@@ -1,0 +1,11 @@
+{
+  "name": "inchanted-forms-designer",
+  "private": true,
+  "workspaces": [
+    "backend/api",
+    "backend/src",
+    "frontend",
+    "shared"
+  ]
+}
+
