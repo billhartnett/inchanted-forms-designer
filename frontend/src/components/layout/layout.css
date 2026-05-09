@@ -1,0 +1,60 @@
+/* Layout container */
+.layout-container {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 220px;
+  background: #1e1e1e;
+  color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-title {
+  font-size: 1.4rem;
+  margin-bottom: 20px;
+}
+
+.sidebar-nav a {
+  color: #ccc;
+  text-decoration: none;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.sidebar-nav a:hover {
+  color: white;
+}
+
+/* Main area */
+.layout-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Topbar */
+.topbar {
+  height: 50px;
+  background: #f5f5f5;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+.topbar-title {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+/* Page content */
+.layout-content {
+  padding: 20px;
+  overflow: auto;
+}
