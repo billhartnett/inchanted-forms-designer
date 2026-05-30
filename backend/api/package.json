@@ -1,15 +1,18 @@
 {
-  "name": "inchanted-backend",
+  "name": "inchanted-api",
   "version": "1.0.0",
+  "private": true,
   "type": "module",
-  "main": "index.js",
   "scripts": {
-    "start": "func start",
-    "build": "echo \"No build step needed\""
+    "build": "tsc -p tsconfig.json"
   },
   "dependencies": {
     "@azure/functions": "^4.0.0",
-    "@azure/ai-form-recognizer": "^5.0.0",
-    "openai": "^4.0.0"
+    "shared": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3",
+    "@types/node": "^20.11.30"
   }
 }
+
