@@ -1,33 +1,48 @@
 import { create } from "zustand";
-import { DesignerField } from "../types/Field";
+
+export interface DesignerField {
+  id: string;
+  type: "text" | "checkbox" | "signature";
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  value?: string;
+}
 
 interface DesignerState {
-  fields: DesignerField[];
-  selectedId: string | null;
-  zoom: number;
-
   pdfPages: string[];
   currentPage: number;
 
+  fields: DesignerField[];
+  selectedId: string | null;
+
+  zoom: number;
+
+  setPdfPages: (pages: string[]) => void;
+  setCurrentPage: (page: number) => void;
+
   addField: (field: DesignerField) => void;
   updateField: (id: string, updates: Partial<DesignerField>) => void;
+
   setSelected: (id: string | null) => void;
 
   zoomIn: () => void;
   zoomOut: () => void;
   zoomReset: () => void;
-
-  setPdfPages: (pages: string[]) => void;
-  setCurrentPage: (page: number) => void;
 }
 
 export const useDesignerStore = create<DesignerState>((set) => ({
-  fields: [],
-  selectedId: null,
-  zoom: 1,
-
   pdfPages: [],
   currentPage: 0,
+
+  fields: [],
+  selectedId: null,
+
+  zoom: 1,
+
+  setPdfPages: (pages) => set({ pdfPages: pages, currentPage: 0 }),
+  setCurrentPage: (page) => set({ currentPage: page }),
 
   addField: (field) =>
     set((state) => ({ fields: [...state.fields, field] })),
@@ -44,7 +59,4 @@ export const useDesignerStore = create<DesignerState>((set) => ({
   zoomIn: () => set((s) => ({ zoom: Math.min(s.zoom + 0.1, 2) })),
   zoomOut: () => set((s) => ({ zoom: Math.max(s.zoom - 0.1, 0.3) })),
   zoomReset: () => set({ zoom: 1 }),
-
-  setPdfPages: (pages) => set({ pdfPages: pages, currentPage: 0 }),
-  setCurrentPage: (page) => set({ currentPage: page }),
 }));

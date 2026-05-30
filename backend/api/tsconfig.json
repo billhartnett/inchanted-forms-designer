@@ -1,14 +1,26 @@
 {
   "compilerOptions": {
     "target": "ES2020",
-    "module": "ES2020",
-    "moduleResolution": "node",
-    "outDir": "dist",
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "outDir": ".",
     "rootDir": ".",
     "esModuleInterop": true,
-    "resolveJsonModule": true,
-    "strict": true
+    "forceConsistentCasingInFileNames": true,
+    "strict": false,
+    "skipLibCheck": true,
+    "resolveJsonModule": true
   },
-  "include": ["./**/*.ts"],
-  "exclude": ["../src", "../../shared"]
+  "include": [
+    "index.ts",
+    "functions.ts",
+    "extractText/**/*.ts",
+    "suggestLabels/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "__blobstorage__",
+    "__queuestorage__",
+    "__azurite_db*"
+  ]
 }

@@ -1,0 +1,25 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+
+    // Azure Document Intelligence (Form Recognizer)
+    "DI_ENDPOINT": "https://<your-doc-intel-resource>.cognitiveservices.azure.com/",
+    "DI_KEY": "<your-doc-intel-key>",
+
+    // OpenAI (for suggestLabels)
+    "OPENAI_API_KEY": "<your-openai-key>",
+    "OPENAI_API_VERSION": "2024-02-15-preview",
+    "OPENAI_ENDPOINT": "https://api.openai.com/v1",
+
+    // Required for Functions App Model
+    "FUNCTIONS_WORKER_RUNTIME": "node",
+    "AzureWebJobsFeatureFlags": "EnableWorkerIndexing",
+
+    // SWA local emulator flag
+    "SWA_CLI_DEBUG": "true",
+
+    // Azure Storage for saving mappings
+    "AZURE_STORAGE_CONNECTION_STRING": "<your-storage-connection-string>"
+  }
+}

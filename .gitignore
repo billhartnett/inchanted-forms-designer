@@ -1,6 +1,41 @@
-node_modules
-dist
-.env
-*.log
+# Node modules
+node_modules/
+**/node_modules/
+
+# Build output
+dist/
+build/
+.swa/
+
+# Vite cache
+frontend/.vite/
+
+# Local environment files
+*.env
+*.env.local
+*.env.development
+*.env.production
+
+# Azure Functions local settings (contains secrets)
+backend/api/local.settings.json
+
+# Azurite emulator artifacts
+backend/api/__azurite_db_*
+backend/api/AzuriteConfig
+backend/api/configDump.json
+
+# Compiled JS from TypeScript (backend)
+backend/api/*.js
+backend/api/*/*.js
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS junk
 .DS_Store
-.vscode
+Thumbs.db
+
+# VS Code
+.vscode/

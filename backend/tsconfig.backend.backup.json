@@ -1,0 +1,8 @@
+{
+  "extends": null,
+  "compilerOptions": {
+    "composite": false
+  },
+  "include": [],
+  "exclude": ["**/*"]
+}

@@ -1,0 +1,5 @@
+[
+  { "label": "ApplicantName", "description": "Name of the applicant" },
+  { "label": "ApplicantAddress", "description": "Address of the applicant" },
+  { "label": "PolicyNumber", "description": "Unique identifier for the policy" }
+]
