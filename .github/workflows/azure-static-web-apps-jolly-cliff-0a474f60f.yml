@@ -24,6 +24,9 @@ jobs:
       - name: Install pnpm
         run: npm install -g pnpm
 
+      - name: Approve esbuild native build
+        run: pnpm add -g esbuild && pnpm approve-builds
+
       # FRONTEND
       - name: Install frontend dependencies
         working-directory: frontend
@@ -49,12 +52,10 @@ jobs:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_JOLLY_CLIFF_0A474F60F }}
           action: "upload"
 
-          # These paths match your repo exactly
           app_location: "frontend"
           api_location: "backend/api"
           output_location: "frontend/dist"
 
-          # We already built everything ourselves
           skip_app_build: true
           skip_api_build: true
 
