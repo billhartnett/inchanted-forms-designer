@@ -24,31 +24,14 @@ jobs:
       - name: Install pnpm
         run: npm install -g pnpm
 
-      # FRONTEND
-      - name: Approve frontend native builds
-        working-directory: frontend
-        run: pnpm approve-builds
-
-      - name: Install frontend dependencies
-        working-directory: frontend
+      - name: Install workspace dependencies
         run: pnpm install --no-frozen-lockfile
 
       - name: Build frontend
-        working-directory: frontend
-        run: pnpm run build
-
-      # BACKEND
-      - name: Approve backend native builds
-        working-directory: backend/api
-        run: pnpm approve-builds
-
-      - name: Install backend dependencies
-        working-directory: backend/api
-        run: pnpm install --no-frozen-lockfile
+        run: pnpm --filter frontend run build
 
       - name: Build backend
-        working-directory: backend/api
-        run: pnpm run build
+        run: pnpm --filter api run build
 
       - name: Build And Deploy
         id: builddeploy
