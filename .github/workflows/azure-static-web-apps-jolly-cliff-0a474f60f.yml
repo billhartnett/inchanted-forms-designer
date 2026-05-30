@@ -27,7 +27,7 @@ jobs:
       # FRONTEND
       - name: Install frontend dependencies
         working-directory: frontend
-        run: pnpm install
+        run: pnpm install --no-frozen-lockfile
 
       - name: Build frontend
         working-directory: frontend
@@ -36,7 +36,7 @@ jobs:
       # BACKEND
       - name: Install backend dependencies
         working-directory: backend/api
-        run: pnpm install
+        run: pnpm install --no-frozen-lockfile
 
       - name: Build backend
         working-directory: backend/api
@@ -49,10 +49,12 @@ jobs:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_JOLLY_CLIFF_0A474F60F }}
           action: "upload"
 
+          # These paths match your repo exactly
           app_location: "frontend"
           api_location: "backend/api"
           output_location: "frontend/dist"
 
+          # We already built everything ourselves
           skip_app_build: true
           skip_api_build: true
 
