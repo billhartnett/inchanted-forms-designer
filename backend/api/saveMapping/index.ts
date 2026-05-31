@@ -1,11 +1,20 @@
 import { app, HttpRequest, HttpResponseInit, InvocationContext } from "@azure/functions";
 import { BlobServiceClient } from "@azure/storage-blob";
 
-export async function saveMapping(request: HttpRequest, context: InvocationContext): Promise<HttpResponseInit> {
-  try {
-    const body = await request.json();
+interface SaveMappingRequest {
+  mappings: Record<string, any>;
+  pages: any[];
+  fileName?: string;
+}
 
-    if (!body || !body.mappings) {
+export async function saveMapping(
+  request: HttpRequest,
+  context: InvocationContext
+): Promise<HttpResponseInit> {
+  try {
+    const body = (await request.json()) as SaveMappingRequest;
+
+    if (!body?.mappings) {
       return {
         status: 400,
         jsonBody: { error: "Missing mapping payload" }
