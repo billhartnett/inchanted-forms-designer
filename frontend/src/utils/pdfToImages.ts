@@ -1,9 +1,12 @@
-import * as pdfjsLib from "pdfjs-dist";
-import "pdfjs-dist/build/pdf.worker.min.js";
+import { GlobalWorkerOptions, getDocument } from "pdfjs-dist/build/pdf";
+import pdfjsWorker from "pdfjs-dist/build/pdf.worker?worker";
+
+// Tell PDF.js where the worker is
+GlobalWorkerOptions.workerSrc = pdfjsWorker;
 
 export async function pdfToImages(file: File): Promise<string[]> {
   const arrayBuffer = await file.arrayBuffer();
-  const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+  const pdf = await getDocument({ data: arrayBuffer }).promise;
 
   const images: string[] = [];
 
