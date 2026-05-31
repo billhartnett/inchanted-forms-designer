@@ -47,6 +47,9 @@ jobs:
           skip_app_build: true
           skip_api_build: true
 
+          # IMPORTANT: New SWA SKU uses "default" as the environment name
+          deployment_environment: "default"
+
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
     runs-on: ubuntu-latest
