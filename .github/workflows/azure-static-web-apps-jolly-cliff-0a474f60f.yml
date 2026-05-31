@@ -47,10 +47,7 @@ jobs:
           skip_app_build: true
           skip_api_build: true
 
-          deployment_environment: "default"
 
-          # CRITICAL FIX — disable Data API validation
-          data_api_location: ""
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
