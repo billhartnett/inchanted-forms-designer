@@ -1,71 +1,53 @@
 import { app, HttpRequest, HttpResponseInit, InvocationContext } from "@azure/functions";
-import OpenAI from "openai";
-import acord from "../../../shared/acord.json";
+import { BlobServiceClient } from "@azure/storage-blob";
 
-const client = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY!
-});
-
-// Define the expected request body shape
-interface SuggestLabelsRequest {
-    textBlocks: Array<{ content: string; boundingBox?: any }>;
+interface SaveMappingRequest {
+  mappings: Record<string, any>;
+  pages: any[];
+  fileName: string;
 }
 
-export async function suggestLabels(req: HttpRequest, context: InvocationContext): Promise<HttpResponseInit> {
-    try {
-        const body = (await req.json()) as SuggestLabelsRequest;
-        const { textBlocks } = body;
+const containerName = process.env.MAPPINGS_CONTAINER!;
+const connectionString = process.env.AZURE_STORAGE_CONNECTION_STRING!;
+const blobService = BlobServiceClient.fromConnectionString(connectionString);
+const container = blobService.getContainerClient(containerName);
 
-        if (!textBlocks || !Array.isArray(textBlocks)) {
-            return { status: 400, jsonBody: { error: "textBlocks[] is required" } };
-        }
+export async function saveMapping(
+  request: HttpRequest,
+  context: InvocationContext
+): Promise<HttpResponseInit> {
+  try {
+    const body = (await request.json()) as SaveMappingRequest;
 
-        // Prepare ACORD dictionary for the model
-        const acordFields = acord.map(a => `${a.label}: ${a.description}`).join("\n");
-
-        const prompt = `
-You are an ACORD insurance forms expert. 
-Your job is to map extracted form text to ACORD eLabels.
-
-ACORD Fields:
-${acordFields}
-
-For each text block, return:
-- bestMatch: the most likely ACORD label
-- confidence: 0–1
-- candidates: array of { label, confidence }
-- reason: short explanation
-
-Respond ONLY in JSON.
-
-Text Blocks:
-${JSON.stringify(textBlocks, null, 2)}
-        `;
-
-        const response = await client.chat.completions.create({
-            model: "gpt-4o-mini",
-            response_format: { type: "json_object" },
-            messages: [
-                { role: "system", content: "You map text to ACORD eLabels." },
-                { role: "user", content: prompt }
-            ]
-        });
-
-        const json = JSON.parse(response.choices[0].message.content);
-
-        return {
-            status: 200,
-            jsonBody: json
-        };
-
-    } catch (err: any) {
-        context.error("suggestLabels error:", err);
-        return { status: 500, jsonBody: { error: err.message } };
+    if (!body?.mappings || !body?.pages || !body?.fileName) {
+      return {
+        status: 400,
+        jsonBody: { error: "Missing mappings, pages, or fileName" }
+      };
     }
+
+    const { mappings, pages, fileName } = body;
+
+    const blob = container.getBlockBlobClient(fileName + ".json");
+    const payload = JSON.stringify({ mappings, pages }, null, 2);
+
+    await blob.upload(payload, Buffer.byteLength(payload));
+
+    return {
+      status: 200,
+      jsonBody: { success: true }
+    };
+  } catch (err: any) {
+    context.error("saveMapping error:", err);
+    return {
+      status: 500,
+      jsonBody: { error: "Failed to save mapping", details: err.message }
+    };
+  }
 }
 
-app.http("suggestLabels", {
-    methods: ["POST"],
-    authLevel: "anonymous",
-    handler: suggestLabels
+app.http("saveMapping", {
+  methods: ["POST"],
+  authLevel: "anonymous",
+  handler: saveMapping
 });
