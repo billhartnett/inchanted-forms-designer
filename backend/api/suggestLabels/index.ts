@@ -6,9 +6,14 @@ const client = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY!
 });
 
+// Define the expected request body shape
+interface SuggestLabelsRequest {
+    textBlocks: Array<{ content: string; boundingBox?: any }>;
+}
+
 export async function suggestLabels(req: HttpRequest, context: InvocationContext): Promise<HttpResponseInit> {
     try {
-        const body = await req.json();
+        const body = (await req.json()) as SuggestLabelsRequest;
         const { textBlocks } = body;
 
         if (!textBlocks || !Array.isArray(textBlocks)) {
