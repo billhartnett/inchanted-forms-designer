@@ -1,10 +1,20 @@
 import { app, HttpRequest, HttpResponseInit, InvocationContext } from "@azure/functions";
 
-export async function exportAcordXml(request: HttpRequest, context: InvocationContext): Promise<HttpResponseInit> {
-  try {
-    const body = await request.json();
+interface ExportAcordXmlRequest {
+  mappings: Record<string, { acordLabel: string }>;
+  pages: Array<{
+    lines: Array<{ content: string }>;
+  }>;
+}
 
-    if (!body || !body.mappings || !body.pages) {
+export async function exportAcordXml(
+  request: HttpRequest,
+  context: InvocationContext
+): Promise<HttpResponseInit> {
+  try {
+    const body = (await request.json()) as ExportAcordXmlRequest;
+
+    if (!body?.mappings || !body?.pages) {
       return {
         status: 400,
         jsonBody: { error: "Missing mappings or pages" }
@@ -45,10 +55,7 @@ export async function exportAcordXml(request: HttpRequest, context: InvocationCo
 }
 
 function escapeXml(str: string) {
-  return str
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;");
+  return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
 app.http("exportAcordXml", {
