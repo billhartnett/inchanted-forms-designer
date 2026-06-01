@@ -20,12 +20,13 @@ on:
     branches: [ "main" ]
 
 # Environment variables available to all jobs and steps in this workflow
- env:
-  app_location: "frontend"        # location of your client code
-  api_location: ""                # no API
-  output_location: "dist"         # Vite output folder
-  data_api_location: ""           # disable Data API
+env:
+  app_location: "frontend"
+  api_location: ""
+  output_location: "dist"
+  data_api_location: ""
   AZURE_STATIC_WEB_APPS_API_TOKEN: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+
 permissions:
   contents: read
 
@@ -50,9 +51,10 @@ jobs:
           action: "upload"
           ###### Repository/Build Configurations - These values can be configured to match you app requirements. ######
           # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
-          app_location: ${{ env.APP_LOCATION }}
-          api_location: ${{ env.API_LOCATION }}
-          app_artifact_location: ${{ env.APP_ARTIFACT_LOCATION }}
+          app_location: ${{ env.app_location }}
+          api_location: ${{ env.api_location }}
+          app_artifact_location: ${{ env.output_location }}
+
           ###### End of Repository/Build Configurations ######
 
   close_pull_request_job:
