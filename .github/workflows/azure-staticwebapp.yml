@@ -54,6 +54,8 @@ jobs:
           app_location: ${{ env.app_location }}
           api_location: ${{ env.api_location }}
           app_artifact_location: ${{ env.output_location }}
+          data_api_location: ${{ env.data_api_location }}
+
 
           ###### End of Repository/Build Configurations ######
 
