@@ -20,13 +20,15 @@ jobs:
         with:
           submodules: true
           lfs: false
+
+      # 🔍 DEBUG STEP — checks whether GitHub is passing your secret
       - name: Debug Secret
         run: |
           if [ -z "${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_POLITE_FLOWER_020777A0F }}" ]; then
-          echo "SECRET IS EMPTY"
-          exit 1
+            echo "❌ SECRET IS EMPTY — GitHub is NOT passing your token"
+            exit 1
           else
-            echo "SECRET EXISTS (not printing for security)"
+            echo "✅ SECRET EXISTS — GitHub IS passing your token"
           fi
 
       - name: Build And Deploy
