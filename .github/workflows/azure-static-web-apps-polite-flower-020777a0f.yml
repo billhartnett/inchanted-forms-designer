@@ -20,6 +20,14 @@ jobs:
         with:
           submodules: true
           lfs: false
+      - name: Debug Secret
+        run: |
+          if [ -z "${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_POLITE_FLOWER_020777A0F }}" ]; then
+          echo "SECRET IS EMPTY"
+          exit 1
+          else
+            echo "SECRET EXISTS (not printing for security)"
+          fi
 
       - name: Build And Deploy
         id: builddeploy
