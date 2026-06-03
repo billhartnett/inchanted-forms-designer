@@ -10,7 +10,6 @@
     "overrides": {
       "tinyglobby": "0.2.16"
     }
-  },
-  "packageManager": "pnpm@10.33.4"
+  }
 }
 

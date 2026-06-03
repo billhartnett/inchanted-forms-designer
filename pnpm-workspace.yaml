@@ -1,6 +1,0 @@
-packages:
-  - "frontend"
-  - "backend/api"
-  - "shared"
-allowBuilds:
-  esbuild: true
