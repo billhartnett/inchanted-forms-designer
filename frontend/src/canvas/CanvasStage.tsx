@@ -1,6 +1,7 @@
-import { Stage, Layer, Rect, Text, Transformer } from "react-konva";
+import { Stage, Layer, Rect, Text, Transformer, Image } from "react-konva";
 import { useDesignerStore } from "../state/useDesignerStore";
 import { useRef, useEffect } from "react";
+import useImage from "use-image";
 
 export default function CanvasStage() {
   const fields = useDesignerStore((s) => s.fields);
@@ -8,6 +9,11 @@ export default function CanvasStage() {
   const setSelected = useDesignerStore((s) => s.setSelected);
   const updateField = useDesignerStore((s) => s.updateField);
   const zoom = useDesignerStore((s) => s.zoom);
+
+  const pdfPages = useDesignerStore((s) => s.pdfPages);
+  const currentPage = useDesignerStore((s) => s.currentPage);
+
+  const [pdfImage] = useImage(pdfPages?.[currentPage] || null);
 
   const shapeRef = useRef<any>(null);
   const transformerRef = useRef<any>(null);
@@ -35,8 +41,22 @@ export default function CanvasStage() {
       scaleX={zoom}
       scaleY={zoom}
       onMouseDown={handleDeselect}
-      style={{ background: "#fafafa" }}
+      style={{ background: "transparent" }}   // <-- FIXED
     >
+      {/* PDF BACKGROUND LAYER */}
+      <Layer listening={false} hitGraphEnabled={false}>
+        {pdfImage && (
+          <Image
+            image={pdfImage}
+            x={0}
+            y={0}
+            width={800}
+            height={600}
+          />
+        )}
+      </Layer>
+
+      {/* INTERACTIVE FIELDS LAYER */}
       <Layer>
         {fields.map((f) => {
           const isSelected = f.id === selectedId;
