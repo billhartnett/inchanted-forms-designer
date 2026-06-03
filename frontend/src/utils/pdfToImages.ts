@@ -1,25 +1,31 @@
-import { GlobalWorkerOptions, getDocument } from "pdfjs-dist/build/pdf";
+import { getDocument, GlobalWorkerOptions } from "pdfjs-dist";
 import pdfjsWorker from "pdfjs-dist/build/pdf.worker?worker";
 
-// Tell PDF.js where the worker is
-GlobalWorkerOptions.workerSrc = pdfjsWorker;
+/**
+ * Convert a PDF file (as ArrayBuffer) into an array of image data URLs.
+ */
+export async function pdfToImages(pdfData: ArrayBuffer): Promise<string[]> {
+  // IMPORTANT:
+  // Do NOT set GlobalWorkerOptions.workerSrc when using Vite + ?worker.
+  // Vite automatically wires the worker correctly.
+  GlobalWorkerOptions.workerSrc = undefined as any;
 
-export async function pdfToImages(file: File): Promise<string[]> {
-  const arrayBuffer = await file.arrayBuffer();
-  const pdf = await getDocument({ data: arrayBuffer }).promise;
+  const loadingTask = getDocument({ data: pdfData, worker: pdfjsWorker });
+  const pdf = await loadingTask.promise;
 
   const images: string[] = [];
 
-  for (let i = 1; i <= pdf.numPages; i++) {
-    const page = await pdf.getPage(i);
-    const viewport = page.getViewport({ scale: 2 });
+  for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+    const page = await pdf.getPage(pageNum);
 
+    const viewport = page.getViewport({ scale: 2 });
     const canvas = document.createElement("canvas");
-    const ctx = canvas.getContext("2d")!;
+    const context = canvas.getContext("2d")!;
+
     canvas.width = viewport.width;
     canvas.height = viewport.height;
 
-    await page.render({ canvasContext: ctx, viewport }).promise;
+    await page.render({ canvasContext: context, viewport }).promise;
 
     images.push(canvas.toDataURL("image/png"));
   }

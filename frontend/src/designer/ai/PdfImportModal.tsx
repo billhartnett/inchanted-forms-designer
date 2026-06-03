@@ -1,4 +1,4 @@
-import { pdfToImages } from "../utils/pdfToImages";
+import { pdfToImages } from "../../utils/pdfToImages";
 import { useDesignerStore } from "../state/useDesignerStore";
 
 export default function PdfImportModal({ onClose }: { onClose: () => void }) {
