@@ -5,6 +5,7 @@ import useImage from "use-image";
 import { ACORD_SCHEMA } from "../data/acordSchema";
 
 export default function Designer() {
+  console.log("Designer page mounted");
   const [pages, setPages] = useState([]);
   const [images, setImages] = useState<string[]>([]);
   const [selected, setSelected] = useState<any>(null);
@@ -49,6 +50,7 @@ export default function Designer() {
 
   // Load current page image
   const [bgImage] = useImage(images[currentPage] || "");
+  console.log("PDF image URL:", images[currentPage]);
   const currentLines =
     pages[currentPage]?.lines ? pages[currentPage].lines : [];
 

@@ -10,6 +10,7 @@ export default function App() {
       </nav>
 
       <Routes>
+        {/* Home route */}
         <Route
           path="/"
           element={
@@ -21,7 +22,11 @@ export default function App() {
           }
         />
 
+        {/* Designer route */}
         <Route path="/designer" element={<Designer />} />
+
+        {/* ⭐ REQUIRED: Catch-all route for SPA */}
+        <Route path="*" element={<Designer />} />
       </Routes>
     </div>
   );

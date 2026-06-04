@@ -11,6 +11,9 @@ import { useRef, useEffect, useState } from "react";
 import useImage from "use-image";
 
 export default function CanvasStage() {
+  // ⭐ DEBUG: Confirm component is actually rendering
+  console.log("CanvasStage mounted");
+
   const fields = useDesignerStore((s) => s.fields);
   const selectedId = useDesignerStore((s) => s.selectedId);
   const setSelected = useDesignerStore((s) => s.setSelected);
@@ -22,14 +25,18 @@ export default function CanvasStage() {
 
   const hasPage = pdfPages.length > 0;
 
-  // ⭐ DEBUG LINE — THIS IS WHAT WE NEED
-  console.log("PDF page URL:", hasPage ? pdfPages[currentPage] : "NO PAGE LOADED");
+  // ⭐ DEBUG: Show exactly what URL we are trying to load
+  console.log(
+    "PDF page URL:",
+    hasPage ? pdfPages[currentPage] : "NO PAGE LOADED"
+  );
 
   const [bg] = useImage(hasPage ? pdfPages[currentPage] : undefined);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const [containerWidth, setContainerWidth] = useState(800);
 
+  // Measure container width
   useEffect(() => {
     const update = () => {
       if (containerRef.current) {
@@ -41,6 +48,7 @@ export default function CanvasStage() {
     return () => window.removeEventListener("resize", update);
   }, []);
 
+  // Compute scaling based on PDF image size
   let fitScale = 1;
   let stageWidth = 800;
   let stageHeight = 600;

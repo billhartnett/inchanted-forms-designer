@@ -5,25 +5,27 @@ export default function UploadForm({ onExtracted }) {
   const [file, setFile] = useState<File | null>(null);
 
   async function handleUpload() {
-    if (!file) return;
+  if (!file) return;
 
-    // Convert PDF → images
-    const images = await pdfToImages(file);
+  // Convert PDF → ArrayBuffer → images
+  const arrayBuffer = await file.arrayBuffer();
+  const images = await pdfToImages(arrayBuffer);
 
-    // Extract text from backend
-    const form = new FormData();
-    form.append("file", file);
+  // Extract text from backend
+  const form = new FormData();
+  form.append("file", file);
 
-    const res = await fetch("/api/extractText", {
-      method: "POST",
-      body: form
-    });
+  const res = await fetch("/api/extractText", {
+    method: "POST",
+    body: form
+  });
 
-    const json = await res.json();
+  const json = await res.json();
 
-    // Pass both to the designer
-    onExtracted({ pages: json.pages, images });
-  }
+  // Pass both to the designer
+  onExtracted({ pages: json.pages, images });
+}
+
 
   return (
     <div style={{ padding: 20 }}>
