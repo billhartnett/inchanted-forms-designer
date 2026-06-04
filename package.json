@@ -1,15 +1,5 @@
 {
   "name": "inchanted-forms-designer",
-  "private": true,
-  "workspaces": [
-    "frontend",
-    "backend/api",
-    "shared"
-  ],
-  "pnpm": {
-    "overrides": {
-      "tinyglobby": "0.2.16"
-    }
-  }
+  "version": "1.0.0",
+  "private": true
 }
-
