@@ -1,73 +1,50 @@
-import React, { useState } from "react";
 import { useDesignerStore } from "../state/useDesignerStore";
-import PdfImportModal from "../ai/PdfImportModal";
 
-export default function Toolbox() {
+export function Toolbox() {
   const addField = useDesignerStore((s) => s.addField);
-  const zoomIn = useDesignerStore((s) => s.zoomIn);
-  const zoomOut = useDesignerStore((s) => s.zoomOut);
-  const zoomReset = useDesignerStore((s) => s.zoomReset);
-
-  const [showPdfModal, setShowPdfModal] = useState(false);
+  const selectField = useDesignerStore((s) => s.selectField);
 
   const addRect = () => {
-    addField({
-      id: "rect_" + Date.now(),
-      type: "rect",
+    const field = {
+      type: "rect" as const,
       x: 100,
       y: 100,
-      width: 150,
+      width: 120,
       height: 80,
-      fill: "lightblue",
-    });
+      fill: "#4a90e2",
+    };
+
+    addField(field);
+    // select the last added field
+    setTimeout(() => {
+      const fields = useDesignerStore.getState().fields;
+      selectField(fields[fields.length - 1].id);
+    }, 0);
   };
 
   const addText = () => {
-    addField({
-      id: "text_" + Date.now(),
-      type: "text",
-      x: 120,
-      y: 120,
-      width: 200,
-      height: 30,
+    const field = {
+      type: "text" as const,
+      x: 100,
+      y: 100,
       text: "New Text",
       fontSize: 20,
       color: "#000000",
-    });
+    };
+
+    addField(field);
+    setTimeout(() => {
+      const fields = useDesignerStore.getState().fields;
+      selectField(fields[fields.length - 1].id);
+    }, 0);
   };
 
   return (
-    <>
-      <div
-        style={{
-          width: 150,
-          background: "#f3f3f3",
-          borderRight: "1px solid #ccc",
-          padding: 10,
-          display: "flex",
-          flexDirection: "column",
-          gap: 10,
-        }}
-      >
-        <div style={{ fontWeight: "bold" }}>Fields</div>
-        <button onClick={addRect}>Rectangle</button>
-        <button onClick={addText}>Text</button>
-
-        <hr />
-
-        <button onClick={() => setShowPdfModal(true)}>Import PDF</button>
-
-        <hr />
-
-        <div style={{ fontWeight: "bold" }}>Canvas</div>
-        <button onClick={() => zoomIn()}>Zoom In</button>
-        <button onClick={() => zoomOut()}>Zoom Out</button>
-        <button onClick={() => zoomReset()}>Reset Zoom</button>
-      </div>
-
-      {showPdfModal && (
-        <PdfImportModal onClose={() => setShowPdfModal(false)} />
-      )}
-    </>
+    <div
+      style={{ padding: 12, display: "flex", flexDirection: "column", gap: 8 }}
+    >
+      <button onClick={addRect}>Add Rectangle</button>
+      <button onClick={addText}>Add Text</button>
+    </div>
   );
 }

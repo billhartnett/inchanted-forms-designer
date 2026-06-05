@@ -2,24 +2,25 @@ import React from "react";
 
 interface DesignerLayoutProps {
   sidebar: React.ReactNode;
-  canvas: React.ReactNode;
   properties: React.ReactNode;
+  children: React.ReactNode;
 }
 
-export default function DesignerLayout({
+export function DesignerLayout({
   sidebar,
-  canvas,
   properties,
+  children,
 }: DesignerLayoutProps) {
   return (
     <div
       style={{
         display: "grid",
         gridTemplateColumns: "260px 1fr 300px",
-        height: "calc(100vh - 80px)",
-        borderTop: "1px solid #ddd",
+        height: "100vh",
+        overflow: "hidden",
       }}
     >
+      {/* LEFT SIDEBAR */}
       <aside
         style={{
           borderRight: "1px solid #ddd",
@@ -30,6 +31,7 @@ export default function DesignerLayout({
         {sidebar}
       </aside>
 
+      {/* CENTER CANVAS */}
       <main
         style={{
           padding: "1rem",
@@ -37,9 +39,10 @@ export default function DesignerLayout({
           overflow: "auto",
         }}
       >
-        {canvas}
+        {children}
       </main>
 
+      {/* RIGHT PROPERTIES PANEL */}
       <aside
         style={{
           borderLeft: "1px solid #ddd",
