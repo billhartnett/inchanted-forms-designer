@@ -1,24 +1,41 @@
 import React from "react";
-
 import { CanvasStage } from "../canvas/CanvasStage";
-import { CanvasGrid } from "../canvas/CanvasGrid";
-import { CanvasGuides } from "../canvas/CanvasGuides";
-
 import { Toolbox } from "./toolbox/Toolbox";
 import { PropertiesPanel } from "./properties/PropertiesPanel";
-import { ZoomControls } from "./controls/ZoomControls";
+import ZoomControls from "./controls/ZoomControls";
 
-import { DesignerLayout } from "./layout/DesignerLayout";
+export default function Designer() {
+  // Zoom handlers (CanvasStage owns zoom state)
+  const zoomIn = () => {
+    const stage = window.__stageRef;
+    if (!stage) return;
+    const scale = stage.scaleX() * 1.1;
+    stage.scale({ x: scale, y: scale });
+    stage.batchDraw();
+  };
 
-export function Designer() {
+  const zoomOut = () => {
+    const stage = window.__stageRef;
+    if (!stage) return;
+    const scale = stage.scaleX() / 1.1;
+    stage.scale({ x: scale, y: scale });
+    stage.batchDraw();
+  };
+
+  const resetZoom = () => {
+    const stage = window.__stageRef;
+    if (!stage) return;
+    stage.scale({ x: 1, y: 1 });
+    stage.position({ x: 0, y: 0 });
+    stage.batchDraw();
+  };
+
   return (
-    <DesignerLayout sidebar={<Toolbox />} properties={<PropertiesPanel />}>
-      <div style={{ position: "relative", width: "100%", height: "100%" }}>
-        <CanvasGrid />
-        <CanvasGuides />
-        <CanvasStage />
-        <ZoomControls />
-      </div>
-    </DesignerLayout>
+    <div style={{ width: "100vw", height: "100vh", position: "relative" }}>
+      <CanvasStage />
+      <Toolbox />
+      <PropertiesPanel />
+      <ZoomControls zoomIn={zoomIn} zoomOut={zoomOut} reset={resetZoom} />
+    </div>
   );
 }
