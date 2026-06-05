@@ -4,10 +4,9 @@ import { Toolbox } from "./toolbox/Toolbox";
 import { PropertiesPanel } from "./properties/PropertiesPanel";
 import ZoomControls from "./controls/ZoomControls";
 
-export default function Designer() {
-  // Zoom handlers (CanvasStage owns zoom state)
+export function Designer() {
   const zoomIn = () => {
-    const stage = window.__stageRef;
+    const stage = (window as any).__stageRef;
     if (!stage) return;
     const scale = stage.scaleX() * 1.1;
     stage.scale({ x: scale, y: scale });
@@ -15,7 +14,7 @@ export default function Designer() {
   };
 
   const zoomOut = () => {
-    const stage = window.__stageRef;
+    const stage = (window as any).__stageRef;
     if (!stage) return;
     const scale = stage.scaleX() / 1.1;
     stage.scale({ x: scale, y: scale });
@@ -23,7 +22,7 @@ export default function Designer() {
   };
 
   const resetZoom = () => {
-    const stage = window.__stageRef;
+    const stage = (window as any).__stageRef;
     if (!stage) return;
     stage.scale({ x: 1, y: 1 });
     stage.position({ x: 0, y: 0 });
