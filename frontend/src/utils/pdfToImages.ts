@@ -1,8 +1,8 @@
 import { getDocument, GlobalWorkerOptions } from "pdfjs-dist";
-import pdfjsWorker from "pdfjs-dist/build/pdf.worker.mjs?worker";
+import PdfJsWorker from "pdfjs-dist/build/pdf.worker.min.mjs?worker";
 
 // Correct worker assignment for pdfjs-dist v4 + Vite 8
-GlobalWorkerOptions.workerSrc = pdfjsWorker;
+GlobalWorkerOptions.workerPort = new PdfJsWorker();
 
 export async function pdfToImages(pdfData: ArrayBuffer): Promise<string[]> {
   const loadingTask = getDocument({ data: pdfData });

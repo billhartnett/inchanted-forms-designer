@@ -1,6 +1,7 @@
 {
   "name": "inchanted-api",
   "version": "1.0.0",
+  "main": "index.js",
   "private": true,
   "scripts": {
     "build": "tsc -p tsconfig.json",
@@ -15,6 +16,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
+    "azure-functions-core-tools": "^4.12.0",
     "typescript": "^5.4.0"
   }
 }

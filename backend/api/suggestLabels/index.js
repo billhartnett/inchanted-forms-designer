@@ -1,53 +1,40 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.suggestLabels = suggestLabels;
+exports.saveMapping = saveMapping;
 const functions_1 = require("@azure/functions");
-const search_documents_1 = require("@azure/search-documents");
-const openai_1 = __importDefault(require("openai"));
-const searchEndpoint = process.env.SEARCH_ENDPOINT;
-const searchKey = process.env.SEARCH_KEY;
-const indexName = process.env.SEARCH_INDEX;
-const openai = new openai_1.default({
-    apiKey: process.env.OPENAI_API_KEY
-});
-async function suggestLabels(req, context) {
+const storage_blob_1 = require("@azure/storage-blob");
+const containerName = process.env.MAPPINGS_CONTAINER;
+const connectionString = process.env.AZURE_STORAGE_CONNECTION_STRING;
+const blobService = storage_blob_1.BlobServiceClient.fromConnectionString(connectionString);
+const container = blobService.getContainerClient(containerName);
+async function saveMapping(request, context) {
     try {
-        const body = (await req.json());
-        const text = body.text;
-        const embeddingResponse = await openai.embeddings.create({
-            model: "text-embedding-3-small",
-            input: text
-        });
-        const embedding = embeddingResponse.data[0].embedding;
-        const client = new search_documents_1.SearchClient(searchEndpoint, indexName, new search_documents_1.AzureKeyCredential(searchKey));
-        const results = await client.search(text, {
-            vectors: [
-                {
-                    value: embedding,
-                    kNearestNeighborsCount: 5,
-                    fields: ["embedding"]
-                }
-            ]
-        });
-        const labels = [];
-        for await (const result of results.results) {
-            if (result.document?.label) {
-                labels.push(result.document.label);
-            }
+        const body = (await request.json());
+        if (!body?.mappings || !body?.pages || !body?.fileName) {
+            return {
+                status: 400,
+                jsonBody: { error: "Missing mappings, pages, or fileName" }
+            };
         }
-        return { jsonBody: { labels } };
+        const { mappings, pages, fileName } = body;
+        const blob = container.getBlockBlobClient(fileName + ".json");
+        const payload = JSON.stringify({ mappings, pages }, null, 2);
+        await blob.upload(payload, Buffer.byteLength(payload));
+        return {
+            status: 200,
+            jsonBody: { success: true }
+        };
     }
     catch (err) {
-        const message = err instanceof Error ? err.message : "Unknown error";
-        context.error("suggestLabels error:", err);
-        return { status: 500, jsonBody: { error: message } };
+        context.error("saveMapping error:", err);
+        return {
+            status: 500,
+            jsonBody: { error: "Failed to save mapping", details: err.message }
+        };
     }
 }
-functions_1.app.http("suggestLabels", {
+functions_1.app.http("saveMapping", {
     methods: ["POST"],
     authLevel: "anonymous",
-    handler: suggestLabels
+    handler: saveMapping
 });

@@ -1,0 +1,158 @@
+"use strict";
+/**
+ * Embeddings provider for ACORD semantic mapping.
+ *
+ * Supports standard OpenAI and Azure OpenAI.  When no API key is configured
+ * every function returns empty arrays so callers can degrade gracefully to
+ * dictionary + heuristic scoring.
+ *
+ * Environment variables (via local.settings.json / app settings):
+ *   OPENAI_API_KEY      – Required.  Key for OpenAI or Azure OpenAI.
+ *   OPENAI_ENDPOINT     – Optional.  Defaults to https://api.openai.com/v1.
+ *                         Set to an Azure endpoint to use Azure OpenAI.
+ *   OPENAI_API_VERSION  – Optional.  Required for Azure (e.g. 2024-02-15-preview).
+ *   EMBEDDING_MODEL     – Optional.  Defaults to text-embedding-3-small.
+ */
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || (function () {
+    var ownKeys = function(o) {
+        ownKeys = Object.getOwnPropertyNames || function (o) {
+            var ar = [];
+            for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
+            return ar;
+        };
+        return ownKeys(o);
+    };
+    return function (mod) {
+        if (mod && mod.__esModule) return mod;
+        var result = {};
+        if (mod != null) for (var k = ownKeys(mod), i = 0; i < k.length; i++) if (k[i] !== "default") __createBinding(result, mod, k[i]);
+        __setModuleDefault(result, mod);
+        return result;
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.isEmbeddingsAvailable = isEmbeddingsAvailable;
+exports.embedText = embedText;
+exports.embedBatch = embedBatch;
+exports.cosineSimilarity = cosineSimilarity;
+const openai_1 = __importStar(require("openai"));
+const DEFAULT_OAI_BASE = "https://api.openai.com/v1";
+const DEFAULT_MODEL = "text-embedding-3-small";
+const MAX_INPUT_CHARS = 32_000; // ~8 191 tokens, conservative cap
+// Lazy singleton — initialised once on first use.
+let _client = undefined;
+function buildClient() {
+    const apiKey = (process.env.OPENAI_API_KEY ?? "").trim();
+    if (!apiKey) {
+        return null; // embeddings unavailable — callers will use fallback
+    }
+    const endpoint = (process.env.OPENAI_ENDPOINT ?? DEFAULT_OAI_BASE).trim();
+    const apiVersion = (process.env.OPENAI_API_VERSION ?? "2024-02-15-preview").trim();
+    const isAzure = endpoint.length > 0 && !endpoint.startsWith("https://api.openai.com");
+    if (isAzure) {
+        return new openai_1.AzureOpenAI({
+            apiKey,
+            endpoint,
+            apiVersion,
+            dangerouslyAllowBrowser: false,
+        });
+    }
+    return new openai_1.default({
+        apiKey,
+        baseURL: endpoint || DEFAULT_OAI_BASE,
+    });
+}
+function getClient() {
+    if (_client !== undefined)
+        return _client;
+    _client = buildClient();
+    return _client;
+}
+/** True when an API key is present and a client can be created. */
+function isEmbeddingsAvailable() {
+    return getClient() !== null;
+}
+/**
+ * Embed a single text string.
+ * Returns [] when embeddings are not configured or the call fails.
+ */
+async function embedText(text) {
+    const client = getClient();
+    if (!client)
+        return [];
+    const model = (process.env.EMBEDDING_MODEL ?? "").trim() || DEFAULT_MODEL;
+    try {
+        const response = await client.embeddings.create({
+            model,
+            input: text.trim().slice(0, MAX_INPUT_CHARS),
+        });
+        return response.data[0]?.embedding ?? [];
+    }
+    catch (err) {
+        console.warn("[embeddings] embedText failed:", err);
+        return [];
+    }
+}
+/**
+ * Embed a batch of texts in a single API call.
+ * Returns a parallel array of embedding vectors (or empty arrays on failure).
+ * Callers should split very large arrays into chunks before calling this.
+ */
+async function embedBatch(texts) {
+    if (texts.length === 0)
+        return [];
+    const client = getClient();
+    if (!client)
+        return texts.map(() => []);
+    const model = (process.env.EMBEDDING_MODEL ?? "").trim() || DEFAULT_MODEL;
+    const safe = texts.map((t) => t.trim().slice(0, MAX_INPUT_CHARS));
+    try {
+        const response = await client.embeddings.create({
+            model,
+            input: safe,
+        });
+        // API guarantees ordering by index; sort defensively.
+        const sorted = [...response.data].sort((a, b) => a.index - b.index);
+        return sorted.map((d) => d.embedding);
+    }
+    catch (err) {
+        console.warn("[embeddings] embedBatch failed:", err);
+        return texts.map(() => []);
+    }
+}
+/**
+ * Compute cosine similarity between two embedding vectors.
+ * Returns a value in [0, 1].  Returns 0 for zero/mismatched vectors.
+ */
+function cosineSimilarity(a, b) {
+    if (a.length === 0 || b.length !== a.length)
+        return 0;
+    let dot = 0;
+    let normA = 0;
+    let normB = 0;
+    for (let i = 0; i < a.length; i += 1) {
+        dot += a[i] * b[i];
+        normA += a[i] * a[i];
+        normB += b[i] * b[i];
+    }
+    const denom = Math.sqrt(normA) * Math.sqrt(normB);
+    if (denom === 0)
+        return 0;
+    return Math.max(0, Math.min(1, dot / denom));
+}
