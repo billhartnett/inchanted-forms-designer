@@ -23,6 +23,11 @@ backend/api/local.settings.json
 backend/api/__azurite_db_*
 backend/api/AzuriteConfig
 backend/api/configDump.json
+backend/api/__blobstorage__/
+backend/api/__queuestorage__/
+
+# Generated diagnostics/runtime outputs
+backend/api/tests/diagnostics/*.json
 
 # Compiled JS from TypeScript (backend)
 backend/api/*.js
