@@ -6,11 +6,12 @@ import {
 } from "@azure/functions";
 
 import {
-  getAllAcordEntries,
-  getAcordDictionaryState,
-  lookupAcordByCode,
-  searchAcordDictionary,
-} from "../src/services/acordDictionary";
+  getAcordDictionarySummary,
+  listAcordLabels,
+  lookupAcordLabel,
+  searchAcordLabels,
+  suggestAcordLabel,
+} from "../../mapping";
 
 type SuggestRequest = {
   text: string;
@@ -41,7 +42,7 @@ export async function acordSearch(
       };
     }
 
-    const results = searchAcordDictionary(query, limit);
+    const results = searchAcordLabels(query, limit);
 
     return {
       status: 200,
@@ -53,7 +54,7 @@ export async function acordSearch(
           ...result.entry,
           relevanceScore: result.score,
         })),
-        dictionary: getAcordDictionaryState(),
+        dictionary: getAcordDictionarySummary(),
       },
     };
   } catch (error: any) {
@@ -81,7 +82,7 @@ export async function acordLookupByCode(
       };
     }
 
-    const found = lookupAcordByCode(rawCode);
+    const found = lookupAcordLabel(rawCode);
     if (!found) {
       return {
         status: 404,
@@ -113,13 +114,13 @@ export async function acordAll(
   context: InvocationContext,
 ): Promise<HttpResponseInit> {
   try {
-    const all = getAllAcordEntries();
+    const all = listAcordLabels();
 
     return {
       status: 200,
       jsonBody: {
         total: all.length,
-        dictionary: getAcordDictionaryState(),
+        dictionary: getAcordDictionarySummary(),
         items: all,
       },
     };
@@ -150,31 +151,9 @@ export async function acordSuggest(
       };
     }
 
-    const combined = `${body.text} ${body.context || ""}`.trim();
-    const [best] = searchAcordDictionary(combined, 1);
-
-    if (!best) {
-      return {
-        status: 200,
-        jsonBody: {
-          acordCode: "ACORD.UNKNOWN",
-          label: "Unknown Field",
-          confidenceScore: 0.5,
-          source: "ai",
-        },
-      };
-    }
-
-    const confidenceScore = Math.min(0.99, 0.5 + best.score / 300);
-
     return {
       status: 200,
-      jsonBody: {
-        acordCode: best.entry.acordCode,
-        label: best.entry.label,
-        confidenceScore: Number(confidenceScore.toFixed(2)),
-        source: "ai",
-      },
+      jsonBody: suggestAcordLabel(body.text, body.context),
     };
   } catch (error: any) {
     context.error("acordSuggest error", error);

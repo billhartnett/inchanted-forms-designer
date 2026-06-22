@@ -4,10 +4,33 @@
   "private": true,
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "acord.json"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./acord": {
+      "types": "./dist/acord/index.d.ts",
+      "default": "./dist/acord/index.js"
+    },
+    "./types": {
+      "types": "./dist/types/index.d.ts",
+      "default": "./dist/types/index.js"
+    },
+    "./quality": {
+      "types": "./dist/quality/index.d.ts",
+      "default": "./dist/quality/index.js"
+    }
+  },
   "scripts": {
     "build": "tsc -p tsconfig.json"
   },
   "devDependencies": {
+    "@types/node": "^20.0.0",
     "typescript": "^5.4.0"
   }
 }

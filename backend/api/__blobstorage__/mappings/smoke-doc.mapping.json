@@ -1,0 +1,163 @@
+{
+  "version": 1,
+  "documentId": "smoke-doc",
+  "pages": [
+    {
+      "lines": [
+        {
+          "content": "Applicant Name"
+        }
+      ],
+      "pageNumber": 1
+    }
+  ],
+  "fields": [
+    {
+      "metadata": {
+        "required": false,
+        "extractionBlockId": "b1",
+        "source": "ai",
+        "acordCode": "Applicant_Name",
+        "acordLabel": "Applicant Name",
+        "confidenceScore": 0.91,
+        "acordDescription": "Smoke test",
+        "fieldType": "text"
+      },
+      "stroke": "#000000",
+      "opacity": 1,
+      "text": "Applicant Name",
+      "width": 120,
+      "pageIndex": 0,
+      "rotation": 0,
+      "y": 10,
+      "type": "text",
+      "fontSize": 14,
+      "id": "field-1",
+      "height": 20,
+      "textAlign": "left",
+      "color": "#000000",
+      "strokeWidth": 0,
+      "x": 10,
+      "fontFamily": "Geist Variable"
+    }
+  ],
+  "mappings": [
+    {
+      "mapping": {
+        "text": "Applicant Name",
+        "suggestions": [
+          {
+            "label": "Applicant Name",
+            "description": "Smoke test",
+            "acordCode": "Applicant_Name",
+            "source": "manual",
+            "confidenceScore": 0.91
+          }
+        ],
+        "boundingBox": {
+          "y": 10,
+          "width": 120,
+          "height": 20,
+          "x": 10
+        },
+        "blockId": "b1",
+        "rationale": {
+          "ambiguityNotes": [],
+          "confidenceThresholds": {
+            "accepted": 0.8,
+            "rejected": 0.45,
+            "review": 0.6
+          },
+          "lexicalEvidence": [
+            "Applicant Name"
+          ],
+          "semanticEvidence": [
+            "manual"
+          ],
+          "summary": "Smoke rationale",
+          "contributingLabels": [
+            "Applicant Name"
+          ]
+        },
+        "page": 1,
+        "chosen": {
+          "label": "Applicant Name",
+          "description": "Smoke test",
+          "acordCode": "Applicant_Name",
+          "source": "manual",
+          "confidenceScore": 0.91
+        }
+      },
+      "fieldId": "field-1",
+      "extractionBlockId": "b1"
+    }
+  ],
+  "decisionGraph": {
+    "confidenceThresholds": {
+      "accepted": 0.8,
+      "rejected": 0.45,
+      "review": 0.6
+    },
+    "labels": {
+      "b1": {
+        "linkedArtifactIds": [
+          "field-1"
+        ],
+        "artifactId": "b1",
+        "decision": "accepted"
+      }
+    },
+    "fields": {
+      "field-1": {
+        "linkedArtifactIds": [
+          "b1"
+        ],
+        "artifactId": "field-1",
+        "decision": "accepted"
+      }
+    },
+    "mappings": {
+      "b1": {
+        "linkedArtifactIds": [
+          "b1",
+          "field-1"
+        ],
+        "chosenCandidateCode": "Applicant_Name",
+        "artifactId": "b1",
+        "rationale": {
+          "ambiguityNotes": [],
+          "confidenceThresholds": {
+            "accepted": 0.8,
+            "rejected": 0.45,
+            "review": 0.6
+          },
+          "lexicalEvidence": [
+            "Applicant Name"
+          ],
+          "semanticEvidence": [
+            "manual"
+          ],
+          "summary": "Smoke rationale",
+          "contributingLabels": [
+            "Applicant Name"
+          ]
+        },
+        "decision": "accepted",
+        "candidateDecisions": {
+          "Applicant_Name": "accepted"
+        }
+      }
+    }
+  },
+  "overrides": {
+    "field-1": {
+      "extractionBlockId": "b1",
+      "source": "manual",
+      "fieldId": "field-1",
+      "confidenceScore": 0.91,
+      "acordLabel": "Applicant Name",
+      "acordCode": "Applicant_Name",
+      "acordDescription": "Smoke test"
+    }
+  }
+}

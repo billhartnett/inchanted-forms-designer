@@ -1,0 +1,24 @@
+{
+  "tenantId": "default-tenant",
+  "queueId": "default-tenant:submission-60618328:markel:retry-2",
+  "submissionId": "default-tenant:submission-60618328:markel",
+  "packageId": "submission-60618328",
+  "carrierId": "markel",
+  "payload": {
+    "carrierId": "anac",
+    "format": "json",
+    "payload": "{\n  \"submissionDocumentId\": \"fixture-doc\",\n  \"carrierId\": \"anac\",\n  \"mappings\": [\n    {\n      \"extractionBlockId\": \"block-1\",\n      \"code\": \"GeneralInfo.NamedInsured\",\n      \"confidence\": 0.92\n    }\n  ],\n  \"underwritingDecision\": \"accept\",\n  \"weightedScore\": 0,\n  \"acordXmlHash\": \"e6b20dc0\"\n}",
+    "payloadHash": "0eca4c2c",
+    "schemaVersion": "carrier-json-v1",
+    "lineage": [
+      "carrier=anac",
+      "format=json",
+      "schema=carrier-json-v1"
+    ]
+  },
+  "attemptCount": 0,
+  "maxAttempts": 3,
+  "nextAttemptAt": "2026-06-11T03:12:01.779Z",
+  "lastError": "replay-protection-failed:Nonce already used",
+  "createdAt": "2026-06-11T03:11:31.779Z"
+}

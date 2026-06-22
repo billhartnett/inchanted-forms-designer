@@ -5,9 +5,9 @@ import {
   type FieldMetadata,
   type NumericField,
   type DropdownField,
-  type MetadataFieldType,
   useDesignerStore,
 } from "../state/useDesignerStore";
+import type { SemanticFieldType } from "../../../../shared/src/types";
 
 function num(value: number, fallback = 0) {
   return Number.isFinite(value) ? value : fallback;
@@ -84,7 +84,7 @@ function apiUrl(path: string): string {
   return `${API_BASE_URL}${path}`;
 }
 
-function toMetadataFieldType(type: Field["type"]): MetadataFieldType {
+function toMetadataFieldType(type: Field["type"]): SemanticFieldType {
   if (type === "rect") {
     return "text";
   }
@@ -186,7 +186,23 @@ function getFieldPromptText(field: Field) {
   return "";
 }
 
-export function PropertiesPanel() {
+function getConfidenceStatus(confidenceScore: number) {
+  if (confidenceScore >= 0.8) {
+    return { label: "High confidence", color: "#166534", background: "#dcfce7" };
+  }
+
+  if (confidenceScore >= 0.55) {
+    return { label: "Medium confidence", color: "#92400e", background: "#fef3c7" };
+  }
+
+  return { label: "Low confidence", color: "#991b1b", background: "#fee2e2" };
+}
+
+type PropertiesPanelProps = {
+  selectedField?: Field | null;
+};
+
+export function PropertiesPanel({ selectedField }: PropertiesPanelProps) {
   const fields = useDesignerStore((s) => s.fields);
   const selectedIds = useDesignerStore((s) => s.selectedIds);
   const selectedGroupId = useDesignerStore((s) => s.selectedGroupId);
@@ -208,10 +224,13 @@ export function PropertiesPanel() {
     [fields, selectedIds],
   );
 
-  const selectedSingle = useMemo(
-    () => (selected.length === 1 && !selectedGroupId ? selected[0] : null),
-    [selected, selectedGroupId],
-  );
+  const selectedSingle = useMemo(() => {
+    if (selectedField !== undefined) {
+      return selectedField;
+    }
+
+    return selected.length === 1 && !selectedGroupId ? selected[0] : null;
+  }, [selectedField, selected, selectedGroupId]);
 
   useEffect(() => {
     setSuggestion(null);
@@ -368,6 +387,7 @@ export function PropertiesPanel() {
   if (selectedSingle) {
     const single = selectedSingle;
     const metadata = getFieldMetadata(single);
+    const confidenceStatus = getConfidenceStatus(metadata.confidenceScore);
 
     const update = (patch: Partial<Field>) => {
       updateField(single.id, patch);
@@ -381,6 +401,29 @@ export function PropertiesPanel() {
           fieldType: toMetadataFieldType(single.type),
         },
       });
+    };
+
+    const applyManualMapping = () => {
+      updateMetadata({
+        acordCode: metadata.acordCode.trim(),
+        acordLabel: metadata.acordLabel.trim(),
+        acordDescription: metadata.acordDescription.trim(),
+        source: "manual",
+      });
+    };
+
+    const clearManualMapping = () => {
+      updateMetadata({
+        acordCode: "",
+        acordLabel: "",
+        acordDescription: "",
+        confidenceScore: 0,
+        source: "manual",
+      });
+      setAcordQuery("");
+      setMatchingAcordFields([]);
+      setSuggestion(null);
+      setAcordError(null);
     };
 
     const handleSuggest = async () => {
@@ -724,6 +767,25 @@ export function PropertiesPanel() {
         >
           <h4 style={{ margin: 0, color: "#0f172a" }}>ACORD Mapping</h4>
 
+          <div
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 6,
+              alignSelf: "flex-start",
+              padding: "0.2rem 0.5rem",
+              borderRadius: 999,
+              fontSize: 12,
+              fontWeight: 700,
+              color: confidenceStatus.color,
+              background: confidenceStatus.background,
+              border: `1px solid ${confidenceStatus.color}22`,
+            }}
+          >
+            <span>{confidenceStatus.label}</span>
+            <span>{Math.round(metadata.confidenceScore * 100)}%</span>
+          </div>
+
           <label>
             Field Type:
             <input type="text" value={metadata.fieldType} readOnly />
@@ -821,6 +883,10 @@ export function PropertiesPanel() {
             />
           </label>
 
+          <div style={{ fontSize: 12, color: "#475569" }}>
+            Select a search result to assign that ACORD label to this field.
+          </div>
+
           {matchingAcordFields.length > 0 && (
             <div
               style={{
@@ -850,6 +916,9 @@ export function PropertiesPanel() {
                   </div>
                   <div style={{ fontSize: 12, color: "#475569" }}>
                     {entry.description}
+                  </div>
+                  <div style={{ fontSize: 11, fontWeight: 600, color: "#0f766e" }}>
+                    Assign
                   </div>
                 </button>
               ))}
@@ -909,6 +978,11 @@ export function PropertiesPanel() {
               </button>
             </div>
           )}
+
+          <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+            <button onClick={applyManualMapping}>Assign Current Label</button>
+            <button onClick={clearManualMapping}>Clear Mapping</button>
+          </div>
         </div>
 
         <button

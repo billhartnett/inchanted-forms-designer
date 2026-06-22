@@ -298,7 +298,9 @@ function searchAcordDictionary(query, limit = 20) {
         score: getScore(entry, queryText, queryTokens),
     }))
         .filter((result) => result.score > 0)
-        .sort((a, b) => b.score - a.score)
+        .sort((a, b) => b.score - a.score ||
+        a.entry.acordCode.localeCompare(b.entry.acordCode) ||
+        a.entry.label.localeCompare(b.entry.label))
         .slice(0, Math.max(1, Math.min(limit, 100)));
 }
 // ---------------------------------------------------------------------------
@@ -356,7 +358,3 @@ function getEmbeddingCache() {
 }
 // Load dictionary once during cold start.
 initializeAcordDictionary();
-// Kick off embedding precompute in the background — does not block startup.
-ensureEmbeddings().catch((err) => {
-    console.warn("[acordDictionary] Background embedding precompute failed:", err);
-});

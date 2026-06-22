@@ -39,3 +39,7 @@ Thumbs.db
 
 # VS Code
 .vscode/
+
+# Sample PDFs
+test-fixtures/
+

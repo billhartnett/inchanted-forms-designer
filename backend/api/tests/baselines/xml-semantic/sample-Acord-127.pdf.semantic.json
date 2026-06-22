@@ -1,0 +1,48 @@
+{
+  "fixtureId": "sample-Acord-127.pdf",
+  "generatedAt": "2026-06-10T20:25:44.610Z",
+  "structuralHash": "86f004e5",
+  "semanticHash": "196593a7",
+  "nodeCount": 36,
+  "codes": [
+    "AccidentConviction_ReviewedYearCount",
+    "AccountantsLiability_Attachment_DeclarationsPageIndicator",
+    "AdditionalInterest_Interest_EmployeeAsLessorIndicator",
+    "AdditionalInterest_Interest_RegistrantIndicator",
+    "AdditionalInterest_LoanAmount",
+    "AdditionalInterest_MailingAddress_PostalCode",
+    "AdditionalInterest_OwnershipPercent",
+    "BuildingOccupancy_UsedAsBusinessDescription",
+    "CertificateHolder_FullName",
+    "CommercialPropertyCoverage_OtherCoverages",
+    "CommercialVehicleLineOfBusiness_ElectronicDataMonitoringDevice_MileageTrackingDeviceIndicator",
+    "CommercialVehicleLineOfBusiness_ElectronicDataMonitoringDevice_MonitorVehicleMaintenanceIndicator",
+    "CommercialVehicleLineOfBusiness_ElectronicDataMonitoringDevice_NavigationIndicator",
+    "CommercialVehicleLineOfBusiness_ElectronicDataMonitoringDevice_TrackFuelConsumptionIndicator",
+    "Driver_Coverage_BroadenedNoFaultCode",
+    "NamedInsured_FullName",
+    "NamedInsured_GivenName",
+    "Policy_SectionAttached_BusinessAutoIndicator",
+    "Producer_AgencyAutomationDailyWork_CustomerServiceIndicator",
+    "ProductInformation_DiscontinuedDescription",
+    "WorkersCompensation_Individual_SocialSecurityNumber"
+  ],
+  "issues": [
+    {
+      "severity": "warning",
+      "code": "cardinality-max-1",
+      "message": "NamedInsured_GivenName appears 7 times but is expected to be singular.",
+      "path": "/ACORD/Submission/NamedInsured_GivenName"
+    },
+    {
+      "severity": "warning",
+      "code": "cardinality-max-1",
+      "message": "NamedInsured_FullName appears 2 times but is expected to be singular.",
+      "path": "/ACORD/Submission/NamedInsured_FullName"
+    }
+  ],
+  "crossFieldWarnings": [],
+  "isValid": true,
+  "familyId": "acord-125",
+  "familySignatureHash": "b7ca02d1"
+}

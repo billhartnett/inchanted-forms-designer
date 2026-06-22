@@ -4,9 +4,15 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "npm --prefix ../../shared run build && tsc -p tsconfig.json",
     "start": "func start",
-    "test": "echo \"No tests yet\""
+    "test": "npm run build && node --test tests/*.test.js",
+    "test:fixtures": "npm run build && node scripts/run-fixture-regression.js",
+    "test:fixtures:update": "npm run build && node scripts/run-fixture-regression.js --update",
+    "diag:mapping": "npm run build && node scripts/run-mapping-diagnostics.js",
+    "diag:mapping:all": "npm run build && node scripts/run-mapping-diagnostics.js --all",
+    "diag:root-cause": "npm run build && node scripts/run-root-cause-eval.js",
+    "gate:anchors": "npm run build && node scripts/run-anchor-regression-gate.js"
   },
   "dependencies": {
     "@azure/ai-form-recognizer": "^5.1.0",

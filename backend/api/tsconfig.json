@@ -1,10 +1,11 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "module": "CommonJS",
-    "moduleResolution": "Node",
-    "outDir": ".",
-    "rootDir": ".",
+    "module": "Node16",
+    "moduleResolution": "Node16",
+    "outDir": "..",
+    "rootDir": "..",
+    "ignoreDeprecations": "5.0",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": false,
@@ -12,7 +13,8 @@
     "resolveJsonModule": true
   },
   "include": [
-    "**/*.ts",
+    "./**/*.ts",
+    "../**/*.ts",
     "types/**/*.d.ts"
   ],
   "exclude": [

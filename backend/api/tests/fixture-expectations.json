@@ -1,0 +1,100 @@
+{
+  "sample-Acord-125.pdf": [
+    {
+      "id": "named-insured",
+      "textPattern": "named\\s+insured",
+      "expectedAcordCode": "GeneralInfo.NamedInsured",
+      "expectedTopN": 3
+    },
+    {
+      "id": "mailing-address",
+      "textPattern": "mailing\\s+address",
+      "expectedAcordCode": "GeneralInfo.MailingAddress",
+      "expectedTopN": 5
+    },
+    {
+      "id": "policy-number",
+      "textPattern": "policy\\s+(number|no)",
+      "expectedAcordCode": "Policy_PolicyNumberIdentifier",
+      "expectedTopN": 5
+    },
+    {
+      "id": "business-start-date",
+      "textPattern": "business\\s+start|date\\s+business\\s+started",
+      "expectedAcordCode": "BusinessInformation_BusinessStartDate",
+      "expectedTopN": 5
+    }
+  ],
+  "Contractors Supp App.pdf": [
+    {
+      "id": "insured-name",
+      "textPattern": "insured\\s+name",
+      "expectedAcordCode": "GeneralInfo.NamedInsured",
+      "expectedTopN": 5
+    },
+    {
+      "id": "subcontractor-cost",
+      "textPattern": "subcontractor.*(cost|paid|amount)",
+      "expectedAcordCode": "Contractors_SubcontractorsPaidAmount",
+      "expectedTopN": 5
+    },
+    {
+      "id": "operations-description",
+      "textPattern": "describe.*operations|operations.*description",
+      "expectedAcordCode": "BusinessInformation_OperationsDescription",
+      "expectedTopN": 5
+    }
+  ],
+  "Markel-Contractors-Supp.pdf": [
+    {
+      "id": "subcontractors-paid",
+      "textPattern": "subcontractor.*(paid|cost|amount)",
+      "expectedAcordCode": "Contractors_SubcontractorsPaidAmount",
+      "expectedTopN": 5
+    },
+    {
+      "id": "remodel-work",
+      "textPattern": "remodel.*percent|percent.*remodel",
+      "expectedAcordCode": "ContractorsUnderwriting_RemodelWorkPercent",
+      "expectedTopN": 5
+    }
+  ],
+  "ANA_E-S_Contractors_Supplemental-Application_MKT0109_fillable.pdf": [
+    {
+      "id": "contractor-license",
+      "textPattern": "license\\s+(number|no)",
+      "expectedAcordCode": "ContractorsUnderwriting_LicenseNumberIdentifier",
+      "expectedTopN": 5
+    },
+    {
+      "id": "subcontractor-percent",
+      "textPattern": "subcontractor.*percent|percent.*subcontractor",
+      "expectedAcordCode": "SuretyLineOfBusiness_JobCostBreakdown_SubcontractorPercent",
+      "expectedTopN": 5
+    }
+  ],
+  "sample-Acord-126.pdf": [
+    {
+      "id": "general-liability-operations",
+      "textPattern": "general\\s+liability|operations",
+      "expectedAcordCode": "GeneralLiability_OperationsDescription",
+      "expectedTopN": 5
+    }
+  ],
+  "sample-Acord-140.pdf": [
+    {
+      "id": "building-description",
+      "textPattern": "building\\s+description|premises",
+      "expectedAcordCode": "CommercialStructure_Description",
+      "expectedTopN": 5
+    }
+  ],
+  "sample-Acord-90.pdf": [
+    {
+      "id": "vehicle-identification",
+      "textPattern": "vehicle\\s+identification|vin",
+      "expectedAcordCode": "Vehicle_VehicleIdentificationNumberIdentifier",
+      "expectedTopN": 5
+    }
+  ]
+}

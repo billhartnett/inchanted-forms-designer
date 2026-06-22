@@ -1,11 +1,14 @@
 import { app, HttpRequest, HttpResponseInit, InvocationContext } from "@azure/functions";
+import {
+  buildAcordXmlFromPayload,
+  type ExportAcordXmlResponse,
+} from "../../mapping/acordXml";
+import type { MappingPersistencePayload } from "../../types";
+import { validateMappingPersistencePayload } from "../src/services/mappingPayloadValidation";
 
-interface ExportAcordXmlRequest {
-  mappings: Record<string, { acordLabel: string }>;
-  pages: Array<{
-    lines: Array<{ content: string }>;
-  }>;
-}
+type ExportAcordXmlRequest = MappingPersistencePayload & {
+  suppressedOcrBlockIds?: string[];
+};
 
 export async function exportAcordXml(
   request: HttpRequest,
@@ -14,36 +17,25 @@ export async function exportAcordXml(
   try {
     const body = (await request.json()) as ExportAcordXmlRequest;
 
-    if (!body?.mappings || !body?.pages) {
+    const validated = validateMappingPersistencePayload({
+      ...body,
+      suppressedOcrBlockIds: body.suppressedOcrBlockIds || [],
+    });
+    if (!validated.valid) {
+      const error = "error" in validated ? validated.error : "Invalid mapping payload";
       return {
         status: 400,
-        jsonBody: { error: "Missing mappings or pages" }
+        jsonBody: { error }
       };
     }
 
-    const { mappings, pages } = body;
-
-    // Build XML
-    let xml = `<?xml version="1.0" encoding="UTF-8"?>\n<ACORD>\n  <InsuranceForm>\n`;
-
-    for (const key of Object.keys(mappings)) {
-      const [pageIndex, lineIndex] = key.split("-").map(Number);
-      const acordLabel = mappings[key].acordLabel;
-
-      const text = pages[pageIndex].lines[lineIndex].content;
-
-      xml += `    <${acordLabel}>${escapeXml(text)}</${acordLabel}>\n`;
-    }
-
-    xml += `  </InsuranceForm>\n</ACORD>`;
+    const result: ExportAcordXmlResponse = buildAcordXmlFromPayload(validated.payload, {
+      suppressedOcrBlockIds: body.suppressedOcrBlockIds,
+    });
 
     return {
       status: 200,
-      headers: {
-        "Content-Type": "application/xml",
-        "Content-Disposition": "attachment; filename=acord.xml"
-      },
-      body: xml
+      jsonBody: result,
     };
   } catch (err: any) {
     context.error("exportAcordXml error:", err);
@@ -52,10 +44,6 @@ export async function exportAcordXml(
       jsonBody: { error: "Failed to export ACORD XML", details: err.message }
     };
   }
-}
-
-function escapeXml(str: string) {
-  return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
 app.http("exportAcordXml", {

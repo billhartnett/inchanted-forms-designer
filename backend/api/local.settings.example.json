@@ -11,6 +11,12 @@
     "OPENAI_API_KEY": "<your-openai-key>",
     "OPENAI_API_VERSION": "2024-02-15-preview",
     "OPENAI_ENDPOINT": "https://api.openai.com/v1",
+    "EMBEDDING_MODEL": "text-embedding-3-small",
+
+    // Runtime semantic toggle in mappingEngine:
+    // 1 = disable per-block runtime embedding calls
+    // 0 or unset = enable runtime semantic matching
+    "DISABLE_RUNTIME_EMBEDDINGS": "1",
 
     // Required for Functions App Model
     "FUNCTIONS_WORKER_RUNTIME": "node",

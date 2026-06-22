@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "notes": [
+    "Optional supplemental supervision for root-cause diagnostics.",
+    "Use this when you have previously corrected mappings and want exact code checks."
+  ],
+  "forms": [
+    {
+      "fixtureName": "sample-Acord-125.pdf",
+      "entries": [
+        {
+          "anchorId": "insured_name",
+          "expectedAcordCodes": ["GeneralInfo.NamedInsured"],
+          "matchAnyPatterns": ["named\\s+insured", "insured\\s+name"]
+        },
+        {
+          "anchorId": "policy_number",
+          "expectedAcordCodes": ["Policy.PolicyNumberIdentifier"],
+          "matchAnyPatterns": ["policy\\s+(number|no)"]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "version": 1,
+  "notes": [
+    "This is the gold anchor schema for regression gating.",
+    "Start with current fixtures, then expand to 20 representative forms.",
+    "Each anchor uses matchAnyPatterns so labels/codes can vary by carrier wording."
+  ],
+  "forms": [
+    {
+      "fixtureName": "sample-Acord-125.pdf",
+      "anchors": [
+        {
+          "anchorId": "insured_name",
+          "matchAnyPatterns": ["named\\s+insured", "insured\\s+name", "GeneralInfo\\.NamedInsured"]
+        },
+        {
+          "anchorId": "agent_name",
+          "matchAnyPatterns": ["agent\\s+name", "producer\\s+name", "agent"]
+        },
+        {
+          "anchorId": "agent_id",
+          "matchAnyPatterns": ["agent\\s+(id|code)", "producer\\s+(id|code)", "id\\s+number", "national\\s+producer\\s+number"]
+        },
+        {
+          "anchorId": "address",
+          "matchAnyPatterns": ["mailing\\s+address", "street\\s+address", "GeneralInfo\\.MailingAddress"]
+        },
+        {
+          "anchorId": "city",
+          "matchAnyPatterns": ["\\bcity\\b"]
+        },
+        {
+          "anchorId": "state",
+          "matchAnyPatterns": ["\\bstate\\b", "province"]
+        },
+        {
+          "anchorId": "zip_code",
+          "matchAnyPatterns": ["zip", "postal"]
+        },
+        {
+          "anchorId": "policy_number",
+          "matchAnyPatterns": ["policy\\s+(number|no)", "Policy_PolicyNumberIdentifier"]
+        },
+        {
+          "anchorId": "effective_date",
+          "matchAnyPatterns": ["effective\\s+date", "inception\\s+date", "eff\\.?[-\\s]*date", "proposed\\s+eff\\s+date"]
+        },
+        {
+          "anchorId": "expiration_date",
+          "matchAnyPatterns": ["expiration\\s+date", "expiry\\s+date", "exp\\.?\\s+date"]
+        }
+      ]
+    },
+    {
+      "fixtureName": "sample-Acord-126.pdf",
+      "anchors": [
+        {
+          "anchorId": "operations_description",
+          "matchAnyPatterns": ["operations", "GeneralLiability_OperationsDescription"]
+        }
+      ]
+    },
+    {
+      "fixtureName": "sample-Acord-140.pdf",
+      "anchors": [
+        {
+          "anchorId": "building_description",
+          "matchAnyPatterns": ["building\\s+description", "premises", "CommercialStructure_Description"]
+        }
+      ]
+    },
+    {
+      "fixtureName": "Contractors Supp App.pdf",
+      "anchors": [
+        {
+          "anchorId": "insured_name",
+          "matchAnyPatterns": ["insured\\s+name", "GeneralInfo\\.NamedInsured"]
+        },
+        {
+          "anchorId": "subcontractor_cost",
+          "matchAnyPatterns": ["subcontractor", "Contractors_SubcontractorsPaidAmount"]
+        }
+      ]
+    }
+  ]
+}

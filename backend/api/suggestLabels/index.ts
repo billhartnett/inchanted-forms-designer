@@ -1,53 +1,40 @@
 import { app, HttpRequest, HttpResponseInit, InvocationContext } from "@azure/functions";
-import { BlobServiceClient } from "@azure/storage-blob";
+import { suggestAcordLabel } from "../../mapping";
 
-interface SaveMappingRequest {
-  mappings: Record<string, any>;
-  pages: any[];
-  fileName: string;
-}
+type SuggestLabelsRequest = {
+  text?: string;
+  context?: string;
+};
 
-const containerName = process.env.MAPPINGS_CONTAINER!;
-const connectionString = process.env.AZURE_STORAGE_CONNECTION_STRING!;
-const blobService = BlobServiceClient.fromConnectionString(connectionString);
-const container = blobService.getContainerClient(containerName);
-
-export async function saveMapping(
+export async function suggestLabels(
   request: HttpRequest,
-  context: InvocationContext
+  context: InvocationContext,
 ): Promise<HttpResponseInit> {
   try {
-    const body = (await request.json()) as SaveMappingRequest;
-
-    if (!body?.mappings || !body?.pages || !body?.fileName) {
+    const body = (await request.json()) as SuggestLabelsRequest;
+    if (!body?.text || !body.text.trim()) {
       return {
         status: 400,
-        jsonBody: { error: "Missing mappings, pages, or fileName" }
+        jsonBody: { error: "Missing text in request body" },
       };
     }
 
-    const { mappings, pages, fileName } = body;
-
-    const blob = container.getBlockBlobClient(fileName + ".json");
-    const payload = JSON.stringify({ mappings, pages }, null, 2);
-
-    await blob.upload(payload, Buffer.byteLength(payload));
-
     return {
       status: 200,
-      jsonBody: { success: true }
+      jsonBody: suggestAcordLabel(body.text, body.context),
     };
   } catch (err: any) {
-    context.error("saveMapping error:", err);
+    context.error("suggestLabels error:", err);
     return {
       status: 500,
-      jsonBody: { error: "Failed to save mapping", details: err.message }
+      jsonBody: { error: "Failed to suggest labels", details: err.message },
     };
   }
 }
 
-app.http("saveMapping", {
+app.http("suggestLabels", {
   methods: ["POST"],
   authLevel: "anonymous",
-  handler: saveMapping
+  route: "suggestLabels",
+  handler: suggestLabels,
 });

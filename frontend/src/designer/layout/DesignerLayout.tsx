@@ -29,7 +29,9 @@ export function DesignerLayout({
             borderBottom: "1px solid #d9e2ec",
             background: "#ffffff",
             padding: "0.55rem 0.75rem",
-            overflowX: "auto",
+            overflow: "visible",
+            position: "relative",
+            zIndex: 5,
           }}
         >
           {topBar}

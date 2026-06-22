@@ -1,0 +1,317 @@
+import { useEffect, useMemo, useRef } from "react";
+import { Group as KonvaGroup, Line } from "react-konva";
+import { Rect as KonvaRect, Text as KonvaText } from "react-konva";
+import { CanvasStage } from "../../canvas/CanvasStage";
+import ZoomControls from "../../designer/controls/ZoomControls";
+import PdfImportModal from "../../designer/ai/PdfImportModal";
+import { useSelectedFields } from "../../state/fieldStore";
+import { useDesignerStore, type Field } from "../../state/designerStore";
+import { FieldControls } from "./FieldControls";
+import FieldRenderer from "./FieldRenderer";
+import PdfBackground from "./PdfBackground";
+
+const GRID_SIZE = 20;
+
+type StageLike = {
+  scaleX: () => number;
+  scale: (value: { x: number; y: number }) => void;
+  position: (value: { x: number; y: number }) => void;
+  x: () => number;
+  y: () => number;
+  batchDraw: () => void;
+};
+
+type DesignerToast = {
+  message: string;
+  tone: "success" | "error" | "info";
+};
+
+type DesignerCanvasProps = {
+  canvasSurfaceWidth: number;
+  canvasSurfaceHeight: number;
+  pdfUrl: string | null;
+  onStageReady: (stage: StageLike | null) => void;
+  onSelectedPdfSizeChange: (size: { width: number; height: number } | null) => void;
+  zoomIn: () => void;
+  zoomOut: () => void;
+  resetZoom: () => void;
+  toast: DesignerToast | null;
+  showPdfModal: boolean;
+  pdfModalMode: "import" | "map-only";
+  onClosePdfModal: () => void;
+  onImportResult: (result: {
+    warning?: string;
+    importedPages: number;
+    mappedFields: number;
+  }) => void;
+  onViewportChange: (viewport: { width: number; height: number }) => void;
+};
+
+export function DesignerCanvas({
+  canvasSurfaceWidth,
+  canvasSurfaceHeight,
+  pdfUrl,
+  onStageReady,
+  onSelectedPdfSizeChange,
+  zoomIn,
+  zoomOut,
+  resetZoom,
+  toast,
+  showPdfModal,
+  pdfModalMode,
+  onClosePdfModal,
+  onImportResult,
+  onViewportChange,
+}: DesignerCanvasProps) {
+  const canvasHostRef = useRef<HTMLDivElement | null>(null);
+
+  const fields = useDesignerStore((s) => s.fields);
+  const pdfPages = useDesignerStore((s) => s.pdfPages);
+  const currentPdfPage = useDesignerStore((s) => s.currentPdfPage);
+  const showGrid = useDesignerStore((s) => s.showGrid);
+  const draftCanvasFields = useDesignerStore((s) => s.draftCanvasFields);
+  const draftSelectedIds = useDesignerStore((s) => s.draftSelectedIds);
+  const toggleDraftSelection = useDesignerStore((s) => s.toggleDraftSelection);
+  const selectField = useDesignerStore((s) => s.selectField);
+  const selectedFields = useSelectedFields();
+
+  const visibleFields = fields.filter((field) => {
+    if (pdfPages.length === 0) return true;
+    if (field.pageIndex === null || field.pageIndex === undefined) return true;
+    return field.pageIndex === currentPdfPage;
+  });
+
+  const visibleDraftFields = draftCanvasFields.filter((field) => {
+    if (pdfPages.length === 0) return true;
+    if (field.pageIndex === null || field.pageIndex === undefined) return true;
+    return field.pageIndex === currentPdfPage;
+  });
+
+  const gridLines = useMemo(() => {
+    const lines: Array<{ key: string; points: number[] }> = [];
+
+    for (let x = 0; x <= canvasSurfaceWidth; x += GRID_SIZE) {
+      lines.push({
+        key: `grid-v-${x}`,
+        points: [x, 0, x, canvasSurfaceHeight],
+      });
+    }
+
+    for (let y = 0; y <= canvasSurfaceHeight; y += GRID_SIZE) {
+      lines.push({
+        key: `grid-h-${y}`,
+        points: [0, y, canvasSurfaceWidth, y],
+      });
+    }
+
+    return lines;
+  }, [canvasSurfaceHeight, canvasSurfaceWidth]);
+
+  useEffect(() => {
+    const host = canvasHostRef.current;
+    if (!host) return;
+
+    const observer = new ResizeObserver((entries) => {
+      const entry = entries[0];
+      const width = Math.max(1, Math.floor(entry.contentRect.width));
+      const height = Math.max(1, Math.floor(entry.contentRect.height));
+      onViewportChange({ width, height });
+    });
+
+    observer.observe(host);
+    return () => observer.disconnect();
+  }, [onViewportChange]);
+
+  useEffect(() => {
+    if (!pdfUrl) {
+      onSelectedPdfSizeChange(null);
+    }
+  }, [pdfUrl, onSelectedPdfSizeChange]);
+
+  return (
+    <div
+      ref={canvasHostRef}
+      style={{
+        position: "absolute",
+        inset: 0,
+        overflow: "auto",
+      }}
+    >
+      <div
+        style={{
+          position: "relative",
+          width: canvasSurfaceWidth,
+          height: canvasSurfaceHeight,
+        }}
+      >
+        <CanvasStage
+          width={canvasSurfaceWidth}
+          height={canvasSurfaceHeight}
+          onStageReady={onStageReady}
+          backgroundChildren={
+            <>
+              {pdfUrl ? (
+                <PdfBackground
+                  src={pdfUrl}
+                  onLoaded={(size) => onSelectedPdfSizeChange(size)}
+                />
+              ) : null}
+              {showGrid
+                ? gridLines.map((line) => (
+                    <Line
+                      key={line.key}
+                      points={line.points}
+                      stroke="#e2e8f0"
+                      strokeWidth={1}
+                      opacity={0.7}
+                      listening={false}
+                    />
+                  ))
+                : null}
+            </>
+          }
+          overlayChildren={
+            visibleFields.length > 0 || selectedFields.length > 0 || visibleDraftFields.length > 0 ? (
+              <>
+                {visibleFields.map((field: Field) => (
+                  <KonvaGroup
+                    key={`visual-${field.id}`}
+                    x={field.x}
+                    y={field.y}
+                    rotation={field.rotation ?? 0}
+                    opacity={field.opacity ?? 1}
+                    listening
+                    onClick={(event) => {
+                      event.cancelBubble = true;
+                      selectField(field.id, Boolean(event.evt.shiftKey));
+                    }}
+                    onTap={(event) => {
+                      event.cancelBubble = true;
+                      selectField(field.id, Boolean(event.evt.shiftKey));
+                    }}
+                  >
+                    <FieldRenderer field={field} />
+                  </KonvaGroup>
+                ))}
+                {visibleDraftFields.map((draft) => {
+                  const isSelected = draftSelectedIds.includes(draft.id);
+                  return (
+                    <KonvaGroup
+                      key={`draft-${draft.id}`}
+                      x={draft.x}
+                      y={draft.y}
+                      listening
+                      onClick={(event) => {
+                        event.cancelBubble = true;
+                        toggleDraftSelection(draft.id);
+                      }}
+                      onTap={(event) => {
+                        event.cancelBubble = true;
+                        toggleDraftSelection(draft.id);
+                      }}
+                    >
+                      <KonvaRect
+                        x={0}
+                        y={0}
+                        width={Math.max(24, draft.width)}
+                        height={Math.max(18, draft.height)}
+                        fill={isSelected ? "rgba(251, 191, 36, 0.24)" : "rgba(251, 191, 36, 0.12)"}
+                        stroke={isSelected ? "#d97706" : "#f59e0b"}
+                        strokeWidth={2}
+                        dash={[6, 4]}
+                        cornerRadius={3}
+                      />
+                      <KonvaText
+                        x={4}
+                        y={3}
+                        width={Math.max(0, draft.width - 8)}
+                        height={Math.max(0, draft.height - 6)}
+                        text={
+                          draft.metadata?.acordLabel?.trim() ||
+                          draft.metadata?.acordCode?.trim() ||
+                          draft.type
+                        }
+                        fontSize={11}
+                        fontFamily="Geist Variable"
+                        fill={isSelected ? "#7c2d12" : "#b45309"}
+                        verticalAlign="middle"
+                        ellipsis
+                      />
+                    </KonvaGroup>
+                  );
+                })}
+                {selectedFields.map((f) => (
+                  <FieldControls key={f.id} field={f} />
+                ))}
+              </>
+            ) : undefined
+          }
+        />
+      </div>
+
+      <ZoomControls zoomIn={zoomIn} zoomOut={zoomOut} reset={resetZoom} />
+
+      {toast && (
+        <div
+          style={{
+            position: "absolute",
+            top: 16,
+            right: 16,
+            zIndex: 20,
+            padding: "0.55rem 0.75rem",
+            borderRadius: 10,
+            border: "1px solid",
+            borderColor:
+              toast.tone === "success"
+                ? "#16a34a"
+                : toast.tone === "error"
+                  ? "#dc2626"
+                  : "#0ea5e9",
+            background:
+              toast.tone === "success"
+                ? "rgba(22, 163, 74, 0.12)"
+                : toast.tone === "error"
+                  ? "rgba(220, 38, 38, 0.12)"
+                  : "rgba(14, 165, 233, 0.12)",
+            color: "#0f172a",
+            fontSize: 12,
+            fontWeight: 600,
+          }}
+        >
+          {toast.message}
+        </div>
+      )}
+
+      {showPdfModal && (
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            background: "rgba(15, 23, 42, 0.45)",
+            display: "grid",
+            placeItems: "center",
+            zIndex: 15,
+          }}
+        >
+          <div
+            style={{
+              width: "min(560px, calc(100% - 2rem))",
+              background: "#ffffff",
+              borderRadius: 12,
+              padding: "1rem",
+              boxShadow: "0 16px 50px rgba(0, 0, 0, 0.2)",
+            }}
+          >
+            <PdfImportModal
+              mode={pdfModalMode}
+              onClose={onClosePdfModal}
+              onImportResult={onImportResult}
+            />
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default DesignerCanvas;

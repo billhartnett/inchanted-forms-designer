@@ -1,9 +1,11 @@
 import { app, HttpRequest, HttpResponseInit, InvocationContext } from "@azure/functions";
-import { BlobServiceClient } from "@azure/storage-blob";
+import { saveJsonBlob } from "../../services/blobStorage";
+import type { MappingPersistencePayload } from "shared/types";
+import { validateMappingPersistencePayload } from "../src/services/mappingPayloadValidation";
+import { enforceTenantPolicy } from "../src/services/tenantContext";
+import { appendImmutableAuditEvent, appendAuditIndex } from "../src/services/auditLog";
 
-interface SaveMappingRequest {
-  mappings: Record<string, any>;
-  pages: any[];
+interface SaveMappingRequest extends MappingPersistencePayload {
   fileName?: string;
 }
 
@@ -12,41 +14,56 @@ export async function saveMapping(
   context: InvocationContext
 ): Promise<HttpResponseInit> {
   try {
-    const body = (await request.json()) as SaveMappingRequest;
+    const policy = enforceTenantPolicy(request, {
+      scope: "mapping",
+      action: "save",
+      allowedRoles: ["admin", "reviewer", "underwriter"],
+    });
+    if (policy.allowed === false) {
+      return {
+        status: policy.status,
+        jsonBody: { error: policy.error }
+      };
+    }
 
-    if (!body?.mappings) {
+    const body = (await request.json()) as SaveMappingRequest;
+    const validated = validateMappingPersistencePayload(body);
+    if (!validated.valid) {
+      const error = "error" in validated ? validated.error : "Invalid mapping payload";
       return {
         status: 400,
-        jsonBody: { error: "Missing mapping payload" }
+        jsonBody: { error }
       };
     }
 
-    const connectionString = process.env.AZURE_STORAGE_CONNECTION_STRING;
-    if (!connectionString) {
-      return {
-        status: 500,
-        jsonBody: { error: "Missing AZURE_STORAGE_CONNECTION_STRING" }
-      };
-    }
+    const localName = `${body.fileName || body.documentId || "form"}.mapping.json`;
+    const blobName = `${policy.context.tenantId}/${localName}`;
+    const payload: MappingPersistencePayload = {
+      ...validated.payload,
+      documentId: body.documentId,
+      tenantId: policy.context.tenantId,
+      tenantEnvironment: policy.context.environment,
+    };
+    const saved = await saveJsonBlob("mappings", blobName, payload);
 
-    const blobService = BlobServiceClient.fromConnectionString(connectionString);
-    const container = blobService.getContainerClient("mappings");
-    await container.createIfNotExists();
-
-    const blobName = `${body.fileName || "form"}.mapping.json`;
-    const blob = container.getBlockBlobClient(blobName);
-
-    const json = JSON.stringify(body, null, 2);
-    await blob.upload(json, Buffer.byteLength(json), {
-      blobHTTPHeaders: { blobContentType: "application/json" }
+    const audit = await appendImmutableAuditEvent({
+      tenantId: policy.context.tenantId,
+      actorId: policy.context.actorId,
+      actorRole: policy.context.actorRole,
+      domain: "mapping",
+      action: "save",
+      objectId: blobName,
+      payloadHashSeed: JSON.stringify(payload),
+      lineage: [],
     });
+    await appendAuditIndex(policy.context.tenantId, audit.eventId);
 
     return {
       status: 200,
       jsonBody: {
         success: true,
-        blobName,
-        url: blob.url
+        blobName: saved.blobName,
+        url: saved.url
       }
     };
   } catch (err: any) {

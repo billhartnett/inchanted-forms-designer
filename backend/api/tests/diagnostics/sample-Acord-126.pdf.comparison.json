@@ -1,0 +1,35 @@
+{
+  "fixtureName": "sample-Acord-126.pdf",
+  "generatedAt": "2026-06-11T22:32:06.171Z",
+  "ocr": {
+    "extractedBlocks": 323,
+    "keptBlocks": 270,
+    "filteredBlocks": 53,
+    "usedRawBlocksFallback": false,
+    "rejectionReasons": {
+      "text_too_short": 50,
+      "no_alpha_chars": 3
+    }
+  },
+  "mappingRawCandidates": 270,
+  "strictFinalAccepted": 84,
+  "looseFinalAccepted": 84,
+  "deltaFinalAccepted": 0,
+  "compatibilityDropEstimate": 17,
+  "strictUsedFallback": false,
+  "looseUsedFallback": false,
+  "strictRejectionReasons": {
+    "no_candidate": 158,
+    "below_confidence_floor": 17,
+    "hard_mismatch": 1,
+    "section_title": 3,
+    "header_line": 7
+  },
+  "looseRejectionReasons": {
+    "no_candidate": 158,
+    "below_confidence_floor": 17,
+    "hard_mismatch": 1,
+    "section_title": 3,
+    "header_line": 7
+  }
+}

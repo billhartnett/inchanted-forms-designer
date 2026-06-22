@@ -1,0 +1,14 @@
+{
+  "eventId": "default-tenant:mapping:2026-06-11T03:11:40.975Z:b23ec7f0",
+  "tenantId": "default-tenant",
+  "actorId": "system",
+  "actorRole": "reviewer",
+  "domain": "mapping",
+  "action": "save",
+  "objectId": "default-tenant/roundtrip-fixture.mapping.json",
+  "hash": "b23ec7f0",
+  "occurredAt": "2026-06-11T03:11:40.975Z",
+  "lineage": [
+    "audit.eventId=default-tenant:mapping:2026-06-11T03:11:40.975Z:b23ec7f0"
+  ]
+}

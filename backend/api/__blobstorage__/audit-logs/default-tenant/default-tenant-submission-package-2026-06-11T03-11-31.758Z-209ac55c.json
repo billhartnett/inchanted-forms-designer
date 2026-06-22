@@ -1,0 +1,19 @@
+{
+  "eventId": "default-tenant:submission-package:2026-06-11T03:11:31.758Z:209ac55c",
+  "tenantId": "default-tenant",
+  "actorId": "system",
+  "actorRole": "reviewer",
+  "domain": "submission-package",
+  "action": "submit-to-carrier",
+  "objectId": "default-tenant:submission-60618328:markel",
+  "hash": "209ac55c",
+  "occurredAt": "2026-06-11T03:11:31.758Z",
+  "lineage": [
+    "orchestration.packageId=submission-60618328",
+    "orchestration.tenant=default-tenant",
+    "orchestration.carrier=markel",
+    "orchestration.response=accepted",
+    "orchestration.xmlValid=true",
+    "audit.eventId=default-tenant:submission-package:2026-06-11T03:11:31.758Z:209ac55c"
+  ]
+}

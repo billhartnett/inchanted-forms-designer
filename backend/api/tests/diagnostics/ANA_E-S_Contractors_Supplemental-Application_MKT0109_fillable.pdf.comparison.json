@@ -1,0 +1,28 @@
+{
+  "fixtureName": "ANA_E-S_Contractors_Supplemental-Application_MKT0109_fillable.pdf",
+  "generatedAt": "2026-06-11T22:29:26.888Z",
+  "ocr": {
+    "extractedBlocks": 287,
+    "keptBlocks": 147,
+    "filteredBlocks": 140,
+    "usedRawBlocksFallback": false,
+    "rejectionReasons": {
+      "text_too_short": 140
+    }
+  },
+  "mappingRawCandidates": 147,
+  "strictFinalAccepted": 38,
+  "looseFinalAccepted": 38,
+  "deltaFinalAccepted": 0,
+  "compatibilityDropEstimate": 15,
+  "strictUsedFallback": false,
+  "looseUsedFallback": false,
+  "strictRejectionReasons": {
+    "no_candidate": 94,
+    "below_confidence_floor": 15
+  },
+  "looseRejectionReasons": {
+    "no_candidate": 94,
+    "below_confidence_floor": 15
+  }
+}

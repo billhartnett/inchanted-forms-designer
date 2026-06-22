@@ -1,0 +1,19 @@
+{
+  "fixtureId": "sample-Acord-127.pdf",
+  "ontology": {
+    "ontologyId": "acord-canonical-ontology",
+    "ontologyVersion": "2026.06.10",
+    "ontologyHash": "c653ca94",
+    "selectedCodeCount": 36,
+    "valid": true,
+    "issues": []
+  },
+  "transferability": {
+    "transferabilityScore": 1,
+    "confidenceDrift": 0,
+    "rationaleSignalDrift": 0,
+    "candidateStabilityDrift": 0.798139
+  },
+  "familyId": "acord-125",
+  "familySignatureHash": "b7ca02d1"
+}

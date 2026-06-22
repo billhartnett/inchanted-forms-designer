@@ -1,0 +1,29 @@
+{
+  "fixtureName": "Contractors Supp App.pdf",
+  "generatedAt": "2026-06-11T22:29:55.001Z",
+  "ocr": {
+    "extractedBlocks": 196,
+    "keptBlocks": 189,
+    "filteredBlocks": 7,
+    "usedRawBlocksFallback": false,
+    "rejectionReasons": {
+      "no_alpha_chars": 6,
+      "text_too_short": 1
+    }
+  },
+  "mappingRawCandidates": 189,
+  "strictFinalAccepted": 30,
+  "looseFinalAccepted": 30,
+  "deltaFinalAccepted": 0,
+  "compatibilityDropEstimate": 13,
+  "strictUsedFallback": false,
+  "looseUsedFallback": false,
+  "strictRejectionReasons": {
+    "no_candidate": 146,
+    "below_confidence_floor": 13
+  },
+  "looseRejectionReasons": {
+    "no_candidate": 146,
+    "below_confidence_floor": 13
+  }
+}

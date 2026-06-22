@@ -18,9 +18,31 @@ import OpenAI, { AzureOpenAI } from "openai";
 const DEFAULT_OAI_BASE = "https://api.openai.com/v1";
 const DEFAULT_MODEL = "text-embedding-3-small";
 const MAX_INPUT_CHARS = 32_000; // ~8 191 tokens, conservative cap
+const EMBEDDING_PRECISION = 6;
 
 // Lazy singleton — initialised once on first use.
 let _client: OpenAI | AzureOpenAI | null | undefined = undefined;
+const _textEmbeddingCache = new Map<string, number[]>();
+
+function quantize(value: number, digits = EMBEDDING_PRECISION): number {
+  return Number(value.toFixed(digits));
+}
+
+function normalizeInputText(value: string): string {
+  return value.trim().slice(0, MAX_INPUT_CHARS);
+}
+
+function quantizeVector(vector: number[] | undefined): number[] {
+  if (!Array.isArray(vector) || vector.length === 0) {
+    return [];
+  }
+
+  return vector.map((value) => quantize(value));
+}
+
+function getTextCacheKey(model: string, text: string): string {
+  return `${model}::${text}`;
+}
 
 function buildClient(): OpenAI | AzureOpenAI | null {
   const apiKey = (process.env.OPENAI_API_KEY ?? "").trim();
@@ -71,13 +93,22 @@ export async function embedText(text: string): Promise<number[]> {
   if (!client) return [];
 
   const model = (process.env.EMBEDDING_MODEL ?? "").trim() || DEFAULT_MODEL;
+  const normalized = normalizeInputText(text);
+  const cacheKey = getTextCacheKey(model, normalized);
+  const cached = _textEmbeddingCache.get(cacheKey);
+  if (cached) {
+    return [...cached];
+  }
 
   try {
     const response = await client.embeddings.create({
       model,
-      input: text.trim().slice(0, MAX_INPUT_CHARS),
+      input: normalized,
     });
-    return response.data[0]?.embedding ?? [];
+
+    const embedding = quantizeVector(response.data[0]?.embedding);
+    _textEmbeddingCache.set(cacheKey, embedding);
+    return [...embedding];
   } catch (err) {
     console.warn("[embeddings] embedText failed:", err);
     return [];
@@ -97,17 +128,43 @@ export async function embedBatch(texts: string[]): Promise<number[][]> {
 
   const model = (process.env.EMBEDDING_MODEL ?? "").trim() || DEFAULT_MODEL;
 
-  const safe = texts.map((t) => t.trim().slice(0, MAX_INPUT_CHARS));
+  const safe = texts.map((t) => normalizeInputText(t));
+  const output: number[][] = texts.map(() => []);
+  const missingIndexes: number[] = [];
+
+  for (let index = 0; index < safe.length; index += 1) {
+    const key = getTextCacheKey(model, safe[index]);
+    const cached = _textEmbeddingCache.get(key);
+    if (cached) {
+      output[index] = [...cached];
+    } else {
+      missingIndexes.push(index);
+    }
+  }
+
+  if (missingIndexes.length === 0) {
+    return output;
+  }
+
+  const missingInputs = missingIndexes.map((index) => safe[index]);
 
   try {
     const response = await client.embeddings.create({
       model,
-      input: safe,
+      input: missingInputs,
     });
 
     // API guarantees ordering by index; sort defensively.
     const sorted = [...response.data].sort((a, b) => a.index - b.index);
-    return sorted.map((d) => d.embedding);
+    for (let index = 0; index < missingIndexes.length; index += 1) {
+      const source = sorted[index]?.embedding;
+      const quantized = quantizeVector(source);
+      const targetIndex = missingIndexes[index];
+      output[targetIndex] = quantized;
+      _textEmbeddingCache.set(getTextCacheKey(model, safe[targetIndex]), quantized);
+    }
+
+    return output;
   } catch (err) {
     console.warn("[embeddings] embedBatch failed:", err);
     return texts.map(() => []);

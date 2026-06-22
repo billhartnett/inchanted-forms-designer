@@ -3,6 +3,31 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.mapBlocksToAcord = mapBlocksToAcord;
 const acordDictionary_1 = require("./acordDictionary");
 const embeddings_1 = require("./embeddings");
+const acord_1 = require("shared/acord");
+const quality_1 = require("shared/quality");
+const SCORE_PRECISION = 6;
+function quantize(value, digits = SCORE_PRECISION) {
+    if (!Number.isFinite(value)) {
+        return 0;
+    }
+    return Number(value.toFixed(digits));
+}
+function compareScoreAccumulator(left, right) {
+    return (right.score - left.score ||
+        right.semanticSimilarity - left.semanticSimilarity ||
+        right.dictionaryScore - left.dictionaryScore ||
+        right.heuristicScore - left.heuristicScore ||
+        left.acordCode.localeCompare(right.acordCode) ||
+        left.label.localeCompare(right.label));
+}
+function compareSuggestion(left, right) {
+    return (right.confidenceScore - left.confidenceScore ||
+        right.semanticSimilarity - left.semanticSimilarity ||
+        right.lexicalScore - left.lexicalScore ||
+        right.dictionaryScore - left.dictionaryScore ||
+        right.heuristicScore - left.heuristicScore ||
+        left.acordCode.localeCompare(right.acordCode));
+}
 function normalizeText(value) {
     return value
         .toLowerCase()
@@ -21,6 +46,38 @@ function clamp01(value) {
         return 0;
     return Math.min(1, Math.max(0, value));
 }
+function resolveCalibrationProfile(profile) {
+    return profile || (0, quality_1.createDefaultCalibrationProfile)();
+}
+function resolveScopedCalibrationProfile(profile, familyId) {
+    const base = resolveCalibrationProfile(profile);
+    if (!familyId)
+        return base;
+    const resolved = (0, quality_1.resolveFamilyCalibration)(base, familyId);
+    return {
+        ...base,
+        globalThresholds: resolved.thresholds,
+        signalWeights: resolved.signalWeights,
+        codeThresholdOverrides: resolved.codeThresholdOverrides,
+        lineage: resolved.lineage,
+    };
+}
+function resolveThresholds(profile, acordCode) {
+    return profile.codeThresholdOverrides[acordCode] || profile.globalThresholds;
+}
+function normalizeSignalWeights(profile) {
+    const configured = profile.signalWeights || quality_1.DEFAULT_CALIBRATION_SIGNAL_WEIGHTS;
+    const total = Math.max(0.000001, configured.embedding +
+        configured.lexical +
+        configured.dictionary +
+        configured.heuristic);
+    return {
+        embedding: configured.embedding / total,
+        lexical: configured.lexical / total,
+        dictionary: configured.dictionary / total,
+        heuristic: configured.heuristic / total,
+    };
+}
 function safeDictionarySearch(query, limit) {
     try {
         return (0, acordDictionary_1.searchAcordDictionary)(query, limit);
@@ -34,7 +91,13 @@ function hasAnyToken(normalizedText, tokens) {
 }
 function isNamePrompt(text) {
     const normalized = normalizeText(text);
-    return hasAnyToken(normalized, ["name", "applicant", "insured"]);
+    return hasAnyToken(normalized, [
+        "name",
+        "applicant",
+        "insured",
+        "agent",
+        "producer",
+    ]);
 }
 function isAddressPrompt(text) {
     const normalized = normalizeText(text);
@@ -208,7 +271,7 @@ function hasFieldCue(text) {
         return false;
     if (text.trim().endsWith(":"))
         return true;
-    return /(name|address|city|state|zip|phone|email|date|policy|insured|applicant|dob|birth|effective|expiration)/.test(normalized);
+    return /(name|address|city|state|zip|phone|email|date|policy|insured|applicant|dob|birth|effective|expiration|expiry|agent|producer|id|code|eff\b|exp\b)/.test(normalized);
 }
 function isLikelyInstructionOrQuestion(text) {
     const normalized = normalizeText(text);
@@ -285,15 +348,22 @@ function isLikelyNonMappableText(block) {
     const fieldCue = hasFieldCue(block.text);
     if (isLikelyFormTitle(block.text))
         return true;
-    if (isLikelyTitleText(block.text) && !fieldCue)
+    if (!fieldCue &&
+        tokenCount >= 5 &&
+        isLikelyHeaderOrLogoNoise(block.text)) {
         return true;
-    if (isLikelyInstructionOrQuestion(block.text) && !fieldCue)
+    }
+    if (!fieldCue &&
+        tokenCount >= 6 &&
+        isLikelyTabularSchemaText(block.text)) {
         return true;
-    if (isLikelyHeaderOrLogoNoise(block.text) && !fieldCue)
+    }
+    if (!fieldCue &&
+        tokenCount >= 8 &&
+        (isLikelyTitleText(block.text) || isLikelyInstructionOrQuestion(block.text))) {
         return true;
-    if (isLikelyTabularSchemaText(block.text) && !fieldCue)
-        return true;
-    if (tokenCount >= 10 && !fieldCue) {
+    }
+    if (tokenCount >= 16 && !fieldCue) {
         return true;
     }
     return false;
@@ -349,14 +419,14 @@ function applyIntentSignals(block, accum) {
     for (const intent of intents) {
         const hits = safeDictionarySearch(intent.query, 3);
         for (const hit of hits) {
-            const weighted = hit.score * 0.9 * intent.weight * multiplier;
+            const weighted = quantize(hit.score * 0.9 * intent.weight * multiplier);
             const entry = ensureAccumulator(accum, hit.entry.acordCode, {
                 label: hit.entry.label,
                 description: hit.entry.description,
                 source: "heuristic",
             });
-            entry.score += weighted;
-            entry.heuristicScore += weighted;
+            entry.score = quantize(entry.score + weighted);
+            entry.heuristicScore = quantize(entry.heuristicScore + weighted);
             if (entry.source !== "dictionary") {
                 entry.source = "heuristic";
             }
@@ -367,14 +437,14 @@ function applyDictionarySignals(block, accum) {
     const multiplier = getBlockScoreMultiplier(block);
     const primary = safeDictionarySearch(block.text, 6);
     for (const hit of primary) {
-        const weighted = hit.score * multiplier;
+        const weighted = quantize(hit.score * multiplier);
         const entry = ensureAccumulator(accum, hit.entry.acordCode, {
             label: hit.entry.label,
             description: hit.entry.description,
             source: "dictionary",
         });
-        entry.score += weighted;
-        entry.dictionaryScore += weighted;
+        entry.score = quantize(entry.score + weighted);
+        entry.dictionaryScore = quantize(entry.dictionaryScore + weighted);
         if (entry.source !== "ai") {
             entry.source = "dictionary";
         }
@@ -383,14 +453,14 @@ function applyDictionarySignals(block, accum) {
     for (const token of keywordTokens) {
         const hits = safeDictionarySearch(token, 3);
         for (const hit of hits) {
-            const weighted = hit.score * 0.35 * multiplier;
+            const weighted = quantize(hit.score * 0.35 * multiplier);
             const entry = ensureAccumulator(accum, hit.entry.acordCode, {
                 label: hit.entry.label,
                 description: hit.entry.description,
                 source: "dictionary",
             });
-            entry.score += weighted;
-            entry.dictionaryScore += weighted;
+            entry.score = quantize(entry.score + weighted);
+            entry.dictionaryScore = quantize(entry.dictionaryScore + weighted);
         }
     }
 }
@@ -424,32 +494,98 @@ function applyHeuristicSignals(block, accum) {
         heuristicQueries.push("premium amount");
     if (normalized.includes("policy"))
         heuristicQueries.push("policy number");
+    if (/\bpolicy\s*(no|number|#)\b/.test(normalized)) {
+        heuristicQueries.push("policy number identifier");
+    }
     if (normalized.includes("phone"))
         heuristicQueries.push("phone number");
     if (normalized.includes("email"))
         heuristicQueries.push("email address");
+    if (normalized.includes("agent") || normalized.includes("producer")) {
+        heuristicQueries.push("agent name");
+        heuristicQueries.push("producer name");
+        heuristicQueries.push("agent code");
+        heuristicQueries.push("producer code");
+    }
+    if (/\b(id|code)\b/.test(normalized) && (normalized.includes("agent") || normalized.includes("producer"))) {
+        heuristicQueries.push("agent identifier");
+        heuristicQueries.push("producer identifier");
+    }
+    if (/\b(effective|eff)\b/.test(normalized)) {
+        heuristicQueries.push("effective date");
+        heuristicQueries.push("policy effective date");
+    }
+    if (/\b(expiration|expiry|exp)\b/.test(normalized)) {
+        heuristicQueries.push("expiration date");
+        heuristicQueries.push("policy expiration date");
+    }
     for (const query of heuristicQueries) {
         const hits = safeDictionarySearch(query, 2);
         for (const hit of hits) {
-            const weighted = hit.score * 0.65 * multiplier;
+            const weighted = quantize(hit.score * 0.65 * multiplier);
             const entry = ensureAccumulator(accum, hit.entry.acordCode, {
                 label: hit.entry.label,
                 description: hit.entry.description,
                 source: "heuristic",
             });
-            entry.score += weighted;
-            entry.heuristicScore += weighted;
+            entry.score = quantize(entry.score + weighted);
+            entry.heuristicScore = quantize(entry.heuristicScore + weighted);
             if (entry.source !== "dictionary") {
                 entry.source = "heuristic";
             }
         }
     }
 }
+function boostKnownCode(accum, acordCode, boost) {
+    const found = (0, acordDictionary_1.lookupAcordByCode)(acordCode);
+    if (!found)
+        return;
+    const entry = ensureAccumulator(accum, found.acordCode, {
+        label: found.label,
+        description: found.description,
+        source: "heuristic",
+    });
+    entry.score = quantize(entry.score + boost);
+    entry.heuristicScore = quantize(entry.heuristicScore + boost);
+}
+function applyAnchorOverrideSignals(block, accum) {
+    const normalized = normalizeText(block.text);
+    if (!normalized)
+        return;
+    const hasAgentOrProducer = /\b(agent|producer)\b/.test(normalized);
+    const hasName = /\bname\b/.test(normalized);
+    const hasIdCode = /\b(id|code|number|no|#)\b/.test(normalized);
+    if (/\bpolicy\b/.test(normalized) && /\b(number|no|#)\b/.test(normalized)) {
+        boostKnownCode(accum, "Policy_PolicyNumberIdentifier", 240);
+    }
+    if (/\b(effective|eff)\b/.test(normalized) && /\bdate\b/.test(normalized)) {
+        boostKnownCode(accum, "Policy_EffectiveDate", 240);
+    }
+    if (/\b(expiration|expiry|exp)\b/.test(normalized) && /\bdate\b/.test(normalized)) {
+        boostKnownCode(accum, "Policy_ExpirationDate", 240);
+    }
+    if (hasAgentOrProducer && hasName) {
+        boostKnownCode(accum, "Producer_FullName", 235);
+        boostKnownCode(accum, "Producer_ContactPerson_FullName", 220);
+    }
+    if (hasAgentOrProducer && hasIdCode) {
+        boostKnownCode(accum, "Producer_CustomerIdentifier", 235);
+    }
+}
 /**
  * Semantic signal via cosine similarity against precomputed ACORD embeddings.
  * No-ops gracefully when embeddings are unavailable or not yet cached.
+ *
+ * Set DISABLE_RUNTIME_EMBEDDINGS=1 to skip per-block OpenAI API calls while
+ * keeping the precomputed ACORD cache for future ranking use. This avoids
+ * HTTP 431 (headers too large) errors when processing large batches.
  */
-async function applySemanticSignals(block, accum) {
+async function applySemanticSignals(block, accum, deterministic = false) {
+    // Skip when explicitly disabled or running in deterministic mode.
+    // Dictionary + heuristic scoring covers 91% of mappings without embeddings.
+    if (deterministic || process.env.DISABLE_RUNTIME_EMBEDDINGS === "1") {
+        return;
+    }
     const multiplier = getBlockScoreMultiplier(block);
     const cache = (0, acordDictionary_1.getEmbeddingCache)();
     if (cache.size === 0)
@@ -464,21 +600,21 @@ async function applySemanticSignals(block, accum) {
     if (blockEmbedding.length === 0)
         return;
     // Score every cached ACORD entry and collect those above threshold.
-    const SIMILARITY_THRESHOLD = 0.45;
-    const TOP_K = 8;
+    const SIMILARITY_THRESHOLD = 0.3;
+    const TOP_K = 12;
     const candidates = [];
     for (const [acordCode, embedding] of cache) {
-        const sim = (0, embeddings_1.cosineSimilarity)(blockEmbedding, embedding);
+        const sim = quantize((0, embeddings_1.cosineSimilarity)(blockEmbedding, embedding));
         if (sim >= SIMILARITY_THRESHOLD) {
             candidates.push({ acordCode, sim });
         }
     }
-    candidates.sort((a, b) => b.sim - a.sim);
+    candidates.sort((a, b) => b.sim - a.sim || a.acordCode.localeCompare(b.acordCode));
     const top = candidates.slice(0, TOP_K);
     for (const { acordCode, sim } of top) {
         // Scale cosine similarity to the same magnitude as dictionary scores
         // (dictionary exact-code match = 200, label match = 160).
-        const semanticScore = sim * 240 * multiplier;
+        const semanticScore = quantize(sim * 240 * multiplier);
         const found = (0, acordDictionary_1.lookupAcordByCode)(acordCode);
         if (!found)
             continue;
@@ -487,15 +623,19 @@ async function applySemanticSignals(block, accum) {
             description: found.description,
             source: "ai",
         });
-        entry.score += semanticScore;
-        entry.semanticSimilarity = Math.max(entry.semanticSimilarity, sim);
+        entry.score = quantize(entry.score + semanticScore);
+        entry.semanticSimilarity = quantize(Math.max(entry.semanticSimilarity, sim));
         // Promote source to AI only when semantic evidence is clearly strong.
         if (sim >= 0.78 && entry.source !== "dictionary") {
             entry.source = "ai";
         }
     }
 }
-function toSuggestions(accum, block, blockConfidence) {
+function toSuggestions(accum, block, blockConfidence, calibrationProfile, familyId, graphSnapshot, carrierAdapterOverrides, underwritingRuleOverrides) {
+    const profile = resolveScopedCalibrationProfile(calibrationProfile, familyId);
+    const hasExplicitFieldCue = hasFieldCue(block.text);
+    const ontologyBundles = (0, acord_1.selectOntologyBundlesForFamily)(familyId);
+    const normalizedWeights = normalizeSignalWeights(profile);
     const getAddressComponentKind = (label, acordCode) => {
         const text = normalizeText(`${label} ${acordCode}`);
         if (hasAnyToken(text, ["line one", "line1"]))
@@ -516,10 +656,13 @@ function toSuggestions(accum, block, blockConfidence) {
         const precisionBoost = getTokenPrecisionBoost(block.text, item.label);
         return {
             ...item,
-            score: item.score * penalty * precisionBoost,
+            score: quantize(item.score * penalty * precisionBoost),
+            dictionaryScore: quantize(item.dictionaryScore),
+            heuristicScore: quantize(item.heuristicScore),
+            semanticSimilarity: quantize(item.semanticSimilarity),
         };
     })
-        .sort((a, b) => b.score - a.score);
+        .sort(compareScoreAccumulator);
     const getLocationKind = (label, acordCode) => {
         const text = normalizeText(`${label} ${acordCode}`);
         const isPostal = hasAnyToken(text, ["postal", "zip"]);
@@ -539,7 +682,7 @@ function toSuggestions(accum, block, blockConfidence) {
             state: "mailing address state or province code",
             postal: "mailing address postal code",
         };
-        const fallbackHits = safeDictionarySearch(queryByKind[kind], 5);
+        const fallbackHits = [...safeDictionarySearch(queryByKind[kind], 5)].sort((left, right) => right.score - left.score || left.entry.acordCode.localeCompare(right.entry.acordCode));
         const picked = fallbackHits.find((hit) => getLocationKind(hit.entry.label, hit.entry.acordCode) === kind) ?? fallbackHits[0];
         if (!picked)
             return null;
@@ -549,7 +692,7 @@ function toSuggestions(accum, block, blockConfidence) {
             state: 1.25,
             postal: 1.15,
         };
-        const syntheticScore = syntheticBase * syntheticWeightByKind[kind];
+        const syntheticScore = quantize(syntheticBase * syntheticWeightByKind[kind]);
         return {
             acordCode: picked.entry.acordCode,
             label: picked.entry.label,
@@ -601,24 +744,79 @@ function toSuggestions(accum, block, blockConfidence) {
     const ordered = enforceCityStatePostalOrder(scored);
     const all = ordered;
     if (all.length === 0) {
+        // If we have a clear field cue but no scored candidates, provide a low-confidence
+        // fallback set so downstream review can still inspect probable ACORD options.
+        if (hasExplicitFieldCue) {
+            const fallback = safeDictionarySearch(block.text, 3).map((hit) => ({
+                acordCode: hit.entry.acordCode,
+                label: hit.entry.label,
+                description: hit.entry.description,
+                confidenceScore: 0.12,
+                normalizedConfidenceScore: 0.12,
+                source: "dictionary",
+                lexicalScore: 0.15,
+                semanticSimilarity: 0,
+                dictionaryScore: 0.35,
+                heuristicScore: 0.1,
+            }));
+            return fallback;
+        }
         return [];
     }
     const top = all[0].score || 1;
     const second = all[1]?.score || 0;
     const topMargin = top > 0 ? (top - second) / top : 0;
     const marginGate = clamp01(topMargin / 0.2);
+    const allCandidateCodes = new Set(all.map((item) => item.acordCode));
     const scoredSuggestions = all.slice(0, 5).map((item) => {
         const normalizedRelative = top > 0 ? item.score / top : 0;
         const semanticEvidence = clamp01(item.semanticSimilarity);
         const dictionaryEvidence = clamp01(item.dictionaryScore / 200);
         const heuristicEvidence = clamp01(item.heuristicScore / 160);
         const anchorEvidence = lexicalAnchorScore(block.text, item.label, item.acordCode);
-        const blendedEvidence = clamp01(semanticEvidence * 0.5 +
-            dictionaryEvidence * 0.3 +
-            heuristicEvidence * 0.2);
+        const blendedEvidence = clamp01(semanticEvidence * normalizedWeights.embedding +
+            anchorEvidence * normalizedWeights.lexical +
+            dictionaryEvidence * normalizedWeights.dictionary +
+            heuristicEvidence * normalizedWeights.heuristic);
+        const normalization = (0, quality_1.normalizeSignalsForFamily)({
+            embedding: semanticEvidence,
+            lexical: anchorEvidence,
+            dictionary: dictionaryEvidence,
+            heuristic: heuristicEvidence,
+        }, familyId);
+        const normalizedBlend = (0, quality_1.blendNormalizedSignals)(normalization.normalized, normalizedWeights);
+        const ontologyNode = (0, acord_1.getAcordOntologyNode)(item.acordCode);
+        const ontologyViolations = [];
+        const ontologyWarnings = [];
+        const ontologyExplanation = [];
+        if (ontologyNode) {
+            if (ontologyNode.parentCodes.length > 0) {
+                ontologyExplanation.push(`Parents: ${ontologyNode.parentCodes.join(", ")}`);
+            }
+            if (ontologyNode.requiredSiblingCodes.length > 0) {
+                ontologyExplanation.push(`Required siblings: ${ontologyNode.requiredSiblingCodes.join(", ")}`);
+            }
+            if (ontologyNode.mutuallyExclusiveCodes.length > 0) {
+                ontologyExplanation.push(`Mutually exclusive with: ${ontologyNode.mutuallyExclusiveCodes.join(", ")}`);
+            }
+            ontologyExplanation.push(`Sections: ${ontologyNode.sections.join(", ")}`);
+            if (ontologyNode.parentCodes.length > 0 &&
+                !ontologyNode.parentCodes.some((code) => allCandidateCodes.has(code))) {
+                ontologyViolations.push("parent-missing");
+            }
+            if (ontologyNode.requiredSiblingCodes.length > 0 &&
+                !ontologyNode.requiredSiblingCodes.some((code) => allCandidateCodes.has(code))) {
+                ontologyWarnings.push("required-sibling-missing");
+            }
+            if (ontologyNode.mutuallyExclusiveCodes.some((code) => allCandidateCodes.has(code))) {
+                ontologyWarnings.push("mutually-exclusive-candidate-present");
+            }
+        }
         let confidenceScore = clamp01(blendedEvidence * 0.6 +
             normalizedRelative * 0.25 +
             clamp01(blockConfidence) * 0.15);
+        // Blend normalized signals to make cross-family confidence comparable.
+        confidenceScore = clamp01(confidenceScore * 0.7 + normalizedBlend * 0.3);
         // Confidence calibration: penalize ambiguous tops and weak lexical anchors.
         confidenceScore *= 0.6 + marginGate * 0.4;
         if (item.source === "heuristic" &&
@@ -637,7 +835,9 @@ function toSuggestions(accum, block, blockConfidence) {
         if (isSensitivePrompt && anchorEvidence < 0.34 && semanticEvidence < 0.74) {
             confidenceScore = Math.min(confidenceScore, 0.5);
         }
-        if (isSensitivePrompt && anchorEvidence >= 0.65 && normalizedRelative > 0.9) {
+        if (isSensitivePrompt &&
+            anchorEvidence >= 0.65 &&
+            normalizedRelative > 0.9) {
             confidenceScore = clamp01(confidenceScore * 1.06);
         }
         // Address prompts can over-index on dictionary score because many address
@@ -665,72 +865,186 @@ function toSuggestions(accum, block, blockConfidence) {
                 confidenceScore = Math.min(confidenceScore, 0.5);
             }
         }
-        confidenceScore = clamp01(confidenceScore);
+        confidenceScore = clamp01(quantize(confidenceScore));
+        const ontologyPenalty = ontologyViolations.length > 0 ? 0.12 : 0;
         return {
             acordCode: item.acordCode,
             label: item.label,
             description: item.description,
             confidenceScore: Number(confidenceScore.toFixed(3)),
+            normalizedConfidenceScore: Number((confidenceScore * (1 - ontologyPenalty)).toFixed(3)),
             source: item.source,
+            lexicalScore: Number(anchorEvidence.toFixed(3)),
+            semanticSimilarity: Number(semanticEvidence.toFixed(3)),
+            dictionaryScore: Number(dictionaryEvidence.toFixed(3)),
+            heuristicScore: Number(heuristicEvidence.toFixed(3)),
+            normalization: normalization,
+            ontology: ontologyNode
+                ? {
+                    parentCodes: ontologyNode.parentCodes,
+                    childCodes: ontologyNode.childCodes,
+                    mutuallyExclusiveCodes: ontologyNode.mutuallyExclusiveCodes,
+                    requiredSiblingCodes: ontologyNode.requiredSiblingCodes,
+                    sections: ontologyNode.sections,
+                    groups: ontologyNode.groups,
+                    explanation: ontologyExplanation,
+                    warnings: ontologyWarnings,
+                    violatedConstraints: ontologyViolations,
+                }
+                : undefined,
             _anchorEvidence: anchorEvidence,
             _semanticEvidence: semanticEvidence,
+            _ontologyPenalty: ontologyPenalty,
         };
     });
-    const topSuggestion = scoredSuggestions[0];
+    const withCalibrationRanking = scoredSuggestions.map((candidate) => {
+        const arbitration = (0, acord_1.arbitrateCandidateByOntology)(candidate, ontologyBundles);
+        const graphInference = (0, quality_1.inferCandidateFromGlobalGraph)(candidate, graphSnapshot);
+        const carrierAdapter = (0, quality_1.adaptCandidateToCarrier)(candidate, familyId, carrierAdapterOverrides);
+        const underwritingRules = (0, quality_1.evaluateCandidateUnderwritingRules)(candidate, {
+            blockText: block.text,
+            chosenCodes: Array.from(allCandidateCodes).sort((left, right) => left.localeCompare(right)),
+            familyId,
+            overrides: underwritingRuleOverrides,
+            extractionBlockId: block.id,
+        });
+        const riskDecision = (0, quality_1.inferCandidateRiskAndDecisionIntelligence)(candidate, {
+            blockText: block.text,
+            familyId,
+        });
+        const thresholds = resolveThresholds(profile, candidate.acordCode);
+        const thresholdGap = candidate.confidenceScore - thresholds.review;
+        const ontologyPenalty = candidate._ontologyPenalty || 0;
+        const graphBoost = graphInference.inferred ? graphInference.confidence * 0.08 : 0;
+        const graphPenalty = graphInference.inferred ? 0 : 0.03;
+        const carrierBoost = carrierAdapter.confidence * 0.06;
+        const rulePenalty = underwritingRules.hardFailures.length > 0 ? 0.25 : 0;
+        const riskPenalty = riskDecision.decisionIntelligence.projectedOutcome === "decline"
+            ? 0.22
+            : riskDecision.decisionIntelligence.projectedOutcome === "refer-to-underwriter"
+                ? 0.12
+                : 0;
+        const calibratedRankingScore = quantize((candidate.normalizedConfidenceScore || candidate.confidenceScore) *
+            (1 - ontologyPenalty) *
+            0.72 +
+            thresholdGap * 0.2 +
+            graphBoost -
+            graphPenalty +
+            carrierBoost +
+            underwritingRules.scoreDelta * 0.22 -
+            rulePenalty -
+            riskPenalty);
+        return {
+            unification: (0, quality_1.resolveUnificationForCode)(candidate.acordCode),
+            ...candidate,
+            graphInference,
+            carrierAdapter,
+            underwritingRules,
+            riskFactors: riskDecision.riskFactors,
+            decisionIntelligence: riskDecision.decisionIntelligence,
+            ontology: candidate.ontology
+                ? {
+                    ...candidate.ontology,
+                    namespace: arbitration.winningNamespace,
+                }
+                : candidate.ontology,
+            arbitration: {
+                winningNamespace: arbitration.winningNamespace,
+                precedenceScore: arbitration.score,
+                reason: arbitration.reason,
+            },
+            _calibratedRankingScore: calibratedRankingScore,
+        };
+    });
+    withCalibrationRanking.sort((left, right) => right._calibratedRankingScore - left._calibratedRankingScore ||
+        compareSuggestion(left, right));
+    const topSuggestion = withCalibrationRanking[0];
     if (!topSuggestion) {
         return [];
     }
     const isCompoundLocationPrompt = isCityStateZipPrompt(block.text);
     const isSensitivePrompt = isNamePrompt(block.text) || isAddressPrompt(block.text);
+    const topThresholds = resolveThresholds(profile, topSuggestion.acordCode);
     const topLabelText = normalizeText(`${topSuggestion.label} ${topSuggestion.acordCode}`);
     const hasAddressLabelEvidence = isAddressPrompt(block.text) &&
-        hasAnyToken(topLabelText, ["address", "mailing", "street", "line one", "line two"]);
+        hasAnyToken(topLabelText, [
+            "address",
+            "mailing",
+            "street",
+            "line one",
+            "line two",
+        ]);
     const hasStrongSensitiveEvidence = isSensitivePrompt &&
         (topSuggestion._anchorEvidence >= 0.2 ||
             topSuggestion._semanticEvidence >= 0.72 ||
             hasAddressLabelEvidence);
-    // Abstain policy: prefer no suggestion over over-confident bad guesses.
-    if (!isCompoundLocationPrompt &&
-        !hasStrongSensitiveEvidence &&
-        topSuggestion.confidenceScore < 0.45) {
+    // Keep ranked candidates available for reviewer triage instead of hard-abstaining
+    // at this stage; downstream filters and manual review still enforce quality.
+    if (!hasExplicitFieldCue &&
+        (topSuggestion.ontology?.violatedConstraints?.length || 0) > 1) {
         return [];
     }
-    if (!isCompoundLocationPrompt &&
-        !hasStrongSensitiveEvidence &&
-        topMargin < 0.08 &&
-        topSuggestion.confidenceScore < 0.72) {
+    if (!hasExplicitFieldCue &&
+        (topSuggestion.underwritingRules?.hardFailures?.length || 0) > 0) {
         return [];
     }
-    if (!isCompoundLocationPrompt &&
-        !hasStrongSensitiveEvidence &&
-        topSuggestion._anchorEvidence < 0.12 &&
-        topSuggestion._semanticEvidence < 0.65) {
-        return [];
-    }
-    return scoredSuggestions.map(({ _anchorEvidence: _ignoredAnchor, _semanticEvidence: _ignoredSem, ...rest }) => rest);
+    // Preserve suggestions even when graph inference is weak; confidence captures this.
+    return withCalibrationRanking.map(({ _anchorEvidence: _ignoredAnchor, _semanticEvidence: _ignoredSem, _ontologyPenalty: _ignoredOntologyPenalty, _calibratedRankingScore: _ignoredCalibratedScore, ...rest }) => rest);
 }
 async function mapBlocksToAcord(blocks, options) {
-    // Kick off embedding precompute if not already started.  We do NOT await it
-    // here — early requests use dictionary + heuristic scoring, and once the
-    // cache warms up subsequent requests gain semantic scoring too.
-    (0, acordDictionary_1.ensureEmbeddings)().catch(() => { });
+    if (!options?.deterministic) {
+        (0, acordDictionary_1.ensureEmbeddings)().catch(() => { });
+    }
+    const graphSeedPayload = {
+        version: 1,
+        documentId: "runtime-graph-document",
+        pages: [],
+        fields: [],
+        mappings: [],
+        decisionGraph: {
+            labels: {},
+            fields: {},
+            mappings: {},
+            confidenceThresholds: {
+                accepted: 0.8,
+                review: 0.6,
+                rejected: 0.45,
+            },
+        },
+        overrides: {},
+        suppressedOcrBlockIds: [],
+        associationEdits: [],
+        schemaArtifacts: [],
+        formFamily: options?.familyId
+            ? {
+                familyId: options.familyId,
+                familyLabel: options.familyId,
+                confidence: 1,
+                signatureHash: "runtime-graph",
+                layoutSignature: [],
+                semanticSignature: [],
+                evidence: ["runtime-graph"],
+                classifiedAt: "1970-01-01T00:00:00.000Z",
+                classifierVersion: "runtime",
+            }
+            : undefined,
+    };
+    const runtimeGraph = (0, quality_1.buildGlobalSemanticGraph)([
+        {
+            fixtureId: "runtime-graph",
+            payload: graphSeedPayload,
+        },
+    ]).snapshot;
     return Promise.all(blocks.map(async (block) => {
-        if (isLikelyNonMappableText(block)) {
-            return {
-                blockId: block.id,
-                page: block.page,
-                text: block.text,
-                boundingBox: block.boundingBox,
-                suggestions: [],
-                chosen: undefined,
-            };
-        }
+        // Run scoring for all OCR blocks; suppression should happen downstream where
+        // we have full mapping context and diagnostics visibility.
         const accum = new Map();
         applyIntentSignals(block, accum);
         applyDictionarySignals(block, accum);
         applyHeuristicSignals(block, accum);
-        await applySemanticSignals(block, accum);
-        const suggestions = toSuggestions(accum, block, block.confidence);
+        applyAnchorOverrideSignals(block, accum);
+        await applySemanticSignals(block, accum, options?.deterministic === true);
+        const suggestions = toSuggestions(accum, block, block.confidence, options?.calibrationProfile, options?.familyId, runtimeGraph, options?.carrierAdapterOverrides, options?.underwritingRuleOverrides);
         return {
             blockId: block.id,
             page: block.page,

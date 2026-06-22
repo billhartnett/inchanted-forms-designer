@@ -1,0 +1,46 @@
+{
+  "profileId": "unit-calibration-1781147404042",
+  "name": "Unit Calibration",
+  "version": 2,
+  "createdAt": "2026-06-11T03:10:04.042Z",
+  "updatedAt": "2026-06-11T03:10:04.091Z",
+  "globalThresholds": {
+    "accepted": 0.8,
+    "review": 0.6,
+    "rejected": 0.45
+  },
+  "codeThresholdOverrides": {},
+  "signalWeights": {
+    "embedding": 0.5,
+    "lexical": 0.25,
+    "dictionary": 0.2,
+    "heuristic": 0.05
+  },
+  "familyOverrides": {},
+  "lineage": [],
+  "suggestedOverrides": [],
+  "auditTrail": [
+    {
+      "version": 1,
+      "changedAt": "2026-06-11T03:10:04.042Z",
+      "reason": "initial",
+      "summary": "Default deterministic calibration profile."
+    },
+    {
+      "version": 1,
+      "changedAt": "2026-06-11T03:10:04.049Z",
+      "changedBy": "test-suite",
+      "reason": "initial save",
+      "summary": "Calibration profile updated"
+    },
+    {
+      "version": 2,
+      "changedAt": "2026-06-11T03:10:04.091Z",
+      "changedBy": "test-suite",
+      "reason": "revision",
+      "summary": "Calibration profile updated"
+    }
+  ],
+  "updatedBy": "test-suite",
+  "notes": "second revision"
+}

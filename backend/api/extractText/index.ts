@@ -8,6 +8,10 @@ import {
   AzureKeyCredential,
   DocumentAnalysisClient,
 } from "@azure/ai-form-recognizer";
+import {
+  createDocumentAnalysisClient,
+  normalizeExtractedPages,
+} from "../../extraction";
 
 function createClient() {
   const endpoint = process.env.DI_ENDPOINT;
@@ -27,7 +31,7 @@ export async function extractText(
   context: InvocationContext,
 ): Promise<HttpResponseInit> {
   try {
-    const client = createClient();
+    const client = createDocumentAnalysisClient() || createClient();
     const form = await req.formData();
     const file = form.get("file") as File;
 
@@ -40,18 +44,7 @@ export async function extractText(
     // Use the prebuilt layout model for text + bounding boxes
     const poller = await client.beginAnalyzeDocument("prebuilt-layout", buffer);
     const result = await poller.pollUntilDone();
-
-    const pages =
-      result.pages?.map((page) => ({
-        pageNumber: page.pageNumber,
-        width: page.width,
-        height: page.height,
-        unit: page.unit,
-        lines: page.lines?.map((line) => ({
-          content: line.content,
-          boundingBox: line.polygon,
-        })),
-      })) ?? [];
+    const pages = normalizeExtractedPages(result.pages ?? []);
 
     return {
       status: 200,

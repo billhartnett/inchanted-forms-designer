@@ -1,203 +1,44 @@
 import { create } from "zustand";
+import type {
+  CheckboxField,
+  DateField,
+  DropdownField,
+  Field,
+  FieldDraft,
+  FieldMetadata,
+  FieldMetadataSource,
+  NumericField,
+  RadioField,
+  RectField,
+  SemanticFieldType,
+  SignatureField,
+  TextField,
+} from "../../../../shared/src/types";
 
 const HISTORY_LIMIT = 150;
-
-export type MetadataFieldType =
-  | "text"
-  | "checkbox"
-  | "radio"
-  | "dropdown"
-  | "date"
-  | "numeric"
-  | "signature";
-
-export type MetadataSource = "manual" | "ai" | "ocr";
-
-export type FieldMetadata = {
-  acordCode: string;
-  acordLabel: string;
-  acordDescription: string;
-  fieldType: MetadataFieldType;
-  required: boolean;
-  confidenceScore: number;
-  source: MetadataSource;
+export type {
+  CheckboxField,
+  DateField,
+  DropdownField,
+  Field,
+  FieldDraft,
+  FieldMetadata,
+  NumericField,
+  RadioField,
+  RectField,
+  SignatureField,
+  TextField,
 };
-
-export type RectField = {
-  id: string;
-  type: "rect";
-  pageIndex?: number | null;
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  rotation: number;
-  opacity: number;
-  fill: string;
-  stroke: string;
-  strokeWidth: number;
-  cornerRadius: number;
-  groupId?: string | null;
-  metadata?: FieldMetadata;
-};
-
-export type TextField = {
-  id: string;
-  type: "text";
-  pageIndex?: number | null;
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  rotation: number;
-  opacity: number;
-  text: string;
-  fontSize: number;
-  fontFamily: string;
-  textAlign: "left" | "center" | "right";
-  color: string;
-  stroke: string;
-  strokeWidth: number;
-  groupId?: string | null;
-  metadata?: FieldMetadata;
-};
-
-export type CheckboxField = {
-  id: string;
-  type: "checkbox";
-  pageIndex?: number | null;
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  rotation: number;
-  opacity: number;
-  stroke: string;
-  strokeWidth: number;
-  fill: string;
-  checked: boolean;
-  label: string;
-  groupId?: string | null;
-  metadata?: FieldMetadata;
-};
-
-export type RadioField = {
-  id: string;
-  type: "radio";
-  pageIndex?: number | null;
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  rotation: number;
-  opacity: number;
-  stroke: string;
-  strokeWidth: number;
-  fill: string;
-  checked: boolean;
-  groupName: string;
-  label: string;
-  groupId?: string | null;
-  metadata?: FieldMetadata;
-};
-
-export type DropdownField = {
-  id: string;
-  type: "dropdown";
-  pageIndex?: number | null;
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  rotation: number;
-  opacity: number;
-  stroke: string;
-  strokeWidth: number;
-  fill: string;
-  options: string[];
-  selectedOption: string;
-  placeholder: string;
-  openPreview: boolean;
-  groupId?: string | null;
-  metadata?: FieldMetadata;
-};
-
-export type DateField = {
-  id: string;
-  type: "date";
-  pageIndex?: number | null;
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  rotation: number;
-  opacity: number;
-  stroke: string;
-  strokeWidth: number;
-  fill: string;
-  dateFormat: string;
-  value: string;
-  placeholder: string;
-  groupId?: string | null;
-  metadata?: FieldMetadata;
-};
-
-export type NumericField = {
-  id: string;
-  type: "numeric";
-  pageIndex?: number | null;
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  rotation: number;
-  opacity: number;
-  stroke: string;
-  strokeWidth: number;
-  fill: string;
-  min: number;
-  max: number;
-  step: number;
-  value: number | null;
-  placeholder: string;
-  groupId?: string | null;
-  metadata?: FieldMetadata;
-};
-
-export type SignatureField = {
-  id: string;
-  type: "signature";
-  pageIndex?: number | null;
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  rotation: number;
-  opacity: number;
-  stroke: string;
-  strokeWidth: number;
-  fill: string;
-  placeholder: string;
-  signed: boolean;
-  showStrokePreview: boolean;
-  groupId?: string | null;
-  metadata?: FieldMetadata;
-};
-
-export type Field =
-  | RectField
-  | TextField
-  | CheckboxField
-  | RadioField
-  | DropdownField
-  | DateField
-  | NumericField
-  | SignatureField;
 
 export type ShapeGroup = {
   id: string;
   fieldIds: string[];
 };
+
+export type DesignerFieldSnapshot = Pick<
+  Field,
+  "id" | "type" | "x" | "y" | "width" | "height" | "pageIndex" | "metadata"
+>;
 
 export type DesignerSerializableState = {
   fields: Field[];
@@ -224,10 +65,15 @@ type UpdateOptions = {
 interface DesignerState {
   fields: Field[];
   groups: ShapeGroup[];
+  draftCanvasFields: Field[];
+  draftSelectedIds: string[];
   selectedIds: string[];
   selectedGroupId: string | null;
   pdfPages: string[];
+  pdfPageImages: string[];
   currentPdfPage: number;
+  showGrid: boolean;
+  snapToGrid: boolean;
   canvasCursor: { x: number; y: number } | null;
   historyPast: DesignerSnapshot[];
   historyFuture: DesignerSnapshot[];
@@ -235,17 +81,7 @@ interface DesignerState {
   canUndo: boolean;
   canRedo: boolean;
 
-  addField: (
-    field:
-      | Omit<RectField, "id">
-      | Omit<TextField, "id">
-      | Omit<CheckboxField, "id">
-      | Omit<RadioField, "id">
-      | Omit<DropdownField, "id">
-      | Omit<DateField, "id">
-      | Omit<NumericField, "id">
-      | Omit<SignatureField, "id">,
-  ) => void;
+  addField: (field: FieldDraft) => string;
   updateField: (
     id: string,
     patch: Partial<Field>,
@@ -272,6 +108,15 @@ interface DesignerState {
   ungroupSelected: () => void;
   setPdfPages: (pages: string[]) => void;
   setCurrentPdfPage: (page: number) => void;
+  setShowGrid: (show: boolean) => void;
+  setSnapToGrid: (snap: boolean) => void;
+  setDraftCanvasFields: (fields: Field[]) => void;
+  toggleDraftSelection: (id: string) => void;
+  clearDraftSelection: () => void;
+  clearDraftCanvasFields: () => void;
+  rejectSelectedDraftCanvasFields: () => number;
+  commitDraftCanvasFields: () => number;
+  commitSelectedDraftCanvasFields: () => number;
   setCanvasCursor: (cursor: { x: number; y: number } | null) => void;
   beginHistoryAction: () => void;
   endHistoryAction: () => void;
@@ -351,7 +196,7 @@ function normalizePageIndex(value: unknown): number | null {
   return Math.max(0, Math.floor(value));
 }
 
-function toMetadataFieldType(type: Field["type"]): MetadataFieldType {
+function toMetadataFieldType(type: Field["type"]): SemanticFieldType {
   if (type === "rect") {
     return "text";
   }
@@ -373,7 +218,7 @@ function normalizeMetadata(
     Math.max(0, toFiniteNumber(parsed.confidenceScore, 0)),
   );
 
-  const source: MetadataSource =
+  const source: FieldMetadataSource =
     parsed.source === "ai" || parsed.source === "ocr"
       ? parsed.source
       : "manual";
@@ -389,19 +234,15 @@ function normalizeMetadata(
     required: Boolean(parsed.required),
     confidenceScore,
     source,
+      extractionBlockId:
+        typeof parsed.extractionBlockId === "string" && parsed.extractionBlockId
+          ? parsed.extractionBlockId
+          : undefined,
   };
 }
 
 function normalizeField(
-  field:
-    | Omit<RectField, "id">
-    | Omit<TextField, "id">
-    | Omit<CheckboxField, "id">
-    | Omit<RadioField, "id">
-    | Omit<DropdownField, "id">
-    | Omit<DateField, "id">
-    | Omit<NumericField, "id">
-    | Omit<SignatureField, "id">,
+  field: FieldDraft,
 ): Field {
   const id = crypto.randomUUID();
   const pageIndex = normalizePageIndex(
@@ -884,7 +725,12 @@ export const useDesignerStore = create<DesignerState>((set, get) => ({
   selectedIds: [],
   selectedGroupId: null,
   pdfPages: [],
+  pdfPageImages: [],
   currentPdfPage: 0,
+  draftCanvasFields: [],
+  draftSelectedIds: [],
+  showGrid: true,
+  snapToGrid: true,
   canvasCursor: null,
   historyPast: [],
   historyFuture: [],
@@ -892,10 +738,10 @@ export const useDesignerStore = create<DesignerState>((set, get) => ({
   canUndo: false,
   canRedo: false,
 
-  addField: (field) =>
+  addField: (field) => {
+    const normalized = normalizeField(field);
     set((state) => {
       const before = snapshotFromState(state);
-      const normalized = normalizeField(field);
       const nextFields = [...state.fields, normalized];
       const after = cloneSnapshot({
         fields: nextFields,
@@ -912,7 +758,10 @@ export const useDesignerStore = create<DesignerState>((set, get) => ({
         selectedGroupId: null,
         ...pushHistory(state, before, after),
       };
-    }),
+    });
+
+    return normalized.id;
+  },
 
   updateField: (id, patch, options) =>
     set((state) => {
@@ -1271,6 +1120,7 @@ export const useDesignerStore = create<DesignerState>((set, get) => ({
 
       return {
         pdfPages: [...pages],
+        pdfPageImages: [...pages],
         currentPdfPage: 0,
         ...pushHistory(state, before, after),
       };
@@ -1306,6 +1156,96 @@ export const useDesignerStore = create<DesignerState>((set, get) => ({
         ...pushHistory(state, before, after),
       };
     }),
+
+  setShowGrid: (show) => set({ showGrid: Boolean(show) }),
+
+  setSnapToGrid: (snap) => set({ snapToGrid: Boolean(snap) }),
+
+  setDraftCanvasFields: (fields) =>
+    set({ draftCanvasFields: fields, draftSelectedIds: fields.map((f) => f.id) }),
+
+  toggleDraftSelection: (id) =>
+    set((state) => {
+      const exists = state.draftSelectedIds.includes(id);
+      return {
+        draftSelectedIds: exists
+          ? state.draftSelectedIds.filter((item) => item !== id)
+          : [...state.draftSelectedIds, id],
+      };
+    }),
+
+  clearDraftSelection: () => set({ draftSelectedIds: [] }),
+
+  clearDraftCanvasFields: () => set({ draftCanvasFields: [], draftSelectedIds: [] }),
+
+  rejectSelectedDraftCanvasFields: () => {
+    const { draftCanvasFields, draftSelectedIds } = useDesignerStore.getState();
+    if (draftSelectedIds.length === 0) return 0;
+    const selected = new Set(draftSelectedIds);
+    const beforeCount = draftCanvasFields.length;
+    const kept = draftCanvasFields.filter((f) => !selected.has(f.id));
+    useDesignerStore.setState({
+      draftCanvasFields: kept,
+      draftSelectedIds: kept.map((f) => f.id),
+    });
+    return beforeCount - kept.length;
+  },
+
+  commitDraftCanvasFields: () => {
+    const drafts = useDesignerStore.getState().draftCanvasFields;
+    if (drafts.length === 0) return 0;
+    useDesignerStore.setState((state) => {
+      const before = snapshotFromState(state);
+      const nextFields = [...state.fields, ...drafts];
+      const after = cloneSnapshot({
+        fields: nextFields,
+        groups: state.groups,
+        selectedIds: drafts.length > 0 ? [drafts[0].id] : state.selectedIds,
+        selectedGroupId: null,
+        pdfPages: state.pdfPages,
+        currentPdfPage: state.currentPdfPage,
+      });
+      return {
+        fields: nextFields,
+        draftCanvasFields: [],
+        draftSelectedIds: [],
+        selectedIds: drafts.length > 0 ? [drafts[0].id] : state.selectedIds,
+        ...pushHistory(state, before, after),
+      };
+    });
+    return drafts.length;
+  },
+
+  commitSelectedDraftCanvasFields: () => {
+    const { draftCanvasFields, draftSelectedIds } = useDesignerStore.getState();
+    if (draftCanvasFields.length === 0 || draftSelectedIds.length === 0) return 0;
+
+    const selected = new Set(draftSelectedIds);
+    const toCommit = draftCanvasFields.filter((f) => selected.has(f.id));
+    const remainingDrafts = draftCanvasFields.filter((f) => !selected.has(f.id));
+    if (toCommit.length === 0) return 0;
+
+    useDesignerStore.setState((state) => {
+      const before = snapshotFromState(state);
+      const nextFields = [...state.fields, ...toCommit];
+      const after = cloneSnapshot({
+        fields: nextFields,
+        groups: state.groups,
+        selectedIds: [toCommit[0].id],
+        selectedGroupId: null,
+        pdfPages: state.pdfPages,
+        currentPdfPage: state.currentPdfPage,
+      });
+      return {
+        fields: nextFields,
+        draftCanvasFields: remainingDrafts,
+        draftSelectedIds: remainingDrafts.map((f) => f.id),
+        selectedIds: [toCommit[0].id],
+        ...pushHistory(state, before, after),
+      };
+    });
+    return toCommit.length;
+  },
 
   setCanvasCursor: (cursor) => set({ canvasCursor: cursor }),
 
@@ -1404,6 +1344,7 @@ export const useDesignerStore = create<DesignerState>((set, get) => ({
         selectedIds: next.selectedIds,
         selectedGroupId: next.selectedGroupId,
         pdfPages: next.pdfPages,
+        pdfPageImages: next.pdfPages,
         currentPdfPage: next.currentPdfPage,
         historyPast: [],
         historyFuture: [],

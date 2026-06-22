@@ -1,40 +1,33 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.saveMapping = saveMapping;
+exports.suggestLabels = suggestLabels;
 const functions_1 = require("@azure/functions");
-const storage_blob_1 = require("@azure/storage-blob");
-const containerName = process.env.MAPPINGS_CONTAINER;
-const connectionString = process.env.AZURE_STORAGE_CONNECTION_STRING;
-const blobService = storage_blob_1.BlobServiceClient.fromConnectionString(connectionString);
-const container = blobService.getContainerClient(containerName);
-async function saveMapping(request, context) {
+const mapping_1 = require("../../mapping");
+async function suggestLabels(request, context) {
     try {
         const body = (await request.json());
-        if (!body?.mappings || !body?.pages || !body?.fileName) {
+        if (!body?.text || !body.text.trim()) {
             return {
                 status: 400,
-                jsonBody: { error: "Missing mappings, pages, or fileName" }
+                jsonBody: { error: "Missing text in request body" },
             };
         }
-        const { mappings, pages, fileName } = body;
-        const blob = container.getBlockBlobClient(fileName + ".json");
-        const payload = JSON.stringify({ mappings, pages }, null, 2);
-        await blob.upload(payload, Buffer.byteLength(payload));
         return {
             status: 200,
-            jsonBody: { success: true }
+            jsonBody: (0, mapping_1.suggestAcordLabel)(body.text, body.context),
         };
     }
     catch (err) {
-        context.error("saveMapping error:", err);
+        context.error("suggestLabels error:", err);
         return {
             status: 500,
-            jsonBody: { error: "Failed to save mapping", details: err.message }
+            jsonBody: { error: "Failed to suggest labels", details: err.message },
         };
     }
 }
-functions_1.app.http("saveMapping", {
+functions_1.app.http("suggestLabels", {
     methods: ["POST"],
     authLevel: "anonymous",
-    handler: saveMapping
+    route: "suggestLabels",
+    handler: suggestLabels,
 });

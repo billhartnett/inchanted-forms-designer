@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "rootDir": ".",
+    "outDir": ".",
+    "ignoreDeprecations": "5.0",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": false,
+    "skipLibCheck": true,
+    "resolveJsonModule": true
+  },
+  "include": [
+    "./extraction/**/*.ts",
+    "./mapping/**/*.ts",
+    "./services/**/*.ts",
+    "./types/**/*.ts",
+    "./api/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "api/node_modules",
+    "api/__blobstorage__",
+    "api/__queuestorage__",
+    "api/__azurite_db*"
+  ]
+}
