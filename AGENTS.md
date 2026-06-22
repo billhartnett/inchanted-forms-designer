@@ -48,6 +48,17 @@ Keep those stages distinct. Labels are semantic anchors; they are not canvas ove
 - Preserve service-relative paths when touching backend data loading.
 - If a change affects mapping or extraction semantics, validate both the field model and the generated output shape.
 
+## Runtime Artifacts
+
+- Treat emulator and runtime output as local-only data. Do not commit generated runtime artifacts.
+- Keep these paths untracked in git:
+	- backend/api/__blobstorage__/
+	- backend/api/__queuestorage__/
+	- [backend/api/AzuriteConfig](backend/api/AzuriteConfig)
+	- [backend/api/tests/diagnostics/](backend/api/tests/diagnostics/)
+- If diagnostics outputs are needed for discussion, summarize results in markdown docs or PR text instead of committing raw runtime JSON snapshots.
+- If a new local emulator or cache directory is introduced, add it to [.gitignore](.gitignore) in the same change.
+
 ## When Editing
 
 - Keep changes minimal and local.
