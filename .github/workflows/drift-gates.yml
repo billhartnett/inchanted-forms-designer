@@ -56,5 +56,9 @@ jobs:
       - name: Run backend tests (exclude live fixture host dependency)
         shell: bash
         run: |
-          TEST_FILES=$(ls backend/api/tests/*.test.js | grep -v "fixture-integration.test.js")
-          node --test $TEST_FILES
+          mapfile -t TEST_FILES < <(git ls-files "backend/api/tests/*.test.js" | grep -v "fixture-integration.test.js" || true)
+          if [ ${#TEST_FILES[@]} -eq 0 ]; then
+            echo "No tracked backend/api/tests/*.test.js files found; skipping backend test step."
+            exit 0
+          fi
+          node --test "${TEST_FILES[@]}"
