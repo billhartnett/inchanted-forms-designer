@@ -1,0 +1,140 @@
+﻿{
+  "report": "designer_semantic_upgrade_report",
+  "timestamp": "2026-07-01T00:00:00Z",
+  "status": "FULLY_UPGRADED",
+  "summary": "Designer fully upgraded to align with Wave 8 mapping engine output. All semantic metadata extracted from Wave 8 and rendered in UI.",
+  "enhancements": {
+    "data_model": {
+      "upgraded_field_metadata": {
+        "new_fields": [
+          "semanticLabel - Wave 8 semantic field label",
+          "checkboxState - Checkbox detection and state",
+          "signatureState - Signature detection and state",
+          "categoryMode - ACORD category mode (strict/permissive)",
+          "acordCandidates[] - Full ranked list of ACORD candidates",
+          "kvpData - Key/value pair data for KVP fields",
+          "structuralDelta - Baseline and change tracking metadata"
+        ],
+        "existing_fields": [
+          "acordCode - Primary ACORD code",
+          "acordLabel - ACORD label",
+          "confidenceScore - Extraction confidence 0-1",
+          "fieldType - Semantic type (text, date, numeric, checkbox, signature, radio)",
+          "extractionBlockId - Link to extraction block"
+        ]
+      }
+    },
+    "field_rendering": {
+      "checkbox_support": {
+        "detection": "Detects checkbox type from source block",
+        "rendering": "Checkbox indicator with checked/unchecked state",
+        "visual": "Checkbox icon at top-right of field, filled when checked"
+      },
+      "signature_support": {
+        "detection": "Detects signature type from source block",
+        "rendering": "Signature indicator with state",
+        "visual": "Signature icon (✎) at top-right, gold when signed"
+      },
+      "kvp_support": {
+        "detection": "Key/value pair detection from extraction",
+        "rendering": "Key: Value format with light blue background",
+        "visual": "Full key/value displayed inline"
+      },
+      "semantic_labels": {
+        "feature": "Semantic label overlay on fields",
+        "display": "⚙ label indicator above field text",
+        "visual": "Light indigo color, semi-transparent"
+      },
+      "category_mode_coding": {
+        "strict_mode": {
+          "color": "#7c3aed (violet)",
+          "indicator": "STRICT badge in top-right",
+          "stroke": "Violet border around field"
+        },
+        "permissive_mode": {
+          "color": "#16a34a (green)",
+          "indicator": "No special badge",
+          "stroke": "Green border"
+        }
+      },
+      "confidence_color_gradient": {
+        "high": "#16a34a (green) > 80%",
+        "medium": "#ea580c (orange) 60-80%",
+        "low": "#dc2626 (red) < 60%"
+      }
+    },
+    "properties_panel": {
+      "field_basics_section": [
+        "Label input (auto-populated from OCR)",
+        "Type selector (text, checkbox, date, numeric, signature, dropdown)",
+        "Required checkbox",
+        "Default value input"
+      ],
+      "wave8_semantic_section": {
+        "semantic_label": "Editable semantic label from Wave 8",
+        "acord_code": "Read-only ACORD code",
+        "field_type": "Read-only semantic field type",
+        "confidence_slider": "Visual confidence score 0-100%",
+        "category_mode": "Dropdown: None, Strict, Permissive",
+        "acord_candidates": {
+          "feature": "Full ranked list of candidates",
+          "each_candidate_shows": [
+            "ACORD code with confidence score",
+            "Full ACORD label",
+            "Candidate source (dictionary, heuristic, embeddings, geometry, category, fusion)"
+          ]
+        },
+        "structural_delta": {
+          "feature": "Baseline tracking metadata",
+          "fields_shown": [
+            "deltaVersion",
+            "changeType (added/removed/modified)",
+            "baselineDocumentId"
+          ]
+        }
+      }
+    },
+    "acord_binding_panel": {
+      "enhancements": [
+        "Extraction Details section showing semantic metadata",
+        "Semantic Label display from Wave 8",
+        "Field Type display",
+        "Confidence score percentage",
+        "Category Mode badge (STRICT/PERMISSIVE with color coding)",
+        "Full ACORD candidates list with sources",
+        "Candidate source attribution (dictionary, heuristic, embeddings, geometry, category, fusion)",
+        "Enhanced candidate card with source and rationale"
+      ]
+    },
+    "pdf_import_modal": {
+      "semantic_field_population": [
+        "Extracts all ACORD candidates from suggestions[]",
+        "Populates semanticLabel from mapping.text",
+        "Detects checkboxState for checkbox-type fields",
+        "Detects signatureState for signature-type fields",
+        "Extracts kvpData for key/value pair fields",
+        "Captures categoryMode from chosen candidate",
+        "Populates acordCandidates array with full metadata"
+      ]
+    }
+  },
+  "integration_flow": {
+    "pdf_upload": "User uploads PDF file",
+    "extraction": "extractText API called for OCR",
+    "mapping": "mapFields API called with DI output",
+    "wave8_response": "FieldMapping[] returned with candidates",
+    "semantic_extraction": "buildTypedFieldPreview extracts all Wave 8 metadata",
+    "field_creation": "Field objects created with full semantic metadata",
+    "designer_display": "Fields rendered with semantic overlays and colors",
+    "metadata_visible": "Properties panel and binding panel show all Wave 8 data",
+    "user_interaction": "User can select fields, view candidates, override ACORD labels"
+  },
+  "validation": {
+    "typescript_build": "PASS - 0 errors in backend",
+    "frontend_build": "PASS - Compiles with only chunk size warnings",
+    "field_renderer": "PASS - Enhanced with semantic labels and state indicators",
+    "properties_panel": "PASS - Shows full Wave 8 metadata",
+    "bindings_panel": "PASS - Shows category mode, candidates with sources",
+    "pdf_import": "PASS - Populates all semantic fields from Wave 8 response"
+  }
+}

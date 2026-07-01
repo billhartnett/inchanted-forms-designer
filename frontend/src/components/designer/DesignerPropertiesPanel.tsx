@@ -20,6 +20,13 @@ function buildDefaultMetadata(field: Field) {
     required: Boolean(field.metadata?.required),
     confidenceScore: field.metadata?.confidenceScore ?? 0,
     source: field.metadata?.source || ("manual" as const),
+    semanticLabel: field.metadata?.semanticLabel || "",
+    checkboxState: field.metadata?.checkboxState,
+    signatureState: field.metadata?.signatureState,
+    kvpData: field.metadata?.kvpData,
+    categoryMode: field.metadata?.categoryMode,
+    acordCandidates: field.metadata?.acordCandidates,
+    structuralDelta: field.metadata?.structuralDelta,
   };
 }
 
@@ -95,6 +102,11 @@ export function DesignerPropertiesPanel() {
         fill: "#ffffff",
         checked: false,
         label: "Checkbox",
+        metadata: {
+          ...buildDefaultMetadata(selectedField),
+          fieldType: "checkbox",
+          checkboxState: { isCheckbox: true, checked: false },
+        },
       } as Partial<Field>);
       return;
     }
@@ -146,6 +158,11 @@ export function DesignerPropertiesPanel() {
         placeholder: "Sign here",
         signed: false,
         showStrokePreview: false,
+        metadata: {
+          ...buildDefaultMetadata(selectedField),
+          fieldType: "signature",
+          signatureState: { isSignature: true, signed: false },
+        },
       } as Partial<Field>);
       return;
     }
@@ -164,6 +181,26 @@ export function DesignerPropertiesPanel() {
       metadata: {
         ...buildDefaultMetadata(selectedField),
         required,
+      },
+    } as Partial<Field>);
+  };
+
+  const updateSemanticLabel = (value: string) => {
+    if (!selectedField) return;
+    updateField(selectedField.id, {
+      metadata: {
+        ...buildDefaultMetadata(selectedField),
+        semanticLabel: value,
+      },
+    } as Partial<Field>);
+  };
+
+  const updateCategoryMode = (value: string) => {
+    if (!selectedField) return;
+    updateField(selectedField.id, {
+      metadata: {
+        ...buildDefaultMetadata(selectedField),
+        categoryMode: value || undefined,
       },
     } as Partial<Field>);
   };
@@ -204,78 +241,210 @@ export function DesignerPropertiesPanel() {
   return (
     <div style={{ display: "grid", gap: 12 }}>
       {selectedField && (
-        <section
-          style={{
-            border: "1px solid #d9e2ec",
-            borderRadius: 12,
-            background: "#f8fafc",
-            padding: 12,
-            display: "grid",
-            gap: 8,
-          }}
-        >
-          <h4 style={{ margin: 0, color: "#0f172a" }}>Field Basics</h4>
+        <>
+          <section
+            style={{
+              border: "1px solid #d9e2ec",
+              borderRadius: 12,
+              background: "#f8fafc",
+              padding: 12,
+              display: "grid",
+              gap: 8,
+            }}
+          >
+            <h4 style={{ margin: 0, color: "#0f172a" }}>Field Basics</h4>
 
-          <label>
-            Label:
-            <input
-              type="text"
-              value={
-                selectedField.type === "text"
-                  ? selectedField.text
-                  : selectedField.type === "checkbox" || selectedField.type === "radio"
-                    ? selectedField.label
-                    : selectedField.metadata?.acordLabel || ""
-              }
-              onChange={(e) => updateLabel(e.target.value)}
-            />
-          </label>
+            <label>
+              Label:
+              <input
+                type="text"
+                value={
+                  selectedField.type === "text"
+                    ? selectedField.text
+                    : selectedField.type === "checkbox" || selectedField.type === "radio"
+                      ? selectedField.label
+                      : selectedField.metadata?.acordLabel || ""
+                }
+                onChange={(e) => updateLabel(e.target.value)}
+              />
+            </label>
 
-          <label>
-            Type:
-            <select
-              value={selectedField.type}
-              onChange={(e) => updateType(e.target.value as Field["type"])}
+            <label>
+              Type:
+              <select
+                value={selectedField.type}
+                onChange={(e) => updateType(e.target.value as Field["type"])}
+              >
+                <option value="text">text</option>
+                <option value="checkbox">checkbox</option>
+                <option value="dropdown">dropdown</option>
+                <option value="date">date</option>
+                <option value="numeric">numeric</option>
+                <option value="signature">signature</option>
+              </select>
+            </label>
+
+            <label>
+              Required:
+              <input
+                type="checkbox"
+                checked={Boolean(selectedField.metadata?.required)}
+                onChange={(e) => updateRequired(e.target.checked)}
+              />
+            </label>
+
+            <label>
+              Default Value:
+              <input
+                type="text"
+                value={
+                  selectedField.type === "text"
+                    ? selectedField.text
+                    : selectedField.type === "dropdown"
+                      ? selectedField.selectedOption
+                      : selectedField.type === "date"
+                        ? selectedField.value
+                        : selectedField.type === "numeric"
+                          ? selectedField.value?.toString() || ""
+                          : selectedField.type === "checkbox" || selectedField.type === "radio"
+                            ? String(Boolean(selectedField.checked))
+                            : ""
+                }
+                onChange={(e) => updateDefaultValue(e.target.value)}
+              />
+            </label>
+          </section>
+
+          {selectedField.metadata && (
+            <section
+              style={{
+                border: "1px solid #d9e2ec",
+                borderRadius: 12,
+                background: "#f0fdf4",
+                padding: 12,
+                display: "grid",
+                gap: 8,
+              }}
             >
-              <option value="text">text</option>
-              <option value="checkbox">checkbox</option>
-              <option value="dropdown">dropdown</option>
-              <option value="date">date</option>
-              <option value="numeric">numeric</option>
-              <option value="signature">signature</option>
-            </select>
-          </label>
+              <h4 style={{ margin: 0, color: "#15803d" }}>Wave 8 Semantic Metadata</h4>
 
-          <label>
-            Required:
-            <input
-              type="checkbox"
-              checked={Boolean(selectedField.metadata?.required)}
-              onChange={(e) => updateRequired(e.target.checked)}
-            />
-          </label>
+              <label>
+                Semantic Label:
+                <input
+                  type="text"
+                  value={selectedField.metadata.semanticLabel || ""}
+                  onChange={(e) => updateSemanticLabel(e.target.value)}
+                  placeholder="e.g., InsuredName, PolicyNumber"
+                />
+              </label>
 
-          <label>
-            Default Value:
-            <input
-              type="text"
-              value={
-                selectedField.type === "text"
-                  ? selectedField.text
-                  : selectedField.type === "dropdown"
-                    ? selectedField.selectedOption
-                    : selectedField.type === "date"
-                      ? selectedField.value
-                      : selectedField.type === "numeric"
-                        ? selectedField.value?.toString() || ""
-                        : selectedField.type === "checkbox" || selectedField.type === "radio"
-                          ? String(Boolean(selectedField.checked))
-                          : ""
-              }
-              onChange={(e) => updateDefaultValue(e.target.value)}
-            />
-          </label>
-        </section>
+              <label>
+                ACORD Code:
+                <input
+                  type="text"
+                  value={selectedField.metadata.acordCode || ""}
+                  disabled
+                  style={{ opacity: 0.6 }}
+                />
+              </label>
+
+              <label>
+                Field Type:
+                <input
+                  type="text"
+                  value={selectedField.metadata.fieldType || ""}
+                  disabled
+                  style={{ opacity: 0.6 }}
+                />
+              </label>
+
+              <label>
+                Confidence Score:
+                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                  <input
+                    type="range"
+                    min="0"
+                    max="100"
+                    value={(selectedField.metadata.confidenceScore ?? 0) * 100}
+                    disabled
+                    style={{ flex: 1 }}
+                  />
+                  <span style={{ fontSize: 12, fontWeight: 600 }}>
+                    {((selectedField.metadata.confidenceScore ?? 0) * 100).toFixed(1)}%
+                  </span>
+                </div>
+              </label>
+
+              <label>
+                Category Mode:
+                <select
+                  value={selectedField.metadata.categoryMode || ""}
+                  onChange={(e) => updateCategoryMode(e.target.value)}
+                >
+                  <option value="">None</option>
+                  <option value="strict">Strict</option>
+                  <option value="permissive">Permissive</option>
+                </select>
+              </label>
+
+              {selectedField.metadata.acordCandidates && selectedField.metadata.acordCandidates.length > 0 && (
+                <div style={{ paddingTop: 8, borderTop: "1px solid #86efac" }}>
+                  <div style={{ fontSize: 11, fontWeight: 700, color: "#166534", marginBottom: 6 }}>
+                    ACORD Candidates
+                  </div>
+                  <div style={{ display: "grid", gap: 4 }}>
+                    {selectedField.metadata.acordCandidates.map((cand, idx) => (
+                      <div
+                        key={idx}
+                        style={{
+                          fontSize: 11,
+                          padding: 6,
+                          background: "#ffffff",
+                          border: "1px solid #86efac",
+                          borderRadius: 4,
+                        }}
+                      >
+                        <div style={{ fontWeight: 600 }}>
+                          {cand.acordCode} ({(cand.confidenceScore * 100).toFixed(0)}%)
+                        </div>
+                        <div style={{ fontSize: 10, color: "#666" }}>{cand.label}</div>
+                        {cand.source && (
+                          <div style={{ fontSize: 9, color: "#999" }}>Source: {cand.source}</div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {selectedField.metadata.structuralDelta && (
+                <div style={{ paddingTop: 8, borderTop: "1px solid #86efac" }}>
+                  <div style={{ fontSize: 11, fontWeight: 700, color: "#166534", marginBottom: 6 }}>
+                    Structural Delta
+                  </div>
+                  <div
+                    style={{
+                      fontSize: 10,
+                      padding: 6,
+                      background: "#ffffff",
+                      border: "1px solid #86efac",
+                      borderRadius: 4,
+                      fontFamily: "monospace",
+                    }}
+                  >
+                    <div>Version: {selectedField.metadata.structuralDelta.deltaVersion}</div>
+                    {selectedField.metadata.structuralDelta.changeType && (
+                      <div>Type: {selectedField.metadata.structuralDelta.changeType}</div>
+                    )}
+                    {selectedField.metadata.structuralDelta.baselineDocumentId && (
+                      <div>Baseline: {selectedField.metadata.structuralDelta.baselineDocumentId}</div>
+                    )}
+                  </div>
+                </div>
+              )}
+            </section>
+          )}
+        </>
       )}
 
       <PropertiesPanel selectedField={selectedField} />

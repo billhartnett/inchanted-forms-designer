@@ -512,6 +512,16 @@ function buildTypedFieldPreview(
   // Anchor input controls to the right of label text and normalize size.
   const anchorX = rawX + Math.min(Math.max(12, rawW + 10), 240);
   const anchorY = rawY - 1;
+  
+  // Extract ACORD candidates from suggestions
+  const acordCandidates = mapping.suggestions?.map((sugg) => ({
+    acordCode: sugg.acordCode,
+    label: sugg.label,
+    confidenceScore: sugg.confidenceScore,
+    source: sugg.source as "dictionary" | "heuristic" | "embeddings" | "geometry" | "category" | "fusion" | undefined,
+    rationale: sugg.rationale?.summary,
+  }));
+
   const base = {
     id: mapping.blockId,
     pageIndex: Math.max(0, mapping.page - 1),
@@ -531,6 +541,26 @@ function buildTypedFieldPreview(
       confidenceScore: chosen?.confidenceScore ?? sourceBlock.confidence,
       source: metadataSource,
       extractionBlockId: mapping.blockId,
+      // NEW: Wave 8 semantic metadata
+      semanticLabel: mapping.text,
+      categoryMode: chosen?.categoryMode as string | undefined,
+      acordCandidates,
+      // NEW: Checkpoint state detection
+      checkboxState: sourceBlock.type === "checkbox" ? {
+        isCheckbox: true,
+        checked: false,
+        pattern: "\\u2610|\\u2611|\\u2612|\\[\\s*\\]",
+      } : undefined,
+      signatureState: sourceBlock.type === "signature" ? {
+        isSignature: true,
+        signed: false,
+        pattern: "signature|sign here",
+      } : undefined,
+      // NEW: KVP data if applicable
+      kvpData: sourceBlock.type === "kvp" ? {
+        key: mapping.text.split(":")[0]?.trim() || "key",
+        value: mapping.text.split(":")[1]?.trim() || "",
+      } : undefined,
     },
   };
 
@@ -579,6 +609,13 @@ function buildTypedFieldPreview(
       fill: "#ffffff",
       checked: false,
       label: mapping.text,
+      metadata: {
+        ...base.metadata,
+        checkboxState: {
+          isCheckbox: true,
+          checked: false,
+        },
+      },
     };
   }
 
@@ -611,6 +648,13 @@ function buildTypedFieldPreview(
       placeholder: "Sign here",
       signed: false,
       showStrokePreview: false,
+      metadata: {
+        ...base.metadata,
+        signatureState: {
+          isSignature: true,
+          signed: false,
+        },
+      },
     };
   }
 

@@ -84,20 +84,73 @@ export function DesignerBindingsPanel() {
           }}
         >
           <h4 style={{ margin: 0, color: "#0f172a" }}>Bindings</h4>
-          <span
+          <div style={{ display: "flex", gap: 6 }}>
+            <span
+              style={{
+                fontSize: 11,
+                fontWeight: 700,
+                padding: "2px 8px",
+                borderRadius: 6,
+                background: required ? "#fee2e2" : "#f1f5f9",
+                color: required ? "#b91c1c" : "#475569",
+                border: `1px solid ${required ? "#fca5a5" : "#cbd5e1"}`,
+              }}
+            >
+              {required ? "Required" : "Optional"}
+            </span>
+            {selectedMapping?.categoryMode && (
+              <span
+                style={{
+                  fontSize: 11,
+                  fontWeight: 700,
+                  padding: "2px 8px",
+                  borderRadius: 6,
+                  background: selectedMapping.categoryMode === "strict" ? "#ede9fe" : "#f0fdf4",
+                  color: selectedMapping.categoryMode === "strict" ? "#5b21b6" : "#15803d",
+                  border: `1px solid ${
+                    selectedMapping.categoryMode === "strict" ? "#d8b4fe" : "#86efac"
+                  }`,
+                }}
+              >
+                {selectedMapping.categoryMode.toUpperCase()}
+              </span>
+            )}
+          </div>
+        </div>
+
+        {/* Semantic metadata */}
+        {selectedMapping && (
+          <div
             style={{
-              fontSize: 11,
-              fontWeight: 700,
-              padding: "2px 8px",
+              marginBottom: 10,
+              padding: 8,
+              background: "#f0f9ff",
+              border: "1px solid #bfdbfe",
               borderRadius: 6,
-              background: required ? "#fee2e2" : "#f1f5f9",
-              color: required ? "#b91c1c" : "#475569",
-              border: `1px solid ${required ? "#fca5a5" : "#cbd5e1"}`,
+              fontSize: 11,
             }}
           >
-            {required ? "Required" : "Optional"}
-          </span>
-        </div>
+            <div style={{ fontWeight: 600, color: "#0369a1", marginBottom: 4 }}>
+              Extraction Details
+            </div>
+            {selectedMapping.semanticLabel && (
+              <div style={{ color: "#475569", marginBottom: 2 }}>
+                Semantic Label: <span style={{ fontWeight: 600 }}>{selectedMapping.semanticLabel}</span>
+              </div>
+            )}
+            {selectedMapping.fieldType && (
+              <div style={{ color: "#475569", marginBottom: 2 }}>
+                Field Type: <span style={{ fontWeight: 600 }}>{selectedMapping.fieldType}</span>
+              </div>
+            )}
+            <div style={{ color: "#475569" }}>
+              Confidence:{" "}
+              <span style={{ fontWeight: 600 }}>
+                {((selectedMapping.confidenceScore ?? 0) * 100).toFixed(1)}%
+              </span>
+            </div>
+          </div>
+        )}
 
         {/* ACORD suggestions with click handlers */}
         {topAcordCandidates.length > 0 && (
@@ -110,7 +163,7 @@ export function DesignerBindingsPanel() {
                 marginBottom: 6,
               }}
             >
-              ACORD suggestions
+              ACORD Candidates ({topAcordCandidates.length})
             </div>
             <div style={{ display: "grid", gap: 5 }}>
               {topAcordCandidates.map((candidate) => {
@@ -123,8 +176,8 @@ export function DesignerBindingsPanel() {
                     style={{
                       display: "flex",
                       justifyContent: "space-between",
-                      alignItems: "center",
-                      padding: "4px 8px",
+                      alignItems: "flex-start",
+                      padding: "6px 8px",
                       borderRadius: 8,
                       background: isChosen ? "#eff6ff" : "#ffffff",
                       border: `1px solid ${isChosen ? "#93c5fd" : "#e2e8f0"}`,
@@ -144,7 +197,7 @@ export function DesignerBindingsPanel() {
                       }
                     }}
                   >
-                    <div>
+                    <div style={{ flex: 1 }}>
                       <div
                         style={{
                           fontSize: 12,
@@ -161,9 +214,14 @@ export function DesignerBindingsPanel() {
                           </span>
                         )}
                       </div>
-                      <div style={{ fontSize: 11, color: "#475569" }}>
+                      <div style={{ fontSize: 11, color: "#475569", marginBottom: 2 }}>
                         {candidate.label}
                       </div>
+                      {candidate.source && (
+                        <div style={{ fontSize: 9, color: "#94a3b8" }}>
+                          Source: {candidate.source}
+                        </div>
+                      )}
                     </div>
                     <MappingConfidence
                       confidenceScore={candidate.confidenceScore}

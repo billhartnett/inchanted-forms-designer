@@ -103,6 +103,38 @@ export type SemanticFieldType =
 
 export type FieldMetadataSource = "manual" | "ai" | "ocr";
 
+export type CheckboxState = {
+  isCheckbox: boolean;
+  checked?: boolean;
+  pattern?: string;
+};
+
+export type SignatureState = {
+  isSignature: boolean;
+  signed?: boolean;
+  pattern?: string;
+};
+
+export type KvpFieldData = {
+  key: string;
+  value: string;
+};
+
+export type AcordCandidateMetadata = {
+  acordCode: string;
+  label: string;
+  confidenceScore: number;
+  source: "dictionary" | "heuristic" | "embeddings" | "geometry" | "category" | "fusion";
+  rationale?: string;
+};
+
+export type StructuralDeltaMetadata = {
+  deltaVersion: string;
+  baselineDocumentId?: string;
+  changeType?: "added" | "removed" | "modified";
+  changeReason?: string;
+};
+
 export type FieldMetadata = {
   acordCode: string;
   acordLabel: string;
@@ -112,6 +144,13 @@ export type FieldMetadata = {
   confidenceScore: number;
   source: FieldMetadataSource;
   extractionBlockId?: string;
+  semanticLabel?: string;
+  checkboxState?: CheckboxState;
+  signatureState?: SignatureState;
+  kvpData?: KvpFieldData;
+  categoryMode?: string;
+  acordCandidates?: AcordCandidateMetadata[];
+  structuralDelta?: StructuralDeltaMetadata;
 };
 
 export type ReviewDecision = "pending" | "accepted" | "rejected";
