@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef } from "react";
-import { Group as KonvaGroup, Line } from "react-konva";
+import { Group as KonvaGroup, Line, Transformer } from "react-konva";
 import { Rect as KonvaRect, Text as KonvaText } from "react-konva";
 import { CanvasStage } from "../../canvas/CanvasStage";
 import ZoomControls from "../../designer/controls/ZoomControls";
@@ -64,6 +64,8 @@ export function DesignerCanvas({
   onViewportChange,
 }: DesignerCanvasProps) {
   const canvasHostRef = useRef<HTMLDivElement | null>(null);
+  const transformerRef = useRef<any>(null);
+  const fieldGroupRefs = useRef<Map<string, any>>(new Map());
 
   const fields = useDesignerStore((s) => s.fields);
   const pdfPages = useDesignerStore((s) => s.pdfPages);
@@ -128,6 +130,26 @@ export function DesignerCanvas({
     }
   }, [pdfUrl, onSelectedPdfSizeChange]);
 
+  // Update transformer when selected fields change
+  useEffect(() => {
+    if (!transformerRef.current) return;
+
+    const nodeList = selectedFields
+      .map((field) => fieldGroupRefs.current.get(field.id))
+      .filter((node) => !!node);
+
+    if (nodeList.length === 0) {
+      transformerRef.current.nodes([]);
+    } else if (nodeList.length === 1) {
+      transformerRef.current.nodes(nodeList);
+    } else {
+      // Multiple selections: don't use transformer for now
+      transformerRef.current.nodes([]);
+    }
+
+    transformerRef.current.getLayer()?.batchDraw();
+  }, [selectedFields]);
+
   return (
     <div
       ref={canvasHostRef}
@@ -176,6 +198,10 @@ export function DesignerCanvas({
                 {visibleFields.map((field: Field) => (
                   <KonvaGroup
                     key={`visual-${field.id}`}
+                    ref={(node) => {
+                      if (node) fieldGroupRefs.current.set(field.id, node);
+                      else fieldGroupRefs.current.delete(field.id);
+                    }}
                     x={field.x}
                     y={field.y}
                     rotation={field.rotation ?? 0}
@@ -257,6 +283,46 @@ export function DesignerCanvas({
                     <FieldControls key={f.id} field={f} />
                   );
                 })}
+                {/* Transformer for resize/rotate handles */}
+                <Transformer
+                  ref={transformerRef}
+                  rotateEnabled
+                  enabledAnchors={["top-left", "top-center", "top-right", "middle-left", "middle-right", "bottom-left", "bottom-center", "bottom-right"]}
+                  boundBoxStrokeWidth={2}
+                  anchorStroke="#0ea5e9"
+                  anchorFill="#ffffff"
+                  anchorSize={8}
+                  borderStroke="#0ea5e9"
+                  borderStrokeWidth={2}
+                  rotateAnchorOffset={30}
+                  onTransformEnd={(e) => {
+                    const node = e.target;
+                    const scaleX = node.scaleX();
+                    const scaleY = node.scaleY();
+                    
+                    // Reset scale to 1 so the shape reports correct position
+                    node.scaleX(1);
+                    node.scaleY(1);
+                    
+                    const updateField = useDesignerStore.getState().updateField;
+                    const selectedField = selectedFields[0];
+                    
+                    if (updateField && selectedField) {
+                      updateField(selectedField.id, {
+                        x: node.x(),
+                        y: node.y(),
+                        width: Math.max(20, node.width() * scaleX),
+                        height: Math.max(20, node.height() * scaleY),
+                        rotation: node.rotation(),
+                      }, { recordHistory: true });
+                      
+                      // Force re-render of node with new dimensions
+                      node.width(Math.max(20, node.width() * scaleX));
+                      node.height(Math.max(20, node.height() * scaleY));
+                    }
+                  }}
+                />
+              
               </>
             ) : undefined
           }
