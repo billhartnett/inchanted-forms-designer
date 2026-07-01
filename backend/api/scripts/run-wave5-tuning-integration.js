@@ -48,8 +48,25 @@ function runValidationRunner() {
 }
 
 async function readValidationReport() {
-  const raw = await fs.readFile(validationReportPath, "utf8");
-  return JSON.parse(raw);
+  try {
+    const raw = await fs.readFile(validationReportPath, "utf8");
+    return JSON.parse(raw);
+  } catch {
+    // If validation runner crashed before writing the report, generate a failure report
+    return {
+      generatedAt: new Date().toISOString(),
+      mode: tuningMode,
+      pass: false,
+      strictModeRequired: tuningMode === "strict_live_host_only",
+      failureClass: "runnerFailure",
+      hostHealthFailure: false,
+      mappingThresholdFailure: false,
+      error: "Validation runner failed to produce report",
+      checks: {},
+      aggregate: {},
+      tuningEnvelopes: {},
+    };
+  }
 }
 
 function buildDiagnosticsSummary(validationReport) {

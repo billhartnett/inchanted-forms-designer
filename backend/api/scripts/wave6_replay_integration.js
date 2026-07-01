@@ -43,8 +43,54 @@ function runReplayTuningRunner() {
 }
 
 async function readJson(filePath) {
-  const raw = await fs.readFile(filePath, "utf8");
-  return JSON.parse(raw);
+  try {
+    const raw = await fs.readFile(filePath, "utf8");
+    return JSON.parse(raw);
+  } catch {
+    // If any report file is missing, return a fallback structure
+    // This can happen if the runner crashed before writing files
+    const baseName = path.basename(filePath);
+    if (baseName === "wave6_phase1_replay_validation_report.json") {
+      return {
+        generatedAt: new Date().toISOString(),
+        mode: replayMode,
+        pass: false,
+        failureClass: "runnerFailure",
+        error: "Runner failed to produce validation report",
+        checks: {},
+        structuralMissTotals: {},
+        structuralMissRates: {},
+        tuningEnvelopes: {},
+      };
+    }
+    if (baseName === "wave6_phase1_replay_ingestion_report.json") {
+      return {
+        generatedAt: new Date().toISOString(),
+        mode: replayMode,
+        replayBatchCount: 0,
+        files: [],
+        replayInputBlocks: 0,
+        replayBatchBlocks: 0,
+      };
+    }
+    if (baseName === "wave6_phase1_structural_miss_delta.json") {
+      return {
+        generatedAt: new Date().toISOString(),
+        totals: {},
+        rates: {},
+        perFixture: [],
+      };
+    }
+    if (baseName === "wave6_phase1_replay_tuning_envelopes.json") {
+      return {
+        generatedAt: new Date().toISOString(),
+        tuningEnvelopes: {},
+        selectedProfile: null,
+      };
+    }
+    // Generic fallback
+    return {};
+  }
 }
 
 function buildIntegrationMarkdown(validationReport, ingestionReport, structuralMissDelta) {

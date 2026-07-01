@@ -389,8 +389,15 @@ async function main() {
 main().catch(async (error) => {
   const failure = {
     generatedAt: new Date().toISOString(),
+    mode: (mode === "strict_live_host_only" ? "strict_live_host_only" : "fast_deterministic"),
     pass: false,
+    failureClass: "runnerFailure",
+    hostHealthFailure: false,
+    mappingThresholdFailure: false,
     error: error instanceof Error ? error.message : String(error),
+    checks: {},
+    aggregate: {},
+    tuningEnvelopes: {},
   };
   try {
     await fs.mkdir(reportDir, { recursive: true });

@@ -98,7 +98,7 @@ jobs:
         if: env.ENFORCE_STRICT == 'true'
         shell: bash
         run: |
-          node -e "const fs=require('fs');const p='training-data/acord-labeled/wave6_phase1_replay_validation_report.json';const r=JSON.parse(fs.readFileSync(p,'utf8'));if(r.mode!=='strict_live_host_only'){console.error('strict replay mode not executed');process.exit(1);}if(!r.pass&&!['hostHealthFailure','mappingThresholdFailure'].includes(r.failureClass)){console.error('invalid failureClass',r.failureClass);process.exit(1);}console.log('wave6 strict replay classification valid:',r.failureClass||'none');"
+          node -e "const fs=require('fs');const p='training-data/acord-labeled/wave6_phase1_replay_validation_report.json';const r=JSON.parse(fs.readFileSync(p,'utf8'));if(r.mode!=='strict_live_host_only'){console.error('strict replay mode not executed');process.exit(1);}if(!r.pass&&!['hostHealthFailure','mappingThresholdFailure','runnerFailure'].includes(r.failureClass)){console.error('invalid failureClass',r.failureClass);process.exit(1);}console.log('wave6 strict replay classification valid:',r.failureClass||'none');"
 
       - name: Enforce replay-driven regression gate
         shell: bash

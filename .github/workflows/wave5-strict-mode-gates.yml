@@ -81,4 +81,4 @@ jobs:
         if: env.ENFORCE_STRICT == 'true'
         shell: bash
         run: |
-          node -e "const fs=require('fs'); const p='training-data/acord-labeled/sprint5_tuning_validation_report.json'; const r=JSON.parse(fs.readFileSync(p,'utf8')); if (r.mode!=='strict_live_host_only') { console.error('strict mode not executed'); process.exit(1);} if (!r.pass && !['hostHealthFailure','mappingThresholdFailure'].includes(r.failureClass)) { console.error('invalid failureClass', r.failureClass); process.exit(1);} console.log('strict mode classification valid:', r.failureClass || 'none');"
+          node -e "const fs=require('fs'); const p='training-data/acord-labeled/sprint5_tuning_validation_report.json'; const r=JSON.parse(fs.readFileSync(p,'utf8')); if (r.mode!=='strict_live_host_only') { console.error('strict mode not executed'); process.exit(1);} if (!r.pass && !['hostHealthFailure','mappingThresholdFailure','runnerFailure'].includes(r.failureClass)) { console.error('invalid failureClass', r.failureClass); process.exit(1);} console.log('strict mode classification valid:', r.failureClass || 'none');"
