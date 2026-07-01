@@ -1,7 +1,7 @@
 {
-  "timestamp": "2026-07-01T19:27:00Z",
+  "timestamp": "2026-07-01T19:30:00Z",
   "operation": "Designer Runtime Validation",
-  "status": "READY - Fresh runtime loaded",
+  "status": "READY ✓ - Fresh runtime loaded and backend operational",
   "frontend_build_status": {
     "vite_server": {
       "status": "RUNNING",
@@ -193,10 +193,16 @@
   },
   "validation_readiness": {
     "frontend_ready": true,
-    "backend_ready": "Awaiting listener bind",
+    "backend_ready": true,
     "database_connected": "N/A - No database required for extraction",
     "di_configured": "Via backend/api/local.settings.json",
-    "wave8_loaded": "Code compiled and bundled"
+    "wave8_loaded": "Code compiled and running",
+    "test_pdfs_available": [
+      "sample-Acord-125.pdf",
+      "sample-Acord-126.pdf",
+      "sample-Acord-127.pdf",
+      "sample-Acord-140.pdf"
+    ]
   },
   "test_procedures": {
     "step_1_verify_backend": {
