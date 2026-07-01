@@ -1,0 +1,20 @@
+{
+  "generatedAt": "2026-07-01T13:10:54.347Z",
+  "phase": "wave7_phase2_carrier_adapter_tuning",
+  "carrierCount": 1,
+  "diagnosticsCoverage": 1,
+  "perCarrierDiagnostics": [
+    {
+      "carrierId": "default",
+      "carrierName": "Default Carrier Adapter",
+      "diagnosticsCoverage": 1,
+      "validationPass": true,
+      "failureClass": "none"
+    }
+  ],
+  "validationStatus": {
+    "pass": true,
+    "allCarriersPass": true,
+    "noRegressionDetected": true
+  }
+}

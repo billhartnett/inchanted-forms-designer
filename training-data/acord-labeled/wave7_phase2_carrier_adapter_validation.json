@@ -1,0 +1,83 @@
+{
+  "generatedAt": "2026-07-01T13:10:54.346Z",
+  "phase": "wave7_phase2_carrier_adapter_tuning",
+  "carrierCount": 1,
+  "enabledCarriers": 1,
+  "carrierValidations": [
+    {
+      "carrierId": "default",
+      "carrierName": "Default Carrier Adapter",
+      "carrierType": "default",
+      "enabled": true,
+      "thresholdAdjustment": 1,
+      "carrierAdjustedThresholds": {
+        "minReplayCoverageRatio": 0.97,
+        "maxMissingFieldRate": 0.001,
+        "maxMisclassificationRate": 0.001,
+        "maxGeometryMismatchRate": 0.001,
+        "maxCategoryModeMismatchRate": 0.17378
+      },
+      "baseRates": {
+        "replayCoverageRatio": 1,
+        "missingFieldRate": 0,
+        "misclassificationRate": 0,
+        "geometryMismatchRate": 0,
+        "categoryModeMismatchRate": 0.41178
+      },
+      "adjustedRates": {
+        "replayCoverageRatio": 1,
+        "missingFieldRate": 0,
+        "misclassificationRate": 0,
+        "geometryMismatchRate": 0,
+        "categoryModeMismatchRate": 0.17178
+      },
+      "carrierChecks": {
+        "replayCoveragePass": true,
+        "missingFieldPass": true,
+        "misclassificationPass": true,
+        "geometryMismatchPass": true,
+        "categoryModeMismatchPass": true
+      },
+      "checksPass": true,
+      "noRegressionOnCategoryMode": true,
+      "validationPass": true,
+      "failureClass": "none"
+    }
+  ],
+  "wave6ThresholdsApplied": {
+    "minReplayCoverageRatio": 0.97,
+    "maxMissingFieldRate": 0.001,
+    "maxMisclassificationRate": 0.001,
+    "maxGeometryMismatchRate": 0.001,
+    "maxCategoryModeMismatchRate": 0.17378
+  },
+  "structuralDelta": {
+    "totals": {
+      "fixtureCount": 18,
+      "replayInputBlocks": 7521,
+      "replayBatchBlocks": 7521,
+      "missingFields": 0,
+      "misclassifications": 0,
+      "geometryMismatches": 0,
+      "categoryModeMismatches": 3097
+    },
+    "rates": {
+      "replayCoverageRatio": 1,
+      "missingFieldRate": 0,
+      "misclassificationRate": 0,
+      "geometryMismatchRate": 0,
+      "categoryModeMismatchRate": 0.41178
+    }
+  },
+  "regressionAnalysis": {
+    "totalRegressionCount": 0,
+    "allCarriersPass": true,
+    "noRegressionDetected": true
+  },
+  "productionGatingStatus": {
+    "pass": true,
+    "allCarriersPass": true,
+    "noRegression": true,
+    "readyForProduction": true
+  }
+}
