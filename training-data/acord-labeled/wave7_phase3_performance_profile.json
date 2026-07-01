@@ -1,0 +1,13 @@
+{
+  "timestamp": "2026-07-01T13:18:33.886Z",
+  "batchCount": 0,
+  "avgLatencyMs": 0,
+  "p95LatencyMs": 0,
+  "p99LatencyMs": 0,
+  "avgThroughputBlocksPerSec": 0,
+  "performanceBaselinesMet": {
+    "latencyP95": true,
+    "latencyP99": true,
+    "throughputMinimum": true
+  }
+}
