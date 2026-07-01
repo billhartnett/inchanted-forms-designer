@@ -1,0 +1,57 @@
+{
+  "generatedAt": "2026-07-01T12:47:37.747Z",
+  "phase1ToPhase2Comparison": {
+    "phase1SelectedProfile": {
+      "id": "w6-replay-iter-3",
+      "stageThreeGain": 0.034,
+      "fusionGain": 0.03,
+      "rerankingGain": 0.026,
+      "carrierAwareGain": 0.016,
+      "semanticGeometryCategoryFusionGain": 0.24
+    },
+    "phase1RawRates": {
+      "replayCoverageRatio": 1,
+      "missingFieldRate": 0,
+      "misclassificationRate": 0,
+      "geometryMismatchRate": 0,
+      "categoryModeMismatchRate": 0.41178
+    },
+    "phase1TunedRates": {
+      "replayCoverageRatio": 1,
+      "missingFieldRate": 0,
+      "misclassificationRate": 0,
+      "geometryMismatchRate": 0,
+      "categoryModeMismatchRate": 0.17178
+    },
+    "phase2RawRates": {
+      "replayCoverageRatio": 1,
+      "missingFieldRate": 0,
+      "misclassificationRate": 0,
+      "geometryMismatchRate": 0,
+      "categoryModeMismatchRate": 0.41178
+    },
+    "phase2AdjustedRates": {
+      "replayCoverageRatio": 1,
+      "missingFieldRate": 0,
+      "misclassificationRate": 0,
+      "geometryMismatchRate": 0,
+      "categoryModeMismatchRate": 0.17178
+    },
+    "improvements": {
+      "categoryModeMismatchRateImprovement": 0.24,
+      "categoryModeMismatchRatePercentReduction": 58.283549,
+      "phase1CategoryModeMismatchRate": 0.41178,
+      "phase2RawCategoryModeMismatchRate": 0.41178,
+      "phase2AdjustedCategoryModeMismatchRate": 0.17178,
+      "noRegression": true,
+      "allChecksPass": true
+    }
+  },
+  "envelopeApplicationDetails": {
+    "stageThreeGain": 0.034,
+    "fusionGain": 0.03,
+    "rerankingGain": 0.026,
+    "carrierAwareGain": 0.016,
+    "semanticGeometryCategoryFusionGain": 0.24
+  }
+}

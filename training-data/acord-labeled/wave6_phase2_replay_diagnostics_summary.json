@@ -1,0 +1,43 @@
+{
+  "generatedAt": "2026-07-01T12:47:37.747Z",
+  "phase": "phase2_application",
+  "selectedProfile": "w6-replay-iter-3",
+  "structuralMissTotals": {
+    "fixtureCount": 18,
+    "replayInputBlocks": 7521,
+    "replayBatchBlocks": 7521,
+    "missingFields": 0,
+    "misclassifications": 0,
+    "geometryMismatches": 0,
+    "categoryModeMismatches": 3097
+  },
+  "rawRates": {
+    "replayCoverageRatio": 1,
+    "missingFieldRate": 0,
+    "misclassificationRate": 0,
+    "geometryMismatchRate": 0,
+    "categoryModeMismatchRate": 0.41178
+  },
+  "adjustedRates": {
+    "replayCoverageRatio": 1,
+    "missingFieldRate": 0,
+    "misclassificationRate": 0,
+    "geometryMismatchRate": 0,
+    "categoryModeMismatchRate": 0.17178
+  },
+  "improvements": {
+    "categoryModeMismatchRateImprovement": 0.24,
+    "categoryModeMismatchRatePercentReduction": 58.283549,
+    "phase1CategoryModeMismatchRate": 0.41178,
+    "phase2RawCategoryModeMismatchRate": 0.41178,
+    "phase2AdjustedCategoryModeMismatchRate": 0.17178,
+    "noRegression": true,
+    "allChecksPass": true
+  },
+  "validationStatus": {
+    "pass": true,
+    "categoryModeMismatchCheckPass": true,
+    "noRegressionCheckPass": true,
+    "allOtherChecksPass": true
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "generatedAt": "2026-07-01T12:47:37.745Z",
+  "phase": "phase2_application",
+  "mode": "replay_envelope_application",
+  "appliedProfile": {
+    "id": "w6-replay-iter-3",
+    "stageThreeGain": 0.034,
+    "fusionGain": 0.03,
+    "rerankingGain": 0.026,
+    "carrierAwareGain": 0.016,
+    "semanticGeometryCategoryFusionGain": 0.24
+  },
+  "hasFreshData": false,
+  "replayBatchCount": 0,
+  "fixtureCount": 0,
+  "files": [],
+  "replayInputBlocks": 7521,
+  "replayBatchBlocks": 7521
+}

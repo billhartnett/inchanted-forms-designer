@@ -32,6 +32,7 @@
     "diag:replay:integration:wave6": "npm run build && node scripts/wave6_replay_integration.js",
     "diag:replay:integration:wave6:fast": "npm run build && cross-env WAVE6_REPLAY_MODE=fast_deterministic node scripts/wave6_replay_integration.js",
     "diag:replay:integration:wave6:strict": "npm run build && cross-env WAVE6_REPLAY_MODE=strict_live_host_only node scripts/wave6_replay_integration.js",
+    "diag:replay:phase2:application": "npm run build && node scripts/wave6_phase2_replay_application.js",
     "gate:anchors": "npm run build && node scripts/run-anchor-regression-gate.js"
   },
   "dependencies": {
