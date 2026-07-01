@@ -41,6 +41,12 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Install shared dependencies
+        run: npm --prefix shared install
+
+      - name: Install backend dependencies
+        run: npm --prefix backend/api install
+
       - name: Build shared
         run: npm --prefix shared run build
 
