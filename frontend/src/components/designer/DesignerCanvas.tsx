@@ -180,6 +180,7 @@ export function DesignerCanvas({
                     y={field.y}
                     rotation={field.rotation ?? 0}
                     opacity={field.opacity ?? 1}
+                    draggable
                     listening
                     onClick={(event) => {
                       event.cancelBubble = true;
@@ -188,6 +189,16 @@ export function DesignerCanvas({
                     onTap={(event) => {
                       event.cancelBubble = true;
                       selectField(field.id, Boolean(event.evt.shiftKey));
+                    }}
+                    onDragEnd={(event) => {
+                      // Update field position after drag
+                      const updateField = useDesignerStore.getState().updateField;
+                      if (updateField) {
+                        updateField(field.id, {
+                          x: event.target.x(),
+                          y: event.target.y(),
+                        }, { recordHistory: true });
+                      }
                     }}
                   >
                     <FieldRenderer field={field} />
@@ -240,9 +251,12 @@ export function DesignerCanvas({
                     </KonvaGroup>
                   );
                 })}
-                {selectedFields.map((f) => (
-                  <FieldControls key={f.id} field={f} />
-                ))}
+                {selectedFields.map((f) => {
+                  const stageRef = document.querySelector("canvas")?.parentElement?.querySelector("[role='presentation']");
+                  return (
+                    <FieldControls key={f.id} field={f} />
+                  );
+                })}
               </>
             ) : undefined
           }

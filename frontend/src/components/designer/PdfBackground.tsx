@@ -17,7 +17,19 @@ export function PdfBackground({ src, onLoaded }: PdfBackgroundProps) {
 
   if (!image) return null;
 
-  return <KonvaImage key={src} image={image} x={0} y={0} listening={false} />;
+  // Render PDF at full resolution, don't scale here
+  // The Stage handles zoom/pan, fields use normalized coordinates
+  return (
+    <KonvaImage
+      key={src}
+      image={image}
+      x={0}
+      y={0}
+      width={image.width}
+      height={image.height}
+      listening={false}
+    />
+  );
 }
 
 export default PdfBackground;

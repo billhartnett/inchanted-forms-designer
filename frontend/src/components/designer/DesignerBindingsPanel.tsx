@@ -1,12 +1,14 @@
 import { useMemo } from "react";
 import { useSelectedField } from "../../state/fieldStore";
 import { useSelectedFieldMapping } from "../../state/mappingStore";
+import { useMappingStore } from "../../state/mappingStore";
 import { MappingConfidence } from "../../mapping/MappingConfidence";
 import { MappingPanel } from "../../mapping/MappingPanel";
 
 export function DesignerBindingsPanel() {
   const selectedField = useSelectedField();
   const selectedMapping = useSelectedFieldMapping();
+  const updateMapping = useMappingStore((s) => s.updateMapping);
 
   const candidates = selectedMapping?.candidates ?? [];
   const chosenCandidate = selectedMapping?.chosenCandidate ?? null;
@@ -37,6 +39,16 @@ export function DesignerBindingsPanel() {
   const riskSeverity =
     (chosenCandidate?.riskFactors?.exposureSeverity ?? 0) +
     (chosenCandidate?.riskFactors?.hazardSeverity ?? 0);
+
+  const handleSelectCandidate = (candidate: any) => {
+    if (!selectedMapping) return;
+    
+    // Update mapping with chosen candidate
+    updateMapping(selectedMapping.fieldId, {
+      ...selectedMapping,
+      chosenCandidate: candidate,
+    });
+  };
 
   if (!selectedField) {
     return (
@@ -91,7 +103,7 @@ export function DesignerBindingsPanel() {
           </span>
         </div>
 
-        {/* ACORD suggestions */}
+        {/* ACORD suggestions with click handlers */}
         {topAcordCandidates.length > 0 && (
           <div style={{ marginBottom: 10 }}>
             <div
@@ -111,6 +123,7 @@ export function DesignerBindingsPanel() {
                 return (
                   <div
                     key={candidate.acordCode}
+                    onClick={() => handleSelectCandidate(candidate)}
                     style={{
                       display: "flex",
                       justifyContent: "space-between",
@@ -119,6 +132,20 @@ export function DesignerBindingsPanel() {
                       borderRadius: 8,
                       background: isChosen ? "#eff6ff" : "#ffffff",
                       border: `1px solid ${isChosen ? "#93c5fd" : "#e2e8f0"}`,
+                      cursor: "pointer",
+                      transition: "all 150ms ease",
+                    }}
+                    onMouseEnter={(e) => {
+                      if (!isChosen) {
+                        (e.currentTarget as HTMLElement).style.background = "#f0f9ff";
+                        (e.currentTarget as HTMLElement).style.borderColor = "#bfdbfe";
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!isChosen) {
+                        (e.currentTarget as HTMLElement).style.background = "#ffffff";
+                        (e.currentTarget as HTMLElement).style.borderColor = "#e2e8f0";
+                      }
                     }}
                   >
                     <div>
