@@ -1,0 +1,60 @@
+{
+  "report": "geometry_normalization_report",
+  "timestamp": "2026-07-01T00:00:00Z",
+  "status": "COMPLETED",
+  "summary": "DPI scaling and coordinate normalization restored across extraction pipeline. Bounding boxes are now correctly converted from Document Intelligence inch units to canvas pixel coordinates.",
+  "coordinate_system": {
+    "document_intelligence_unit": "inch",
+    "canvas_unit": "pixel",
+    "conversion": "pixel = inch * 96",
+    "standard_page_letter_px": { "width": 816, "height": 1056 },
+    "standard_page_letter_in": { "width": 8.5, "height": 11 }
+  },
+  "backend_normalization": {
+    "file": "backend/api/extractDocument/index.ts",
+    "function": "scaleBoundingBoxToPixels(bbox, unit)",
+    "logic": "If unit === 'inch': x *= 96, y *= 96, width *= 96, height *= 96. Otherwise passes through unchanged.",
+    "constants": {
+      "POINTS_PER_INCH": 72,
+      "CANVAS_DPI": 96,
+      "SCALE_FACTOR": 1.333
+    }
+  },
+  "page_dimensions": {
+    "file": "backend/api/extractDocument/index.ts",
+    "field": "pageDimensions in response",
+    "shape": "Array<{ page: number, width: number, height: number, unit: string }>",
+    "purpose": "Allows frontend to perform additional scaling when rendering PDF at different resolutions"
+  },
+  "frontend_normalization": {
+    "file": "frontend/src/designer/ai/PdfImportModal.tsx",
+    "function": "runAutoMapping() scaleX/scaleY calculation",
+    "logic": "Reads rendered image pixel size, divides by DI source size, applies scale to block bboxes",
+    "code_pattern": "scaleX = imageSize.width / sourcePageWidth; bbox.x = rawBbox.x * scaleX",
+    "status": "Already correctly implemented — handles all DPI conversions client-side for the designer import flow"
+  },
+  "geometry_utilities": {
+    "file": "frontend/src/utils/geometryNormalization.ts",
+    "status": "CREATED in previous session",
+    "functions": [
+      "normalizePageCoordinates(point, pageIndex, pageSize, canvasScale, pageOffsets)",
+      "denormalizePageCoordinates(point, pageIndex, pageSize, canvasScale, pageOffsets)",
+      "scaleBoundingBox(bbox, pageIndex, pageSize, canvasScale, pageOffsets)",
+      "computePageOffsets(pageCount, pageHeight, paddingBetweenPages)",
+      "calculateTotalCanvasHeight(pageCount, pageHeight, paddingBetweenPages)",
+      "getPageAtYCoordinate(y, pageHeight, paddingBetweenPages)",
+      "constrainFieldToPage(field, pageIndex, pageSize, pageOffsets)",
+      "getBoundingBoxIntersection(bbox, pageIndex, pageSize, pageOffsets)"
+    ]
+  },
+  "multi_page_support": {
+    "status": "SUPPORTED via pageIndex field on ExtractedBlock and Field",
+    "page_offset_calculation": "computePageOffsets() in frontend/src/utils/geometryNormalization.ts",
+    "designer_store_filtering": "visibleFields filter by field.pageIndex === currentPdfPage"
+  },
+  "validation": {
+    "mock_page_dimensions": "816 × 1056 pixels (standard Letter at 96 DPI)",
+    "mock_block_positions": "Coordinates in pixel units matching canvas coordinate system",
+    "real_extraction_conversion": "scaleBoundingBoxToPixels() applied during block normalization"
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "report": "acord_metadata_reintegration_report",
+  "timestamp": "2026-07-01T00:00:00Z",
+  "status": "COMPLETED",
+  "summary": "ACORD metadata provider restored end-to-end. extractDocument now delivers FieldMapping[] with ranked ACORD candidates. DesignerBindingsPanel accepts candidate selections and persists them via mappingStore.chooseCandidate().",
+  "provider_chain": {
+    "step1_extraction": {
+      "endpoint": "POST /api/extractDocument",
+      "output": "blocks: ExtractedBlock[]",
+      "acord_content": "None yet — raw OCR blocks with field types"
+    },
+    "step2_mapping": {
+      "function": "enrichWithMappingEngine() inside extractDocument handler",
+      "calls": "mapBlocksWithAcord(blocks, { context: 'document-extraction' })",
+      "output": "mappings: FieldMapping[] with suggestions: AcordLabelCandidate[]",
+      "acord_content": "Each FieldMapping carries ranked ACORD candidates with acordCode, label, description, confidenceScore, source"
+    },
+    "step3_frontend_import": {
+      "component": "frontend/src/designer/ai/PdfImportModal.tsx",
+      "action": "Calls extractText then mapFields to get FieldMapping[], then initializeMappings(documentId, mappings)",
+      "populates": "mappingStore.mappings — keyed by extractionBlockId",
+      "note": "PdfImportModal uses its own two-step flow (extractText + mapFields) which is the primary designer import path. extractDocument is used by DocumentIngestionTester and external consumers."
+    },
+    "step4_field_link": {
+      "function": "linkFieldToMapping(fieldId, extractionBlockId)",
+      "called_by": "PdfImportModal after addField() for each imported field",
+      "result": "mappingStore.mappings[blockId].fieldId linked to canvas field"
+    },
+    "step5_binding_panel": {
+      "component": "frontend/src/components/designer/DesignerBindingsPanel.tsx",
+      "reads_via": "useSelectedFieldMapping() hook → reads mappings[field.metadata.extractionBlockId]",
+      "displays": "topAcordCandidates (top 3 by confidenceScore), carrierCandidates",
+      "action": "onClick on candidate row → chooseCandidate(extractionBlockId, acordCode)"
+    },
+    "step6_persistence": {
+      "function": "chooseCandidate(extractionBlockId, acordCode)",
+      "effect": "Updates mappingStore decisionGraph.mappings[blockId].chosenCandidateCode",
+      "triggers": "useSelectedFieldMapping recomputes chosenCandidate → panel updates highlighting"
+    }
+  },
+  "acord_candidate_schema": {
+    "acordCode": "string — e.g. 'ApplicantName', 'MailingAddress', 'PolicyEffectiveDate'",
+    "label": "string — human-readable display label",
+    "description": "string | undefined — longer description from ACORD ontology",
+    "confidenceScore": "number 0-1 — fusion score from Wave 8 multi-stage pipeline",
+    "source": "\"ai\" | \"dictionary\" | \"heuristic\" | \"manual\""
+  },
+  "field_type_classification": {
+    "provider": "backend/extraction/semanticInference.ts → inferSemanticFields()",
+    "types_detected": ["text", "date", "numeric", "checkbox", "radio", "signature"],
+    "rules": {
+      "checkbox": "block.type === 'checkbox' OR checkbox symbol in text",
+      "radio": "block.type === 'radio' OR yes/no pattern in text",
+      "signature": "block.type === 'signature' OR 'signature' keyword in text",
+      "date": "'date|dob|birth|effective|expiration' in text or ACORD label",
+      "numeric": "'amount|premium|deductible|employees|zip' in text or ACORD label",
+      "text": "default fallback"
+    },
+    "propagation": "fieldTypes map (blockId → fieldType) returned in extractDocument response; also used in FieldRenderer for canvas display"
+  },
+  "structural_delta": {
+    "shape": {
+      "addedBlocks": "number",
+      "removedBlocks": "number",
+      "changedBlocks": "number",
+      "totalBlocks": "number",
+      "deltaVersion": "number",
+      "baselineDocumentId": "string | null"
+    },
+    "status": "First-extraction delta always has removedBlocks=0, changedBlocks=0. Full drift detection requires prior snapshot via detectFamilyDrift/detectCrossDocumentDrift endpoints."
+  },
+  "confidence_thresholds": {
+    "accepted": 0.8,
+    "review": 0.6,
+    "rejected": 0.45,
+    "source": "DEFAULT_THRESHOLDS in mappingStore.ts, overrideable via calibrationProfile"
+  },
+  "validation": {
+    "binding_panel_click": "Fixed — chooseCandidate() correctly called on candidate click",
+    "mapping_store_init": "initializeMappings() called after import with all FieldMapping[] data",
+    "field_link": "linkFieldToMapping() connects canvas field ID to extraction block ID",
+    "acord_candidates_populated": "When backend mapFields runs, suggestions array populated with ranked candidates",
+    "backend_tsc": "PASSED",
+    "frontend_build": "PASSED"
+  }
+}

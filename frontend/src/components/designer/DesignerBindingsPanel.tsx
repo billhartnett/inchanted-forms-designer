@@ -8,7 +8,7 @@ import { MappingPanel } from "../../mapping/MappingPanel";
 export function DesignerBindingsPanel() {
   const selectedField = useSelectedField();
   const selectedMapping = useSelectedFieldMapping();
-  const updateMapping = useMappingStore((s) => s.updateMapping);
+  const chooseCandidate = useMappingStore((s) => s.chooseCandidate);
 
   const candidates = selectedMapping?.candidates ?? [];
   const chosenCandidate = selectedMapping?.chosenCandidate ?? null;
@@ -41,13 +41,9 @@ export function DesignerBindingsPanel() {
     (chosenCandidate?.riskFactors?.hazardSeverity ?? 0);
 
   const handleSelectCandidate = (candidate: any) => {
-    if (!selectedMapping) return;
-    
-    // Update mapping with chosen candidate
-    updateMapping(selectedMapping.fieldId, {
-      ...selectedMapping,
-      chosenCandidate: candidate,
-    });
+    const extractionBlockId = selectedField?.metadata?.extractionBlockId;
+    if (!extractionBlockId || !candidate?.acordCode) return;
+    chooseCandidate(extractionBlockId, candidate.acordCode);
   };
 
   if (!selectedField) {
