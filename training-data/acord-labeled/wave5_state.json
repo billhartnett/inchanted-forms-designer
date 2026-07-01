@@ -1,12 +1,25 @@
 {
-  "wave": "6",
-  "status": "wave6_phase1_active",
+  "wave": "7",
+  "status": "wave7_phase1_active",
+  "phase": "production_gating",
+  "executionMode": "strict_live_host_only",
+  "productionGating": {
+    "liveHostReplayValidation": {
+      "pointer": "training-data/acord-labeled/wave7_phase1_livehost_replay_validation_report.json",
+      "diagnosticsPointer": "training-data/acord-labeled/wave7_phase1_livehost_replay_diagnostics.json",
+      "integrationPointer": "training-data/acord-labeled/wave7_phase1_livehost_replay_integration_report.md",
+      "regressionPointer": "training-data/acord-labeled/wave7_phase1_livehost_replay_regression_report.json"
+    },
+    "wave6ThresholdsApplied": {
+      "phase3ThresholdsTightened": "training-data/acord-labeled/wave6_phase3_threshold_tightening_effects.json",
+      "phase4DiagnosticsStabilized": "training-data/acord-labeled/wave6_phase4_diagnostics_stabilization_effects.json"
+    }
+  },
   "focusAreas": [
-    "semantic_architecture_upgrades",
-    "geometry_architecture_upgrades",
-    "category_mode_architecture_improvements",
-    "mapping_engine_reflow",
-    "replay_driven_tuning"
+    "production_gating",
+    "live_host_replay_validation",
+    "threshold_validation_under_live_conditions",
+    "carrier_adapter_tuning"
   ],
   "constraints": {
     "wave48BaselineFrozen": true,
@@ -15,7 +28,9 @@
       "review": 8,
       "rejected": 5
     },
-    "wave4TuningReopened": false
+    "wave4TuningReopened": false,
+    "wave5ToWave6PathOnly": true,
+    "wave6ExitGatesPassed": true
   },
   "artifacts": {
     "plan": "training-data/acord-labeled/WAVE5_ARCHITECTURE_PLAN.md",
