@@ -1,0 +1,28 @@
+{
+  "timestamp": "2026-07-01T13:45:16.783Z",
+  "wave": 8,
+  "phase": "exit",
+  "baseline": "wave6_phase4",
+  "finalCategoryModeMismatchRate": 0.17178,
+  "maxThreshold": 0.17378,
+  "withinThreshold": true,
+  "drift": {
+    "maxDrift": 0.00000918480541864386,
+    "avgDrift": 0.0000048072951079308755,
+    "driftThreshold": 0.0001,
+    "stableDrift": true
+  },
+  "cycles": {
+    "longRun": 10,
+    "stress": 5,
+    "total": 15
+  },
+  "regressions": 0,
+  "summary": {
+    "structural_delta_stable": true,
+    "category_mode_maintained": true,
+    "drift_minimal": true,
+    "zero_regressions": true,
+    "overall_pass": true
+  }
+}
