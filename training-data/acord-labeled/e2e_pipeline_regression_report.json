@@ -1,0 +1,31 @@
+{
+  "timestamp": "2026-07-01T15:20:43.180Z",
+  "regressionDetection": {
+    "regressionCount": {
+      "expected": 0,
+      "actual": 0,
+      "detected": false
+    },
+    "routingRegressions": 0,
+    "mappingRegressions": 0,
+    "strictModeRegressions": 0
+  },
+  "validationDetails": {
+    "regressionCount": {
+      "expected": 0,
+      "actual": 0,
+      "passed": true
+    },
+    "diagnosticsCoverage": {
+      "expected": 0.9,
+      "actual": 1,
+      "passed": true
+    },
+    "categoryModeMismatchRate": {
+      "expected": 0.17378,
+      "actual": 0.17178,
+      "passed": false
+    }
+  },
+  "regressionStatus": "REGRESSIONS_DETECTED"
+}

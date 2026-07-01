@@ -1,14 +1,38 @@
 {
-  "wave": "7",
-  "status": "wave7_phase1_active",
-  "phase": "production_gating",
-  "executionMode": "strict_live_host_only",
+{  "wave": "production",
+  "status": "e2e_testing_active",
+  "phase": "full_pipeline_e2e_testing",
+  "executionMode": "continuous_e2e_monitoring",
+  "e2ePipelineTesting": {
+    "ingestionTesting": "backend/api/e2e-tests/e2e_ingestion_test.js",
+    "routingTesting": "backend/api/e2e-tests/e2e_routing_test.js",
+    "mappingTesting": "backend/api/e2e-tests/e2e_mapping_test.js",
+    "diagnosticsTesting": "backend/api/e2e-tests/e2e_diagnostics_test.js",
+    "strictModeE2E": "backend/api/e2e-tests/e2e_strict_mode_test.js",
+    "pipelineRunner": "backend/api/e2e-tests/e2e_pipeline_runner.js",
+    "pipelineDashboard": "backend/api/e2e-tests/e2e_pipeline_dashboard.js"
+  },
+  "e2eArtifacts": {
+    "pipelineManifest": "training-data/acord-labeled/e2e_pipeline_manifest.json",
+    "healthReport": "training-data/acord-labeled/e2e_pipeline_health_report.json",
+    "regressionReport": "training-data/acord-labeled/e2e_pipeline_regression_report.json",
+    "diagnosticsReport": "training-data/acord-labeled/e2e_pipeline_diagnostics_report.json",
+    "performanceReport": "training-data/acord-labeled/e2e_pipeline_performance_report.json",
+    "integrationReport": "training-data/acord-labeled/e2e_pipeline_integration_report.md"
+  },
   "productionGating": {
     "liveHostReplayValidation": {
       "pointer": "training-data/acord-labeled/wave7_phase1_livehost_replay_validation_report.json",
       "diagnosticsPointer": "training-data/acord-labeled/wave7_phase1_livehost_replay_diagnostics.json",
       "integrationPointer": "training-data/acord-labeled/wave7_phase1_livehost_replay_integration_report.md",
       "regressionPointer": "training-data/acord-labeled/wave7_phase1_livehost_replay_regression_report.json"
+    },
+    "carrierAdapterTuning": {
+      "validationPointer": "training-data/acord-labeled/wave7_phase2_carrier_adapter_validation.json",
+      "structuralDeltaPointer": "training-data/acord-labeled/wave7_phase2_carrier_adapter_structural_delta.json",
+      "diagnosticsPointer": "training-data/acord-labeled/wave7_phase2_carrier_adapter_diagnostics_summary.json",
+      "regressionPointer": "training-data/acord-labeled/wave7_phase2_carrier_adapter_regression_report.json",
+      "integrationPointer": "training-data/acord-labeled/wave7_phase2_carrier_adapter_integration_report.md"
     },
     "wave6ThresholdsApplied": {
       "phase3ThresholdsTightened": "training-data/acord-labeled/wave6_phase3_threshold_tightening_effects.json",

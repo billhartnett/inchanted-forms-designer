@@ -1,0 +1,36 @@
+{
+  "timestamp": "2026-07-01T15:20:43.181Z",
+  "latencyMetrics": {
+    "ingestionLatency": {
+      "value": 90,
+      "threshold": 150,
+      "withinThreshold": true
+    },
+    "routingLatency": {
+      "value": 25,
+      "threshold": 50,
+      "withinThreshold": true
+    },
+    "mappingLatency": {
+      "value": 42,
+      "threshold": 100,
+      "withinThreshold": true
+    },
+    "diagnosticsLatency": {
+      "value": 12,
+      "threshold": 50,
+      "withinThreshold": true
+    },
+    "strictModeLatency": {
+      "value": 18,
+      "threshold": 50,
+      "withinThreshold": true
+    },
+    "totalLatency": {
+      "value": 187,
+      "threshold": 400,
+      "withinThreshold": true
+    }
+  },
+  "performanceStatus": "ACCEPTABLE"
+}
