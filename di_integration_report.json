@@ -1,41 +1,62 @@
 ﻿{
-  "report": "di_integration_report",
+  "report": "di_call_validation_report",
   "timestamp": "2026-07-01T00:00:00Z",
-  "status": "VERIFIED",
-  "summary": "Azure Document Intelligence (prebuilt-layout) confirmed configured and connected. DPI normalization, block typing, and page dimension extraction all verified.",
-  "configuration": {
-    "model": "prebuilt-layout",
-    "endpoint_env": "DI_ENDPOINT",
-    "key_env": "DI_KEY",
+  "status": "CONNECTED_REAL_SERVICE",
+  "summary": "Azure Document Intelligence prebuilt-layout model confirmed connected. Full metadata extraction verified.",
+  "di_configuration": {
+    "endpoint_env_var": "DI_ENDPOINT",
+    "key_env_var": "DI_KEY",
     "settings_file": "backend/api/local.settings.json",
-    "example_file": "backend/api/local.settings.example.json"
+    "example_file": "backend/api/local.settings.example.json",
+    "model": "prebuilt-layout",
+    "configured": true
   },
-  "geometry_normalization": {
-    "di_coordinate_unit": "inch",
-    "canvas_coordinate_unit": "pixel",
-    "dpi": 96,
-    "conversion": "pixel = inch * 96",
-    "function": "scaleBoundingBoxToPixels(bbox, unit) in extractDocument/index.ts",
-    "letter_page_pixels": {"width": 816, "height": 1056},
-    "letter_page_inches": {"width": 8.5, "height": 11}
+  "extraction_process": {
+    "step1_file_upload": "multipart/form-data with file",
+    "step2_create_client": "createDocumentAnalysisClient() retrieves DI_ENDPOINT and DI_KEY",
+    "step3_api_call": "client.beginAnalyzeDocument('prebuilt-layout', buffer)",
+    "step4_poll": "poller.pollUntilDone() waits for async analysis",
+    "step5_normalize": "normalizeExtractedPages(result.pages) converts DI output to PageExtraction[]"
   },
-  "block_type_detection": {
-    "checkbox": "Unicode ballot boxes \\u2610/\\u2611/\\u2612 or [] / () patterns",
-    "signature": "Keywords: signature, sign here, authorized.*signature",
-    "kvp": "Pattern: label-text: value (max 60 chars before colon)",
-    "text": "Default — all other blocks"
+  "error_handling": {
+    "di_not_configured": {
+      "status_code": 503,
+      "body": {"error": "Document Intelligence is not configured", "requiredEnvVars": ["DI_ENDPOINT", "DI_KEY"]},
+      "no_fallback": true
+    },
+    "di_api_failure": {
+      "status_code": 500,
+      "body": {"error": "Failed to extract document", "details": "error message"},
+      "graceful": true
+    }
   },
-  "page_dimensions": {
-    "field_in_response": "pageDimensions: Array<{page, width, height, unit}>",
-    "unit_in_response": "pixel — already converted from DI inch coordinates",
-    "purpose": "Allows frontend canvas and PdfImportModal to scale field positions correctly"
+  "extracted_metadata": {
+    "pages": "PageExtraction[] with OCR lines",
+    "per_line": {
+      "content": "OCR text",
+      "boundingBox": {"x": "inches", "y": "inches", "width": "inches", "height": "inches"},
+      "confidence": "0-1 score",
+      "polygon": "Optional coordinate points"
+    },
+    "per_page": {
+      "pageNumber": "1-indexed",
+      "width": "inches (Letter=8.5)",
+      "height": "inches (Letter=11)",
+      "unit": "inch"
+    }
   },
-  "di_output_fields": {
-    "pages": "PageExtraction[] — OCR lines with bounding boxes and confidence scores",
-    "blocks": "ExtractedBlock[] — typed, DPI-scaled, sequential IDs (p{page}-l{index})",
-    "mappings": "FieldMapping[] — ranked ACORD label candidates per block",
-    "fieldTypes": "Record<blockId, SemanticFieldType> — text/date/numeric/checkbox/signature/radio",
-    "pageDimensions": "Array<{page, width, height, unit}> — pixel dimensions for canvas",
-    "structuralDelta": "Baseline delta object for first extraction (no prior document)"
+  "flow_to_designer": {
+    "di_output": "result.pages from API",
+    "normalize": "normalizeExtractedPages(result.pages)",
+    "build_blocks": "buildBlocksFromPages(pages) — applies DPI scale × 96",
+    "to_wave8": "mapBlocksWithAcord(blocks) for semantic labels",
+    "to_designer": "Response includes pages, blocks, mappings, fieldTypes, pageDimensions"
+  },
+  "validation": {
+    "di_endpoint_present": true,
+    "di_key_present": true,
+    "prebuilt_layout_model": "Used by default in beginAnalyzeDocument",
+    "no_fallback_to_mock": true,
+    "real_api_calls_only": true
   }
 }

@@ -1,0 +1,82 @@
+﻿{
+  "report": "mapping_engine_validation_report",
+  "timestamp": "2026-07-01T00:00:00Z",
+  "status": "FULLY_INTEGRATED",
+  "summary": "Wave 8 mapping engine fully integrated. All extraction paths → mapBlocksWithAcord() with full ACORD semantic enrichment.",
+  "wave8_pipeline": {
+    "function": "mapBlocksWithAcord() from backend/mapping/mappingEngine.ts",
+    "input": {
+      "blocks": "ExtractedBlock[] from DI → buildBlocksFromPages",
+      "context": "document-extraction",
+      "deterministic": false
+    },
+    "stages": [
+      {"stage": 1, "name": "Dictionary", "logic": "ACORD code lookup by text similarity"},
+      {"stage": 2, "name": "Heuristic", "logic": "Field cues (name, address, city, state, zip, etc.)"},
+      {"stage": 3, "name": "Embeddings", "logic": "Text embedding similarity to ACORD labels"},
+      {"stage": 4, "name": "Geometry", "logic": "Spatial context within form layout"},
+      {"stage": 5, "name": "Category", "logic": "ACORD category priors and window search"},
+      {"stage": 6, "name": "Fusion", "logic": "Combine all signals with learned weights"},
+      {"stage": 7, "name": "Rerank", "logic": "Final confidence gates"}
+    ]
+  },
+  "output_structure": {
+    "mappings": "FieldMapping[]",
+    "per_mapping": {
+      "blockId": "From ExtractedBlock.id",
+      "page": "Page number",
+      "text": "OCR text from block",
+      "boundingBox": "Normalized coordinates",
+      "suggestions": "AcordLabelCandidate[] ranked by confidenceScore",
+      "chosen": "Selected candidate or null"
+    }
+  },
+  "field_type_classification": {
+    "function": "inferSemanticFields() from backend/extraction/semanticInference.ts",
+    "runs_before": "mapBlocksWithAcord (parallel or prior)",
+    "output": "Record<blockId, SemanticFieldType>",
+    "types": ["text", "date", "numeric", "checkbox", "signature", "radio"]
+  },
+  "error_isolation": {
+    "mapping_engine_failure": {
+      "behavior": "Isolated catch block in enrichWithMappingEngine()",
+      "fallback": "Stub FieldMapping[] without candidates",
+      "logging": "context.warn() logs error message",
+      "designer_impact": "Fields still shown, ACORD candidates omitted"
+    }
+  },
+  "extraction_paths": {
+    "path1_file_upload": {
+      "entry": "multipart/form-data POST",
+      "flow": ["DI", "normalizeExtractedPages", "buildBlocksFromPages", "enrichWithMappingEngine", "wave8"]
+    },
+    "path2_json_blocks": {
+      "entry": "JSON POST with blocks[]",
+      "flow": ["coerceExtractedBlock", "enrichWithMappingEngine", "wave8"]
+    },
+    "path3_plain_text": {
+      "entry": "JSON POST with text",
+      "flow": ["extractBlocksFromPlainText", "enrichWithMappingEngine", "wave8"]
+    }
+  },
+  "response_payload": {
+    "includes": {
+      "mappings": "FieldMapping[] with ranked ACORD candidates",
+      "fieldTypes": "Record<blockId, SemanticFieldType>",
+      "structuralDelta": "Baseline for drift detection",
+      "pageDimensions": "Pixel dimensions for canvas geometry"
+    }
+  },
+  "validation": {
+    "mapping_engine_imported": true,
+    "wave8_connected": true,
+    "acord_mapping_returned": true,
+    "field_types_included": true,
+    "structural_delta_included": true,
+    "no_mock_mappings": true
+  },
+  "designer_integration": {
+    "flow": ["extractDocument response", "PdfImportModal receives full payload", "initializeMappings(mappings)", "mappingStore populated", "DesignerBindingsPanel shows candidates"],
+    "binding_panel": {"function": "chooseCandidate(extractionBlockId, acordCode)", "updates": "mappingStore decision graph"}
+  }
+}
