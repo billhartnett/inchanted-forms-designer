@@ -59,11 +59,25 @@ jobs:
         run: npm --prefix backend/api run build
 
       - name: Run Wave 6 replay fast mode
-        run: npm --prefix backend/api run diag:replay:integration:wave6:fast
+        shell: bash
+        run: |
+          cd backend/api
+          WAVE6_REPLAY_MODE=fast_deterministic \
+            WAVE5_GEOMETRY_ENABLED=1 \
+            WAVE5_CATEGORY_MODE_ENABLED=1 \
+            WAVE5_REFLOW_ENABLED=1 \
+            node scripts/wave6_replay_integration.js
 
       - name: Run Wave 6 replay strict mode when enforced
         if: env.ENFORCE_STRICT == 'true'
-        run: npm --prefix backend/api run diag:replay:integration:wave6:strict
+        shell: bash
+        run: |
+          cd backend/api
+          WAVE6_REPLAY_MODE=strict_live_host_only \
+            WAVE5_GEOMETRY_ENABLED=1 \
+            WAVE5_CATEGORY_MODE_ENABLED=1 \
+            WAVE5_REFLOW_ENABLED=1 \
+            node scripts/wave6_replay_integration.js
 
       - name: Upload Wave 6 replay artifacts
         if: always()
