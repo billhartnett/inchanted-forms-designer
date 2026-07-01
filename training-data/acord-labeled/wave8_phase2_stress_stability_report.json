@@ -1,0 +1,44 @@
+{
+  "timestamp": "2026-07-01T13:41:04.610Z",
+  "cycles": 5,
+  "metrics": {
+    "avgLatencyMs": 0,
+    "latencyThreshold": 150,
+    "failures": 0,
+    "pass": true
+  },
+  "cycleResults": [
+    {
+      "cycle": 1,
+      "latencyMs": 0,
+      "pass": true,
+      "timestamp": "2026-07-01T13:33:04.609Z"
+    },
+    {
+      "cycle": 2,
+      "latencyMs": 0,
+      "pass": true,
+      "timestamp": "2026-07-01T13:35:04.609Z"
+    },
+    {
+      "cycle": 3,
+      "latencyMs": 0,
+      "pass": true,
+      "timestamp": "2026-07-01T13:37:04.609Z"
+    },
+    {
+      "cycle": 4,
+      "latencyMs": 0,
+      "pass": true,
+      "timestamp": "2026-07-01T13:39:04.609Z"
+    },
+    {
+      "cycle": 5,
+      "latencyMs": 0,
+      "pass": true,
+      "timestamp": "2026-07-01T13:41:04.609Z"
+    }
+  ],
+  "regressionCount": 0,
+  "allCyclesPass": true
+}
