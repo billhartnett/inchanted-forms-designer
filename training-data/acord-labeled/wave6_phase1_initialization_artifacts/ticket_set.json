@@ -1,0 +1,16 @@
+{
+  "phase": "wave6_phase1",
+  "program": "replay-driven-tuning",
+  "tickets": [
+    {"id":"W6-P1-001","title":"Replay harness seed control","area":"replay","priority":"high","status":"planned"},
+    {"id":"W6-P1-002","title":"Replay threshold policy","area":"replay","priority":"high","status":"planned"},
+    {"id":"W6-P1-003","title":"Strict failure telemetry carry-forward","area":"diagnostics","priority":"high","status":"planned"},
+    {"id":"W6-P1-004","title":"CI replay nightly gate","area":"ci","priority":"medium","status":"planned"},
+    {"id":"W6-P1-005","title":"Release/sprint-exit replay enforcement","area":"ci","priority":"medium","status":"planned"},
+    {"id":"W6-P1-006","title":"Replay regression report schema","area":"reporting","priority":"medium","status":"planned"}
+  ],
+  "constraints": {
+    "wave48BaselineFrozen": true,
+    "wave4TuningReopened": false
+  }
+}

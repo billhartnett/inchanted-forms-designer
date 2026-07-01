@@ -13,6 +13,38 @@ export async function mapBlocksWithAcord(
     familyId?: string;
     semanticMemorySnapshot?: MappingPersistencePayload["semanticMemorySnapshot"];
     semanticMemoryDecisions?: MappingPersistencePayload["semanticMemoryDecisions"];
+    layoutLmPrimaryClassifier?: boolean;
+    wave5GeometryEnabled?: boolean;
+    wave5CategoryModeEnabled?: boolean;
+    wave5ReflowEnabled?: boolean;
+    wave5TuningProfile?: {
+      stageOneBaseWeight?: number;
+      stageOneSemanticWeight?: number;
+      stageTwoStageOneWeight?: number;
+      stageTwoGeometryWeight?: number;
+      stageThreeStageTwoWeight?: number;
+      stageThreeCategoryWeight?: number;
+      stageThreeBias?: number;
+      fusionSemanticWeight?: number;
+      fusionGeometryWeight?: number;
+      fusionCategoryWeight?: number;
+      contextBoostScale?: number;
+      carrierBaseBoost?: number;
+      carrierTokenBoost?: number;
+      carrierPolicyBoost?: number;
+    };
+    layoutLmByBlock?: Record<
+      string,
+      {
+        page: number;
+        tokenCount: number;
+        topPredictions: Array<{
+          eLabelName: string;
+          logit: number;
+          probability: number;
+        }>;
+      }
+    >;
     carrierAdapterOverrides?: MappingPersistencePayload["carrierAdapterOverrides"];
     underwritingRuleOverrides?: MappingPersistencePayload["underwritingRuleOverrides"];
   },

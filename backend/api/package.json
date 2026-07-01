@@ -12,6 +12,20 @@
     "diag:mapping": "npm run build && node scripts/run-mapping-diagnostics.js",
     "diag:mapping:all": "npm run build && node scripts/run-mapping-diagnostics.js --all",
     "diag:root-cause": "npm run build && node scripts/run-root-cause-eval.js",
+    "diag:load": "npm run build && node scripts/run-wave49-load-validation.js",
+    "diag:geometry": "npm run build && node scripts/run-wave5-geometry-validation.js",
+    "diag:geometry:integration": "npm run build && node scripts/run-wave5-geometry-integration.js",
+    "diag:geometry:sprint2": "npm run build && node scripts/sprint2_geometry_regression_runner.js",
+    "diag:category:sprint3": "npm run build && node scripts/sprint3_category_mode_validation_runner.js --mode sprint3_category_full",
+    "diag:category:integration": "npm run build && node scripts/run-wave5-category-mode-integration.js",
+    "diag:reflow:sprint4": "npm run build && node scripts/sprint4_reflow_validation_runner.js",
+    "diag:reflow:integration": "npm run build && node scripts/run-wave5-reflow-integration.js",
+    "diag:tuning:sprint5": "npm run build && node scripts/sprint5_tuning_validation_runner.js",
+    "diag:tuning:integration": "npm run build && node scripts/run-wave5-tuning-integration.js",
+    "diag:tuning:sprint5:fast": "npm run build && cross-env SPRINT5_TUNING_MODE=fast_deterministic node scripts/sprint5_tuning_validation_runner.js",
+    "diag:tuning:sprint5:strict": "npm run build && cross-env SPRINT5_TUNING_MODE=strict_live_host_only node scripts/sprint5_tuning_validation_runner.js",
+    "diag:tuning:integration:fast": "npm run build && cross-env SPRINT5_TUNING_MODE=fast_deterministic node scripts/run-wave5-tuning-integration.js",
+    "diag:tuning:integration:strict": "npm run build && cross-env SPRINT5_TUNING_MODE=strict_live_host_only node scripts/run-wave5-tuning-integration.js",
     "gate:anchors": "npm run build && node scripts/run-anchor-regression-gate.js"
   },
   "dependencies": {
@@ -23,6 +37,7 @@
   "devDependencies": {
     "@types/node": "^20.0.0",
     "azure-functions-core-tools": "^4.12.0",
+    "cross-env": "^7.0.3",
     "typescript": "^5.4.0"
   }
 }
