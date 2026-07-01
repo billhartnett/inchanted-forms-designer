@@ -1,0 +1,167 @@
+{
+  "timestamp": "2026-07-01T19:27:00Z",
+  "operation": "Backend Restart Validation",
+  "status": "PARTIAL - Backend initializing",
+  "backend_build_validation": {
+    "typescript_compilation": {
+      "status": "PASSED",
+      "errors": 0,
+      "warnings": 0,
+      "timestamp": "2026-07-01T19:26:30Z",
+      "location": "backend/api"
+    },
+    "build_command": "npm run build",
+    "build_steps": [
+      {
+        "step": "Shared types",
+        "command": "npm --prefix ../../shared run build",
+        "status": "PASSED"
+      },
+      {
+        "step": "Backend TypeScript",
+        "command": "tsc -p tsconfig.json",
+        "status": "PASSED"
+      }
+    ]
+  },
+  "backend_artifacts": {
+    "dist_folder": "Fresh - no stale compiled code",
+    ".func_folder": "Fresh - no stale Azure Functions cache",
+    "node_modules": "Fresh - clean install",
+    "compiled_output": "Ready at backend/api/dist"
+  },
+  "backend_startup": {
+    "command": "func start",
+    "environment": "FUNCTIONS_WORKER_RUNTIME=node",
+    "port": 7071,
+    "status": "INITIALIZING",
+    "log_output": [
+      "✓ Azure Functions Core Tools 4.12.0",
+      "✓ Host lock lease acquired",
+      "✓ Reading configuration from host.json",
+      "✓ Building host",
+      "✓ Initializing Host",
+      "⏳ Functions being loaded",
+      "(Awaiting listener bind notification)"
+    ]
+  },
+  "expected_endpoints": [
+    "http://localhost:7071/api/getHealth",
+    "http://localhost:7071/api/extractText",
+    "http://localhost:7071/api/extractDocument",
+    "http://localhost:7071/api/mapFields",
+    "http://localhost:7071/api/getMetrics"
+  ],
+  "wave8_pipeline_components": {
+    "di_integration": {
+      "status": "Code built",
+      "component": "Azure Document Intelligence client",
+      "endpoint": "backend/api/extractDocument/index.ts",
+      "notes": "Configured to fail with 503 if DI_ENDPOINT/DI_KEY not set (no mock fallback)"
+    },
+    "mapping_engine": {
+      "status": "Code built",
+      "component": "mapBlocksWithAcord from Wave 8",
+      "endpoint": "backend/mapping/mappingEngine.ts",
+      "error_isolation": "Catches errors and returns stub mappings rather than crashing"
+    },
+    "layoutlmv3": {
+      "status": "Code built",
+      "component": "evaluateLayoutLmAtPageLevel",
+      "feature": "Field type classification (text, date, numeric, checkbox, signature, radio)"
+    }
+  },
+  "semantic_metadata_extraction": {
+    "blocked_types_detected": {
+      "checkbox": "Via pattern matching in OCR text",
+      "signature": "Via pattern matching in OCR text",
+      "kvp": "Via key:value split detection"
+    },
+    "field_type_inference": {
+      "text": "Default for unclassified",
+      "date": "LayoutLMv3 + heuristic patterns",
+      "numeric": "LayoutLMv3 + heuristic patterns",
+      "checkbox": "Type detection + state tracking",
+      "signature": "Type detection + state tracking",
+      "radio": "Type detection via geometry"
+    },
+    "acord_mapping": {
+      "strategy": "Dictionary → Heuristic → Embeddings → Geometry → Category → Fusion → Re-rank",
+      "output_fields": [
+        "acordCode",
+        "label",
+        "confidenceScore",
+        "source (dictionary|heuristic|embeddings|geometry|category|fusion)",
+        "rationale"
+      ]
+    }
+  },
+  "response_structure": {
+    "extractDocument_response": {
+      "documentId": "UUID",
+      "fileName": "string",
+      "extractionMethod": "document-intelligence-wave8",
+      "extractedAt": "ISO timestamp",
+      "pages": "OCR page array",
+      "blocks": [
+        {
+          "id": "p{page}-l{line}",
+          "content": "OCR text",
+          "boundingBox": "{ x, y, width, height } in pixels (96 DPI)",
+          "polygon": "Geometry array from DI",
+          "confidence": "0.0-1.0",
+          "blockType": "checkbox|signature|kvp|text",
+          "metadata": {
+            "semanticLabel": "OCR semantic label from extraction",
+            "checkboxState": "{ isCheckbox, checked, pattern }",
+            "signatureState": "{ isSignature, signed, pattern }",
+            "kvpData": "{ key, value }"
+          }
+        }
+      ],
+      "mappings": [
+        {
+          "blockId": "p{page}-l{line}",
+          "text": "OCR content",
+          "chosen": {
+            "acordCode": "ABC_DEF_001",
+            "label": "Applicant Name"
+          },
+          "suggestions": [
+            {
+              "acordCode": "ABC_DEF_001",
+              "label": "Applicant Name",
+              "confidenceScore": 0.95,
+              "source": "dictionary|heuristic|embeddings|geometry|category|fusion",
+              "rationale": "Explanation"
+            }
+          ]
+        }
+      ],
+      "fieldTypes": "{ blockId: 'type' mapping }",
+      "pageDimensions": "{ width: 816, height: 1056 } at 96 DPI",
+      "structuralDelta": {
+        "deltaVersion": "1.0",
+        "baselineDocumentId": "UUID from first ingestion",
+        "addedBlocks": 0,
+        "removedBlocks": 0,
+        "changedBlocks": 0
+      },
+      "summary": "Extraction and mapping statistics"
+    }
+  },
+  "error_handling": {
+    "di_unavailable": "Returns 503 Service Unavailable (mandatory, no fallback)",
+    "mapping_engine_error": "Returns stub mappings with error note rather than propagating",
+    "layout_lmv3_error": "Returns default type inference (text)"
+  },
+  "next_validation_steps": [
+    "1. Verify backend listening: http://localhost:7071/api/getHealth → 200 OK",
+    "2. Confirm extractDocument endpoint accessible: http://localhost:7071/api/extractDocument",
+    "3. Test PDF upload via designer UI → observe extraction spinner",
+    "4. Verify response contains all 10 semantic metadata fields",
+    "5. Check canvas displays semantic overlays (labels, confidence colors, state indicators)",
+    "6. Validate properties panel shows Wave 8 metadata section",
+    "7. Confirm ACORD binding panel displays candidates with source attribution"
+  ]
+}

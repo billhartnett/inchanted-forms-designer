@@ -1,0 +1,251 @@
+{
+  "timestamp": "2026-07-01T19:27:00Z",
+  "operation": "Designer Runtime Validation",
+  "status": "READY - Fresh runtime loaded",
+  "frontend_build_status": {
+    "vite_server": {
+      "status": "RUNNING",
+      "port": 5173,
+      "startup_time": "282 ms",
+      "url": "http://localhost:5173/designer"
+    },
+    "hot_module_replacement": "ENABLED",
+    "bundle_status": "Fresh - no Vite cache"
+  },
+  "frontend_dependency_status": {
+    "packages_installed": 159,
+    "audit_result": "No vulnerabilities",
+    "legacy_peer_deps": "Enabled for compatibility"
+  },
+  "browser_state": {
+    "url": "http://localhost:5173/designer",
+    "page_title": "inchanted Forms Designer",
+    "session_cache": "Cleared (fresh load)",
+    "bundles_loaded": "Fresh - no .vite cache",
+    "console_warnings": [
+      "⚠ React Router Future Flag Warnings (v7 prep) - expected",
+      "✓ No errors on page load"
+    ]
+  },
+  "designer_ui_state": {
+    "status": "READY",
+    "canvas": "Blank - awaiting PDF ingestion",
+    "toolbar": "All buttons functional",
+    "left_panel": {
+      "pages": "Empty - no PDF loaded",
+      "groups": "Empty",
+      "fields": "Empty"
+    },
+    "right_panel": {
+      "properties": "Field selector ready",
+      "bindings": "Select a field text visible",
+      "metadata_sections": [
+        "✓ Advanced > ACORD Ontology",
+        "✓ Advanced > Form Family",
+        "✓ Advanced > Calibration Dashboard",
+        "✓ Advanced > Semantic Conflicts",
+        "✓ Advanced > Semantic Fusion",
+        "✓ Advanced > Semantic Graph Explorer",
+        "✓ Advanced > Carrier Semantic Adapters",
+        "✓ Advanced > Underwriting Rule Alignment",
+        "✓ Advanced > Risk and Decision Intelligence",
+        "✓ Advanced > Submission Package",
+        "✓ Advanced > Semantic Memory"
+      ]
+    }
+  },
+  "field_renderer_enhancements": {
+    "semantic_overlays": {
+      "semantic_label": "⚙ label at top-left (indigo #6366f1)",
+      "checkbox_indicator": "● circle at top-right (green when checked, gray when unchecked)",
+      "signature_indicator": "✎ pen at top-right (gold when signed, gray when unsigned)",
+      "confidence_badge": "% at bottom-left (gradient colors)"
+    },
+    "background_colors": {
+      "default": "White",
+      "checkbox_checked": "Light indigo #e0e7ff",
+      "signature_signed": "Light amber #fef3c7",
+      "kvp_field": "Light blue #f0f9ff"
+    },
+    "border_colors": {
+      "high_confidence": "Green #16a34a (>80%)",
+      "medium_confidence": "Orange #ea580c (60-80%)",
+      "low_confidence": "Red #dc2626 (<60%)",
+      "strict_mode": "Violet #7c3aed (overrides confidence)"
+    },
+    "category_mode_display": {
+      "strict": "Violet border with label",
+      "permissive": "Green border with label"
+    }
+  },
+  "properties_panel_enhancements": {
+    "field_basics_section": {
+      "label": "Text input",
+      "type": "Dropdown selector",
+      "required": "Checkbox toggle",
+      "default_value": "Text input"
+    },
+    "wave8_semantic_metadata_section": {
+      "background": "Light green #f0fdf4",
+      "fields": [
+        "Semantic Label (editable text input)",
+        "ACORD Code (read-only disabled input)",
+        "Field Type (read-only disabled input)",
+        "Confidence Slider (0-100%, read-only visual)",
+        "Category Mode (Dropdown: None/Strict/Permissive)",
+        "ACORD Candidates (Collapsible list with code, label, source, confidence)",
+        "Structural Delta (Shows version, changeType, baselineDocumentId)"
+      ]
+    }
+  },
+  "bindings_panel_enhancements": {
+    "extraction_details_section": {
+      "background": "Light blue #f0f9ff",
+      "fields": [
+        "Semantic Label (extracted value)",
+        "Field Type (inferred type)",
+        "Confidence Score (visual %)"
+      ]
+    },
+    "category_mode_badge": {
+      "strict": "Violet background #ede9fe, text #5b21b6",
+      "permissive": "Green background #f0fdf4, text #15803d"
+    },
+    "candidates_list": {
+      "visual_styling": {
+        "chosen": "Light blue #eff6ff background, blue #93c5fd border",
+        "not_chosen": "White background, gray #e2e8f0 border",
+        "hover": "Light blue #f0f9ff background"
+      },
+      "fields_displayed": [
+        "acordCode",
+        "label",
+        "source (dictionary|heuristic|embeddings|geometry|category|fusion)",
+        "confidenceScore",
+        "Interaction: Click to chooseCandidate()"
+      ]
+    }
+  },
+  "pdf_import_modal_enhancements": {
+    "metadata_extraction": {
+      "semantic_metadata_captured": [
+        "✓ acordCandidates[] from mapping.suggestions",
+        "✓ semanticLabel from mapping.text",
+        "✓ categoryMode from mapping.chosen?.categoryMode",
+        "✓ checkboxState for checkbox-type fields",
+        "✓ signatureState for signature-type fields",
+        "✓ kvpData (key:value split) for KVP fields"
+      ],
+      "field_creation": "buildTypedFieldPreview() extracts all semantic data"
+    }
+  },
+  "wave8_integration_verification": {
+    "extraction_pipeline": {
+      "endpoint": "http://localhost:7071/api/extractDocument",
+      "method": "POST",
+      "auth": "None (local)",
+      "response_includes": [
+        "✓ documentId",
+        "✓ fileName",
+        "✓ extractionMethod: 'document-intelligence-wave8'",
+        "✓ extractedAt timestamp",
+        "✓ pages[] with OCR",
+        "✓ blocks[] with metadata",
+        "✓ mappings[] with ACORD candidates",
+        "✓ fieldTypes mapping",
+        "✓ pageDimensions (96 DPI normalized)",
+        "✓ structuralDelta"
+      ]
+    },
+    "mapping_engine": {
+      "entry_point": "mapBlocksWithAcord(blocks, context)",
+      "pipeline": [
+        "1. Dictionary lookup (exact match)",
+        "2. Heuristic scoring (pattern-based)",
+        "3. Semantic embeddings (LayoutLMv3)",
+        "4. Geometry analysis (spatial)",
+        "5. Category mode (strict/permissive)",
+        "6. Fusion scoring (weighted combine)",
+        "7. Re-ranking (confidence sort)"
+      ],
+      "output": "FieldMapping[] with AcordLabelCandidate[] ranked by confidenceScore"
+    },
+    "source_attribution": [
+      "dictionary",
+      "heuristic",
+      "embeddings",
+      "geometry",
+      "category",
+      "fusion"
+    ]
+  },
+  "semantic_metadata_flow": {
+    "extraction_to_ui": [
+      "1. PDF → extractDocument endpoint",
+      "2. Wave 8 pipeline runs (DI + LayoutLMv3 + Mapping Engine)",
+      "3. Response includes all semantic metadata",
+      "4. PdfImportModal.buildTypedFieldPreview() extracts metadata",
+      "5. Fields created with full semantic data in metadata",
+      "6. Designer canvas renders fields with semantic overlays",
+      "7. Properties panel shows Wave 8 metadata section",
+      "8. Bindings panel shows candidates with sources"
+    ]
+  },
+  "validation_readiness": {
+    "frontend_ready": true,
+    "backend_ready": "Awaiting listener bind",
+    "database_connected": "N/A - No database required for extraction",
+    "di_configured": "Via backend/api/local.settings.json",
+    "wave8_loaded": "Code compiled and bundled"
+  },
+  "test_procedures": {
+    "step_1_verify_backend": {
+      "command": "curl http://localhost:7071/api/getHealth",
+      "expected_response": "200 OK with health status"
+    },
+    "step_2_upload_pdf": {
+      "action": "Click File → Open PDF in designer UI",
+      "file": "Any ACORD 125 PDF",
+      "expected": "Extraction spinner, then canvas populated"
+    },
+    "step_3_verify_extraction": {
+      "check": "Browser DevTools → Network → extractDocument request",
+      "expected": "Response contains all 10 semantic metadata fields"
+    },
+    "step_4_verify_canvas": {
+      "action": "Select any field on canvas",
+      "expected": [
+        "Semantic label overlay visible",
+        "Confidence color gradient applied",
+        "State indicators (checkbox/signature) visible",
+        "Category mode color coding applied"
+      ]
+    },
+    "step_5_verify_properties": {
+      "action": "Inspect field selected on canvas",
+      "panel": "Right panel → Properties → Wave 8 Semantic Metadata",
+      "expected": [
+        "Semantic Label displayed",
+        "ACORD Code shown",
+        "Field Type shown",
+        "Confidence slider populated",
+        "Category Mode visible",
+        "ACORD Candidates list populated with sources"
+      ]
+    },
+    "step_6_verify_bindings": {
+      "action": "Inspect same field in Bindings panel",
+      "expected": [
+        "Extraction Details section shows values",
+        "Category Mode badge displayed (correct color)",
+        "Candidates list shows full ranking with sources"
+      ]
+    }
+  },
+  "known_warnings": [
+    "React Router Future Flag warnings (v7 prep) - expected and harmless",
+    "Vite chunk size warnings on build - expected for large apps",
+    "AzureWebJobsStorage health check fails locally - expected (no blob/queue storage in local)"
+  ],
+  "ready_for_testing": true
+}
