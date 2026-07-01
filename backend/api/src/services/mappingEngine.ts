@@ -4144,7 +4144,7 @@ export async function mapBlocksToAcord(
           )
         : undefined;
       const topConfidence = Number(topCandidate?.confidenceScore || 0);
-      const topConfidenceLevel = topCandidate?.confidenceLevel ||
+      const topConfidenceLevel = (topCandidate as any)?.confidenceLevel ||
         (topThresholds ? resolveConfidenceLevel(topConfidence, topThresholds) : undefined);
       const thresholdDecision =
         topCandidate && topConfidenceLevel
@@ -4190,7 +4190,7 @@ export async function mapBlocksToAcord(
         stageTimingsMs: stageTimings,
       });
 
-      const mapping: FieldMapping = {
+      const mapping = {
         blockId: block.id,
         page: block.page,
         text: block.text,
@@ -4270,7 +4270,7 @@ export async function mapBlocksToAcord(
                 }
               : undefined,
         }) as any,
-      };
+      } as FieldMapping;
       results.push(mapping);
   }
 
