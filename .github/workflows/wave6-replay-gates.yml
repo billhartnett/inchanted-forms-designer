@@ -1,0 +1,92 @@
+name: Wave6 Replay Gates
+
+on:
+  schedule:
+    - cron: "20 5 * * *"
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - labeled
+      - unlabeled
+  push:
+    branches:
+      - main
+      - release/**
+      - sprint-exit/**
+  workflow_dispatch:
+
+jobs:
+  wave6-replay-gate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+
+    env:
+      ENFORCE_STRICT: ${{ github.event_name == 'schedule' || startsWith(github.ref, 'refs/heads/release/') || startsWith(github.ref, 'refs/heads/sprint-exit/') || (github.event_name == 'pull_request' && contains(join(github.event.pull_request.labels.*.name, ','), 'requires-wave6-replay-strict-mode')) }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22.x"
+          cache: npm
+          cache-dependency-path: |
+            shared/package-lock.json
+            backend/package-lock.json
+            backend/api/package-lock.json
+
+      - name: Install shared dependencies
+        run: npm --prefix shared ci --no-audit --no-fund
+
+      - name: Install backend dependencies
+        run: npm --prefix backend ci --no-audit --no-fund
+
+      - name: Install backend api dependencies
+        run: npm --prefix backend/api ci --no-audit --no-fund
+
+      - name: Build shared
+        run: npm --prefix shared run build
+
+      - name: Build backend
+        run: npm --prefix backend/api run build
+
+      - name: Run Wave 6 replay fast mode
+        run: npm --prefix backend/api run diag:replay:integration:wave6:fast
+
+      - name: Run Wave 6 replay strict mode when enforced
+        if: env.ENFORCE_STRICT == 'true'
+        run: npm --prefix backend/api run diag:replay:integration:wave6:strict
+
+      - name: Upload Wave 6 replay artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: wave6-phase1-replay-artifacts
+          if-no-files-found: ignore
+          path: |
+            training-data/acord-labeled/wave6_phase1_replay_ingestion_report.json
+            training-data/acord-labeled/wave6_phase1_structural_miss_delta.json
+            training-data/acord-labeled/wave6_phase1_replay_tuning_envelopes.json
+            training-data/acord-labeled/wave6_phase1_replay_integration_report.md
+            training-data/acord-labeled/wave6_phase1_replay_diagnostics_summary.json
+            training-data/acord-labeled/wave6_phase1_replay_regression_report.json
+            training-data/acord-labeled/wave6_phase1_replay_validation_report.json
+
+      - name: Enforce strict replay failure classification guard
+        if: env.ENFORCE_STRICT == 'true'
+        shell: bash
+        run: |
+          node -e "const fs=require('fs');const p='training-data/acord-labeled/wave6_phase1_replay_validation_report.json';const r=JSON.parse(fs.readFileSync(p,'utf8'));if(r.mode!=='strict_live_host_only'){console.error('strict replay mode not executed');process.exit(1);}if(!r.pass&&!['hostHealthFailure','mappingThresholdFailure'].includes(r.failureClass)){console.error('invalid failureClass',r.failureClass);process.exit(1);}console.log('wave6 strict replay classification valid:',r.failureClass||'none');"
+
+      - name: Enforce replay-driven regression gate
+        shell: bash
+        run: |
+          node -e "const fs=require('fs');const p='training-data/acord-labeled/wave6_phase1_replay_regression_report.json';const r=JSON.parse(fs.readFileSync(p,'utf8'));if(!r.validationReport){console.error('missing validationReport');process.exit(1);}if(!r.validationReport.pass){console.error('wave6 replay regression failed',r.validationReport.failureClass||'unknown');process.exit(1);}console.log('wave6 replay regression gate passed');"

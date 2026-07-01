@@ -1,11 +1,12 @@
 {
   "wave": "6",
-  "status": "wave6_phase1_initialized",
+  "status": "wave6_phase1_active",
   "focusAreas": [
     "semantic_architecture_upgrades",
     "geometry_architecture_upgrades",
     "category_mode_architecture_improvements",
-    "mapping_engine_reflow"
+    "mapping_engine_reflow",
+    "replay_driven_tuning"
   ],
   "constraints": {
     "wave48BaselineFrozen": true,
@@ -93,6 +94,13 @@
     "wave6Phase1ExitGates": "training-data/acord-labeled/wave6_phase1_exit_gates.md",
     "wave6Phase1RollbackCheckpoints": "training-data/acord-labeled/wave6_phase1_rollback_checkpoints.md",
     "wave6Phase1TicketSet": "training-data/acord-labeled/wave6_phase1_ticket_set.json",
+    "wave6Phase1ReplayIngestionReport": "training-data/acord-labeled/wave6_phase1_replay_ingestion_report.json",
+    "wave6Phase1StructuralMissDelta": "training-data/acord-labeled/wave6_phase1_structural_miss_delta.json",
+    "wave6Phase1ReplayTuningEnvelopes": "training-data/acord-labeled/wave6_phase1_replay_tuning_envelopes.json",
+    "wave6Phase1ReplayIntegrationReport": "training-data/acord-labeled/wave6_phase1_replay_integration_report.md",
+    "wave6Phase1ReplayDiagnosticsSummary": "training-data/acord-labeled/wave6_phase1_replay_diagnostics_summary.json",
+    "wave6Phase1ReplayRegressionReport": "training-data/acord-labeled/wave6_phase1_replay_regression_report.json",
+    "wave6Phase1ReplayValidationReport": "training-data/acord-labeled/wave6_phase1_replay_validation_report.json",
     "phase2Sprint1SemanticScaffold": "backend/api/src/services/wave5/semanticArchitectureScaffold.ts"
   },
   "readinessDecision": {
@@ -116,7 +124,8 @@
     "phase2Sprint5Initialized": true,
     "phase2Sprint5TuningValidated": true,
     "phase2Sprint5Completed": true,
-    "wave6Phase1Initialized": true
+    "wave6Phase1Initialized": true,
+    "wave6Phase1ReplayDrivenTuningActive": true
   },
   "initializedAt": "2026-06-30T00:00:00.000Z"
 }

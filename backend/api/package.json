@@ -26,12 +26,19 @@
     "diag:tuning:sprint5:strict": "npm run build && cross-env SPRINT5_TUNING_MODE=strict_live_host_only node scripts/sprint5_tuning_validation_runner.js",
     "diag:tuning:integration:fast": "npm run build && cross-env SPRINT5_TUNING_MODE=fast_deterministic node scripts/run-wave5-tuning-integration.js",
     "diag:tuning:integration:strict": "npm run build && cross-env SPRINT5_TUNING_MODE=strict_live_host_only node scripts/run-wave5-tuning-integration.js",
+    "diag:replay:wave6": "npm run build && node scripts/wave6_replay_tuning_runner.js",
+    "diag:replay:wave6:fast": "npm run build && cross-env WAVE6_REPLAY_MODE=fast_deterministic node scripts/wave6_replay_tuning_runner.js",
+    "diag:replay:wave6:strict": "npm run build && cross-env WAVE6_REPLAY_MODE=strict_live_host_only node scripts/wave6_replay_tuning_runner.js",
+    "diag:replay:integration:wave6": "npm run build && node scripts/wave6_replay_integration.js",
+    "diag:replay:integration:wave6:fast": "npm run build && cross-env WAVE6_REPLAY_MODE=fast_deterministic node scripts/wave6_replay_integration.js",
+    "diag:replay:integration:wave6:strict": "npm run build && cross-env WAVE6_REPLAY_MODE=strict_live_host_only node scripts/wave6_replay_integration.js",
     "gate:anchors": "npm run build && node scripts/run-anchor-regression-gate.js"
   },
   "dependencies": {
     "@azure/ai-form-recognizer": "^5.1.0",
     "@azure/functions": "^4.0.0",
     "@azure/storage-blob": "^12.31.0",
+    "inchanted-forms-designer": "file:../..",
     "openai": "^4.0.0",
     "shared": "file:../../shared"
   },
