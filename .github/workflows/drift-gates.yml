@@ -30,7 +30,7 @@ jobs:
             frontend/package-lock.json
 
       - name: Install root dependencies
-        run: npm ci --no-audit --no-fund
+        run: npm install --no-audit --no-fund
 
       - name: Install shared dependencies
         run: npm --prefix shared ci --no-audit --no-fund
