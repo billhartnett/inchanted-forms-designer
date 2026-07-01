@@ -1,0 +1,188 @@
+{
+  "version": "1.0",
+  "timestamp": "2026-07-01T16:00:00.000Z",
+  "componentMap": {
+    "layout": {
+      "App": {
+        "type": "Root Component",
+        "file": "src/App.jsx",
+        "imports": ["React", "DashboardLayout", "useMonitoringData", "dashboard.css"],
+        "exports": "App",
+        "size": "~2KB"
+      },
+      "DashboardLayout": {
+        "type": "Layout Component",
+        "file": "src/layouts/DashboardLayout.jsx",
+        "imports": [
+          "React",
+          "SystemHealthBar",
+          "StrictModePanel",
+          "DiagnosticsPanel",
+          "StructuralDeltaPanel",
+          "ThresholdsPanel",
+          "PerformancePanel",
+          "DriftPanel",
+          "RegressionPanel",
+          "CarrierPanel",
+          "IngestionPanel",
+          "IncidentLog",
+          "TimelinePanel"
+        ],
+        "exports": "DashboardLayout",
+        "size": "~5KB",
+        "responsibilities": ["Grid layout management", "Panel arrangement", "Data routing to panels"]
+      }
+    },
+    "dataFetching": {
+      "useMonitoringData": {
+        "type": "Custom Hook",
+        "file": "src/hooks/useMonitoringData.js",
+        "imports": ["React", "monitoringApi"],
+        "exports": "useMonitoringData",
+        "features": [
+          "Auto-refresh (5 second interval)",
+          "Error handling",
+          "Loading state management",
+          "Cleanup on unmount"
+        ],
+        "size": "~1.5KB"
+      },
+      "monitoringApi": {
+        "type": "API Service",
+        "file": "src/services/monitoringApi.js",
+        "endpoints": [
+          "GET /api/monitoring/dashboard",
+          "GET /api/monitoring/:moduleName"
+        ],
+        "functions": [
+          "fetchMonitoringData()",
+          "fetchModuleData(moduleName)",
+          "transformMonitoringData(rawData)"
+        ],
+        "size": "~3KB"
+      }
+    },
+    "components": {
+      "SystemHealthBar": {
+        "type": "Status Component",
+        "file": "src/components/SystemHealthBar.jsx",
+        "size": "~2KB",
+        "props": ["healthData"],
+        "displays": ["Overall status", "Pass rate", "Alert count", "Critical alerts"]
+      },
+      "StrictModePanel": {
+        "type": "Monitoring Panel",
+        "file": "src/components/StrictModePanel.jsx",
+        "size": "~1.5KB",
+        "props": ["data"],
+        "displays": ["Status", "Failure class", "Latency", "Consecutive failures"]
+      },
+      "DiagnosticsPanel": {
+        "type": "Monitoring Panel",
+        "file": "src/components/DiagnosticsPanel.jsx",
+        "size": "~1.8KB",
+        "props": ["data"],
+        "displays": ["Coverage %", "Drift metric", "Latency", "Missing fields"],
+        "features": ["Progress bar", "Status coloring"]
+      },
+      "StructuralDeltaPanel": {
+        "type": "Monitoring Panel",
+        "file": "src/components/StructuralDeltaPanel.jsx",
+        "size": "~1.6KB",
+        "props": ["data"],
+        "displays": ["Category mode mismatch rate", "Regression count", "Drift"],
+        "features": ["Threshold visualization"]
+      },
+      "ThresholdsPanel": {
+        "type": "Monitoring Panel",
+        "file": "src/components/ThresholdsPanel.jsx",
+        "size": "~1.5KB",
+        "props": ["data"],
+        "displays": ["6 Wave 6 Phase 3 thresholds"],
+        "features": ["Status icons", "Pass/fail indicators"]
+      },
+      "PerformancePanel": {
+        "type": "Monitoring Panel",
+        "file": "src/components/PerformancePanel.jsx",
+        "size": "~2.2KB",
+        "props": ["data"],
+        "displays": ["P95 latency", "P99 latency", "Total latency", "Component breakdown"],
+        "features": ["Latency bars", "Threshold lines"]
+      },
+      "DriftPanel": {
+        "type": "Monitoring Panel",
+        "file": "src/components/DriftPanel.jsx",
+        "size": "~1.5KB",
+        "props": ["data"],
+        "displays": ["Current max drift", "Trend", "Incidents"],
+        "features": ["Drift bar", "Trend indicators"]
+      },
+      "RegressionPanel": {
+        "type": "Monitoring Panel",
+        "file": "src/components/RegressionPanel.jsx",
+        "size": "~1.4KB",
+        "props": ["data"],
+        "displays": ["Regression count", "Trend", "Consecutive successes"]
+      },
+      "CarrierPanel": {
+        "type": "Monitoring Panel",
+        "file": "src/components/CarrierPanel.jsx",
+        "size": "~1.6KB",
+        "props": ["data"],
+        "displays": ["Carrier health %", "Enabled/healthy count", "Status", "Failures"]
+      },
+      "IngestionPanel": {
+        "type": "Monitoring Panel",
+        "file": "src/components/IngestionPanel.jsx",
+        "size": "~1.5KB",
+        "props": ["data"],
+        "displays": ["Status", "Success rate %", "Documents processed", "Failure rate"]
+      },
+      "TimelinePanel": {
+        "type": "Timeline Component",
+        "file": "src/components/TimelinePanel.jsx",
+        "size": "~2.5KB",
+        "props": ["data"],
+        "features": ["Timeline visualization", "Event markers", "Color coding by type"]
+      },
+      "IncidentLog": {
+        "type": "Log Component",
+        "file": "src/components/IncidentLog.jsx",
+        "size": "~1.8KB",
+        "props": ["data"],
+        "features": ["Incident list", "Level-based coloring", "Recent incidents (8 max)"]
+      }
+    },
+    "styling": {
+      "dashboard.css": {
+        "type": "Global Stylesheet",
+        "file": "src/styles/dashboard.css",
+        "size": "~18KB",
+        "features": [
+          "CSS Custom Properties (variables)",
+          "Dark theme",
+          "Responsive grid layout",
+          "Component animations",
+          "Status-based coloring"
+        ],
+        "breakpoints": ["1920px", "1200px", "768px", "480px"]
+      }
+    }
+  },
+  "totalComponentCount": 12,
+  "totalFileCount": 15,
+  "totalCodeSize": "~50KB (before compression)",
+  "buildReady": true,
+  "testReady": false,
+  "productionReady": true,
+  "dependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "devDependencies": [],
+  "buildCommand": "npm run build",
+  "startCommand": "npm run dev",
+  "environmentVariables": {
+    "REACT_APP_API_URL": "http://localhost:7071/api (dev) or /api (prod)"
+  }
+}
