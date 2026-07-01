@@ -48,5 +48,6 @@ import "./getSubmissionStatus";
 import "./evaluateSubmissionDrift";
 import "./getHealth";
 import "./getMetrics";
+import "./getMonitoringDashboard";
 import "./exportAuditTrail";
 import "./processSubmissionRetry";

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import SystemHealthBar from '../components/SystemHealthBar';
 import StrictModePanel from '../components/StrictModePanel';
 import DiagnosticsPanel from '../components/DiagnosticsPanel';
@@ -40,8 +41,19 @@ function DashboardLayout({ monitoringData, loading, error, refreshing, lastUpdat
     <div className="dashboard-container">
       {/* Header with System Health */}
       <header className="dashboard-header">
-        <h1>Production Monitoring Dashboard</h1>
-        <div className="header-meta">
+        <div className="header-left">
+          <h1>Production Monitoring Dashboard</h1>
+        </div>
+        <div className="header-right">
+          <Link to="/designer" className="nav-link">
+            🎨 Designer
+          </Link>
+          <Link to="/mapping" className="nav-link">
+            🗺️ Mapping
+          </Link>
+          <Link to="/ingestion-test" className="nav-link">
+            📤 Test Ingestion
+          </Link>
           <span className={`refresh-status ${refreshing ? 'refreshing' : ''}`}>
             {refreshing ? '⟳ Updating...' : `✓ Last updated: ${lastUpdate.toLocaleTimeString()}`}
           </span>

@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import DashboardLayout from './layouts/DashboardLayout';
+import DocumentIngestionTester from './pages/DocumentIngestionTester';
 import useMonitoringData from './hooks/useMonitoringData';
 import './styles/dashboard.css';
 
-function App() {
+function DashboardPage() {
   const { monitoringData, loading, error, refreshing } = useMonitoringData();
   const [lastUpdate, setLastUpdate] = useState(new Date());
 
@@ -24,6 +26,15 @@ function App() {
         lastUpdate={lastUpdate}
       />
     </div>
+  );
+}
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<DashboardPage />} />
+      <Route path="/ingest" element={<DocumentIngestionTester />} />
+    </Routes>
   );
 }
 

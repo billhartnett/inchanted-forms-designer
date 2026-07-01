@@ -36,6 +36,12 @@
     "diag:replay:phase3:threshold:tightening": "npm run build && node scripts/wave6_phase3_threshold_tightening.js",
     "diag:replay:phase4:diagnostics:stabilization": "npm run build && node scripts/wave6_phase4_diagnostics_stabilization.js",
     "gate:wave7:phase1:livehost": "npm run build && node scripts/wave7_phase1_livehost_replay_validation.js",
+    "gate:wave7:phase2:carrier:adapter": "npm run build && node scripts/wave7_phase2_carrier_adapter_tuning.js",
+    "gate:wave7:phase3:production:readiness": "npm run build && node scripts/wave7_phase3_production_readiness_gating.js",
+    "gate:wave8:phase1:performance:hardening": "npm run build && node scripts/wave8_phase1_performance_hardening.js",
+    "gate:wave8:phase2:stability:hardening": "npm run build && node scripts/wave8_phase2_stability_hardening.js",
+    "gate:wave8:exit:release:candidate": "npm run build && node scripts/wave8_exit_release_candidate_generation.js",
+    "gate:release:deployment:rollout": "npm run build && node scripts/release_deployment_production_rollout.js",
     "gate:anchors": "npm run build && node scripts/run-anchor-regression-gate.js"
   },
   "dependencies": {
