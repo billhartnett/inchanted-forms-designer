@@ -1,0 +1,33 @@
+﻿{
+  "report": "mapping_engine_reintegration_report",
+  "timestamp": "2026-07-01T00:00:00Z",
+  "status": "COMPLETED",
+  "summary": "All mock extraction logic removed. extractDocument now requires real Azure Document Intelligence and runs the full Wave 8 mapping engine pipeline on every code path.",
+  "mock_removals": [
+    "generateMockBlocks() function — deleted (was 30-block ACORD 125 static fixture)",
+    "generateMockExtraction() function — deleted (was 4-block simplified mock from prior session)",
+    "mock fallback on DI not configured — replaced with 503 Service Unavailable response",
+    "mock fallback on DI error — replaced with 500 Internal Server Error propagation",
+    "extractionMethod: 'mock-wave8' — removed",
+    "extractionMethod: 'mock-wave8-fallback' — removed"
+  ],
+  "real_pipeline": {
+    "step1_ocr": "Azure Document Intelligence prebuilt-layout model — returns PageExtraction[] with OCR lines, bounding boxes (inch units), page dimensions",
+    "step2_block_build": "buildBlocksFromPages() — converts DI lines to typed ExtractedBlock[] with DPI scaling (96 DPI), checkbox/signature/kvp detection",
+    "step3_field_types": "inferSemanticFields() — classifies each block as text/date/numeric/checkbox/signature/radio",
+    "step4_acord_mapping": "mapBlocksWithAcord() — runs Wave 8 multi-stage pipeline: dictionary -> heuristic -> embeddings -> geometry -> category -> fusion -> re-rank",
+    "step5_response": "Full semantic extraction returned: pages, blocks, mappings (FieldMapping[] with AcordLabelCandidate[]), fieldTypes, pageDimensions, structuralDelta, summary"
+  },
+  "error_handling": {
+    "di_not_configured": "Returns 503 with requiredEnvVars: [DI_ENDPOINT, DI_KEY]",
+    "di_extraction_failure": "Propagates as 500 — no silent fallback",
+    "mapping_engine_failure": "Isolated catch — returns stub FieldMapping[] without candidates, logs warning. Designer still shows fields, just without ACORD suggestions."
+  },
+  "extractText_status": "Already real-only. Throws if DI not configured. No changes needed.",
+  "validation": {
+    "backend_tsc": "PASSED — 0 TypeScript errors after rewrite",
+    "mock_strings_remaining": 0,
+    "real_di_calls": 1,
+    "mapping_engine_calls": 1
+  }
+}

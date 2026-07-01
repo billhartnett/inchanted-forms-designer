@@ -1,0 +1,41 @@
+﻿{
+  "report": "di_integration_report",
+  "timestamp": "2026-07-01T00:00:00Z",
+  "status": "VERIFIED",
+  "summary": "Azure Document Intelligence (prebuilt-layout) confirmed configured and connected. DPI normalization, block typing, and page dimension extraction all verified.",
+  "configuration": {
+    "model": "prebuilt-layout",
+    "endpoint_env": "DI_ENDPOINT",
+    "key_env": "DI_KEY",
+    "settings_file": "backend/api/local.settings.json",
+    "example_file": "backend/api/local.settings.example.json"
+  },
+  "geometry_normalization": {
+    "di_coordinate_unit": "inch",
+    "canvas_coordinate_unit": "pixel",
+    "dpi": 96,
+    "conversion": "pixel = inch * 96",
+    "function": "scaleBoundingBoxToPixels(bbox, unit) in extractDocument/index.ts",
+    "letter_page_pixels": {"width": 816, "height": 1056},
+    "letter_page_inches": {"width": 8.5, "height": 11}
+  },
+  "block_type_detection": {
+    "checkbox": "Unicode ballot boxes \\u2610/\\u2611/\\u2612 or [] / () patterns",
+    "signature": "Keywords: signature, sign here, authorized.*signature",
+    "kvp": "Pattern: label-text: value (max 60 chars before colon)",
+    "text": "Default — all other blocks"
+  },
+  "page_dimensions": {
+    "field_in_response": "pageDimensions: Array<{page, width, height, unit}>",
+    "unit_in_response": "pixel — already converted from DI inch coordinates",
+    "purpose": "Allows frontend canvas and PdfImportModal to scale field positions correctly"
+  },
+  "di_output_fields": {
+    "pages": "PageExtraction[] — OCR lines with bounding boxes and confidence scores",
+    "blocks": "ExtractedBlock[] — typed, DPI-scaled, sequential IDs (p{page}-l{index})",
+    "mappings": "FieldMapping[] — ranked ACORD label candidates per block",
+    "fieldTypes": "Record<blockId, SemanticFieldType> — text/date/numeric/checkbox/signature/radio",
+    "pageDimensions": "Array<{page, width, height, unit}> — pixel dimensions for canvas",
+    "structuralDelta": "Baseline delta object for first extraction (no prior document)"
+  }
+}

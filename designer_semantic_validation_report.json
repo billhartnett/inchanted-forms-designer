@@ -1,0 +1,55 @@
+﻿{
+  "report": "designer_semantic_validation_report",
+  "timestamp": "2026-07-01T00:00:00Z",
+  "status": "VALIDATED",
+  "summary": "Designer integration with semantic extraction pipeline validated. Field selection, ACORD binding panel, checkbox detection, field type classification, and mapping preview all connected.",
+  "validations": [
+    {
+      "check": "Field selection updates properties panel",
+      "status": "PASS",
+      "mechanism": "selectField() in designerStore -> selectedIds state -> useSelectedField() hook -> PropertiesPanel renders metadata",
+      "verified_by": "Browser snapshot confirms properties panel populates with Field Basics, ACORD Mapping sections on click"
+    },
+    {
+      "check": "ACORD binding panel populates correctly",
+      "status": "PASS",
+      "mechanism": "initializeMappings() called after mapFields response -> mappingStore.mappings[blockId] -> useSelectedFieldMapping() -> DesignerBindingsPanel renders candidates",
+      "bug_fixed": "chooseCandidate(extractionBlockId, acordCode) wired to candidate onClick — was calling non-existent updateMapping()"
+    },
+    {
+      "check": "Checkboxes detected",
+      "status": "PASS",
+      "mechanism": "buildBlocksFromPages() detects \\u2610/\\u2611/\\u2612 and [] patterns -> type: 'checkbox' -> inferFieldType() returns 'checkbox' -> buildTypedFieldPreview() creates 20x20 checkbox field",
+      "pipeline": "DI OCR -> buildBlocksFromPages -> type=checkbox -> mapFields -> checkbox FieldMapping -> PdfImportModal -> CheckboxField on canvas"
+    },
+    {
+      "check": "Field types correct (text/date/numeric/checkbox/signature)",
+      "status": "PASS",
+      "mechanism": "inferSemanticFields() classifies by regex patterns. Results in fieldTypes:{blockId: SemanticFieldType} returned from extractDocument and used by buildTypedFieldPreview() in PdfImportModal",
+      "date_detection": "/(date|dob|birth|effective|expiration)/",
+      "numeric_detection": "/(premium|limit|deductible|amount|employees|zip|years)/",
+      "signature_detection": "/(signature|signed)/"
+    },
+    {
+      "check": "Mapping preview correct",
+      "status": "PASS",
+      "mechanism": "MappingPanel component reads from useSelectedFieldMapping() which computes chosenCandidate from mappingStore decision graph. Confidence thresholds: accepted >= 0.8, review >= 0.6, rejected < 0.45"
+    },
+    {
+      "check": "Confidence color coding on canvas",
+      "status": "PASS",
+      "mechanism": "FieldRenderer.tsx: green border (>80%), orange (60-80%), red (<60%) based on metadata.confidence. Confidence badge displayed in bottom-right of each field box."
+    }
+  ],
+  "designer_import_flow": {
+    "entry_point": "PdfImportModal.tsx -> runAutoMapping()",
+    "step1": "extractText endpoint -> PageExtraction[] with OCR lines",
+    "step2": "buildBlocksFromPages equivalent in PdfImportModal -> ExtractedBlock[] with DPI scaling",
+    "step3": "mapFields endpoint -> FieldMapping[] with ACORD candidates (Wave 8 pipeline)",
+    "step4": "buildTypedFieldPreview() -> Field[] with typed metadata",
+    "step5": "setDraftCanvasFields() -> user review in draft mode",
+    "step6": "commitDraftCanvasFields() -> addField() for each accepted field",
+    "step7": "initializeMappings() -> mappingStore populated with candidates",
+    "step8": "linkFieldToMapping() -> each canvas field linked to extraction block"
+  }
+}
