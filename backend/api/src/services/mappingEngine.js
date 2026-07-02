@@ -2681,6 +2681,10 @@ async function mapBlocksToAcord(blocks, options) {
             wave49Errors.push(normalizeWave49Error("suggestion", error));
         }
         stageTimings.suggestionMs = Date.now() - stageStartedAt;
+        // DEBUG: Log suggestion generation
+        if (suggestions.length === 0 && accum.size > 0) {
+            console.error(`[CRITICAL-BACKEND] Block ${block.id}: accum has ${accum.size} candidates but toSuggestions() returned 0 suggestions`);
+        }
         if (suggestions.length === 0) {
             const beforeHeuristic = accum.size;
             applyHeuristicSignals(block, accum);
@@ -2974,6 +2978,10 @@ async function mapBlocksToAcord(blocks, options) {
                 existing.add(topCandidate.acordCode);
                 seenCodesByCategory.set(primaryCategory, existing);
             }
+        }
+        else {
+            // DEBUG: Log if topCandidate is falsy (mapping will be skipped)
+            console.error(`[CRITICAL-BACKEND] Block ${block.id}: suggestions.length=${suggestions.length}, topCandidate is falsy, MAPPING SKIPPED`);
         }
         stageTimings.totalMs = Date.now() - blockStartedAt;
         const wave49LatencySummary = summarizeWave49Latency(stageTimings);

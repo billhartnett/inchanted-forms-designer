@@ -942,16 +942,24 @@ export default function PdfImportModal({
       ? wave8Payload.mappings
       : [];
     
-    console.log("[mapFields-response]", {
-      inputBlockCount: keptBlocks.length,
-      outputMappingCount: mappings.length,
-      sampleMappings: mappings.slice(0, 3).map(m => ({
-        blockId: m.blockId,
-        text: m.text?.substring(0, 30),
-        chosen: m.chosen ? { label: m.chosen.label, score: m.chosen.confidenceScore } : null,
-        suggestionsCount: m.suggestions?.length || 0,
+    // DEBUG STEP 1: Log mapFields response in detail
+    const mapFieldsDebug = {
+      timestamp: new Date().toISOString(),
+      totalInputBlocks: keptBlocks.length,
+      totalMappingsReturned: mappings.length,
+      mappingDetails: mappings.slice(0, 20).map((m, i) => ({
+        idx: i,
+        fieldId: m.blockId,
+        text: m.text?.substring(0, 50),
+        fieldType: m.fieldType || 'unknown',
+        confidenceScore: m.chosen?.confidenceScore,
+        acordCandidatesCount: m.suggestions?.length || 0,
+        topCandidate: m.chosen ? { label: m.chosen.label, score: m.chosen.confidenceScore, source: m.chosen.source } : null,
       })),
-    });
+    };
+    console.error("[mapFields-RESPONSE-COUNT] Input: " + keptBlocks.length + " blocks → Output: " + mappings.length + " mappings");
+    console.log("[mapFields-response]", mapFieldsDebug);
+    window.__debugMapFieldsResponse = mapFieldsDebug;
     
     const sourceBlockById = new Map(
       keptBlocks.map((block) => [block.id, block]),
@@ -994,26 +1002,43 @@ export default function PdfImportModal({
       )
       .sort((a, b) => b.priority - a.priority);
 
-    // Collect metrics for diagnostic reporting
+    // DEBUG STEP 2: Collect detailed filter metrics
     const rejectionReasons: Record<string, number> = {};
     const topCandidatesPerBlock: Record<string, Array<{ label: string; score: number }>> = {};
+    const filterBreakdown = {
+      noChosen: 0,
+      lowConfidenceStrict: 0,
+      noText: 0,
+      formHeader: 0,
+      sectionTitle: 0,
+      hardMismatch: 0,
+      passed: 0,
+    };
+
+    // DEBUG MODE: Temporarily relax quality thresholds for diagnosis
+    const debugModeRelaxedThresholds = useDiagnosticMode;
+    const minConfidenceStrict = debugModeRelaxedThresholds ? 0.0 : 0.3;
+    const shouldCheckTextFilters = !debugModeRelaxedThresholds;
+    const shouldCheckHeaderFilters = !debugModeRelaxedThresholds;
 
     let qualityMappings = mappingCandidates.filter(({ mapping }) => {
       const chosen = mapping.chosen || mapping.suggestions?.[0];
-      if (!chosen) return false;
-      if (chosen.confidenceScore < 0.3) return false;
+      if (!chosen) { filterBreakdown.noChosen++; return false; }
+      if (chosen.confidenceScore < minConfidenceStrict) { filterBreakdown.lowConfidenceStrict++; return false; }
 
       const text = (mapping.text || "").trim();
-      if (!text) return false;
-      if (isLikelyFormHeaderLine(text)) return false;
+      if (shouldCheckTextFilters && !text) { filterBreakdown.noText++; return false; }
+      if (shouldCheckHeaderFilters && isLikelyFormHeaderLine(text)) { filterBreakdown.formHeader++; return false; }
 
       // Keep field prompts (trailing ':', clear field cue tokens), suppress broad section headers.
       const isPrompt = text.endsWith(":") || hasFieldCueToken(text);
-      if (!isPrompt && isLikelySectionTitle(text)) {
+      if (shouldCheckHeaderFilters && !isPrompt && isLikelySectionTitle(text)) {
+        filterBreakdown.sectionTitle++;
         return false;
       }
 
-      if (isHardMismatch(text, chosen.label || "")) {
+      if (shouldCheckHeaderFilters && isHardMismatch(text, chosen.label || "")) {
+        filterBreakdown.hardMismatch++;
         return false;
       }
 
@@ -1033,38 +1058,67 @@ export default function PdfImportModal({
         .slice(0, 5)
         .map((s) => ({ label: s.label, score: s.confidenceScore }));
 
+      filterBreakdown.passed++;
       return true;
     });
 
     // If filtering is too strict, fall back to a relaxed set but still reject headers and low-confidence noise.
+    const fallbackFilterBreakdown = { ...filterBreakdown, noChosen: 0, lowConfidenceRelaxed: 0, passed: 0 };
+    const minConfidenceRelaxed = debugModeRelaxedThresholds ? 0.0 : 0.12;
+    
     if (qualityMappings.length < 20) {
       qualityMappings = mappingCandidates.filter(({ mapping }) => {
         const chosen = mapping.chosen || mapping.suggestions?.[0];
-        if (!chosen || chosen.confidenceScore < 0.12) return false;
+        if (!chosen || chosen.confidenceScore < minConfidenceRelaxed) { fallbackFilterBreakdown.lowConfidenceRelaxed++; return false; }
 
         const text = (mapping.text || "").trim();
-        if (!text) return false;
-        if (isLikelyFormHeaderLine(text)) return false;
+        if (shouldCheckTextFilters && !text) { fallbackFilterBreakdown.noText++; return false; }
+        if (shouldCheckHeaderFilters && isLikelyFormHeaderLine(text)) { fallbackFilterBreakdown.formHeader++; return false; }
 
         const isPrompt = text.endsWith(":") || hasFieldCueToken(text);
-        if (!isPrompt && isLikelySectionTitle(text)) return false;
-        if (isHardMismatch(text, chosen.label || "")) return false;
+        if (shouldCheckHeaderFilters && !isPrompt && isLikelySectionTitle(text)) { fallbackFilterBreakdown.sectionTitle++; return false; }
+        if (shouldCheckHeaderFilters && isHardMismatch(text, chosen.label || "")) { fallbackFilterBreakdown.hardMismatch++; return false; }
+        fallbackFilterBreakdown.passed++;
         return true;
       });
     }
     
-    console.log("[quality-filtering]", {
+    // DEBUG STEP 3: Log quality filter results
+    const qualityFilterDebug = {
+      timestamp: new Date().toISOString(),
+      debugModeActive: debugModeRelaxedThresholds,
+      thresholds: {
+        minConfidenceStrict,
+        minConfidenceRelaxed,
+        filtersEnabled: shouldCheckTextFilters,
+      },
       mappingCandidatesCount: mappingCandidates.length,
-      qualityMappingsAfterStrictFilter: qualityMappings.length,
-      samples: qualityMappings.slice(0, 2).map(m => ({
-        text: m.mapping.text?.substring(0, 30),
+      strictFilterApplied: true,
+      strictFilterResults: filterBreakdown,
+      resultAfterStrictFilter: qualityMappings.length,
+      fallbackFilterApplied: qualityMappings.length < 20,
+      fallbackFilterResults: qualityMappings.length < 20 ? fallbackFilterBreakdown : null,
+      resultAfterFallback: qualityMappings.length,
+      samples: qualityMappings.slice(0, 5).map(m => ({
+        text: m.mapping.text?.substring(0, 40),
         chosen: m.mapping.chosen ? { label: m.mapping.chosen.label, score: m.mapping.chosen.confidenceScore } : null,
       })),
-    });
+    };
+    console.error("[quality-filtering-COUNT] Candidates in: " + mappingCandidates.length + " → Passed strict filter: " + qualityMappings.length + " → After fallback: " + qualityMappings.length);
+    console.log("[quality-filtering]", qualityFilterDebug);
+    window.__debugQualityFiltering = qualityFilterDebug;
 
     const safeMappings = qualityMappings
       .slice(0, Math.max(1, limit))
       .map((item) => item.mapping);
+    
+    // DEBUG STEP 4: Log safe mappings before designerStore persistence
+    console.error("[safe-mappings-COUNT] Ready to persist: " + safeMappings.length + " fields (cap: " + limit + ")");
+    console.log("[safe-mappings-ready]", {
+      totalSafeMappings: safeMappings.length,
+      fieldsCap: limit,
+      actualFieldsToCreate: Math.min(safeMappings.length, limit),
+    });
 
     const mappingSummary = {
       candidateMappings: mappings.length,
@@ -1197,11 +1251,62 @@ export default function PdfImportModal({
       fieldObjects.push(fallback);
     }
 
-    if (fieldObjects.length === 0) return 0;
+    // DEBUG STEP 5: Log field object construction
+    console.error("[CRITICAL] applyMappedFields started with " + mappings.length + " draft mappings");
+    console.error("[CRITICAL] Field objects constructed: " + fieldObjects.length);
+    
+    const pageDistribution: Record<number, number> = {};
+    fieldObjects.forEach(f => {
+      pageDistribution[f.pageIndex] = (pageDistribution[f.pageIndex] || 0) + 1;
+    });
+    const designerStoreDebug = {
+      timestamp: new Date().toISOString(),
+      draftMappingsInput: mappings.length,
+      fieldObjectsConstructed: fieldObjects.length,
+      pageDistribution,
+      sampleFields: fieldObjects.slice(0, 3).map(f => ({
+        id: f.id,
+        text: f.text?.substring(0, 30),
+        type: f.type,
+        pageIndex: f.pageIndex,
+        confidenceScore: f.metadata?.confidenceScore,
+      })),
+    };
+    console.log("[designerStore-before-persist]", designerStoreDebug);
+    window.__debugDesignerStorePersistence = designerStoreDebug;
+
+    if (fieldObjects.length === 0) {
+      console.error("[F:0] FATAL: No field objects constructed. Mappings input: " + mappings.length);
+      return 0;
+    }
 
     // Push ALL extracted fields as amber draft overlays on the canvas.
     // User reviews visually on the form and clicks "Commit" to finalise.
+    const preStoreFieldCount = useDesignerStore.getState().fields.length;
+    console.error("[CRITICAL] designerStore fields BEFORE setDraftCanvasFields: " + preStoreFieldCount);
     useDesignerStore.getState().setDraftCanvasFields(fieldObjects);
+    const postStoreFieldCount = useDesignerStore.getState().fields.length;
+    console.error("[CRITICAL] designerStore fields AFTER setDraftCanvasFields: " + postStoreFieldCount);
+
+    // DEBUG STEP 6: Verify persistence to designerStore
+    const persistenceDebug = {
+      timestamp: new Date().toISOString(),
+      fieldsPersistenceAttempted: fieldObjects.length,
+      designerStoreFieldsBeforePersist: preStoreFieldCount,
+      designerStoreFieldsAfterPersist: postStoreFieldCount,
+      fieldsActuallyAdded: postStoreFieldCount - preStoreFieldCount,
+      persistenceSuccess: postStoreFieldCount > preStoreFieldCount,
+      draftFields: useDesignerStore.getState().draftFields?.length || 0,
+      allFieldsCount: useDesignerStore.getState().fields.length,
+    };
+    console.log("[designerStore-persistence]", persistenceDebug);
+    window.__debugDesignerStorePersistence = { ...designerStoreDebug, ...persistenceDebug };
+
+    if (postStoreFieldCount === preStoreFieldCount) {
+      console.error("[F:0] FATAL: DesignerStore persistence FAILED. Fields attempted: " + fieldObjects.length + ", actual added: " + (postStoreFieldCount - preStoreFieldCount));
+    } else {
+      console.error("[SUCCESS] DesignerStore persistence OK. Fields added: " + (postStoreFieldCount - preStoreFieldCount));
+    }
 
     // Navigate to the page of the first extracted field.
     const firstPage = fieldObjects[0].pageIndex ?? 0;
