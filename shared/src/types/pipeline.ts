@@ -463,6 +463,10 @@ export type FieldMapping = {
   boundingBox: BoundingBox;
   suggestions: AcordLabelCandidate[];
   chosen?: AcordLabelCandidate;
+  topCandidate?: AcordLabelCandidate;
+  fieldType?: SemanticFieldType;
+  semanticLabel?: string;
+  fallbackReason?: "confidence_only_fallback" | "synthetic_confidence_fallback";
   rationale?: AcordMappingRationale;
 };
 

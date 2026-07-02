@@ -7,10 +7,13 @@ import {
 import { createHash } from "node:crypto";
 
 import {
+  getLastReducerDebugSnapshot,
   mapBlocksWithAcord,
 } from "../../mapping";
 import { getDefaultOntologyMetadata } from "shared/acord";
 import { coerceExtractedBlock } from "../../extraction";
+import { mkdir, writeFile } from "node:fs/promises";
+import path from "node:path";
 import type {
   CalibrationProfile,
   ExtractedBlock,
@@ -98,6 +101,374 @@ type MapFieldsRequest = {
   };
 };
 
+type ReducerFailureClass =
+  | "emptyAccum"
+  | "emptySuggestions"
+  | "confidenceCollapse"
+  | "categoryModeCollapse"
+  | "fusionCollapse"
+  | "rerankCollapse"
+  | "none";
+
+function resolveReducerFailureClass(entries: Array<{
+  accumCount: number;
+  suggestionsCount: number;
+  postGateCandidateCount: number;
+  gatedOutCandidateCount: number;
+  lowCategoryConfidenceFallbackActive: boolean;
+  wave5GeometryFusionApplied: boolean;
+  wave5ReflowApplied: boolean;
+  topCandidateConfidence: number;
+}>): ReducerFailureClass {
+  if (entries.length === 0) return "emptySuggestions";
+
+  const total = entries.length;
+  const allEmptyAccum = entries.every((entry) => entry.accumCount === 0);
+  if (allEmptyAccum) return "emptyAccum";
+
+  const emptySuggestionsRate =
+    entries.filter((entry) => entry.accumCount > 0 && entry.suggestionsCount === 0).length /
+    total;
+  if (emptySuggestionsRate >= 0.6) return "emptySuggestions";
+
+  const confidenceCollapseRate =
+    entries.filter(
+      (entry) =>
+        entry.suggestionsCount > 0 &&
+        entry.topCandidateConfidence <= 0.12,
+    ).length / total;
+  if (confidenceCollapseRate >= 0.6) return "confidenceCollapse";
+
+  const categoryModeCollapseRate =
+    entries.filter(
+      (entry) =>
+        entry.gatedOutCandidateCount > 0 &&
+        entry.postGateCandidateCount === 0 &&
+        !entry.lowCategoryConfidenceFallbackActive,
+    ).length / total;
+  if (categoryModeCollapseRate >= 0.5) return "categoryModeCollapse";
+
+  const fusionCollapseRate =
+    entries.filter(
+      (entry) => entry.suggestionsCount > 0 && !entry.wave5GeometryFusionApplied,
+    ).length / total;
+  if (fusionCollapseRate >= 0.75) return "fusionCollapse";
+
+  const rerankCollapseRate =
+    entries.filter(
+      (entry) => entry.suggestionsCount > 0 && !entry.wave5ReflowApplied,
+    ).length / total;
+  if (rerankCollapseRate >= 0.75) return "rerankCollapse";
+
+  return "none";
+}
+
+async function writeReducerArtifacts(args: {
+  documentId: string | undefined;
+  totalBlocks: number;
+  mappingsCount: number;
+  reducerSnapshot: ReturnType<typeof getLastReducerDebugSnapshot>;
+}) {
+  const debugDir = path.resolve(process.cwd(), "../../debug");
+  await mkdir(debugDir, { recursive: true });
+
+  const entries = args.reducerSnapshot.entries || [];
+  const summary = {
+    timestamp: new Date().toISOString(),
+    documentId: args.documentId,
+    totalBlocks: args.totalBlocks,
+    accumCount: entries.reduce((sum, entry) => sum + Number(entry.accumCount || 0), 0),
+    suggestionsCount: entries.reduce((sum, entry) => sum + Number(entry.suggestionsCount || 0), 0),
+    mappingsCount: args.mappingsCount,
+    sampledBlocks: entries.length,
+    reducerFailureClass: resolveReducerFailureClass(entries),
+  };
+
+  const debugPayload = {
+    timestamp: new Date().toISOString(),
+    documentId: args.documentId,
+    totalBlocks: args.totalBlocks,
+    sampledBlocks: args.reducerSnapshot.capturedBlocks,
+    entries,
+  };
+
+  const sampledCandidates = entries.flatMap((entry) =>
+    (entry.firstFiveCandidates || []).map((candidate) => ({
+      ...candidate,
+      blockId: entry.blockId,
+      fusionThreshold: Number(candidate.fusionThreshold || entry.fusionThreshold || 0.6),
+    })),
+  );
+
+  const fusionStageDebug = {
+    timestamp: new Date().toISOString(),
+    documentId: args.documentId,
+    totalBlocks: args.totalBlocks,
+    sampledBlocks: entries.length,
+    entries: entries.map((entry) => ({
+      blockIndex: entry.blockIndex,
+      blockId: entry.blockId,
+      page: entry.page,
+      accumCount: entry.accumCount,
+      candidateCount: entry.suggestionsCount,
+      fusionThreshold: Number(entry.fusionThreshold || 0.6),
+      confidenceNormalization: {
+        topCandidateConfidence: entry.topCandidateConfidence,
+        topCandidateNormalizedConfidence: entry.topCandidateNormalizedConfidence,
+      },
+      categoryMode: {
+        gateDecision: entry.categoryModeGateDecision,
+        lowCategoryConfidenceFallbackActive: entry.lowCategoryConfidenceFallbackActive,
+        preGateCandidateCount: entry.preGateCandidateCount,
+        postGateCandidateCount: entry.postGateCandidateCount,
+        gatedOutCandidateCount: entry.gatedOutCandidateCount,
+      },
+      fusionWeights: entry.fusionWeights,
+      candidates: (entry.firstFiveCandidates || []).map((candidate) => ({
+        acordCode: candidate.acordCode,
+        label: candidate.label,
+        fusionScore: Number(candidate.fusionScore || 0),
+        fusionThreshold: Number(candidate.fusionThreshold || entry.fusionThreshold || 0.6),
+        dictionaryScore: Number(candidate.dictionaryScore || 0),
+        heuristicScore: Number(candidate.heuristicScore || 0),
+        semanticScore: Number(candidate.semanticScore || 0),
+        geometryScore: Number(candidate.geometryScore || 0),
+        categoryScore: Number(candidate.categoryScore || 0),
+        confidenceScore: Number(candidate.confidenceScore || 0),
+        normalizedConfidenceScore: Number(candidate.normalizedConfidenceScore || 0),
+        semanticContribution: Number(candidate.semanticContribution || 0),
+        geometryContribution: Number(candidate.geometryContribution || 0),
+      })),
+    })),
+  };
+
+  const fusionReducerDecisions = {
+    timestamp: new Date().toISOString(),
+    documentId: args.documentId,
+    totalBlocks: args.totalBlocks,
+    sampledBlocks: entries.length,
+    entries: entries.map((entry) => ({
+      blockIndex: entry.blockIndex,
+      blockId: entry.blockId,
+      accumCount: entry.accumCount,
+      candidateCount: entry.suggestionsCount,
+      reducerDecisions: (entry.firstFiveCandidates || []).map((candidate) => ({
+        acordCode: candidate.acordCode,
+        fusionScore: Number(candidate.fusionScore || 0),
+        fusionThreshold: Number(candidate.fusionThreshold || entry.fusionThreshold || 0.6),
+        reducerDecision: candidate.reducerDecision,
+      })),
+    })),
+  };
+
+  const allFusionBelowThreshold =
+    sampledCandidates.length > 0 &&
+    sampledCandidates.every(
+      (candidate) => Number(candidate.fusionScore || 0) < Number(candidate.fusionThreshold || 0.6),
+    );
+  const categoryModeRemovesAll =
+    entries.length > 0 &&
+    entries.every((entry) => entry.categoryModeGateDecision === "dropped_all");
+  const confidenceNormalizationZero =
+    sampledCandidates.length > 0 &&
+    sampledCandidates.every(
+      (candidate) => Number(candidate.normalizedConfidenceScore || 0) <= 0,
+    );
+  const fusionWeightsZero =
+    entries.length > 0 &&
+    entries.every((entry) =>
+      Number(entry.fusionWeights?.category || 0) +
+        Number(entry.fusionWeights?.heuristic || 0) +
+        Number(entry.fusionWeights?.geometry || 0) +
+        Number(entry.fusionWeights?.ontology || 0) +
+        Number(entry.fusionWeights?.semantic || 0) +
+        Number(entry.fusionWeights?.dictionary || 0) +
+        Number(entry.fusionWeights?.lexical || 0) ===
+      0,
+    );
+
+  let fusionFailureClass: string = "none";
+  if (allFusionBelowThreshold) {
+    fusionFailureClass = "fusionThresholdTooHigh";
+  } else if (categoryModeRemovesAll) {
+    fusionFailureClass = "categoryModeCollapse";
+  } else if (confidenceNormalizationZero) {
+    fusionFailureClass = "confidenceCollapse";
+  } else if (fusionWeightsZero) {
+    fusionFailureClass = "fusionCollapse";
+  }
+
+  const fusionFailureSummary = {
+    timestamp: new Date().toISOString(),
+    documentId: args.documentId,
+    totalBlocks: args.totalBlocks,
+    sampledBlocks: entries.length,
+    accumCount: entries.reduce((sum, entry) => sum + Number(entry.accumCount || 0), 0),
+    suggestionsCount: entries.reduce((sum, entry) => sum + Number(entry.suggestionsCount || 0), 0),
+    sampledCandidateCount: sampledCandidates.length,
+    checks: {
+      allFusionBelowThreshold,
+      categoryModeRemovesAll,
+      confidenceNormalizationZero,
+      fusionWeightsZero,
+    },
+    fusionFailureClass,
+  };
+
+  await Promise.all([
+    writeFile(
+      path.join(debugDir, "mapFields_reducer_debug.json"),
+      JSON.stringify(debugPayload, null, 2),
+      "utf8",
+    ),
+    writeFile(
+      path.join(debugDir, "mapFields_reducer_summary.json"),
+      JSON.stringify(summary, null, 2),
+      "utf8",
+    ),
+    writeFile(
+      path.join(debugDir, "reducer_debug_report.json"),
+      JSON.stringify(debugPayload, null, 2),
+      "utf8",
+    ),
+    writeFile(
+      path.join(debugDir, "reducer_summary_report.json"),
+      JSON.stringify(summary, null, 2),
+      "utf8",
+    ),
+    writeFile(
+      path.join(debugDir, "fusion_stage_debug.json"),
+      JSON.stringify(fusionStageDebug, null, 2),
+      "utf8",
+    ),
+    writeFile(
+      path.join(debugDir, "fusion_reducer_decisions.json"),
+      JSON.stringify(fusionReducerDecisions, null, 2),
+      "utf8",
+    ),
+    writeFile(
+      path.join(debugDir, "fusion_failure_summary.json"),
+      JSON.stringify(fusionFailureSummary, null, 2),
+      "utf8",
+    ),
+  ]);
+}
+
+async function writeUsabilityArtifacts(args: {
+  documentId: string | undefined;
+  totalBlocks: number;
+  mappings: FieldMapping[];
+}) {
+  const debugDir = path.resolve(process.cwd(), "../../debug");
+  await mkdir(debugDir, { recursive: true });
+
+  const mappings = args.mappings || [];
+  const mappingCount = mappings.length;
+  const mappedByBlockId = new Set(mappings.map((mapping) => mapping.blockId));
+  const missingTopCandidate = mappings.filter(
+    (mapping) => !(mapping.topCandidate || mapping.chosen || mapping.suggestions?.[0]),
+  );
+  const missingFieldType = mappings.filter((mapping) => !mapping.fieldType);
+  const missingSemanticLabel = mappings.filter(
+    (mapping) => !String(mapping.semanticLabel || "").trim(),
+  );
+  const fallbackMappings = mappings.filter((mapping) => Boolean(mapping.fallbackReason));
+
+  const mappingUsabilityModeReport = {
+    timestamp: new Date().toISOString(),
+    documentId: args.documentId,
+    totalBlocks: args.totalBlocks,
+    mappingsCount: mappingCount,
+    blockCoverageCount: mappedByBlockId.size,
+    checks: {
+      mappingsMatchBlocks: mappingCount === args.totalBlocks,
+      blockCoverageMatch: mappedByBlockId.size === args.totalBlocks,
+      allHaveFieldType: missingFieldType.length === 0,
+      allHaveSemanticLabel: missingSemanticLabel.length === 0,
+      allHaveTopCandidate: missingTopCandidate.length === 0,
+    },
+    missing: {
+      fieldTypeBlockIds: missingFieldType.map((mapping) => mapping.blockId),
+      semanticLabelBlockIds: missingSemanticLabel.map((mapping) => mapping.blockId),
+      topCandidateBlockIds: missingTopCandidate.map((mapping) => mapping.blockId),
+    },
+  };
+
+  const fusionFallbackBehaviorReport = {
+    timestamp: new Date().toISOString(),
+    documentId: args.documentId,
+    totalBlocks: args.totalBlocks,
+    mappingsCount: mappingCount,
+    confidenceOnlyFallbackCount: fallbackMappings.filter(
+      (mapping) => mapping.fallbackReason === "confidence_only_fallback",
+    ).length,
+    syntheticFallbackCount: fallbackMappings.filter(
+      (mapping) => mapping.fallbackReason === "synthetic_confidence_fallback",
+    ).length,
+    fallbackSamples: fallbackMappings.slice(0, 50).map((mapping) => ({
+      blockId: mapping.blockId,
+      page: mapping.page,
+      fallbackReason: mapping.fallbackReason,
+      topCandidateCode:
+        mapping.topCandidate?.acordCode ||
+        mapping.chosen?.acordCode ||
+        mapping.suggestions?.[0]?.acordCode ||
+        null,
+      topCandidateConfidence:
+        Number(
+          mapping.topCandidate?.confidenceScore ||
+            mapping.chosen?.confidenceScore ||
+            mapping.suggestions?.[0]?.confidenceScore ||
+            0,
+        ) || 0,
+    })),
+  };
+
+  const designerRenderableMappings = mappings.filter((mapping) => {
+    const fieldTypePresent = Boolean(mapping.fieldType);
+    const semanticLabelPresent = Boolean(String(mapping.semanticLabel || "").trim());
+    return fieldTypePresent && semanticLabelPresent;
+  });
+
+  const designerFieldRenderingReport = {
+    timestamp: new Date().toISOString(),
+    documentId: args.documentId,
+    totalBlocks: args.totalBlocks,
+    mappingsCount: mappingCount,
+    renderRule: {
+      requiresFieldType: true,
+      requiresSemanticLabel: true,
+      ignoresFusionThresholdForRendering: true,
+    },
+    renderableMappingsCount: designerRenderableMappings.length,
+    nonRenderableMappingsCount: Math.max(0, mappingCount - designerRenderableMappings.length),
+    renderableCoverageRate: Number(
+      (designerRenderableMappings.length / Math.max(1, args.totalBlocks)).toFixed(4),
+    ),
+    checks: {
+      allBlocksRenderable: designerRenderableMappings.length === args.totalBlocks,
+    },
+  };
+
+  await Promise.all([
+    writeFile(
+      path.join(debugDir, "mapping_usability_mode_report.json"),
+      JSON.stringify(mappingUsabilityModeReport, null, 2),
+      "utf8",
+    ),
+    writeFile(
+      path.join(debugDir, "fusion_fallback_behavior_report.json"),
+      JSON.stringify(fusionFallbackBehaviorReport, null, 2),
+      "utf8",
+    ),
+    writeFile(
+      path.join(debugDir, "designer_field_rendering_report.json"),
+      JSON.stringify(designerFieldRenderingReport, null, 2),
+      "utf8",
+    ),
+  ]);
+}
+
 const LAYOUTLM_INFER_URL =
   process.env.LAYOUTLM_INFER_URL || "http://localhost:8090/infer";
 const LAYOUTLM_BATCH_INFER_URL =
@@ -141,7 +512,6 @@ const LAYOUTLM_MODEL_VERSION =
   process.env.FINETUNED_MODEL_DIR ||
   process.env.LAYOUTLM_MODEL_VERSION ||
   "unknown-model";
-
 type LayoutLmInferInput = {
   pageImageBase64: string;
   ocrTokens: string[];
@@ -1028,7 +1398,10 @@ function createMappingDecisionGraph(
           artifactId: mapping.blockId,
           decision: "pending" as const,
           linkedArtifactIds: [mapping.blockId].sort((left, right) => left.localeCompare(right)),
-          chosenCandidateCode: mapping.chosen?.acordCode,
+          chosenCandidateCode:
+            mapping.chosen?.acordCode ||
+            mapping.topCandidate?.acordCode ||
+            mapping.suggestions?.[0]?.acordCode,
           candidateDecisions: Object.fromEntries(
             [...mapping.suggestions]
               .sort((left, right) => left.acordCode.localeCompare(right.acordCode))
@@ -1140,6 +1513,19 @@ export async function mapFields(
       wave5ReflowEnabled: body.wave5ReflowEnabled,
       wave5TuningProfile: body.wave5TuningProfile,
     });
+    const reducerSnapshot = getLastReducerDebugSnapshot();
+    await writeReducerArtifacts({
+      documentId: body.documentId,
+      totalBlocks: blocks.length,
+      mappingsCount: mappings.length,
+      reducerSnapshot,
+    });
+    await writeUsabilityArtifacts({
+      documentId: body.documentId,
+      totalBlocks: blocks.length,
+      mappings,
+    });
+
     const mappingsWithLayoutLm = mappings.map((mapping) => ({
       ...mapping,
       // Evaluation-only enrichment: no candidate scores or selected mapping are changed.

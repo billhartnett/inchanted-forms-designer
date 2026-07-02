@@ -85,6 +85,8 @@ const API_BASE_URL = (() => {
   return "";
 })();
 
+const WAVE8_USABILITY_MODE = true;
+
 function apiUrl(path: string): string {
   if (!API_BASE_URL) {
     return path;
@@ -498,8 +500,12 @@ function buildTypedFieldPreview(
   mapping: MapFieldMapping,
   sourceBlock: ExtractedBlock,
 ): Field {
-  const chosen = mapping.chosen || mapping.suggestions?.[0];
-  const fieldType = inferFieldType(sourceBlock, chosen);
+  const chosen = mapping.chosen || (mapping as any).topCandidate || mapping.suggestions?.[0];
+  const fieldType = ((mapping as any).fieldType as SemanticFieldType | undefined) || inferFieldType(sourceBlock, chosen);
+  const semanticLabel =
+    String((mapping as any).semanticLabel || "").trim() ||
+    String(mapping.text || "").trim() ||
+    String(chosen?.label || "").trim();
   const metadataSource: FieldMetadataSource = chosen
     ? toMetadataSource(chosen.source)
     : "ocr";
@@ -534,7 +540,7 @@ function buildTypedFieldPreview(
     groupId: null,
     metadata: {
       acordCode: chosen?.acordCode ?? "",
-      acordLabel: chosen?.label ?? mapping.text,
+      acordLabel: chosen?.label ?? semanticLabel,
       acordDescription: chosen?.description ?? "",
       fieldType,
       required: false,
@@ -542,7 +548,7 @@ function buildTypedFieldPreview(
       source: metadataSource,
       extractionBlockId: mapping.blockId,
       // NEW: Wave 8 semantic metadata
-      semanticLabel: mapping.text,
+      semanticLabel,
       categoryMode: chosen?.categoryMode as string | undefined,
       acordCandidates,
       // NEW: Checkpoint state detection
@@ -709,7 +715,7 @@ export default function PdfImportModal({
   const formFamily = useMappingStore((s) => s.formFamily);
   const [isAutoMapping, setIsAutoMapping] = useState(true);
   const [isReviewMode, setIsReviewMode] = useState(false);
-  const [maxMappedFields, setMaxMappedFields] = useState(120);
+  const [maxMappedFields, setMaxMappedFields] = useState(1000);
   const [isImporting, setIsImporting] = useState(false);
 
   const downloadDebugReport = () => {
@@ -1017,12 +1023,30 @@ export default function PdfImportModal({
 
     // DEBUG MODE: Temporarily relax quality thresholds for diagnosis
     const debugModeRelaxedThresholds = useDiagnosticMode;
-    const minConfidenceStrict = debugModeRelaxedThresholds ? 0.0 : 0.3;
-    const shouldCheckTextFilters = !debugModeRelaxedThresholds;
-    const shouldCheckHeaderFilters = !debugModeRelaxedThresholds;
+    const minConfidenceStrict = WAVE8_USABILITY_MODE
+      ? 0.0
+      : debugModeRelaxedThresholds
+        ? 0.0
+        : 0.3;
+    const shouldCheckTextFilters = !debugModeRelaxedThresholds && !WAVE8_USABILITY_MODE;
+    const shouldCheckHeaderFilters = !debugModeRelaxedThresholds && !WAVE8_USABILITY_MODE;
 
     let qualityMappings = mappingCandidates.filter(({ mapping }) => {
-      const chosen = mapping.chosen || mapping.suggestions?.[0];
+      const chosen = mapping.chosen || (mapping as any).topCandidate || mapping.suggestions?.[0];
+      const fieldType = (mapping as any).fieldType as SemanticFieldType | undefined;
+      const semanticLabel = String((mapping as any).semanticLabel || "").trim();
+
+      if (WAVE8_USABILITY_MODE && fieldType && semanticLabel) {
+        if (!topCandidatesPerBlock[mapping.blockId]) {
+          topCandidatesPerBlock[mapping.blockId] = [];
+        }
+        topCandidatesPerBlock[mapping.blockId] = mapping.suggestions
+          .slice(0, 5)
+          .map((s) => ({ label: s.label, score: s.confidenceScore }));
+        filterBreakdown.passed++;
+        return true;
+      }
+
       if (!chosen) { filterBreakdown.noChosen++; return false; }
       if (chosen.confidenceScore < minConfidenceStrict) { filterBreakdown.lowConfidenceStrict++; return false; }
 
@@ -1064,11 +1088,21 @@ export default function PdfImportModal({
 
     // If filtering is too strict, fall back to a relaxed set but still reject headers and low-confidence noise.
     const fallbackFilterBreakdown = { ...filterBreakdown, noChosen: 0, lowConfidenceRelaxed: 0, passed: 0 };
-    const minConfidenceRelaxed = debugModeRelaxedThresholds ? 0.0 : 0.12;
+    const minConfidenceRelaxed = WAVE8_USABILITY_MODE
+      ? 0.0
+      : debugModeRelaxedThresholds
+        ? 0.0
+        : 0.12;
     
     if (qualityMappings.length < 20) {
       qualityMappings = mappingCandidates.filter(({ mapping }) => {
-        const chosen = mapping.chosen || mapping.suggestions?.[0];
+        const chosen = mapping.chosen || (mapping as any).topCandidate || mapping.suggestions?.[0];
+        const fieldType = (mapping as any).fieldType as SemanticFieldType | undefined;
+        const semanticLabel = String((mapping as any).semanticLabel || "").trim();
+        if (WAVE8_USABILITY_MODE && fieldType && semanticLabel) {
+          fallbackFilterBreakdown.passed++;
+          return true;
+        }
         if (!chosen || chosen.confidenceScore < minConfidenceRelaxed) { fallbackFilterBreakdown.lowConfidenceRelaxed++; return false; }
 
         const text = (mapping.text || "").trim();
@@ -1109,15 +1143,15 @@ export default function PdfImportModal({
     window.__debugQualityFiltering = qualityFilterDebug;
 
     const safeMappings = qualityMappings
-      .slice(0, Math.max(1, limit))
+      .slice(0, WAVE8_USABILITY_MODE ? qualityMappings.length : Math.max(1, limit))
       .map((item) => item.mapping);
     
     // DEBUG STEP 4: Log safe mappings before designerStore persistence
     console.error("[safe-mappings-COUNT] Ready to persist: " + safeMappings.length + " fields (cap: " + limit + ")");
     console.log("[safe-mappings-ready]", {
       totalSafeMappings: safeMappings.length,
-      fieldsCap: limit,
-      actualFieldsToCreate: Math.min(safeMappings.length, limit),
+      fieldsCap: WAVE8_USABILITY_MODE ? "all" : limit,
+      actualFieldsToCreate: safeMappings.length,
     });
 
     const mappingSummary = {
@@ -1159,7 +1193,7 @@ export default function PdfImportModal({
     });
 
     const draftMappings = safeMappings.map((mapping) => {
-      const chosen = mapping.chosen || mapping.suggestions?.[0];
+      const chosen = mapping.chosen || (mapping as any).topCandidate || mapping.suggestions?.[0];
       const sourceBlock = sourceBlockById.get(mapping.blockId);
       const blockType = sourceBlock?.type || "text";
       const fieldPreview = sourceBlock
@@ -1181,7 +1215,7 @@ export default function PdfImportModal({
 
       return {
         ...draft,
-        accepted: Boolean(chosen) || shouldAcceptMapping(draft),
+        accepted: WAVE8_USABILITY_MODE ? true : Boolean(chosen) || shouldAcceptMapping(draft),
       };
     });
 
@@ -1285,6 +1319,7 @@ export default function PdfImportModal({
     const preStoreFieldCount = useDesignerStore.getState().fields.length;
     console.error("[CRITICAL] designerStore fields BEFORE setDraftCanvasFields: " + preStoreFieldCount);
     useDesignerStore.getState().setDraftCanvasFields(fieldObjects);
+    const committedDraftCount = useDesignerStore.getState().commitDraftCanvasFields();
     const postStoreFieldCount = useDesignerStore.getState().fields.length;
     console.error("[CRITICAL] designerStore fields AFTER setDraftCanvasFields: " + postStoreFieldCount);
 
@@ -1295,6 +1330,7 @@ export default function PdfImportModal({
       designerStoreFieldsBeforePersist: preStoreFieldCount,
       designerStoreFieldsAfterPersist: postStoreFieldCount,
       fieldsActuallyAdded: postStoreFieldCount - preStoreFieldCount,
+      committedDraftCount,
       persistenceSuccess: postStoreFieldCount > preStoreFieldCount,
       draftFields: useDesignerStore.getState().draftFields?.length || 0,
       allFieldsCount: useDesignerStore.getState().fields.length,

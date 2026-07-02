@@ -113,6 +113,75 @@ type ScoreAccumulator = {
   source: "ai" | "dictionary" | "heuristic";
 };
 
+type ReducerDebugCandidate = {
+  acordCode: string;
+  label: string;
+  confidenceScore: number;
+  normalizedConfidenceScore: number;
+  source: string;
+  fusionScore: number;
+  fusionThreshold: number;
+  reducerDecision: "kept" | "dropped";
+  dictionaryScore: number;
+  heuristicScore: number;
+  semanticScore: number;
+  geometryAgreement: number;
+  categoryEvidence: number;
+  geometryScore: number;
+  categoryScore: number;
+  semanticContribution: number;
+  geometryContribution: number;
+};
+
+type ReducerDebugEntry = {
+  blockIndex: number;
+  blockId: string;
+  page: number;
+  textSample: string;
+  accumCount: number;
+  suggestionsCount: number;
+  preGateCandidateCount: number;
+  postGateCandidateCount: number;
+  gatedOutCandidateCount: number;
+  lowCategoryConfidenceFallbackActive: boolean;
+  categoryModeGateDecision: "passed_or_relaxed" | "dropped_all";
+  wave5GeometryFusionApplied: boolean;
+  wave5CategoryModeApplied: boolean;
+  wave5ReflowApplied: boolean;
+  fusionThreshold: number;
+  fusionWeights: {
+    category: number;
+    heuristic: number;
+    geometry: number;
+    ontology: number;
+    semantic: number;
+    dictionary: number;
+    lexical: number;
+  };
+  topCandidateConfidence: number;
+  topCandidateNormalizedConfidence: number;
+  firstFiveCandidates: ReducerDebugCandidate[];
+};
+
+export type ReducerDebugSnapshot = {
+  timestamp: string;
+  totalBlocks: number;
+  capturedBlocks: number;
+  entries: ReducerDebugEntry[];
+};
+
+const REDUCER_DEBUG_BLOCK_LIMIT = 20;
+let lastReducerDebugSnapshot: ReducerDebugSnapshot = {
+  timestamp: new Date(0).toISOString(),
+  totalBlocks: 0,
+  capturedBlocks: 0,
+  entries: [],
+};
+
+export function getLastReducerDebugSnapshot(): ReducerDebugSnapshot {
+  return lastReducerDebugSnapshot;
+}
+
 const SCORE_PRECISION = 6;
 const LAYOUTLM_PRIMARY_TOP_K = Math.max(
   1,
@@ -161,6 +230,17 @@ const DEFAULT_WAVE44_FUSION: Wave44FusionWeights = {
   dictionary: 0.03,
   lexical: 0.02,
 };
+
+const WAVE8_USABILITY_MODE = process.env.WAVE8_USABILITY_MODE !== "0";
+const WAVE8_CONFIDENCE_FALLBACK_THRESHOLD = Math.max(
+  0,
+  Math.min(1, Number(process.env.WAVE8_CONFIDENCE_FALLBACK_THRESHOLD || 0.3)),
+);
+const WAVE8_PERMISSIVE_FUSION_THRESHOLD = Math.max(
+  0,
+  Math.min(1, Number(process.env.WAVE8_PERMISSIVE_FUSION_THRESHOLD || 0.15)),
+);
+const WAVE8_MIN_FUSION_WEIGHT = 0.01;
 
 const DEFAULT_WAVE44_GATE: Wave44GateTuning = {
   acceptedGlobalRelax: 0.04,
@@ -836,6 +916,15 @@ const WAVE47_GATE = loadWave47Gate();
 const WAVE48_OVERRIDES = loadWave48Overrides();
 const WAVE48_GATE = loadWave48Gate();
 const WAVE48_RERANK = loadWave48Rerank();
+const WAVE8_EFFECTIVE_FUSION: Wave44FusionWeights = {
+  category: ensureNonZeroFusionWeight(Number(WAVE44_FUSION.category || 0)),
+  heuristic: ensureNonZeroFusionWeight(Number(WAVE44_FUSION.heuristic || 0)),
+  geometry: ensureNonZeroFusionWeight(Number(WAVE44_FUSION.geometry || 0)),
+  ontology: ensureNonZeroFusionWeight(Number(WAVE44_FUSION.ontology || 0)),
+  semantic: ensureNonZeroFusionWeight(Number(WAVE44_FUSION.semantic || 0)),
+  dictionary: ensureNonZeroFusionWeight(Number(WAVE44_FUSION.dictionary || 0)),
+  lexical: ensureNonZeroFusionWeight(Number(WAVE44_FUSION.lexical || 0)),
+};
 
 type ConfidenceLevel = "accepted" | "review" | "rejected";
 
@@ -994,6 +1083,73 @@ function tokenize(value: string): string[] {
 function clamp01(value: number): number {
   if (!Number.isFinite(value)) return 0;
   return Math.min(1, Math.max(0, value));
+}
+
+function ensureNonZeroFusionWeight(value: number): number {
+  if (!Number.isFinite(value) || value <= 0) {
+    return WAVE8_MIN_FUSION_WEIGHT;
+  }
+  return value;
+}
+
+function deriveUsabilityFieldType(
+  block: ExtractedBlock,
+  candidate?: Pick<AcordSuggestion, "label" | "description">,
+): "text" | "checkbox" | "radio" | "date" | "numeric" | "signature" {
+  if (block.type === "checkbox") return "checkbox";
+  if (block.type === "radio") return "radio";
+  if (block.type === "signature") return "signature";
+
+  const text = `${block.text || ""} ${candidate?.label || ""} ${candidate?.description || ""}`.toLowerCase();
+  if (/\b(date|dob|birth|effective|expiration|expiry)\b|\b\d{1,2}\/\d{1,2}\/\d{2,4}\b/.test(text)) {
+    return "date";
+  }
+  if (/\b(amount|premium|deductible|limit|employees|number|zip|postal|years|currency|total)\b|\$\s*\d/.test(text)) {
+    return "numeric";
+  }
+  if (/\bsignature|sign here|signed by|authorized signature\b/.test(text)) {
+    return "signature";
+  }
+  if (/\u2610|\u2611|\u2612|\[\s?\]|\(\s?\)/.test(block.text || "")) {
+    return "checkbox";
+  }
+
+  return "text";
+}
+
+function deriveUsabilitySemanticLabel(
+  block: ExtractedBlock,
+  candidate?: Pick<AcordSuggestion, "label">,
+): string {
+  const blockText = String(block.text || "").trim();
+  if (blockText.length > 0) {
+    return blockText;
+  }
+
+  const candidateLabel = String(candidate?.label || "").trim();
+  if (candidateLabel.length > 0) {
+    return candidateLabel;
+  }
+
+  return String(block.text || "").trim().slice(0, 32) || block.id;
+}
+
+function buildSyntheticConfidenceFallbackCandidate(block: ExtractedBlock): AcordSuggestion {
+  const semanticLabel = deriveUsabilitySemanticLabel(block);
+  const confidence = WAVE8_CONFIDENCE_FALLBACK_THRESHOLD;
+  return {
+    acordCode: "UNMAPPED_CONFIDENCE_FALLBACK",
+    label: semanticLabel,
+    description: "Synthetic confidence-only fallback candidate",
+    confidenceScore: Number(confidence.toFixed(3)),
+    normalizedConfidenceScore: Number(confidence.toFixed(3)),
+    source: "heuristic",
+    lexicalScore: 0,
+    semanticSimilarity: 0,
+    dictionaryScore: 0,
+    heuristicScore: Number(confidence.toFixed(3)),
+    rationale: "confidence_only_fallback",
+  } as AcordSuggestion;
 }
 
 function summarizeWave49Latency(stageTimings: Wave49StageTimings) {
@@ -3008,13 +3164,13 @@ function toSuggestions(
 
     if (WAVE44_FUSION_ENABLED) {
       const wave44Fused = clamp01(
-        categoryEvidence * WAVE44_FUSION.category +
-          heuristicEvidence * WAVE44_FUSION.heuristic +
-          geometryAgreement * WAVE44_FUSION.geometry +
-          ontologyPrior * WAVE44_FUSION.ontology +
-          semanticEvidence * WAVE44_FUSION.semantic +
-          dictionaryEvidence * WAVE44_FUSION.dictionary +
-          anchorEvidence * WAVE44_FUSION.lexical,
+        categoryEvidence * WAVE8_EFFECTIVE_FUSION.category +
+          heuristicEvidence * WAVE8_EFFECTIVE_FUSION.heuristic +
+          geometryAgreement * WAVE8_EFFECTIVE_FUSION.geometry +
+          ontologyPrior * WAVE8_EFFECTIVE_FUSION.ontology +
+          semanticEvidence * WAVE8_EFFECTIVE_FUSION.semantic +
+          dictionaryEvidence * WAVE8_EFFECTIVE_FUSION.dictionary +
+          anchorEvidence * WAVE8_EFFECTIVE_FUSION.lexical,
       );
       confidenceScore = clamp01(confidenceScore * 0.38 + wave44Fused * 0.62);
     }
@@ -3489,6 +3645,8 @@ export async function mapBlocksToAcord(
     };
   },
 ): Promise<FieldMapping[]> {
+  const reducerDebugEntries: ReducerDebugEntry[] = [];
+
   if (!options?.deterministic) {
     ensureEmbeddings().catch(() => {});
   }
@@ -3558,7 +3716,7 @@ export async function mapBlocksToAcord(
     wave5FeatureGateEnabled && (options?.wave5ReflowEnabled ?? wave5ReflowDefault);
   const geometryBlocksByPage = new Map<number, GeometryBlock[]>();
 
-  for (const block of orderedBlocks) {
+  for (const [blockIndex, block] of orderedBlocks.entries()) {
     const pageIndex = Math.max(0, Number(block.page || 1) - 1);
     const existing = geometryBlocksByPage.get(pageIndex) || [];
     existing.push({
@@ -3573,7 +3731,7 @@ export async function mapBlocksToAcord(
     geometryBlocksByPage.set(pageIndex, existing);
   }
 
-  for (const block of orderedBlocks) {
+  for (const [blockIndex, block] of orderedBlocks.entries()) {
       const blockStartedAt = Date.now();
       const stageTimings = {
         layoutLmMs: 0,
@@ -3645,6 +3803,10 @@ export async function mapBlocksToAcord(
 
       const postGateCandidateCount = accum.size;
       const gatedOutCandidateCount = Math.max(0, preGateCandidateCount - postGateCandidateCount);
+      const categoryModeGateDecision =
+        preGateCandidateCount > 0 && postGateCandidateCount === 0 && !lowCategoryConfidenceFallbackActive
+          ? "dropped_all"
+          : "passed_or_relaxed";
 
       stageStartedAt = Date.now();
       try {
@@ -3690,11 +3852,6 @@ export async function mapBlocksToAcord(
         wave49Errors.push(normalizeWave49Error("suggestion", error));
       }
       stageTimings.suggestionMs = Date.now() - stageStartedAt;
-
-      // DEBUG: Log suggestion generation
-      if (suggestions.length === 0 && accum.size > 0) {
-        console.error(`[CRITICAL-BACKEND] Block ${block.id}: accum has ${accum.size} candidates but toSuggestions() returned 0 suggestions`);
-      }
 
       if (suggestions.length === 0) {
         const beforeHeuristic = accum.size;
@@ -3757,6 +3914,19 @@ export async function mapBlocksToAcord(
 
       let wave5FusionApplied = false;
       let wave5GeometryDiagnostics: ReturnType<typeof emitGeometryModeDiagnostics> | undefined;
+      const fusionThreshold = WAVE8_USABILITY_MODE
+        ? WAVE8_PERMISSIVE_FUSION_THRESHOLD
+        : 0.6;
+      const fusionByAcordCode = new Map<
+        string,
+        {
+          fusionScore: number;
+          semanticScore: number;
+          geometryScore: number;
+          semanticContribution: number;
+          geometryContribution: number;
+        }
+      >();
       if (wave5GeometryEnabled && suggestions.length > 0) {
         const wave5StartedAt = Date.now();
         try {
@@ -3788,7 +3958,8 @@ export async function mapBlocksToAcord(
             undefined,
           );
           const candidateLimit = Math.min(6, suggestions.length);
-          const fusionCandidates = suggestions.slice(0, candidateLimit).map((candidate, index) => {
+          const preFusionSuggestions = suggestions.slice(0, candidateLimit);
+          const fusionCandidates = preFusionSuggestions.map((candidate, index) => {
             const candidateBlock =
               geometryScope[index % geometryScope.length] || anchorBlock;
             return {
@@ -3805,6 +3976,19 @@ export async function mapBlocksToAcord(
             candidates: fusionCandidates,
             carrierPatterns,
           });
+          for (const result of fusionResults) {
+            const [indexToken] = result.candidateId.split(":");
+            const candidateIndex = Number(indexToken);
+            const candidate = preFusionSuggestions[candidateIndex];
+            if (!candidate) continue;
+            fusionByAcordCode.set(candidate.acordCode, {
+              fusionScore: Number(result.fusedScore || 0),
+              semanticScore: Number(result.semanticScore || 0),
+              geometryScore: Number(result.geometryScore || 0),
+              semanticContribution: Number(result.semanticContribution || 0),
+              geometryContribution: Number(result.geometryContribution || 0),
+            });
+          }
           const fusionByCandidateId = new Map(
             fusionResults.map((entry) => [entry.candidateId, entry]),
           );
@@ -4059,7 +4243,147 @@ export async function mapBlocksToAcord(
         }
       }
 
+      let fallbackReason: "confidence_only_fallback" | "synthetic_confidence_fallback" | undefined;
+      if (WAVE8_USABILITY_MODE) {
+        if (suggestions.length === 0) {
+          suggestions = [buildSyntheticConfidenceFallbackCandidate(block)];
+          fallbackReason = "synthetic_confidence_fallback";
+        } else {
+          const confidenceEligible = suggestions.filter(
+            (candidate) => Number(candidate.confidenceScore || 0) >= WAVE8_CONFIDENCE_FALLBACK_THRESHOLD,
+          );
+
+          const hasFusionPass = suggestions.some((candidate) => {
+            const fusionScore = Number(
+              fusionByAcordCode.get(candidate.acordCode)?.fusionScore ||
+                candidate.normalizedConfidenceScore ||
+                candidate.confidenceScore ||
+                0,
+            );
+            return fusionScore >= fusionThreshold;
+          });
+
+          const hasPositiveContributions = suggestions.some((candidate) => {
+            const details = fusionByAcordCode.get(candidate.acordCode);
+            return (
+              Number(details?.semanticContribution || 0) > 0 ||
+              Number(details?.geometryContribution || 0) > 0
+            );
+          });
+
+          if (!hasFusionPass && confidenceEligible.length > 0) {
+            confidenceEligible.sort(
+              (left, right) =>
+                Number(right.confidenceScore || 0) - Number(left.confidenceScore || 0) ||
+                left.acordCode.localeCompare(right.acordCode),
+            );
+            const selected = confidenceEligible[0];
+            suggestions = [
+              selected,
+              ...suggestions.filter((candidate) => candidate.acordCode !== selected.acordCode),
+            ];
+            fallbackReason = "confidence_only_fallback";
+          }
+
+          if (!hasPositiveContributions && confidenceEligible.length > 0 && !fallbackReason) {
+            fallbackReason = "confidence_only_fallback";
+          }
+        }
+      }
+
       const topCandidate = suggestions[0];
+      if (blockIndex < REDUCER_DEBUG_BLOCK_LIMIT) {
+        reducerDebugEntries.push({
+          blockIndex,
+          blockId: block.id,
+          page: block.page,
+          textSample: String(block.text || "").slice(0, 120),
+          accumCount: candidatePoolCountBeforeFallback,
+          suggestionsCount: suggestions.length,
+          preGateCandidateCount,
+          postGateCandidateCount,
+          gatedOutCandidateCount,
+          lowCategoryConfidenceFallbackActive,
+          categoryModeGateDecision,
+          wave5GeometryFusionApplied: wave5FusionApplied,
+          wave5CategoryModeApplied,
+          wave5ReflowApplied,
+          fusionThreshold,
+          fusionWeights: {
+            category: Number(WAVE8_EFFECTIVE_FUSION.category || 0),
+            heuristic: Number(WAVE8_EFFECTIVE_FUSION.heuristic || 0),
+            geometry: Number(WAVE8_EFFECTIVE_FUSION.geometry || 0),
+            ontology: Number(WAVE8_EFFECTIVE_FUSION.ontology || 0),
+            semantic: Number(WAVE8_EFFECTIVE_FUSION.semantic || 0),
+            dictionary: Number(WAVE8_EFFECTIVE_FUSION.dictionary || 0),
+            lexical: Number(WAVE8_EFFECTIVE_FUSION.lexical || 0),
+          },
+          topCandidateConfidence: Number(topCandidate?.confidenceScore || 0),
+          topCandidateNormalizedConfidence: Number(
+            topCandidate?.normalizedConfidenceScore || topCandidate?.confidenceScore || 0,
+          ),
+          firstFiveCandidates: suggestions.slice(0, 5).map((candidate) => ({
+            acordCode: candidate.acordCode,
+            label: candidate.label,
+            confidenceScore: Number(candidate.confidenceScore || 0),
+            normalizedConfidenceScore: Number(
+              candidate.normalizedConfidenceScore || candidate.confidenceScore || 0,
+            ),
+            source: String(candidate.source || "unknown"),
+            fusionScore: Number(
+              fusionByAcordCode.get(candidate.acordCode)?.fusionScore ||
+                candidate.normalizedConfidenceScore ||
+                candidate.confidenceScore ||
+                0,
+            ),
+            fusionThreshold,
+            reducerDecision: (() => {
+              const fusionScore = Number(
+                fusionByAcordCode.get(candidate.acordCode)?.fusionScore ||
+                  candidate.normalizedConfidenceScore ||
+                  candidate.confidenceScore ||
+                  0,
+              );
+              const confidenceScore = Number(candidate.confidenceScore || 0);
+              const semanticContribution = Number(
+                fusionByAcordCode.get(candidate.acordCode)?.semanticContribution || 0,
+              );
+              const geometryContribution = Number(
+                fusionByAcordCode.get(candidate.acordCode)?.geometryContribution || 0,
+              );
+              const contributionMissing = semanticContribution <= 0 && geometryContribution <= 0;
+              const confidenceFallbackPass = WAVE8_USABILITY_MODE &&
+                confidenceScore >= WAVE8_CONFIDENCE_FALLBACK_THRESHOLD &&
+                contributionMissing;
+              return fusionScore >= fusionThreshold || confidenceFallbackPass
+                ? "kept"
+                : "dropped";
+            })(),
+            dictionaryScore: Number((candidate as any).dictionaryScore || 0),
+            heuristicScore: Number((candidate as any).heuristicScore || 0),
+            semanticScore: Number(
+              fusionByAcordCode.get(candidate.acordCode)?.semanticScore ||
+                candidate.normalizedConfidenceScore ||
+                candidate.confidenceScore ||
+                0,
+            ),
+            geometryAgreement: Number((candidate as any)?._geometryAgreement || 0),
+            categoryEvidence: Number((candidate as any)?._categoryEvidence || 0),
+            geometryScore: Number(
+              fusionByAcordCode.get(candidate.acordCode)?.geometryScore ||
+                (candidate as any)?._geometryAgreement ||
+                0,
+            ),
+            categoryScore: Number((candidate as any)?._categoryEvidence || 0),
+            semanticContribution: Number(
+              fusionByAcordCode.get(candidate.acordCode)?.semanticContribution || 0,
+            ),
+            geometryContribution: Number(
+              fusionByAcordCode.get(candidate.acordCode)?.geometryContribution || 0,
+            ),
+          })),
+        });
+      }
       if (topCandidate) {
         consistencyCache.set(consistencyKey, {
           acordCode: topCandidate.acordCode,
@@ -4072,9 +4396,6 @@ export async function mapBlocksToAcord(
           existing.add(topCandidate.acordCode);
           seenCodesByCategory.set(primaryCategory, existing);
         }
-      } else {
-        // DEBUG: Log if topCandidate is falsy (mapping will be skipped)
-        console.error(`[CRITICAL-BACKEND] Block ${block.id}: suggestions.length=${suggestions.length}, topCandidate is falsy, MAPPING SKIPPED`);
       }
       stageTimings.totalMs = Date.now() - blockStartedAt;
       const wave49LatencySummary = summarizeWave49Latency(stageTimings);
@@ -4205,6 +4526,10 @@ export async function mapBlocksToAcord(
         boundingBox: block.boundingBox,
         suggestions,
         chosen: suggestions[0],
+        topCandidate: suggestions[0],
+        fieldType: deriveUsabilityFieldType(block, suggestions[0]),
+        semanticLabel: deriveUsabilitySemanticLabel(block, suggestions[0]),
+        fallbackReason,
         mappingDiagnostics: ({
           layoutLmPrimaryClassifierEnabled: useLayoutLmPrimaryClassifier,
           wave44FusionEnabled: WAVE44_FUSION_ENABLED,
@@ -4281,6 +4606,13 @@ export async function mapBlocksToAcord(
       } as FieldMapping;
       results.push(mapping);
   }
+
+  lastReducerDebugSnapshot = {
+    timestamp: new Date().toISOString(),
+    totalBlocks: orderedBlocks.length,
+    capturedBlocks: reducerDebugEntries.length,
+    entries: reducerDebugEntries,
+  };
 
   return results;
 }
