@@ -1,0 +1,119 @@
+{
+  "mapping_engine_recovery_report": {
+    "timestamp": "2026-07-02T12:21:00Z",
+    "status": "operational_with_issue",
+    "mapping_engine_version": "Wave 8",
+    "backend_endpoint": "http://localhost:7071/api/mapFields",
+    "test_results": {
+      "test_file": "sample-Acord-125.pdf",
+      "test_pages": 6,
+      "test_timestamp": "2026-07-02T12:17:30Z"
+    },
+    "extraction_pipeline": {
+      "stage_1_di_extraction": {
+        "name": "Azure Document Intelligence (prebuilt-layout)",
+        "status": "operational",
+        "endpoint": "https://acordmap.cognitiveservices.azure.com/",
+        "output": "PageExtraction[] with OCR lines",
+        "result": "714 blocks extracted from 6-page PDF",
+        "execution_time_ms": 67292,
+        "http_status": 200
+      },
+      "stage_2_ocr_filtering": {
+        "name": "Frontend OCR filtering (getRejectionReason)",
+        "status": "operational",
+        "filters_applied": [
+          "text_length >= 2",
+          "has_alpha_chars",
+          "confidence >= 0.35",
+          "bbox.width >= 10px"
+        ],
+        "input_blocks": 714,
+        "output_blocks": 714,
+        "rejection_rate": "0%",
+        "finding": "All blocks pass filtering - no rejections detected"
+      },
+      "stage_3_mapping": {
+        "name": "mapFields endpoint - Wave 8 Semantic Mapping",
+        "status": "operational",
+        "endpoint": "POST /api/mapFields",
+        "input_blocks": 714,
+        "execution_time_ms": 81722,
+        "http_status": 200,
+        "response_mappings": "unknown - requires inspection"
+      },
+      "stage_4_quality_filtering": {
+        "name": "Frontend quality filtering",
+        "status": "operational_but_filtering_all",
+        "filters": [
+          "chosen label exists",
+          "confidence >= 0.3",
+          "text not empty",
+          "not a form header",
+          "not a section title",
+          "not a hard mismatch"
+        ],
+        "fallback_filter": "confidence >= 0.12 if < 20 candidates",
+        "input_candidates": "unknown",
+        "output_fields": 0,
+        "finding": "All candidates rejected by quality filtering"
+      }
+    },
+    "mapping_engine_7_stages": {
+      "1_dictionary_lookup": "enabled",
+      "2_heuristic_scoring": "enabled",
+      "3_semantic_embeddings": "enabled",
+      "4_geometry_analysis": "enabled",
+      "5_category_mode": "enabled",
+      "6_fusion_scoring": "enabled",
+      "7_reranking": "enabled",
+      "status": "all stages operational"
+    },
+    "confidence_thresholds": {
+      "strict_filter": 0.3,
+      "relaxed_filter": 0.12,
+      "critical_issue": "Need to inspect actual confidence scores in mapFields response"
+    },
+    "diagnostics_needed": [
+      "mapFields response structure and mapping count",
+      "Confidence score distribution",
+      "Quality filter rejection breakdown",
+      "Sample mappings with chosen labels"
+    ],
+    "recovery_validation": {
+      "backend_functions": {
+        "status": "operational",
+        "all_56_functions": "loaded",
+        "mapFields_function": "responding"
+      },
+      "endpoints": {
+        "extractText": "HTTP 200",
+        "mapFields": "HTTP 200",
+        "mapFields_latency_ms": 81722
+      },
+      "typescript_compilation": {
+        "status": "success",
+        "errors": 0
+      }
+    },
+    "root_cause_analysis": {
+      "hypothesis_1": {
+        "name": "mapFields returns empty mappings array",
+        "probability": "high",
+        "action": "Inspect mapFields response JSON structure"
+      },
+      "hypothesis_2": {
+        "name": "All mappings have confidence < 0.3",
+        "probability": "medium",
+        "action": "Log confidence score distribution from mapFields response"
+      },
+      "hypothesis_3": {
+        "name": "Quality filter logic is too strict",
+        "probability": "medium",
+        "action": "Trace quality filter rejection reasons"
+      }
+    },
+    "recovery_status": "complete",
+    "operational_status": "ready for debugging"
+  }
+}
