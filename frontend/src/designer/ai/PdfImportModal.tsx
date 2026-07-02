@@ -882,6 +882,7 @@ export default function PdfImportModal({
     };
 
     console.info("[auto-map] OCR block filter summary", ocrSummary);
+    console.warn("[DEBUG] keptBlocks:", keptBlocks.length, "samples:", keptBlocks.slice(0, 2).map(b => ({id: b.id, text: b.text.substring(0, 20), bbox: b.boundingBox})));
 
     const rejectionByBlockId = new Map(filteredOut.map((item) => [item.id, item.reason]));
     const labels = buildLabelDetections(blocks, rejectionByBlockId);
