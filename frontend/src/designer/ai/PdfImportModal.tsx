@@ -941,6 +941,18 @@ export default function PdfImportModal({
     const mappings = Array.isArray(wave8Payload.mappings)
       ? wave8Payload.mappings
       : [];
+    
+    console.log("[mapFields-response]", {
+      inputBlockCount: keptBlocks.length,
+      outputMappingCount: mappings.length,
+      sampleMappings: mappings.slice(0, 3).map(m => ({
+        blockId: m.blockId,
+        text: m.text?.substring(0, 30),
+        chosen: m.chosen ? { label: m.chosen.label, score: m.chosen.confidenceScore } : null,
+        suggestionsCount: m.suggestions?.length || 0,
+      })),
+    });
+    
     const sourceBlockById = new Map(
       keptBlocks.map((block) => [block.id, block]),
     );
@@ -1040,6 +1052,15 @@ export default function PdfImportModal({
         return true;
       });
     }
+    
+    console.log("[quality-filtering]", {
+      mappingCandidatesCount: mappingCandidates.length,
+      qualityMappingsAfterStrictFilter: qualityMappings.length,
+      samples: qualityMappings.slice(0, 2).map(m => ({
+        text: m.mapping.text?.substring(0, 30),
+        chosen: m.mapping.chosen ? { label: m.mapping.chosen.label, score: m.mapping.chosen.confidenceScore } : null,
+      })),
+    });
 
     const safeMappings = qualityMappings
       .slice(0, Math.max(1, limit))
