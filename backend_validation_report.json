@@ -1,27 +1,44 @@
 {
-    "timestamp":  "2026-07-03T12:22:43.2902015-04:00",
+    "timestamp":  "2026-07-03T17:41:28.7432234-04:00",
     "functionAppName":  "forms-designer-backend",
     "checks":  [
                    {
                        "ok":  true,
-                       "method":  "POST",
-                       "url":  "https://forms-designer-backend.azurewebsites.net/api/extractdocument",
-                       "status":  400,
-                       "note":  "Endpoint reachable with invalid payload"
+                       "method":  "GET",
+                       "url":  "https://forms-designer-backend.azurewebsites.net/api/ops/acord-dictionary",
+                       "status":  200
                    },
                    {
                        "ok":  true,
+                       "method":  "GET",
+                       "url":  "https://forms-designer-backend.azurewebsites.net/api/ops/label-search?query=test",
+                       "status":  200
+                   },
+                   {
+                       "selectionMarksPresent":  true,
+                       "ok":  true,
                        "method":  "POST",
+                       "selectionMarksCount":  193,
+                       "extractionMethod":  "document-intelligence-wave8",
+                       "url":  "https://forms-designer-backend.azurewebsites.net/api/extractdocument",
+                       "status":  200
+                   },
+                   {
                        "url":  "https://forms-designer-backend.azurewebsites.net/api/mapfields",
-                       "status":  400,
-                       "note":  "Endpoint reachable with invalid payload"
+                       "semanticLabelsPresent":  true,
+                       "method":  "POST",
+                       "categoryLabelsPresent":  false,
+                       "mappingsCount":  120,
+                       "maxSuggestionsPerMapping":  5,
+                       "ok":  true,
+                       "gatingLikelyActive":  true,
+                       "status":  200
                    },
                    {
                        "ok":  true,
                        "method":  "GET",
                        "url":  "https://forms-designer-backend.azurewebsites.net/api/ingestion-test",
-                       "status":  200,
-                       "note":  "New endpoint active"
+                       "status":  200
                    }
                ]
 }

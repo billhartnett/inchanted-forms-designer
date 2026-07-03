@@ -272,8 +272,112 @@ try {
   }
 
   $baseApi = "https://$FunctionAppName.azurewebsites.net/api"
-  $extractValidation = Test-Http -Method "GET" -Url "$baseApi/extractDocument"
-  $mapValidation = Test-Http -Method "POST" -Url "$baseApi/mapFields" -Body @{ documentId = "deploy-validation"; blocks = @() }
+  $acordDictionaryValidation = Test-Http -Method "GET" -Url "$baseApi/ops/acord-dictionary"
+  $labelSearchValidation = Test-Http -Method "GET" -Url "$baseApi/ops/label-search?query=test"
+
+  $extractValidation = [ordered]@{
+    method = "POST"
+    url = "$baseApi/extractdocument"
+    status = $null
+    ok = $false
+    responseLength = 0
+    error = "not_executed"
+    selectionMarksPresent = $false
+    selectionMarkCount = 0
+    extractionMethod = $null
+  }
+
+  $mapValidation = [ordered]@{
+    method = "POST"
+    url = "$baseApi/mapfields"
+    status = $null
+    ok = $false
+    responseLength = 0
+    error = "not_executed"
+    mappingsCount = 0
+    semanticLabelsPresent = $false
+    categoryLabelsPresent = $false
+    gatingLikelyActive = $false
+    maxSuggestionCount = 0
+  }
+
+  $pdfCandidate = Get-ChildItem -Path (Join-Path $RepoRoot "test-fixtures\pdf") -Filter *.pdf -File -ErrorAction SilentlyContinue | Select-Object -First 1
+  if ($pdfCandidate) {
+    try {
+      $extractResponsePath = Join-Path $deployRoot "extractdocument-validation-response.json"
+      if (Test-Path $extractResponsePath) {
+        Remove-Item $extractResponsePath -Force -ErrorAction SilentlyContinue
+      }
+
+      $extractStatus = & curl.exe -sS -X POST "$baseApi/extractdocument" -H "X-File-Name: $($pdfCandidate.Name)" -F "file=@$($pdfCandidate.FullName);type=application/pdf" -o "$extractResponsePath" -w "%{http_code}"
+      if ($LASTEXITCODE -ne 0) {
+        throw "curl extraction call failed with exit code $LASTEXITCODE"
+      }
+
+      $extractStatusCode = [int]$extractStatus
+      $extractRaw = if (Test-Path $extractResponsePath) { Get-Content $extractResponsePath -Raw } else { "" }
+      $extractValidation.status = $extractStatusCode
+      $extractValidation.responseLength = $extractRaw.Length
+
+      if ($extractStatusCode -ge 200 -and $extractStatusCode -lt 300 -and $extractRaw) {
+        $extractJson = $extractRaw | ConvertFrom-Json
+        $selectionMarks = @($extractJson.selectionMarks)
+        if (-not $selectionMarks -or $selectionMarks.Count -eq 0) {
+          $selectionMarks = @($extractJson.blocks | Where-Object { $_.text -match '^selection_mark_(selected|unselected)_\\d+$' })
+        }
+        $extractValidation.ok = $true
+        $extractValidation.error = $null
+        $extractValidation.extractionMethod = [string]$extractJson.extractionMethod
+        $extractValidation.selectionMarkCount = @($selectionMarks).Count
+        $extractValidation.selectionMarksPresent = ($extractValidation.selectionMarkCount -gt 0)
+
+        $blocksForMap = @($extractJson.blocks | Select-Object -First 120)
+        if ($blocksForMap.Count -gt 0) {
+          $mapCheck = Test-Http -Method "POST" -Url "$baseApi/mapfields" -Body @{ documentId = "deploy-validation-wave8"; blocks = $blocksForMap }
+          $mapValidation.status = $mapCheck.status
+          $mapValidation.ok = $mapCheck.ok
+          $mapValidation.responseLength = $mapCheck.responseLength
+          $mapValidation.error = $mapCheck.error
+
+          if ($mapCheck.ok) {
+            $mapJson = Invoke-WebRequest -Method "POST" -Uri "$baseApi/mapfields" -UseBasicParsing -ContentType "application/json" -Body ((@{ documentId = "deploy-validation-wave8"; blocks = $blocksForMap } | ConvertTo-Json -Depth 20)) -TimeoutSec 180
+            $mapPayload = $mapJson.Content | ConvertFrom-Json
+            $mappings = @($mapPayload.mappings)
+            $mapValidation.mappingsCount = $mappings.Count
+            $mapValidation.semanticLabelsPresent = (@($mappings | Where-Object { $_.semanticLabel -and [string]$_.semanticLabel -ne "" }).Count -gt 0)
+            $mapValidation.categoryLabelsPresent = (
+              @($mappings | Where-Object {
+                ($_.chosen -and $_.chosen.category) -or
+                (@($_.suggestions | Where-Object { $_.category }).Count -gt 0)
+              }).Count -gt 0
+            )
+            $maxSuggestions = 0
+            foreach ($mapping in $mappings) {
+              $count = @($mapping.suggestions).Count
+              if ($count -gt $maxSuggestions) { $maxSuggestions = $count }
+            }
+            $mapValidation.maxSuggestionCount = $maxSuggestions
+            $mapValidation.gatingLikelyActive = ($maxSuggestions -le 5)
+          }
+        } else {
+          $mapValidation.error = "extractdocument returned no blocks for mapfields validation"
+        }
+      } else {
+        $extractValidation.error = "extractdocument returned status $extractStatusCode"
+      }
+    }
+    catch {
+      $extractValidation.error = $_.Exception.Message
+      if ($mapValidation.error -eq "not_executed") {
+        $mapValidation.error = "mapfields skipped because extractdocument validation failed"
+      }
+    }
+  }
+  else {
+    $extractValidation.error = "No PDF fixture found under test-fixtures/pdf"
+    $mapValidation.error = "mapfields skipped because no PDF fixture was available"
+  }
+
   $ingestionValidation = Test-Http -Method "GET" -Url "$baseApi/ingestion-test"
 
   $deploymentReport = [ordered]@{
@@ -297,6 +401,10 @@ try {
       extractDocument_indexJs = (Test-Path (Join-Path $stageBackend "extractDocument\index.js"))
       mapFields_indexJs = (Test-Path (Join-Path $stageBackend "mapFields\index.js"))
       ingestionTest_indexJs = (Test-Path (Join-Path $stageBackend "ingestion-test\index.js"))
+      semanticLabelClassifier_ts = (Test-Path (Join-Path $stageBackend "extraction\semanticLabelClassifier.ts"))
+      semanticLabelClassifier_js = (Test-Path (Join-Path $stageBackend "extraction\semanticLabelClassifier.js"))
+      wave8Gating_ts = (Test-Path (Join-Path $stageBackend "mapping\wave8Gating.ts"))
+      wave8Gating_js = (Test-Path (Join-Path $stageBackend "mapping\wave8Gating.js"))
       mapping_dir = (Test-Path (Join-Path $stageBackend "mapping"))
       api_mapping_dir = (Test-Path (Join-Path $stageBackend "api\\mapping"))
       extraction_dir = (Test-Path (Join-Path $stageBackend "extraction"))
@@ -311,11 +419,13 @@ try {
       shared_node_module = (Test-Path (Join-Path $stageBackend "node_modules\shared"))
     }
     discoveredFunctions = $functionNames
-    expectedFunctions = @("extractDocument", "mapFields", "ingestion-test")
+    expectedFunctions = @("extractDocument", "mapFields", "ingestionTest", "opsAcordDictionary", "opsLabelSearch")
     expectedFunctionPresence = [ordered]@{
       extractDocument = ($functionNames -contains "extractDocument")
       mapFields = ($functionNames -contains "mapFields")
-      ingestion_test = ($functionNames -contains "ingestion-test")
+      ingestion_test = ($functionNames -contains "ingestionTest")
+      ops_acord_dictionary = ($functionNames -contains "opsAcordDictionary")
+      ops_label_search = ($functionNames -contains "opsLabelSearch")
     }
     restart = [ordered]@{
       functionAppRestarted = $true
@@ -331,6 +441,8 @@ try {
     timestamp = (Get-Date).ToString("o")
     functionAppName = $FunctionAppName
     checks = @(
+      $acordDictionaryValidation,
+      $labelSearchValidation,
       $extractValidation,
       $mapValidation,
       $ingestionValidation
