@@ -1,0 +1,27 @@
+{
+    "timestamp":  "2026-07-03T12:22:43.2902015-04:00",
+    "functionAppName":  "forms-designer-backend",
+    "checks":  [
+                   {
+                       "ok":  true,
+                       "method":  "POST",
+                       "url":  "https://forms-designer-backend.azurewebsites.net/api/extractdocument",
+                       "status":  400,
+                       "note":  "Endpoint reachable with invalid payload"
+                   },
+                   {
+                       "ok":  true,
+                       "method":  "POST",
+                       "url":  "https://forms-designer-backend.azurewebsites.net/api/mapfields",
+                       "status":  400,
+                       "note":  "Endpoint reachable with invalid payload"
+                   },
+                   {
+                       "ok":  true,
+                       "method":  "GET",
+                       "url":  "https://forms-designer-backend.azurewebsites.net/api/ingestion-test",
+                       "status":  200,
+                       "note":  "New endpoint active"
+                   }
+               ]
+}

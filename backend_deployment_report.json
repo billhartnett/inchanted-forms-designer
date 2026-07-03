@@ -1,0 +1,27 @@
+{
+    "timestamp":  "2026-07-03T12:22:43.2902015-04:00",
+    "functionAppName":  "forms-designer-backend",
+    "resourceGroup":  "inchanted-forms-rg",
+    "runtimeTarget":  "Azure Functions v4 / Node 20 (Flex Consumption)",
+    "deploymentMethod":  "single-shot script with robust config-zip fallback",
+    "deploymentStatus":  "healthy_indexed",
+    "discoveredFunctions":  [
+                                "extractDocument",
+                                "mapFields",
+                                "ingestionTest"
+                            ],
+    "expectedFunctions":  [
+                              "extractDocument",
+                              "mapFields",
+                              "ingestion-test"
+                          ],
+    "expectedFunctionPresence":  {
+                                     "extractDocument":  true,
+                                     "mapFields":  true,
+                                     "ingestion_test":  true
+                                 },
+    "notes":  [
+                  "ingestion-test route is served by function name ingestionTest (camelCase internal name, hyphenated HTTP route)",
+                  "extractDocument and mapFields are POST endpoints and return 400 on intentionally invalid test payloads"
+              ]
+}

@@ -228,15 +228,25 @@ try {
   $deployTransport = "az functionapp deploy"
   $deploySucceeded = $false
   $deployResponse = $null
+  $primaryDeployOk = $false
   try {
     $deployResponse = Invoke-AzJson "az functionapp deploy -g $ResourceGroup -n $FunctionAppName --src-path `"$zipPath`" --type zip --clean true --restart true -o json"
-    $deploySucceeded = $true
+    if ($LASTEXITCODE -eq 0) {
+      $primaryDeployOk = $true
+    }
   }
   catch {
+    $primaryDeployOk = $false
+  }
+
+  if (-not $primaryDeployOk) {
     $deployTransport = "az functionapp deployment source config-zip"
     az functionapp deployment source config-zip -g $ResourceGroup -n $FunctionAppName --src "$zipPath" --output none
-    $deploySucceeded = $true
+    if ($LASTEXITCODE -ne 0) {
+      throw "config-zip deployment failed with exit code $LASTEXITCODE"
+    }
   }
+  $deploySucceeded = $true
   $zipDeployUrl = "https://$FunctionAppName.scm.azurewebsites.net/api/zipdeploy"
 
   $functionsRaw = Invoke-AzJson "az functionapp function list -g $ResourceGroup -n $FunctionAppName -o json"

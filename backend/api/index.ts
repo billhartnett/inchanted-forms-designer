@@ -51,3 +51,4 @@ import "./getMetrics";
 import "./getMonitoringDashboard";
 import "./exportAuditTrail";
 import "./processSubmissionRetry";
+import "./ingestion-test";
