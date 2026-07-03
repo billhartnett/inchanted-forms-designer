@@ -97,11 +97,13 @@ try {
 
   foreach ($dir in @("mapping", "extraction", "services", "types", "data")) {
     $sourceDir = Join-Path $backendRootPath $dir
-    $targetDir = Join-Path $stageBackend $dir
     if (Test-Path $sourceDir) {
-      robocopy "$sourceDir" "$targetDir" /E /NFL /NDL /NJH /NJS /NP /XD node_modules | Out-Null
-      if ($LASTEXITCODE -ge 8) {
-        throw "Backend sibling copy failed for $dir with exit code $LASTEXITCODE"
+      foreach ($targetDir in @((Join-Path $stageBackend $dir), (Join-Path $stageBackend "api\\$dir"))) {
+        New-Item -ItemType Directory -Path $targetDir -Force | Out-Null
+        robocopy "$sourceDir" "$targetDir" /E /NFL /NDL /NJH /NJS /NP /XD node_modules | Out-Null
+        if ($LASTEXITCODE -ge 8) {
+          throw "Backend sibling copy failed for $dir into $targetDir with exit code $LASTEXITCODE"
+        }
       }
     }
   }
@@ -174,6 +176,17 @@ try {
     $content = $content.Replace("../../types", "../types")
     $content = $content.Replace("../../data", "../data")
     Set-Content -Path $entryFile.FullName -Value $content
+  }
+
+  $rootSrcServiceFiles = Get-ChildItem -Path (Join-Path $stageBackend "src\services") -File -Filter *.js -Recurse -ErrorAction SilentlyContinue
+  foreach ($serviceFile in $rootSrcServiceFiles) {
+    $content = Get-Content $serviceFile.FullName -Raw
+    $content = $content.Replace("../../../mapping/", "../../mapping/")
+    $content = $content.Replace("../../../extraction/", "../../extraction/")
+    $content = $content.Replace("../../../services/", "../../services/")
+    $content = $content.Replace("../../../types/", "../../types/")
+    $content = $content.Replace("../../../data/", "../../data/")
+    Set-Content -Path $serviceFile.FullName -Value $content
   }
 
   if (Test-Path $zipPath) {
@@ -275,10 +288,15 @@ try {
       mapFields_indexJs = (Test-Path (Join-Path $stageBackend "mapFields\index.js"))
       ingestionTest_indexJs = (Test-Path (Join-Path $stageBackend "ingestion-test\index.js"))
       mapping_dir = (Test-Path (Join-Path $stageBackend "mapping"))
+      api_mapping_dir = (Test-Path (Join-Path $stageBackend "api\\mapping"))
       extraction_dir = (Test-Path (Join-Path $stageBackend "extraction"))
+      api_extraction_dir = (Test-Path (Join-Path $stageBackend "api\\extraction"))
       services_dir = (Test-Path (Join-Path $stageBackend "services"))
+      api_services_dir = (Test-Path (Join-Path $stageBackend "api\\services"))
       types_dir = (Test-Path (Join-Path $stageBackend "types"))
+      api_types_dir = (Test-Path (Join-Path $stageBackend "api\\types"))
       data_dir = (Test-Path (Join-Path $stageBackend "data"))
+      api_data_dir = (Test-Path (Join-Path $stageBackend "api\\data"))
       api_src_dir = (Test-Path (Join-Path $stageBackend "api\src"))
       shared_node_module = (Test-Path (Join-Path $stageBackend "node_modules\shared"))
     }
