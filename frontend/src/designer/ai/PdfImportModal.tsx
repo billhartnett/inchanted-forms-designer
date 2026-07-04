@@ -17,6 +17,7 @@ import type {
 import { ExtractionViewer } from "../../extraction";
 import { useExtractionStore } from "../../state";
 import { useMappingStore } from "../../state/mappingStore";
+import { apiUrl } from "../../config/runtimeConfig";
 import { useDesignerStore } from "../state/useDesignerStore";
 
 type ImportResult = {
@@ -65,38 +66,33 @@ type AutoMapSummary = {
   filteredMappings: number;
 };
 
-const API_BASE_URL = (() => {
-  const configured = (
-    import.meta.env.VITE_API_BASE_URL as string | undefined
-  )?.trim();
-  if (configured) {
-    return configured;
-  }
-
-  if (typeof window === "undefined") {
-    return "";
-  }
-
-  const { hostname, protocol } = window.location;
-  if (hostname === "localhost" || hostname === "127.0.0.1") {
-    return `${protocol}//${hostname}:7071`;
-  }
-
-  return "";
-})();
-
 const WAVE8_USABILITY_MODE = true;
 
-function apiUrl(path: string): string {
-  if (!API_BASE_URL) {
-    return path;
+async function fetchJson<T>(
+  url: string,
+  init?: RequestInit,
+  timeoutMs = 120_000,
+): Promise<T> {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => {
+    controller.abort();
+  }, timeoutMs);
+
+  let response: Response;
+  try {
+    response = await fetch(url, {
+      ...init,
+      signal: controller.signal,
+    });
+  } catch (error) {
+    clearTimeout(timeoutId);
+    if (error instanceof DOMException && error.name === "AbortError") {
+      throw new Error(`Request timed out after ${Math.round(timeoutMs / 1000)}s`);
+    }
+    throw error;
   }
 
-  return `${API_BASE_URL}${path}`;
-}
-
-async function fetchJson<T>(url: string, init?: RequestInit): Promise<T> {
-  const response = await fetch(url, init);
+  clearTimeout(timeoutId);
   if (!response.ok) {
     let message = `Request failed: ${response.status}`;
     try {
@@ -715,7 +711,7 @@ export default function PdfImportModal({
   const formFamily = useMappingStore((s) => s.formFamily);
   const [isAutoMapping, setIsAutoMapping] = useState(true);
   const [isReviewMode, setIsReviewMode] = useState(false);
-  const [maxMappedFields, setMaxMappedFields] = useState(1000);
+  const [maxMappedFields, setMaxMappedFields] = useState(250);
   const [isImporting, setIsImporting] = useState(false);
 
   const downloadDebugReport = () => {
@@ -782,6 +778,7 @@ export default function PdfImportModal({
         method: "POST",
         body: formData,
       },
+      180_000,
     );
 
     const pages: PageExtraction[] = Array.isArray(extractPayload.pages)
@@ -925,6 +922,9 @@ export default function PdfImportModal({
     // WAVE 8 FIX: Call /api/mapFields with extracted blocks.
     // Now that we removed the old compatibility check, Wave 8 mappings will flow through
     // with their full semantic metadata (acordCode, confidenceScore, source attribution).
+    const mappingInputLimit = Math.max(50, Math.min(limit, keptBlocks.length));
+    const mappingInputBlocks = keptBlocks.slice(0, mappingInputLimit);
+
     const wave8Payload = await fetchJson<{
       mappings?: FieldMapping[];
     }>(
@@ -936,12 +936,13 @@ export default function PdfImportModal({
         },
         body: JSON.stringify({
           documentId: file.name,
-          blocks: keptBlocks,
+          blocks: mappingInputBlocks,
           context: "PDF import Wave 8 semantic mapping",
           calibrationProfile,
           familyId: formFamily?.familyId,
         }),
       },
+      180_000,
     );
 
     const mappings = Array.isArray(wave8Payload.mappings)
@@ -951,7 +952,8 @@ export default function PdfImportModal({
     // DEBUG STEP 1: Log mapFields response in detail
     const mapFieldsDebug = {
       timestamp: new Date().toISOString(),
-      totalInputBlocks: keptBlocks.length,
+      totalInputBlocks: mappingInputBlocks.length,
+      mappingInputTruncated: mappingInputBlocks.length < keptBlocks.length,
       totalMappingsReturned: mappings.length,
       mappingDetails: mappings.slice(0, 20).map((m, i) => ({
         idx: i,
@@ -963,12 +965,12 @@ export default function PdfImportModal({
         topCandidate: m.chosen ? { label: m.chosen.label, score: m.chosen.confidenceScore, source: m.chosen.source } : null,
       })),
     };
-    console.error("[mapFields-RESPONSE-COUNT] Input: " + keptBlocks.length + " blocks → Output: " + mappings.length + " mappings");
+    console.error("[mapFields-RESPONSE-COUNT] Input: " + mappingInputBlocks.length + " blocks → Output: " + mappings.length + " mappings");
     console.log("[mapFields-response]", mapFieldsDebug);
     window.__debugMapFieldsResponse = mapFieldsDebug;
     
     const sourceBlockById = new Map(
-      keptBlocks.map((block) => [block.id, block]),
+      mappingInputBlocks.map((block) => [block.id, block]),
     );
 
     const mappingCandidates = mappings
@@ -1567,7 +1569,7 @@ export default function PdfImportModal({
             setMaxMappedFields(
               Number.isFinite(next)
                 ? Math.max(1, Math.min(500, Math.floor(next)))
-                : 120,
+                : 250,
             );
           }}
         />
