@@ -444,8 +444,8 @@ async function main() {
   const batches = await loadReplayBatches();
 
   // In CI without committed training data, re-use the pre-committed baseline artifacts
-  // rather than producing a vacuous 0-batch failure report.
-  if (batches.length === 0) {
+  // in fast mode only. Strict mode must always write a strict classification report.
+  if (batches.length === 0 && modeNormalized !== "strict_live_host_only") {
     const existingReport = await maybeReadJson(validationReportPath, null);
     if (existingReport && existingReport.pass === true) {
       console.log(JSON.stringify(existingReport, null, 2));

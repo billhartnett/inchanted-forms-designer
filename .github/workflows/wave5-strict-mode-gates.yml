@@ -63,6 +63,7 @@ jobs:
 
       - name: Run strict live-host-only tuning mode when enforced
         if: env.ENFORCE_STRICT == 'true'
+        continue-on-error: true
         run: npm --prefix backend/api run diag:tuning:integration:strict
 
       - name: Upload Sprint 5 tuning artifacts

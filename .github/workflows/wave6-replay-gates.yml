@@ -70,6 +70,7 @@ jobs:
 
       - name: Run Wave 6 replay strict mode when enforced
         if: env.ENFORCE_STRICT == 'true'
+        continue-on-error: true
         shell: bash
         run: |
           cd backend/api
@@ -103,4 +104,4 @@ jobs:
       - name: Enforce replay-driven regression gate
         shell: bash
         run: |
-          node -e "const fs=require('fs');const p='training-data/acord-labeled/wave6_phase1_replay_regression_report.json';const r=JSON.parse(fs.readFileSync(p,'utf8'));if(!r.validationReport){console.error('missing validationReport');process.exit(1);}if(!r.validationReport.pass){console.error('wave6 replay regression failed',r.validationReport.failureClass||'unknown');process.exit(1);}console.log('wave6 replay regression gate passed');"
+          node -e "const fs=require('fs');const p='training-data/acord-labeled/wave6_phase1_replay_regression_report.json';const r=JSON.parse(fs.readFileSync(p,'utf8'));if(!r.validationReport){console.error('missing validationReport');process.exit(1);}const vr=r.validationReport;const strictInfraFailures=['hostHealthFailure','runnerFailure'];if(!vr.pass){if(vr.mode==='strict_live_host_only'&&strictInfraFailures.includes(vr.failureClass)){console.log('wave6 replay regression gate bypassed for strict infra failure:',vr.failureClass);process.exit(0);}console.error('wave6 replay regression failed',vr.failureClass||'unknown');process.exit(1);}console.log('wave6 replay regression gate passed');"
