@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.normalizeBoundingBox = exports.boundsFromPolygon = exports.inferSemanticFields = exports.inferSemanticField = exports.normalizeExtractedLine = exports.normalizeExtractedPages = exports.detectLabels = exports.detectLabel = exports.buildTypedFields = exports.buildTypedField = exports.createDocumentAnalysisClient = void 0;
+exports.normalizeBoundingBox = exports.boundsFromPolygon = exports.classifySemanticLabel = exports.classifyCategoryMode = exports.classifyBlockSemantic = exports.inferSemanticFields = exports.inferSemanticField = exports.normalizeExtractedLine = exports.normalizeExtractedPages = exports.detectLabels = exports.detectLabel = exports.buildTypedFields = exports.buildTypedField = exports.createDocumentAnalysisClient = void 0;
 exports.coerceExtractedBlock = coerceExtractedBlock;
 exports.extractBlocksFromPlainText = extractBlocksFromPlainText;
 const bboxNormalization_1 = require("./bboxNormalization");
@@ -18,6 +18,10 @@ Object.defineProperty(exports, "normalizeExtractedLine", { enumerable: true, get
 var semanticInference_1 = require("./semanticInference");
 Object.defineProperty(exports, "inferSemanticField", { enumerable: true, get: function () { return semanticInference_1.inferSemanticField; } });
 Object.defineProperty(exports, "inferSemanticFields", { enumerable: true, get: function () { return semanticInference_1.inferSemanticFields; } });
+var semanticLabelClassifier_1 = require("./semanticLabelClassifier");
+Object.defineProperty(exports, "classifyBlockSemantic", { enumerable: true, get: function () { return semanticLabelClassifier_1.classifyBlockSemantic; } });
+Object.defineProperty(exports, "classifyCategoryMode", { enumerable: true, get: function () { return semanticLabelClassifier_1.classifyCategoryMode; } });
+Object.defineProperty(exports, "classifySemanticLabel", { enumerable: true, get: function () { return semanticLabelClassifier_1.classifySemanticLabel; } });
 var bboxNormalization_2 = require("./bboxNormalization");
 Object.defineProperty(exports, "boundsFromPolygon", { enumerable: true, get: function () { return bboxNormalization_2.boundsFromPolygon; } });
 Object.defineProperty(exports, "normalizeBoundingBox", { enumerable: true, get: function () { return bboxNormalization_2.normalizeBoundingBox; } });

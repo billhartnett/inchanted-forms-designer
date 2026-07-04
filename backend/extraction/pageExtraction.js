@@ -21,9 +21,13 @@ function normalizeExtractedPages(rawPages) {
         width: typeof page?.width === "number" ? quantize(page.width) : undefined,
         height: typeof page?.height === "number" ? quantize(page.height) : undefined,
         unit: typeof page?.unit === "string" ? page.unit : undefined,
-        lines: Array.isArray(page?.lines)
-            ? page.lines.map((line) => normalizeExtractedLine(line)).sort(compareLines)
-            : [],
+        lines: (() => {
+            const normalizedLines = Array.isArray(page?.lines)
+                ? page.lines.map((line) => normalizeExtractedLine(line))
+                : [];
+            const selectionLines = normalizeSelectionMarks(page?.selectionMarks);
+            return [...normalizedLines, ...selectionLines].sort(compareLines);
+        })(),
     }));
     return pages.sort((left, right) => left.pageNumber - right.pageNumber);
 }
@@ -55,4 +59,39 @@ function normalizeExtractedLine(rawLine) {
             };
         })(),
     };
+}
+function normalizeSelectionMarks(rawSelectionMarks) {
+    if (!Array.isArray(rawSelectionMarks)) {
+        return [];
+    }
+    return rawSelectionMarks
+        .map((mark, index) => {
+        const state = typeof mark?.state === "string" ? mark.state.toLowerCase() : "unselected";
+        const confidence = typeof mark?.confidence === "number" && Number.isFinite(mark.confidence)
+            ? quantize(mark.confidence)
+            : undefined;
+        const polygon = Array.isArray(mark?.polygon)
+            ? mark.polygon
+            : Array.isArray(mark?.boundingPolygon)
+                ? mark.boundingPolygon
+                : undefined;
+        const bounds = (0, bboxNormalization_1.boundsFromPolygon)(polygon);
+        return {
+            content: `selection_mark_${state}_${index + 1}`,
+            confidence,
+            polygon: Array.isArray(polygon) && typeof polygon[0] !== "number"
+                ? polygon.map((point) => ({
+                    x: Number(point?.x ?? 0),
+                    y: Number(point?.y ?? 0),
+                }))
+                : undefined,
+            boundingBox: {
+                x: quantize(bounds.x),
+                y: quantize(bounds.y),
+                width: quantize(bounds.width),
+                height: quantize(bounds.height),
+            },
+        };
+    })
+        .filter((line) => Boolean(line.boundingBox));
 }

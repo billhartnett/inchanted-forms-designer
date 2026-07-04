@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.inferSemanticField = inferSemanticField;
 exports.inferSemanticFields = inferSemanticFields;
+const semanticLabelClassifier_1 = require("./semanticLabelClassifier");
 function inferFieldType(text) {
     const normalized = text.toLowerCase();
     if (/(date|dob|birth|effective|expiration)/.test(normalized)) {
@@ -26,6 +27,7 @@ function toCanonicalName(text) {
         .replace(/\s+/g, "_");
 }
 function inferSemanticField(block) {
+    const semantic = (0, semanticLabelClassifier_1.classifyBlockSemantic)(block);
     const fieldType = inferFieldType(block.text);
     const validationRules = [];
     if (fieldType === "date") {
@@ -37,10 +39,12 @@ function inferSemanticField(block) {
     return {
         blockId: block.id,
         fieldType,
-        canonicalName: toCanonicalName(block.text),
+        canonicalName: toCanonicalName(`${semantic.semanticLabel}_${block.text}`),
         validationRules,
         rationale: [
             `Inferred ${fieldType} from label text \"${block.text}\".`,
+            `Semantic label classifier: ${semantic.semanticLabel}.`,
+            `Category-mode classifier: ${semantic.categoryMode}.`,
             "TODO: refine semantic inference with grouped labels and neighboring field geometry.",
         ],
     };

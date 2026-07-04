@@ -6,6 +6,11 @@ export { buildTypedField, buildTypedFields } from "./fieldFactory";
 export { detectLabel, detectLabels } from "./labelDetection";
 export { normalizeExtractedPages, normalizeExtractedLine } from "./pageExtraction";
 export { inferSemanticField, inferSemanticFields } from "./semanticInference";
+export {
+  classifyBlockSemantic,
+  classifyCategoryMode,
+  classifySemanticLabel,
+} from "./semanticLabelClassifier";
 export { boundsFromPolygon, normalizeBoundingBox } from "./bboxNormalization";
 
 function hashString(value: string): string {

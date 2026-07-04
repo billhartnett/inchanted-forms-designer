@@ -1,8 +1,13 @@
 import type { ExtractedBlock, FieldMapping, MappingPersistencePayload } from "shared/types";
-import { mapBlocksToAcord } from "../api/src/services/mappingEngine";
+import {
+  getLastReducerDebugSnapshot as getServiceReducerDebugSnapshot,
+  mapBlocksToAcord,
+  type ReducerDebugSnapshot,
+} from "../api/src/services/mappingEngine";
 import { buildMappingRationale } from "./mappingRationale";
 import type { CalibrationProfile } from "shared/types";
 import { resolveSemanticConflicts } from "shared/quality";
+import { applyWave8Gating } from "./wave8Gating";
 
 export async function mapBlocksWithAcord(
   blocks: ExtractedBlock[],
@@ -51,12 +56,14 @@ export async function mapBlocksWithAcord(
 ): Promise<FieldMapping[]> {
   const mappings = await mapBlocksToAcord(blocks, options);
 
+  const gatedMappings = applyWave8Gating(mappings);
+
   const payload = {
     version: 1 as const,
     documentId: "in-memory-document",
     pages: [],
     fields: [],
-    mappings: mappings.map((mapping) => ({
+    mappings: gatedMappings.map((mapping) => ({
       extractionBlockId: mapping.blockId,
       mapping,
     })),
@@ -105,7 +112,7 @@ export async function mapBlocksWithAcord(
       .map((decision) => [decision.extractionBlockId, decision]),
   );
 
-  return mappings.map((mapping) => {
+  return gatedMappings.map((mapping) => {
     const resolution = resolutionByBlock.get(mapping.blockId);
     const resolvedChosen =
       resolution && mapping.suggestions.length
@@ -144,4 +151,8 @@ export async function mapBlocksWithAcord(
       },
     };
   });
+}
+
+export function getLastReducerDebugSnapshot(): ReducerDebugSnapshot {
+  return getServiceReducerDebugSnapshot();
 }

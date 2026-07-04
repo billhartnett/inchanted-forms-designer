@@ -64,6 +64,8 @@ function buildBlocksFromPages(pages: PageExtraction[]): ExtractedBlock[] {
       let type: ExtractedBlock["type"] = "text";
       if (/\u2610|\u2611|\u2612|\[\s*\]|\(\s*\)/.test(text)) {
         type = "checkbox";
+      } else if (/^selection_mark_(selected|unselected)_\d+$/i.test(text)) {
+        type = "checkbox";
       } else if (/\bsignature\b|\bsign here\b|\bauthorized.{0,20}signature\b/i.test(text)) {
         type = "signature";
       } else if (/^[a-z0-9\s\-\/\.,#&'"()]{2,60}:\s*.{1,}/i.test(text)) {
@@ -186,6 +188,7 @@ export async function extractDocument(
       }));
 
       const structuralDelta = buildStructuralDelta(blocks);
+      const selectionMarks = blocks.filter((b) => /^selection_mark_(selected|unselected)_\d+$/i.test(b.text));
 
       return {
         status: 200,
@@ -196,6 +199,7 @@ export async function extractDocument(
           extractedAt: new Date().toISOString(),
           pages,
           blocks,
+          selectionMarks,
           mappings,
           fieldTypes,
           pageDimensions,
@@ -204,6 +208,7 @@ export async function extractDocument(
             totalPages: pages.length,
             totalBlocks: blocks.length,
             totalMappings: mappings.length,
+            selectionMarkCount: selectionMarks.length,
             checkboxCount: blocks.filter((b) => b.type === "checkbox").length,
             signatureCount: blocks.filter((b) => b.type === "signature").length,
             kvpCount: blocks.filter((b) => b.type === "kvp").length,

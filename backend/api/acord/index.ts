@@ -174,10 +174,31 @@ app.http("acordSearch", {
   handler: acordSearch,
 });
 
+app.http("acordLabelSearch", {
+  methods: ["GET"],
+  authLevel: "anonymous",
+  route: "acord/labels/search",
+  handler: acordSearch,
+});
+
+app.http("opsLabelSearch", {
+  methods: ["GET"],
+  authLevel: "anonymous",
+  route: "ops/label-search",
+  handler: acordSearch,
+});
+
 app.http("acordLookupByCode", {
   methods: ["GET"],
   authLevel: "anonymous",
   route: "acord/code/{acordCode}",
+  handler: acordLookupByCode,
+});
+
+app.http("acordLabelLookupByCode", {
+  methods: ["GET"],
+  authLevel: "anonymous",
+  route: "acord/labels/code/{acordCode}",
   handler: acordLookupByCode,
 });
 
@@ -188,9 +209,30 @@ app.http("acordAll", {
   handler: acordAll,
 });
 
+app.http("acordLabelAll", {
+  methods: ["GET"],
+  authLevel: "anonymous",
+  route: "acord/labels/all",
+  handler: acordAll,
+});
+
+app.http("opsAcordDictionary", {
+  methods: ["GET"],
+  authLevel: "anonymous",
+  route: "ops/acord-dictionary",
+  handler: acordAll,
+});
+
 app.http("acordSuggest", {
   methods: ["POST"],
   authLevel: "anonymous",
   route: "acord/suggest",
+  handler: acordSuggest,
+});
+
+app.http("acordLabelSuggest", {
+  methods: ["POST"],
+  authLevel: "anonymous",
+  route: "acord/labels/suggest",
   handler: acordSuggest,
 });

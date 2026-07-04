@@ -1,4 +1,5 @@
 import type { ExtractedBlock, SemanticInference, SemanticFieldType } from "shared/types";
+import { classifyBlockSemantic } from "./semanticLabelClassifier";
 
 function inferFieldType(text: string): SemanticFieldType {
   const normalized = text.toLowerCase();
@@ -31,6 +32,7 @@ function toCanonicalName(text: string): string {
 }
 
 export function inferSemanticField(block: ExtractedBlock): SemanticInference {
+  const semantic = classifyBlockSemantic(block);
   const fieldType = inferFieldType(block.text);
   const validationRules: string[] = [];
 
@@ -45,10 +47,12 @@ export function inferSemanticField(block: ExtractedBlock): SemanticInference {
   return {
     blockId: block.id,
     fieldType,
-    canonicalName: toCanonicalName(block.text),
+    canonicalName: toCanonicalName(`${semantic.semanticLabel}_${block.text}`),
     validationRules,
     rationale: [
       `Inferred ${fieldType} from label text \"${block.text}\".`,
+      `Semantic label classifier: ${semantic.semanticLabel}.`,
+      `Category-mode classifier: ${semantic.categoryMode}.`,
       "TODO: refine semantic inference with grouped labels and neighboring field geometry.",
     ],
   };
