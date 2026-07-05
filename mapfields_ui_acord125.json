@@ -1,0 +1,3966 @@
+{
+  "fixture": "sample-Acord-125.pdf",
+  "uiRenderedFieldCount": 120,
+  "fields": [
+    {
+      "key": "p1-l2|1|693|34",
+      "blockId": "p1-l2",
+      "page": 1,
+      "text": "DATE (MM/DD/YYYY)",
+      "acordCode": "CommercialPropertyCoverage_CombinedDemolitionCostAndIncreasedConstructionCost_FormDate",
+      "acordLabel": "Commercial Property Coverage Combined Demolition Cost And Increased Construction Cost Form Date",
+      "uiFieldType": "date",
+      "geometry": {
+        "x": 693.1392,
+        "y": 34.3776,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l5|1|709|65",
+      "blockId": "p1-l5",
+      "page": 1,
+      "text": "UNDERWRITER OFF.",
+      "acordCode": "Insurer_Underwriter_OfficeIdentifier",
+      "acordLabel": "Insurer Underwriter Office Identifier",
+      "uiFieldType": "text",
+      "geometry": {
+        "x": 708.7296,
+        "y": 64.6272,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l6|1|330|65",
+      "blockId": "p1-l6",
+      "page": 1,
+      "text": "CARRIER",
+      "acordCode": "BuildersRiskInstallation_Transportation_CommonCarrierRiskPercent",
+      "acordLabel": "Builders Risk Installation Transportation Common Carrier Risk Percent",
+      "uiFieldType": "text",
+      "geometry": {
+        "x": 329.6064,
+        "y": 65.088,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l7|1|541|65",
+      "blockId": "p1-l7",
+      "page": 1,
+      "text": "UNDERWRITER",
+      "acordCode": "Insurer_Underwriter_ApprovedIndicator",
+      "acordLabel": "Insurer Underwriter Approved Indicator",
+      "uiFieldType": "text",
+      "geometry": {
+        "x": 540.9408,
+        "y": 65.088,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l8|1|410|68",
+      "blockId": "p1-l8",
+      "page": 1,
+      "text": "NAIC CODE:",
+      "acordCode": "Client_NAICSCode",
+      "acordLabel": "Client NAICSCode",
+      "uiFieldType": "numeric",
+      "geometry": {
+        "x": 410.2944,
+        "y": 68.2944,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l9|1|28|85",
+      "blockId": "p1-l9",
+      "page": 1,
+      "text": "ADDRESS:",
+      "acordCode": "AdditionalInterest_MailingAddress_LineOne",
+      "acordLabel": "Additional Interest Mailing Address Line One",
+      "uiFieldType": "text",
+      "geometry": {
+        "x": 27.504,
+        "y": 85.248,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l11|1|636|97",
+      "blockId": "p1-l11",
+      "page": 1,
+      "text": "POLICY NUMBER",
+      "acordCode": "OtherPolicy_PolicyNumberIdentifier",
+      "acordLabel": "Other Policy Policy Number Identifier",
+      "uiFieldType": "numeric",
+      "geometry": {
+        "x": 636.2976,
+        "y": 97.1712,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l12|1|28|109",
+      "blockId": "p1-l12",
+      "page": 1,
+      "text": "CITY:",
+      "acordCode": "Aircraft_SeatingCapacityCount",
+      "acordLabel": "Aircraft Seating Capacity Count",
+      "uiFieldType": "text",
+      "geometry": {
+        "x": 27.9648,
+        "y": 108.624,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l15|1|27|130",
+      "blockId": "p1-l15",
+      "page": 1,
+      "text": "STATE:",
+      "acordCode": "StatementOfValues_CauseOfLoss_BasicIndicator",
+      "acordLabel": "Statement Of Values Cause Of Loss Basic Indicator",
+      "uiFieldType": "numeric",
+      "geometry": {
+        "x": 27.0432,
+        "y": 129.7056,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l17|1|502|131",
+      "blockId": "p1-l17",
+      "page": 1,
+      "text": "EQUIPMENT FLOATER",
+      "acordCode": "EquipmentFloaterInformation_ApplicationOperatingEquipmentNotListedExplanation",
+      "acordLabel": "Equipment Floater Information Application Operating Equipment Not Listed Explanation",
+      "uiFieldType": "text",
+      "geometry": {
+        "x": 501.9744,
+        "y": 130.6272,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l20|1|632|144",
+      "blockId": "p1-l20",
+      "page": 1,
+      "text": "selection_mark_unselected_15",
+      "acordCode": "CommercialVehicleLineOfBusiness_RemarkText",
+      "acordLabel": "Commercial Vehicle Line Of Business Remark Text",
+      "uiFieldType": "checkbox",
+      "geometry": {
+        "x": 632.4864,
+        "y": 143.9328,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l21|1|28|144",
+      "blockId": "p1-l21",
+      "page": 1,
+      "text": "PHONE",
+      "acordCode": "AdditionalInterest_CellPhoneNumber",
+      "acordLabel": "Additional Interest Cell Phone Number",
+      "uiFieldType": "numeric",
+      "geometry": {
+        "x": 27.504,
+        "y": 144.3744,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l23|1|330|146",
+      "blockId": "p1-l23",
+      "page": 1,
+      "text": "selection_mark_selected_3",
+      "acordCode": "CommercialPropertyCoverage_Burglary_CoverageSelectedIndicator",
+      "acordLabel": "Commercial Property Coverage Burglary Coverage Selected Indicator",
+      "uiFieldType": "checkbox",
+      "geometry": {
+        "x": 330.3552,
+        "y": 146.3712,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l24|1|348|147",
+      "blockId": "p1-l24",
+      "page": 1,
+      "text": "PROPERTY",
+      "acordCode": "Property_AccidentalDamage_DeductibleAmount",
+      "acordLabel": "Property Accidental Damage Deductible Amount",
+      "uiFieldType": "date",
+      "geometry": {
+        "x": 347.9424,
+        "y": 147.1296,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l26|1|656|147",
+      "blockId": "p1-l26",
+      "page": 1,
+      "text": "VEHICLE SCHEDULE",
+      "acordCode": "Vehicle_ScheduledAutosIndicator",
+      "acordLabel": "Vehicle Scheduled Autos Indicator",
+      "uiFieldType": "numeric",
+      "geometry": {
+        "x": 656.0064,
+        "y": 147.1296,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l27|1|28|151",
+      "blockId": "p1-l27",
+      "page": 1,
+      "text": "(A/C, No, Ext):",
+      "acordCode": "AttorneyInformation_PredecessorFirm_ExtendedReportingPeriodYesNoCode",
+      "acordLabel": "Attorney Information Predecessor Firm Extended Reporting Period Yes No Code",
+      "uiFieldType": "text",
+      "geometry": {
+        "x": 28.4256,
+        "y": 151.248,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l29|1|327|160",
+      "blockId": "p1-l29",
+      "page": 1,
+      "text": "selection_mark_unselected_4",
+      "acordCode": "GlassAndSign_RemarkText",
+      "acordLabel": "Glass And Sign Remark Text",
+      "uiFieldType": "checkbox",
+      "geometry": {
+        "x": 327.0912,
+        "y": 159.8208,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l31|1|28|160",
+      "blockId": "p1-l31",
+      "page": 1,
+      "text": "FAX",
+      "acordCode": "AdditionalInterest_Primary_FaxNumber",
+      "acordLabel": "Additional Interest Primary Fax Number",
+      "uiFieldType": "numeric",
+      "geometry": {
+        "x": 27.504,
+        "y": 160.416,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l34|1|656|162",
+      "blockId": "p1-l34",
+      "page": 1,
+      "text": "BOILER & MACHINERY",
+      "acordCode": "BoilerAndMachineryCoverage_AmmoniaContamination_LimitAmount",
+      "acordLabel": "Boiler And Machinery Coverage Ammonia Contamination Limit Amount",
+      "uiFieldType": "numeric",
+      "geometry": {
+        "x": 656.4672,
+        "y": 162.2496,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l36|1|27|176",
+      "blockId": "p1-l36",
+      "page": 1,
+      "text": "E-MAIL",
+      "acordCode": "Employee_MailingAddress_CityName",
+      "acordLabel": "Employee Mailing Address City Name",
+      "uiFieldType": "text",
+      "geometry": {
+        "x": 27.0432,
+        "y": 175.5456,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l37|1|349|176",
+      "blockId": "p1-l37",
+      "page": 1,
+      "text": "ACCOUNTS RECEIVABLE/",
+      "acordCode": "AccountsReceivableCoverage_Coinsurance_FireContentsRate",
+      "acordLabel": "Accounts Receivable Coverage Coinsurance Fire Contents Rate",
+      "uiFieldType": "text",
+      "geometry": {
+        "x": 349.3248,
+        "y": 175.5456,
+        "width": 101.7696,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l39|1|633|176",
+      "blockId": "p1-l39",
+      "page": 1,
+      "text": "selection_mark_unselected_17",
+      "acordCode": "WorkersCompensation_RateInformation_RemarkText",
+      "acordLabel": "Workers Compensation Rate Information Remark Text",
+      "uiFieldType": "checkbox",
+      "geometry": {
+        "x": 632.7264,
+        "y": 176.1984,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l40|1|502|176",
+      "blockId": "p1-l40",
+      "page": 1,
+      "text": "COMMERCIAL",
+      "acordCode": "CommercialCoverage_AdditionalIncreaseCostOfWorking_DeclaredValueLimitAmount",
+      "acordLabel": "Commercial Coverage Additional Increase Cost Of Working Declared Value Limit Amount",
+      "uiFieldType": "numeric",
+      "geometry": {
+        "x": 502.4352,
+        "y": 176.4576,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l41|1|482|177",
+      "blockId": "p1-l41",
+      "page": 1,
+      "text": "selection_mark_selected_10",
+      "acordCode": "CommercialPropertyCoverage_Burglary_CoverageSelectedIndicator",
+      "acordLabel": "Commercial Property Coverage Burglary Coverage Selected Indicator",
+      "uiFieldType": "checkbox",
+      "geometry": {
+        "x": 481.6608,
+        "y": 176.688,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l42|1|656|178",
+      "blockId": "p1-l42",
+      "page": 1,
+      "text": "WORKERS COMPENSATION",
+      "acordCode": "WorkersCompensation_AdditionalClassCodesIndicator",
+      "acordLabel": "Workers Compensation Additional Class Codes Indicator",
+      "uiFieldType": "date",
+      "geometry": {
+        "x": 656.4672,
+        "y": 178.2912,
+        "width": 110.9376,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l43|1|27|183",
+      "blockId": "p1-l43",
+      "page": 1,
+      "text": "ADDRESS:",
+      "acordCode": "AdditionalInterest_MailingAddress_LineOne",
+      "acordLabel": "Additional Interest Mailing Address Line One",
+      "uiFieldType": "text",
+      "geometry": {
+        "x": 27.0432,
+        "y": 183.3312,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l44|1|349|183",
+      "blockId": "p1-l44",
+      "page": 1,
+      "text": "VALUABLE PAPERS",
+      "acordCode": "ValuablePapersInformation_PapersReplacedNoIndicator",
+      "acordLabel": "Valuable Papers Information Papers Replaced No Indicator",
+      "uiFieldType": "text",
+      "geometry": {
+        "x": 348.864,
+        "y": 183.3312,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l45|1|503|183",
+      "blockId": "p1-l45",
+      "page": 1,
+      "text": "GENERAL LIABILITY",
+      "acordCode": "GeneralLiability_AdditionalInsured_ClaimsNotCoveredYesIndicator",
+      "acordLabel": "General Liability Additional Insured Claims Not Covered Yes Indicator",
+      "uiFieldType": "numeric",
+      "geometry": {
+        "x": 502.896,
+        "y": 183.3312,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l48|1|479|193",
+      "blockId": "p1-l48",
+      "page": 1,
+      "text": "selection_mark_unselected_12",
+      "acordCode": "AustraliaCommercialAuto_RemarkText",
+      "acordLabel": "Australia Commercial Auto Remark Text",
+      "uiFieldType": "checkbox",
+      "geometry": {
+        "x": 479.1168,
+        "y": 192.576,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l50|1|504|195",
+      "blockId": "p1-l50",
+      "page": 1,
+      "text": "BUSINESS AUTO",
+      "acordCode": "Vehicle_BusinessAutoSymbol_EightIndicator",
+      "acordLabel": "Vehicle Business Auto Symbol Eight Indicator",
+      "uiFieldType": "text",
+      "geometry": {
+        "x": 503.808,
+        "y": 194.7936,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l51|1|656|195",
+      "blockId": "p1-l51",
+      "page": 1,
+      "text": "UMBRELLA",
+      "acordCode": "Binder_ExcessUmbrella_CoverageFormsDescription",
+      "acordLabel": "Binder Excess Umbrella Coverage Forms Description",
+      "uiFieldType": "text",
+      "geometry": {
+        "x": 656.4672,
+        "y": 195.2544,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l52|1|27|197",
+      "blockId": "p1-l52",
+      "page": 1,
+      "text": "CODE:",
+      "acordCode": "AccidentConviction_AccidentViolationCode",
+      "acordLabel": "Accident Conviction Accident Violation Code",
+      "uiFieldType": "text",
+      "geometry": {
+        "x": 26.592,
+        "y": 197.088,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l53|1|176|197",
+      "blockId": "p1-l53",
+      "page": 1,
+      "text": "SUB CODE:",
+      "acordCode": "AirportFBO_SubrogationWaivedCode",
+      "acordLabel": "Airport FBO Subrogation Waived Code",
+      "uiFieldType": "text",
+      "geometry": {
+        "x": 176.0352,
+        "y": 197.088,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l55|1|350|208",
+      "blockId": "p1-l55",
+      "page": 1,
+      "text": "TRANSPORTATION/",
+      "acordCode": "TransportationCoverage_DeductibleAmount",
+      "acordLabel": "Transportation Coverage Deductible Amount",
+      "uiFieldType": "numeric",
+      "geometry": {
+        "x": 349.776,
+        "y": 208.08,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l58|1|27|210",
+      "blockId": "p1-l58",
+      "page": 1,
+      "text": "AGENCY CUSTOMER ID:",
+      "acordCode": "Producer_AgencyAutomationDailyWork_CustomerServiceIndicator",
+      "acordLabel": "Producer Agency Automation Daily Work Customer Service Indicator",
+      "uiFieldType": "text",
+      "geometry": {
+        "x": 27.0432,
+        "y": 210.3744,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l62|1|292|226",
+      "blockId": "p1-l62",
+      "page": 1,
+      "text": "PACKAGE POLICY INFORMATION",
+      "acordCode": "LiquorInformation_PackageGoodsSalesIndicator",
+      "acordLabel": "Liquor Information Package Goods Sales Indicator",
+      "uiFieldType": "text",
+      "geometry": {
+        "x": 291.5616,
+        "y": 226.416,
+        "width": 183.8304,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l63|1|24|239",
+      "blockId": "p1-l63",
+      "page": 1,
+      "text": "selection_mark_unselected_6",
+      "acordCode": "Client_MarketingObjective",
+      "acordLabel": "Client Marketing Objective",
+      "uiFieldType": "checkbox",
+      "geometry": {
+        "x": 24.0096,
+        "y": 239.1456,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l64|1|230|240",
+      "blockId": "p1-l64",
+      "page": 1,
+      "text": "selection_mark_unselected_20",
+      "acordCode": "Client_MarketingObjective",
+      "acordLabel": "Client Marketing Objective",
+      "uiFieldType": "checkbox",
+      "geometry": {
+        "x": 229.824,
+        "y": 239.76,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l66|1|152|242",
+      "blockId": "p1-l66",
+      "page": 1,
+      "text": "ISSUE POLICY",
+      "acordCode": "Policy_Status_IssueIndicator",
+      "acordLabel": "Policy Status Issue Indicator",
+      "uiFieldType": "date",
+      "geometry": {
+        "x": 152.1984,
+        "y": 242.4576,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l67|1|51|243",
+      "blockId": "p1-l67",
+      "page": 1,
+      "text": "QUOTE",
+      "acordCode": "LifeBenefits_InterestRate_QuotedAfterFeesAndMortalityRatesDeductedIndicator",
+      "acordLabel": "Life Benefits Interest Rate Quoted After Fees And Mortality Rates Deducted Indicator",
+      "uiFieldType": "text",
+      "geometry": {
+        "x": 50.8896,
+        "y": 243.3792,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l68|1|254|243",
+      "blockId": "p1-l68",
+      "page": 1,
+      "text": "RENEW",
+      "acordCode": "CancelNonRenew_AgentNoLongerWritesForInsurerIndicator",
+      "acordLabel": "Cancel Non Renew Agent No Longer Writes For Insurer Indicator",
+      "uiFieldType": "text",
+      "geometry": {
+        "x": 253.5072,
+        "y": 243.3792,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l69|1|291|244",
+      "blockId": "p1-l69",
+      "page": 1,
+      "text": "ENTER THIS INFORMATION WHEN COMMON DATES AND TERMS APPLY TO SEVERAL LINES, OR FOR MONOLINE POLICIES.",
+      "acordCode": "WorkersCompensationLineOfBusiness_BusinessDatesAndInsuranceInformationExplanation",
+      "acordLabel": "Workers Compensation Line Of Business Business Dates And Insurance Information Explanation",
+      "uiFieldType": "date",
+      "geometry": {
+        "x": 291.1008,
+        "y": 244.2912,
+        "width": 479.0592,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l71|1|51|258",
+      "blockId": "p1-l71",
+      "page": 1,
+      "text": "BOUND (Give Date and/or Attach Copy):",
+      "acordCode": "AccountantsLiability_Attachment_RetroactiveDateEndorsementIndicator",
+      "acordLabel": "Accountants Liability Attachment Retroactive Date Endorsement Indicator",
+      "uiFieldType": "date",
+      "geometry": {
+        "x": 50.8896,
+        "y": 258.4992,
+        "width": 148.9824,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l72|1|402|260",
+      "blockId": "p1-l72",
+      "page": 1,
+      "text": "PROPOSED EXP DATE",
+      "acordCode": "Alarm_Burglar_CertificateExpirationDate",
+      "acordLabel": "Alarm Burglar Certificate Expiration Date",
+      "uiFieldType": "date",
+      "geometry": {
+        "x": 401.5776,
+        "y": 260.3328,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l73|1|297|261",
+      "blockId": "p1-l73",
+      "page": 1,
+      "text": "PROPOSED EFF DATE",
+      "acordCode": "Binder_EffectiveDate",
+      "acordLabel": "Binder Effective Date",
+      "uiFieldType": "date",
+      "geometry": {
+        "x": 296.6016,
+        "y": 260.7936,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l74|1|629|261",
+      "blockId": "p1-l74",
+      "page": 1,
+      "text": "PAYMENT PLAN",
+      "acordCode": "AccountsReceivableHistory_DeferredPaymentPercent",
+      "acordLabel": "Accounts Receivable History Deferred Payment Percent",
+      "uiFieldType": "text",
+      "geometry": {
+        "x": 629.424,
+        "y": 260.7936,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l75|1|751|261",
+      "blockId": "p1-l75",
+      "page": 1,
+      "text": "AUDIT",
+      "acordCode": "Audit_MaximumEFTAmount",
+      "acordLabel": "Audit Maximum EFTAmount",
+      "uiFieldType": "numeric",
+      "geometry": {
+        "x": 751.3632,
+        "y": 260.7936,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l76|1|514|261",
+      "blockId": "p1-l76",
+      "page": 1,
+      "text": "BILLING PLAN",
+      "acordCode": "EmployeeBenefits_Attachment_BillingStatementDentalIndicator",
+      "acordLabel": "Employee Benefits Attachment Billing Statement Dental Indicator",
+      "uiFieldType": "text",
+      "geometry": {
+        "x": 513.8976,
+        "y": 261.2544,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l77|1|113|271",
+      "blockId": "p1-l77",
+      "page": 1,
+      "text": "DATE",
+      "acordCode": "AccidentConviction_AccidentDate",
+      "acordLabel": "Accident Conviction Accident Date",
+      "uiFieldType": "date",
+      "geometry": {
+        "x": 113.232,
+        "y": 271.3344,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l78|1|249|272",
+      "blockId": "p1-l78",
+      "page": 1,
+      "text": "selection_mark_unselected_23",
+      "acordCode": "ResidentialStructure_ContentsMarketValueAmount",
+      "acordLabel": "Residential Structure Contents Market Value Amount",
+      "uiFieldType": "checkbox",
+      "geometry": {
+        "x": 249.1296,
+        "y": 271.6608,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l79|1|200|272",
+      "blockId": "p1-l79",
+      "page": 1,
+      "text": "TIME",
+      "acordCode": "Airport_ControlTower_EmployeeScheduleFullTimeIndicator",
+      "acordLabel": "Airport Control Tower Employee Schedule Full Time Indicator",
+      "uiFieldType": "text",
+      "geometry": {
+        "x": 200.3328,
+        "y": 271.7952,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l80|1|24|272",
+      "blockId": "p1-l80",
+      "page": 1,
+      "text": "selection_mark_unselected_22",
+      "acordCode": "PolicyChange_RemarkText",
+      "acordLabel": "Policy Change Remark Text",
+      "uiFieldType": "checkbox",
+      "geometry": {
+        "x": 23.6448,
+        "y": 271.9008,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l82|1|51|275",
+      "blockId": "p1-l82",
+      "page": 1,
+      "text": "CHANGE",
+      "acordCode": "AccountantInformation_PredecessorFirm_NameChangeDate",
+      "acordLabel": "Accountant Information Predecessor Firm Name Change Date",
+      "uiFieldType": "date",
+      "geometry": {
+        "x": 51.3408,
+        "y": 275.0016,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l84|1|522|277",
+      "blockId": "p1-l84",
+      "page": 1,
+      "text": "DIRECT BILL",
+      "acordCode": "Policy_Payment_DirectBillAccountIndicator",
+      "acordLabel": "Policy Payment Direct Bill Account Indicator",
+      "uiFieldType": "text",
+      "geometry": {
+        "x": 521.6928,
+        "y": 277.296,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l86|1|249|288",
+      "blockId": "p1-l86",
+      "page": 1,
+      "text": "selection_mark_unselected_25",
+      "acordCode": "Vehicle_PIP_PIPMedicalExpenseCoverageSelectionIndicator",
+      "acordLabel": "Vehicle PIP PIPMedical Expense Coverage Selection Indicator",
+      "uiFieldType": "checkbox",
+      "geometry": {
+        "x": 249.0144,
+        "y": 288.1536,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l88|1|51|291",
+      "blockId": "p1-l88",
+      "page": 1,
+      "text": "CANCEL",
+      "acordCode": "CancelNonRenew_CancellationRequestIndicator",
+      "acordLabel": "Cancel Non Renew Cancellation Request Indicator",
+      "uiFieldType": "text",
+      "geometry": {
+        "x": 51.3408,
+        "y": 290.5824,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l90|1|522|293",
+      "blockId": "p1-l90",
+      "page": 1,
+      "text": "AGENCY BILL",
+      "acordCode": "AdditionalInterest_MortgageeBillNoIndicator",
+      "acordLabel": "Additional Interest Mortgagee Bill No Indicator",
+      "uiFieldType": "text",
+      "geometry": {
+        "x": 521.6928,
+        "y": 293.3376,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l91|1|28|306",
+      "blockId": "p1-l91",
+      "page": 1,
+      "text": "APPLICANT INFORMATION",
+      "acordCode": "AccountantInformation_PredecessorFirm_DissolutionDate",
+      "acordLabel": "Accountant Information Predecessor Firm Dissolution Date",
+      "uiFieldType": "date",
+      "geometry": {
+        "x": 27.504,
+        "y": 306.1632,
+        "width": 148.0704,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l92|1|27|321",
+      "blockId": "p1-l92",
+      "page": 1,
+      "text": "NAME (First Named Insured & Other Named Insureds)",
+      "acordCode": "NamedInsured_JointInsured_OtherGivenNameInitial",
+      "acordLabel": "Named Insured Joint Insured Other Given Name Initial Insured Name",
+      "uiFieldType": "numeric",
+      "geometry": {
+        "x": 27.0432,
+        "y": 320.832,
+        "width": 201.7152,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l93|1|493|321",
+      "blockId": "p1-l93",
+      "page": 1,
+      "text": "MAILING ADDRESS INCL ZIP+4 (of First Named Insured)",
+      "acordCode": "NamedInsured_ContactMailingAddress_LineOne",
+      "acordLabel": "Named Insured Contact Mailing Address Line One Insured Name",
+      "uiFieldType": "numeric",
+      "geometry": {
+        "x": 492.8064,
+        "y": 321.2928,
+        "width": 211.7952,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l94|1|491|335",
+      "blockId": "p1-l94",
+      "page": 1,
+      "text": "STREET:",
+      "acordCode": "AdditionalInterest_MailingAddress_LineOneStreetNumber",
+      "acordLabel": "Additional Interest Mailing Address Line One Street Number",
+      "uiFieldType": "numeric",
+      "geometry": {
+        "x": 490.5216,
+        "y": 335.04,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l95|1|491|360",
+      "blockId": "p1-l95",
+      "page": 1,
+      "text": "City:",
+      "acordCode": "Aircraft_SeatingCapacityCount",
+      "acordLabel": "Aircraft Seating Capacity Count",
+      "uiFieldType": "text",
+      "geometry": {
+        "x": 490.9728,
+        "y": 359.7888,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l96|1|491|383",
+      "blockId": "p1-l96",
+      "page": 1,
+      "text": "State:",
+      "acordCode": "StatementOfValues_CauseOfLoss_BasicIndicator",
+      "acordLabel": "Statement Of Values Cause Of Loss Basic Indicator",
+      "uiFieldType": "numeric",
+      "geometry": {
+        "x": 490.9728,
+        "y": 382.704,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l98|1|253|401",
+      "blockId": "p1-l98",
+      "page": 1,
+      "text": "PHONE",
+      "acordCode": "AdditionalInterest_CellPhoneNumber",
+      "acordLabel": "Additional Interest Cell Phone Number",
+      "uiFieldType": "numeric",
+      "geometry": {
+        "x": 253.056,
+        "y": 401.04,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l100|1|28|407",
+      "blockId": "p1-l100",
+      "page": 1,
+      "text": "(of First Named Insured):",
+      "acordCode": "NamedInsured_FullName_AA",
+      "acordLabel": "Named Insured Full Name AA Insured Name",
+      "uiFieldType": "numeric",
+      "geometry": {
+        "x": 28.4256,
+        "y": 407.0016,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l101|1|253|408",
+      "blockId": "p1-l101",
+      "page": 1,
+      "text": "(A/C, No, Ext):",
+      "acordCode": "AttorneyInformation_PredecessorFirm_ExtendedReportingPeriodYesNoCode",
+      "acordLabel": "Attorney Information Predecessor Firm Extended Reporting Period Yes No Code",
+      "uiFieldType": "text",
+      "geometry": {
+        "x": 252.5952,
+        "y": 407.9136,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l102|1|28|416",
+      "blockId": "p1-l102",
+      "page": 1,
+      "text": "E-MAIL",
+      "acordCode": "Employee_MailingAddress_CityName",
+      "acordLabel": "Employee Mailing Address City Name",
+      "uiFieldType": "text",
+      "geometry": {
+        "x": 27.504,
+        "y": 415.7088,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l103|1|493|416",
+      "blockId": "p1-l103",
+      "page": 1,
+      "text": "WEBSITE",
+      "acordCode": "Client_WebsiteAddress",
+      "acordLabel": "Client Website Address",
+      "uiFieldType": "text",
+      "geometry": {
+        "x": 492.8064,
+        "y": 415.7088,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l104|1|27|423",
+      "blockId": "p1-l104",
+      "page": 1,
+      "text": "ADDRESS(ES):",
+      "acordCode": "AdditionalInterest_MailingAddress_CityName",
+      "acordLabel": "Additional Interest Mailing Address City Name",
+      "uiFieldType": "text",
+      "geometry": {
+        "x": 27.0432,
+        "y": 423.0432,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l105|1|493|423",
+      "blockId": "p1-l105",
+      "page": 1,
+      "text": "ADDRESS(ES):",
+      "acordCode": "AdditionalInterest_MailingAddress_CityName",
+      "acordLabel": "Additional Interest Mailing Address City Name",
+      "uiFieldType": "text",
+      "geometry": {
+        "x": 492.8064,
+        "y": 423.0432,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l109|1|233|432",
+      "blockId": "p1-l109",
+      "page": 1,
+      "text": "SUBCHAPTER \"S\"",
+      "acordCode": "NamedInsured_LegalEntity_SubchapterSCorporationIndicator",
+      "acordLabel": "Named Insured Legal Entity Subchapter SCorporation Indicator Insured Name",
+      "uiFieldType": "text",
+      "geometry": {
+        "x": 233.3376,
+        "y": 432.2112,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l110|1|744|433",
+      "blockId": "p1-l110",
+      "page": 1,
+      "text": "DATE BUS",
+      "acordCode": "BusinessInformation_BusinessStartDate",
+      "acordLabel": "Business Information Business Start Date",
+      "uiFieldType": "date",
+      "geometry": {
+        "x": 744.0288,
+        "y": 432.6624,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l113|1|479|434",
+      "blockId": "p1-l113",
+      "page": 1,
+      "text": "ID NUMBER",
+      "acordCode": "CertificateOfInsurance_EvidenceNumberIdentifier",
+      "acordLabel": "Certificate Of Insurance Evidence Number Identifier",
+      "uiFieldType": "numeric",
+      "geometry": {
+        "x": 479.0592,
+        "y": 434.496,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l115|1|137|436",
+      "blockId": "p1-l115",
+      "page": 1,
+      "text": "CORPORATION",
+      "acordCode": "BusinessInformation_IncorporationDate",
+      "acordLabel": "Business Information Incorporation Date",
+      "uiFieldType": "date",
+      "geometry": {
+        "x": 137.0688,
+        "y": 436.3296,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l116|1|51|437",
+      "blockId": "p1-l116",
+      "page": 1,
+      "text": "INDIVIDUAL",
+      "acordCode": "AccountantsLiability_IndividualTax_CurrentYearPercent",
+      "acordLabel": "Accountants Liability Individual Tax Current Year Percent",
+      "uiFieldType": "numeric",
+      "geometry": {
+        "x": 50.8896,
+        "y": 436.7904,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l117|1|434|440",
+      "blockId": "p1-l117",
+      "page": 1,
+      "text": "NAME",
+      "acordCode": "NamedInsured_AccountingContact_FullName",
+      "acordLabel": "Named Insured Accounting Contact Full Name Insured Name",
+      "uiFieldType": "text",
+      "geometry": {
+        "x": 433.6704,
+        "y": 439.5456,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l118|1|234|440",
+      "blockId": "p1-l118",
+      "page": 1,
+      "text": "CORPORATION",
+      "acordCode": "BusinessInformation_IncorporationDate",
+      "acordLabel": "Business Information Incorporation Date",
+      "uiFieldType": "date",
+      "geometry": {
+        "x": 233.7984,
+        "y": 439.9968,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l119|1|744|440",
+      "blockId": "p1-l119",
+      "page": 1,
+      "text": "STARTED",
+      "acordCode": "AttorneyInformation_StartedPrivatePracticeYear",
+      "acordLabel": "Attorney Information Started Private Practice Year",
+      "uiFieldType": "text",
+      "geometry": {
+        "x": 744.4896,
+        "y": 439.9968,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l122|1|234|449",
+      "blockId": "p1-l122",
+      "page": 1,
+      "text": "NOT FOR",
+      "acordCode": "BusinessInformation_BusinessType_NotForProfitIndicator",
+      "acordLabel": "Business Information Business Type Not For Profit Indicator",
+      "uiFieldType": "text",
+      "geometry": {
+        "x": 233.7984,
+        "y": 448.704,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l123|1|211|449",
+      "blockId": "p1-l123",
+      "page": 1,
+      "text": "selection_mark_unselected_31",
+      "acordCode": "AircraftLossNotice_ACORDForm_RemarkText",
+      "acordLabel": "Aircraft Loss Notice ACORDForm Remark Text",
+      "uiFieldType": "checkbox",
+      "geometry": {
+        "x": 211.1232,
+        "y": 448.8768,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l125|1|51|453",
+      "blockId": "p1-l125",
+      "page": 1,
+      "text": "PARTNERSHIP",
+      "acordCode": "NamedInsured_LegalEntity_GeneralPartnershipIndicator",
+      "acordLabel": "Named Insured Legal Entity General Partnership Indicator Insured Name",
+      "uiFieldType": "numeric",
+      "geometry": {
+        "x": 51.3408,
+        "y": 453.2928,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l126|1|138|453",
+      "blockId": "p1-l126",
+      "page": 1,
+      "text": "JOINT VENTURE",
+      "acordCode": "DirectorsAndOfficersLineOfBusiness_ApplicantOrSubsidiariesActAsGeneralPartnerOrInvolvedJointVentureExplanation",
+      "acordLabel": "Directors And Officers Line Of Business Applicant Or Subsidiaries Act As General Partner Or Involved Joint Venture Explanation",
+      "uiFieldType": "numeric",
+      "geometry": {
+        "x": 138.4416,
+        "y": 453.2928,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l127|1|310|455",
+      "blockId": "p1-l127",
+      "page": 1,
+      "text": "AND MANAGERS",
+      "acordCode": "AccountsReceivableHistory_Outstanding_AsOfDate",
+      "acordLabel": "Accounts Receivable History Outstanding As Of Date",
+      "uiFieldType": "date",
+      "geometry": {
+        "x": 310.3584,
+        "y": 454.6656,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l128|1|234|455",
+      "blockId": "p1-l128",
+      "page": 1,
+      "text": "PROFIT ORG",
+      "acordCode": "NamedInsured_LegalEntity_NonProfitOrganizationIndiator",
+      "acordLabel": "Named Insured Legal Entity Non Profit Organization Indiator Insured Name",
+      "uiFieldType": "text",
+      "geometry": {
+        "x": 234.2592,
+        "y": 455.1264,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l129|1|412|466",
+      "blockId": "p1-l129",
+      "page": 1,
+      "text": "ACCOUNTING RECORDS CONTACT:",
+      "acordCode": "NamedInsured_AccountingContact_CellPhoneNumber",
+      "acordLabel": "Named Insured Accounting Contact Cell Phone Number Insured Name",
+      "uiFieldType": "numeric",
+      "geometry": {
+        "x": 411.6672,
+        "y": 465.6672,
+        "width": 138.4416,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l130|1|28|466",
+      "blockId": "p1-l130",
+      "page": 1,
+      "text": "INSPECTION CONTACT:",
+      "acordCode": "InspectionInformation_InspectionContact_FullName",
+      "acordLabel": "Inspection Information Inspection Contact Full Name",
+      "uiFieldType": "text",
+      "geometry": {
+        "x": 27.504,
+        "y": 466.128,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l131|1|28|480",
+      "blockId": "p1-l131",
+      "page": 1,
+      "text": "PHONE",
+      "acordCode": "AdditionalInterest_CellPhoneNumber",
+      "acordLabel": "Additional Interest Cell Phone Number",
+      "uiFieldType": "numeric",
+      "geometry": {
+        "x": 27.504,
+        "y": 479.8752,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l132|1|219|480",
+      "blockId": "p1-l132",
+      "page": 1,
+      "text": "E-MAIL",
+      "acordCode": "Employee_MailingAddress_CityName",
+      "acordLabel": "Employee Mailing Address City Name",
+      "uiFieldType": "text",
+      "geometry": {
+        "x": 219.1296,
+        "y": 479.8752,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l133|1|412|480",
+      "blockId": "p1-l133",
+      "page": 1,
+      "text": "PHONE",
+      "acordCode": "AdditionalInterest_CellPhoneNumber",
+      "acordLabel": "Additional Interest Cell Phone Number",
+      "uiFieldType": "numeric",
+      "geometry": {
+        "x": 411.6672,
+        "y": 479.8752,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l134|1|604|480",
+      "blockId": "p1-l134",
+      "page": 1,
+      "text": "E-MAIL",
+      "acordCode": "Employee_MailingAddress_CityName",
+      "acordLabel": "Employee Mailing Address City Name",
+      "uiFieldType": "text",
+      "geometry": {
+        "x": 603.744,
+        "y": 479.8752,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l135|1|28|487",
+      "blockId": "p1-l135",
+      "page": 1,
+      "text": "(A/C, No, Ext):",
+      "acordCode": "AttorneyInformation_PredecessorFirm_ExtendedReportingPeriodYesNoCode",
+      "acordLabel": "Attorney Information Predecessor Firm Extended Reporting Period Yes No Code",
+      "uiFieldType": "text",
+      "geometry": {
+        "x": 27.9648,
+        "y": 486.7488,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l136|1|410|487",
+      "blockId": "p1-l136",
+      "page": 1,
+      "text": "(A/C, No, Ext):",
+      "acordCode": "AttorneyInformation_PredecessorFirm_ExtendedReportingPeriodYesNoCode",
+      "acordLabel": "Attorney Information Predecessor Firm Extended Reporting Period Yes No Code",
+      "uiFieldType": "text",
+      "geometry": {
+        "x": 410.2944,
+        "y": 486.7488,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l137|1|219|487",
+      "blockId": "p1-l137",
+      "page": 1,
+      "text": "ADDRESS:",
+      "acordCode": "AdditionalInterest_MailingAddress_LineOne",
+      "acordLabel": "Additional Interest Mailing Address Line One",
+      "uiFieldType": "text",
+      "geometry": {
+        "x": 219.1296,
+        "y": 487.2096,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l138|1|604|487",
+      "blockId": "p1-l138",
+      "page": 1,
+      "text": "ADDRESS:",
+      "acordCode": "AdditionalInterest_MailingAddress_LineOne",
+      "acordLabel": "Additional Interest Mailing Address Line One",
+      "uiFieldType": "text",
+      "geometry": {
+        "x": 603.744,
+        "y": 487.2096,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l139|1|28|499",
+      "blockId": "p1-l139",
+      "page": 1,
+      "text": "PREMISES INFORMATION",
+      "acordCode": "BusinessInformation_Delivery_SalesOnPremisesPercent",
+      "acordLabel": "Business Information Delivery Sales On Premises Percent",
+      "uiFieldType": "text",
+      "geometry": {
+        "x": 27.504,
+        "y": 498.6624,
+        "width": 141.6576,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l140|1|656|514",
+      "blockId": "p1-l140",
+      "page": 1,
+      "text": "ANNUAL",
+      "acordCode": "AccountantsLiability_AnnualPremiumAmount",
+      "acordLabel": "Accountants Liability Annual Premium Amount",
+      "uiFieldType": "numeric",
+      "geometry": {
+        "x": 656.0064,
+        "y": 514.2528,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l144|1|395|519",
+      "blockId": "p1-l144",
+      "page": 1,
+      "text": "CITY LIMITS",
+      "acordCode": "CommercialStructure_RiskLocation_InsideCityLimitsIndicator",
+      "acordLabel": "Commercial Structure Risk Location Inside City Limits Indicator",
+      "uiFieldType": "numeric",
+      "geometry": {
+        "x": 395.1648,
+        "y": 518.832,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l145|1|30|519",
+      "blockId": "p1-l145",
+      "page": 1,
+      "text": "LOC #",
+      "acordCode": "Location_DirectionsDescription",
+      "acordLabel": "Location Directions Description",
+      "uiFieldType": "text",
+      "geometry": {
+        "x": 30.2592,
+        "y": 519.2928,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l146|1|475|519",
+      "blockId": "p1-l146",
+      "page": 1,
+      "text": "INTEREST",
+      "acordCode": "AccountantsLiability_ApplicantFirmProvidedServicesForInstitutionApplicantMemberHeldEquityInterestExplanation",
+      "acordLabel": "Accountants Liability Applicant Firm Provided Services For Institution Applicant Member Held Equity Interest Explanation",
+      "uiFieldType": "text",
+      "geometry": {
+        "x": 475.392,
+        "y": 519.2928,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l147|1|725|519",
+      "blockId": "p1-l147",
+      "page": 1,
+      "text": "% OCCUPIED",
+      "acordCode": "BuildingOccupancy_LengthOfTimeVacantUnoccupiedDescription",
+      "acordLabel": "Building Occupancy Length Of Time Vacant Unoccupied Description",
+      "uiFieldType": "date",
+      "geometry": {
+        "x": 725.232,
+        "y": 519.2928,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l148|1|69|520",
+      "blockId": "p1-l148",
+      "page": 1,
+      "text": "BLD #",
+      "acordCode": "UNMAPPED_CONFIDENCE_FALLBACK",
+      "acordLabel": "BLD #",
+      "uiFieldType": "date",
+      "geometry": {
+        "x": 68.7648,
+        "y": 519.7536,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l149|1|548|524",
+      "blockId": "p1-l149",
+      "page": 1,
+      "text": "BUILT",
+      "acordCode": "CommercialStructure_BuiltYear",
+      "acordLabel": "Commercial Structure Built Year",
+      "uiFieldType": "text",
+      "geometry": {
+        "x": 548.2752,
+        "y": 523.872,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l150|1|583|524",
+      "blockId": "p1-l150",
+      "page": 1,
+      "text": "EMPLOYEES",
+      "acordCode": "EmployeeSchedule_PartTime_FullTimeEmployeesDoingSameWorkCount",
+      "acordLabel": "Employee Schedule Part Time Full Time Employees Doing Same Work Count",
+      "uiFieldType": "numeric",
+      "geometry": {
+        "x": 583.1232,
+        "y": 523.872,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l151|1|651|524",
+      "blockId": "p1-l151",
+      "page": 1,
+      "text": "REVENUES",
+      "acordCode": "WorkersCompensation_EstimatedAnnualRevenues",
+      "acordLabel": "Workers Compensation Estimated Annual Revenues",
+      "uiFieldType": "numeric",
+      "geometry": {
+        "x": 650.5056,
+        "y": 524.3328,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l153|1|452|536",
+      "blockId": "p1-l153",
+      "page": 1,
+      "text": "selection_mark_unselected_35",
+      "acordCode": "BusinessOwnersLineOfBusiness_RemarkText",
+      "acordLabel": "Business Owners Line Of Business Remark Text",
+      "uiFieldType": "checkbox",
+      "geometry": {
+        "x": 451.9104,
+        "y": 536.0256,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l154|1|411|541",
+      "blockId": "p1-l154",
+      "page": 1,
+      "text": "INSIDE",
+      "acordCode": "AccountantsLiability_DefenceCosts_InsideIndicator",
+      "acordLabel": "Accountants Liability Defence Costs Inside Indicator",
+      "uiFieldType": "numeric",
+      "geometry": {
+        "x": 411.2064,
+        "y": 541.296,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l155|1|474|541",
+      "blockId": "p1-l155",
+      "page": 1,
+      "text": "OWNER",
+      "acordCode": "AdditionalInterest_OwnershipPercent",
+      "acordLabel": "Additional Interest Ownership Percent",
+      "uiFieldType": "text",
+      "geometry": {
+        "x": 474.0096,
+        "y": 541.296,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l158|1|412|557",
+      "blockId": "p1-l158",
+      "page": 1,
+      "text": "OUTSIDE",
+      "acordCode": "AccountantsLiability_DefenceCosts_OutsideIndicator",
+      "acordLabel": "Accountants Liability Defence Costs Outside Indicator",
+      "uiFieldType": "numeric",
+      "geometry": {
+        "x": 412.128,
+        "y": 557.3376,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l159|1|474|558",
+      "blockId": "p1-l159",
+      "page": 1,
+      "text": "TENANT",
+      "acordCode": "Airport_ApplicantInterest_SubTenantIndicator",
+      "acordLabel": "Airport Applicant Interest Sub Tenant Indicator",
+      "uiFieldType": "text",
+      "geometry": {
+        "x": 474.0096,
+        "y": 557.7888,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l162|1|452|585",
+      "blockId": "p1-l162",
+      "page": 1,
+      "text": "selection_mark_unselected_39",
+      "acordCode": "BusinessOwnersLineOfBusiness_RemarkText",
+      "acordLabel": "Business Owners Line Of Business Remark Text",
+      "uiFieldType": "checkbox",
+      "geometry": {
+        "x": 452.4,
+        "y": 584.6688,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l163|1|411|589",
+      "blockId": "p1-l163",
+      "page": 1,
+      "text": "INSIDE",
+      "acordCode": "AccountantsLiability_DefenceCosts_InsideIndicator",
+      "acordLabel": "Accountants Liability Defence Costs Inside Indicator",
+      "uiFieldType": "numeric",
+      "geometry": {
+        "x": 411.2064,
+        "y": 588.96,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l164|1|474|589",
+      "blockId": "p1-l164",
+      "page": 1,
+      "text": "OWNER",
+      "acordCode": "AdditionalInterest_OwnershipPercent",
+      "acordLabel": "Additional Interest Ownership Percent",
+      "uiFieldType": "text",
+      "geometry": {
+        "x": 473.5584,
+        "y": 588.96,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l167|1|412|605",
+      "blockId": "p1-l167",
+      "page": 1,
+      "text": "OUTSIDE",
+      "acordCode": "AccountantsLiability_DefenceCosts_OutsideIndicator",
+      "acordLabel": "Accountants Liability Defence Costs Outside Indicator",
+      "uiFieldType": "numeric",
+      "geometry": {
+        "x": 412.128,
+        "y": 605.4624,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l168|1|474|606",
+      "blockId": "p1-l168",
+      "page": 1,
+      "text": "TENANT",
+      "acordCode": "Airport_ApplicantInterest_SubTenantIndicator",
+      "acordLabel": "Airport Applicant Interest Sub Tenant Indicator",
+      "uiFieldType": "text",
+      "geometry": {
+        "x": 474.0096,
+        "y": 605.9136,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l171|1|28|698",
+      "blockId": "p1-l171",
+      "page": 1,
+      "text": "GENERAL INFORMATION",
+      "acordCode": "EmployeeBenefits_Attachment_ExperienceInformationGeneralApplicationIndicator",
+      "acordLabel": "Employee Benefits Attachment Experience Information General Application Indicator",
+      "uiFieldType": "numeric",
+      "geometry": {
+        "x": 27.504,
+        "y": 698.0448,
+        "width": 139.3632,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l172|1|754|715",
+      "blockId": "p1-l172",
+      "page": 1,
+      "text": "YES",
+      "acordCode": "AccidentConviction_BodilyInjuryOrDeathYesIndicator",
+      "acordLabel": "Accident Conviction Bodily Injury Or Death Yes Indicator",
+      "uiFieldType": "text",
+      "geometry": {
+        "x": 754.1088,
+        "y": 715.4592,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l176|1|375|718",
+      "blockId": "p1-l176",
+      "page": 1,
+      "text": "YES NO",
+      "acordCode": "AccidentConviction_ViolationYesNoCode",
+      "acordLabel": "Accident Conviction Violation Yes No Code",
+      "uiFieldType": "text",
+      "geometry": {
+        "x": 374.9952,
+        "y": 717.7536,
+        "width": 96,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l177|1|422|727",
+      "blockId": "p1-l177",
+      "page": 1,
+      "text": "8. DURING THE LAST FIVE YEARS (TEN IN RI), HAS ANY APPLICANT BEEN",
+      "acordCode": "DirectorsAndOfficersLineOfBusiness_ApplicantCompletedRegistrationPublicOfferingLastMandatedNumberOfYearsExplanaton",
+      "acordLabel": "Directors And Officers Line Of Business Applicant Completed Registration Public Offering Last Mandated Number Of Years Explanaton",
+      "uiFieldType": "date",
+      "geometry": {
+        "x": 421.7568,
+        "y": 726.912,
+        "width": 290.64,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l181|1|28|730",
+      "blockId": "p1-l181",
+      "page": 1,
+      "text": "1a. IS THE APPLICANT A SUBSIDIARY OF ANOTHER ENTITY ?",
+      "acordCode": "AircraftLineOfBusiness_ApplicantOwnOtherAircraftNotListed",
+      "acordLabel": "Aircraft Line Of Business Applicant Own Other Aircraft Not Listed",
+      "uiFieldType": "text",
+      "geometry": {
+        "x": 27.504,
+        "y": 730.128,
+        "width": 238.3872,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    },
+    {
+      "key": "p1-l186|1|28|746",
+      "blockId": "p1-l186",
+      "page": 1,
+      "text": "1b. DOES THE APPLICANT HAVE ANY SUBSIDIARIES?",
+      "acordCode": "Contractor_SubsidiaryOfOtherEntityHaveAnySubsidiaryExplanation",
+      "acordLabel": "Contractor Subsidiary Of Other Entity Have Any Subsidiary Explanation",
+      "uiFieldType": "text",
+      "geometry": {
+        "x": 27.9648,
+        "y": 746.1696,
+        "width": 208.128,
+        "height": 96
+      },
+      "propertiesReadByUi": {
+        "label": [
+          "mapping.chosen.label",
+          "mapping.suggestions[0].label",
+          "mapping.text"
+        ],
+        "geometry": [
+          "mapping.boundingBox.x",
+          "mapping.boundingBox.y",
+          "mapping.boundingBox.width",
+          "mapping.boundingBox.height"
+        ],
+        "type": [
+          "sourceBlock.type",
+          "mapping.chosen.label",
+          "mapping.chosen.description"
+        ]
+      }
+    }
+  ]
+}
