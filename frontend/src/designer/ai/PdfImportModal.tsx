@@ -2,6 +2,7 @@ import { pdfToImages } from "../../utils/pdfToImages";
 import { useState, type ChangeEvent } from "react";
 import type { AcordLabelCandidate } from "../../../../shared/src/acord/acordTypes";
 import type {
+  BoundingBox,
   ExtractionArtifacts,
   ExtractionResult,
   ExtractedBlock,
@@ -13,6 +14,14 @@ import type {
   NormalizedBoundingBox,
   PageExtraction,
   SemanticFieldType,
+  Wave8AnchorPromotion,
+  Wave8CheckboxCandidate,
+  Wave8FieldMetadata,
+  Wave8GatingMetadata,
+  Wave8PairedLabel,
+  Wave8ResolverFlags,
+  Wave8SelectionMarkAssociation,
+  Wave8SuppressionMetadata,
 } from "../../../../shared/src/types";
 import { ExtractionViewer } from "../../extraction";
 import { useExtractionStore } from "../../state";
@@ -353,6 +362,31 @@ function isLikelyFormHeaderLine(text: string): boolean {
   return tokens.length >= 4 && upperOnly && !hasFieldCueToken(text);
 }
 
+function isWave8LikelyHeaderOrNonField(text: string): boolean {
+  const normalized = normalizeOcrText(text);
+  if (!normalized) return false;
+
+  if (
+    /commercial insurance application|supplemental application|acord|page \d+ of \d+|agent countersignature/.test(
+      normalized,
+    )
+  ) {
+    return true;
+  }
+
+  if (isLikelyHeaderLogoText(text) || isLikelySectionTitle(text)) {
+    return !hasFieldCueToken(text);
+  }
+
+  return false;
+}
+
+function hasCheckboxShapeCue(text: string): boolean {
+  return /\u2610|\u2611|\u2612|\[\s?\]|\(\s?\)|\byes\s*\/\s*no\b|\bno\s*\/\s*yes\b/i.test(
+    text,
+  );
+}
+
 function hasTokenOverlap(left: string, right: string): boolean {
   const leftTokens = normalizeOcrText(left).split(" ").filter((t) => t.length >= 3);
   const rightTokens = normalizeOcrText(right).split(" ").filter((t) => t.length >= 3);
@@ -439,6 +473,48 @@ function shouldAcceptMapping(mapping: DraftMappedField): boolean {
   );
 }
 
+function shouldRenderWave8Mapping(
+  mapping: MapFieldMapping,
+  sourceBlock: ExtractedBlock,
+): boolean {
+  const wave8 = readWave8Metadata(mapping, sourceBlock);
+  const forceVisible = Boolean(
+    wave8.resolverFlags?.contractorsInsuredNameResolverApplied ||
+      (wave8.anchorPromotions || []).length > 0,
+  );
+
+  if (
+    (wave8.suppressionMetadata?.suppressed ||
+      wave8.suppressionMetadata?.nonField ||
+      wave8.suppressionMetadata?.headerBlock) &&
+    !forceVisible
+  ) {
+    return false;
+  }
+
+  if (
+    wave8.gatingMetadata?.thresholdDecision === "rejected" &&
+    !forceVisible
+  ) {
+    return false;
+  }
+
+  if (!forceVisible && isWave8LikelyHeaderOrNonField(String(mapping.text || ""))) {
+    return false;
+  }
+
+  const sem = Number(wave8.confidenceScores?.semanticScore || 0);
+  const dict = Number(wave8.confidenceScores?.dictionaryScore || 0);
+  const sup = Number(wave8.confidenceScores?.supervisionBoost || 0);
+  const conf = Number(wave8.confidenceScores?.confidenceScore || 0);
+
+  if (!forceVisible && conf < 0.22 && sem < 0.05 && dict < 0.08 && sup < 0.12) {
+    return false;
+  }
+
+  return true;
+}
+
 function buildLabelDetections(
   blocks: ExtractedBlock[],
   rejectionByBlockId: Map<string, string>,
@@ -492,27 +568,285 @@ function toCanonicalName(text: string) {
   return normalizeOcrText(text).replace(/\s+/g, "_");
 }
 
+function isBoxLike(value: unknown): value is BoundingBox {
+  if (!value || typeof value !== "object") return false;
+  const box = value as Partial<BoundingBox>;
+  return (
+    Number.isFinite(box.x) &&
+    Number.isFinite(box.y) &&
+    Number.isFinite(box.width) &&
+    Number.isFinite(box.height)
+  );
+}
+
+function toBoundingBox(value: unknown, fallback: BoundingBox): BoundingBox {
+  if (!isBoxLike(value)) {
+    return fallback;
+  }
+
+  return {
+    x: Number(value.x) || 0,
+    y: Number(value.y) || 0,
+    width: Math.max(1, Number(value.width) || 1),
+    height: Math.max(1, Number(value.height) || 1),
+  };
+}
+
+function deriveWave8GroupLabel(semanticLabel: string, rawText: string): string {
+  const text = normalizeOcrText(`${semanticLabel} ${rawText}`);
+  if (/namedinsured|insured|identity|person_name/.test(text)) return "identity";
+  if (/producer|agent|agency/.test(text)) return "agent";
+  if (/applicant|party_information/.test(text)) return "applicant";
+  if (/operations|operations_description|contracting/.test(text)) return "operations";
+  return "general";
+}
+
+function readWave8Metadata(
+  mapping: MapFieldMapping,
+  sourceBlock: ExtractedBlock,
+): Wave8FieldMetadata {
+  const diag = ((mapping as any).mappingDiagnostics || {}) as Record<string, unknown>;
+  const chosen = mapping.chosen || (mapping as any).topCandidate || mapping.suggestions?.[0];
+
+  const blockGeometry = toBoundingBox(
+    (mapping as any).blockGeometry,
+    toBoundingBox(mapping.boundingBox, sourceBlock.boundingBox),
+  );
+
+  const pairedLabel: Wave8PairedLabel | undefined = (() => {
+    const paired = (mapping as any).pairedLabel as unknown;
+    if (paired && typeof paired === "object") {
+      const input = paired as Record<string, unknown>;
+      return {
+        text: typeof input.text === "string" ? input.text : undefined,
+        blockId: typeof input.blockId === "string" ? input.blockId : undefined,
+        boundingBox: isBoxLike(input.boundingBox)
+          ? toBoundingBox(input.boundingBox, blockGeometry)
+          : undefined,
+      };
+    }
+
+    const pairLabel =
+      typeof diag.wave8SelectionMarkPairLabel === "string"
+        ? (diag.wave8SelectionMarkPairLabel as string)
+        : undefined;
+    if (pairLabel) {
+      return { text: pairLabel };
+    }
+    return undefined;
+  })();
+
+  const selectionMarkAssociations: Wave8SelectionMarkAssociation[] = Array.isArray(
+    (mapping as any).selectionMarkAssociations,
+  )
+    ? ((mapping as any).selectionMarkAssociations as Array<Record<string, unknown>>).map((entry) => ({
+        selectionMarkBlockId:
+          typeof entry.selectionMarkBlockId === "string"
+            ? entry.selectionMarkBlockId
+            : undefined,
+        labelBlockId: typeof entry.labelBlockId === "string" ? entry.labelBlockId : undefined,
+        labelText: typeof entry.labelText === "string" ? entry.labelText : undefined,
+        checked: Boolean(entry.checked),
+        confidence:
+          typeof entry.confidence === "number" && Number.isFinite(entry.confidence)
+            ? entry.confidence
+            : undefined,
+        boundingBox: isBoxLike(entry.boundingBox)
+          ? toBoundingBox(entry.boundingBox, blockGeometry)
+          : undefined,
+      }))
+    : [];
+
+  const checkboxCandidates: Wave8CheckboxCandidate[] = Array.isArray(
+    (mapping as any).checkboxCandidates,
+  )
+    ? ((mapping as any).checkboxCandidates as Array<Record<string, unknown>>).map((entry) => ({
+        blockId: typeof entry.blockId === "string" ? entry.blockId : undefined,
+        text: typeof entry.text === "string" ? entry.text : undefined,
+        checked: Boolean(entry.checked),
+        confidence:
+          typeof entry.confidence === "number" && Number.isFinite(entry.confidence)
+            ? entry.confidence
+            : undefined,
+        boundingBox: isBoxLike(entry.boundingBox)
+          ? toBoundingBox(entry.boundingBox, blockGeometry)
+          : undefined,
+      }))
+    : [];
+
+  const hasCheckboxCue = hasCheckboxShapeCue(
+    `${String(sourceBlock.text || "")} ${String(mapping.text || "")}`,
+  );
+  const declaredFieldType = String((mapping as any).fieldType || "").toLowerCase();
+  if (
+    selectionMarkAssociations.length === 0 &&
+    checkboxCandidates.length === 0 &&
+    (sourceBlock.type === "checkbox" || declaredFieldType === "checkbox" || hasCheckboxCue)
+  ) {
+    checkboxCandidates.push({
+      blockId: mapping.blockId,
+      text: String(mapping.text || sourceBlock.text || "").trim() || undefined,
+      checked: /\u2611|\u2612/.test(`${String(sourceBlock.text || "")} ${String(mapping.text || "")}`),
+      confidence: 0.35,
+      boundingBox: blockGeometry,
+    });
+  }
+
+  const anchorPromotions: Wave8AnchorPromotion[] = (() => {
+    const explicit = (mapping as any).anchorPromotions;
+    if (Array.isArray(explicit)) {
+      return explicit.map((entry: Record<string, unknown>) => ({
+        id: typeof entry.id === "string" ? entry.id : undefined,
+        label: typeof entry.label === "string" ? entry.label : undefined,
+        reason: typeof entry.reason === "string" ? entry.reason : undefined,
+      }));
+    }
+
+    const promoted =
+      typeof diag.wave8TargetedAnchorPromoted === "string"
+        ? (diag.wave8TargetedAnchorPromoted as string)
+        : "";
+    return promoted ? [{ id: promoted, label: promoted, reason: "wave8_promotion" }] : [];
+  })();
+
+  const resolverFlags: Wave8ResolverFlags = {
+    contractorsInsuredNameResolverApplied: Boolean(
+      diag.contractorsInsuredNameResolverApplied ||
+        (mapping as any)?.resolverFlags?.contractorsInsuredNameResolverApplied,
+    ),
+    wave8TargetedAnchorPromoted:
+      (typeof diag.wave8TargetedAnchorPromoted === "string"
+        ? (diag.wave8TargetedAnchorPromoted as string)
+        : undefined) ||
+      (typeof (mapping as any)?.resolverFlags?.wave8TargetedAnchorPromoted === "string"
+        ? (mapping as any).resolverFlags.wave8TargetedAnchorPromoted
+        : undefined),
+  };
+
+  const gatingMetadata: Wave8GatingMetadata = {
+    passed:
+      typeof (mapping as any)?.gatingMetadata?.passed === "boolean"
+        ? (mapping as any).gatingMetadata.passed
+        : Boolean((chosen as any)?.wave8Gating?.passed),
+    thresholdDecision:
+      typeof diag.thresholdDecision === "string"
+        ? (diag.thresholdDecision as string)
+        : undefined,
+    thresholdReason:
+      typeof diag.thresholdReason === "string"
+        ? (diag.thresholdReason as string)
+        : undefined,
+    rejectReasons: Array.isArray((chosen as any)?.wave8Gating?.rejectReasons)
+      ? ((chosen as any).wave8Gating.rejectReasons as string[])
+      : undefined,
+    semanticConsistency:
+      typeof (chosen as any)?.semanticSimilarity === "number"
+        ? (chosen as any).semanticSimilarity
+        : undefined,
+    dictionaryConsistency:
+      typeof (chosen as any)?.dictionaryScore === "number"
+        ? (chosen as any).dictionaryScore
+        : undefined,
+    categoryConsistency:
+      typeof (chosen as any)?.categoryScore === "number"
+        ? (chosen as any).categoryScore
+        : undefined,
+    supervisionBoost:
+      typeof (chosen as any)?.supervisionBoost === "number"
+        ? (chosen as any).supervisionBoost
+        : undefined,
+  };
+
+  const suppressionMetadata: Wave8SuppressionMetadata = {
+    suppressed: Boolean(
+      (mapping as any)?.suppressionMetadata?.suppressed || diag.wave8OverlapSuppressed,
+    ),
+    reason:
+      typeof (mapping as any)?.suppressionMetadata?.reason === "string"
+        ? (mapping as any).suppressionMetadata.reason
+        : typeof diag.thresholdReason === "string"
+          ? (diag.thresholdReason as string)
+          : undefined,
+    iou:
+      typeof diag.wave8OverlapIou === "number"
+        ? (diag.wave8OverlapIou as number)
+        : undefined,
+    winnerBlockId:
+      typeof diag.wave8OverlapWinnerBlockId === "string"
+        ? (diag.wave8OverlapWinnerBlockId as string)
+        : undefined,
+    nonField:
+      /section_title|header|non_field|title/i.test(
+        `${String(diag.thresholdReason || "")} ${String((mapping as any)?.suppressionMetadata?.reason || "")}`,
+      ) || isWave8LikelyHeaderOrNonField(String(mapping.text || "")),
+    headerBlock:
+      /section_title|header/i.test(
+        `${String(diag.thresholdReason || "")} ${String((mapping as any)?.suppressionMetadata?.reason || "")}`,
+      ) || isLikelyFormHeaderLine(String(mapping.text || "")),
+  };
+
+  const semanticLabel =
+    String((mapping as any).semanticLabel || "").trim() ||
+    String(sourceBlock.text || "").trim();
+  const categoryMode =
+    String((mapping as any).categoryMode || (chosen as any)?.categoryMode || "").trim() ||
+    undefined;
+  const groupLabel = deriveWave8GroupLabel(semanticLabel, sourceBlock.text || "");
+  const groupKey =
+    `${mapping.blockId}::${Math.round(blockGeometry.x)}:${Math.round(blockGeometry.y)}:` +
+    `${categoryMode || "none"}:${groupLabel}`;
+
+  return {
+    blockId: mapping.blockId,
+    blockGeometry,
+    categoryMode,
+    semanticLabel,
+    pairedLabel,
+    resolverFlags,
+    supervisionBoost:
+      typeof (chosen as any)?.supervisionBoost === "number"
+        ? (chosen as any).supervisionBoost
+        : undefined,
+    gatingMetadata,
+    suppressionMetadata,
+    fieldType: (mapping as any).fieldType,
+    selectionMarkAssociations,
+    checkboxCandidates,
+    anchorPromotions,
+    confidenceScores: {
+      confidenceScore: chosen?.confidenceScore,
+      normalizedConfidenceScore: (chosen as any)?.normalizedConfidenceScore,
+      semanticScore: (chosen as any)?.semanticSimilarity,
+      dictionaryScore: (chosen as any)?.dictionaryScore,
+      categoryScore: (chosen as any)?.categoryScore,
+      supervisionBoost: (chosen as any)?.supervisionBoost,
+    },
+    groupKey,
+    groupLabel,
+  };
+}
+
 function buildTypedFieldPreview(
   mapping: MapFieldMapping,
   sourceBlock: ExtractedBlock,
 ): Field {
   const chosen = mapping.chosen || (mapping as any).topCandidate || mapping.suggestions?.[0];
-  const fieldType = ((mapping as any).fieldType as SemanticFieldType | undefined) || inferFieldType(sourceBlock, chosen);
-  const semanticLabel =
-    String((mapping as any).semanticLabel || "").trim() ||
-    String(mapping.text || "").trim() ||
-    String(chosen?.label || "").trim();
+  const wave8 = readWave8Metadata(mapping, sourceBlock);
+  const fieldType = (wave8.fieldType as SemanticFieldType | undefined) || inferFieldType(sourceBlock, chosen);
+  const semanticLabel = wave8.semanticLabel || String(mapping.text || "").trim() || String(chosen?.label || "").trim();
   const metadataSource: FieldMetadataSource = chosen
     ? toMetadataSource(chosen.source)
     : "ocr";
-  const rawX = Number(mapping.boundingBox.x) || 0;
-  const rawY = Number(mapping.boundingBox.y) || 0;
-  const rawW = Math.max(8, Number(mapping.boundingBox.width) || 80);
-  const rawH = Math.max(8, Number(mapping.boundingBox.height) || 18);
+  const geometry = wave8.blockGeometry || mapping.boundingBox;
+  const rawX = Number(geometry.x) || 0;
+  const rawY = Number(geometry.y) || 0;
+  const rawW = Math.max(8, Number(geometry.width) || 80);
+  const rawH = Math.max(8, Number(geometry.height) || 18);
+  const pairedGeometry = wave8.pairedLabel?.boundingBox;
 
   // OCR boxes usually describe LABEL text, not the writable area.
   // Anchor input controls to the right of label text and normalize size.
-  const anchorX = rawX + Math.min(Math.max(12, rawW + 10), 240);
+  const anchorX = (pairedGeometry ? pairedGeometry.x + pairedGeometry.width : rawX) + Math.min(Math.max(12, rawW + 10), 240);
   const anchorY = rawY - 1;
   
   // Extract ACORD candidates from suggestions
@@ -520,8 +854,8 @@ function buildTypedFieldPreview(
     acordCode: sugg.acordCode,
     label: sugg.label,
     confidenceScore: sugg.confidenceScore,
-    source: sugg.source as "dictionary" | "heuristic" | "embeddings" | "geometry" | "category" | "fusion" | undefined,
-    rationale: sugg.rationale?.summary,
+    source: (sugg.source as "dictionary" | "heuristic" | "embeddings" | "geometry" | "category" | "fusion" | undefined) || "dictionary",
+    rationale: sugg.rationale,
   }));
 
   const base = {
@@ -533,7 +867,7 @@ function buildTypedFieldPreview(
     height: Math.min(30, Math.max(20, rawH * 1.15)),
     rotation: 0,
     opacity: 1,
-    groupId: null,
+    groupId: wave8.groupKey || null,
     metadata: {
       acordCode: chosen?.acordCode ?? "",
       acordLabel: chosen?.label ?? semanticLabel,
@@ -543,14 +877,16 @@ function buildTypedFieldPreview(
       confidenceScore: chosen?.confidenceScore ?? sourceBlock.confidence,
       source: metadataSource,
       extractionBlockId: mapping.blockId,
-      // NEW: Wave 8 semantic metadata
+      // Preserve legacy top-level metadata while storing full Wave-8 contract.
       semanticLabel,
-      categoryMode: chosen?.categoryMode as string | undefined,
+      categoryMode: wave8.categoryMode,
       acordCandidates,
-      // NEW: Checkpoint state detection
+      wave8,
       checkboxState: sourceBlock.type === "checkbox" ? {
         isCheckbox: true,
-        checked: false,
+        checked:
+          Boolean(wave8.selectionMarkAssociations?.some((item) => item.checked)) ||
+          Boolean(wave8.checkboxCandidates?.some((item) => item.checked)),
         pattern: "\\u2610|\\u2611|\\u2612|\\[\\s*\\]",
       } : undefined,
       signatureState: sourceBlock.type === "signature" ? {
@@ -599,23 +935,31 @@ function buildTypedFieldPreview(
   }
 
   if (fieldType === "checkbox") {
+    const checkboxAssoc = wave8.selectionMarkAssociations?.[0];
+    const checkboxCandidate = wave8.checkboxCandidates?.[0];
+    const checkboxGeometry = checkboxAssoc?.boundingBox || checkboxCandidate?.boundingBox;
+    const checkedConfidence =
+      checkboxAssoc?.confidence ?? checkboxCandidate?.confidence ?? 0;
+    const checkedState =
+      Boolean(checkboxAssoc?.checked || checkboxCandidate?.checked) ||
+      checkedConfidence >= 0.5;
     return {
       ...base,
       type: "checkbox",
-      x: rawX + Math.min(Math.max(8, rawW + 6), 120),
-      y: rawY,
+      x: checkboxGeometry ? checkboxGeometry.x : rawX + Math.min(Math.max(8, rawW + 6), 120),
+      y: checkboxGeometry ? checkboxGeometry.y : rawY,
       width: 20,
       height: 20,
       stroke: "#1e293b",
       strokeWidth: 1,
       fill: "#ffffff",
-      checked: false,
-      label: mapping.text,
+      checked: checkedState,
+      label: wave8.pairedLabel?.text || checkboxAssoc?.labelText || mapping.text,
       metadata: {
         ...base.metadata,
         checkboxState: {
           isCheckbox: true,
-          checked: false,
+          checked: checkedState,
         },
       },
     };
@@ -967,7 +1311,7 @@ export default function PdfImportModal({
     };
     console.error("[mapFields-RESPONSE-COUNT] Input: " + mappingInputBlocks.length + " blocks → Output: " + mappings.length + " mappings");
     console.log("[mapFields-response]", mapFieldsDebug);
-    window.__debugMapFieldsResponse = mapFieldsDebug;
+    (window as any).__debugMapFieldsResponse = mapFieldsDebug;
     
     const sourceBlockById = new Map(
       mappingInputBlocks.map((block) => [block.id, block]),
@@ -1000,12 +1344,25 @@ export default function PdfImportModal({
           return null;
         }
 
+        const wave8 = readWave8Metadata(mapping, sourceBlock);
+        const forceVisible =
+          Boolean(wave8.resolverFlags?.contractorsInsuredNameResolverApplied) ||
+          Boolean(wave8.anchorPromotions && wave8.anchorPromotions.length > 0);
+        const suppressedByWave8 =
+          Boolean(wave8.suppressionMetadata?.suppressed) ||
+          Boolean(wave8.suppressionMetadata?.nonField) ||
+          Boolean(wave8.suppressionMetadata?.headerBlock);
+        if (suppressedByWave8 && !forceVisible) {
+          return null;
+        }
+
         return {
           mapping,
+          sourceBlock,
           priority: blockPriority(sourceBlock),
         };
       })
-      .filter((item): item is { mapping: MapFieldMapping; priority: number } =>
+      .filter((item): item is { mapping: MapFieldMapping; sourceBlock: ExtractedBlock; priority: number } =>
         Boolean(item),
       )
       .sort((a, b) => b.priority - a.priority);
@@ -1033,12 +1390,15 @@ export default function PdfImportModal({
     const shouldCheckTextFilters = !debugModeRelaxedThresholds && !WAVE8_USABILITY_MODE;
     const shouldCheckHeaderFilters = !debugModeRelaxedThresholds && !WAVE8_USABILITY_MODE;
 
-    let qualityMappings = mappingCandidates.filter(({ mapping }) => {
+    let qualityMappings = mappingCandidates.filter(({ mapping, sourceBlock }) => {
       const chosen = mapping.chosen || (mapping as any).topCandidate || mapping.suggestions?.[0];
       const fieldType = (mapping as any).fieldType as SemanticFieldType | undefined;
       const semanticLabel = String((mapping as any).semanticLabel || "").trim();
 
       if (WAVE8_USABILITY_MODE && fieldType && semanticLabel) {
+        if (!shouldRenderWave8Mapping(mapping, sourceBlock)) {
+          return false;
+        }
         if (!topCandidatesPerBlock[mapping.blockId]) {
           topCandidatesPerBlock[mapping.blockId] = [];
         }
@@ -1097,11 +1457,14 @@ export default function PdfImportModal({
         : 0.12;
     
     if (qualityMappings.length < 20) {
-      qualityMappings = mappingCandidates.filter(({ mapping }) => {
+      qualityMappings = mappingCandidates.filter(({ mapping, sourceBlock }) => {
         const chosen = mapping.chosen || (mapping as any).topCandidate || mapping.suggestions?.[0];
         const fieldType = (mapping as any).fieldType as SemanticFieldType | undefined;
         const semanticLabel = String((mapping as any).semanticLabel || "").trim();
         if (WAVE8_USABILITY_MODE && fieldType && semanticLabel) {
+          if (!shouldRenderWave8Mapping(mapping, sourceBlock)) {
+            return false;
+          }
           fallbackFilterBreakdown.passed++;
           return true;
         }
@@ -1142,7 +1505,7 @@ export default function PdfImportModal({
     };
     console.error("[quality-filtering-COUNT] Candidates in: " + mappingCandidates.length + " → Passed strict filter: " + qualityMappings.length + " → After fallback: " + qualityMappings.length);
     console.log("[quality-filtering]", qualityFilterDebug);
-    window.__debugQualityFiltering = qualityFilterDebug;
+    (window as any).__debugQualityFiltering = qualityFilterDebug;
 
     const safeMappings = qualityMappings
       .slice(0, WAVE8_USABILITY_MODE ? qualityMappings.length : Math.max(1, limit))
@@ -1251,6 +1614,86 @@ export default function PdfImportModal({
         id: crypto.randomUUID(),
       }));
 
+    // Wave-8 overlap suppression in placement phase: keep resolver/anchor-promoted
+    // fields visible, but avoid stacking by nudging lower-priority overlaps.
+    const placedByPage = new Map<number, Field[]>();
+    const intersectionOverUnion = (a: BoundingBox, b: BoundingBox) => {
+      const x1 = Math.max(a.x, b.x);
+      const y1 = Math.max(a.y, b.y);
+      const x2 = Math.min(a.x + a.width, b.x + b.width);
+      const y2 = Math.min(a.y + a.height, b.y + b.height);
+      const inter = Math.max(0, x2 - x1) * Math.max(0, y2 - y1);
+      if (inter <= 0) return 0;
+      const union = a.width * a.height + b.width * b.height - inter;
+      return union > 0 ? inter / union : 0;
+    };
+
+    for (const field of fieldObjects) {
+      const page = Math.max(0, field.pageIndex ?? 0);
+      const pageFields = placedByPage.get(page) || [];
+      const wave8 = field.metadata?.wave8;
+      const forceVisible = Boolean(
+        wave8?.resolverFlags?.contractorsInsuredNameResolverApplied ||
+          (wave8?.anchorPromotions || []).length,
+      );
+      const suppression = wave8?.suppressionMetadata;
+      const thresholdIou =
+        typeof suppression?.iou === "number"
+          ? Math.max(0.35, suppression.iou)
+          : 0.45;
+
+      let candidateBox = {
+        x: field.x,
+        y: field.y,
+        width: Math.max(1, field.width),
+        height: Math.max(1, field.height),
+      };
+
+      let overlap = pageFields.some((existing) =>
+        intersectionOverUnion(candidateBox, {
+          x: existing.x,
+          y: existing.y,
+          width: Math.max(1, existing.width),
+          height: Math.max(1, existing.height),
+        }) >= thresholdIou,
+      );
+
+      if (overlap && suppression?.suppressed && !forceVisible) {
+        continue;
+      }
+
+      let nudgeCount = 0;
+      while (overlap && nudgeCount < 10) {
+        if (nudgeCount % 2 === 0) {
+          field.y += 12;
+        } else {
+          field.x += 10;
+        }
+        candidateBox = {
+          x: field.x,
+          y: field.y,
+          width: Math.max(1, field.width),
+          height: Math.max(1, field.height),
+        };
+        overlap = pageFields.some((existing) =>
+          intersectionOverUnion(candidateBox, {
+            x: existing.x,
+            y: existing.y,
+            width: Math.max(1, existing.width),
+            height: Math.max(1, existing.height),
+          }) >= thresholdIou,
+        );
+        nudgeCount += 1;
+      }
+
+      if (overlap && !forceVisible) {
+        continue;
+      }
+
+      pageFields.push(field);
+      placedByPage.set(page, pageFields);
+    }
+
     // Fall back to a plain text field for any mapping without a typed preview.
     for (const m of mappings) {
       if (m.fieldPreview) continue;
@@ -1293,7 +1736,8 @@ export default function PdfImportModal({
     
     const pageDistribution: Record<number, number> = {};
     fieldObjects.forEach(f => {
-      pageDistribution[f.pageIndex] = (pageDistribution[f.pageIndex] || 0) + 1;
+      const pageKey = Math.max(0, f.pageIndex ?? 0);
+      pageDistribution[pageKey] = (pageDistribution[pageKey] || 0) + 1;
     });
     const designerStoreDebug = {
       timestamp: new Date().toISOString(),
@@ -1302,14 +1746,14 @@ export default function PdfImportModal({
       pageDistribution,
       sampleFields: fieldObjects.slice(0, 3).map(f => ({
         id: f.id,
-        text: f.text?.substring(0, 30),
+        text: ("text" in f ? f.text : f.metadata?.acordLabel || f.type).substring(0, 30),
         type: f.type,
         pageIndex: f.pageIndex,
         confidenceScore: f.metadata?.confidenceScore,
       })),
     };
     console.log("[designerStore-before-persist]", designerStoreDebug);
-    window.__debugDesignerStorePersistence = designerStoreDebug;
+    (window as any).__debugDesignerStorePersistence = designerStoreDebug;
 
     if (fieldObjects.length === 0) {
       console.error("[F:0] FATAL: No field objects constructed. Mappings input: " + mappings.length);
@@ -1334,11 +1778,11 @@ export default function PdfImportModal({
       fieldsActuallyAdded: postStoreFieldCount - preStoreFieldCount,
       committedDraftCount,
       persistenceSuccess: postStoreFieldCount > preStoreFieldCount,
-      draftFields: useDesignerStore.getState().draftFields?.length || 0,
+      draftFields: useDesignerStore.getState().draftCanvasFields?.length || 0,
       allFieldsCount: useDesignerStore.getState().fields.length,
     };
     console.log("[designerStore-persistence]", persistenceDebug);
-    window.__debugDesignerStorePersistence = { ...designerStoreDebug, ...persistenceDebug };
+    (window as any).__debugDesignerStorePersistence = { ...designerStoreDebug, ...persistenceDebug };
 
     if (postStoreFieldCount === preStoreFieldCount) {
       console.error("[F:0] FATAL: DesignerStore persistence FAILED. Fields attempted: " + fieldObjects.length + ", actual added: " + (postStoreFieldCount - preStoreFieldCount));

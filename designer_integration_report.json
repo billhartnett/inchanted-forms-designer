@@ -1,0 +1,112 @@
+{
+  "timestamp": "2026-07-05T18:34:23.002Z",
+  "wave8FieldsConsumed": [
+    "blockId",
+    "blockGeometry",
+    "categoryMode",
+    "semanticLabel",
+    "pairedLabel",
+    "resolverFlags",
+    "supervisionBoost",
+    "gatingMetadata",
+    "suppressionMetadata",
+    "fieldType",
+    "selectionMarkAssociations",
+    "checkboxCandidates",
+    "anchorPromotions",
+    "confidenceScores"
+  ],
+  "uiComponentsUpdated": [
+    "frontend/src/designer/ai/PdfImportModal.tsx",
+    "frontend/src/components/designer/DesignerCanvas.tsx",
+    "frontend/src/components/designer/FieldRenderer.tsx",
+    "frontend/src/components/designer/DesignerBindingsPanel.tsx",
+    "shared/src/types/pipeline.ts"
+  ],
+  "groupingAndSuppressionRules": [
+    "Group by Wave-8 groupKey derived from blockId+blockGeometry+categoryMode+semantic class",
+    "Render section bounds per group (identity/agent/applicant/operations/general)",
+    "Drop non-field/header/suppressed mappings unless resolver/anchor promoted",
+    "Placement IoU suppression with nudge fallback to avoid stacked overlays",
+    "Use pairedLabel geometry when available for anchored placement"
+  ],
+  "validationResults": [
+    {
+      "fixture": "sample-Acord-125.pdf",
+      "extractStatus": 200,
+      "mapStatus": 200,
+      "mappingCount": 91,
+      "selectionMarks": 305,
+      "overlapPairsWithoutSuppression": 0,
+      "checkboxLinked": 25,
+      "checkboxCandidates": 0,
+      "agentPopulated": true,
+      "headerMapped": false,
+      "identityPresent": true,
+      "resolverPresent": false,
+      "anchorPresent": false,
+      "blockIdCoverage": 1,
+      "blockGeometryCoverage": 1
+    },
+    {
+      "fixture": "sample-Acord-126.pdf",
+      "extractStatus": 200,
+      "mapStatus": 200,
+      "mappingCount": 91,
+      "selectionMarks": 305,
+      "overlapPairsWithoutSuppression": 0,
+      "checkboxLinked": 25,
+      "checkboxCandidates": 0,
+      "agentPopulated": true,
+      "headerMapped": false,
+      "identityPresent": true,
+      "resolverPresent": false,
+      "anchorPresent": false,
+      "blockIdCoverage": 1,
+      "blockGeometryCoverage": 1
+    },
+    {
+      "fixture": "sample-Acord-140.pdf",
+      "extractStatus": 200,
+      "mapStatus": 200,
+      "mappingCount": 86,
+      "selectionMarks": 114,
+      "overlapPairsWithoutSuppression": 0,
+      "checkboxLinked": 18,
+      "checkboxCandidates": 0,
+      "agentPopulated": false,
+      "headerMapped": false,
+      "identityPresent": false,
+      "resolverPresent": false,
+      "anchorPresent": false,
+      "blockIdCoverage": 1,
+      "blockGeometryCoverage": 1
+    },
+    {
+      "fixture": "Contractors Supp App.pdf",
+      "extractStatus": 200,
+      "mapStatus": 200,
+      "mappingCount": 93,
+      "selectionMarks": 87,
+      "overlapPairsWithoutSuppression": 0,
+      "checkboxLinked": 14,
+      "checkboxCandidates": 0,
+      "agentPopulated": true,
+      "headerMapped": false,
+      "identityPresent": true,
+      "resolverPresent": true,
+      "anchorPresent": true,
+      "blockIdCoverage": 1,
+      "blockGeometryCoverage": 1
+    }
+  ],
+  "summary": {
+    "allFormsMapped": true,
+    "noStackedLabels": true,
+    "checkboxesLinked": true,
+    "agentSectionDetected": true,
+    "headersSuppressed": true,
+    "identityDetected": true,
+    "resolverPromotionsDetected": true
+  }
+}
