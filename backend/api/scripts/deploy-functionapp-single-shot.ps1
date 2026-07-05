@@ -95,7 +95,7 @@ try {
     throw "Shared staging copy failed with exit code $LASTEXITCODE"
   }
 
-  foreach ($dir in @("mapping", "extraction", "services", "types", "data")) {
+  foreach ($dir in @("mapping", "extraction", "services", "types", "data", "wave8")) {
     $sourceDir = Join-Path $backendRootPath $dir
     if (Test-Path $sourceDir) {
       foreach ($targetDir in @((Join-Path $stageBackend $dir), (Join-Path $stageBackend "api\\$dir"))) {
@@ -415,6 +415,8 @@ try {
       api_types_dir = (Test-Path (Join-Path $stageBackend "api\\types"))
       data_dir = (Test-Path (Join-Path $stageBackend "data"))
       api_data_dir = (Test-Path (Join-Path $stageBackend "api\\data"))
+      wave8_dir = (Test-Path (Join-Path $stageBackend "wave8"))
+      api_wave8_dir = (Test-Path (Join-Path $stageBackend "api\\wave8"))
       api_src_dir = (Test-Path (Join-Path $stageBackend "api\src"))
       shared_node_module = (Test-Path (Join-Path $stageBackend "node_modules\shared"))
     }

@@ -1,44 +1,54 @@
 {
-    "timestamp":  "2026-07-03T17:41:28.7432234-04:00",
+    "timestamp":  "2026-07-05T12:37:43.3475773-04:00",
     "functionAppName":  "forms-designer-backend",
     "checks":  [
                    {
-                       "ok":  true,
                        "method":  "GET",
                        "url":  "https://forms-designer-backend.azurewebsites.net/api/ops/acord-dictionary",
-                       "status":  200
+                       "status":  200,
+                       "ok":  true,
+                       "responseLength":  12134167,
+                       "error":  null
                    },
                    {
-                       "ok":  true,
                        "method":  "GET",
                        "url":  "https://forms-designer-backend.azurewebsites.net/api/ops/label-search?query=test",
-                       "status":  200
+                       "status":  200,
+                       "ok":  true,
+                       "responseLength":  16189,
+                       "error":  null
                    },
                    {
-                       "selectionMarksPresent":  true,
-                       "ok":  true,
                        "method":  "POST",
-                       "selectionMarksCount":  193,
-                       "extractionMethod":  "document-intelligence-wave8",
                        "url":  "https://forms-designer-backend.azurewebsites.net/api/extractdocument",
-                       "status":  200
+                       "status":  200,
+                       "ok":  true,
+                       "responseLength":  11211424,
+                       "error":  null,
+                       "selectionMarksPresent":  true,
+                       "selectionMarkCount":  193,
+                       "extractionMethod":  "document-intelligence-wave8"
                    },
                    {
-                       "url":  "https://forms-designer-backend.azurewebsites.net/api/mapfields",
-                       "semanticLabelsPresent":  true,
                        "method":  "POST",
-                       "categoryLabelsPresent":  false,
-                       "mappingsCount":  120,
-                       "maxSuggestionsPerMapping":  5,
+                       "url":  "https://forms-designer-backend.azurewebsites.net/api/mapfields",
+                       "status":  200,
                        "ok":  true,
+                       "responseLength":  3077565,
+                       "error":  null,
+                       "mappingsCount":  120,
+                       "semanticLabelsPresent":  true,
+                       "categoryLabelsPresent":  false,
                        "gatingLikelyActive":  true,
-                       "status":  200
+                       "maxSuggestionCount":  5
                    },
                    {
-                       "ok":  true,
                        "method":  "GET",
                        "url":  "https://forms-designer-backend.azurewebsites.net/api/ingestion-test",
-                       "status":  200
+                       "status":  200,
+                       "ok":  true,
+                       "responseLength":  126,
+                       "error":  null
                    }
                ]
 }
