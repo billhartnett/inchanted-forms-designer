@@ -3,10 +3,43 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.classifySemanticLabel = classifySemanticLabel;
 exports.classifyCategoryMode = classifyCategoryMode;
 exports.classifyBlockSemantic = classifyBlockSemantic;
+const supervision_1 = require("../wave8/supervision");
 function norm(value) {
     return value.toLowerCase().trim();
 }
+function isSemanticLabelClass(value) {
+    return [
+        "person_name",
+        "address",
+        "date",
+        "currency",
+        "identifier",
+        "boolean_choice",
+        "signature",
+        "vehicle",
+        "property",
+        "policy",
+        "coverage",
+        "generic",
+    ].includes(value);
+}
+function isCategoryModeClass(value) {
+    return [
+        "party_information",
+        "policy_information",
+        "vehicle_information",
+        "property_information",
+        "loss_information",
+        "coverage_information",
+        "compliance_information",
+        "general_information",
+    ].includes(value);
+}
 function classifySemanticLabel(text) {
+    const hint = (0, supervision_1.getWave8SemanticHintForText)(text);
+    if (hint?.semanticLabel && isSemanticLabelClass(hint.semanticLabel)) {
+        return hint.semanticLabel;
+    }
     const value = norm(text);
     if (!value)
         return "generic";
@@ -35,6 +68,10 @@ function classifySemanticLabel(text) {
     return "generic";
 }
 function classifyCategoryMode(text) {
+    const hint = (0, supervision_1.getWave8SemanticHintForText)(text);
+    if (hint?.categoryMode && isCategoryModeClass(hint.categoryMode)) {
+        return hint.categoryMode;
+    }
     const semantic = classifySemanticLabel(text);
     switch (semantic) {
         case "person_name":

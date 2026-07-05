@@ -1,4 +1,5 @@
 import type { ExtractedBlock } from "shared/types";
+import { getWave8SemanticHintForText } from "../wave8/supervision";
 
 export type SemanticLabelClass =
   | "person_name"
@@ -28,7 +29,42 @@ function norm(value: string): string {
   return value.toLowerCase().trim();
 }
 
+function isSemanticLabelClass(value: string): value is SemanticLabelClass {
+  return [
+    "person_name",
+    "address",
+    "date",
+    "currency",
+    "identifier",
+    "boolean_choice",
+    "signature",
+    "vehicle",
+    "property",
+    "policy",
+    "coverage",
+    "generic",
+  ].includes(value);
+}
+
+function isCategoryModeClass(value: string): value is CategoryModeClass {
+  return [
+    "party_information",
+    "policy_information",
+    "vehicle_information",
+    "property_information",
+    "loss_information",
+    "coverage_information",
+    "compliance_information",
+    "general_information",
+  ].includes(value);
+}
+
 export function classifySemanticLabel(text: string): SemanticLabelClass {
+  const hint = getWave8SemanticHintForText(text);
+  if (hint?.semanticLabel && isSemanticLabelClass(hint.semanticLabel)) {
+    return hint.semanticLabel;
+  }
+
   const value = norm(text);
   if (!value) return "generic";
 
@@ -48,6 +84,11 @@ export function classifySemanticLabel(text: string): SemanticLabelClass {
 }
 
 export function classifyCategoryMode(text: string): CategoryModeClass {
+  const hint = getWave8SemanticHintForText(text);
+  if (hint?.categoryMode && isCategoryModeClass(hint.categoryMode)) {
+    return hint.categoryMode;
+  }
+
   const semantic = classifySemanticLabel(text);
   switch (semantic) {
     case "person_name":

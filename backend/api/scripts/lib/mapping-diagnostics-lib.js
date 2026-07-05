@@ -249,10 +249,15 @@ function evaluateMappingCandidate(mapping, useDiagnosticMode, confidenceFloor) {
 
   const text = String(mapping.text || "").trim();
   if (!text) return { accepted: false, reason: "empty_text" };
+  const chosenSearch = `${chosen.label || ""} ${chosen.acordCode || ""}`;
+  const isCriticalAnchorCandidate =
+    /named\s+insured|insured\s+name/.test(normalizeOcrText(chosenSearch)) ||
+    /operations\s+description|operations/.test(normalizeOcrText(chosenSearch));
+
   if (isLikelyFormHeaderLine(text)) return { accepted: false, reason: "header_line" };
 
   const isPrompt = text.endsWith(":") || hasFieldCueToken(text);
-  if (!isPrompt && isLikelySectionTitle(text)) {
+  if (!isPrompt && isLikelySectionTitle(text) && !isCriticalAnchorCandidate) {
     return { accepted: false, reason: "section_title" };
   }
 
@@ -260,7 +265,7 @@ function evaluateMappingCandidate(mapping, useDiagnosticMode, confidenceFloor) {
     return { accepted: false, reason: "hard_mismatch" };
   }
 
-  if (!useDiagnosticMode && !isCandidateCompatible(text, chosen.label || "")) {
+  if (!useDiagnosticMode && !isCandidateCompatible(text, chosen.label || "") && !isCriticalAnchorCandidate) {
     return { accepted: false, reason: "compatibility_mismatch" };
   }
 
@@ -269,10 +274,52 @@ function evaluateMappingCandidate(mapping, useDiagnosticMode, confidenceFloor) {
 
 function runPipelineFromMappings(mappings, useDiagnosticMode, limit) {
   const stageRejectReasons = {};
+  const strictDecisionByBlockId = {};
+
+  function anchorPriority(mapping) {
+    const text = normalizeOcrText(mapping?.text || "");
+    const chosen = mapping?.chosen || mapping?.suggestions?.[0] || {};
+    const chosenLabel = normalizeOcrText(`${chosen?.label || ""} ${chosen?.acordCode || ""}`);
+    const namedInsuredSignal =
+      /named\s+insured|insured\s+name/.test(text) ||
+      /named\s+insured|insured\s+name/.test(chosenLabel);
+    const operationsSignal =
+      /operations|premises\s*operations|description\s+of\s+operations/.test(text) ||
+      /operations\s+description|premises\s+operations/.test(chosenLabel);
+    if (namedInsuredSignal || operationsSignal) {
+      return 2;
+    }
+    if (hasFieldCueToken(mapping?.text || "")) {
+      return 1;
+    }
+    return 0;
+  }
+
+  function sortByQuality(left, right) {
+    const leftChosen = left.chosen || left.suggestions?.[0] || {};
+    const rightChosen = right.chosen || right.suggestions?.[0] || {};
+    const leftAnchor = anchorPriority(left);
+    const rightAnchor = anchorPriority(right);
+    if (rightAnchor !== leftAnchor) {
+      return rightAnchor - leftAnchor;
+    }
+    const leftConfidence = Number(leftChosen?.confidenceScore || 0);
+    const rightConfidence = Number(rightChosen?.confidenceScore || 0);
+    if (rightConfidence !== leftConfidence) {
+      return rightConfidence - leftConfidence;
+    }
+    const leftSemantic = Number(leftChosen?.semanticSimilarity || 0);
+    const rightSemantic = Number(rightChosen?.semanticSimilarity || 0);
+    if (rightSemantic !== leftSemantic) {
+      return rightSemantic - leftSemantic;
+    }
+    return String(left.blockId || "").localeCompare(String(right.blockId || ""));
+  }
 
   const strictStage = [];
   for (const mapping of mappings) {
     const decision = evaluateMappingCandidate(mapping, useDiagnosticMode, 0.3);
+    strictDecisionByBlockId[mapping.blockId] = decision;
     if (decision.accepted) {
       strictStage.push(mapping);
     } else {
@@ -294,15 +341,21 @@ function runPipelineFromMappings(mappings, useDiagnosticMode, limit) {
     }
   }
 
+  qualityMappings = [...qualityMappings].sort(sortByQuality);
+
   const finalMappings = qualityMappings.slice(0, Math.max(1, limit));
 
   const topCandidatesPerBlock = {};
   for (const mapping of mappings) {
-    topCandidatesPerBlock[mapping.blockId] = (mapping.suggestions || []).slice(0, 5).map((item) => ({
+    topCandidatesPerBlock[mapping.blockId] = (mapping.suggestions || []).slice(0, 10).map((item) => ({
       acordCode: item.acordCode,
       label: item.label,
       score: Number(item.confidenceScore || 0),
       source: item.source,
+      semanticScore: Number(item.semanticSimilarity || 0),
+      dictionaryScore: Number(item.dictionaryScore || 0),
+      supervisionBoost: Number(item.supervisionBoost || 0),
+      wave8Gating: item.wave8Gating || null,
     }));
   }
 
@@ -314,6 +367,7 @@ function runPipelineFromMappings(mappings, useDiagnosticMode, limit) {
     rejectionReasons: stageRejectReasons,
     finalMappings,
     topCandidatesPerBlock,
+    strictDecisionByBlockId,
   };
 }
 
@@ -398,6 +452,7 @@ async function runDiagnosticsForFixture({ fixtureName, limit = 120 }) {
       rejectionReasons: strict.rejectionReasons,
     },
     topCandidatesPerBlock: strict.topCandidatesPerBlock,
+    strictDecisionByBlockId: strict.strictDecisionByBlockId,
     finalMappings: strict.finalMappings,
   };
 
@@ -413,6 +468,7 @@ async function runDiagnosticsForFixture({ fixtureName, limit = 120 }) {
       rejectionReasons: loose.rejectionReasons,
     },
     topCandidatesPerBlock: loose.topCandidatesPerBlock,
+    strictDecisionByBlockId: loose.strictDecisionByBlockId,
     finalMappings: loose.finalMappings,
   };
 
@@ -437,6 +493,7 @@ async function runDiagnosticsForFixture({ fixtureName, limit = 120 }) {
     strictReport,
     looseReport,
     comparison,
+    rawMappings: mappings,
   };
 }
 

@@ -11,6 +11,7 @@
     "test:fixtures:update": "npm run build && node scripts/run-fixture-regression.js --update",
     "diag:mapping": "npm run build && node scripts/run-mapping-diagnostics.js",
     "diag:mapping:all": "npm run build && node scripts/run-mapping-diagnostics.js --all",
+    "diag:wave8:anchors": "npm run build && node scripts/run-wave8-anchor-diagnostics.js",
     "diag:root-cause": "npm run build && node scripts/run-root-cause-eval.js",
     "diag:load": "npm run build && node scripts/run-wave49-load-validation.js",
     "diag:geometry": "npm run build && node scripts/run-wave5-geometry-validation.js",

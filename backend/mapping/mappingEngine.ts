@@ -114,8 +114,13 @@ export async function mapBlocksWithAcord(
 
   return gatedMappings.map((mapping) => {
     const resolution = resolutionByBlock.get(mapping.blockId);
+    const preserveTargetedAnchorPromotion = Boolean(
+      (mapping as any)?.mappingDiagnostics?.wave8TargetedAnchorPromoted,
+    );
     const resolvedChosen =
-      resolution && mapping.suggestions.length
+      preserveTargetedAnchorPromotion
+        ? mapping.chosen
+        : resolution && mapping.suggestions.length
         ? mapping.suggestions.find((item) => item.acordCode === resolution.resolvedAcordCode) ||
           mapping.chosen
         : mapping.chosen;
