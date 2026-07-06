@@ -1,0 +1,180 @@
+{
+  "summary": {
+    "mode": "after_local",
+    "mapperSource": "local",
+    "generatedAt": "2026-07-06T13:35:26.022Z",
+    "startedAt": "2026-07-06T13:22:04.226Z",
+    "fixtureCount": 4,
+    "totalMappings": 2994,
+    "totalHeaderSuppressed": 151,
+    "totalHeaderMapped": 13,
+    "totalGateRejected": 2318,
+    "totalTargetedFields": 411,
+    "totalTargetedAligned": 409,
+    "totalSemanticAligned": 0,
+    "totalDictionaryAligned": 2765,
+    "totalCategoryAligned": 0,
+    "totalSupervisionPresent": 124
+  },
+  "results": [
+    {
+      "fixture": "ACORD 125",
+      "file": "sample-Acord-125.pdf",
+      "mappingCount": 1091,
+      "headerSuppressedCount": 54,
+      "headerMappedCount": 4,
+      "gateRejectedCount": 834,
+      "targetedFieldCount": 168,
+      "targetedAlignedCount": 167,
+      "semanticAlignedCount": 0,
+      "dictionaryAlignedCount": 1010,
+      "categoryAlignedCount": 0,
+      "supervisionPresentCount": 54,
+      "top20Mislabels": [
+        {
+          "blockId": "p3-l74",
+          "text": "OTHER COVERAGES, RESTRICTIONS AND/OR ENDORSEMENTS (For hired/non-owned auto coverages attach the applicable state Business Auto Section, ACORD 137)",
+          "predictedAcordCode": "ResidenceBusinessCoverage_NonOwnedAuto_FormDate",
+          "predictedLabel": "Residence Business Coverage Non Owned Auto Form Date",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p4-l111",
+          "text": "ACORD 45 attached for additional names",
+          "predictedAcordCode": "AircraftInsuranceBinder_ACORDForm_RemarkText",
+          "predictedLabel": "Aircraft Insurance Binder ACORDForm Remark Text",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p4-l237",
+          "text": "ATTACH TO APPLICANT INFORMATION SECTION",
+          "predictedAcordCode": "Policy_SectionAttached_DriverInformationScheduleIndicator",
+          "predictedLabel": "Policy Section Attached Driver Information Schedule Indicator",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p5-l166",
+          "text": "ATTACH TO APPLICANT INFORMATION SECTION",
+          "predictedAcordCode": "Policy_SectionAttached_DriverInformationScheduleIndicator",
+          "predictedLabel": "Policy Section Attached Driver Information Schedule Indicator",
+          "reason": "header_region_false_positive"
+        }
+      ],
+      "extractedBlockCount": 1091
+    },
+    {
+      "fixture": "ACORD 126",
+      "file": "sample-Acord-126.pdf",
+      "mappingCount": 1091,
+      "headerSuppressedCount": 54,
+      "headerMappedCount": 4,
+      "gateRejectedCount": 834,
+      "targetedFieldCount": 168,
+      "targetedAlignedCount": 167,
+      "semanticAlignedCount": 0,
+      "dictionaryAlignedCount": 1010,
+      "categoryAlignedCount": 0,
+      "supervisionPresentCount": 54,
+      "top20Mislabels": [
+        {
+          "blockId": "p3-l74",
+          "text": "OTHER COVERAGES, RESTRICTIONS AND/OR ENDORSEMENTS (For hired/non-owned auto coverages attach the applicable state Business Auto Section, ACORD 137)",
+          "predictedAcordCode": "ResidenceBusinessCoverage_NonOwnedAuto_FormDate",
+          "predictedLabel": "Residence Business Coverage Non Owned Auto Form Date",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p4-l111",
+          "text": "ACORD 45 attached for additional names",
+          "predictedAcordCode": "AircraftInsuranceBinder_ACORDForm_RemarkText",
+          "predictedLabel": "Aircraft Insurance Binder ACORDForm Remark Text",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p4-l237",
+          "text": "ATTACH TO APPLICANT INFORMATION SECTION",
+          "predictedAcordCode": "Policy_SectionAttached_DriverInformationScheduleIndicator",
+          "predictedLabel": "Policy Section Attached Driver Information Schedule Indicator",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p5-l166",
+          "text": "ATTACH TO APPLICANT INFORMATION SECTION",
+          "predictedAcordCode": "Policy_SectionAttached_DriverInformationScheduleIndicator",
+          "predictedLabel": "Policy Section Attached Driver Information Schedule Indicator",
+          "reason": "header_region_false_positive"
+        }
+      ],
+      "extractedBlockCount": 1091
+    },
+    {
+      "fixture": "ACORD 140",
+      "file": "sample-Acord-140.pdf",
+      "mappingCount": 455,
+      "headerSuppressedCount": 33,
+      "headerMappedCount": 4,
+      "gateRejectedCount": 356,
+      "targetedFieldCount": 43,
+      "targetedAlignedCount": 43,
+      "semanticAlignedCount": 0,
+      "dictionaryAlignedCount": 410,
+      "categoryAlignedCount": 0,
+      "supervisionPresentCount": 10,
+      "top20Mislabels": [
+        {
+          "blockId": "p1-l183",
+          "text": "ACORD 45 attached for additional names",
+          "predictedAcordCode": "AircraftInsuranceBinder_ACORDForm_RemarkText",
+          "predictedLabel": "Aircraft Insurance Binder ACORDForm Remark Text",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p1-l208",
+          "text": "The ACORD name and logo are registered marks of ACORD",
+          "predictedAcordCode": "MedicalProfessionalLiability_ACORDForm_RemarkText",
+          "predictedLabel": "Medical Professional Liability ACORDForm Remark Text",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p2-l172",
+          "text": "ACORD 45 attached for additional names",
+          "predictedAcordCode": "AircraftInsuranceBinder_ACORDForm_RemarkText",
+          "predictedLabel": "Aircraft Insurance Binder ACORDForm Remark Text",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p3-l51",
+          "text": "Page 3 of 3",
+          "predictedAcordCode": "AccountantsLiability_Attachment_DeclarationsPageIndicator",
+          "predictedLabel": "Accountants Liability Attachment Declarations Page Indicator",
+          "reason": "header_region_false_positive"
+        }
+      ],
+      "extractedBlockCount": 455
+    },
+    {
+      "fixture": "Contractors",
+      "file": "Contractors Supp App.pdf",
+      "mappingCount": 357,
+      "headerSuppressedCount": 10,
+      "headerMappedCount": 1,
+      "gateRejectedCount": 294,
+      "targetedFieldCount": 32,
+      "targetedAlignedCount": 32,
+      "semanticAlignedCount": 0,
+      "dictionaryAlignedCount": 335,
+      "categoryAlignedCount": 0,
+      "supervisionPresentCount": 6,
+      "top20Mislabels": [
+        {
+          "blockId": "p3-l98",
+          "text": "Page 3 of 3",
+          "predictedAcordCode": "AccountantsLiability_Attachment_DeclarationsPageIndicator",
+          "predictedLabel": "Accountants Liability Attachment Declarations Page Indicator",
+          "reason": "header_region_false_positive"
+        }
+      ],
+      "extractedBlockCount": 357
+    }
+  ]
+}

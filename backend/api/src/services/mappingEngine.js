@@ -54,6 +54,8 @@ const WAVE8_GATE_MIN_CONFIDENCE = Math.max(0, Math.min(1, Number(process.env.WAV
 const WAVE8_GATE_MIN_SEMANTIC_CONSISTENCY = Math.max(0, Math.min(1, Number(process.env.WAVE8_GATE_MIN_SEMANTIC_CONSISTENCY || 0.24)));
 const WAVE8_GATE_MIN_DICTIONARY_CONSISTENCY = Math.max(0, Math.min(1, Number(process.env.WAVE8_GATE_MIN_DICTIONARY_CONSISTENCY || 0.2)));
 const WAVE8_GATE_MIN_CATEGORY_CONSISTENCY = Math.max(0, Math.min(1, Number(process.env.WAVE8_GATE_MIN_CATEGORY_CONSISTENCY || 0.22)));
+const WAVE8_HEADER_TOP_BAND_Y = Math.max(0, Number(process.env.WAVE8_HEADER_TOP_BAND_Y || 120));
+const WAVE8_HEADER_STRICT_MIN_CONSISTENCY = Math.max(0, Math.min(1, Number(process.env.WAVE8_HEADER_STRICT_MIN_CONSISTENCY || 0.4)));
 const WAVE8_PERMISSIVE_FUSION_THRESHOLD = Math.max(0, Math.min(1, Number(process.env.WAVE8_PERMISSIVE_FUSION_THRESHOLD || 0.15)));
 const WAVE8_MIN_FUSION_WEIGHT = 0.01;
 const DEFAULT_WAVE44_GATE = {
@@ -1640,6 +1642,180 @@ function isLikelyHeaderOrLogoNoise(text) {
     const hasContactPattern = /(\d{3}[\s\-\)]*\d{3}[\s\-]\d{4})/.test(text);
     return hasOrgToken || hasContactPattern;
 }
+function normalizeDictionaryConsistency(value) {
+    const numeric = Number(value || 0);
+    if (!Number.isFinite(numeric) || numeric <= 0) {
+        return 0;
+    }
+    if (numeric > 1) {
+        return clamp01(numeric / 200);
+    }
+    return clamp01(numeric);
+}
+function isWave8HeaderLikeText(text) {
+    const normalized = normalizeText(text);
+    if (!normalized)
+        return false;
+    return hasAnyToken(normalized, [
+        "acord",
+        "commercial insurance application",
+        "supplemental application",
+        "applicant information section",
+        "edition",
+        "copyright",
+        "all rights reserved",
+        "form no",
+    ]) || /\bpage\s+\d+\s+of\s+\d+\b/.test(normalized);
+}
+function buildWave8NearbyFieldCueMap(blocks) {
+    const grouped = new Map();
+    for (const block of blocks) {
+        const page = Number(block.page || 1);
+        const bucket = grouped.get(page) || [];
+        bucket.push(block);
+        grouped.set(page, bucket);
+    }
+    const nearbyFieldCueMap = new Map();
+    for (const pageBlocks of grouped.values()) {
+        pageBlocks.sort((left, right) => Number(left.boundingBox?.y || 0) - Number(right.boundingBox?.y || 0) ||
+            Number(left.boundingBox?.x || 0) - Number(right.boundingBox?.x || 0));
+        for (let index = 0; index < pageBlocks.length; index += 1) {
+            const current = pageBlocks[index];
+            const currentY = Number(current.boundingBox?.y || 0);
+            let nearbyFieldCue = false;
+            for (let probe = Math.max(0, index - 3); probe <= Math.min(pageBlocks.length - 1, index + 3); probe += 1) {
+                if (probe === index) {
+                    continue;
+                }
+                const candidate = pageBlocks[probe];
+                const candidateY = Number(candidate.boundingBox?.y || 0);
+                if (Math.abs(candidateY - currentY) > 82) {
+                    continue;
+                }
+                if (hasFieldCue(candidate.text)) {
+                    nearbyFieldCue = true;
+                    break;
+                }
+            }
+            nearbyFieldCueMap.set(current.id, nearbyFieldCue);
+        }
+    }
+    return nearbyFieldCueMap;
+}
+function assessWave8HeaderBlock(block, hasNearbyFieldCue) {
+    const normalized = normalizeText(block.text);
+    const y = Number(block.boundingBox?.y || 0);
+    const width = Number(block.boundingBox?.width || 0);
+    const height = Number(block.boundingBox?.height || 0);
+    const tokenCount = normalized ? normalized.split(" ").filter(Boolean).length : 0;
+    const hasFieldToken = hasFieldCue(block.text);
+    const headerLikeText = isWave8HeaderLikeText(block.text);
+    const logoNoise = isLikelyHeaderOrLogoNoise(block.text);
+    const nonField = isLikelyNonMappableText(block);
+    const topOfPage = y < WAVE8_HEADER_TOP_BAND_Y;
+    const reasons = [];
+    let score = 0;
+    if (topOfPage) {
+        score += 0.32;
+        reasons.push("top_of_page");
+    }
+    if (headerLikeText) {
+        score += 0.42;
+        reasons.push("acord_header_tokens");
+    }
+    if (logoNoise && tokenCount >= 3) {
+        score += 0.24;
+        reasons.push("logo_or_contact_noise");
+    }
+    if (!hasFieldToken && !hasNearbyFieldCue) {
+        score += 0.24;
+        reasons.push("no_nearby_field_cue");
+    }
+    if ((height >= 20 || (width >= 360 && tokenCount >= 4)) && topOfPage) {
+        score += 0.18;
+        reasons.push("title_geometry_proxy");
+    }
+    if (nonField) {
+        score += 0.22;
+        reasons.push("non_field_pattern");
+    }
+    const headerBlock = score >= 0.62 || (topOfPage && headerLikeText);
+    return {
+        headerBlock,
+        nonField,
+        topOfPage,
+        reasons,
+        score: Number(clamp01(score).toFixed(3)),
+    };
+}
+function resolveWave8SemanticDictionaryAdjustments(blockText, candidate, headerAssessment) {
+    const normalizedPrompt = normalizeText(blockText);
+    const normalizedTarget = normalizeText(`${candidate.acordCode || ""} ${candidate.label || ""}`);
+    let semanticDelta = 0;
+    let dictionaryDelta = 0;
+    let categoryDelta = 0;
+    let supervisionFloor = 0;
+    const namedInsuredPrompt = /\b(named\s+insured|insured\s+name|name\s+of\s+insured|first\s+named\s+insured)\b/.test(normalizedPrompt);
+    const producerPrompt = /\b(producer|agent)\b/.test(normalizedPrompt);
+    const applicantPrompt = /\bapplicant\b/.test(normalizedPrompt);
+    const operationsPrompt = /\b(operations\s+description|description\s+of\s+operations|premises\s*operations|nature\s+of\s+operations)\b/.test(normalizedPrompt);
+    const policyDatePrompt = /\b(effective\s+date|expiration\s+date|effective|expiration|expiry)\b/.test(normalizedPrompt);
+    const policyLimitPrompt = /\b(limit|limits|policy\s+number|premium|deductible|coverage\s+amount)\b/.test(normalizedPrompt);
+    if (namedInsuredPrompt && /\b(namedinsured|insured|applicant|fullname|personname)\b/.test(normalizedTarget)) {
+        semanticDelta += 0.2;
+        dictionaryDelta += 0.22;
+        categoryDelta += 0.14;
+        supervisionFloor = Math.max(supervisionFloor, 0.18);
+    }
+    if (applicantPrompt && /\b(applicant|namedinsured|insured|personname)\b/.test(normalizedTarget)) {
+        semanticDelta += 0.15;
+        dictionaryDelta += 0.14;
+        categoryDelta += 0.1;
+        supervisionFloor = Math.max(supervisionFloor, 0.14);
+    }
+    if (producerPrompt && /\b(producer|agent|contactperson|producerfullname|producercontactperson)\b/.test(normalizedTarget)) {
+        if (headerAssessment.topOfPage && !hasFieldCue(blockText)) {
+            semanticDelta -= 0.2;
+            dictionaryDelta -= 0.26;
+            categoryDelta -= 0.12;
+        }
+        else {
+            semanticDelta += 0.17;
+            dictionaryDelta += 0.18;
+            categoryDelta += 0.12;
+            supervisionFloor = Math.max(supervisionFloor, 0.16);
+        }
+    }
+    if (operationsPrompt && /\b(operations|premises|liability|description)\b/.test(normalizedTarget)) {
+        semanticDelta += 0.21;
+        dictionaryDelta += 0.2;
+        categoryDelta += 0.15;
+        supervisionFloor = Math.max(supervisionFloor, 0.2);
+    }
+    if (policyDatePrompt && /\b(effectivedate|expirationdate|expiry|policy)\b/.test(normalizedTarget)) {
+        semanticDelta += 0.16;
+        dictionaryDelta += 0.16;
+        categoryDelta += 0.1;
+        supervisionFloor = Math.max(supervisionFloor, 0.14);
+    }
+    if (policyLimitPrompt && /\b(limit|deductible|premium|policy|coverage|amount|numberidentifier)\b/.test(normalizedTarget)) {
+        semanticDelta += 0.12;
+        dictionaryDelta += 0.16;
+        categoryDelta += 0.08;
+        supervisionFloor = Math.max(supervisionFloor, 0.1);
+    }
+    if (headerAssessment.headerBlock || isWave8HeaderLikeText(blockText)) {
+        semanticDelta -= 0.24;
+        dictionaryDelta -= 0.3;
+        categoryDelta -= 0.2;
+    }
+    return {
+        semanticDelta: Number(semanticDelta.toFixed(3)),
+        dictionaryDelta: Number(dictionaryDelta.toFixed(3)),
+        categoryDelta: Number(categoryDelta.toFixed(3)),
+        supervisionFloor: Number(clamp01(supervisionFloor).toFixed(3)),
+    };
+}
 function isLikelyTabularSchemaText(text) {
     const normalized = normalizeText(text);
     if (!normalized)
@@ -1765,13 +1941,18 @@ function applyIntentSignals(block, accum) {
 }
 function applyDictionarySignals(block, accum, allowedCodes, familyId) {
     const multiplier = getBlockScoreMultiplier(block);
+    const headerAssessment = assessWave8HeaderBlock(block, false);
     const primary = safeDictionarySearch(block.text, 6);
     for (const hit of primary) {
         if (allowedCodes && !allowedCodes.has(hit.entry.acordCode)) {
             continue;
         }
         const supervisionBoost = (0, supervision_1.getWave8SupervisionAnchorBoost)(block.text, hit.entry.acordCode, familyId);
-        const weighted = quantize(hit.score * multiplier + hit.score * supervisionBoost * 0.85);
+        const strongCodeMatch = normalizeText(block.text).includes(normalizeText(hit.entry.acordCode));
+        const strongLabelMatch = lexicalAnchorScore(block.text, hit.entry.label, hit.entry.acordCode) >= 0.62;
+        const confidenceScale = strongCodeMatch ? 1.35 : strongLabelMatch ? 1.22 : 1;
+        const headerPenalty = headerAssessment.headerBlock ? 0.26 : 1;
+        const weighted = quantize((hit.score * multiplier + hit.score * supervisionBoost * 0.85) * confidenceScale * headerPenalty);
         const entry = ensureAccumulator(accum, hit.entry.acordCode, {
             label: hit.entry.label,
             description: hit.entry.description,
@@ -1791,7 +1972,8 @@ function applyDictionarySignals(block, accum, allowedCodes, familyId) {
                 continue;
             }
             const supervisionBoost = (0, supervision_1.getWave8SupervisionAnchorBoost)(block.text, hit.entry.acordCode, familyId);
-            const weighted = quantize(hit.score * 0.35 * multiplier + hit.score * supervisionBoost * 0.36);
+            const headerPenalty = headerAssessment.headerBlock ? 0.22 : 1;
+            const weighted = quantize((hit.score * 0.35 * multiplier + hit.score * supervisionBoost * 0.36) * headerPenalty);
             const entry = ensureAccumulator(accum, hit.entry.acordCode, {
                 label: hit.entry.label,
                 description: hit.entry.description,
@@ -1808,7 +1990,8 @@ function applyDictionarySignals(block, accum, allowedCodes, familyId) {
             if (allowedCodes && !allowedCodes.has(found.acordCode)) {
                 continue;
             }
-            const weighted = quantize((120 + candidate.weight * 95) * candidate.dictionaryConfidenceWeight * multiplier);
+            const headerPenalty = headerAssessment.headerBlock ? 0.32 : 1;
+            const weighted = quantize((120 + candidate.weight * 95) * candidate.dictionaryConfidenceWeight * multiplier * headerPenalty);
             const entry = ensureAccumulator(accum, found.acordCode, {
                 label: found.label,
                 description: found.description,
@@ -1825,7 +2008,8 @@ function applyDictionarySignals(block, accum, allowedCodes, familyId) {
             if (allowedCodes && !allowedCodes.has(fallbackHit.entry.acordCode)) {
                 continue;
             }
-            const weighted = quantize((85 + candidate.weight * 70) * candidate.dictionaryConfidenceWeight * multiplier);
+            const headerPenalty = headerAssessment.headerBlock ? 0.3 : 1;
+            const weighted = quantize((85 + candidate.weight * 70) * candidate.dictionaryConfidenceWeight * multiplier * headerPenalty);
             const entry = ensureAccumulator(accum, fallbackHit.entry.acordCode, {
                 label: fallbackHit.entry.label,
                 description: fallbackHit.entry.description,
@@ -2618,6 +2802,7 @@ async function applySemanticSignals(block, accum, deterministic = false, allowed
 function toSuggestions(accum, block, blockConfidence, calibrationProfile, familyId, graphSnapshot, carrierAdapterOverrides, underwritingRuleOverrides, options) {
     const profile = resolveScopedCalibrationProfile(calibrationProfile, familyId);
     const hasExplicitFieldCue = hasFieldCue(block.text);
+    const headerAssessment = options?.headerAssessment || assessWave8HeaderBlock(block, false);
     const ontologyBundles = (0, acord_1.selectOntologyBundlesForFamily)(familyId);
     const scored = [...accum.values()]
         .map((item) => {
@@ -2749,13 +2934,17 @@ function toSuggestions(accum, block, blockConfidence, calibrationProfile, family
     const scoredSuggestions = all.slice(0, 10).map((item) => {
         const normalizedRelative = top > 0 ? item.score / top : 0;
         const layoutlmEvidence = clamp01(item.layoutlmScore);
-        const categoryEvidence = clamp01(Math.max(item.categoryConfidenceScore || 0, layoutlmEvidence));
-        const semanticEvidence = clamp01(item.semanticSimilarity);
-        const dictionaryEvidence = clamp01(item.dictionaryScore / 200);
+        const baseCategoryEvidence = clamp01(Math.max(item.categoryConfidenceScore || 0, layoutlmEvidence));
+        const baseSemanticEvidence = clamp01(item.semanticSimilarity);
+        const baseDictionaryEvidence = normalizeDictionaryConsistency(item.dictionaryScore);
+        const semanticDictionaryAdjustments = resolveWave8SemanticDictionaryAdjustments(block.text, { acordCode: item.acordCode, label: item.label }, headerAssessment);
+        const semanticEvidence = clamp01(baseSemanticEvidence + semanticDictionaryAdjustments.semanticDelta);
+        const dictionaryEvidence = clamp01(baseDictionaryEvidence + semanticDictionaryAdjustments.dictionaryDelta);
+        const categoryEvidence = clamp01(baseCategoryEvidence + semanticDictionaryAdjustments.categoryDelta);
         const heuristicEvidence = clamp01(item.heuristicScore / 160);
         const anchorEvidence = lexicalAnchorScore(block.text, item.label, item.acordCode);
         const supervisionSignal = supervisionByCode.get(item.acordCode);
-        const supervisionBoost = Number(supervisionSignal?.weight || 0);
+        const supervisionBoost = Math.max(Number(supervisionSignal?.weight || 0), semanticDictionaryAdjustments.supervisionFloor);
         const semanticHintWeight = Number(supervisionSignal?.semanticHintWeight || 1);
         const categoryHintWeight = Number(supervisionSignal?.categoryHintWeight || 1);
         const dictionaryConsistencyWeight = Number(supervisionSignal?.dictionaryConfidenceWeight || 1);
@@ -3006,6 +3195,11 @@ function toSuggestions(accum, block, blockConfidence, calibrationProfile, family
             _wave47OodGeometryDetected: wave47Signals.oodGeometryDetected,
             _wave47OodPatternDetected: wave47Signals.oodPatternDetected,
             _wave47PriorityOverride: wave47Signals.priorityOverride,
+            _wave8SemanticConsistency: semanticEvidence,
+            _wave8DictionaryConsistency: dictionaryEvidence,
+            _wave8CategoryConsistency: categoryEvidence,
+            _wave8SupervisionBoost: clamp01(supervisionBoost),
+            _wave8HeaderBlock: headerAssessment.headerBlock,
         };
     });
     const withCalibrationRanking = scoredSuggestions.map((candidate) => {
@@ -3137,27 +3331,53 @@ function toSuggestions(accum, block, blockConfidence, calibrationProfile, family
         };
     });
     const withWave8Gating = withConfidenceLevels.map((candidate) => {
+        const semanticConsistency = clamp01(Number((candidate._wave8SemanticConsistency ?? candidate.semanticSimilarity) || 0));
+        const dictionaryConsistency = normalizeDictionaryConsistency(Number((candidate._wave8DictionaryConsistency ?? candidate.dictionaryScore) || 0));
+        const categoryConsistency = clamp01(Number((candidate._wave8CategoryConsistency ?? candidate._categoryEvidence) || 0));
+        const supervisionBoost = clamp01(Number(candidate._wave8SupervisionBoost || 0));
+        const headerBlock = Boolean(candidate._wave8HeaderBlock || headerAssessment.headerBlock);
         const rejectReasons = [];
         if (Number(candidate.confidenceScore || 0) < WAVE8_GATE_MIN_CONFIDENCE) {
             rejectReasons.push("below_min_confidence");
         }
-        if (Number(candidate.semanticSimilarity || 0) < WAVE8_GATE_MIN_SEMANTIC_CONSISTENCY) {
+        if (semanticConsistency < WAVE8_GATE_MIN_SEMANTIC_CONSISTENCY) {
             rejectReasons.push("below_semantic_consistency");
         }
-        if (Number(candidate.dictionaryScore || 0) < WAVE8_GATE_MIN_DICTIONARY_CONSISTENCY) {
+        if (dictionaryConsistency < WAVE8_GATE_MIN_DICTIONARY_CONSISTENCY) {
             rejectReasons.push("below_dictionary_consistency");
         }
-        if (Number(candidate.categoryConfidence || 0) < WAVE8_GATE_MIN_CATEGORY_CONSISTENCY) {
+        if (categoryConsistency < WAVE8_GATE_MIN_CATEGORY_CONSISTENCY) {
             rejectReasons.push("below_category_mode_consistency");
+        }
+        if (headerBlock) {
+            if (semanticConsistency < WAVE8_HEADER_STRICT_MIN_CONSISTENCY) {
+                rejectReasons.push("header_strict_semantic_consistency");
+            }
+            if (dictionaryConsistency < WAVE8_HEADER_STRICT_MIN_CONSISTENCY) {
+                rejectReasons.push("header_strict_dictionary_consistency");
+            }
+            if (categoryConsistency < WAVE8_HEADER_STRICT_MIN_CONSISTENCY) {
+                rejectReasons.push("header_strict_category_consistency");
+            }
+            if (supervisionBoost <= 0) {
+                rejectReasons.push("header_requires_supervision_boost");
+            }
         }
         const wave48OverrideExists = Boolean(candidate._wave48OverrideExists);
         const forceDecision = candidate._wave48ForceDecision;
-        const passed = rejectReasons.length === 0 || (WAVE48_GATE_ENABLED && wave48OverrideExists && Boolean(forceDecision));
+        const explicitPromotion = (WAVE48_GATE_ENABLED && wave48OverrideExists && Boolean(forceDecision)) ||
+            String(candidate.rationale || "").includes("wave8_targeted_anchor");
+        const passed = rejectReasons.length === 0 || explicitPromotion;
         return {
             ...candidate,
             wave8Gating: {
                 passed,
                 rejectReasons,
+                semanticConsistency,
+                dictionaryConsistency,
+                categoryConsistency,
+                supervisionBoost,
+                headerBlock,
                 thresholds: {
                     minConfidence: WAVE8_GATE_MIN_CONFIDENCE,
                     minSemanticConsistency: WAVE8_GATE_MIN_SEMANTIC_CONSISTENCY,
@@ -3168,9 +3388,14 @@ function toSuggestions(accum, block, blockConfidence, calibrationProfile, family
         };
     });
     const withConfidenceLevelsFiltered = withWave8Gating.filter((candidate) => candidate.wave8Gating?.passed);
-    const gatedCandidates = withConfidenceLevelsFiltered.length > 0
+    const gatedCandidates = headerAssessment.headerBlock
         ? withConfidenceLevelsFiltered
-        : withWave8Gating;
+        : withConfidenceLevelsFiltered.length > 0
+            ? withConfidenceLevelsFiltered
+            : withWave8Gating;
+    if (headerAssessment.headerBlock && gatedCandidates.length === 0) {
+        return [];
+    }
     const topSuggestion = gatedCandidates[0];
     if (!topSuggestion) {
         return [];
@@ -3269,6 +3494,7 @@ async function mapBlocksToAcord(blocks, options) {
     const orderedBlocks = [...blocks].sort((left, right) => left.page - right.page ||
         left.boundingBox.y - right.boundingBox.y ||
         left.boundingBox.x - right.boundingBox.x);
+    const nearbyFieldCueMap = buildWave8NearbyFieldCueMap(orderedBlocks);
     const selectionMarkPairings = resolveSelectionMarkPairings(orderedBlocks);
     const consistencyCache = new Map();
     const seenCodesByCategory = new Map();
@@ -3310,6 +3536,7 @@ async function mapBlocksToAcord(blocks, options) {
         // Run scoring for all OCR blocks; suppression should happen downstream where
         // we have full mapping context and diagnostics visibility.
         const pairedSelectionLabel = selectionMarkPairings.get(block.id);
+        const wave8HeaderAssessment = assessWave8HeaderBlock(block, nearbyFieldCueMap.get(block.id) === true);
         const scoringText = pairedSelectionLabel
             ? `${pairedSelectionLabel} ${String(block.text || "")}`
             : block.text;
@@ -3387,13 +3614,16 @@ async function mapBlocksToAcord(blocks, options) {
         stageStartedAt = Date.now();
         let suggestions = [];
         try {
-            suggestions = toSuggestions(accum, scoringBlock, block.confidence, options?.calibrationProfile, options?.familyId, runtimeGraph, options?.carrierAdapterOverrides, options?.underwritingRuleOverrides, { disableHeuristicInfluence: useLayoutLmPrimaryClassifier });
+            suggestions = toSuggestions(accum, scoringBlock, block.confidence, options?.calibrationProfile, options?.familyId, runtimeGraph, options?.carrierAdapterOverrides, options?.underwritingRuleOverrides, {
+                disableHeuristicInfluence: useLayoutLmPrimaryClassifier,
+                headerAssessment: wave8HeaderAssessment,
+            });
         }
         catch (error) {
             wave49Errors.push(normalizeWave49Error("suggestion", error));
         }
         stageTimings.suggestionMs = Date.now() - stageStartedAt;
-        if (suggestions.length === 0) {
+        if (suggestions.length === 0 && !wave8HeaderAssessment.headerBlock) {
             const beforeHeuristic = accum.size;
             applyHeuristicSignals(scoringBlock, accum);
             let afterHeuristic = accum.size;
@@ -3421,7 +3651,7 @@ async function mapBlocksToAcord(blocks, options) {
                 suggestions = buildWave49FallbackSuggestions(accum);
             }
         }
-        if (suggestions.length === 0 && accum.size > 0) {
+        if (suggestions.length === 0 && accum.size > 0 && !wave8HeaderAssessment.headerBlock) {
             suggestions = buildWave49FallbackSuggestions(accum);
         }
         const candidatePoolCountAfterFallback = accum.size;
@@ -3693,7 +3923,7 @@ async function mapBlocksToAcord(blocks, options) {
             }
         }
         let fallbackReason;
-        if (WAVE8_USABILITY_MODE) {
+        if (WAVE8_USABILITY_MODE && !wave8HeaderAssessment.headerBlock) {
             if (suggestions.length === 0) {
                 suggestions = [buildSyntheticConfidenceFallbackCandidate(block)];
                 fallbackReason = "synthetic_confidence_fallback";
@@ -3881,18 +4111,29 @@ async function mapBlocksToAcord(blocks, options) {
         const topConfidence = Number(topCandidate?.confidenceScore || 0);
         const topConfidenceLevel = topCandidate?.confidenceLevel ||
             (topThresholds ? resolveConfidenceLevel(topConfidence, topThresholds) : undefined);
-        const thresholdDecision = topCandidate && topConfidenceLevel
-            ? topConfidenceLevel
-            : suggestions.length > 0
-                ? "rejected"
-                : "none";
+        const thresholdDecision = wave8HeaderAssessment.headerBlock && suggestions.length === 0
+            ? "rejected"
+            : topCandidate && topConfidenceLevel
+                ? topConfidenceLevel
+                : suggestions.length > 0
+                    ? "rejected"
+                    : "none";
         const thresholdReason = !topCandidate
-            ? "no_candidates_after_reranking"
+            ? wave8HeaderAssessment.headerBlock
+                ? "header_strict_gate_reject"
+                : "no_candidates_after_reranking"
             : topConfidenceLevel === "accepted"
                 ? "meets_accepted_threshold"
                 : topConfidenceLevel === "review"
                     ? "between_review_and_accepted"
                     : "below_review_threshold";
+        const topWave8Gating = topCandidate?.wave8Gating;
+        const suppressionReasons = [
+            ...wave8HeaderAssessment.reasons,
+            ...(Array.isArray(topWave8Gating?.rejectReasons) ? topWave8Gating.rejectReasons : []),
+        ];
+        const isSuppressed = wave8HeaderAssessment.headerBlock &&
+            (!topCandidate || !Boolean(topWave8Gating?.passed));
         emitWave49Telemetry({
             blockId: block.id,
             page: block.page,
@@ -3932,6 +4173,31 @@ async function mapBlocksToAcord(blocks, options) {
             topCandidate: suggestions[0],
             fieldType: deriveUsabilityFieldType(block, suggestions[0]),
             semanticLabel: deriveUsabilitySemanticLabel(block, suggestions[0], pairedSelectionLabel, options?.familyId),
+            gatingMetadata: {
+                passed: !isSuppressed,
+                thresholdDecision,
+                thresholdReason,
+                rejectReasons: Array.from(new Set(suppressionReasons)),
+                semanticConsistency: Number(topCandidate?._wave8SemanticConsistency || 0),
+                dictionaryConsistency: Number(topCandidate?._wave8DictionaryConsistency || 0),
+                categoryConsistency: Number(topCandidate?._wave8CategoryConsistency || 0),
+                supervisionBoost: Number(topCandidate?._wave8SupervisionBoost || 0),
+            },
+            suppressionMetadata: {
+                suppressed: isSuppressed,
+                reason: isSuppressed ? "header_non_field_suppression" : undefined,
+                reasons: Array.from(new Set(suppressionReasons)),
+                nonField: wave8HeaderAssessment.nonField,
+                headerBlock: wave8HeaderAssessment.headerBlock,
+            },
+            confidenceScores: {
+                confidenceScore: Number(topCandidate?.confidenceScore || 0),
+                normalizedConfidenceScore: Number(topCandidate?.normalizedConfidenceScore || topCandidate?.confidenceScore || 0),
+                semanticScore: Number(topCandidate?._wave8SemanticConsistency || 0),
+                dictionaryScore: Number(topCandidate?._wave8DictionaryConsistency || 0),
+                categoryScore: Number(topCandidate?._wave8CategoryConsistency || 0),
+                supervisionBoost: Number(topCandidate?._wave8SupervisionBoost || 0),
+            },
             fallbackReason,
             mappingDiagnostics: ({
                 layoutLmPrimaryClassifierEnabled: useLayoutLmPrimaryClassifier,
@@ -3989,6 +4255,10 @@ async function mapBlocksToAcord(blocks, options) {
                 finalSuggestionCount: suggestions.length,
                 thresholdDecision,
                 thresholdReason,
+                wave8HeaderBlock: wave8HeaderAssessment.headerBlock,
+                wave8HeaderScore: wave8HeaderAssessment.score,
+                wave8HeaderReasons: wave8HeaderAssessment.reasons,
+                wave8NonFieldBlock: wave8HeaderAssessment.nonField,
                 topCandidate: topCandidate && topThresholds && topConfidenceLevel
                     ? {
                         acordCode: topCandidate.acordCode,

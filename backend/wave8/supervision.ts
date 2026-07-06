@@ -101,7 +101,86 @@ const TARGETED_ANCHOR_TUNING: Record<string, AnchorTuningProfile> = {
     semanticHintWeight: 1.32,
     categoryHintWeight: 1.28,
   },
+  producer_agent: {
+    anchorWeightMultiplier: 1.45,
+    synonymVariantWeightBonus: 0.2,
+    dictionaryConfidenceWeight: 1.24,
+    semanticHintWeight: 1.26,
+    categoryHintWeight: 1.22,
+  },
+  applicant_name: {
+    anchorWeightMultiplier: 1.42,
+    synonymVariantWeightBonus: 0.18,
+    dictionaryConfidenceWeight: 1.2,
+    semanticHintWeight: 1.24,
+    categoryHintWeight: 1.2,
+  },
+  policy_dates: {
+    anchorWeightMultiplier: 1.36,
+    synonymVariantWeightBonus: 0.16,
+    dictionaryConfidenceWeight: 1.18,
+    semanticHintWeight: 1.22,
+    categoryHintWeight: 1.2,
+  },
+  policy_limits: {
+    anchorWeightMultiplier: 1.34,
+    synonymVariantWeightBonus: 0.15,
+    dictionaryConfidenceWeight: 1.18,
+    semanticHintWeight: 1.2,
+    categoryHintWeight: 1.18,
+  },
 };
+
+const WAVE8_SYNTHETIC_SUPERVISION_RULES: Array<{
+  familyId?: string;
+  expectedAcordCode: string;
+  pattern: string;
+  semanticHint: SemanticHint;
+  anchorId: keyof typeof TARGETED_ANCHOR_TUNING;
+}> = [
+  {
+    expectedAcordCode: "GeneralInfo.NamedInsured",
+    pattern: "named\\s+insured|insured\\s+name|name\\s+of\\s+insured|first\\s+named\\s+insured",
+    semanticHint: { semanticLabel: "person_name", categoryMode: "party_information" },
+    anchorId: "insured_name",
+  },
+  {
+    expectedAcordCode: "Producer_FullName",
+    pattern: "producer\\s+name|agent\\s+name|producer\\s*[:]|agent\\s*[:]",
+    semanticHint: { semanticLabel: "person_name", categoryMode: "party_information" },
+    anchorId: "producer_agent",
+  },
+  {
+    expectedAcordCode: "Applicant_FullName",
+    pattern: "applicant\\s+name|name\\s+of\\s+applicant",
+    semanticHint: { semanticLabel: "person_name", categoryMode: "party_information" },
+    anchorId: "applicant_name",
+  },
+  {
+    expectedAcordCode: "GeneralLiability_OperationsDescription",
+    pattern: "operations\\s+description|description\\s+of\\s+operations|nature\\s+of\\s+operations|premises\\s*\\/?\\s*operations",
+    semanticHint: { semanticLabel: "coverage", categoryMode: "coverage_information" },
+    anchorId: "operations_description",
+  },
+  {
+    expectedAcordCode: "Policy_EffectiveDate",
+    pattern: "effective\\s+date|eff\\.?\\s+date",
+    semanticHint: { semanticLabel: "date", categoryMode: "policy_information" },
+    anchorId: "policy_dates",
+  },
+  {
+    expectedAcordCode: "Policy_ExpirationDate",
+    pattern: "expiration\\s+date|expiry\\s+date|exp\\.?\\s+date",
+    semanticHint: { semanticLabel: "date", categoryMode: "policy_information" },
+    anchorId: "policy_dates",
+  },
+  {
+    expectedAcordCode: "Policy_Limit",
+    pattern: "policy\\s+limits?|limits?|coverage\\s+limits?|deductible|premium",
+    semanticHint: { semanticLabel: "currency", categoryMode: "coverage_information" },
+    anchorId: "policy_limits",
+  },
+];
 
 let compiledRulesCache: CompiledRule[] | null = null;
 let rulesByCodeCache: Map<string, CompiledRule[]> | null = null;
@@ -250,6 +329,17 @@ function collectRules(): CompiledRule[] {
   }
 
   const deduped = new Map<string, SupervisionRule>();
+  for (const synthetic of WAVE8_SYNTHETIC_SUPERVISION_RULES) {
+    rules.push({
+      source: "anchor",
+      fixtureName: undefined,
+      familyId: synthetic.familyId,
+      anchorId: synthetic.anchorId,
+      expectedAcordCode: synthetic.expectedAcordCode,
+      pattern: synthetic.pattern,
+      semanticHint: synthetic.semanticHint,
+    });
+  }
   for (const rule of rules) {
     const key = [
       rule.source,
