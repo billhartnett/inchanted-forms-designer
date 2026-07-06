@@ -89,6 +89,52 @@ export function DesignerCanvas({
     return field.pageIndex === currentPdfPage;
   });
 
+  const visibleWave8Groups = useMemo(() => {
+    const byGroup = new Map<
+      string,
+      {
+        x: number;
+        y: number;
+        maxX: number;
+        maxY: number;
+        label: string;
+      }
+    >();
+
+    for (const field of visibleFields) {
+      if (!field.groupId) continue;
+      const wave8 = field.metadata?.wave8;
+      const label =
+        wave8?.groupLabel ||
+        (field.metadata?.semanticLabel || "general").toLowerCase();
+      const x = field.x;
+      const y = field.y;
+      const maxX = field.x + Math.max(1, field.width);
+      const maxY = field.y + Math.max(1, field.height);
+      const existing = byGroup.get(field.groupId);
+      if (!existing) {
+        byGroup.set(field.groupId, { x, y, maxX, maxY, label });
+        continue;
+      }
+      existing.x = Math.min(existing.x, x);
+      existing.y = Math.min(existing.y, y);
+      existing.maxX = Math.max(existing.maxX, maxX);
+      existing.maxY = Math.max(existing.maxY, maxY);
+      if (existing.label === "general" && label !== "general") {
+        existing.label = label;
+      }
+    }
+
+    return Array.from(byGroup.entries()).map(([key, box]) => ({
+      key,
+      label: box.label,
+      x: box.x - 6,
+      y: box.y - 18,
+      width: Math.max(24, box.maxX - box.x + 12),
+      height: Math.max(24, box.maxY - box.y + 26),
+    }));
+  }, [visibleFields]);
+
   const gridLines = useMemo(() => {
     const lines: Array<{ key: string; points: number[] }> = [];
 
@@ -195,6 +241,29 @@ export function DesignerCanvas({
           overlayChildren={
             visibleFields.length > 0 || selectedFields.length > 0 || visibleDraftFields.length > 0 ? (
               <>
+                {visibleWave8Groups.map((group) => (
+                  <KonvaGroup key={`wave8-group-${group.key}`} listening={false}>
+                    <KonvaRect
+                      x={group.x}
+                      y={group.y}
+                      width={group.width}
+                      height={group.height}
+                      stroke="#7dd3fc"
+                      strokeWidth={1}
+                      dash={[5, 4]}
+                      fill="rgba(125, 211, 252, 0.04)"
+                      cornerRadius={4}
+                    />
+                    <KonvaText
+                      x={group.x + 6}
+                      y={group.y + 2}
+                      text={group.label}
+                      fontSize={10}
+                      fontFamily="Geist Variable"
+                      fill="#0369a1"
+                    />
+                  </KonvaGroup>
+                ))}
                 {visibleFields.map((field: Field) => (
                   <KonvaGroup
                     key={`visual-${field.id}`}

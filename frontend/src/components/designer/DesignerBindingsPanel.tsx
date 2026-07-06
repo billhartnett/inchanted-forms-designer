@@ -8,7 +8,7 @@ import { MappingPanel } from "../../mapping/MappingPanel";
 export function DesignerBindingsPanel() {
   const selectedField = useSelectedField();
   const selectedMapping = useSelectedFieldMapping();
-  const updateMapping = useMappingStore((s) => s.updateMapping);
+  const chooseCandidate = useMappingStore((s) => s.chooseCandidate);
 
   const candidates = selectedMapping?.candidates ?? [];
   const chosenCandidate = selectedMapping?.chosenCandidate ?? null;
@@ -32,6 +32,7 @@ export function DesignerBindingsPanel() {
   );
 
   const required = Boolean(selectedField?.metadata?.required);
+  const wave8 = selectedField?.metadata?.wave8;
   const hardFailures = chosenCandidate?.underwritingRules?.hardFailures?.length ?? 0;
   const ruleImpact = chosenCandidate?.underwritingRules?.scoreDelta ?? 0;
   const ruleCount = chosenCandidate?.underwritingRules?.evaluations?.length ?? 0;
@@ -41,13 +42,9 @@ export function DesignerBindingsPanel() {
     (chosenCandidate?.riskFactors?.hazardSeverity ?? 0);
 
   const handleSelectCandidate = (candidate: any) => {
-    if (!selectedMapping) return;
-    
-    // Update mapping with chosen candidate
-    updateMapping(selectedMapping.fieldId, {
-      ...selectedMapping,
-      chosenCandidate: candidate,
-    });
+    const extractionBlockId = selectedField?.metadata?.extractionBlockId;
+    if (!extractionBlockId || !candidate?.acordCode) return;
+    chooseCandidate(extractionBlockId, candidate.acordCode);
   };
 
   if (!selectedField) {
@@ -88,22 +85,115 @@ export function DesignerBindingsPanel() {
           }}
         >
           <h4 style={{ margin: 0, color: "#0f172a" }}>Bindings</h4>
-          <span
-            style={{
-              fontSize: 11,
-              fontWeight: 700,
-              padding: "2px 8px",
-              borderRadius: 6,
-              background: required ? "#fee2e2" : "#f1f5f9",
-              color: required ? "#b91c1c" : "#475569",
-              border: `1px solid ${required ? "#fca5a5" : "#cbd5e1"}`,
-            }}
-          >
-            {required ? "Required" : "Optional"}
-          </span>
+          <div style={{ display: "flex", gap: 6 }}>
+            <span
+              style={{
+                fontSize: 11,
+                fontWeight: 700,
+                padding: "2px 8px",
+                borderRadius: 6,
+                background: required ? "#fee2e2" : "#f1f5f9",
+                color: required ? "#b91c1c" : "#475569",
+                border: `1px solid ${required ? "#fca5a5" : "#cbd5e1"}`,
+              }}
+            >
+              {required ? "Required" : "Optional"}
+            </span>
+            {selectedMapping?.categoryMode && (
+              <span
+                style={{
+                  fontSize: 11,
+                  fontWeight: 700,
+                  padding: "2px 8px",
+                  borderRadius: 6,
+                  background: selectedMapping.categoryMode === "strict" ? "#ede9fe" : "#f0fdf4",
+                  color: selectedMapping.categoryMode === "strict" ? "#5b21b6" : "#15803d",
+                  border: `1px solid ${
+                    selectedMapping.categoryMode === "strict" ? "#d8b4fe" : "#86efac"
+                  }`,
+                }}
+              >
+                {selectedMapping.categoryMode.toUpperCase()}
+              </span>
+            )}
+          </div>
         </div>
 
+        {/* Semantic metadata */}
+        {selectedMapping && (
+          <div
+            style={{
+              marginBottom: 10,
+              padding: 8,
+              background: "#f0f9ff",
+              border: "1px solid #bfdbfe",
+              borderRadius: 6,
+              fontSize: 11,
+            }}
+          >
+            <div style={{ fontWeight: 600, color: "#0369a1", marginBottom: 4 }}>
+              Extraction Details
+            </div>
+            {selectedMapping.semanticLabel && (
+              <div style={{ color: "#475569", marginBottom: 2 }}>
+                Semantic Label: <span style={{ fontWeight: 600 }}>{selectedMapping.semanticLabel}</span>
+              </div>
+            )}
+            {selectedMapping.fieldType && (
+              <div style={{ color: "#475569", marginBottom: 2 }}>
+                Field Type: <span style={{ fontWeight: 600 }}>{selectedMapping.fieldType}</span>
+              </div>
+            )}
+            <div style={{ color: "#475569" }}>
+              Confidence:{" "}
+              <span style={{ fontWeight: 600 }}>
+                {((selectedMapping.confidenceScore ?? 0) * 100).toFixed(1)}%
+              </span>
+            </div>
+          </div>
+        )}
+
         {/* ACORD suggestions with click handlers */}
+        {wave8 && (
+          <div
+            style={{
+              marginBottom: 10,
+              padding: 8,
+              borderRadius: 8,
+              background: "#f8fafc",
+              border: "1px solid #cbd5e1",
+              fontSize: 11,
+              color: "#334155",
+              display: "grid",
+              gap: 2,
+            }}
+          >
+            <div style={{ fontWeight: 700, color: "#0f172a" }}>Wave-8 metadata</div>
+            <div>blockId: {wave8.blockId || "-"}</div>
+            <div>group: {wave8.groupLabel || "general"}</div>
+            <div>categoryMode: {wave8.categoryMode || "-"}</div>
+            <div>semanticLabel: {wave8.semanticLabel || "-"}</div>
+            <div>fieldType: {wave8.fieldType || "-"}</div>
+            <div>
+              gating: {wave8.gatingMetadata?.thresholdDecision || "pass"}
+              {wave8.gatingMetadata?.thresholdReason
+                ? ` (${wave8.gatingMetadata.thresholdReason})`
+                : ""}
+            </div>
+            <div>
+              suppression: {wave8.suppressionMetadata?.suppressed ? "true" : "false"}
+              {wave8.suppressionMetadata?.headerBlock ? " header" : ""}
+              {wave8.suppressionMetadata?.nonField ? " nonField" : ""}
+            </div>
+            <div>
+              resolver: {wave8.resolverFlags?.contractorsInsuredNameResolverApplied ? "applied" : "none"}
+            </div>
+            <div>
+              anchors: {(wave8.anchorPromotions || []).length} • selection marks: {(wave8.selectionMarkAssociations || []).length}
+            </div>
+          </div>
+        )}
+
         {topAcordCandidates.length > 0 && (
           <div style={{ marginBottom: 10 }}>
             <div
@@ -114,7 +204,7 @@ export function DesignerBindingsPanel() {
                 marginBottom: 6,
               }}
             >
-              ACORD suggestions
+              ACORD Candidates ({topAcordCandidates.length})
             </div>
             <div style={{ display: "grid", gap: 5 }}>
               {topAcordCandidates.map((candidate) => {
@@ -127,8 +217,8 @@ export function DesignerBindingsPanel() {
                     style={{
                       display: "flex",
                       justifyContent: "space-between",
-                      alignItems: "center",
-                      padding: "4px 8px",
+                      alignItems: "flex-start",
+                      padding: "6px 8px",
                       borderRadius: 8,
                       background: isChosen ? "#eff6ff" : "#ffffff",
                       border: `1px solid ${isChosen ? "#93c5fd" : "#e2e8f0"}`,
@@ -148,7 +238,7 @@ export function DesignerBindingsPanel() {
                       }
                     }}
                   >
-                    <div>
+                    <div style={{ flex: 1 }}>
                       <div
                         style={{
                           fontSize: 12,
@@ -165,9 +255,14 @@ export function DesignerBindingsPanel() {
                           </span>
                         )}
                       </div>
-                      <div style={{ fontSize: 11, color: "#475569" }}>
+                      <div style={{ fontSize: 11, color: "#475569", marginBottom: 2 }}>
                         {candidate.label}
                       </div>
+                      {candidate.source && (
+                        <div style={{ fontSize: 9, color: "#94a3b8" }}>
+                          Source: {candidate.source}
+                        </div>
+                      )}
                     </div>
                     <MappingConfidence
                       confidenceScore={candidate.confidenceScore}

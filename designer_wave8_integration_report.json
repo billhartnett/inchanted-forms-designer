@@ -1,0 +1,277 @@
+{
+  "generatedAt": "2026-07-05T20:36:39.689Z",
+  "wave8FieldsConsumed": [
+    "mapping.blockId",
+    "mapping.blockGeometry",
+    "mapping.semanticLabel",
+    "mapping.categoryMode",
+    "mapping.pairedLabel",
+    "mapping.fieldType",
+    "mapping.anchorPromotions",
+    "mapping.resolverFlags",
+    "mapping.selectionMarkAssociations",
+    "mapping.suppressionMetadata",
+    "mapping.gatingMetadata",
+    "mapping.confidenceScores"
+  ],
+  "wave3FiltersRemoved": [
+    "header_line",
+    "section_title",
+    "candidate_incompatible",
+    "hard_mismatch",
+    "low_confidence_strict",
+    "wave3_text_pattern_type_rejections"
+  ],
+  "wave8GatingRulesApplied": [
+    "gatingMetadata.semanticConsistency",
+    "gatingMetadata.dictionaryConsistency",
+    "gatingMetadata.categoryConsistency",
+    "gatingMetadata.supervisionBoost",
+    "gatingMetadata.minConfidence (or diagnostics wave8MinConfidence fallback)",
+    "suppressionMetadata.suppressed",
+    "suppressionMetadata.headerBlock",
+    "suppressionMetadata.nonField",
+    "fieldType === header suppression",
+    "resolverFlags and anchorPromotions force-visible override"
+  ],
+  "results": [
+    {
+      "fixture": "ACORD 125",
+      "backendFieldCount": 854,
+      "uiFieldCount": 761,
+      "droppedCount": 93,
+      "droppedSample": [
+        {
+          "blockId": "p1-l31",
+          "reason": "suppressed_or_header"
+        },
+        {
+          "blockId": "p1-l35",
+          "reason": "suppressed_or_header"
+        },
+        {
+          "blockId": "p1-l36",
+          "reason": "suppressed_or_header"
+        },
+        {
+          "blockId": "p1-l46",
+          "reason": "suppressed_or_header"
+        },
+        {
+          "blockId": "p1-l70",
+          "reason": "suppressed_or_header"
+        },
+        {
+          "blockId": "p1-l97",
+          "reason": "suppressed_or_header"
+        },
+        {
+          "blockId": "p1-l102",
+          "reason": "suppressed_or_header"
+        },
+        {
+          "blockId": "p1-l103",
+          "reason": "suppressed_or_header"
+        },
+        {
+          "blockId": "p1-l108",
+          "reason": "suppressed_or_header"
+        },
+        {
+          "blockId": "p1-l111",
+          "reason": "suppressed_or_header"
+        },
+        {
+          "blockId": "p1-l119",
+          "reason": "suppressed_or_header"
+        },
+        {
+          "blockId": "p1-l132",
+          "reason": "suppressed_or_header"
+        },
+        {
+          "blockId": "p1-l134",
+          "reason": "suppressed_or_header"
+        },
+        {
+          "blockId": "p1-l160",
+          "reason": "suppressed_or_header"
+        },
+        {
+          "blockId": "p1-l165",
+          "reason": "suppressed_or_header"
+        },
+        {
+          "blockId": "p1-l169",
+          "reason": "suppressed_or_header"
+        },
+        {
+          "blockId": "p1-l183",
+          "reason": "suppressed_or_header"
+        },
+        {
+          "blockId": "p1-l191",
+          "reason": "suppressed_or_header"
+        },
+        {
+          "blockId": "p1-l192",
+          "reason": "suppressed_or_header"
+        },
+        {
+          "blockId": "p1-l213",
+          "reason": "suppressed_or_header"
+        },
+        {
+          "blockId": "p1-l230",
+          "reason": "suppressed_or_header"
+        },
+        {
+          "blockId": "p1-l239",
+          "reason": "suppressed_or_header"
+        },
+        {
+          "blockId": "p2-l4",
+          "reason": "suppressed_or_header"
+        },
+        {
+          "blockId": "p2-l72",
+          "reason": "suppressed_or_header"
+        },
+        {
+          "blockId": "p2-l82",
+          "reason": "suppressed_or_header"
+        },
+        {
+          "blockId": "p2-l89",
+          "reason": "suppressed_or_header"
+        },
+        {
+          "blockId": "p2-l91",
+          "reason": "suppressed_or_header"
+        },
+        {
+          "blockId": "p2-l95",
+          "reason": "suppressed_or_header"
+        },
+        {
+          "blockId": "p2-l103",
+          "reason": "suppressed_or_header"
+        },
+        {
+          "blockId": "p2-l119",
+          "reason": "suppressed_or_header"
+        }
+      ],
+      "overlapDroppedCount": 0,
+      "overlapFree": true,
+      "checkboxCount": 116,
+      "groupCounts": {
+        "general": 708,
+        "applicant": 18,
+        "agent": 12,
+        "identity": 10,
+        "operations": 13
+      },
+      "headerSuppressedCount": 93,
+      "parityExcludingHeaders": true,
+      "identityRendered": true,
+      "agentRendered": true,
+      "applicantRendered": true,
+      "operationsRendered": true
+    },
+    {
+      "fixture": "Contractors",
+      "backendFieldCount": 322,
+      "uiFieldCount": 307,
+      "droppedCount": 15,
+      "droppedSample": [
+        {
+          "blockId": "p1-l35",
+          "reason": "suppressed_or_header"
+        },
+        {
+          "blockId": "p2-l21",
+          "reason": "suppressed_or_header"
+        },
+        {
+          "blockId": "p2-l62",
+          "reason": "suppressed_or_header"
+        },
+        {
+          "blockId": "p2-l68",
+          "reason": "suppressed_or_header"
+        },
+        {
+          "blockId": "p2-l71",
+          "reason": "suppressed_or_header"
+        },
+        {
+          "blockId": "p2-l103",
+          "reason": "suppressed_or_header"
+        },
+        {
+          "blockId": "p2-l115",
+          "reason": "suppressed_or_header"
+        },
+        {
+          "blockId": "p2-l120",
+          "reason": "suppressed_or_header"
+        },
+        {
+          "blockId": "p2-l125",
+          "reason": "suppressed_or_header"
+        },
+        {
+          "blockId": "p2-l126",
+          "reason": "suppressed_or_header"
+        },
+        {
+          "blockId": "p3-l33",
+          "reason": "suppressed_or_header"
+        },
+        {
+          "blockId": "p3-l89",
+          "reason": "suppressed_or_header"
+        },
+        {
+          "blockId": "p3-l91",
+          "reason": "suppressed_or_header"
+        },
+        {
+          "blockId": "p3-l94",
+          "reason": "suppressed_or_header"
+        },
+        {
+          "blockId": "p3-l96",
+          "reason": "suppressed_or_header"
+        }
+      ],
+      "overlapDroppedCount": 0,
+      "overlapFree": true,
+      "checkboxCount": 59,
+      "groupCounts": {
+        "identity": 2,
+        "general": 297,
+        "operations": 4,
+        "applicant": 3,
+        "agent": 1
+      },
+      "headerSuppressedCount": 15,
+      "parityExcludingHeaders": true,
+      "identityRendered": true,
+      "agentRendered": true,
+      "applicantRendered": true,
+      "operationsRendered": true
+    }
+  ],
+  "summary": {
+    "parityAchievedForAll": true,
+    "overlapResolvedForAll": true,
+    "checkboxesRenderedForAll": true,
+    "identityRendered": true,
+    "agentRendered": true,
+    "applicantRendered": true,
+    "operationsRendered": true,
+    "headerSuppressionActive": true
+  }
+}
