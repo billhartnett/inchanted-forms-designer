@@ -21,6 +21,14 @@ type CompiledRule = SupervisionRule & {
   regex: RegExp | null;
 };
 
+type Wave8StructureSuppressionKind = "section_heading" | "logo" | "layout_label";
+
+type Wave8StructureSuppressionRule = {
+  kind: Wave8StructureSuppressionKind;
+  pattern: string;
+  families?: string[];
+};
+
 type AnchorTuningProfile = {
   anchorWeightMultiplier: number;
   synonymVariantWeightBonus: number;
@@ -47,6 +55,7 @@ const FIXTURE_TO_FAMILY: Record<string, string> = {
   "sample-Acord-126.pdf": "acord-126",
   "sample-Acord-127.pdf": "acord-127",
   "sample-Acord-140.pdf": "acord-140",
+  "sample-Contractors-Supplemental.pdf": "contractors-supplement",
   "Contractors Supp App.pdf": "contractors-supplement",
   "Markel-Contractors-Supp.pdf": "contractors-supplement",
   "ANA_E-S_Contractors_Supplemental-Application_MKT0109_fillable.pdf": "contractors-supplement",
@@ -58,6 +67,16 @@ const ANCHOR_CODE_HINTS: Record<string, string[]> = {
     "NamedInsured_FullName",
     "NamedInsured_FullName_AA",
     "NamedInsured_GivenName",
+  ],
+  mailing_address: [
+    "GeneralInfo.MailingAddress.Line1",
+    "GeneralInfo.MailingAddress.Street",
+    "GeneralInfo.MailingAddress.City",
+    "GeneralInfo.MailingAddress.State",
+    "GeneralInfo.MailingAddress.PostalCode",
+  ],
+  location_address: [
+    "CommercialProperty.Building.LocationAddress",
   ],
   operations_description: [
     "GeneralLiability_OperationsDescription",
@@ -76,13 +95,30 @@ const TARGETED_ANCHOR_PATTERN_VARIANTS: Record<string, string[]> = {
     "name\\s+of\\s+insured",
     "applicant\\s+name",
     "name\\s+of\\s+applicant",
+    "insured\s*mailing\s+address",
     "insured\\s*:\\s*",
+  ],
+  mailing_address: [
+    "mailing\s+address",
+    "mailing\s+address\s+line\s*1",
+    "mailing\s+address\s+line\s*2",
+    "insured\s+mailing\s+address",
+    "mailing\s+city\s+state\s+zip",
+  ],
+  location_address: [
+    "location\s+address",
+    "premises\s+address",
+    "risk\s+address",
+    "street\s+address",
+    "location\s+city\s+state\s+zip",
   ],
   operations_description: [
     "operations\\s+description",
     "premises\\s*\\/\\s*operations",
     "description\\s+of\\s+operations",
     "nature\\s+of\\s+operations",
+    "business\s+description",
+    "nature\s+of\s+business",
   ],
 };
 
@@ -93,6 +129,20 @@ const TARGETED_ANCHOR_TUNING: Record<string, AnchorTuningProfile> = {
     dictionaryConfidenceWeight: 1.25,
     semanticHintWeight: 1.3,
     categoryHintWeight: 1.25,
+  },
+  mailing_address: {
+    anchorWeightMultiplier: 1.46,
+    synonymVariantWeightBonus: 0.2,
+    dictionaryConfidenceWeight: 1.24,
+    semanticHintWeight: 1.26,
+    categoryHintWeight: 1.22,
+  },
+  location_address: {
+    anchorWeightMultiplier: 1.44,
+    synonymVariantWeightBonus: 0.18,
+    dictionaryConfidenceWeight: 1.22,
+    semanticHintWeight: 1.24,
+    categoryHintWeight: 1.2,
   },
   operations_description: {
     anchorWeightMultiplier: 1.55,
@@ -179,6 +229,39 @@ const WAVE8_SYNTHETIC_SUPERVISION_RULES: Array<{
     pattern: "policy\\s+limits?|limits?|coverage\\s+limits?|deductible|premium",
     semanticHint: { semanticLabel: "currency", categoryMode: "coverage_information" },
     anchorId: "policy_limits",
+  },
+];
+
+const WAVE8_PHASE3_TARGET_FAMILIES = [
+  "acord-125",
+  "acord-126",
+  "acord-140",
+  "contractors-supplement",
+];
+
+const WAVE8_STRUCTURE_SUPPRESSION_RULES: Wave8StructureSuppressionRule[] = [
+  {
+    kind: "logo",
+    pattern: "\bacord\b|\bthe\s+acord\s+name\s+and\s+logo\s+are\s+registered\s+marks\b|\ball\s+rights\s+reserved\b|\bcopyright\b",
+  },
+  {
+    kind: "layout_label",
+    pattern: "\bpage\s+\d+\s+of\s+\d+\b|\bform\s+no\b|\bedition\b|\bacord\s*\d+\b",
+  },
+  {
+    kind: "section_heading",
+    pattern: "\bapplicant\s+information\b|\bgeneral\s+information\b|\bpremises\s+information\b|\bbuilding\s+information\b|\bpolicy\s+information\b|\bcoverage\s+information\b|\bloss\s+history\b|\bprior\s+carrier\b|\boperations\s+description\b|\bnature\s+of\s+operations\b",
+    families: ["acord-125", "acord-126", "acord-140", "contractors-supplement"],
+  },
+  {
+    kind: "section_heading",
+    pattern: "\bcontractors?\s+supp(lemental)?\s+application\b|\bto\s+be\s+submitted\s+with\s+acord\s+applications\b",
+    families: ["contractors-supplement"],
+  },
+  {
+    kind: "layout_label",
+    pattern: "\bcontinued\s+on\s+next\s+page\b|\battach\s+(additional\s+)?pages\b|\bsee\s+supplement\b",
+    families: ["acord-125", "acord-126", "acord-140", "contractors-supplement"],
   },
 ];
 
@@ -297,6 +380,23 @@ function collectRules(): CompiledRule[] {
     }
   }
 
+  rules.push(
+    {
+      source: "gold_label",
+      expectedAcordCode: "GeneralInfo.MailingAddress.Line1",
+      pattern: "mailing\\s+address|mailing\\s+address\\s+line\\s*1|mailing\\s+address\\s+line\\s*2|insured\\s+mailing\\s+address",
+      semanticHint: { semanticLabel: "address", categoryMode: "party_information" },
+      anchorId: "mailing_address",
+    },
+    {
+      source: "gold_label",
+      expectedAcordCode: "CommercialProperty.Building.LocationAddress",
+      pattern: "location\\s+address|premises\\s+address|risk\\s+address|street\\s+address|location\\s+city\\s+state\\s+zip",
+      semanticHint: { semanticLabel: "address", categoryMode: "property_information" },
+      anchorId: "location_address",
+    },
+  );
+
   const anchorConfig = loadJson<{ forms?: any[] }>(GOLD_ANCHORS_PATH, {});
   for (const form of anchorConfig.forms || []) {
     const fixtureName = String(form?.fixtureName || "").trim();
@@ -375,6 +475,44 @@ function ensureCaches(): void {
 function familyMatches(ruleFamily: string | undefined, familyId: string | undefined): boolean {
   if (!ruleFamily || !familyId) return true;
   return normalizeText(ruleFamily) === normalizeText(familyId);
+}
+
+function normalizeFamilyAlias(value: string | undefined): string {
+  const normalized = normalizeText(String(value || ""));
+  return normalized.replace(/\s+/g, "-");
+}
+
+function isWave8Phase3TargetFamily(familyId?: string): boolean {
+  const normalized = normalizeFamilyAlias(familyId);
+  if (!normalized) {
+    return false;
+  }
+
+  if (WAVE8_PHASE3_TARGET_FAMILIES.includes(normalized)) {
+    return true;
+  }
+
+  return (
+    normalized.includes("acord-125") ||
+    normalized.includes("acord-126") ||
+    normalized.includes("acord-140") ||
+    normalized.includes("contractors")
+  );
+}
+
+function structureRuleFamilyMatches(rule: Wave8StructureSuppressionRule, familyId?: string): boolean {
+  if (!rule.families || rule.families.length === 0) {
+    return true;
+  }
+  const normalized = normalizeFamilyAlias(familyId);
+  if (!normalized) {
+    return false;
+  }
+
+  return rule.families.some((family) => {
+    const familyAlias = normalizeFamilyAlias(family);
+    return normalized === familyAlias || normalized.includes(familyAlias);
+  });
 }
 
 function patternMatches(rule: CompiledRule, text: string): boolean {
@@ -473,6 +611,60 @@ export function getWave8SemanticHintForText(
 
   matches.sort((left, right) => right.weight - left.weight || left.acordCode.localeCompare(right.acordCode));
   return matches[0].semanticHint;
+}
+
+export function getWave8StructureSuppressionSignals(
+  text: string,
+  familyId?: string,
+): {
+  matched: boolean;
+  kinds: Wave8StructureSuppressionKind[];
+  reasons: string[];
+  score: number;
+} {
+  const source = String(text || "");
+  if (!source.trim() || !isWave8Phase3TargetFamily(familyId)) {
+    return {
+      matched: false,
+      kinds: [],
+      reasons: [],
+      score: 0,
+    };
+  }
+
+  const normalizedText = normalizeText(source);
+  const tokenCount = normalizedText.split(" ").filter(Boolean).length;
+  const kinds = new Set<Wave8StructureSuppressionKind>();
+  const reasons = new Set<string>();
+  let score = 0;
+
+  for (const rule of WAVE8_STRUCTURE_SUPPRESSION_RULES) {
+    if (!structureRuleFamilyMatches(rule, familyId)) {
+      continue;
+    }
+    const regex = safeRegex(rule.pattern);
+    if (!regex || !regex.test(source)) {
+      continue;
+    }
+
+    kinds.add(rule.kind);
+    reasons.add(`phase3_${rule.kind}`);
+
+    if (rule.kind === "logo") {
+      score += 0.44;
+    } else if (rule.kind === "section_heading") {
+      score += tokenCount >= 2 && tokenCount <= 10 ? 0.32 : 0.24;
+    } else {
+      score += 0.26;
+    }
+  }
+
+  return {
+    matched: kinds.size > 0,
+    kinds: [...kinds],
+    reasons: [...reasons],
+    score: Number(Math.min(1, Math.max(0, score)).toFixed(3)),
+  };
 }
 
 export function getWave8SupervisionRuleCount(): number {
