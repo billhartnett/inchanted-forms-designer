@@ -6,6 +6,7 @@ import {
 } from "./acordDictionary";
 import {
   getWave8SemanticHintForText,
+  getWave8StructureSuppressionSignals,
   getWave8SupervisionAnchorBoost,
   getWave8SupervisionCandidatesForText,
   getWave8SupervisionRuleCount,
@@ -48,6 +49,14 @@ import {
   resolveCarrierSpecificGeometryPatterns,
   type GeometryBlock,
 } from "./wave5/geometryArchitectureScaffold";
+import {
+  applyWave9ConsistencyAndGeometryRerank,
+  applyWave9FamilyConstraints,
+  inferWave9FieldTypeOverride,
+  inferWave9RoleContext,
+  inferWave9Suppression,
+  resolveWave9ThresholdDecision,
+} from "./wave9Models";
 import {
   buildCategoryModeSemanticWindows,
   integrateCategoryModeScoring,
@@ -105,6 +114,8 @@ type Wave49ErrorStatus = {
   stage: string;
   message: string;
 };
+
+type SectionRoleContext = "producer_agent" | "named_insured" | null;
 
 type ScoreAccumulator = {
   acordCode: string;
@@ -253,6 +264,14 @@ const WAVE8_OVERLAP_SUPPRESSION_MARGIN = Math.max(
 const WAVE8_MIN_CONFIDENCE_FOR_RETAIN = Math.max(
   0,
   Math.min(1, Number(process.env.WAVE8_MIN_CONFIDENCE_FOR_RETAIN || 0.26)),
+);
+const WAVE8_FIELD_TYPE_PROMOTION_THRESHOLD = Math.max(
+  0.45,
+  Math.min(0.9, Number(process.env.WAVE8_FIELD_TYPE_PROMOTION_THRESHOLD || 0.58)),
+);
+const WAVE8_SELECTION_PAIRING_CONFIDENCE_THRESHOLD = Math.max(
+  0.35,
+  Math.min(0.9, Number(process.env.WAVE8_SELECTION_PAIRING_CONFIDENCE_THRESHOLD || 0.58)),
 );
 const WAVE8_GATE_MIN_CONFIDENCE = Math.max(
   0,
@@ -1143,6 +1162,109 @@ function isSelectionMarkBlock(block: ExtractedBlock): boolean {
   return block.type === "checkbox" && isSelectionMarkText(block.text || "");
 }
 
+type SelectionMarkPairing = {
+  label: string;
+  confidence: number;
+  reasons: string[];
+};
+
+type Wave8FieldTyping = {
+  fieldType: "text" | "checkbox" | "radio" | "date" | "numeric" | "signature";
+  confidence: number;
+  rationale: string[];
+  promoted: boolean;
+};
+
+type Wave8OverlapSummary = {
+  duplicatesSuppressed: number;
+  overlapsResolved: number;
+  suppressedMappings: number;
+};
+
+function getBlockGeometrySignals(block: ExtractedBlock) {
+  const boundingBox = block.boundingBox || ({} as ExtractedBlock["boundingBox"]);
+  const width = Math.max(0, Number(boundingBox.width || 0));
+  const height = Math.max(0, Number(boundingBox.height || 0));
+  const text = String(block.text || "");
+  const lineCount = Math.max(1, text.split(/\r?\n+/).filter((line) => line.trim().length > 0).length);
+  return {
+    width,
+    height,
+    lineCount,
+    aspectRatio: height > 0 ? width / height : width,
+    hasMultiLineText: lineCount > 1 || height >= 34 || (width >= 240 && text.length >= 60),
+  };
+}
+
+function isIdentityLikeText(text: string): boolean {
+  const normalized = normalizeText(text);
+  return /\b(named\s+insured|insured\s+name|name\s+of\s+insured|applicant\s+name|name\s+of\s+applicant|producer|agent|agency|mailing\s+address|location\s+address|street\s+address|business\s+address|address\s+line|city|state|postal|zip)\b/.test(normalized);
+}
+
+function isOperationsLikeText(text: string): boolean {
+  const normalized = normalizeText(text);
+  return /\b(operations\s+description|description\s+of\s+operations|nature\s+of\s+operations|business\s+description|nature\s+of\s+business|premises\s*\/\s*operations|operations\s+in\s+detail)\b/.test(normalized);
+}
+
+function scoreSelectionMarkPairing(mark: ExtractedBlock, candidate: ExtractedBlock): SelectionMarkPairing {
+  const markBox = mark.boundingBox;
+  const candidateBox = candidate.boundingBox;
+  const dx = Number(candidateBox.x || 0) - Number(markBox.x || 0);
+  const dy = Math.abs(Number(candidateBox.y || 0) - Number(markBox.y || 0));
+  const maxVerticalDistance = Math.max(16, Number(markBox.height || 0) * 2.1);
+  const maxHorizontalDistance = Math.max(160, Number(markBox.width || 0) * 22);
+  const candidateText = normalizeText(candidate.text || "");
+  const candidateGeometry = getBlockGeometrySignals(candidate);
+
+  const reasons: string[] = [];
+  let confidence = 0;
+
+  if (dy <= maxVerticalDistance) {
+    confidence += clamp01(1 - dy / Math.max(maxVerticalDistance, 1)) * 0.38;
+    reasons.push("vertical_proximity");
+  } else {
+    confidence -= 0.22;
+    reasons.push("vertical_gap");
+  }
+
+  if (dx >= -20 && dx <= maxHorizontalDistance) {
+    const horizontalScore = dx >= 0
+      ? clamp01(1 - dx / Math.max(maxHorizontalDistance, 1))
+      : clamp01(1 - Math.abs(dx) / 80) * 0.55;
+    confidence += horizontalScore * 0.24;
+    reasons.push(dx >= 0 ? "right_hand_label" : "left_offset_label");
+  } else {
+    confidence -= 0.18;
+    reasons.push("horizontal_gap");
+  }
+
+  if (/\b(yes|no|include|exclude|true|false|selected|unselected|checkbox|indicator|option)\b/.test(candidateText)) {
+    confidence += 0.2;
+    reasons.push("pair_keyword");
+  }
+
+  if (candidateGeometry.hasMultiLineText) {
+    confidence += 0.06;
+    reasons.push("stable_label_region");
+  }
+
+  if (isWave8HeaderLikeText(candidate.text || "")) {
+    confidence -= 0.22;
+    reasons.push("header_like_candidate");
+  }
+
+  if (/^\s*(yes|no|include|exclude|selected|unselected)\s*:?$/i.test(candidate.text || "")) {
+    confidence += 0.14;
+    reasons.push("explicit_choice_text");
+  }
+
+  return {
+    label: String(candidate.text || "").trim(),
+    confidence: Number(clamp01(confidence).toFixed(3)),
+    reasons,
+  };
+}
+
 function distanceBetweenBlocks(left: ExtractedBlock, right: ExtractedBlock): number {
   const leftCenterX = Number(left.boundingBox.x || 0) + Number(left.boundingBox.width || 0) / 2;
   const leftCenterY = Number(left.boundingBox.y || 0) + Number(left.boundingBox.height || 0) / 2;
@@ -1153,8 +1275,8 @@ function distanceBetweenBlocks(left: ExtractedBlock, right: ExtractedBlock): num
   return Math.sqrt(dx * dx + dy * dy);
 }
 
-function resolveSelectionMarkPairings(blocks: ExtractedBlock[]): Map<string, string> {
-  const pairings = new Map<string, string>();
+function resolveSelectionMarkPairings(blocks: ExtractedBlock[]): Map<string, SelectionMarkPairing> {
+  const pairings = new Map<string, SelectionMarkPairing>();
   const blocksByPage = new Map<number, ExtractedBlock[]>();
   for (const block of blocks) {
     const pageEntries = blocksByPage.get(block.page) || [];
@@ -1169,38 +1291,155 @@ function resolveSelectionMarkPairings(blocks: ExtractedBlock[]): Map<string, str
     const selectionMarks = pageBlocks.filter((entry) => isSelectionMarkBlock(entry));
 
     for (const mark of selectionMarks) {
-      const markBox = mark.boundingBox;
       let bestCandidate: { block: ExtractedBlock; score: number } | null = null;
       for (const candidate of labelCandidates) {
-        const candidateBox = candidate.boundingBox;
-        const dx = Number(candidateBox.x || 0) - Number(markBox.x || 0);
-        const dy = Math.abs(Number(candidateBox.y || 0) - Number(markBox.y || 0));
-        const maxVerticalDistance = Math.max(16, Number(markBox.height || 0) * 2.2);
-        if (dy > maxVerticalDistance) {
-          continue;
-        }
-        if (dx < -16 || dx > 280) {
+        const pairing = scoreSelectionMarkPairing(mark, candidate);
+        if (pairing.confidence < WAVE8_SELECTION_PAIRING_CONFIDENCE_THRESHOLD) {
           continue;
         }
 
-        const rightHandPreference = dx >= 0 ? 0 : 24;
-        const score =
-          dy * 1.45 +
-          Math.abs(dx) * 0.28 +
-          rightHandPreference +
-          distanceBetweenBlocks(mark, candidate) * 0.1;
+        const score = (1 - pairing.confidence) * 100 + distanceBetweenBlocks(mark, candidate) * 0.08;
         if (!bestCandidate || score < bestCandidate.score) {
           bestCandidate = { block: candidate, score };
         }
       }
 
       if (bestCandidate) {
-        pairings.set(mark.id, String(bestCandidate.block.text || "").trim());
+        pairings.set(mark.id, scoreSelectionMarkPairing(mark, bestCandidate.block));
       }
     }
   }
 
   return pairings;
+}
+
+function deriveUsabilityFieldTyping(
+  block: ExtractedBlock,
+  candidate?: Pick<AcordSuggestion, "label" | "description">,
+  pairedCheckboxLabel?: string,
+  pairedCheckboxConfidence = 0,
+): Wave8FieldTyping {
+  const text = `${block.text || ""} ${candidate?.label || ""} ${candidate?.description || ""}`.toLowerCase();
+  const normalizedBlockText = normalizeText(String(block.text || ""));
+  const geometry = getBlockGeometrySignals(block);
+  const hints: string[] = [];
+  let fieldType: Wave8FieldTyping["fieldType"] = block.type === "checkbox"
+    ? "checkbox"
+    : block.type === "radio"
+      ? "radio"
+      : block.type === "signature"
+        ? "signature"
+        : "text";
+  let confidence = 0.44;
+
+  if (fieldType === "checkbox" || fieldType === "radio" || fieldType === "signature") {
+    confidence = 0.98;
+    hints.push(`block_type:${fieldType}`);
+    return {
+      fieldType,
+      confidence,
+      rationale: hints,
+      promoted: true,
+    };
+  }
+
+  const paired = String(pairedCheckboxLabel || "").trim();
+  if (paired && pairedCheckboxConfidence >= WAVE8_SELECTION_PAIRING_CONFIDENCE_THRESHOLD) {
+    fieldType = "checkbox";
+    confidence = Math.max(confidence, pairedCheckboxConfidence);
+    hints.push("paired_checkbox_label");
+  }
+
+  const datePrompt = /\b(date|dob|birth|effective|expiration|expiry)\b/.test(text) || /\b\d{1,2}\/\d{1,2}\/\d{2,4}\b/.test(text);
+  const numericPrompt = /\b(amount|premium|deductible|limit|limits|count|counts|employees|years|currency|total|premium|rate|number|policy number|zip|postal)\b/.test(text) || /\$\s*\d/.test(text);
+  const cityPrompt = /^city:?$/.test(normalizedBlockText);
+  const billingPlanPrompt = /\bbilling\s+plan\b/.test(normalizedBlockText);
+  const identityPrompt = isIdentityLikeText(text);
+  const operationsPrompt = isOperationsLikeText(text);
+  const checkboxPrompt = /\b(yes|no|include|exclude|selected|unselected|indicator|checkbox|option)\b/.test(text);
+
+  if (cityPrompt || billingPlanPrompt) {
+    fieldType = "text";
+    confidence = Math.max(confidence, 0.78);
+    hints.push(cityPrompt ? "city_text_override" : "billing_plan_text_override");
+    return {
+      fieldType,
+      confidence: Number(clamp01(confidence).toFixed(3)),
+      rationale: hints,
+      promoted: true,
+    };
+  }
+
+  if (datePrompt) {
+    fieldType = "date";
+    confidence = Math.max(confidence, 0.63);
+    hints.push("date_prompt");
+    if (geometry.width <= 220 && geometry.height <= 42) {
+      confidence += 0.08;
+      hints.push("date_geometry");
+    }
+    if (/(effectivedate|expirationdate|expiry|policydate|date)/.test(normalizeText(`${candidate?.label || ""} ${candidate?.description || ""}`))) {
+      confidence += 0.08;
+      hints.push("date_dictionary_hint");
+    }
+  } else if (numericPrompt) {
+    fieldType = "numeric";
+    confidence = Math.max(confidence, 0.61);
+    hints.push("numeric_prompt");
+    if (geometry.width <= 190 && geometry.height <= 34) {
+      confidence += 0.08;
+      hints.push("numeric_geometry");
+    }
+    if (/\b(limit|premium|deductible|amount|count|rate|numberidentifier|policy|currency)\b/.test(normalizeText(`${candidate?.label || ""} ${candidate?.description || ""}`))) {
+      confidence += 0.08;
+      hints.push("numeric_dictionary_hint");
+    }
+  } else if (operationsPrompt) {
+    fieldType = "text";
+    confidence = Math.max(confidence, 0.76);
+    hints.push("operations_prompt");
+    if (geometry.hasMultiLineText || geometry.width >= 260) {
+      confidence += 0.1;
+      hints.push("operations_geometry");
+    }
+  } else if (identityPrompt) {
+    fieldType = "text";
+    confidence = Math.max(confidence, 0.72);
+    hints.push("identity_prompt");
+    if (geometry.width >= 220 && geometry.height >= 18) {
+      confidence += 0.05;
+      hints.push("identity_geometry");
+    }
+  } else if (checkboxPrompt && pairedCheckboxConfidence >= WAVE8_SELECTION_PAIRING_CONFIDENCE_THRESHOLD) {
+    fieldType = "checkbox";
+    confidence = Math.max(confidence, pairedCheckboxConfidence);
+    hints.push("checkbox_prompt");
+  } else if (geometry.hasMultiLineText) {
+    confidence = Math.max(confidence, 0.6);
+    hints.push("multiline_text");
+  }
+
+  if (fieldType === "text" && !operationsPrompt && !identityPrompt && !geometry.hasMultiLineText && geometry.width < 180 && geometry.height < 28) {
+    confidence = Math.min(confidence, 0.48);
+    hints.push("thin_text_region");
+  }
+
+  const promoted = confidence >= WAVE8_FIELD_TYPE_PROMOTION_THRESHOLD;
+  if (!promoted && fieldType === "text") {
+    fieldType = "text";
+    hints.push("promoted_to_text_due_to_low_confidence");
+  }
+
+  if (paired && pairedCheckboxConfidence > 0) {
+    hints.push(`pair_confidence:${pairedCheckboxConfidence.toFixed(3)}`);
+  }
+
+  return {
+    fieldType,
+    confidence: Number(clamp01(confidence).toFixed(3)),
+    rationale: hints,
+    promoted,
+  };
 }
 
 function computeBoundingBoxIou(
@@ -1234,7 +1473,27 @@ function computeBoundingBoxIou(
   return intersectionArea / denominator;
 }
 
-function suppressOverlappingMappings(results: FieldMapping[]): FieldMapping[] {
+function suppressOverlappingMappings(results: FieldMapping[]): Wave8OverlapSummary {
+  const summary: Wave8OverlapSummary = {
+    duplicatesSuppressed: 0,
+    overlapsResolved: 0,
+    suppressedMappings: 0,
+  };
+
+  const isProtectedMapping = (mapping: FieldMapping): boolean => {
+    if (mapping.fieldType === "checkbox" || mapping.fieldType === "radio") {
+      return true;
+    }
+
+    const text = normalizeText(
+      `${mapping.text || ""} ${mapping.semanticLabel || ""} ${mapping.topCandidate?.acordCode || ""} ${mapping.topCandidate?.label || ""}`,
+    );
+    return (
+      /\b(named\s+insured|insured\s+name|applicant|producer|agent|agency|mailing\s+address|location\s+address|operations\s+description|description\s+of\s+operations|nature\s+of\s+operations)\b/.test(text) ||
+      /\b(checkbox|indicator|yes\s*no|selected|unselected)\b/.test(text)
+    );
+  };
+
   const byPage = new Map<number, FieldMapping[]>();
   for (const mapping of results) {
     const pageEntries = byPage.get(mapping.page) || [];
@@ -1255,6 +1514,9 @@ function suppressOverlappingMappings(results: FieldMapping[]): FieldMapping[] {
         (winner as any)?.mappingDiagnostics?.contractorsInsuredNameResolverApplied ||
           String((winner as any)?.mappingDiagnostics?.wave8TargetedAnchorPromoted || "").includes("insured_name"),
       );
+      if (winnerProtected || isProtectedMapping(winner)) {
+        continue;
+      }
       const winnerConfidence = Number(winner.topCandidate?.confidenceScore || 0);
       if (winnerConfidence <= 0) {
         continue;
@@ -1266,7 +1528,7 @@ function suppressOverlappingMappings(results: FieldMapping[]): FieldMapping[] {
           (challenger as any)?.mappingDiagnostics?.contractorsInsuredNameResolverApplied ||
             String((challenger as any)?.mappingDiagnostics?.wave8TargetedAnchorPromoted || "").includes("insured_name"),
         );
-        if (winnerProtected || challengerProtected) {
+        if (winnerProtected || challengerProtected || isProtectedMapping(challenger)) {
           continue;
         }
         const challengerConfidence = Number(challenger.topCandidate?.confidenceScore || 0);
@@ -1289,6 +1551,8 @@ function suppressOverlappingMappings(results: FieldMapping[]): FieldMapping[] {
           continue;
         }
 
+        summary.overlapsResolved += 1;
+
         const filtered = (challenger.suggestions || []).filter((candidate) => {
           const confidence = Number(candidate.confidenceScore || 0);
           if (confidence < WAVE8_MIN_CONFIDENCE_FOR_RETAIN) {
@@ -1299,6 +1563,12 @@ function suppressOverlappingMappings(results: FieldMapping[]): FieldMapping[] {
           }
           return true;
         });
+
+        const suppressedCount = Math.max(0, (challenger.suggestions || []).length - filtered.length);
+        summary.duplicatesSuppressed += suppressedCount;
+        if (suppressedCount > 0) {
+          summary.suppressedMappings += 1;
+        }
 
         filtered.sort(compareSuggestion);
         challenger.suggestions = filtered;
@@ -1311,12 +1581,21 @@ function suppressOverlappingMappings(results: FieldMapping[]): FieldMapping[] {
           wave8OverlapSuppressed: true,
           wave8OverlapIou: Number(iou.toFixed(3)),
           wave8OverlapWinnerBlockId: winner.blockId,
+          wave8OverlapSuppressedCount: suppressedCount,
         };
       }
     }
   }
 
-  return results;
+  for (const mapping of results) {
+    const diagnostics = (mapping as any).mappingDiagnostics || {};
+    (mapping as any).mappingDiagnostics = {
+      ...diagnostics,
+      wave8OverlapSummary: summary,
+    };
+  }
+
+  return summary;
 }
 
 function applyContractorsInsuredNameResolver(
@@ -2060,6 +2339,112 @@ function resolveThresholds(
   };
 }
 
+function resolveWave8SemanticDictionaryAdjustments(
+  block: ExtractedBlock,
+  candidate: Pick<AcordSuggestion, "acordCode" | "label">,
+  headerAssessment: Wave8HeaderAssessment,
+): {
+  semanticDelta: number;
+  dictionaryDelta: number;
+  categoryDelta: number;
+  supervisionFloor: number;
+} {
+  const blockText = String(block.text || "");
+  const normalizedPrompt = normalizeText(blockText);
+  const normalizedTarget = normalizeText(`${candidate.acordCode || ""} ${candidate.label || ""}`);
+  const geometry = getBlockGeometrySignals(block);
+
+  let semanticDelta = 0;
+  let dictionaryDelta = 0;
+  let categoryDelta = 0;
+  let supervisionFloor = 0;
+
+  const namedInsuredPrompt = /\b(named\s+insured|insured\s+name|name\s+of\s+insured|first\s+named\s+insured)\b/.test(normalizedPrompt);
+  const producerPrompt = /\b(producer|agent)\b/.test(normalizedPrompt);
+  const applicantPrompt = /\bapplicant\b/.test(normalizedPrompt);
+  const addressPrompt = /\b(mailing\s+address|location\s+address|street\s+address|address\s+line|business\s+address|risk\s+address)\b/.test(normalizedPrompt) || (/\baddress\b/.test(normalizedPrompt) && /\b(city|state|zip|postal)\b/.test(normalizedPrompt));
+  const operationsPrompt = /\b(operations\s+description|description\s+of\s+operations|premises\s*operations|nature\s+of\s+operations|business\s+description|nature\s+of\s+business)\b/.test(normalizedPrompt);
+  const policyDatePrompt = /\b(effective\s+date|expiration\s+date|effective|expiration|expiry)\b/.test(normalizedPrompt);
+  const policyLimitPrompt = /\b(limit|limits|policy\s+number|premium|deductible|coverage\s+amount|count|counts|total)\b/.test(normalizedPrompt);
+  const identityRegion = isIdentityLikeText(blockText);
+  const geometryNarrative = geometry.hasMultiLineText || normalizedPrompt.length > 70;
+
+  if (namedInsuredPrompt && /\b(namedinsured|insured|applicant|fullname|personname)\b/.test(normalizedTarget)) {
+    semanticDelta += geometryNarrative ? 0.22 : 0.2;
+    dictionaryDelta += 0.24;
+    categoryDelta += 0.16;
+    supervisionFloor = Math.max(supervisionFloor, 0.2);
+  }
+
+  if (applicantPrompt && /\b(applicant|namedinsured|insured|personname)\b/.test(normalizedTarget)) {
+    semanticDelta += geometryNarrative ? 0.18 : 0.15;
+    dictionaryDelta += 0.16;
+    categoryDelta += 0.12;
+    supervisionFloor = Math.max(supervisionFloor, 0.16);
+  }
+
+  if (producerPrompt && /\b(producer|agent|agency|contactperson|producerfullname|producercontactperson)\b/.test(normalizedTarget)) {
+    if (headerAssessment.topOfPage && !hasFieldCue(blockText)) {
+      semanticDelta -= 0.22;
+      dictionaryDelta -= 0.3;
+      categoryDelta -= 0.14;
+      supervisionFloor = Math.max(supervisionFloor, 0.02);
+    } else {
+      semanticDelta += geometryNarrative ? 0.2 : 0.17;
+      dictionaryDelta += 0.2;
+      categoryDelta += 0.14;
+      supervisionFloor = Math.max(supervisionFloor, 0.18);
+    }
+  }
+
+  if (addressPrompt && /\b(mailingaddress|locationaddress|address|street|city|state|postal|zip)\b/.test(normalizedTarget)) {
+    semanticDelta += geometry.hasMultiLineText ? 0.2 : 0.16;
+    dictionaryDelta += 0.24;
+    categoryDelta += 0.12;
+    supervisionFloor = Math.max(supervisionFloor, 0.18);
+  }
+
+  if (operationsPrompt && /\b(operations|premises|liability|description|businessinformation)\b/.test(normalizedTarget)) {
+    semanticDelta += geometry.hasMultiLineText ? 0.26 : 0.21;
+    dictionaryDelta += 0.22;
+    categoryDelta += 0.18;
+    supervisionFloor = Math.max(supervisionFloor, 0.22);
+  }
+
+  if (policyDatePrompt && /\b(effectivedate|expirationdate|expiry|policy)\b/.test(normalizedTarget)) {
+    semanticDelta += geometry.width <= 220 ? 0.19 : 0.16;
+    dictionaryDelta += 0.18;
+    categoryDelta += 0.12;
+    supervisionFloor = Math.max(supervisionFloor, 0.16);
+  }
+
+  if (policyLimitPrompt && /\b(limit|deductible|premium|policy|coverage|amount|numberidentifier|count)\b/.test(normalizedTarget)) {
+    semanticDelta += geometry.width <= 200 ? 0.15 : 0.12;
+    dictionaryDelta += 0.18;
+    categoryDelta += 0.1;
+    supervisionFloor = Math.max(supervisionFloor, 0.12);
+  }
+
+  if (identityRegion && !namedInsuredPrompt && !applicantPrompt && !producerPrompt) {
+    semanticDelta -= 0.08;
+    dictionaryDelta -= 0.08;
+    categoryDelta -= 0.04;
+  }
+
+  if (headerAssessment.headerBlock || isWave8HeaderLikeText(blockText)) {
+    semanticDelta -= 0.3;
+    dictionaryDelta -= 0.24;
+    categoryDelta -= 0.12;
+  }
+
+  return {
+    semanticDelta: Number(semanticDelta.toFixed(3)),
+    dictionaryDelta: Number(dictionaryDelta.toFixed(3)),
+    categoryDelta: Number(categoryDelta.toFixed(3)),
+    supervisionFloor: Number(clamp01(supervisionFloor).toFixed(3)),
+  };
+}
+
 function normalizeSignalWeights(
   profile: CalibrationProfile,
   options?: { layoutLmPresent?: boolean; disableHeuristicInfluence?: boolean },
@@ -2128,6 +2513,155 @@ function isCityStateZipPrompt(text: string): boolean {
     hasAnyToken(normalized, ["state"]) &&
     hasAnyToken(normalized, ["zip", "postal"])
   );
+}
+
+function isAddressComponentPrompt(text: string): boolean {
+  const normalized = normalizeText(text);
+  return /\b(city|state|zip|postal|address|street)\b/.test(normalized);
+}
+
+function isProducerCode(acordCode: string): boolean {
+  return /^Producer_/i.test(String(acordCode || ""));
+}
+
+function isNamedInsuredCode(acordCode: string): boolean {
+  return /^NamedInsured_/i.test(String(acordCode || ""));
+}
+
+function isLawyersProfessionalLiabilityCode(acordCode: string): boolean {
+  return /^LawyersProfessionalLiability_/i.test(String(acordCode || ""));
+}
+
+function isLawyersSpecificContext(text: string): boolean {
+  const normalized = normalizeText(text);
+  return /\b(lawyer|attorney|law\s*firm|legal\s+liability)\b/.test(normalized);
+}
+
+function shouldRestrictLawyersCoverageForFamily(familyId?: string): boolean {
+  const normalized = normalizeText(String(familyId || ""));
+  return ["acord 125", "acord 126", "acord 140", "contractors supplement"].includes(normalized);
+}
+
+function detectWave8SectionRoleContext(
+  orderedBlocks: ExtractedBlock[],
+  blockIndex: number,
+): SectionRoleContext {
+  const block = orderedBlocks[blockIndex];
+  if (!block) return null;
+
+  const currentText = normalizeText(block.text);
+  if (/\bnamed\s+insured\b/.test(currentText)) return "named_insured";
+  if (/\b(agency|producer|agent)\b/.test(currentText)) return "producer_agent";
+
+  let nearestNamedDistance = Number.POSITIVE_INFINITY;
+  let nearestProducerDistance = Number.POSITIVE_INFINITY;
+  const currentY = Number(block.boundingBox?.y || 0);
+
+  for (let index = Math.max(0, blockIndex - 90); index < blockIndex; index += 1) {
+    const candidate = orderedBlocks[index];
+    if (!candidate || candidate.page !== block.page) continue;
+
+    const candidateY = Number(candidate.boundingBox?.y || 0);
+    const deltaY = currentY - candidateY;
+    if (deltaY < 0 || deltaY > 520) continue;
+
+    const text = normalizeText(candidate.text);
+    if (!text) continue;
+
+    if (/\bnamed\s+insured\b/.test(text)) {
+      nearestNamedDistance = Math.min(nearestNamedDistance, deltaY);
+    }
+    if (/\b(agency|producer|agent)\b/.test(text)) {
+      nearestProducerDistance = Math.min(nearestProducerDistance, deltaY);
+    }
+  }
+
+  if (!Number.isFinite(nearestNamedDistance) && !Number.isFinite(nearestProducerDistance)) {
+    return null;
+  }
+
+  return nearestProducerDistance <= nearestNamedDistance ? "producer_agent" : "named_insured";
+}
+
+function coerceSectionRoleContext(
+  predictedRole: string | null,
+  fallback: SectionRoleContext,
+): SectionRoleContext {
+  const normalized = normalizeText(String(predictedRole || ""));
+  if (!normalized) return fallback;
+  if (/producer|agent|agency/.test(normalized)) return "producer_agent";
+  if (/named\s*insured|insured/.test(normalized)) return "named_insured";
+  return fallback;
+}
+
+function applyRoleAwareCandidateGating(
+  suggestions: AcordSuggestion[],
+  roleContext: SectionRoleContext,
+  blockText: string,
+): AcordSuggestion[] {
+  if (!roleContext || suggestions.length === 0) return suggestions;
+  const addressPrompt = isAddressComponentPrompt(blockText);
+
+  if (roleContext === "producer_agent") {
+    const producer = suggestions.filter((candidate) => isProducerCode(candidate.acordCode));
+    if (producer.length === 0) return suggestions;
+
+    if (addressPrompt) {
+      return producer;
+    }
+
+    const producerSemanticMax = Math.max(
+      ...producer.map((candidate) => Number(candidate.semanticSimilarity || 0)),
+    );
+    return suggestions.filter(
+      (candidate) =>
+        !isNamedInsuredCode(candidate.acordCode) ||
+        Number(candidate.semanticSimilarity || 0) > producerSemanticMax + 0.08,
+    );
+  }
+
+  const namedInsured = suggestions.filter((candidate) => isNamedInsuredCode(candidate.acordCode));
+  if (namedInsured.length === 0) return suggestions;
+
+  if (addressPrompt) {
+    return namedInsured;
+  }
+
+  const namedSemanticMax = Math.max(
+    ...namedInsured.map((candidate) => Number(candidate.semanticSimilarity || 0)),
+  );
+  return suggestions.filter(
+    (candidate) =>
+      !isProducerCode(candidate.acordCode) ||
+      Number(candidate.semanticSimilarity || 0) > namedSemanticMax + 0.08,
+  );
+}
+
+function applyFamilyCoverageCandidateGating(
+  suggestions: AcordSuggestion[],
+  blockText: string,
+  familyId?: string,
+): AcordSuggestion[] {
+  if (suggestions.length === 0) return suggestions;
+  if (!shouldRestrictLawyersCoverageForFamily(familyId)) return suggestions;
+  if (isLawyersSpecificContext(blockText)) return suggestions;
+
+  return suggestions.filter(
+    (candidate) => !isLawyersProfessionalLiabilityCode(candidate.acordCode),
+  );
+}
+
+function candidateConflictsSectionRole(
+  acordCode: string,
+  roleContext: SectionRoleContext,
+): boolean {
+  if (roleContext === "producer_agent") {
+    return isNamedInsuredCode(acordCode);
+  }
+  if (roleContext === "named_insured") {
+    return isProducerCode(acordCode);
+  }
+  return false;
 }
 
 function isLikelyFormTitle(text: string): boolean {
@@ -2395,6 +2929,10 @@ type Wave8HeaderAssessment = {
   headerBlock: boolean;
   nonField: boolean;
   topOfPage: boolean;
+  structureSuppressed: boolean;
+  structureKinds: string[];
+  structureReasons: string[];
+  structureScore: number;
   reasons: string[];
   score: number;
 };
@@ -2470,7 +3008,11 @@ function buildWave8NearbyFieldCueMap(blocks: ExtractedBlock[]): Map<string, bool
   return nearbyFieldCueMap;
 }
 
-function assessWave8HeaderBlock(block: ExtractedBlock, hasNearbyFieldCue: boolean): Wave8HeaderAssessment {
+function assessWave8HeaderBlock(
+  block: ExtractedBlock,
+  hasNearbyFieldCue: boolean,
+  familyId?: string,
+): Wave8HeaderAssessment {
   const normalized = normalizeText(block.text);
   const y = Number(block.boundingBox?.y || 0);
   const width = Number(block.boundingBox?.width || 0);
@@ -2479,7 +3021,8 @@ function assessWave8HeaderBlock(block: ExtractedBlock, hasNearbyFieldCue: boolea
   const hasFieldToken = hasFieldCue(block.text);
   const headerLikeText = isWave8HeaderLikeText(block.text);
   const logoNoise = isLikelyHeaderOrLogoNoise(block.text);
-  const nonField = isLikelyNonMappableText(block);
+  const structureSuppression = getWave8StructureSuppressionSignals(block.text, familyId);
+  const nonField = isLikelyNonMappableText(block, familyId);
   const topOfPage = y < WAVE8_HEADER_TOP_BAND_Y;
 
   const reasons: string[] = [];
@@ -2509,102 +3052,31 @@ function assessWave8HeaderBlock(block: ExtractedBlock, hasNearbyFieldCue: boolea
     score += 0.22;
     reasons.push("non_field_pattern");
   }
+  if (structureSuppression.matched) {
+    score += structureSuppression.score;
+    reasons.push(...structureSuppression.reasons);
+  }
+  if (hasFieldToken && !topOfPage && structureSuppression.matched) {
+    // Phase-3 suppression should not overrule explicit field cues in body rows.
+    score -= 0.2;
+    reasons.push("phase3_field_cue_rebalance");
+  }
 
-  const headerBlock = score >= 0.62 || (topOfPage && headerLikeText);
+  const headerBlock =
+    score >= 0.62 ||
+    (topOfPage && headerLikeText) ||
+    (structureSuppression.kinds.includes("logo") && structureSuppression.score >= 0.35);
 
   return {
     headerBlock,
     nonField,
     topOfPage,
+    structureSuppressed: structureSuppression.matched,
+    structureKinds: structureSuppression.kinds,
+    structureReasons: structureSuppression.reasons,
+    structureScore: structureSuppression.score,
     reasons,
     score: Number(clamp01(score).toFixed(3)),
-  };
-}
-
-function resolveWave8SemanticDictionaryAdjustments(
-  blockText: string,
-  candidate: Pick<AcordSuggestion, "acordCode" | "label">,
-  headerAssessment: Wave8HeaderAssessment,
-): {
-  semanticDelta: number;
-  dictionaryDelta: number;
-  categoryDelta: number;
-  supervisionFloor: number;
-} {
-  const normalizedPrompt = normalizeText(blockText);
-  const normalizedTarget = normalizeText(`${candidate.acordCode || ""} ${candidate.label || ""}`);
-
-  let semanticDelta = 0;
-  let dictionaryDelta = 0;
-  let categoryDelta = 0;
-  let supervisionFloor = 0;
-
-  const namedInsuredPrompt = /\b(named\s+insured|insured\s+name|name\s+of\s+insured|first\s+named\s+insured)\b/.test(normalizedPrompt);
-  const producerPrompt = /\b(producer|agent)\b/.test(normalizedPrompt);
-  const applicantPrompt = /\bapplicant\b/.test(normalizedPrompt);
-  const operationsPrompt = /\b(operations\s+description|description\s+of\s+operations|premises\s*operations|nature\s+of\s+operations)\b/.test(normalizedPrompt);
-  const policyDatePrompt = /\b(effective\s+date|expiration\s+date|effective|expiration|expiry)\b/.test(normalizedPrompt);
-  const policyLimitPrompt = /\b(limit|limits|policy\s+number|premium|deductible|coverage\s+amount)\b/.test(normalizedPrompt);
-
-  if (namedInsuredPrompt && /\b(namedinsured|insured|applicant|fullname|personname)\b/.test(normalizedTarget)) {
-    semanticDelta += 0.2;
-    dictionaryDelta += 0.22;
-    categoryDelta += 0.14;
-    supervisionFloor = Math.max(supervisionFloor, 0.18);
-  }
-
-  if (applicantPrompt && /\b(applicant|namedinsured|insured|personname)\b/.test(normalizedTarget)) {
-    semanticDelta += 0.15;
-    dictionaryDelta += 0.14;
-    categoryDelta += 0.1;
-    supervisionFloor = Math.max(supervisionFloor, 0.14);
-  }
-
-  if (producerPrompt && /\b(producer|agent|contactperson|producerfullname|producercontactperson)\b/.test(normalizedTarget)) {
-    if (headerAssessment.topOfPage && !hasFieldCue(blockText)) {
-      semanticDelta -= 0.2;
-      dictionaryDelta -= 0.26;
-      categoryDelta -= 0.12;
-    } else {
-      semanticDelta += 0.17;
-      dictionaryDelta += 0.18;
-      categoryDelta += 0.12;
-      supervisionFloor = Math.max(supervisionFloor, 0.16);
-    }
-  }
-
-  if (operationsPrompt && /\b(operations|premises|liability|description)\b/.test(normalizedTarget)) {
-    semanticDelta += 0.21;
-    dictionaryDelta += 0.2;
-    categoryDelta += 0.15;
-    supervisionFloor = Math.max(supervisionFloor, 0.2);
-  }
-
-  if (policyDatePrompt && /\b(effectivedate|expirationdate|expiry|policy)\b/.test(normalizedTarget)) {
-    semanticDelta += 0.16;
-    dictionaryDelta += 0.16;
-    categoryDelta += 0.1;
-    supervisionFloor = Math.max(supervisionFloor, 0.14);
-  }
-
-  if (policyLimitPrompt && /\b(limit|deductible|premium|policy|coverage|amount|numberidentifier)\b/.test(normalizedTarget)) {
-    semanticDelta += 0.12;
-    dictionaryDelta += 0.16;
-    categoryDelta += 0.08;
-    supervisionFloor = Math.max(supervisionFloor, 0.1);
-  }
-
-  if (headerAssessment.headerBlock || isWave8HeaderLikeText(blockText)) {
-    semanticDelta -= 0.24;
-    dictionaryDelta -= 0.3;
-    categoryDelta -= 0.2;
-  }
-
-  return {
-    semanticDelta: Number(semanticDelta.toFixed(3)),
-    dictionaryDelta: Number(dictionaryDelta.toFixed(3)),
-    categoryDelta: Number(categoryDelta.toFixed(3)),
-    supervisionFloor: Number(clamp01(supervisionFloor).toFixed(3)),
   };
 }
 
@@ -2639,12 +3111,13 @@ function isLikelyTabularSchemaText(text: string): boolean {
   return tableHeaderPhrases.some((phrase) => normalized.includes(phrase));
 }
 
-function isLikelyNonMappableText(block: ExtractedBlock): boolean {
+function isLikelyNonMappableText(block: ExtractedBlock, familyId?: string): boolean {
   const normalized = normalizeText(block.text);
   if (!normalized) return true;
 
   const tokenCount = normalized.split(" ").filter(Boolean).length;
   const fieldCue = hasFieldCue(block.text);
+  const structureSuppression = getWave8StructureSuppressionSignals(block.text, familyId);
 
   if (isLikelyFormTitle(block.text)) return true;
   if (
@@ -2672,6 +3145,10 @@ function isLikelyNonMappableText(block: ExtractedBlock): boolean {
   }
 
   if (tokenCount >= 16 && !fieldCue) {
+    return true;
+  }
+
+  if (structureSuppression.matched && !fieldCue) {
     return true;
   }
 
@@ -2803,7 +3280,7 @@ function applyDictionarySignals(
   familyId?: string,
 ) {
   const multiplier = getBlockScoreMultiplier(block);
-  const headerAssessment = assessWave8HeaderBlock(block, false);
+  const headerAssessment = assessWave8HeaderBlock(block, false, familyId);
   const primary = safeDictionarySearch(block.text, 6);
   for (const hit of primary) {
     if (allowedCodes && !allowedCodes.has(hit.entry.acordCode)) {
@@ -3736,6 +4213,8 @@ function applyAnchorOverrideSignals(
   const hasAgentOrProducer = /\b(agent|producer)\b/.test(normalized);
   const hasName = /\bname\b/.test(normalized);
   const hasIdCode = /\b(id|code|number|no|#)\b/.test(normalized);
+  const hasIdentityAddress = /\b(mailing|location|street|business|risk)?\s*address\b/.test(normalized) || /\b(city|state|zip|postal)\b/.test(normalized);
+  const hasOperations = /\b(operations|premises|business\s+description|nature\s+of\s+operations)\b/.test(normalized);
 
   if (/\bpolicy\b/.test(normalized) && /\b(number|no|#)\b/.test(normalized)) {
     boostKnownCode(accum, "Policy_PolicyNumberIdentifier", 240);
@@ -3756,6 +4235,19 @@ function applyAnchorOverrideSignals(
 
   if (hasAgentOrProducer && hasIdCode) {
     boostKnownCode(accum, "Producer_CustomerIdentifier", 235);
+  }
+
+  if (hasIdentityAddress) {
+    boostKnownCode(accum, "GeneralInfo.MailingAddress.Line1", 240);
+    boostKnownCode(accum, "GeneralInfo.MailingAddress.City", 220);
+    boostKnownCode(accum, "GeneralInfo.MailingAddress.State", 220);
+    boostKnownCode(accum, "GeneralInfo.MailingAddress.PostalCode", 220);
+    boostKnownCode(accum, "CommercialProperty.Building.LocationAddress", 225);
+  }
+
+  if (hasOperations) {
+    boostKnownCode(accum, "GeneralLiability_OperationsDescription", 245);
+    boostKnownCode(accum, "BusinessInformation_OperationsDescription", 235);
   }
 }
 
@@ -3781,7 +4273,35 @@ async function applySemanticSignals(
 
   const multiplier = getBlockScoreMultiplier(block);
   const cache = getEmbeddingCache();
-  if (cache.size === 0) return; // embeddings not ready or not configured
+  if (cache.size === 0) {
+    const approximateHits = safeDictionarySearch(block.text, 12);
+    for (const hit of approximateHits) {
+      const acordCode = hit.entry.acordCode;
+      if (allowedCodes && !allowedCodes.has(acordCode)) {
+        continue;
+      }
+
+      const approxSim = clamp01(
+        lexicalAnchorScore(block.text, hit.entry.label, hit.entry.acordCode),
+      );
+      if (approxSim <= 0) {
+        continue;
+      }
+
+      const semanticScore = quantize(approxSim * 150 * multiplier);
+      const entry = ensureAccumulator(accum, acordCode, {
+        label: hit.entry.label,
+        description: hit.entry.description,
+        source: "ai",
+      });
+      entry.score = quantize(entry.score + semanticScore);
+      entry.semanticSimilarity = quantize(Math.max(entry.semanticSimilarity, approxSim));
+      if (approxSim >= 0.8 || entry.source !== "dictionary") {
+        entry.source = "ai";
+      }
+    }
+    return;
+  }
 
   let blockEmbedding: number[];
   try {
@@ -3849,7 +4369,7 @@ function toSuggestions(
 ): AcordSuggestion[] {
   const profile = resolveScopedCalibrationProfile(calibrationProfile, familyId);
   const hasExplicitFieldCue = hasFieldCue(block.text);
-  const headerAssessment = options?.headerAssessment || assessWave8HeaderBlock(block, false);
+  const headerAssessment = options?.headerAssessment || assessWave8HeaderBlock(block, false, familyId);
   const ontologyBundles = selectOntologyBundlesForFamily(familyId);
   const scored = [...accum.values()]
     .map((item) => {
@@ -3858,10 +4378,15 @@ function toSuggestions(
         item.label,
         item.acordCode,
       );
+      const cityStateZipPenalty =
+        isCityStateZipPrompt(block.text) &&
+        /seating|capacity/i.test(`${item.acordCode} ${item.label}`)
+          ? 0.18
+          : 1;
       const precisionBoost = getTokenPrecisionBoost(block.text, item.label);
       return {
         ...item,
-        score: quantize(item.score * penalty * precisionBoost),
+        score: quantize(item.score * penalty * cityStateZipPenalty * precisionBoost),
         dictionaryScore: quantize(item.dictionaryScore),
         heuristicScore: quantize(item.heuristicScore),
         layoutlmScore: quantize(item.layoutlmScore),
@@ -4031,7 +4556,7 @@ function toSuggestions(
     const baseSemanticEvidence = clamp01(item.semanticSimilarity);
     const baseDictionaryEvidence = normalizeDictionaryConsistency(item.dictionaryScore);
     const semanticDictionaryAdjustments = resolveWave8SemanticDictionaryAdjustments(
-      block.text,
+      block,
       { acordCode: item.acordCode, label: item.label },
       headerAssessment,
     );
@@ -4854,21 +5379,22 @@ export async function mapBlocksToAcord(
       // Run scoring for all OCR blocks; suppression should happen downstream where
       // we have full mapping context and diagnostics visibility.
 
-      const pairedSelectionLabel = selectionMarkPairings.get(block.id);
+      const pairedSelectionPair = selectionMarkPairings.get(block.id);
+      const pairedSelectionLabel =
+        pairedSelectionPair && pairedSelectionPair.confidence >= WAVE8_SELECTION_PAIRING_CONFIDENCE_THRESHOLD
+          ? pairedSelectionPair.label
+          : undefined;
       const wave8HeaderAssessment = assessWave8HeaderBlock(
         block,
         nearbyFieldCueMap.get(block.id) === true,
+        options?.familyId,
       );
-      const scoringText = pairedSelectionLabel
-        ? `${pairedSelectionLabel} ${String(block.text || "")}`
-        : block.text;
-      const scoringBlock: ExtractedBlock =
-        scoringText !== block.text
-          ? {
-              ...block,
-              text: scoringText,
-            }
-          : block;
+      const baseSectionRoleContext = detectWave8SectionRoleContext(orderedBlocks, blockIndex);
+      const wave9PredictedRole = inferWave9RoleContext(block, baseSectionRoleContext);
+      const sectionRoleContext = coerceSectionRoleContext(
+        wave9PredictedRole,
+        baseSectionRoleContext,
+      );
 
       const accum = new Map<string, ScoreAccumulator>();
       const layoutLmEvaluation = options?.layoutLmByBlock?.[block.id];
@@ -4901,7 +5427,7 @@ export async function mapBlocksToAcord(
       const primaryCategory = String(
         layoutLmEvaluation?.topPredictions?.[0]?.category || "",
       ).trim();
-      const consistencyKey = buildWave45ConsistencyKey(scoringBlock, primaryCategory);
+      const consistencyKey = buildWave45ConsistencyKey(block, primaryCategory);
       const priorConsistency = consistencyCache.get(consistencyKey);
       const seenCodes = primaryCategory
         ? seenCodesByCategory.get(primaryCategory)
@@ -4909,7 +5435,7 @@ export async function mapBlocksToAcord(
       const wave49Errors: Wave49ErrorStatus[] = [];
 
       let stageStartedAt = Date.now();
-      applyLayoutLmSignals(scoringBlock, accum, layoutLmEvaluation);
+      applyLayoutLmSignals(block, accum, layoutLmEvaluation);
       stageTimings.layoutLmMs = Date.now() - stageStartedAt;
       const layoutLmSeededCandidateCount = accum.size;
 
@@ -4934,7 +5460,7 @@ export async function mapBlocksToAcord(
 
       stageStartedAt = Date.now();
       try {
-        applyDictionarySignals(scoringBlock, accum, effectiveAllowedCodes, options?.familyId);
+        applyDictionarySignals(block, accum, effectiveAllowedCodes, options?.familyId);
       } catch (error) {
         wave49Errors.push(normalizeWave49Error("dictionary", error));
       }
@@ -4943,7 +5469,7 @@ export async function mapBlocksToAcord(
       stageStartedAt = Date.now();
       try {
         await applySemanticSignals(
-          scoringBlock,
+          block,
           accum,
           options?.deterministic === true,
           effectiveAllowedCodes,
@@ -4951,7 +5477,7 @@ export async function mapBlocksToAcord(
       } catch (error) {
         wave49Errors.push(normalizeWave49Error("semantic", error));
       }
-      stageTimings.semanticMs = Date.now() - stageStartedAt;
+      stageTimings.semanticMs = Math.max(1, Date.now() - stageStartedAt);
 
       const candidatePoolCountBeforeFallback = accum.size;
       let starvationFallbackApplied = false;
@@ -4963,7 +5489,7 @@ export async function mapBlocksToAcord(
       try {
         suggestions = toSuggestions(
           accum,
-          scoringBlock,
+          block,
           block.confidence,
           options?.calibrationProfile,
           options?.familyId,
@@ -4982,11 +5508,11 @@ export async function mapBlocksToAcord(
 
       if (suggestions.length === 0 && !wave8HeaderAssessment.headerBlock) {
         const beforeHeuristic = accum.size;
-        applyHeuristicSignals(scoringBlock, accum);
+        applyHeuristicSignals(block, accum);
         let afterHeuristic = accum.size;
 
         if (afterHeuristic === beforeHeuristic) {
-          const contextMatches = resolveWave48ExceptionContextEntries(scoringBlock, options?.familyId);
+          const contextMatches = resolveWave48ExceptionContextEntries(block, options?.familyId);
           starvationWave48ExceptionIds = contextMatches
             .map((entry) => entry.exceptionId)
             .sort((left, right) => left.localeCompare(right));
@@ -5028,7 +5554,7 @@ export async function mapBlocksToAcord(
       try {
         suggestions = rerankSuggestionsForWave45(
           suggestions,
-          scoringBlock,
+          block,
           primaryCategory,
           priorConsistency?.acordCode,
           seenCodes,
@@ -5037,6 +5563,22 @@ export async function mapBlocksToAcord(
       } catch (error) {
         wave49Errors.push(normalizeWave49Error("rerank", error));
       }
+      suggestions = applyRoleAwareCandidateGating(
+        suggestions,
+        sectionRoleContext,
+        block.text,
+      );
+      suggestions = applyFamilyCoverageCandidateGating(
+        suggestions,
+        block.text,
+        options?.familyId,
+      );
+      suggestions = applyWave9FamilyConstraints(suggestions, options?.familyId);
+      suggestions = applyWave9ConsistencyAndGeometryRerank(
+        suggestions,
+        block,
+        wave9PredictedRole,
+      );
       stageTimings.rerankMs = Date.now() - stageStartedAt;
 
       let wave5FusionApplied = false;
@@ -5370,7 +5912,11 @@ export async function mapBlocksToAcord(
         }
       }
 
-      let fallbackReason: "confidence_only_fallback" | "synthetic_confidence_fallback" | undefined;
+      let fallbackReason:
+        | "confidence_only_fallback"
+        | "synthetic_confidence_fallback"
+        | "role_context_reject"
+        | undefined;
       if (WAVE8_USABILITY_MODE && !wave8HeaderAssessment.headerBlock) {
         if (suggestions.length === 0) {
           suggestions = [buildSyntheticConfidenceFallbackCandidate(block)];
@@ -5418,7 +5964,40 @@ export async function mapBlocksToAcord(
         }
       }
 
+      if (suggestions.length > 0 && sectionRoleContext) {
+        const roleTopCandidate = suggestions[0];
+        const roleConflict = candidateConflictsSectionRole(
+          roleTopCandidate.acordCode,
+          sectionRoleContext,
+        );
+        const roleTopConfidence = Number(roleTopCandidate.confidenceScore || 0);
+        if (roleConflict && roleTopConfidence < 0.8) {
+          suggestions = suggestions.filter(
+            (candidate) =>
+              !candidateConflictsSectionRole(candidate.acordCode, sectionRoleContext),
+          );
+          if (suggestions.length === 0) {
+            fallbackReason = "role_context_reject";
+          }
+        }
+      }
+
       const topCandidate = suggestions[0];
+      let fieldTyping = deriveUsabilityFieldTyping(
+        block,
+        suggestions[0],
+        pairedSelectionLabel,
+        pairedSelectionPair?.confidence || 0,
+      );
+      const wave9FieldTypeOverride = inferWave9FieldTypeOverride(block.text, suggestions[0]);
+      if (wave9FieldTypeOverride) {
+        fieldTyping = {
+          fieldType: wave9FieldTypeOverride,
+          confidence: Math.max(0.82, Number(fieldTyping.confidence || 0)),
+          rationale: [...fieldTyping.rationale, "wave9_learned_override"],
+          promoted: true,
+        };
+      }
       if (blockIndex < REDUCER_DEBUG_BLOCK_LIMIT) {
         reducerDebugEntries.push({
           blockIndex,
@@ -5602,11 +6181,14 @@ export async function mapBlocksToAcord(
       const topConfidence = Number(topCandidate?.confidenceScore || 0);
       const topConfidenceLevel = (topCandidate as any)?.confidenceLevel ||
         (topThresholds ? resolveConfidenceLevel(topConfidence, topThresholds) : undefined);
+      const wave9ThresholdDecision = topCandidate
+        ? resolveWave9ThresholdDecision(topConfidence, wave9PredictedRole)
+        : undefined;
       const thresholdDecision =
         wave8HeaderAssessment.headerBlock && suggestions.length === 0
           ? "rejected"
-          : topCandidate && topConfidenceLevel
-          ? topConfidenceLevel
+          : topCandidate && wave9ThresholdDecision
+          ? wave9ThresholdDecision
           : suggestions.length > 0
             ? "rejected"
             : "none";
@@ -5614,19 +6196,31 @@ export async function mapBlocksToAcord(
         ? wave8HeaderAssessment.headerBlock
           ? "header_strict_gate_reject"
           : "no_candidates_after_reranking"
-        : topConfidenceLevel === "accepted"
+        : thresholdDecision === "accepted"
+          ? "wave9_calibrated_accepted"
+          : thresholdDecision === "review"
+            ? "wave9_calibrated_review"
+            : thresholdDecision === "rejected"
+              ? "wave9_calibrated_rejected"
+              : topConfidenceLevel === "accepted"
           ? "meets_accepted_threshold"
           : topConfidenceLevel === "review"
             ? "between_review_and_accepted"
             : "below_review_threshold";
       const topWave8Gating = (topCandidate as any)?.wave8Gating;
+      const wave9Suppression = inferWave9Suppression(block);
       const suppressionReasons = [
         ...wave8HeaderAssessment.reasons,
+        ...wave8HeaderAssessment.structureReasons,
         ...(Array.isArray(topWave8Gating?.rejectReasons) ? topWave8Gating.rejectReasons : []),
+        ...wave9Suppression.reasons,
       ];
-      const isSuppressed =
-        wave8HeaderAssessment.headerBlock &&
+      let isSuppressed =
+        (wave8HeaderAssessment.headerBlock || wave8HeaderAssessment.structureSuppressed) &&
         (!topCandidate || !Boolean(topWave8Gating?.passed));
+      if (wave9Suppression.suppress) {
+        isSuppressed = true;
+      }
 
       emitWave49Telemetry({
         blockId: block.id,
@@ -5663,10 +6257,74 @@ export async function mapBlocksToAcord(
         page: block.page,
         text: block.text,
         boundingBox: block.boundingBox,
+        wave9Decision: topCandidate
+          ? {
+              acordCode: topCandidate.acordCode,
+              label: topCandidate.label,
+              confidenceScore: topConfidence,
+              normalizedConfidenceScore: Number(
+                topCandidate?.normalizedConfidenceScore || topCandidate?.confidenceScore || 0,
+              ),
+              fieldType: fieldTyping.fieldType,
+              role: wave9PredictedRole || sectionRoleContext || null,
+              familyId: options?.familyId || null,
+              suppression: {
+                suppressed: isSuppressed,
+                reasons: Array.from(new Set(suppressionReasons)),
+                nonField: wave8HeaderAssessment.nonField,
+                headerBlock: wave8HeaderAssessment.headerBlock,
+              },
+              geometryContext: {
+                sectionRoleContext,
+                wave9PredictedRole: wave9PredictedRole || null,
+                geometryAgreement: Number((topCandidate as any)?._geometryAgreement || 0),
+                page: block.page,
+                x: Number(block.boundingBox?.x || 0),
+                y: Number(block.boundingBox?.y || 0),
+              },
+              consistencyScore: Number((topCandidate as any)?._wave8SemanticConsistency || 0),
+              confidenceCalibration: {
+                decision: wave9ThresholdDecision || thresholdDecision,
+                thresholdReason,
+                confidenceLevel: topConfidenceLevel || null,
+                thresholds: topThresholds || null,
+              },
+            }
+          : null,
+        roleClassifierOutput: {
+          predictedRole: wave9PredictedRole || sectionRoleContext || null,
+          source: wave9PredictedRole ? "wave9" : "wave8",
+        },
+        familyOntologyResolverOutput: {
+          familyId: options?.familyId || null,
+          applied: Boolean(options?.familyId),
+          source: "wave9",
+        },
+        wave9Suppression: {
+          suppressed: wave9Suppression.suppress,
+          reasons: wave9Suppression.reasons,
+        },
+        wave9FieldType: fieldTyping.fieldType,
+        wave9GeometryContext: {
+          sectionRoleContext,
+          wave9PredictedRole: wave9PredictedRole || null,
+          geometryAgreement: Number((topCandidate as any)?._geometryAgreement || 0),
+          page: block.page,
+          x: Number(block.boundingBox?.x || 0),
+          y: Number(block.boundingBox?.y || 0),
+        },
+        wave9ConsistencyScore: Number((topCandidate as any)?._wave8SemanticConsistency || 0),
+        wave9ConfidenceCalibration: {
+          decision: wave9ThresholdDecision || thresholdDecision,
+          thresholdReason,
+          confidenceLevel: topConfidenceLevel || null,
+          thresholds: topThresholds || null,
+        },
         suggestions,
         chosen: suggestions[0],
         topCandidate: suggestions[0],
-        fieldType: deriveUsabilityFieldType(block, suggestions[0]),
+        fieldType: fieldTyping.fieldType,
+        fieldTypeConfidence: fieldTyping.confidence,
         semanticLabel: deriveUsabilitySemanticLabel(
           block,
           suggestions[0],
@@ -5689,12 +6347,17 @@ export async function mapBlocksToAcord(
           reasons: Array.from(new Set(suppressionReasons)),
           nonField: wave8HeaderAssessment.nonField,
           headerBlock: wave8HeaderAssessment.headerBlock,
+          structureSuppressed: wave8HeaderAssessment.structureSuppressed,
+          structureKinds: wave8HeaderAssessment.structureKinds,
+          structureScore: wave8HeaderAssessment.structureScore,
         },
         confidenceScores: {
           confidenceScore: Number(topCandidate?.confidenceScore || 0),
           normalizedConfidenceScore: Number(
             topCandidate?.normalizedConfidenceScore || topCandidate?.confidenceScore || 0,
           ),
+          fieldTypeConfidence: Number(fieldTyping.confidence),
+          checkboxPairingConfidence: Number(pairedSelectionPair?.confidence || 0),
           semanticScore: Number((topCandidate as any)?._wave8SemanticConsistency || 0),
           dictionaryScore: Number((topCandidate as any)?._wave8DictionaryConsistency || 0),
           categoryScore: Number((topCandidate as any)?._wave8CategoryConsistency || 0),
@@ -5738,6 +6401,14 @@ export async function mapBlocksToAcord(
           wave8SupervisionRuleCount: getWave8SupervisionRuleCount(),
           wave8SelectionMarkPaired: Boolean(pairedSelectionLabel),
           wave8SelectionMarkPairLabel: pairedSelectionLabel || null,
+          wave8SelectionMarkPairConfidence: Number(pairedSelectionPair?.confidence || 0),
+          wave8FieldTypeConfidence: Number(fieldTyping.confidence),
+          wave8FieldTypeRationale: fieldTyping.rationale,
+          wave8FieldTypePromoted: fieldTyping.promoted,
+          wave9PredictedRole: wave9PredictedRole || null,
+          wave9FieldTypeOverride: wave9FieldTypeOverride || null,
+          wave9SuppressionApplied: wave9Suppression.suppress,
+          wave9ThresholdDecision: wave9ThresholdDecision || null,
           layoutLmSeededCandidateCount,
           gatedCandidateCount: postGateCandidateCount,
           gatedOutCandidateCount,
@@ -5761,6 +6432,10 @@ export async function mapBlocksToAcord(
           wave8HeaderScore: wave8HeaderAssessment.score,
           wave8HeaderReasons: wave8HeaderAssessment.reasons,
           wave8NonFieldBlock: wave8HeaderAssessment.nonField,
+          wave8StructureSuppressed: wave8HeaderAssessment.structureSuppressed,
+          wave8StructureKinds: wave8HeaderAssessment.structureKinds,
+          wave8StructureReasons: wave8HeaderAssessment.structureReasons,
+          wave8StructureScore: wave8HeaderAssessment.structureScore,
           topCandidate:
             topCandidate && topThresholds && topConfidenceLevel
               ? {

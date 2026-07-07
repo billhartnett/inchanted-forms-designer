@@ -151,6 +151,7 @@ export type FieldMetadata = {
   categoryMode?: string;
   acordCandidates?: AcordCandidateMetadata[];
   structuralDelta?: StructuralDeltaMetadata;
+  wave8?: any;
 };
 
 export type ReviewDecision = "pending" | "accepted" | "rejected";
@@ -464,6 +465,58 @@ export type FieldMapping = {
   suggestions: AcordLabelCandidate[];
   chosen?: AcordLabelCandidate;
   topCandidate?: AcordLabelCandidate;
+  wave9Decision?: {
+    acordCode?: string;
+    label?: string;
+    confidenceScore?: number;
+    normalizedConfidenceScore?: number;
+    fieldType?: SemanticFieldType;
+    role?: string | null;
+    familyId?: string | null;
+    suppression?: {
+      suppressed?: boolean;
+      reasons?: string[];
+      nonField?: boolean;
+      headerBlock?: boolean;
+    };
+    geometryContext?: {
+      sectionRoleContext?: string;
+      wave9PredictedRole?: string | null;
+      geometryAgreement?: number;
+      page?: number;
+      x?: number;
+      y?: number;
+    };
+    consistencyScore?: number;
+    confidenceCalibration?: {
+      decision?: string;
+      thresholdReason?: string;
+      confidenceLevel?: string | null;
+      thresholds?: unknown;
+    };
+  } | null;
+  roleClassifierOutput?: unknown;
+  familyOntologyResolverOutput?: unknown;
+  wave9Suppression?: {
+    suppressed?: boolean;
+    reasons?: string[];
+  };
+  wave9FieldType?: SemanticFieldType;
+  wave9GeometryContext?: {
+    sectionRoleContext?: string;
+    wave9PredictedRole?: string | null;
+    geometryAgreement?: number;
+    page?: number;
+    x?: number;
+    y?: number;
+  };
+  wave9ConsistencyScore?: number;
+  wave9ConfidenceCalibration?: {
+    decision?: string;
+    thresholdReason?: string;
+    confidenceLevel?: string | null;
+    thresholds?: unknown;
+  };
   fieldType?: SemanticFieldType;
   semanticLabel?: string;
   fallbackReason?: "confidence_only_fallback" | "synthetic_confidence_fallback";

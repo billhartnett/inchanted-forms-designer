@@ -82,8 +82,17 @@ export function MappingPanel() {
   };
   const acceptedThreshold = thresholds.accepted;
   const chosenCandidate = selectedMapping.chosenCandidate;
+  const wave9Decision = selectedMapping.wave9Decision;
+  const wave9FieldType = selectedMapping.wave9FieldType;
+  const wave9Suppression = selectedMapping.wave9Suppression;
+  const wave9GeometryContext = selectedMapping.wave9GeometryContext;
+  const wave9ConsistencyScore = selectedMapping.wave9ConsistencyScore;
+  const wave9ConfidenceCalibration = selectedMapping.wave9ConfidenceCalibration;
   if (chosenCandidate && chosenCandidate.confidenceScore < acceptedThreshold) {
     reviewerWarnings.push("Chosen candidate confidence is below calibrated threshold.");
+  }
+  if (typeof wave9Decision?.confidenceScore === "number" && wave9Decision.confidenceScore < acceptedThreshold) {
+    reviewerWarnings.push("Wave-9 decision confidence is below calibrated threshold.");
   }
   if (
     chosenCandidate &&
@@ -101,6 +110,9 @@ export function MappingPanel() {
   }
   if ((chosenCandidate?.ontology?.warnings?.length || 0) > 0) {
     reviewerWarnings.push("Ontology relationship warnings are present for this mapping.");
+  }
+  if (wave9Suppression?.suppressed) {
+    reviewerWarnings.push("Wave-9 suppression flagged this block as a non-field.");
   }
 
   const handleSave = async () => {
@@ -151,6 +163,17 @@ export function MappingPanel() {
           </div>
           <div style={{ fontSize: 12, color: "#64748b", marginTop: 4 }}>
             Field {selectedMapping.fieldDecision} • Label {selectedMapping.labelDecision} • Mapping {selectedMapping.mappingDecision}
+          </div>
+          <div style={{ fontSize: 12, color: "#334155", marginTop: 4 }}>
+            Wave-9 {wave9Decision?.acordCode || selectedMapping.acordCode || "unmapped"}
+            {wave9Decision?.label ? ` • ${wave9Decision.label}` : ""}
+            {wave9FieldType ? ` • ${wave9FieldType}` : ""}
+          </div>
+          <div style={{ fontSize: 12, color: "#64748b", marginTop: 2 }}>
+            {typeof wave9ConsistencyScore === "number" ? `Consistency ${wave9ConsistencyScore.toFixed(3)}` : "Consistency n/a"}
+            {typeof wave9Decision?.confidenceScore === "number" ? ` • Confidence ${wave9Decision.confidenceScore.toFixed(3)}` : ""}
+            {wave9ConfidenceCalibration?.decision ? ` • Calibration ${wave9ConfidenceCalibration.decision}` : ""}
+            {wave9GeometryContext?.wave9PredictedRole || wave9GeometryContext?.sectionRoleContext ? ` • Role ${wave9GeometryContext.wave9PredictedRole || wave9GeometryContext.sectionRoleContext}` : ""}
           </div>
         </div>
         <MappingConfidence

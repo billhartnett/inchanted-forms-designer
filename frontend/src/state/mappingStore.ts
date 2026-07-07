@@ -1541,7 +1541,9 @@ export function useSelectedFieldMapping() {
     const override =
       overrides[selectedField.id] ||
       (extractionBlockId ? overrides[extractionBlockId] : undefined);
+    const wave9Decision = record?.mapping.wave9Decision || undefined;
     const chosenCode =
+      wave9Decision?.acordCode ||
       mappingNode?.chosenCandidateCode ||
       record?.mapping.chosen?.acordCode ||
       override?.acordCode ||
@@ -1550,9 +1552,24 @@ export function useSelectedFieldMapping() {
     const chosenCandidate =
       record?.mapping.suggestions.find((candidate) => candidate.acordCode === chosenCode) ||
       record?.mapping.chosen;
+    const wave9ConfidenceScore =
+      typeof wave9Decision?.confidenceScore === "number"
+        ? wave9Decision.confidenceScore
+        : undefined;
+    const wave9FieldType = wave9Decision?.fieldType || record?.mapping.wave9FieldType;
+    const wave9Suppression = wave9Decision?.suppression || record?.mapping.wave9Suppression;
+    const wave9GeometryContext =
+      wave9Decision?.geometryContext || record?.mapping.wave9GeometryContext;
+    const wave9ConsistencyScore =
+      typeof wave9Decision?.consistencyScore === "number"
+        ? wave9Decision.consistencyScore
+        : record?.mapping.wave9ConsistencyScore;
+    const wave9ConfidenceCalibration =
+      wave9Decision?.confidenceCalibration || record?.mapping.wave9ConfidenceCalibration;
     const candidates = record?.mapping.suggestions || [];
     const rationale = mappingNode?.rationale || record?.mapping.rationale;
     const confidenceScore =
+      wave9ConfidenceScore ??
       chosenCandidate?.confidenceScore ??
       override?.confidenceScore ??
       selectedField.metadata?.confidenceScore ??
@@ -1564,9 +1581,23 @@ export function useSelectedFieldMapping() {
       "manual";
     const details = [
       `Field type: ${selectedField.metadata?.fieldType ?? selectedField.type}`,
+      wave9FieldType ? `Wave-9 field type: ${wave9FieldType}` : undefined,
+      typeof wave9ConsistencyScore === "number"
+        ? `Wave-9 consistency score: ${wave9ConsistencyScore.toFixed(3)}`
+        : undefined,
+      wave9Suppression
+        ? `Wave-9 suppression: ${wave9Suppression.suppressed ? "suppressed" : "active"}`
+        : undefined,
+      wave9GeometryContext?.wave9PredictedRole || wave9GeometryContext?.sectionRoleContext
+        ? `Wave-9 role: ${wave9GeometryContext.wave9PredictedRole || wave9GeometryContext.sectionRoleContext}`
+        : undefined,
       chosenCandidate?.description || selectedField.metadata?.acordDescription || "No ACORD description recorded yet.",
+      wave9Decision?.label ? `Wave-9 label: ${wave9Decision.label}` : undefined,
+      wave9ConfidenceCalibration?.decision
+        ? `Wave-9 calibration: ${wave9ConfidenceCalibration.decision}`
+        : undefined,
       rationale?.summary || "No mapping rationale is available yet.",
-    ];
+    ].filter((item): item is string => Boolean(item));
     const associationCandidates = Object.values(mappings)
       .map((item) => {
         const label = labels.find((entry) => entry.blockId === item.extractionBlockId);
@@ -1598,9 +1629,15 @@ export function useSelectedFieldMapping() {
       acordLabel: chosenCandidate?.label || override?.acordLabel || selectedField.metadata?.acordLabel || "",
       confidenceScore,
       source,
+      wave9Decision,
+      wave9FieldType,
+      wave9Suppression,
+      wave9GeometryContext,
+      wave9ConsistencyScore,
+      wave9ConfidenceCalibration,
       summary:
-        chosenCandidate || override?.acordCode
-          ? `Mapped to ${chosenCandidate?.acordCode || override?.acordCode}${chosenCandidate?.label || override?.acordLabel ? ` (${chosenCandidate?.label || override?.acordLabel})` : ""}.`
+        chosenCandidate || override?.acordCode || wave9Decision?.acordCode
+          ? `Mapped to ${wave9Decision?.acordCode || chosenCandidate?.acordCode || override?.acordCode}${wave9Decision?.label || chosenCandidate?.label || override?.acordLabel ? ` (${wave9Decision?.label || chosenCandidate?.label || override?.acordLabel})` : ""}.`
           : "No ACORD label has been committed to this field.",
       details,
       fieldDecision: fieldNode?.decision || "pending",

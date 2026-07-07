@@ -14,14 +14,6 @@ import type {
   NormalizedBoundingBox,
   PageExtraction,
   SemanticFieldType,
-  Wave8AnchorPromotion,
-  Wave8CheckboxCandidate,
-  Wave8FieldMetadata,
-  Wave8GatingMetadata,
-  Wave8PairedLabel,
-  Wave8ResolverFlags,
-  Wave8SelectionMarkAssociation,
-  Wave8SuppressionMetadata,
 } from "../../../../shared/src/types";
 import { ExtractionViewer } from "../../extraction";
 import { useExtractionStore } from "../../state";
@@ -62,6 +54,75 @@ type DraftMappedField = {
   chosen?: AcordLabelCandidate;
   /** Typed field shape built from buildTypedFieldPreview. Used in applyMappedFields. */
   fieldPreview?: Field;
+};
+
+type Wave8AnchorPromotion = { id?: string; label?: string; reason?: string };
+type Wave8CheckboxCandidate = {
+  blockId?: string;
+  text?: string;
+  checked?: boolean;
+  confidence?: number;
+  boundingBox?: BoundingBox;
+};
+type Wave8PairedLabel = {
+  text?: string;
+  blockId?: string;
+  boundingBox?: BoundingBox;
+};
+type Wave8SelectionMarkAssociation = {
+  selectionMarkBlockId?: string;
+  labelBlockId?: string;
+  labelText?: string;
+  checked?: boolean;
+  confidence?: number;
+  boundingBox?: BoundingBox;
+};
+type Wave8ResolverFlags = {
+  contractorsInsuredNameResolverApplied?: boolean;
+  wave8TargetedAnchorPromoted?: string;
+};
+type Wave8GatingMetadata = {
+  passed?: boolean;
+  thresholdDecision?: string;
+  thresholdReason?: string;
+  rejectReasons?: string[];
+  semanticConsistency?: number;
+  dictionaryConsistency?: number;
+  categoryConsistency?: number;
+  supervisionBoost?: number;
+};
+type Wave8SuppressionMetadata = {
+  suppressed?: boolean;
+  reason?: string;
+  iou?: number;
+  winnerBlockId?: string;
+  nonField?: boolean;
+  headerBlock?: boolean;
+};
+type Wave8FieldMetadata = {
+  blockId: string;
+  blockGeometry: BoundingBox;
+  categoryMode?: string;
+  semanticLabel: string;
+  pairedLabel?: Wave8PairedLabel;
+  resolverFlags: Wave8ResolverFlags;
+  supervisionBoost?: number;
+  gatingMetadata: Wave8GatingMetadata;
+  suppressionMetadata: Wave8SuppressionMetadata;
+  fieldType?: SemanticFieldType;
+  selectionMarkAssociations: Wave8SelectionMarkAssociation[];
+  checkboxCandidates: Wave8CheckboxCandidate[];
+  anchorPromotions: Wave8AnchorPromotion[];
+  confidenceScores: {
+    confidenceScore?: number;
+    normalizedConfidenceScore?: number;
+    semanticScore?: number;
+    dictionaryScore?: number;
+    categoryScore?: number;
+    supervisionBoost?: number;
+  };
+  groupKey: string;
+  groupLabel: string;
 };
 
 type AutoMapSummary = {
@@ -594,7 +655,9 @@ function readWave8Metadata(
   sourceBlock: ExtractedBlock,
 ): Wave8FieldMetadata {
   const diag = ((mapping as any).mappingDiagnostics || {}) as Record<string, unknown>;
-  const chosen = mapping.chosen || (mapping as any).topCandidate || mapping.suggestions?.[0];
+  const wave9Decision = (mapping as any).wave9Decision || undefined;
+  const chosen =
+    wave9Decision || mapping.chosen || (mapping as any).topCandidate || mapping.suggestions?.[0];
 
   const blockGeometry = toBoundingBox(
     (mapping as any).blockGeometry,
@@ -666,10 +729,11 @@ function readWave8Metadata(
     `${String(sourceBlock.text || "")} ${String(mapping.text || "")}`,
   );
   const declaredFieldType = String((mapping as any).fieldType || "").toLowerCase();
+  const wave9FieldType = String((mapping as any).wave9FieldType || wave9Decision?.fieldType || "").toLowerCase();
   if (
     selectionMarkAssociations.length === 0 &&
     checkboxCandidates.length === 0 &&
-    (sourceBlock.type === "checkbox" || declaredFieldType === "checkbox" || hasCheckboxCue)
+    (sourceBlock.type === "checkbox" || declaredFieldType === "checkbox" || wave9FieldType === "checkbox" || hasCheckboxCue)
   ) {
     checkboxCandidates.push({
       blockId: mapping.blockId,
@@ -800,7 +864,7 @@ function readWave8Metadata(
         : undefined,
     gatingMetadata,
     suppressionMetadata,
-    fieldType: (mapping as any).fieldType,
+    fieldType: wave9Decision?.fieldType || (mapping as any).wave9FieldType || (mapping as any).fieldType,
     selectionMarkAssociations,
     checkboxCandidates,
     anchorPromotions,
@@ -821,7 +885,9 @@ function buildTypedFieldPreview(
   mapping: MapFieldMapping,
   sourceBlock: ExtractedBlock,
 ): Field {
-  const chosen = mapping.chosen || (mapping as any).topCandidate || mapping.suggestions?.[0];
+  const wave9Decision = (mapping as any).wave9Decision || undefined;
+  const chosen =
+    wave9Decision || mapping.chosen || (mapping as any).topCandidate || mapping.suggestions?.[0];
   const wave8 = readWave8Metadata(mapping, sourceBlock);
   const shouldForceCheckbox =
     (wave8.selectionMarkAssociations?.length || 0) > 0 ||
@@ -830,6 +896,8 @@ function buildTypedFieldPreview(
   const fieldType = shouldForceCheckbox
     ? "checkbox"
     : (wave8.fieldType as SemanticFieldType | undefined) ||
+      (wave9Decision?.fieldType as SemanticFieldType | undefined) ||
+      ((mapping as any).wave9FieldType as SemanticFieldType | undefined) ||
       ((mapping as any).fieldType as SemanticFieldType | undefined) ||
       inferFieldType(sourceBlock, chosen);
   const semanticLabel = wave8.semanticLabel || String(mapping.text || "").trim() || String(chosen?.label || "").trim();
@@ -874,6 +942,12 @@ function buildTypedFieldPreview(
       fieldType,
       required: false,
       confidenceScore: chosen?.confidenceScore ?? sourceBlock.confidence,
+      wave9Decision,
+      wave9FieldType: wave9Decision?.fieldType || (mapping as any).wave9FieldType,
+      wave9Suppression: (mapping as any).wave9Suppression,
+      wave9GeometryContext: (mapping as any).wave9GeometryContext,
+      wave9ConsistencyScore: (mapping as any).wave9ConsistencyScore,
+      wave9ConfidenceCalibration: (mapping as any).wave9ConfidenceCalibration,
       source: metadataSource,
       extractionBlockId: mapping.blockId,
       // Preserve legacy top-level metadata while storing full Wave-8 contract.
@@ -884,8 +958,8 @@ function buildTypedFieldPreview(
       checkboxState: sourceBlock.type === "checkbox" ? {
         isCheckbox: true,
         checked:
-          Boolean(wave8.selectionMarkAssociations?.some((item) => item.checked)) ||
-          Boolean(wave8.checkboxCandidates?.some((item) => item.checked)),
+          Boolean(wave8.selectionMarkAssociations?.some((item: Wave8SelectionMarkAssociation) => item.checked)) ||
+          Boolean(wave8.checkboxCandidates?.some((item: Wave8CheckboxCandidate) => item.checked)),
         pattern: "\\u2610|\\u2611|\\u2612|\\[\\s*\\]",
       } : undefined,
       signatureState: sourceBlock.type === "signature" ? {
@@ -1522,7 +1596,7 @@ export default function PdfImportModal({
     for (const field of fieldObjects) {
       const page = Math.max(0, field.pageIndex ?? 0);
       const pageFields = placedByPage.get(page) || [];
-      const wave8 = field.metadata?.wave8;
+      const wave8 = (field.metadata as any)?.wave8;
       const forceVisible = Boolean(
         wave8?.resolverFlags?.contractorsInsuredNameResolverApplied ||
           (wave8?.anchorPromotions || []).length,
