@@ -11,6 +11,10 @@ on:
     tags:
       - "v*"
 
+concurrency:
+  group: deploy-aca
+  cancel-in-progress: true
+
 jobs:
   resolve-image:
     runs-on: ubuntu-latest
@@ -139,6 +143,7 @@ jobs:
 
           MAX_PROPAGATION_ATTEMPTS=24
           PROPAGATION_DELAY_SECONDS=15
+          TRANSIENT_RETRY_PATTERN="Identity with resource ID 'system' not found|principalId.*not found|could not be found|BadRequest|ContainerAppOperationInProgress|active provisioning operation in progress"
 
           IDENTITY_TYPE="$(az containerapp show --name "${{ secrets.ACA_APP_NAME }}" --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" --query identity.type -o tsv)"
           if [[ "${IDENTITY_TYPE}" != *"SystemAssigned"* ]]; then
@@ -156,7 +161,7 @@ jobs:
                 ASSIGNED=1
                 break
               fi
-              if grep -qi "Identity with resource ID 'system' not found" <<< "${ASSIGN_OUT}"; then
+              if grep -Eqi "${TRANSIENT_RETRY_PATTERN}" <<< "${ASSIGN_OUT}"; then
                 sleep 10
                 continue
               fi
@@ -209,7 +214,7 @@ jobs:
               REGISTRY_SET=1
               break
             fi
-            if grep -Eqi "Identity with resource ID 'system' not found|principalId.*not found|could not be found|BadRequest" <<< "${REGISTRY_OUT}"; then
+            if grep -Eqi "${TRANSIENT_RETRY_PATTERN}" <<< "${REGISTRY_OUT}"; then
               echo "registry set not ready yet (attempt ${attempt}/${MAX_PROPAGATION_ATTEMPTS}); waiting ${PROPAGATION_DELAY_SECONDS}s..."
               sleep "${PROPAGATION_DELAY_SECONDS}"
               continue
@@ -253,7 +258,7 @@ jobs:
               SECRET_SET=1
               break
             fi
-            if grep -Eqi "Identity with resource ID 'system' not found|principalId.*not found|could not be found|BadRequest" <<< "${SECRET_OUT}"; then
+            if grep -Eqi "${TRANSIENT_RETRY_PATTERN}" <<< "${SECRET_OUT}"; then
               echo "secret set not ready yet (attempt ${attempt}/${MAX_PROPAGATION_ATTEMPTS}); waiting ${PROPAGATION_DELAY_SECONDS}s..."
               sleep "${PROPAGATION_DELAY_SECONDS}"
               continue
@@ -289,7 +294,7 @@ jobs:
               UPDATED=1
               break
             fi
-            if grep -Eqi "Identity with resource ID 'system' not found|principalId.*not found|could not be found|BadRequest" <<< "${UPDATE_OUT}"; then
+            if grep -Eqi "${TRANSIENT_RETRY_PATTERN}" <<< "${UPDATE_OUT}"; then
               echo "env update not ready yet (attempt ${attempt}/${MAX_PROPAGATION_ATTEMPTS}); waiting ${PROPAGATION_DELAY_SECONDS}s..."
               sleep "${PROPAGATION_DELAY_SECONDS}"
               continue
@@ -396,6 +401,7 @@ jobs:
 
           MAX_PROPAGATION_ATTEMPTS=24
           PROPAGATION_DELAY_SECONDS=15
+          TRANSIENT_RETRY_PATTERN="Identity with resource ID 'system' not found|principalId.*not found|could not be found|BadRequest|ContainerAppOperationInProgress|active provisioning operation in progress"
 
           IDENTITY_TYPE="$(az containerapp show --name "${{ secrets.ACA_APP_NAME }}" --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" --query identity.type -o tsv)"
           if [[ "${IDENTITY_TYPE}" != *"SystemAssigned"* ]]; then
@@ -413,7 +419,7 @@ jobs:
                 ASSIGNED=1
                 break
               fi
-              if grep -qi "Identity with resource ID 'system' not found" <<< "${ASSIGN_OUT}"; then
+              if grep -Eqi "${TRANSIENT_RETRY_PATTERN}" <<< "${ASSIGN_OUT}"; then
                 sleep 10
                 continue
               fi
@@ -466,7 +472,7 @@ jobs:
               REGISTRY_SET=1
               break
             fi
-            if grep -Eqi "Identity with resource ID 'system' not found|principalId.*not found|could not be found|BadRequest" <<< "${REGISTRY_OUT}"; then
+            if grep -Eqi "${TRANSIENT_RETRY_PATTERN}" <<< "${REGISTRY_OUT}"; then
               echo "registry set not ready yet (attempt ${attempt}/${MAX_PROPAGATION_ATTEMPTS}); waiting ${PROPAGATION_DELAY_SECONDS}s..."
               sleep "${PROPAGATION_DELAY_SECONDS}"
               continue
@@ -510,7 +516,7 @@ jobs:
               SECRET_SET=1
               break
             fi
-            if grep -Eqi "Identity with resource ID 'system' not found|principalId.*not found|could not be found|BadRequest" <<< "${SECRET_OUT}"; then
+            if grep -Eqi "${TRANSIENT_RETRY_PATTERN}" <<< "${SECRET_OUT}"; then
               echo "secret set not ready yet (attempt ${attempt}/${MAX_PROPAGATION_ATTEMPTS}); waiting ${PROPAGATION_DELAY_SECONDS}s..."
               sleep "${PROPAGATION_DELAY_SECONDS}"
               continue
@@ -546,7 +552,7 @@ jobs:
               UPDATED=1
               break
             fi
-            if grep -Eqi "Identity with resource ID 'system' not found|principalId.*not found|could not be found|BadRequest" <<< "${UPDATE_OUT}"; then
+            if grep -Eqi "${TRANSIENT_RETRY_PATTERN}" <<< "${UPDATE_OUT}"; then
               echo "env update not ready yet (attempt ${attempt}/${MAX_PROPAGATION_ATTEMPTS}); waiting ${PROPAGATION_DELAY_SECONDS}s..."
               sleep "${PROPAGATION_DELAY_SECONDS}"
               continue
