@@ -150,12 +150,75 @@ jobs:
             local state=""
             for ready_attempt in {1..40}; do
               state="$(az containerapp show --name "${{ secrets.ACA_APP_NAME }}" --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" --query properties.provisioningState -o tsv)"
-              if [[ -n "${state}" && "${state}" != "InProgress" ]]; then
+              if [[ "${state}" == "Succeeded" ]]; then
                 return 0
+              fi
+              if [[ "${state}" == "Failed" || "${state}" == "Canceled" ]]; then
+                echo "Container app reached terminal provisioningState=${state} before ${label}" >&2
+                return 2
               fi
               sleep 10
             done
             echo "Container app remained in provisioningState=InProgress before ${label}; last state=${state}" >&2
+            return 1
+          }
+
+          restart_latest_revision() {
+            local label="$1"
+            local revision_name=""
+            revision_name="$(az containerapp show --name "${{ secrets.ACA_APP_NAME }}" --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" --query properties.latestRevisionName -o tsv)"
+            if [[ -z "${revision_name}" || "${revision_name}" == "null" ]]; then
+              echo "No latest revision found for restart during ${label}" >&2
+              return 1
+            fi
+
+            set +e
+            RESTART_OUT="$(az containerapp revision restart \
+              --name "${{ secrets.ACA_APP_NAME }}" \
+              --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" \
+              --revision "${revision_name}" \
+              --output none 2>&1)"
+            RESTART_CODE=$?
+            set -e
+            if [[ ${RESTART_CODE} -ne 0 ]]; then
+              if grep -Eqi "${TRANSIENT_RETRY_PATTERN}" <<< "${RESTART_OUT}"; then
+                echo "revision restart transiently blocked during ${label}; waiting ${PROPAGATION_DELAY_SECONDS}s..."
+                sleep "${PROPAGATION_DELAY_SECONDS}"
+                return 0
+              fi
+              echo "${RESTART_OUT}" >&2
+              return ${RESTART_CODE}
+            fi
+            sleep 15
+            return 0
+          }
+
+          ensure_app_ready() {
+            local label="$1"
+
+            set +e
+            wait_for_app_ready "${label}"
+            READY_CODE=$?
+            set -e
+
+            if [[ ${READY_CODE} -eq 0 ]]; then
+              return 0
+            fi
+
+            if [[ ${READY_CODE} -eq 2 ]]; then
+              echo "Attempting revision restart recovery before ${label}..."
+              restart_latest_revision "${label}" || return 1
+
+              set +e
+              wait_for_app_ready "${label} after revision restart"
+              READY_CODE=$?
+              set -e
+
+              if [[ ${READY_CODE} -eq 0 ]]; then
+                return 0
+              fi
+            fi
+
             return 1
           }
 
@@ -215,7 +278,7 @@ jobs:
             if [[ ${REGISTRY_SET} -eq 1 ]]; then
               break
             fi
-            wait_for_app_ready "staging registry set"
+            ensure_app_ready "staging registry set"
             set +e
             REGISTRY_OUT="$(az containerapp registry set \
               --name "${{ secrets.ACA_APP_NAME }}" \
@@ -245,7 +308,7 @@ jobs:
           # Optional fallback: if ACR pull credentials are provided, bind the registry with credentials
           # to avoid any residual managed-identity propagation race during secret/env mutation.
           if [[ -n "${{ secrets.ACR_PULL_USERNAME }}" && -n "${{ secrets.ACR_PULL_PASSWORD }}" ]]; then
-            wait_for_app_ready "staging registry credential fallback"
+            ensure_app_ready "staging registry credential fallback"
             az containerapp registry set \
               --name "${{ secrets.ACA_APP_NAME }}" \
               --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" \
@@ -270,7 +333,7 @@ jobs:
             if [[ ${SECRET_SET} -eq 1 ]]; then
               break
             fi
-            wait_for_app_ready "staging secret set"
+            ensure_app_ready "staging secret set"
             set +e
             SECRET_OUT="$(az containerapp secret set \
               --name "${{ secrets.ACA_APP_NAME }}" \
@@ -303,7 +366,7 @@ jobs:
 
           UPDATED=0
           for attempt in $(seq 1 "${MAX_PROPAGATION_ATTEMPTS}"); do
-            wait_for_app_ready "staging env update"
+            ensure_app_ready "staging env update"
             set +e
             UPDATE_OUT="$(az containerapp update \
               --name "${{ secrets.ACA_APP_NAME }}" \
@@ -439,12 +502,75 @@ jobs:
             local state=""
             for ready_attempt in {1..40}; do
               state="$(az containerapp show --name "${{ secrets.ACA_APP_NAME }}" --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" --query properties.provisioningState -o tsv)"
-              if [[ -n "${state}" && "${state}" != "InProgress" ]]; then
+              if [[ "${state}" == "Succeeded" ]]; then
                 return 0
+              fi
+              if [[ "${state}" == "Failed" || "${state}" == "Canceled" ]]; then
+                echo "Container app reached terminal provisioningState=${state} before ${label}" >&2
+                return 2
               fi
               sleep 10
             done
             echo "Container app remained in provisioningState=InProgress before ${label}; last state=${state}" >&2
+            return 1
+          }
+
+          restart_latest_revision() {
+            local label="$1"
+            local revision_name=""
+            revision_name="$(az containerapp show --name "${{ secrets.ACA_APP_NAME }}" --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" --query properties.latestRevisionName -o tsv)"
+            if [[ -z "${revision_name}" || "${revision_name}" == "null" ]]; then
+              echo "No latest revision found for restart during ${label}" >&2
+              return 1
+            fi
+
+            set +e
+            RESTART_OUT="$(az containerapp revision restart \
+              --name "${{ secrets.ACA_APP_NAME }}" \
+              --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" \
+              --revision "${revision_name}" \
+              --output none 2>&1)"
+            RESTART_CODE=$?
+            set -e
+            if [[ ${RESTART_CODE} -ne 0 ]]; then
+              if grep -Eqi "${TRANSIENT_RETRY_PATTERN}" <<< "${RESTART_OUT}"; then
+                echo "revision restart transiently blocked during ${label}; waiting ${PROPAGATION_DELAY_SECONDS}s..."
+                sleep "${PROPAGATION_DELAY_SECONDS}"
+                return 0
+              fi
+              echo "${RESTART_OUT}" >&2
+              return ${RESTART_CODE}
+            fi
+            sleep 15
+            return 0
+          }
+
+          ensure_app_ready() {
+            local label="$1"
+
+            set +e
+            wait_for_app_ready "${label}"
+            READY_CODE=$?
+            set -e
+
+            if [[ ${READY_CODE} -eq 0 ]]; then
+              return 0
+            fi
+
+            if [[ ${READY_CODE} -eq 2 ]]; then
+              echo "Attempting revision restart recovery before ${label}..."
+              restart_latest_revision "${label}" || return 1
+
+              set +e
+              wait_for_app_ready "${label} after revision restart"
+              READY_CODE=$?
+              set -e
+
+              if [[ ${READY_CODE} -eq 0 ]]; then
+                return 0
+              fi
+            fi
+
             return 1
           }
 
@@ -504,7 +630,7 @@ jobs:
             if [[ ${REGISTRY_SET} -eq 1 ]]; then
               break
             fi
-            wait_for_app_ready "production registry set"
+            ensure_app_ready "production registry set"
             set +e
             REGISTRY_OUT="$(az containerapp registry set \
               --name "${{ secrets.ACA_APP_NAME }}" \
@@ -534,7 +660,7 @@ jobs:
           # Optional fallback: if ACR pull credentials are provided, bind the registry with credentials
           # to avoid any residual managed-identity propagation race during secret/env mutation.
           if [[ -n "${{ secrets.ACR_PULL_USERNAME }}" && -n "${{ secrets.ACR_PULL_PASSWORD }}" ]]; then
-            wait_for_app_ready "production registry credential fallback"
+            ensure_app_ready "production registry credential fallback"
             az containerapp registry set \
               --name "${{ secrets.ACA_APP_NAME }}" \
               --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" \
@@ -559,7 +685,7 @@ jobs:
             if [[ ${SECRET_SET} -eq 1 ]]; then
               break
             fi
-            wait_for_app_ready "production secret set"
+            ensure_app_ready "production secret set"
             set +e
             SECRET_OUT="$(az containerapp secret set \
               --name "${{ secrets.ACA_APP_NAME }}" \
@@ -592,7 +718,7 @@ jobs:
 
           UPDATED=0
           for attempt in $(seq 1 "${MAX_PROPAGATION_ATTEMPTS}"); do
-            wait_for_app_ready "production env update"
+            ensure_app_ready "production env update"
             set +e
             UPDATE_OUT="$(az containerapp update \
               --name "${{ secrets.ACA_APP_NAME }}" \
