@@ -145,6 +145,20 @@ jobs:
           PROPAGATION_DELAY_SECONDS=15
           TRANSIENT_RETRY_PATTERN="Identity with resource ID 'system' not found|principalId.*not found|could not be found|BadRequest|ContainerAppOperationInProgress|active provisioning operation in progress"
 
+          wait_for_app_ready() {
+            local label="$1"
+            local state=""
+            for ready_attempt in {1..40}; do
+              state="$(az containerapp show --name "${{ secrets.ACA_APP_NAME }}" --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" --query properties.provisioningState -o tsv)"
+              if [[ "${state}" == "Succeeded" ]]; then
+                return 0
+              fi
+              sleep 10
+            done
+            echo "Container app never reached provisioningState=Succeeded before ${label}; last state=${state}" >&2
+            return 1
+          }
+
           IDENTITY_TYPE="$(az containerapp show --name "${{ secrets.ACA_APP_NAME }}" --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" --query identity.type -o tsv)"
           if [[ "${IDENTITY_TYPE}" != *"SystemAssigned"* ]]; then
             ASSIGNED=0
@@ -201,6 +215,7 @@ jobs:
             if [[ ${REGISTRY_SET} -eq 1 ]]; then
               break
             fi
+            wait_for_app_ready "staging registry set"
             set +e
             REGISTRY_OUT="$(az containerapp registry set \
               --name "${{ secrets.ACA_APP_NAME }}" \
@@ -230,6 +245,7 @@ jobs:
           # Optional fallback: if ACR pull credentials are provided, bind the registry with credentials
           # to avoid any residual managed-identity propagation race during secret/env mutation.
           if [[ -n "${{ secrets.ACR_PULL_USERNAME }}" && -n "${{ secrets.ACR_PULL_PASSWORD }}" ]]; then
+            wait_for_app_ready "staging registry credential fallback"
             az containerapp registry set \
               --name "${{ secrets.ACA_APP_NAME }}" \
               --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" \
@@ -239,8 +255,22 @@ jobs:
               --output none
           fi
 
-          SECRET_SET=0
+          EXISTING_SECRETS="$(az containerapp show --name "${{ secrets.ACA_APP_NAME }}" --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" --query "properties.configuration.secrets[].name" -o tsv || true)"
+          if grep -qx "azure-storage-connection-string" <<< "${EXISTING_SECRETS}" \
+            && grep -qx "di-endpoint" <<< "${EXISTING_SECRETS}" \
+            && grep -qx "di-key" <<< "${EXISTING_SECRETS}" \
+            && grep -qx "openai-endpoint" <<< "${EXISTING_SECRETS}" \
+            && grep -qx "openai-api-key" <<< "${EXISTING_SECRETS}"; then
+            SECRET_SET=1
+          else
+            SECRET_SET=0
+          fi
+
           for attempt in $(seq 1 "${MAX_PROPAGATION_ATTEMPTS}"); do
+            if [[ ${SECRET_SET} -eq 1 ]]; then
+              break
+            fi
+            wait_for_app_ready "staging secret set"
             set +e
             SECRET_OUT="$(az containerapp secret set \
               --name "${{ secrets.ACA_APP_NAME }}" \
@@ -273,6 +303,7 @@ jobs:
 
           UPDATED=0
           for attempt in $(seq 1 "${MAX_PROPAGATION_ATTEMPTS}"); do
+            wait_for_app_ready "staging env update"
             set +e
             UPDATE_OUT="$(az containerapp update \
               --name "${{ secrets.ACA_APP_NAME }}" \
@@ -403,6 +434,20 @@ jobs:
           PROPAGATION_DELAY_SECONDS=15
           TRANSIENT_RETRY_PATTERN="Identity with resource ID 'system' not found|principalId.*not found|could not be found|BadRequest|ContainerAppOperationInProgress|active provisioning operation in progress"
 
+          wait_for_app_ready() {
+            local label="$1"
+            local state=""
+            for ready_attempt in {1..40}; do
+              state="$(az containerapp show --name "${{ secrets.ACA_APP_NAME }}" --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" --query properties.provisioningState -o tsv)"
+              if [[ "${state}" == "Succeeded" ]]; then
+                return 0
+              fi
+              sleep 10
+            done
+            echo "Container app never reached provisioningState=Succeeded before ${label}; last state=${state}" >&2
+            return 1
+          }
+
           IDENTITY_TYPE="$(az containerapp show --name "${{ secrets.ACA_APP_NAME }}" --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" --query identity.type -o tsv)"
           if [[ "${IDENTITY_TYPE}" != *"SystemAssigned"* ]]; then
             ASSIGNED=0
@@ -459,6 +504,7 @@ jobs:
             if [[ ${REGISTRY_SET} -eq 1 ]]; then
               break
             fi
+            wait_for_app_ready "production registry set"
             set +e
             REGISTRY_OUT="$(az containerapp registry set \
               --name "${{ secrets.ACA_APP_NAME }}" \
@@ -488,6 +534,7 @@ jobs:
           # Optional fallback: if ACR pull credentials are provided, bind the registry with credentials
           # to avoid any residual managed-identity propagation race during secret/env mutation.
           if [[ -n "${{ secrets.ACR_PULL_USERNAME }}" && -n "${{ secrets.ACR_PULL_PASSWORD }}" ]]; then
+            wait_for_app_ready "production registry credential fallback"
             az containerapp registry set \
               --name "${{ secrets.ACA_APP_NAME }}" \
               --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" \
@@ -497,8 +544,22 @@ jobs:
               --output none
           fi
 
-          SECRET_SET=0
+          EXISTING_SECRETS="$(az containerapp show --name "${{ secrets.ACA_APP_NAME }}" --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" --query "properties.configuration.secrets[].name" -o tsv || true)"
+          if grep -qx "azure-storage-connection-string" <<< "${EXISTING_SECRETS}" \
+            && grep -qx "di-endpoint" <<< "${EXISTING_SECRETS}" \
+            && grep -qx "di-key" <<< "${EXISTING_SECRETS}" \
+            && grep -qx "openai-endpoint" <<< "${EXISTING_SECRETS}" \
+            && grep -qx "openai-api-key" <<< "${EXISTING_SECRETS}"; then
+            SECRET_SET=1
+          else
+            SECRET_SET=0
+          fi
+
           for attempt in $(seq 1 "${MAX_PROPAGATION_ATTEMPTS}"); do
+            if [[ ${SECRET_SET} -eq 1 ]]; then
+              break
+            fi
+            wait_for_app_ready "production secret set"
             set +e
             SECRET_OUT="$(az containerapp secret set \
               --name "${{ secrets.ACA_APP_NAME }}" \
@@ -531,6 +592,7 @@ jobs:
 
           UPDATED=0
           for attempt in $(seq 1 "${MAX_PROPAGATION_ATTEMPTS}"); do
+            wait_for_app_ready "production env update"
             set +e
             UPDATE_OUT="$(az containerapp update \
               --name "${{ secrets.ACA_APP_NAME }}" \
