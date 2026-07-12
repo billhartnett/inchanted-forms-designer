@@ -181,8 +181,15 @@ jobs:
             exit 1
           fi
 
+          REGISTRY_IDENTITY="$(az containerapp show --name "${{ secrets.ACA_APP_NAME }}" --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" --query "properties.configuration.registries[?server=='${{ secrets.ACR_LOGIN_SERVER }}'].identity | [0]" -o tsv)"
           REGISTRY_SET=0
-          for attempt in {1..6}; do
+          if [[ "${REGISTRY_IDENTITY}" == "system" ]]; then
+            REGISTRY_SET=1
+          fi
+          for attempt in {1..18}; do
+            if [[ ${REGISTRY_SET} -eq 1 ]]; then
+              break
+            fi
             set +e
             REGISTRY_OUT="$(az containerapp registry set \
               --name "${{ secrets.ACA_APP_NAME }}" \
@@ -410,8 +417,15 @@ jobs:
             exit 1
           fi
 
+          REGISTRY_IDENTITY="$(az containerapp show --name "${{ secrets.ACA_APP_NAME }}" --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" --query "properties.configuration.registries[?server=='${{ secrets.ACR_LOGIN_SERVER }}'].identity | [0]" -o tsv)"
           REGISTRY_SET=0
-          for attempt in {1..6}; do
+          if [[ "${REGISTRY_IDENTITY}" == "system" ]]; then
+            REGISTRY_SET=1
+          fi
+          for attempt in {1..18}; do
+            if [[ ${REGISTRY_SET} -eq 1 ]]; then
+              break
+            fi
             set +e
             REGISTRY_OUT="$(az containerapp registry set \
               --name "${{ secrets.ACA_APP_NAME }}" \
