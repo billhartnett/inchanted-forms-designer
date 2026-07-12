@@ -128,3 +128,9 @@ The non-negotiable rule remains unchanged: OCR text is evidence for mapping and 
 - Promote `frontend/src/extraction` from placeholders into a reviewer workflow integrated with `PdfImportModal`.
 - Move schema and ACORD XML generation behind the shared typed field model instead of loosely structured dictionaries.
 - Add automated tests for the mapping confidence gates and designer page-scoping behavior.
+
+## Deployment Operations
+
+For GitHub Environment protection and staged ACA promotion guidance, see:
+
+- `docs/aca-environment-protection-runbook.md`

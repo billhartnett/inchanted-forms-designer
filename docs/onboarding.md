@@ -109,3 +109,9 @@ If request failures or latency regressions return:
 1. Set `DISABLE_RUNTIME_EMBEDDINGS=1`.
 2. Restart Function App.
 3. Re-run the diagnostics/gate scripts and verify baseline recovery.
+
+## Deployment Operations
+
+For the Express and ACA deployment approval flow, see:
+
+- `docs/aca-environment-protection-runbook.md`
