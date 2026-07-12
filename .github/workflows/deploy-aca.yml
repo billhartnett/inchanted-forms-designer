@@ -122,6 +122,35 @@ jobs:
             exit 1
           fi
 
+      - name: Inject ACA app secrets and runtime env (staging)
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          az containerapp secret set \
+            --name "${{ secrets.ACA_APP_NAME }}" \
+            --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" \
+            --secrets \
+            azure-storage-connection-string='${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}' \
+            di-key='${{ secrets.DI_KEY }}' \
+            openai-api-key='${{ secrets.OPENAI_API_KEY }}' \
+            --output none
+
+          az containerapp update \
+            --name "${{ secrets.ACA_APP_NAME }}" \
+            --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" \
+            --set-env-vars \
+            NODE_ENV=production \
+            PORT=8080 \
+            AZURE_STORAGE_CONNECTION_STRING=secretref:azure-storage-connection-string \
+            DI_ENDPOINT='${{ secrets.DI_ENDPOINT }}' \
+            DI_KEY=secretref:di-key \
+            OPENAI_ENDPOINT='${{ secrets.OPENAI_ENDPOINT }}' \
+            OPENAI_API_KEY=secretref:openai-api-key \
+            OPENAI_DEPLOYMENT='${{ secrets.OPENAI_DEPLOYMENT }}' \
+            EMBEDDING_MODEL='${{ secrets.OPENAI_DEPLOYMENT }}' \
+            --output none
+
       - name: Apply ACA manifest (staging)
         shell: bash
         run: |
@@ -208,6 +237,35 @@ jobs:
             echo "Missing image digest from resolve-image job" >&2
             exit 1
           fi
+
+      - name: Inject ACA app secrets and runtime env (production)
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          az containerapp secret set \
+            --name "${{ secrets.ACA_APP_NAME }}" \
+            --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" \
+            --secrets \
+            azure-storage-connection-string='${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}' \
+            di-key='${{ secrets.DI_KEY }}' \
+            openai-api-key='${{ secrets.OPENAI_API_KEY }}' \
+            --output none
+
+          az containerapp update \
+            --name "${{ secrets.ACA_APP_NAME }}" \
+            --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" \
+            --set-env-vars \
+            NODE_ENV=production \
+            PORT=8080 \
+            AZURE_STORAGE_CONNECTION_STRING=secretref:azure-storage-connection-string \
+            DI_ENDPOINT='${{ secrets.DI_ENDPOINT }}' \
+            DI_KEY=secretref:di-key \
+            OPENAI_ENDPOINT='${{ secrets.OPENAI_ENDPOINT }}' \
+            OPENAI_API_KEY=secretref:openai-api-key \
+            OPENAI_DEPLOYMENT='${{ secrets.OPENAI_DEPLOYMENT }}' \
+            EMBEDDING_MODEL='${{ secrets.OPENAI_DEPLOYMENT }}' \
+            --output none
 
       - name: Apply ACA manifest (production)
         shell: bash
