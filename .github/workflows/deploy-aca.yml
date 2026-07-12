@@ -181,12 +181,15 @@ jobs:
             exit 1
           fi
 
+          # Give ARM/ACA a short stabilization window after principalId appears.
+          sleep 20
+
           REGISTRY_IDENTITY="$(az containerapp show --name "${{ secrets.ACA_APP_NAME }}" --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" --query "properties.configuration.registries[?server=='${{ secrets.ACR_LOGIN_SERVER }}'].identity | [0]" -o tsv)"
           REGISTRY_SET=0
           if [[ "${REGISTRY_IDENTITY}" == "system" ]]; then
             REGISTRY_SET=1
           fi
-          for attempt in {1..18}; do
+          for attempt in {1..24}; do
             if [[ ${REGISTRY_SET} -eq 1 ]]; then
               break
             fi
@@ -203,8 +206,9 @@ jobs:
               REGISTRY_SET=1
               break
             fi
-            if grep -qi "Identity with resource ID 'system' not found" <<< "${REGISTRY_OUT}"; then
-              sleep 10
+            if grep -Eqi "Identity with resource ID 'system' not found|principalId.*not found|could not be found|BadRequest" <<< "${REGISTRY_OUT}"; then
+              echo "registry set not ready yet (attempt ${attempt}/24); waiting 15s..."
+              sleep 15
               continue
             fi
             echo "${REGISTRY_OUT}" >&2
@@ -216,7 +220,7 @@ jobs:
           fi
 
           SECRET_SET=0
-          for attempt in {1..6}; do
+          for attempt in {1..24}; do
             set +e
             SECRET_OUT="$(az containerapp secret set \
               --name "${{ secrets.ACA_APP_NAME }}" \
@@ -234,8 +238,9 @@ jobs:
               SECRET_SET=1
               break
             fi
-            if grep -qi "Identity with resource ID 'system' not found" <<< "${SECRET_OUT}"; then
-              sleep 10
+            if grep -Eqi "Identity with resource ID 'system' not found|principalId.*not found|could not be found|BadRequest" <<< "${SECRET_OUT}"; then
+              echo "secret set not ready yet (attempt ${attempt}/24); waiting 15s..."
+              sleep 15
               continue
             fi
             echo "${SECRET_OUT}" >&2
@@ -247,7 +252,7 @@ jobs:
           fi
 
           UPDATED=0
-          for attempt in {1..6}; do
+          for attempt in {1..24}; do
             set +e
             UPDATE_OUT="$(az containerapp update \
               --name "${{ secrets.ACA_APP_NAME }}" \
@@ -269,8 +274,9 @@ jobs:
               UPDATED=1
               break
             fi
-            if grep -qi "Identity with resource ID 'system' not found" <<< "${UPDATE_OUT}"; then
-              sleep 10
+            if grep -Eqi "Identity with resource ID 'system' not found|principalId.*not found|could not be found|BadRequest" <<< "${UPDATE_OUT}"; then
+              echo "env update not ready yet (attempt ${attempt}/24); waiting 15s..."
+              sleep 15
               continue
             fi
             echo "${UPDATE_OUT}" >&2
@@ -417,12 +423,15 @@ jobs:
             exit 1
           fi
 
+          # Give ARM/ACA a short stabilization window after principalId appears.
+          sleep 20
+
           REGISTRY_IDENTITY="$(az containerapp show --name "${{ secrets.ACA_APP_NAME }}" --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" --query "properties.configuration.registries[?server=='${{ secrets.ACR_LOGIN_SERVER }}'].identity | [0]" -o tsv)"
           REGISTRY_SET=0
           if [[ "${REGISTRY_IDENTITY}" == "system" ]]; then
             REGISTRY_SET=1
           fi
-          for attempt in {1..18}; do
+          for attempt in {1..24}; do
             if [[ ${REGISTRY_SET} -eq 1 ]]; then
               break
             fi
@@ -439,8 +448,9 @@ jobs:
               REGISTRY_SET=1
               break
             fi
-            if grep -qi "Identity with resource ID 'system' not found" <<< "${REGISTRY_OUT}"; then
-              sleep 10
+            if grep -Eqi "Identity with resource ID 'system' not found|principalId.*not found|could not be found|BadRequest" <<< "${REGISTRY_OUT}"; then
+              echo "registry set not ready yet (attempt ${attempt}/24); waiting 15s..."
+              sleep 15
               continue
             fi
             echo "${REGISTRY_OUT}" >&2
@@ -452,7 +462,7 @@ jobs:
           fi
 
           SECRET_SET=0
-          for attempt in {1..6}; do
+          for attempt in {1..24}; do
             set +e
             SECRET_OUT="$(az containerapp secret set \
               --name "${{ secrets.ACA_APP_NAME }}" \
@@ -470,8 +480,9 @@ jobs:
               SECRET_SET=1
               break
             fi
-            if grep -qi "Identity with resource ID 'system' not found" <<< "${SECRET_OUT}"; then
-              sleep 10
+            if grep -Eqi "Identity with resource ID 'system' not found|principalId.*not found|could not be found|BadRequest" <<< "${SECRET_OUT}"; then
+              echo "secret set not ready yet (attempt ${attempt}/24); waiting 15s..."
+              sleep 15
               continue
             fi
             echo "${SECRET_OUT}" >&2
@@ -483,7 +494,7 @@ jobs:
           fi
 
           UPDATED=0
-          for attempt in {1..6}; do
+          for attempt in {1..24}; do
             set +e
             UPDATE_OUT="$(az containerapp update \
               --name "${{ secrets.ACA_APP_NAME }}" \
@@ -505,8 +516,9 @@ jobs:
               UPDATED=1
               break
             fi
-            if grep -qi "Identity with resource ID 'system' not found" <<< "${UPDATE_OUT}"; then
-              sleep 10
+            if grep -Eqi "Identity with resource ID 'system' not found|principalId.*not found|could not be found|BadRequest" <<< "${UPDATE_OUT}"; then
+              echo "env update not ready yet (attempt ${attempt}/24); waiting 15s..."
+              sleep 15
               continue
             fi
             echo "${UPDATE_OUT}" >&2
