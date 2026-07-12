@@ -150,6 +150,16 @@ jobs:
             --identity system \
             --output none
 
+          # System-assigned identity can take time to propagate for revision provisioning.
+          PRINCIPAL_ID=""
+          for attempt in {1..20}; do
+            PRINCIPAL_ID="$(az containerapp show --name "${{ secrets.ACA_APP_NAME }}" --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" --query identity.principalId -o tsv)"
+            if [[ -n "${PRINCIPAL_ID}" && "${PRINCIPAL_ID}" != "null" ]]; then
+              break
+            fi
+            sleep 5
+          done
+
           az containerapp secret set \
             --name "${{ secrets.ACA_APP_NAME }}" \
             --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" \
@@ -161,20 +171,40 @@ jobs:
             openai-api-key='${{ secrets.OPENAI_API_KEY }}' \
             --output none
 
-          az containerapp update \
-            --name "${{ secrets.ACA_APP_NAME }}" \
-            --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" \
-            --set-env-vars \
-            NODE_ENV=production \
-            PORT=8080 \
-            AZURE_STORAGE_CONNECTION_STRING=secretref:azure-storage-connection-string \
-            DI_ENDPOINT=secretref:di-endpoint \
-            DI_KEY=secretref:di-key \
-            OPENAI_ENDPOINT=secretref:openai-endpoint \
-            OPENAI_API_KEY=secretref:openai-api-key \
-            OPENAI_DEPLOYMENT='${{ secrets.OPENAI_DEPLOYMENT }}' \
-            EMBEDDING_MODEL='${{ secrets.OPENAI_DEPLOYMENT }}' \
-            --output none
+          UPDATED=0
+          for attempt in {1..6}; do
+            set +e
+            UPDATE_OUT="$(az containerapp update \
+              --name "${{ secrets.ACA_APP_NAME }}" \
+              --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" \
+              --set-env-vars \
+              NODE_ENV=production \
+              PORT=8080 \
+              AZURE_STORAGE_CONNECTION_STRING=secretref:azure-storage-connection-string \
+              DI_ENDPOINT=secretref:di-endpoint \
+              DI_KEY=secretref:di-key \
+              OPENAI_ENDPOINT=secretref:openai-endpoint \
+              OPENAI_API_KEY=secretref:openai-api-key \
+              OPENAI_DEPLOYMENT='${{ secrets.OPENAI_DEPLOYMENT }}' \
+              EMBEDDING_MODEL='${{ secrets.OPENAI_DEPLOYMENT }}' \
+              --output none 2>&1)"
+            UPDATE_CODE=$?
+            set -e
+            if [[ ${UPDATE_CODE} -eq 0 ]]; then
+              UPDATED=1
+              break
+            fi
+            if grep -qi "Identity with resource ID 'system' not found" <<< "${UPDATE_OUT}"; then
+              sleep 10
+              continue
+            fi
+            echo "${UPDATE_OUT}" >&2
+            exit ${UPDATE_CODE}
+          done
+          if [[ ${UPDATED} -ne 1 ]]; then
+            echo "Timed out waiting for system identity propagation for staging app" >&2
+            exit 1
+          fi
 
       - name: Apply ACA manifest (staging)
         shell: bash
@@ -281,6 +311,16 @@ jobs:
             --identity system \
             --output none
 
+          # System-assigned identity can take time to propagate for revision provisioning.
+          PRINCIPAL_ID=""
+          for attempt in {1..20}; do
+            PRINCIPAL_ID="$(az containerapp show --name "${{ secrets.ACA_APP_NAME }}" --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" --query identity.principalId -o tsv)"
+            if [[ -n "${PRINCIPAL_ID}" && "${PRINCIPAL_ID}" != "null" ]]; then
+              break
+            fi
+            sleep 5
+          done
+
           az containerapp secret set \
             --name "${{ secrets.ACA_APP_NAME }}" \
             --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" \
@@ -292,20 +332,40 @@ jobs:
             openai-api-key='${{ secrets.OPENAI_API_KEY }}' \
             --output none
 
-          az containerapp update \
-            --name "${{ secrets.ACA_APP_NAME }}" \
-            --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" \
-            --set-env-vars \
-            NODE_ENV=production \
-            PORT=8080 \
-            AZURE_STORAGE_CONNECTION_STRING=secretref:azure-storage-connection-string \
-            DI_ENDPOINT=secretref:di-endpoint \
-            DI_KEY=secretref:di-key \
-            OPENAI_ENDPOINT=secretref:openai-endpoint \
-            OPENAI_API_KEY=secretref:openai-api-key \
-            OPENAI_DEPLOYMENT='${{ secrets.OPENAI_DEPLOYMENT }}' \
-            EMBEDDING_MODEL='${{ secrets.OPENAI_DEPLOYMENT }}' \
-            --output none
+          UPDATED=0
+          for attempt in {1..6}; do
+            set +e
+            UPDATE_OUT="$(az containerapp update \
+              --name "${{ secrets.ACA_APP_NAME }}" \
+              --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" \
+              --set-env-vars \
+              NODE_ENV=production \
+              PORT=8080 \
+              AZURE_STORAGE_CONNECTION_STRING=secretref:azure-storage-connection-string \
+              DI_ENDPOINT=secretref:di-endpoint \
+              DI_KEY=secretref:di-key \
+              OPENAI_ENDPOINT=secretref:openai-endpoint \
+              OPENAI_API_KEY=secretref:openai-api-key \
+              OPENAI_DEPLOYMENT='${{ secrets.OPENAI_DEPLOYMENT }}' \
+              EMBEDDING_MODEL='${{ secrets.OPENAI_DEPLOYMENT }}' \
+              --output none 2>&1)"
+            UPDATE_CODE=$?
+            set -e
+            if [[ ${UPDATE_CODE} -eq 0 ]]; then
+              UPDATED=1
+              break
+            fi
+            if grep -qi "Identity with resource ID 'system' not found" <<< "${UPDATE_OUT}"; then
+              sleep 10
+              continue
+            fi
+            echo "${UPDATE_OUT}" >&2
+            exit ${UPDATE_CODE}
+          done
+          if [[ ${UPDATED} -ne 1 ]]; then
+            echo "Timed out waiting for system identity propagation for production app" >&2
+            exit 1
+          fi
 
       - name: Apply ACA manifest (production)
         shell: bash
