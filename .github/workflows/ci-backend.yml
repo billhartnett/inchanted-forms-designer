@@ -39,8 +39,8 @@ jobs:
 
       - name: TypeScript compile checks
         run: |
-          npm --prefix shared exec tsc -p tsconfig.json --noEmit
-          npm --prefix backend/api exec tsc -p tsconfig.json --noEmit
+          node shared/node_modules/typescript/bin/tsc -p shared/tsconfig.json --noEmit
+          node backend/api/node_modules/typescript/bin/tsc -p backend/api/tsconfig.json --noEmit
 
       - name: Start Express backend and run endpoint smoke tests
         run: |

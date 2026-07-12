@@ -8,6 +8,7 @@ on:
 
 jobs:
   build-and-push:
+    if: ${{ secrets.AZURE_CREDENTIALS != '' && secrets.ACR_NAME != '' && secrets.ACR_LOGIN_SERVER != '' }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -80,3 +81,12 @@ jobs:
         with:
           name: backend-image-digest
           path: image-digest.txt
+
+  build-skipped-missing-secrets:
+    if: ${{ secrets.AZURE_CREDENTIALS == '' || secrets.ACR_NAME == '' || secrets.ACR_LOGIN_SERVER == '' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Report skipped image build
+        run: |
+          echo "Skipping image build: required secrets are missing."
+          echo "Expected secrets: AZURE_CREDENTIALS, ACR_NAME, ACR_LOGIN_SERVER"
