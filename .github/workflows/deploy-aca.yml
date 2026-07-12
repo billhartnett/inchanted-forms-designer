@@ -137,11 +137,34 @@ jobs:
         run: |
           set -euo pipefail
 
-          az containerapp identity assign \
-            --name "${{ secrets.ACA_APP_NAME }}" \
-            --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" \
-            --system \
-            --output none
+          IDENTITY_TYPE="$(az containerapp show --name "${{ secrets.ACA_APP_NAME }}" --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" --query identity.type -o tsv)"
+          if [[ "${IDENTITY_TYPE}" != *"SystemAssigned"* ]]; then
+            ASSIGNED=0
+            for attempt in {1..6}; do
+              set +e
+              ASSIGN_OUT="$(az containerapp identity assign \
+                --name "${{ secrets.ACA_APP_NAME }}" \
+                --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" \
+                --system \
+                --output none 2>&1)"
+              ASSIGN_CODE=$?
+              set -e
+              if [[ ${ASSIGN_CODE} -eq 0 ]]; then
+                ASSIGNED=1
+                break
+              fi
+              if grep -qi "Identity with resource ID 'system' not found" <<< "${ASSIGN_OUT}"; then
+                sleep 10
+                continue
+              fi
+              echo "${ASSIGN_OUT}" >&2
+              exit ${ASSIGN_CODE}
+            done
+            if [[ ${ASSIGNED} -ne 1 ]]; then
+              echo "Timed out waiting to assign system identity for staging app" >&2
+              exit 1
+            fi
+          fi
 
           # System-assigned identity can take time to propagate for revision provisioning.
           PRINCIPAL_ID=""
@@ -343,11 +366,34 @@ jobs:
         run: |
           set -euo pipefail
 
-          az containerapp identity assign \
-            --name "${{ secrets.ACA_APP_NAME }}" \
-            --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" \
-            --system \
-            --output none
+          IDENTITY_TYPE="$(az containerapp show --name "${{ secrets.ACA_APP_NAME }}" --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" --query identity.type -o tsv)"
+          if [[ "${IDENTITY_TYPE}" != *"SystemAssigned"* ]]; then
+            ASSIGNED=0
+            for attempt in {1..6}; do
+              set +e
+              ASSIGN_OUT="$(az containerapp identity assign \
+                --name "${{ secrets.ACA_APP_NAME }}" \
+                --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" \
+                --system \
+                --output none 2>&1)"
+              ASSIGN_CODE=$?
+              set -e
+              if [[ ${ASSIGN_CODE} -eq 0 ]]; then
+                ASSIGNED=1
+                break
+              fi
+              if grep -qi "Identity with resource ID 'system' not found" <<< "${ASSIGN_OUT}"; then
+                sleep 10
+                continue
+              fi
+              echo "${ASSIGN_OUT}" >&2
+              exit ${ASSIGN_CODE}
+            done
+            if [[ ${ASSIGNED} -ne 1 ]]; then
+              echo "Timed out waiting to assign system identity for production app" >&2
+              exit 1
+            fi
+          fi
 
           # System-assigned identity can take time to propagate for revision provisioning.
           PRINCIPAL_ID=""
