@@ -142,7 +142,9 @@ jobs:
             --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" \
             --secrets \
             azure-storage-connection-string='${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}' \
+            di-endpoint='${{ secrets.DI_ENDPOINT }}' \
             di-key='${{ secrets.DI_KEY }}' \
+            openai-endpoint='${{ secrets.OPENAI_ENDPOINT }}' \
             openai-api-key='${{ secrets.OPENAI_API_KEY }}' \
             --output none
 
@@ -153,9 +155,9 @@ jobs:
             NODE_ENV=production \
             PORT=8080 \
             AZURE_STORAGE_CONNECTION_STRING=secretref:azure-storage-connection-string \
-            DI_ENDPOINT='${{ secrets.DI_ENDPOINT }}' \
+            DI_ENDPOINT=secretref:di-endpoint \
             DI_KEY=secretref:di-key \
-            OPENAI_ENDPOINT='${{ secrets.OPENAI_ENDPOINT }}' \
+            OPENAI_ENDPOINT=secretref:openai-endpoint \
             OPENAI_API_KEY=secretref:openai-api-key \
             OPENAI_DEPLOYMENT='${{ secrets.OPENAI_DEPLOYMENT }}' \
             EMBEDDING_MODEL='${{ secrets.OPENAI_DEPLOYMENT }}' \
@@ -258,7 +260,9 @@ jobs:
             --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" \
             --secrets \
             azure-storage-connection-string='${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}' \
+            di-endpoint='${{ secrets.DI_ENDPOINT }}' \
             di-key='${{ secrets.DI_KEY }}' \
+            openai-endpoint='${{ secrets.OPENAI_ENDPOINT }}' \
             openai-api-key='${{ secrets.OPENAI_API_KEY }}' \
             --output none
 
@@ -269,9 +273,9 @@ jobs:
             NODE_ENV=production \
             PORT=8080 \
             AZURE_STORAGE_CONNECTION_STRING=secretref:azure-storage-connection-string \
-            DI_ENDPOINT='${{ secrets.DI_ENDPOINT }}' \
+            DI_ENDPOINT=secretref:di-endpoint \
             DI_KEY=secretref:di-key \
-            OPENAI_ENDPOINT='${{ secrets.OPENAI_ENDPOINT }}' \
+            OPENAI_ENDPOINT=secretref:openai-endpoint \
             OPENAI_API_KEY=secretref:openai-api-key \
             OPENAI_DEPLOYMENT='${{ secrets.OPENAI_DEPLOYMENT }}' \
             EMBEDDING_MODEL='${{ secrets.OPENAI_DEPLOYMENT }}' \
