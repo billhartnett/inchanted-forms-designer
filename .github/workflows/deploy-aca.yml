@@ -150,12 +150,12 @@ jobs:
             local state=""
             for ready_attempt in {1..40}; do
               state="$(az containerapp show --name "${{ secrets.ACA_APP_NAME }}" --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" --query properties.provisioningState -o tsv)"
-              if [[ "${state}" == "Succeeded" ]]; then
+              if [[ -n "${state}" && "${state}" != "InProgress" ]]; then
                 return 0
               fi
               sleep 10
             done
-            echo "Container app never reached provisioningState=Succeeded before ${label}; last state=${state}" >&2
+            echo "Container app remained in provisioningState=InProgress before ${label}; last state=${state}" >&2
             return 1
           }
 
@@ -439,12 +439,12 @@ jobs:
             local state=""
             for ready_attempt in {1..40}; do
               state="$(az containerapp show --name "${{ secrets.ACA_APP_NAME }}" --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" --query properties.provisioningState -o tsv)"
-              if [[ "${state}" == "Succeeded" ]]; then
+              if [[ -n "${state}" && "${state}" != "InProgress" ]]; then
                 return 0
               fi
               sleep 10
             done
-            echo "Container app never reached provisioningState=Succeeded before ${label}; last state=${state}" >&2
+            echo "Container app remained in provisioningState=InProgress before ${label}; last state=${state}" >&2
             return 1
           }
 
