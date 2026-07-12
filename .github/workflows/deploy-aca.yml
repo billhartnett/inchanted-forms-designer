@@ -137,6 +137,9 @@ jobs:
         run: |
           set -euo pipefail
 
+          MAX_PROPAGATION_ATTEMPTS=24
+          PROPAGATION_DELAY_SECONDS=15
+
           IDENTITY_TYPE="$(az containerapp show --name "${{ secrets.ACA_APP_NAME }}" --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" --query identity.type -o tsv)"
           if [[ "${IDENTITY_TYPE}" != *"SystemAssigned"* ]]; then
             ASSIGNED=0
@@ -189,7 +192,7 @@ jobs:
           if [[ "${REGISTRY_IDENTITY}" == "system" ]]; then
             REGISTRY_SET=1
           fi
-          for attempt in {1..24}; do
+          for attempt in $(seq 1 "${MAX_PROPAGATION_ATTEMPTS}"); do
             if [[ ${REGISTRY_SET} -eq 1 ]]; then
               break
             fi
@@ -207,8 +210,8 @@ jobs:
               break
             fi
             if grep -Eqi "Identity with resource ID 'system' not found|principalId.*not found|could not be found|BadRequest" <<< "${REGISTRY_OUT}"; then
-              echo "registry set not ready yet (attempt ${attempt}/24); waiting 15s..."
-              sleep 15
+              echo "registry set not ready yet (attempt ${attempt}/${MAX_PROPAGATION_ATTEMPTS}); waiting ${PROPAGATION_DELAY_SECONDS}s..."
+              sleep "${PROPAGATION_DELAY_SECONDS}"
               continue
             fi
             echo "${REGISTRY_OUT}" >&2
@@ -219,8 +222,20 @@ jobs:
             exit 1
           fi
 
+          # Optional fallback: if ACR pull credentials are provided, bind the registry with credentials
+          # to avoid any residual managed-identity propagation race during secret/env mutation.
+          if [[ -n "${{ secrets.ACR_PULL_USERNAME }}" && -n "${{ secrets.ACR_PULL_PASSWORD }}" ]]; then
+            az containerapp registry set \
+              --name "${{ secrets.ACA_APP_NAME }}" \
+              --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" \
+              --server "${{ secrets.ACR_LOGIN_SERVER }}" \
+              --username "${{ secrets.ACR_PULL_USERNAME }}" \
+              --password "${{ secrets.ACR_PULL_PASSWORD }}" \
+              --output none
+          fi
+
           SECRET_SET=0
-          for attempt in {1..24}; do
+          for attempt in $(seq 1 "${MAX_PROPAGATION_ATTEMPTS}"); do
             set +e
             SECRET_OUT="$(az containerapp secret set \
               --name "${{ secrets.ACA_APP_NAME }}" \
@@ -239,8 +254,8 @@ jobs:
               break
             fi
             if grep -Eqi "Identity with resource ID 'system' not found|principalId.*not found|could not be found|BadRequest" <<< "${SECRET_OUT}"; then
-              echo "secret set not ready yet (attempt ${attempt}/24); waiting 15s..."
-              sleep 15
+              echo "secret set not ready yet (attempt ${attempt}/${MAX_PROPAGATION_ATTEMPTS}); waiting ${PROPAGATION_DELAY_SECONDS}s..."
+              sleep "${PROPAGATION_DELAY_SECONDS}"
               continue
             fi
             echo "${SECRET_OUT}" >&2
@@ -252,7 +267,7 @@ jobs:
           fi
 
           UPDATED=0
-          for attempt in {1..24}; do
+          for attempt in $(seq 1 "${MAX_PROPAGATION_ATTEMPTS}"); do
             set +e
             UPDATE_OUT="$(az containerapp update \
               --name "${{ secrets.ACA_APP_NAME }}" \
@@ -275,8 +290,8 @@ jobs:
               break
             fi
             if grep -Eqi "Identity with resource ID 'system' not found|principalId.*not found|could not be found|BadRequest" <<< "${UPDATE_OUT}"; then
-              echo "env update not ready yet (attempt ${attempt}/24); waiting 15s..."
-              sleep 15
+              echo "env update not ready yet (attempt ${attempt}/${MAX_PROPAGATION_ATTEMPTS}); waiting ${PROPAGATION_DELAY_SECONDS}s..."
+              sleep "${PROPAGATION_DELAY_SECONDS}"
               continue
             fi
             echo "${UPDATE_OUT}" >&2
@@ -379,6 +394,9 @@ jobs:
         run: |
           set -euo pipefail
 
+          MAX_PROPAGATION_ATTEMPTS=24
+          PROPAGATION_DELAY_SECONDS=15
+
           IDENTITY_TYPE="$(az containerapp show --name "${{ secrets.ACA_APP_NAME }}" --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" --query identity.type -o tsv)"
           if [[ "${IDENTITY_TYPE}" != *"SystemAssigned"* ]]; then
             ASSIGNED=0
@@ -431,7 +449,7 @@ jobs:
           if [[ "${REGISTRY_IDENTITY}" == "system" ]]; then
             REGISTRY_SET=1
           fi
-          for attempt in {1..24}; do
+          for attempt in $(seq 1 "${MAX_PROPAGATION_ATTEMPTS}"); do
             if [[ ${REGISTRY_SET} -eq 1 ]]; then
               break
             fi
@@ -449,8 +467,8 @@ jobs:
               break
             fi
             if grep -Eqi "Identity with resource ID 'system' not found|principalId.*not found|could not be found|BadRequest" <<< "${REGISTRY_OUT}"; then
-              echo "registry set not ready yet (attempt ${attempt}/24); waiting 15s..."
-              sleep 15
+              echo "registry set not ready yet (attempt ${attempt}/${MAX_PROPAGATION_ATTEMPTS}); waiting ${PROPAGATION_DELAY_SECONDS}s..."
+              sleep "${PROPAGATION_DELAY_SECONDS}"
               continue
             fi
             echo "${REGISTRY_OUT}" >&2
@@ -461,8 +479,20 @@ jobs:
             exit 1
           fi
 
+          # Optional fallback: if ACR pull credentials are provided, bind the registry with credentials
+          # to avoid any residual managed-identity propagation race during secret/env mutation.
+          if [[ -n "${{ secrets.ACR_PULL_USERNAME }}" && -n "${{ secrets.ACR_PULL_PASSWORD }}" ]]; then
+            az containerapp registry set \
+              --name "${{ secrets.ACA_APP_NAME }}" \
+              --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" \
+              --server "${{ secrets.ACR_LOGIN_SERVER }}" \
+              --username "${{ secrets.ACR_PULL_USERNAME }}" \
+              --password "${{ secrets.ACR_PULL_PASSWORD }}" \
+              --output none
+          fi
+
           SECRET_SET=0
-          for attempt in {1..24}; do
+          for attempt in $(seq 1 "${MAX_PROPAGATION_ATTEMPTS}"); do
             set +e
             SECRET_OUT="$(az containerapp secret set \
               --name "${{ secrets.ACA_APP_NAME }}" \
@@ -481,8 +511,8 @@ jobs:
               break
             fi
             if grep -Eqi "Identity with resource ID 'system' not found|principalId.*not found|could not be found|BadRequest" <<< "${SECRET_OUT}"; then
-              echo "secret set not ready yet (attempt ${attempt}/24); waiting 15s..."
-              sleep 15
+              echo "secret set not ready yet (attempt ${attempt}/${MAX_PROPAGATION_ATTEMPTS}); waiting ${PROPAGATION_DELAY_SECONDS}s..."
+              sleep "${PROPAGATION_DELAY_SECONDS}"
               continue
             fi
             echo "${SECRET_OUT}" >&2
@@ -494,7 +524,7 @@ jobs:
           fi
 
           UPDATED=0
-          for attempt in {1..24}; do
+          for attempt in $(seq 1 "${MAX_PROPAGATION_ATTEMPTS}"); do
             set +e
             UPDATE_OUT="$(az containerapp update \
               --name "${{ secrets.ACA_APP_NAME }}" \
@@ -517,8 +547,8 @@ jobs:
               break
             fi
             if grep -Eqi "Identity with resource ID 'system' not found|principalId.*not found|could not be found|BadRequest" <<< "${UPDATE_OUT}"; then
-              echo "env update not ready yet (attempt ${attempt}/24); waiting 15s..."
-              sleep 15
+              echo "env update not ready yet (attempt ${attempt}/${MAX_PROPAGATION_ATTEMPTS}); waiting ${PROPAGATION_DELAY_SECONDS}s..."
+              sleep "${PROPAGATION_DELAY_SECONDS}"
               continue
             fi
             echo "${UPDATE_OUT}" >&2
