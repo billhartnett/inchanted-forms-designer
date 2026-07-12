@@ -1,0 +1,9 @@
+{
+  "name": "wave8",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "build": "node ../shared/node_modules/typescript/bin/tsc -p tsconfig.json"
+  },
+  "devDependencies": {}
+}

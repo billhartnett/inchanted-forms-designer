@@ -1,4 +1,4 @@
-import { loadJsonBlob, saveJsonBlob } from "../../../services/blobStorage";
+import { loadJsonBlob, saveJsonBlob } from "../services/blobStorage";
 import { buildTenantBlobName } from "./storageKeys";
 
 type SubmissionQueueRecord = {

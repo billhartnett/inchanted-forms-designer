@@ -1,5 +1,5 @@
 import type { ImmutableAuditEvent } from "shared/acord";
-import { saveJsonBlob, loadJsonBlob } from "../../../services/blobStorage";
+import { saveJsonBlob, loadJsonBlob } from "../services/blobStorage";
 import { buildTenantBlobName, sanitizeStorageSegment } from "./storageKeys";
 
 type AuditInput = Omit<ImmutableAuditEvent, "eventId" | "occurredAt" | "hash"> & {

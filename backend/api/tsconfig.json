@@ -3,19 +3,23 @@
     "target": "ES2022",
     "module": "Node16",
     "moduleResolution": "Node16",
-    "outDir": "..",
-    "rootDir": "..",
+    "outDir": "./dist",
+    "rootDir": "./src",
     "ignoreDeprecations": "5.0",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": false,
     "types": ["node"],
     "skipLibCheck": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "baseUrl": ".",
+    "paths": {
+      "shared": ["../../shared/dist/index.d.ts"],
+      "shared/*": ["../../shared/dist/*"]
+    }
   },
   "include": [
-    "./**/*.ts",
-    "../**/*.ts",
+    "src/**/*.ts",
     "types/**/*.d.ts"
   ],
   "exclude": [

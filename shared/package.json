@@ -24,14 +24,30 @@
     "./quality": {
       "types": "./dist/quality/index.d.ts",
       "default": "./dist/quality/index.js"
+    },
+    "./extraction": {
+      "types": "./dist/extraction/index.d.ts",
+      "default": "./dist/extraction/index.js"
+    },
+    "./mapping": {
+      "types": "./dist/mapping/index.d.ts",
+      "default": "./dist/mapping/index.js"
+    },
+    "./services": {
+      "types": "./dist/services/index.d.ts",
+      "default": "./dist/services/index.js"
     }
   },
   "scripts": {
     "build": "tsc -p tsconfig.json"
   },
   "devDependencies": {
-    "@types/node": "^20.0.0",
+    "@types/node": "^20.19.43",
     "typescript": "^5.4.0"
+  },
+  "dependencies": {
+    "@azure/ai-form-recognizer": "^5.0.0",
+    "@azure/storage-blob": "^12.29.1",
+    "inchanted-api": "file:../backend/api"
   }
 }
-

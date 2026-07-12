@@ -10,7 +10,7 @@ import {
   getWave8SupervisionAnchorBoost,
   getWave8SupervisionCandidatesForText,
   getWave8SupervisionRuleCount,
-} from "../../../wave8/supervision";
+} from "../wave8/supervision";
 import {
   getAcordCodesForCategory,
   getCategoryForAcordCode,

@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "Node16",
+    "moduleResolution": "Node16",
+    "ignoreDeprecations": "5.0",
+    "types": ["node"],
+    "typeRoots": ["../shared/node_modules/@types"],
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "noEmit": true,
+    "baseUrl": ".",
+    "paths": {
+      "shared": ["../shared/src/index.ts"],
+      "shared/*": ["../shared/src/*"]
+    }
+  },
+  "include": [
+    "*.ts",
+    "../shared/src/extraction/**/*.ts",
+    "../shared/src/acord/**/*.ts",
+    "../shared/src/mapping/**/*.ts",
+    "../shared/src/types/**/*.ts",
+    "../backend/api/src/services/wave9Models.ts"
+  ]
+}

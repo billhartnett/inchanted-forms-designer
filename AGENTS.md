@@ -12,6 +12,8 @@ This is an ACORD-centric forms platform with three coordinated areas:
 
 Keep those stages distinct. Labels are semantic anchors; they are not canvas overlays.
 
+For domain language in this repo, treat agent and producer as synonymous, and treat carrier and insurance company as synonymous.
+
 ## Non-Negotiables
 
 - Preserve the extraction -> mapping -> designer -> structured output pipeline.

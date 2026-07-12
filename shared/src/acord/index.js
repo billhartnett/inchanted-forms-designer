@@ -17,3 +17,5 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./acordDictionary"), exports);
 __exportStar(require("./acordMappings"), exports);
 __exportStar(require("./acordTypes"), exports);
+__exportStar(require("./ontology"), exports);
+__exportStar(require("./multiOntology"), exports);

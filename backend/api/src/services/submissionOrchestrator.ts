@@ -8,7 +8,7 @@ import {
   extractRiskFactors,
 } from "shared/quality";
 import { validateAcordXmlSemantic } from "shared/quality";
-import { buildAcordXmlFromPayload } from "../../../mapping/acordXml";
+import { buildAcordXmlFromPayload } from "../mapping/acordXml";
 import { submitCarrierPayload } from "./carrierApiClient";
 import { updateSubmissionStatus } from "./submissionStatusStore";
 import { loadIdempotentResponse, saveIdempotentResponse } from "./idempotencyStore";

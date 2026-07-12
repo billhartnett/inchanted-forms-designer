@@ -1,0 +1,484 @@
+{
+  "summary": {
+    "total": 67,
+    "transportFailures": 0,
+    "statusCounts": {
+      "200": 16,
+      "400": 43,
+      "403": 5,
+      "404": 2,
+      "500": 1
+    }
+  },
+  "results": [
+    {
+      "method": "GET",
+      "route": "/api/ping",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"ok\":true,\"status\":\"ok\",\"message\":\"pong\",\"checkedAt\":\"2026-07-12T13:50:22.456Z\"}"
+    },
+    {
+      "method": "GET",
+      "route": "/api/gethealth",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"ok\":true,\"tenantId\":\"aca-test-tenant\",\"checks\":{\"documentIntelligence\":false,\"embeddings\":false,\"storage\":false},\"circ"
+    },
+    {
+      "method": "GET",
+      "route": "/api/ops/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"ok\":true,\"tenantId\":\"aca-test-tenant\",\"checks\":{\"documentIntelligence\":false,\"embeddings\":false,\"storage\":false},\"circ"
+    },
+    {
+      "method": "GET",
+      "route": "/api/version",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"gitCommitHash\":\"unknown\",\"buildTimestamp\":\"2026-07-12T13:50:22.480Z\",\"wave9EngineVersion\":\"1.0.0\"}"
+    },
+    {
+      "method": "GET",
+      "route": "/api/acord/search",
+      "status": 400,
+      "ok": true,
+      "bodyPreview": "{\"error\":\"Missing query parameter\"}"
+    },
+    {
+      "method": "GET",
+      "route": "/api/acord/labels/search",
+      "status": 400,
+      "ok": true,
+      "bodyPreview": "{\"error\":\"Missing query parameter\"}"
+    },
+    {
+      "method": "GET",
+      "route": "/api/ops/label-search",
+      "status": 400,
+      "ok": true,
+      "bodyPreview": "{\"error\":\"Missing query parameter\"}"
+    },
+    {
+      "method": "GET",
+      "route": "/api/acord/code/sample",
+      "status": 404,
+      "ok": true,
+      "bodyPreview": "{\"error\":\"ACORD code not found\",\"acordCode\":\"sample\"}"
+    },
+    {
+      "method": "GET",
+      "route": "/api/acord/labels/code/sample",
+      "status": 404,
+      "ok": true,
+      "bodyPreview": "{\"error\":\"ACORD code not found\",\"acordCode\":\"sample\"}"
+    },
+    {
+      "method": "GET",
+      "route": "/api/acord/all",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"total\":16532,\"dictionary\":{\"loaded\":true,\"csvPath\":\"F:\\\\inchanted-forms-designer\\\\backend\\\\data\\\\acord-elabels.csv\",\"r"
+    },
+    {
+      "method": "GET",
+      "route": "/api/acord/labels/all",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"total\":16532,\"dictionary\":{\"loaded\":true,\"csvPath\":\"F:\\\\inchanted-forms-designer\\\\backend\\\\data\\\\acord-elabels.csv\",\"r"
+    },
+    {
+      "method": "GET",
+      "route": "/api/ops/acord-dictionary",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"total\":16532,\"dictionary\":{\"loaded\":true,\"csvPath\":\"F:\\\\inchanted-forms-designer\\\\backend\\\\data\\\\acord-elabels.csv\",\"r"
+    },
+    {
+      "method": "POST",
+      "route": "/api/acord/suggest",
+      "status": 400,
+      "ok": true,
+      "bodyPreview": "{\"error\":\"Missing text in request body\"}"
+    },
+    {
+      "method": "POST",
+      "route": "/api/acord/labels/suggest",
+      "status": 400,
+      "ok": true,
+      "bodyPreview": "{\"error\":\"Missing text in request body\"}"
+    },
+    {
+      "method": "POST",
+      "route": "/api/clusterFormFamilies",
+      "status": 400,
+      "ok": true,
+      "bodyPreview": "{\"error\":\"At least one valid document is required\"}"
+    },
+    {
+      "method": "POST",
+      "route": "/api/memory/compare-snapshots",
+      "status": 400,
+      "ok": true,
+      "bodyPreview": "{\"error\":\"Both baseline and current semantic memory snapshots are required.\"}"
+    },
+    {
+      "method": "POST",
+      "route": "/api/fusion/drift",
+      "status": 400,
+      "ok": true,
+      "bodyPreview": "{\"error\":\"baseline and current snapshots are required\"}"
+    },
+    {
+      "method": "POST",
+      "route": "/api/detectFamilyDrift",
+      "status": 400,
+      "ok": true,
+      "bodyPreview": "{\"error\":\"baseline and current family reports are required\"}"
+    },
+    {
+      "method": "POST",
+      "route": "/api/ontology/multi/drift",
+      "status": 400,
+      "ok": true,
+      "bodyPreview": "{\"error\":\"baseline and current snapshots are required\"}"
+    },
+    {
+      "method": "POST",
+      "route": "/api/ontology/drift",
+      "status": 400,
+      "ok": true,
+      "bodyPreview": "{\"error\":\"baseline and current ontology snapshots are required\"}"
+    },
+    {
+      "method": "POST",
+      "route": "/api/evaluateAcordSemantics",
+      "status": 400,
+      "ok": true,
+      "bodyPreview": "{\"error\":\"Unsupported payload version\"}"
+    },
+    {
+      "method": "POST",
+      "route": "/api/evaluateCalibration",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"profile\":{\"profileId\":\"default-calibration\",\"name\":\"Default Calibration\",\"version\":1,\"createdAt\":\"2026-07-12T13:50:22."
+    },
+    {
+      "method": "POST",
+      "route": "/api/carrier/adapters/evaluate",
+      "status": 400,
+      "ok": true,
+      "bodyPreview": "{\"error\":\"Payload must be an object\"}"
+    },
+    {
+      "method": "POST",
+      "route": "/api/normalize/cross-family",
+      "status": 400,
+      "ok": true,
+      "bodyPreview": "{\"error\":\"At least one valid document payload is required.\"}"
+    },
+    {
+      "method": "POST",
+      "route": "/api/underwriting/decision/drift",
+      "status": 400,
+      "ok": true,
+      "bodyPreview": "{\"error\":\"current decision context is required.\"}"
+    },
+    {
+      "method": "POST",
+      "route": "/api/evaluateFamilyCalibration",
+      "status": 400,
+      "ok": true,
+      "bodyPreview": "{\"error\":\"Payload must be an object\"}"
+    },
+    {
+      "method": "POST",
+      "route": "/api/graph/drift",
+      "status": 400,
+      "ok": true,
+      "bodyPreview": "{\"error\":\"current global semantic graph snapshot is required.\"}"
+    },
+    {
+      "method": "POST",
+      "route": "/api/graph/harmonization",
+      "status": 400,
+      "ok": true,
+      "bodyPreview": "{\"error\":\"At least one valid document payload is required.\"}"
+    },
+    {
+      "method": "POST",
+      "route": "/api/graph/inference",
+      "status": 400,
+      "ok": true,
+      "bodyPreview": "{\"error\":\"Payload must be an object\"}"
+    },
+    {
+      "method": "POST",
+      "route": "/api/memory/longitudinal-drift",
+      "status": 400,
+      "ok": true,
+      "bodyPreview": "{\"error\":\"current semantic memory snapshot is required.\"}"
+    },
+    {
+      "method": "POST",
+      "route": "/api/evaluateMappingQuality",
+      "status": 400,
+      "ok": true,
+      "bodyPreview": "{\"error\":\"Unsupported payload version\"}"
+    },
+    {
+      "method": "POST",
+      "route": "/api/memory/recommendations",
+      "status": 400,
+      "ok": true,
+      "bodyPreview": "{\"error\":\"At least one valid document payload is required.\"}"
+    },
+    {
+      "method": "POST",
+      "route": "/api/ontology/arbitration",
+      "status": 400,
+      "ok": true,
+      "bodyPreview": "{\"error\":\"Payload must be an object\"}"
+    },
+    {
+      "method": "POST",
+      "route": "/api/risk/factors/evaluate",
+      "status": 400,
+      "ok": true,
+      "bodyPreview": "{\"error\":\"Payload must be an object\"}"
+    },
+    {
+      "method": "POST",
+      "route": "/api/risk/scoring/evaluate",
+      "status": 400,
+      "ok": true,
+      "bodyPreview": "{\"error\":\"Payload must be an object\"}"
+    },
+    {
+      "method": "POST",
+      "route": "/api/conflicts/semantic",
+      "status": 400,
+      "ok": true,
+      "bodyPreview": "{\"error\":\"Payload must be an object\"}"
+    },
+    {
+      "method": "POST",
+      "route": "/api/fusion/evaluate",
+      "status": 400,
+      "ok": true,
+      "bodyPreview": "{\"error\":\"At least one valid document payload is required.\"}"
+    },
+    {
+      "method": "POST",
+      "route": "/api/submission/drift",
+      "status": 400,
+      "ok": true,
+      "bodyPreview": "{\"error\":\"current submission state is required.\"}"
+    },
+    {
+      "method": "POST",
+      "route": "/api/underwriting/decision/evaluate",
+      "status": 400,
+      "ok": true,
+      "bodyPreview": "{\"error\":\"Payload must be an object\"}"
+    },
+    {
+      "method": "POST",
+      "route": "/api/rules/drift",
+      "status": 400,
+      "ok": true,
+      "bodyPreview": "{\"error\":\"current underwriting rule snapshot is required.\"}"
+    },
+    {
+      "method": "POST",
+      "route": "/api/rules/evaluate",
+      "status": 400,
+      "ok": true,
+      "bodyPreview": "{\"error\":\"Payload must be an object\"}"
+    },
+    {
+      "method": "POST",
+      "route": "/api/exportAcordXml",
+      "status": 400,
+      "ok": true,
+      "bodyPreview": "{\"error\":\"Unsupported payload version\"}"
+    },
+    {
+      "method": "GET",
+      "route": "/api/ops/audit/export",
+      "status": 403,
+      "ok": true,
+      "bodyPreview": "{\"error\":\"Policy denied for admin:audit-export role=viewer\"}"
+    },
+    {
+      "method": "POST",
+      "route": "/api/extractDocument",
+      "status": 400,
+      "ok": true,
+      "bodyPreview": "{\"error\":\"Provide blocks[], text, or a multipart file upload with a PDF\"}"
+    },
+    {
+      "method": "POST",
+      "route": "/api/extractText",
+      "status": 500,
+      "ok": true,
+      "bodyPreview": "{\"error\":\"Document Intelligence is not configured. Set DI_ENDPOINT and DI_KEY in local.settings.json.\"}"
+    },
+    {
+      "method": "POST",
+      "route": "/api/submission/package/generate",
+      "status": 400,
+      "ok": true,
+      "bodyPreview": "{\"error\":\"Payload must be an object\"}"
+    },
+    {
+      "method": "GET",
+      "route": "/api/ontology",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"ontologyId\":\"acord-canonical-ontology\",\"version\":\"2026.06.10\",\"generatedAt\":\"deterministic\",\"hash\":\"c653ca94\",\"nodes\":"
+    },
+    {
+      "method": "GET",
+      "route": "/api/carrier/adapters",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"familyId\":\"default\",\"bundles\":[{\"carrierId\":\"carrier-markel\",\"carrierLabel\":\"Markel\",\"namespace\":\"carrier-supplemental"
+    },
+    {
+      "method": "POST",
+      "route": "/api/carrier/adapters",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"familyId\":\"default\",\"bundles\":[{\"carrierId\":\"carrier-markel\",\"carrierLabel\":\"Markel\",\"namespace\":\"carrier-supplemental"
+    },
+    {
+      "method": "POST",
+      "route": "/api/graph/retrieve",
+      "status": 400,
+      "ok": true,
+      "bodyPreview": "{\"error\":\"At least one valid document payload is required.\"}"
+    },
+    {
+      "method": "GET",
+      "route": "/api/ops/metrics",
+      "status": 403,
+      "ok": true,
+      "bodyPreview": "{\"error\":\"Policy denied for admin:metrics role=viewer\"}"
+    },
+    {
+      "method": "GET",
+      "route": "/api/monitoring/dashboard",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"tenantId\":\"local-dev\",\"timestamp\":\"2026-07-12T13:50:22.992Z\",\"system\":{\"status\":\"healthy\",\"passRate\":99.8,\"alerts\":0,\""
+    },
+    {
+      "method": "POST",
+      "route": "/api/memory/snapshot",
+      "status": 400,
+      "ok": true,
+      "bodyPreview": "{\"error\":\"At least one valid document payload is required.\"}"
+    },
+    {
+      "method": "GET",
+      "route": "/api/submission/status",
+      "status": 400,
+      "ok": true,
+      "bodyPreview": "{\"error\":\"submissionId query parameter is required.\"}"
+    },
+    {
+      "method": "GET",
+      "route": "/api/fusion/unification-graph",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"generatedAt\":\"1970-01-01T00:00:00.000Z\",\"graphHash\":\"51cfc61b\",\"edges\":[{\"sourceCode\":\"Applicant.Address.City\",\"target"
+    },
+    {
+      "method": "GET",
+      "route": "/api/ingestion-test",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"ok\":true,\"endpoint\":\"ingestion-test\",\"message\":\"Ingestion test endpoint is active\",\"checkedAt\":\"2026-07-12T13:50:23.00"
+    },
+    {
+      "method": "GET",
+      "route": "/api/loadCalibrationProfile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"profile\":{\"profileId\":\"default-calibration\",\"name\":\"Default Calibration\",\"version\":1,\"createdAt\":\"2026-07-12T13:50:23."
+    },
+    {
+      "method": "GET",
+      "route": "/api/loadMapping",
+      "status": 400,
+      "ok": true,
+      "bodyPreview": "{\"error\":\"Missing fileName query parameter\"}"
+    },
+    {
+      "method": "POST",
+      "route": "/api/mapFields",
+      "status": 400,
+      "ok": true,
+      "bodyPreview": "{\"error\":\"blocks must be a non-empty array\"}"
+    },
+    {
+      "method": "POST",
+      "route": "/api/submission/retry/process",
+      "status": 403,
+      "ok": true,
+      "bodyPreview": "{\"error\":\"Policy denied for submission:retry role=viewer\"}"
+    },
+    {
+      "method": "POST",
+      "route": "/api/saveCalibrationProfile",
+      "status": 400,
+      "ok": true,
+      "bodyPreview": "{\"error\":\"profile is required\"}"
+    },
+    {
+      "method": "POST",
+      "route": "/api/saveMapping",
+      "status": 403,
+      "ok": true,
+      "bodyPreview": "{\"error\":\"Policy denied for mapping:save role=viewer\"}"
+    },
+    {
+      "method": "POST",
+      "route": "/api/submission/carrier/submit",
+      "status": 403,
+      "ok": true,
+      "bodyPreview": "{\"error\":\"Policy denied for submission:submit role=viewer\"}"
+    },
+    {
+      "method": "POST",
+      "route": "/api/suggestLabels",
+      "status": 400,
+      "ok": true,
+      "bodyPreview": "{\"error\":\"Missing text in request body\"}"
+    },
+    {
+      "method": "POST",
+      "route": "/api/graph/update",
+      "status": 400,
+      "ok": true,
+      "bodyPreview": "{\"error\":\"At least one valid document payload is required.\"}"
+    },
+    {
+      "method": "POST",
+      "route": "/api/memory/update",
+      "status": 400,
+      "ok": true,
+      "bodyPreview": "{\"error\":\"At least one valid document payload is required.\"}"
+    },
+    {
+      "method": "POST",
+      "route": "/api/ontology/validate",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"valid\":true,\"issues\":[]}"
+    }
+  ]
+}

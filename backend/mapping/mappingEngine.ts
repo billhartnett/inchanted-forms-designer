@@ -7,6 +7,7 @@ import {
 import { buildMappingRationale } from "./mappingRationale";
 import type { CalibrationProfile } from "shared/types";
 import { resolveSemanticConflicts } from "shared/quality";
+import type { ConflictResolutionDecision } from "shared/quality";
 import { applyWave8Gating } from "./wave8Gating";
 
 export async function mapBlocksWithAcord(
@@ -106,7 +107,7 @@ export async function mapBlocksWithAcord(
     calibrationProfile: options?.calibrationProfile,
   });
 
-  const resolutionByBlock = new Map(
+  const resolutionByBlock = new Map<string, ConflictResolutionDecision>(
     conflictReport.decisions
       .filter((decision) => Boolean(decision.extractionBlockId) && Boolean(decision.resolvedAcordCode))
       .map((decision) => [decision.extractionBlockId, decision]),

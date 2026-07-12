@@ -1,6 +1,6 @@
 import type { CarrierSubmissionResponse, SubmissionStatusSnapshot } from "shared/acord";
 import { buildSubmissionStatusSnapshot } from "shared/quality";
-import { loadJsonBlob, saveJsonBlob } from "../../../services/blobStorage";
+import { loadJsonBlob, saveJsonBlob } from "../services/blobStorage";
 import { buildTenantBlobName } from "./storageKeys";
 
 type SubmissionStoreRecord = {
