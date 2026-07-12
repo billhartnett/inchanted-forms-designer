@@ -1,0 +1,60 @@
+name: CI Backend
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  backend-ci:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22.x"
+          cache: npm
+          cache-dependency-path: |
+            shared/package-lock.json
+            backend/api/package-lock.json
+
+      - name: Install dependencies
+        run: |
+          npm --prefix shared ci --no-audit --no-fund
+          npm --prefix backend/api ci --no-audit --no-fund
+
+      - name: Monorepo build chain (shared -> wave8 -> wave9 -> backend/api)
+        run: |
+          npm --prefix shared run build
+          npm --prefix wave8 run build
+          npm --prefix wave9 run build
+          npm --prefix backend/api run build
+
+      - name: TypeScript compile checks
+        run: |
+          npm --prefix shared exec tsc -p tsconfig.json --noEmit
+          npm --prefix backend/api exec tsc -p tsconfig.json --noEmit
+
+      - name: Start Express backend and run endpoint smoke tests
+        run: |
+          npm --prefix backend/api run start:express > backend-api.log 2>&1 &
+          APP_PID=$!
+          trap "kill $APP_PID" EXIT
+
+          for i in $(seq 1 20); do
+            if curl -fsS http://127.0.0.1:8080/api/ping >/dev/null; then
+              break
+            fi
+            sleep 1
+          done
+
+          curl -fsS http://127.0.0.1:8080/api/ping
+          curl -fsS -H "x-actor-role: viewer" -H "x-tenant-id: ci-tenant" http://127.0.0.1:8080/api/gethealth
+          curl -fsS http://127.0.0.1:8080/api/version

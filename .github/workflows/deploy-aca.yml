@@ -1,0 +1,269 @@
+name: Deploy ACA
+
+on:
+  workflow_dispatch:
+    inputs:
+      image_tag:
+        description: "Optional image tag override (default: tag name or sha-<commit>)"
+        required: false
+        default: ""
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  resolve-image:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+
+    outputs:
+      tag: ${{ steps.image.outputs.tag }}
+      image: ${{ steps.image.outputs.image }}
+      digest: ${{ steps.image.outputs.digest }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download image digest artifact from build-image workflow
+        id: digest_artifact
+        uses: dawidd6/action-download-artifact@v3
+        continue-on-error: true
+        with:
+          workflow: build-image.yml
+          name: backend-image-digest
+          path: .
+
+      - name: Azure login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Resolve image digest
+        id: image
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if [[ -f image-digest.txt ]]; then
+            DIGEST="$(grep '^digest=' image-digest.txt | cut -d= -f2-)"
+            IMAGE_REPO="$(grep '^image_repo=' image-digest.txt | cut -d= -f2-)"
+            TAG_FROM_ARTIFACT="$(grep '^semver_tag=' image-digest.txt | cut -d= -f2-)"
+            if [[ -z "${TAG_FROM_ARTIFACT}" ]]; then
+              TAG_FROM_ARTIFACT="$(grep '^sha_tag=' image-digest.txt | cut -d= -f2-)"
+            fi
+            if [[ -n "${DIGEST}" && -n "${IMAGE_REPO}" && "${DIGEST}" == sha256:* ]]; then
+              echo "tag=${TAG_FROM_ARTIFACT}" >> "$GITHUB_OUTPUT"
+              echo "image=${IMAGE_REPO}@${DIGEST}" >> "$GITHUB_OUTPUT"
+              echo "digest=${DIGEST}" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+          fi
+
+          if [[ -n "${{ github.event.inputs.image_tag }}" ]]; then
+            TAG="${{ github.event.inputs.image_tag }}"
+          elif [[ "${GITHUB_REF}" == refs/tags/v* ]]; then
+            TAG="${GITHUB_REF_NAME}"
+          else
+            TAG="sha-${GITHUB_SHA::12}"
+          fi
+
+          LOGIN_SERVER="${{ secrets.ACR_LOGIN_SERVER }}"
+          REPO="wave9-backend-api"
+          DIGEST="$(az acr repository show-manifests --name "${{ secrets.ACR_NAME }}" --repository "$REPO" --query "[?contains(tags, '$TAG')][0].digest" -o tsv)"
+
+          if [[ -z "${DIGEST}" ]]; then
+            echo "No manifest digest found for tag ${TAG}" >&2
+            exit 1
+          fi
+
+          echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
+          echo "image=${LOGIN_SERVER}/${REPO}@${DIGEST}" >> "$GITHUB_OUTPUT"
+          echo "digest=${DIGEST}" >> "$GITHUB_OUTPUT"
+
+      - name: Guard digest output
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -z "${{ steps.image.outputs.digest }}" ]]; then
+            echo "Resolved digest is empty; refusing deployment" >&2
+            exit 1
+          fi
+          if [[ "${{ steps.image.outputs.digest }}" != sha256:* ]]; then
+            echo "Resolved digest is not a valid sha256 digest" >&2
+            exit 1
+          fi
+
+  deploy-staging:
+    needs: resolve-image
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    environment: staging
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Azure login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Prevent deploy without digest
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -z "${{ needs.resolve-image.outputs.digest }}" ]]; then
+            echo "Missing image digest from resolve-image job" >&2
+            exit 1
+          fi
+
+      - name: Apply ACA manifest (staging)
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp backend/api/deploy/aca/containerapp.yaml containerapp.effective.yaml
+          sed -i "s|<SUBSCRIPTION_ID>|${{ secrets.AZURE_SUBSCRIPTION_ID }}|g" containerapp.effective.yaml
+          sed -i "s|<RG>|${{ secrets.ACA_RESOURCE_GROUP }}|g" containerapp.effective.yaml
+          sed -i "s|<ACA_ENV_NAME>|${{ secrets.ACA_ENV_NAME }}|g" containerapp.effective.yaml
+          sed -i "s|<ACR_NAME>|${{ secrets.ACR_NAME }}|g" containerapp.effective.yaml
+          sed -i "s|<TAG>|${{ needs.resolve-image.outputs.tag }}|g" containerapp.effective.yaml
+          sed -i "s|name: inchanted-api|name: ${{ secrets.ACA_APP_NAME }}|" containerapp.effective.yaml
+
+          az containerapp update \
+            --name "${{ secrets.ACA_APP_NAME }}" \
+            --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" \
+            --yaml containerapp.effective.yaml \
+            --output none
+
+      - name: Pin deployed image to resolved digest (staging)
+        shell: bash
+        run: |
+          set -euo pipefail
+          az containerapp update \
+            --name "${{ secrets.ACA_APP_NAME }}" \
+            --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" \
+            --image "${{ needs.resolve-image.outputs.image }}" \
+            --output none
+
+      - name: Verify new revision creation (staging)
+        id: rev
+        shell: bash
+        run: |
+          set -euo pipefail
+          REVISION="$(az containerapp show --name "${{ secrets.ACA_APP_NAME }}" --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" --query properties.latestReadyRevisionName -o tsv)"
+          if [[ -z "${REVISION}" ]]; then
+            echo "No latest ready revision found" >&2
+            exit 1
+          fi
+          echo "revision=${REVISION}" >> "$GITHUB_OUTPUT"
+
+      - name: Verify container startup logs (staging)
+        shell: bash
+        run: |
+          az containerapp logs show \
+            --name "${{ secrets.ACA_APP_NAME }}" \
+            --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" \
+            --tail 80
+
+      - name: Post-deploy health probes (staging)
+        shell: bash
+        run: |
+          set -euo pipefail
+          FQDN="$(az containerapp show --name "${{ secrets.ACA_APP_NAME }}" --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" --query properties.configuration.ingress.fqdn -o tsv)"
+          BASE_URL="https://${FQDN}"
+
+          curl -fsS "${BASE_URL}/api/ping"
+          curl -fsS -H "x-actor-role: viewer" -H "x-tenant-id: aca-deploy" "${BASE_URL}/api/gethealth"
+          curl -fsS "${BASE_URL}/api/version"
+
+  deploy-production:
+    needs:
+      - resolve-image
+      - deploy-staging
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    environment: production
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Azure login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Prevent deploy without digest
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -z "${{ needs.resolve-image.outputs.digest }}" ]]; then
+            echo "Missing image digest from resolve-image job" >&2
+            exit 1
+          fi
+
+      - name: Apply ACA manifest (production)
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp backend/api/deploy/aca/containerapp.yaml containerapp.effective.yaml
+          sed -i "s|<SUBSCRIPTION_ID>|${{ secrets.AZURE_SUBSCRIPTION_ID }}|g" containerapp.effective.yaml
+          sed -i "s|<RG>|${{ secrets.ACA_RESOURCE_GROUP }}|g" containerapp.effective.yaml
+          sed -i "s|<ACA_ENV_NAME>|${{ secrets.ACA_ENV_NAME }}|g" containerapp.effective.yaml
+          sed -i "s|<ACR_NAME>|${{ secrets.ACR_NAME }}|g" containerapp.effective.yaml
+          sed -i "s|<TAG>|${{ needs.resolve-image.outputs.tag }}|g" containerapp.effective.yaml
+          sed -i "s|name: inchanted-api|name: ${{ secrets.ACA_APP_NAME }}|" containerapp.effective.yaml
+
+          az containerapp update \
+            --name "${{ secrets.ACA_APP_NAME }}" \
+            --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" \
+            --yaml containerapp.effective.yaml \
+            --output none
+
+      - name: Pin deployed image to resolved digest (production)
+        shell: bash
+        run: |
+          set -euo pipefail
+          az containerapp update \
+            --name "${{ secrets.ACA_APP_NAME }}" \
+            --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" \
+            --image "${{ needs.resolve-image.outputs.image }}" \
+            --output none
+
+      - name: Verify new revision creation (production)
+        id: rev
+        shell: bash
+        run: |
+          set -euo pipefail
+          REVISION="$(az containerapp show --name "${{ secrets.ACA_APP_NAME }}" --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" --query properties.latestReadyRevisionName -o tsv)"
+          if [[ -z "${REVISION}" ]]; then
+            echo "No latest ready revision found" >&2
+            exit 1
+          fi
+          echo "revision=${REVISION}" >> "$GITHUB_OUTPUT"
+
+      - name: Verify container startup logs (production)
+        shell: bash
+        run: |
+          az containerapp logs show \
+            --name "${{ secrets.ACA_APP_NAME }}" \
+            --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" \
+            --tail 80
+
+      - name: Post-deploy health probes (production)
+        shell: bash
+        run: |
+          set -euo pipefail
+          FQDN="$(az containerapp show --name "${{ secrets.ACA_APP_NAME }}" --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" --query properties.configuration.ingress.fqdn -o tsv)"
+          BASE_URL="https://${FQDN}"
+
+          curl -fsS "${BASE_URL}/api/ping"
+          curl -fsS -H "x-actor-role: viewer" -H "x-tenant-id: aca-deploy" "${BASE_URL}/api/gethealth"
+          curl -fsS "${BASE_URL}/api/version"

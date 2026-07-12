@@ -1,0 +1,82 @@
+name: Build Image
+
+on:
+  push:
+    branches: [main]
+    tags:
+      - "v*"
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Azure login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: ACR login
+        run: az acr login --name "${{ secrets.ACR_NAME }}"
+
+      - name: Resolve image metadata
+        id: meta
+        shell: bash
+        run: |
+          set -euo pipefail
+          SHA_TAG="sha-${GITHUB_SHA::12}"
+          IMAGE_REPO="${{ secrets.ACR_LOGIN_SERVER }}/wave9-backend-api"
+          if [[ "${GITHUB_REF}" == refs/tags/v* ]]; then
+            SEMVER_TAG="${GITHUB_REF_NAME}"
+          else
+            SEMVER_TAG=""
+          fi
+          echo "image_repo=${IMAGE_REPO}" >> "$GITHUB_OUTPUT"
+          echo "sha_tag=${SHA_TAG}" >> "$GITHUB_OUTPUT"
+          echo "semver_tag=${SEMVER_TAG}" >> "$GITHUB_OUTPUT"
+
+      - name: Build and push backend/api Docker image
+        id: build
+        shell: bash
+        run: |
+          set -euo pipefail
+          IMAGE_REPO="${{ steps.meta.outputs.image_repo }}"
+          SHA_TAG="${{ steps.meta.outputs.sha_tag }}"
+          SEMVER_TAG="${{ steps.meta.outputs.semver_tag }}"
+
+          TAG_ARGS=( -t "${IMAGE_REPO}:${SHA_TAG}" )
+          if [[ -n "${SEMVER_TAG}" ]]; then
+            TAG_ARGS+=( -t "${IMAGE_REPO}:${SEMVER_TAG}" )
+          fi
+
+          docker buildx build \
+            --push \
+            --file backend/api/Dockerfile \
+            "${TAG_ARGS[@]}" \
+            --iidfile image.iid \
+            .
+
+          DIGEST="$(cat image.iid | sed 's/^.*@//')"
+          if [[ "${DIGEST}" != sha256:* ]]; then
+            echo "Digest format not recognized: ${DIGEST}" >&2
+            exit 1
+          fi
+
+          echo "digest=${DIGEST}" >> "$GITHUB_OUTPUT"
+          printf "image_repo=%s\nsha_tag=%s\nsemver_tag=%s\ndigest=%s\n" \
+            "${IMAGE_REPO}" "${SHA_TAG}" "${SEMVER_TAG}" "${DIGEST}" > image-digest.txt
+
+      - name: Upload image digest artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-image-digest
+          path: image-digest.txt
