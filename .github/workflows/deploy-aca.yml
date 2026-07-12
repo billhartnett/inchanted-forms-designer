@@ -143,13 +143,6 @@ jobs:
             --system \
             --output none
 
-          az containerapp registry set \
-            --name "${{ secrets.ACA_APP_NAME }}" \
-            --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" \
-            --server "${{ secrets.ACR_LOGIN_SERVER }}" \
-            --identity system \
-            --output none
-
           # System-assigned identity can take time to propagate for revision provisioning.
           PRINCIPAL_ID=""
           for attempt in {1..20}; do
@@ -160,16 +153,68 @@ jobs:
             sleep 5
           done
 
-          az containerapp secret set \
-            --name "${{ secrets.ACA_APP_NAME }}" \
-            --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" \
-            --secrets \
-            azure-storage-connection-string='${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}' \
-            di-endpoint='${{ secrets.DI_ENDPOINT }}' \
-            di-key='${{ secrets.DI_KEY }}' \
-            openai-endpoint='${{ secrets.OPENAI_ENDPOINT }}' \
-            openai-api-key='${{ secrets.OPENAI_API_KEY }}' \
-            --output none
+          if [[ -z "${PRINCIPAL_ID}" || "${PRINCIPAL_ID}" == "null" ]]; then
+            echo "Timed out waiting for system identity principalId for staging app" >&2
+            exit 1
+          fi
+
+          REGISTRY_SET=0
+          for attempt in {1..6}; do
+            set +e
+            REGISTRY_OUT="$(az containerapp registry set \
+              --name "${{ secrets.ACA_APP_NAME }}" \
+              --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" \
+              --server "${{ secrets.ACR_LOGIN_SERVER }}" \
+              --identity system \
+              --output none 2>&1)"
+            REGISTRY_CODE=$?
+            set -e
+            if [[ ${REGISTRY_CODE} -eq 0 ]]; then
+              REGISTRY_SET=1
+              break
+            fi
+            if grep -qi "Identity with resource ID 'system' not found" <<< "${REGISTRY_OUT}"; then
+              sleep 10
+              continue
+            fi
+            echo "${REGISTRY_OUT}" >&2
+            exit ${REGISTRY_CODE}
+          done
+          if [[ ${REGISTRY_SET} -ne 1 ]]; then
+            echo "Timed out waiting for system identity propagation during staging registry set" >&2
+            exit 1
+          fi
+
+          SECRET_SET=0
+          for attempt in {1..6}; do
+            set +e
+            SECRET_OUT="$(az containerapp secret set \
+              --name "${{ secrets.ACA_APP_NAME }}" \
+              --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" \
+              --secrets \
+              azure-storage-connection-string='${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}' \
+              di-endpoint='${{ secrets.DI_ENDPOINT }}' \
+              di-key='${{ secrets.DI_KEY }}' \
+              openai-endpoint='${{ secrets.OPENAI_ENDPOINT }}' \
+              openai-api-key='${{ secrets.OPENAI_API_KEY }}' \
+              --output none 2>&1)"
+            SECRET_CODE=$?
+            set -e
+            if [[ ${SECRET_CODE} -eq 0 ]]; then
+              SECRET_SET=1
+              break
+            fi
+            if grep -qi "Identity with resource ID 'system' not found" <<< "${SECRET_OUT}"; then
+              sleep 10
+              continue
+            fi
+            echo "${SECRET_OUT}" >&2
+            exit ${SECRET_CODE}
+          done
+          if [[ ${SECRET_SET} -ne 1 ]]; then
+            echo "Timed out waiting for system identity propagation during staging secret set" >&2
+            exit 1
+          fi
 
           UPDATED=0
           for attempt in {1..6}; do
@@ -304,13 +349,6 @@ jobs:
             --system \
             --output none
 
-          az containerapp registry set \
-            --name "${{ secrets.ACA_APP_NAME }}" \
-            --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" \
-            --server "${{ secrets.ACR_LOGIN_SERVER }}" \
-            --identity system \
-            --output none
-
           # System-assigned identity can take time to propagate for revision provisioning.
           PRINCIPAL_ID=""
           for attempt in {1..20}; do
@@ -321,16 +359,68 @@ jobs:
             sleep 5
           done
 
-          az containerapp secret set \
-            --name "${{ secrets.ACA_APP_NAME }}" \
-            --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" \
-            --secrets \
-            azure-storage-connection-string='${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}' \
-            di-endpoint='${{ secrets.DI_ENDPOINT }}' \
-            di-key='${{ secrets.DI_KEY }}' \
-            openai-endpoint='${{ secrets.OPENAI_ENDPOINT }}' \
-            openai-api-key='${{ secrets.OPENAI_API_KEY }}' \
-            --output none
+          if [[ -z "${PRINCIPAL_ID}" || "${PRINCIPAL_ID}" == "null" ]]; then
+            echo "Timed out waiting for system identity principalId for production app" >&2
+            exit 1
+          fi
+
+          REGISTRY_SET=0
+          for attempt in {1..6}; do
+            set +e
+            REGISTRY_OUT="$(az containerapp registry set \
+              --name "${{ secrets.ACA_APP_NAME }}" \
+              --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" \
+              --server "${{ secrets.ACR_LOGIN_SERVER }}" \
+              --identity system \
+              --output none 2>&1)"
+            REGISTRY_CODE=$?
+            set -e
+            if [[ ${REGISTRY_CODE} -eq 0 ]]; then
+              REGISTRY_SET=1
+              break
+            fi
+            if grep -qi "Identity with resource ID 'system' not found" <<< "${REGISTRY_OUT}"; then
+              sleep 10
+              continue
+            fi
+            echo "${REGISTRY_OUT}" >&2
+            exit ${REGISTRY_CODE}
+          done
+          if [[ ${REGISTRY_SET} -ne 1 ]]; then
+            echo "Timed out waiting for system identity propagation during production registry set" >&2
+            exit 1
+          fi
+
+          SECRET_SET=0
+          for attempt in {1..6}; do
+            set +e
+            SECRET_OUT="$(az containerapp secret set \
+              --name "${{ secrets.ACA_APP_NAME }}" \
+              --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" \
+              --secrets \
+              azure-storage-connection-string='${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}' \
+              di-endpoint='${{ secrets.DI_ENDPOINT }}' \
+              di-key='${{ secrets.DI_KEY }}' \
+              openai-endpoint='${{ secrets.OPENAI_ENDPOINT }}' \
+              openai-api-key='${{ secrets.OPENAI_API_KEY }}' \
+              --output none 2>&1)"
+            SECRET_CODE=$?
+            set -e
+            if [[ ${SECRET_CODE} -eq 0 ]]; then
+              SECRET_SET=1
+              break
+            fi
+            if grep -qi "Identity with resource ID 'system' not found" <<< "${SECRET_OUT}"; then
+              sleep 10
+              continue
+            fi
+            echo "${SECRET_OUT}" >&2
+            exit ${SECRET_CODE}
+          done
+          if [[ ${SECRET_SET} -ne 1 ]]; then
+            echo "Timed out waiting for system identity propagation during production secret set" >&2
+            exit 1
+          fi
 
           UPDATED=0
           for attempt in {1..6}; do
