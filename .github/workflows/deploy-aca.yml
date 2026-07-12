@@ -76,7 +76,7 @@ jobs:
 
           DIGEST=""
           for attempt in {1..30}; do
-            DIGEST="$(az acr repository show-manifests --name "${{ secrets.ACR_NAME }}" --repository "$REPO" --query "[?contains(tags, '${EXPECTED_TAG}')][0].digest" -o tsv)"
+            DIGEST="$(az acr manifest list-metadata --registry "${{ secrets.ACR_NAME }}" --name "$REPO" --query "[?tags[?@=='${EXPECTED_TAG}']].digest | [0]" -o tsv)"
             if [[ -n "${DIGEST}" ]]; then
               break
             fi
