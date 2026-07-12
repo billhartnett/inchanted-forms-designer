@@ -163,6 +163,24 @@ jobs:
             EMBEDDING_MODEL='${{ secrets.OPENAI_DEPLOYMENT }}' \
             --output none
 
+      - name: Ensure ACA managed identity and ACR registry binding (staging)
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          az containerapp identity assign \
+            --name "${{ secrets.ACA_APP_NAME }}" \
+            --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" \
+            --system \
+            --output none
+
+          az containerapp registry set \
+            --name "${{ secrets.ACA_APP_NAME }}" \
+            --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" \
+            --server "${{ secrets.ACR_LOGIN_SERVER }}" \
+            --identity system \
+            --output none
+
       - name: Apply ACA manifest (staging)
         shell: bash
         run: |
@@ -279,6 +297,24 @@ jobs:
             OPENAI_API_KEY=secretref:openai-api-key \
             OPENAI_DEPLOYMENT='${{ secrets.OPENAI_DEPLOYMENT }}' \
             EMBEDDING_MODEL='${{ secrets.OPENAI_DEPLOYMENT }}' \
+            --output none
+
+      - name: Ensure ACA managed identity and ACR registry binding (production)
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          az containerapp identity assign \
+            --name "${{ secrets.ACA_APP_NAME }}" \
+            --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" \
+            --system \
+            --output none
+
+          az containerapp registry set \
+            --name "${{ secrets.ACA_APP_NAME }}" \
+            --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" \
+            --server "${{ secrets.ACR_LOGIN_SERVER }}" \
+            --identity system \
             --output none
 
       - name: Apply ACA manifest (production)
