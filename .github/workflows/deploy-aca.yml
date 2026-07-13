@@ -114,7 +114,7 @@ jobs:
     needs: resolve-image
     runs-on: ubuntu-latest
     outputs:
-      staging_base_url: ${{ steps.staging_base.outputs.base_url }}
+      staging_base_url_b64: ${{ steps.staging_base.outputs.base_url_b64 }}
     permissions:
       contents: read
       id-token: write
@@ -515,7 +515,9 @@ jobs:
             echo "Unable to resolve staging ingress FQDN" >&2
             exit 1
           fi
-          echo "base_url=https://${FQDN}" >> "$GITHUB_OUTPUT"
+          BASE_URL="https://${FQDN}"
+          BASE_URL_B64="$(printf '%s' "${BASE_URL}" | base64 | tr -d '\n')"
+          echo "base_url_b64=${BASE_URL_B64}" >> "$GITHUB_OUTPUT"
 
       - name: Wave 8 contract stability sweep (staging)
         shell: bash
@@ -561,11 +563,13 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          BASE_URL="${{ needs.deploy-staging.outputs.staging_base_url }}"
-          if [[ -z "${BASE_URL}" ]]; then
-            echo "Missing staging_base_url output from deploy-staging job" >&2
+          BASE_URL_B64="${{ needs.deploy-staging.outputs.staging_base_url_b64 }}"
+          if [[ -z "${BASE_URL_B64}" ]]; then
+            echo "Missing staging_base_url_b64 output from deploy-staging job" >&2
             exit 1
           fi
+
+          BASE_URL="$(printf '%s' "${BASE_URL_B64}" | base64 -d)"
 
           BASE_URL="${BASE_URL}" \
           WAVE8_ENV=staging \
