@@ -950,10 +950,29 @@ jobs:
         run: |
           set -euo pipefail
           FQDN="$(az containerapp show --name "${{ secrets.ACA_APP_NAME }}" --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" --query properties.configuration.ingress.fqdn -o tsv)"
-          BASE_URL="https://${FQDN}" \
-          WAVE8_ENV=production \
-          WAVE8_REPORT_PATH=backend_validation_report.production.wave8.json \
-          node backend/api/scripts/wave8_contract_stability_sweep.cjs
+          BASE_URL="https://${FQDN}"
+
+          SWEEP_PASSED=0
+          for attempt in 1 2 3; do
+            echo "Wave 8 production sweep attempt ${attempt}/3"
+            if BASE_URL="${BASE_URL}" \
+              WAVE8_ENV=production \
+              WAVE8_REPORT_PATH=backend_validation_report.production.wave8.json \
+              node backend/api/scripts/wave8_contract_stability_sweep.cjs; then
+              SWEEP_PASSED=1
+              break
+            fi
+
+            if [[ ${attempt} -lt 3 ]]; then
+              echo "Wave 8 production sweep attempt ${attempt} failed; waiting 20s before retry..."
+              sleep 20
+            fi
+          done
+
+          if [[ ${SWEEP_PASSED} -ne 1 ]]; then
+            echo "Wave 8 production sweep failed after 3 attempts" >&2
+            exit 1
+          fi
 
           cat backend_validation_report.production.wave8.json
 
