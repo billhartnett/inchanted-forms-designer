@@ -181,7 +181,7 @@ jobs:
             RESTART_CODE=$?
             set -e
             if [[ ${RESTART_CODE} -ne 0 ]]; then
-              if grep -Eqi "${TRANSIENT_RETRY_PATTERN}" <<< "${RESTART_OUT}"; then
+              if echo "${RESTART_OUT}" | tr -d '\r' | grep -Eqi "${TRANSIENT_RETRY_PATTERN}"; then
                 echo "revision restart transiently blocked during ${label}; waiting ${PROPAGATION_DELAY_SECONDS}s..."
                 sleep "${PROPAGATION_DELAY_SECONDS}"
                 return 0
@@ -242,7 +242,7 @@ jobs:
                 ASSIGNED=1
                 break
               fi
-              if grep -Eqi "${TRANSIENT_RETRY_PATTERN}" <<< "${ASSIGN_OUT}"; then
+              if echo "${ASSIGN_OUT}" | tr -d '\r' | grep -Eqi "${TRANSIENT_RETRY_PATTERN}"; then
                 sleep 10
                 continue
               fi
@@ -296,7 +296,7 @@ jobs:
               REGISTRY_SET=1
               break
             fi
-            if grep -Eqi "${TRANSIENT_RETRY_PATTERN}" <<< "${REGISTRY_OUT}"; then
+            if echo "${REGISTRY_OUT}" | tr -d '\r' | grep -Eqi "${TRANSIENT_RETRY_PATTERN}"; then
               echo "registry set not ready yet (attempt ${attempt}/${MAX_PROPAGATION_ATTEMPTS}); waiting ${PROPAGATION_DELAY_SECONDS}s..."
               sleep "${PROPAGATION_DELAY_SECONDS}"
               continue
@@ -355,7 +355,7 @@ jobs:
               SECRET_SET=1
               break
             fi
-            if grep -Eqi "${TRANSIENT_RETRY_PATTERN}" <<< "${SECRET_OUT}"; then
+            if echo "${SECRET_OUT}" | tr -d '\r' | grep -Eqi "${TRANSIENT_RETRY_PATTERN}"; then
               echo "secret set not ready yet (attempt ${attempt}/${MAX_PROPAGATION_ATTEMPTS}); waiting ${PROPAGATION_DELAY_SECONDS}s..."
               sleep "${PROPAGATION_DELAY_SECONDS}"
               continue
@@ -384,7 +384,7 @@ jobs:
               OPENAI_ENDPOINT=secretref:openai-endpoint \
               OPENAI_API_KEY=secretref:openai-api-key \
               OPENAI_DEPLOYMENT='${{ secrets.OPENAI_DEPLOYMENT }}' \
-              EMBEDDING_MODEL='${{ secrets.OPENAI_DEPLOYMENT }}' \
+              EMBEDDING_MODEL='${{ secrets.EMBEDDING_MODEL }}' \
               --output none 2>&1)"
             UPDATE_CODE=$?
             set -e
@@ -392,7 +392,7 @@ jobs:
               UPDATED=1
               break
             fi
-            if grep -Eqi "${TRANSIENT_RETRY_PATTERN}" <<< "${UPDATE_OUT}"; then
+            if echo "${UPDATE_OUT}" | tr -d '\r' | grep -Eqi "${TRANSIENT_RETRY_PATTERN}"; then
               echo "env update not ready yet (attempt ${attempt}/${MAX_PROPAGATION_ATTEMPTS}); waiting ${PROPAGATION_DELAY_SECONDS}s..."
               sleep "${PROPAGATION_DELAY_SECONDS}"
               continue
@@ -416,6 +416,10 @@ jobs:
           sed -i "s|<ACR_NAME>|${{ secrets.ACR_NAME }}|g" containerapp.effective.yaml
           sed -i "s|<TAG>|${{ needs.resolve-image.outputs.tag }}|g" containerapp.effective.yaml
           sed -i "s|name: inchanted-api|name: ${{ secrets.ACA_APP_NAME }}|" containerapp.effective.yaml
+          sed -i "s|<BUILD_TIMESTAMP_ISO8601>|$(date -u +%Y-%m-%dT%H:%M:%SZ)|g" containerapp.effective.yaml
+          sed -i "s|<GIT_COMMIT_SHA>|${{ github.sha }}|g" containerapp.effective.yaml
+          sed -i "s|<WAVE9_ENGINE_VERSION>|${{ needs.resolve-image.outputs.tag }}|g" containerapp.effective.yaml
+          sed -i "s|<REVISION_SUFFIX>|wave9-$(echo "${{ github.sha }}" | cut -c1-8)|g" containerapp.effective.yaml
 
           az containerapp update \
             --name "${{ secrets.ACA_APP_NAME }}" \
@@ -537,7 +541,7 @@ jobs:
             RESTART_CODE=$?
             set -e
             if [[ ${RESTART_CODE} -ne 0 ]]; then
-              if grep -Eqi "${TRANSIENT_RETRY_PATTERN}" <<< "${RESTART_OUT}"; then
+              if echo "${RESTART_OUT}" | tr -d '\r' | grep -Eqi "${TRANSIENT_RETRY_PATTERN}"; then
                 echo "revision restart transiently blocked during ${label}; waiting ${PROPAGATION_DELAY_SECONDS}s..."
                 sleep "${PROPAGATION_DELAY_SECONDS}"
                 return 0
@@ -598,7 +602,7 @@ jobs:
                 ASSIGNED=1
                 break
               fi
-              if grep -Eqi "${TRANSIENT_RETRY_PATTERN}" <<< "${ASSIGN_OUT}"; then
+              if echo "${ASSIGN_OUT}" | tr -d '\r' | grep -Eqi "${TRANSIENT_RETRY_PATTERN}"; then
                 sleep 10
                 continue
               fi
@@ -652,7 +656,7 @@ jobs:
               REGISTRY_SET=1
               break
             fi
-            if grep -Eqi "${TRANSIENT_RETRY_PATTERN}" <<< "${REGISTRY_OUT}"; then
+            if echo "${REGISTRY_OUT}" | tr -d '\r' | grep -Eqi "${TRANSIENT_RETRY_PATTERN}"; then
               echo "registry set not ready yet (attempt ${attempt}/${MAX_PROPAGATION_ATTEMPTS}); waiting ${PROPAGATION_DELAY_SECONDS}s..."
               sleep "${PROPAGATION_DELAY_SECONDS}"
               continue
@@ -711,7 +715,7 @@ jobs:
               SECRET_SET=1
               break
             fi
-            if grep -Eqi "${TRANSIENT_RETRY_PATTERN}" <<< "${SECRET_OUT}"; then
+            if echo "${SECRET_OUT}" | tr -d '\r' | grep -Eqi "${TRANSIENT_RETRY_PATTERN}"; then
               echo "secret set not ready yet (attempt ${attempt}/${MAX_PROPAGATION_ATTEMPTS}); waiting ${PROPAGATION_DELAY_SECONDS}s..."
               sleep "${PROPAGATION_DELAY_SECONDS}"
               continue
@@ -740,7 +744,7 @@ jobs:
               OPENAI_ENDPOINT=secretref:openai-endpoint \
               OPENAI_API_KEY=secretref:openai-api-key \
               OPENAI_DEPLOYMENT='${{ secrets.OPENAI_DEPLOYMENT }}' \
-              EMBEDDING_MODEL='${{ secrets.OPENAI_DEPLOYMENT }}' \
+              EMBEDDING_MODEL='${{ secrets.EMBEDDING_MODEL }}' \
               --output none 2>&1)"
             UPDATE_CODE=$?
             set -e
@@ -748,7 +752,7 @@ jobs:
               UPDATED=1
               break
             fi
-            if grep -Eqi "${TRANSIENT_RETRY_PATTERN}" <<< "${UPDATE_OUT}"; then
+            if echo "${UPDATE_OUT}" | tr -d '\r' | grep -Eqi "${TRANSIENT_RETRY_PATTERN}"; then
               echo "env update not ready yet (attempt ${attempt}/${MAX_PROPAGATION_ATTEMPTS}); waiting ${PROPAGATION_DELAY_SECONDS}s..."
               sleep "${PROPAGATION_DELAY_SECONDS}"
               continue
@@ -772,6 +776,10 @@ jobs:
           sed -i "s|<ACR_NAME>|${{ secrets.ACR_NAME }}|g" containerapp.effective.yaml
           sed -i "s|<TAG>|${{ needs.resolve-image.outputs.tag }}|g" containerapp.effective.yaml
           sed -i "s|name: inchanted-api|name: ${{ secrets.ACA_APP_NAME }}|" containerapp.effective.yaml
+          sed -i "s|<BUILD_TIMESTAMP_ISO8601>|$(date -u +%Y-%m-%dT%H:%M:%SZ)|g" containerapp.effective.yaml
+          sed -i "s|<GIT_COMMIT_SHA>|${{ github.sha }}|g" containerapp.effective.yaml
+          sed -i "s|<WAVE9_ENGINE_VERSION>|${{ needs.resolve-image.outputs.tag }}|g" containerapp.effective.yaml
+          sed -i "s|<REVISION_SUFFIX>|wave9-$(echo "${{ github.sha }}" | cut -c1-8)|g" containerapp.effective.yaml
 
           az containerapp update \
             --name "${{ secrets.ACA_APP_NAME }}" \

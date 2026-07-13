@@ -14,7 +14,7 @@ properties:
       - server: <ACR_NAME>.azurecr.io
         identity: system
   template:
-    revisionSuffix: wave9-express
+    revisionSuffix: <REVISION_SUFFIX>
     containers:
       - name: backend-api
         image: <ACR_NAME>.azurecr.io/wave9-backend-api:<TAG>
