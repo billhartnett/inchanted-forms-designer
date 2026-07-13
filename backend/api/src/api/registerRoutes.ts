@@ -164,6 +164,97 @@ function normalizeJsonBodyForUi(jsonBody: unknown, status: number, path: string)
   };
 }
 
+function buildWave9FrontendIntegrationContract() {
+  const envelope = {
+    success: {
+      ok: true,
+      status: "number",
+      data: "object|array|null",
+      error: null,
+      errorEnvelope: null,
+      contract: {
+        version: WAVE8_CONTRACT_VERSION,
+        path: "string",
+        status: "number",
+        ok: true,
+        timestamp: "ISO-8601",
+      },
+      meta: {
+        contractVersion: WAVE8_CONTRACT_VERSION,
+      },
+    },
+    failure: {
+      ok: false,
+      status: "number",
+      data: null,
+      error: "string",
+      errorEnvelope: {
+        code: "string",
+        message: "string",
+        details: "object|null",
+      },
+      contract: {
+        version: WAVE8_CONTRACT_VERSION,
+        path: "string",
+        status: "number",
+        ok: false,
+        timestamp: "ISO-8601",
+      },
+      meta: {
+        contractVersion: WAVE8_CONTRACT_VERSION,
+      },
+    },
+  };
+
+  return {
+    version: "wave9.frontend.v1",
+    contractVersion: WAVE8_CONTRACT_VERSION,
+    endpoints: {
+      contracts: { method: "GET", path: "/api/wave9/contracts" },
+      extraction: { method: "POST", path: "/api/wave9/acord/extraction" },
+      semanticInference: { method: "POST", path: "/api/wave9/acord/semantic-inference" },
+      semanticSummary: { method: "POST", path: "/api/wave9/semantic-summary" },
+      acordValidate: { method: "POST", path: "/api/wave9/acord/validate" },
+      inference: { method: "POST", path: "/api/wave9/inference" },
+      arbitration: { method: "POST", path: "/api/wave9/arbitration" },
+      arbitrationTrace: { method: "POST", path: "/api/wave9/arbitration/trace" },
+      normalization: { method: "POST", path: "/api/wave9/normalization" },
+      scoring: { method: "POST", path: "/api/wave9/scoring" },
+      preview: { method: "POST", path: "/api/wave9/preview" },
+      mappingFlow: { method: "POST", path: "/api/wave9/mapping/flow" },
+    },
+    payloadFormats: {
+      inferenceRequest: {
+        submissionId: "string",
+        fields: [{ id: "string", label: "string", value: "unknown", page: "number" }],
+        context: { carrier: "string", formId: "string", jurisdiction: "string" },
+      },
+      acordMapping: {
+        acordCode: "string",
+        acordLabel: "string",
+        confidence: "number",
+        sourceFieldId: "string",
+      },
+      arbitrationOutput: {
+        decision: "string",
+        winningCandidate: "object|null",
+        alternatives: [{ reason: "string", candidate: "object" }],
+      },
+      normalizationOutput: {
+        normalizedFields: [{ id: "string", canonicalValue: "unknown", transforms: ["string"] }],
+      },
+      scoringOutput: {
+        totalScore: "number",
+        factors: [{ name: "string", score: "number", weight: "number" }],
+      },
+      previewOutput: {
+        preview: { xml: "string", warnings: ["string"], artifacts: ["object"] },
+      },
+    },
+    envelopes: envelope,
+  };
+}
+
 function toAzureRequest(request: Request): HttpRequest {
   const host = request.get("host") || "localhost";
   const url = new URL(request.originalUrl || request.url, `http://${host}`);
@@ -250,22 +341,15 @@ async function runAzureHandlerAsExpress(handler: AzureHandler, request: Request,
 }
 
 export function registerMigratedFunctionRoutes(router: Router): void {
+  const wave9Contract = buildWave9FrontendIntegrationContract();
+
   router.route("/wave9/contracts")
     .get((_request, response) => {
       response.status(200).json({
         ok: true,
         status: 200,
         data: {
-          version: WAVE8_CONTRACT_VERSION,
-          contracts: {
-            extraction: "/api/wave9/acord/extraction",
-            semanticInference: "/api/wave9/acord/semantic-inference",
-            arbitration: "/api/wave9/arbitration",
-            normalization: "/api/wave9/normalization",
-            scoring: "/api/wave9/scoring",
-            inference: "/api/wave9/inference",
-            preview: "/api/wave9/preview",
-          },
+          ...wave9Contract,
         },
         error: null,
         errorEnvelope: null,
@@ -295,6 +379,26 @@ export function registerMigratedFunctionRoutes(router: Router): void {
     })
     ;
 
+  router.route("/wave9/semantic-summary")
+    .post(async (request, response, next) => {
+      try {
+        await runAzureHandlerAsExpress(evaluateAcordSemanticsHandler, request, response);
+      } catch (error) {
+        next(error);
+      }
+    })
+    ;
+
+  router.route("/wave9/acord/validate")
+    .post(async (request, response, next) => {
+      try {
+        await runAzureHandlerAsExpress(validateAcordOntologyHandler, request, response);
+      } catch (error) {
+        next(error);
+      }
+    })
+    ;
+
   router.route("/wave9/inference")
     .post(async (request, response, next) => {
       try {
@@ -306,6 +410,16 @@ export function registerMigratedFunctionRoutes(router: Router): void {
     ;
 
   router.route("/wave9/arbitration")
+    .post(async (request, response, next) => {
+      try {
+        await runAzureHandlerAsExpress(evaluateOntologyArbitrationHandler, request, response);
+      } catch (error) {
+        next(error);
+      }
+    })
+    ;
+
+  router.route("/wave9/arbitration/trace")
     .post(async (request, response, next) => {
       try {
         await runAzureHandlerAsExpress(evaluateOntologyArbitrationHandler, request, response);
@@ -336,6 +450,16 @@ export function registerMigratedFunctionRoutes(router: Router): void {
     ;
 
   router.route("/wave9/preview")
+    .post(async (request, response, next) => {
+      try {
+        await runAzureHandlerAsExpress(mapFields, request, response);
+      } catch (error) {
+        next(error);
+      }
+    })
+    ;
+
+  router.route("/wave9/mapping/flow")
     .post(async (request, response, next) => {
       try {
         await runAzureHandlerAsExpress(mapFields, request, response);

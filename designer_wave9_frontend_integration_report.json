@@ -1,0 +1,187 @@
+{
+  "timestamp": "2026-07-13T12:37:07.922Z",
+  "baseUrl": "http://127.0.0.1:8080",
+  "contractVersion": "wave8.v1",
+  "summary": {
+    "checked": 12,
+    "transportFailures": 0,
+    "statusMismatches": 0,
+    "contractViolations": 0,
+    "failed": 0
+  },
+  "failures": [],
+  "results": [
+    {
+      "method": "GET",
+      "route": "/api/wave9/contracts",
+      "expectedStatuses": [
+        200
+      ],
+      "status": 200,
+      "ok": true,
+      "latencyMs": 43,
+      "statusValid": true,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"ok\":true,\"status\":200,\"data\":{\"version\":\"wave9.frontend.v1\",\"contractVersion\":\"wave8.v1\",\"endpoints\":{\"contracts\":{\"method\":\"GET\",\"path\":\"/api/wave9/contracts\"},\"extraction\":{\"method\":\"POST\",\"path\":\"/api/wave9/acord/ex"
+    },
+    {
+      "method": "POST",
+      "route": "/api/wave9/acord/extraction",
+      "expectedStatuses": [
+        400,
+        500
+      ],
+      "status": 400,
+      "ok": true,
+      "latencyMs": 5,
+      "statusValid": true,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Provide blocks[], text, or a multipart file upload with a PDF\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Provide blocks[], text, or a multipart file upload with a PDF\""
+    },
+    {
+      "method": "POST",
+      "route": "/api/wave9/acord/semantic-inference",
+      "expectedStatuses": [
+        400
+      ],
+      "status": 400,
+      "ok": true,
+      "latencyMs": 4,
+      "statusValid": true,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Unsupported payload version\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Unsupported payload version\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/wave9"
+    },
+    {
+      "method": "POST",
+      "route": "/api/wave9/semantic-summary",
+      "expectedStatuses": [
+        400
+      ],
+      "status": 400,
+      "ok": true,
+      "latencyMs": 3,
+      "statusValid": true,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Unsupported payload version\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Unsupported payload version\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/wave9"
+    },
+    {
+      "method": "POST",
+      "route": "/api/wave9/acord/validate",
+      "expectedStatuses": [
+        200,
+        400
+      ],
+      "status": 200,
+      "ok": true,
+      "latencyMs": 3,
+      "statusValid": true,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"valid\":true,\"issues\":[],\"ok\":true,\"status\":200,\"data\":{\"valid\":true,\"issues\":[]},\"error\":null,\"errorEnvelope\":null,\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/wave9/acord/validate\",\"status\":200,\"ok\":true,\"timestamp\":"
+    },
+    {
+      "method": "POST",
+      "route": "/api/wave9/inference",
+      "expectedStatuses": [
+        400
+      ],
+      "status": 400,
+      "ok": true,
+      "latencyMs": 3,
+      "statusValid": true,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Payload must be an object\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Payload must be an object\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/wave9/inf"
+    },
+    {
+      "method": "POST",
+      "route": "/api/wave9/arbitration",
+      "expectedStatuses": [
+        400
+      ],
+      "status": 400,
+      "ok": true,
+      "latencyMs": 3,
+      "statusValid": true,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Payload must be an object\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Payload must be an object\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/wave9/arb"
+    },
+    {
+      "method": "POST",
+      "route": "/api/wave9/arbitration/trace",
+      "expectedStatuses": [
+        400
+      ],
+      "status": 400,
+      "ok": true,
+      "latencyMs": 3,
+      "statusValid": true,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Payload must be an object\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Payload must be an object\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/wave9/arb"
+    },
+    {
+      "method": "POST",
+      "route": "/api/wave9/normalization",
+      "expectedStatuses": [
+        400
+      ],
+      "status": 400,
+      "ok": true,
+      "latencyMs": 5,
+      "statusValid": true,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"At least one valid document payload is required.\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"At least one valid document payload is required.\",\"details\":null},\"contract"
+    },
+    {
+      "method": "POST",
+      "route": "/api/wave9/scoring",
+      "expectedStatuses": [
+        400
+      ],
+      "status": 400,
+      "ok": true,
+      "latencyMs": 3,
+      "statusValid": true,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Payload must be an object\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Payload must be an object\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/wave9/sco"
+    },
+    {
+      "method": "POST",
+      "route": "/api/wave9/preview",
+      "expectedStatuses": [
+        200,
+        400
+      ],
+      "status": 400,
+      "ok": true,
+      "latencyMs": 2,
+      "statusValid": true,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"blocks must be a non-empty array\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"blocks must be a non-empty array\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\""
+    },
+    {
+      "method": "POST",
+      "route": "/api/wave9/mapping/flow",
+      "expectedStatuses": [
+        200,
+        400
+      ],
+      "status": 400,
+      "ok": true,
+      "latencyMs": 2,
+      "statusValid": true,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"blocks must be a non-empty array\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"blocks must be a non-empty array\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\""
+    }
+  ]
+}
