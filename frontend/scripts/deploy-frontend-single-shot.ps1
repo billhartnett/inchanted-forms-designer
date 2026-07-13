@@ -1,7 +1,7 @@
 param(
   [string]$AppServiceName = "forms-designer",
   [string]$ResourceGroup = "inchanted-forms-rg",
-  [string]$ApiBaseUrl = "https://forms-designer-backend.azurewebsites.net",
+  [string]$ApiBaseUrl = "https://inchanted-api-production.greenriver-7266e28c.eastus.azurecontainerapps.io",
   [string]$RepoRoot = "c:\Users\First\source\repos\inchanted-forms-designer"
 )
 
