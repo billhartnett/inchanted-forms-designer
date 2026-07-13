@@ -1,0 +1,52 @@
+name: Strict Mode Gate
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  strict-mode-gate:
+    name: strict-mode-gate
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Enforce runtime artifact policy
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          forbidden=(
+            "backend/api/__blobstorage__/"
+            "backend/api/__queuestorage__/"
+            "backend/api/AzuriteConfig"
+            "backend/api/tests/diagnostics/"
+          )
+
+          for path in "${forbidden[@]}"; do
+            if git ls-files --error-unmatch "$path" >/dev/null 2>&1; then
+              echo "Forbidden runtime artifact is tracked: $path"
+              exit 1
+            fi
+            if git ls-files "$path*" | grep -q .; then
+              echo "Forbidden runtime artifact content is tracked under: $path"
+              git ls-files "$path*"
+              exit 1
+            fi
+          done
+
+      - name: Verify workflow consistency
+        shell: bash
+        run: |
+          test -f .github/workflows/ci-backend.yml
+          test -f .github/workflows/deploy-aca.yml
+          test -f .github/workflows/deploy-frontend.yml
+
+      - name: Strict mode gate passed
+        run: echo "strict-mode-gate passed"
