@@ -385,6 +385,11 @@ jobs:
               OPENAI_API_KEY=secretref:openai-api-key \
               OPENAI_DEPLOYMENT='${{ secrets.OPENAI_DEPLOYMENT }}' \
               EMBEDDING_MODEL='${{ secrets.EMBEDDING_MODEL }}' \
+              DISABLE_RUNTIME_EMBEDDINGS=0 \
+              WAVE9_MODELS_ENABLED=1 \
+              WAVE8_GATING_ENABLED=1 \
+              WAVE44_FUSION_ENABLED=1 \
+              WAVE44_GATE_ENABLED=1 \
               --output none 2>&1)"
             UPDATE_CODE=$?
             set -e
@@ -437,6 +442,16 @@ jobs:
             --image "${{ needs.resolve-image.outputs.image }}" \
             --output none
 
+      - name: Verify active image digest pin (staging)
+        shell: bash
+        run: |
+          set -euo pipefail
+          ACTIVE_IMAGE="$(az containerapp show --name "${{ secrets.ACA_APP_NAME }}" --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" --query properties.template.containers[0].image -o tsv)"
+          if [[ "${ACTIVE_IMAGE}" != *"@${{ needs.resolve-image.outputs.digest }}" ]]; then
+            echo "Staging image is not pinned to resolved digest. Active=${ACTIVE_IMAGE}" >&2
+            exit 1
+          fi
+
       - name: Verify new revision creation (staging)
         id: rev
         shell: bash
@@ -467,6 +482,13 @@ jobs:
           curl -fsS "${BASE_URL}/api/ping"
           curl -fsS -H "x-actor-role: viewer" -H "x-tenant-id: aca-deploy" "${BASE_URL}/api/gethealth"
           curl -fsS "${BASE_URL}/api/version"
+
+      - name: Phase 7 endpoint sweep (staging)
+        shell: bash
+        run: |
+          set -euo pipefail
+          FQDN="$(az containerapp show --name "${{ secrets.ACA_APP_NAME }}" --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" --query properties.configuration.ingress.fqdn -o tsv)"
+          BASE_URL="https://${FQDN}" node backend/api/scripts/phase7_staging_endpoint_sweep.cjs
 
   deploy-production:
     needs:
@@ -745,6 +767,11 @@ jobs:
               OPENAI_API_KEY=secretref:openai-api-key \
               OPENAI_DEPLOYMENT='${{ secrets.OPENAI_DEPLOYMENT }}' \
               EMBEDDING_MODEL='${{ secrets.EMBEDDING_MODEL }}' \
+              DISABLE_RUNTIME_EMBEDDINGS=0 \
+              WAVE9_MODELS_ENABLED=1 \
+              WAVE8_GATING_ENABLED=1 \
+              WAVE44_FUSION_ENABLED=1 \
+              WAVE44_GATE_ENABLED=1 \
               --output none 2>&1)"
             UPDATE_CODE=$?
             set -e
@@ -796,6 +823,16 @@ jobs:
             --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" \
             --image "${{ needs.resolve-image.outputs.image }}" \
             --output none
+
+      - name: Verify active image digest pin (production)
+        shell: bash
+        run: |
+          set -euo pipefail
+          ACTIVE_IMAGE="$(az containerapp show --name "${{ secrets.ACA_APP_NAME }}" --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" --query properties.template.containers[0].image -o tsv)"
+          if [[ "${ACTIVE_IMAGE}" != *"@${{ needs.resolve-image.outputs.digest }}" ]]; then
+            echo "Production image is not pinned to resolved digest. Active=${ACTIVE_IMAGE}" >&2
+            exit 1
+          fi
 
       - name: Verify new revision creation (production)
         id: rev
