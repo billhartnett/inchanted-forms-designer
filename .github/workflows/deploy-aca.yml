@@ -447,8 +447,28 @@ jobs:
         run: |
           set -euo pipefail
           ACTIVE_IMAGE="$(az containerapp show --name "${{ secrets.ACA_APP_NAME }}" --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" --query properties.template.containers[0].image -o tsv)"
-          if [[ "${ACTIVE_IMAGE}" != *"@${{ needs.resolve-image.outputs.digest }}" ]]; then
-            echo "Staging image is not pinned to resolved digest. Active=${ACTIVE_IMAGE}" >&2
+          if [[ -z "${ACTIVE_IMAGE}" || "${ACTIVE_IMAGE}" == "null" ]]; then
+            echo "Unable to determine active staging image reference" >&2
+            exit 1
+          fi
+
+          TARGET_DIGEST="${{ needs.resolve-image.outputs.digest }}"
+          if [[ "${ACTIVE_IMAGE}" == *"@"* ]]; then
+            ACTIVE_DIGEST="${ACTIVE_IMAGE##*@}"
+          else
+            IMAGE_WITHOUT_TAG="${ACTIVE_IMAGE%%:*}"
+            ACTIVE_TAG="${ACTIVE_IMAGE##*:}"
+            REPO_NAME="${IMAGE_WITHOUT_TAG#*/}"
+            ACTIVE_DIGEST="$(az acr manifest list-metadata --registry "${{ secrets.ACR_NAME }}" --name "${REPO_NAME}" --query "[?tags[?@=='${ACTIVE_TAG}']].digest | [0]" -o tsv)"
+          fi
+
+          if [[ -z "${ACTIVE_DIGEST}" || "${ACTIVE_DIGEST}" == "null" ]]; then
+            echo "Unable to resolve staging digest for active image. Active=${ACTIVE_IMAGE}" >&2
+            exit 1
+          fi
+
+          if [[ "${ACTIVE_DIGEST}" != "${TARGET_DIGEST}" ]]; then
+            echo "Staging digest mismatch. Active=${ACTIVE_IMAGE} activeDigest=${ACTIVE_DIGEST} expected=${TARGET_DIGEST}" >&2
             exit 1
           fi
 
@@ -829,8 +849,28 @@ jobs:
         run: |
           set -euo pipefail
           ACTIVE_IMAGE="$(az containerapp show --name "${{ secrets.ACA_APP_NAME }}" --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" --query properties.template.containers[0].image -o tsv)"
-          if [[ "${ACTIVE_IMAGE}" != *"@${{ needs.resolve-image.outputs.digest }}" ]]; then
-            echo "Production image is not pinned to resolved digest. Active=${ACTIVE_IMAGE}" >&2
+          if [[ -z "${ACTIVE_IMAGE}" || "${ACTIVE_IMAGE}" == "null" ]]; then
+            echo "Unable to determine active production image reference" >&2
+            exit 1
+          fi
+
+          TARGET_DIGEST="${{ needs.resolve-image.outputs.digest }}"
+          if [[ "${ACTIVE_IMAGE}" == *"@"* ]]; then
+            ACTIVE_DIGEST="${ACTIVE_IMAGE##*@}"
+          else
+            IMAGE_WITHOUT_TAG="${ACTIVE_IMAGE%%:*}"
+            ACTIVE_TAG="${ACTIVE_IMAGE##*:}"
+            REPO_NAME="${IMAGE_WITHOUT_TAG#*/}"
+            ACTIVE_DIGEST="$(az acr manifest list-metadata --registry "${{ secrets.ACR_NAME }}" --name "${REPO_NAME}" --query "[?tags[?@=='${ACTIVE_TAG}']].digest | [0]" -o tsv)"
+          fi
+
+          if [[ -z "${ACTIVE_DIGEST}" || "${ACTIVE_DIGEST}" == "null" ]]; then
+            echo "Unable to resolve production digest for active image. Active=${ACTIVE_IMAGE}" >&2
+            exit 1
+          fi
+
+          if [[ "${ACTIVE_DIGEST}" != "${TARGET_DIGEST}" ]]; then
+            echo "Production digest mismatch. Active=${ACTIVE_IMAGE} activeDigest=${ACTIVE_DIGEST} expected=${TARGET_DIGEST}" >&2
             exit 1
           fi
 
