@@ -207,7 +207,7 @@ jobs:
 
             if [[ ${READY_CODE} -eq 2 ]]; then
               echo "Attempting revision restart recovery before ${label}..."
-              restart_latest_revision "${label}" || return 1
+              restart_latest_revision "${label}" || echo "Revision restart recovery failed before ${label}; continuing to mutation retry path." >&2
 
               set +e
               wait_for_app_ready "${label} after revision restart"
@@ -217,9 +217,13 @@ jobs:
               if [[ ${READY_CODE} -eq 0 ]]; then
                 return 0
               fi
+
+              echo "Provisioning state is still not Succeeded before ${label} after revision restart; continuing to mutation retry path." >&2
+              return 0
             fi
 
-            return 1
+            echo "Readiness check timed out before ${label}; continuing to mutation retry path." >&2
+            return 0
           }
 
           IDENTITY_TYPE="$(az containerapp show --name "${{ secrets.ACA_APP_NAME }}" --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" --query identity.type -o tsv)"
@@ -559,7 +563,7 @@ jobs:
 
             if [[ ${READY_CODE} -eq 2 ]]; then
               echo "Attempting revision restart recovery before ${label}..."
-              restart_latest_revision "${label}" || return 1
+              restart_latest_revision "${label}" || echo "Revision restart recovery failed before ${label}; continuing to mutation retry path." >&2
 
               set +e
               wait_for_app_ready "${label} after revision restart"
@@ -569,9 +573,13 @@ jobs:
               if [[ ${READY_CODE} -eq 0 ]]; then
                 return 0
               fi
+
+              echo "Provisioning state is still not Succeeded before ${label} after revision restart; continuing to mutation retry path." >&2
+              return 0
             fi
 
-            return 1
+            echo "Readiness check timed out before ${label}; continuing to mutation retry path." >&2
+            return 0
           }
 
           IDENTITY_TYPE="$(az containerapp show --name "${{ secrets.ACA_APP_NAME }}" --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" --query identity.type -o tsv)"
