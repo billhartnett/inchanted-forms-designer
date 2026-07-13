@@ -143,7 +143,7 @@ jobs:
 
           MAX_PROPAGATION_ATTEMPTS=24
           PROPAGATION_DELAY_SECONDS=15
-          TRANSIENT_RETRY_PATTERN="Identity with resource ID 'system' not found|principalId.*not found|could not be found|BadRequest|ContainerAppOperationInProgress|active provisioning operation in progress"
+          TRANSIENT_RETRY_PATTERN="Identity with resource ID 'system' not found|principalId.*not found|could not be found|BadRequest|ContainerAppOperationInProgress|active provisioning operation in progress|Connection reset by peer|Connection aborted|The command failed with an unexpected error"
 
           wait_for_app_ready() {
             local label="$1"
@@ -499,7 +499,7 @@ jobs:
 
           MAX_PROPAGATION_ATTEMPTS=24
           PROPAGATION_DELAY_SECONDS=15
-          TRANSIENT_RETRY_PATTERN="Identity with resource ID 'system' not found|principalId.*not found|could not be found|BadRequest|ContainerAppOperationInProgress|active provisioning operation in progress"
+          TRANSIENT_RETRY_PATTERN="Identity with resource ID 'system' not found|principalId.*not found|could not be found|BadRequest|ContainerAppOperationInProgress|active provisioning operation in progress|Connection reset by peer|Connection aborted|The command failed with an unexpected error"
 
           wait_for_app_ready() {
             local label="$1"
