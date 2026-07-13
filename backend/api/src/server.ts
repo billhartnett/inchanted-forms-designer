@@ -6,6 +6,49 @@ import { buildVersionPayload } from "./health/version";
 import { incrementMetric, logStructuredEvent, observeLatency } from "./services/observability";
 
 type RouteRegistrar = (router: Router) => void;
+const WAVE8_CONTRACT_VERSION = "wave8.v1";
+
+function contractEnvelope(path: string, status: number, payload: unknown) {
+  const ok = status < 400;
+  const base = payload && typeof payload === "object" && !Array.isArray(payload)
+    ? (payload as Record<string, unknown>)
+    : {};
+  const message = typeof base.error === "string"
+    ? base.error
+    : (status >= 500 ? "Internal server error" : (status >= 400 ? "Request failed" : null));
+
+  return {
+    ...base,
+    ok,
+    status,
+    data: ok ? (base.data ?? payload) : null,
+    error: ok ? null : message,
+    errorEnvelope: ok
+      ? null
+      : {
+          code: status >= 500 ? "INTERNAL_ERROR" : "REQUEST_ERROR",
+          message,
+          details: base.details ?? null,
+        },
+    contract: {
+      version: WAVE8_CONTRACT_VERSION,
+      path,
+      status,
+      ok,
+      timestamp: new Date().toISOString(),
+    },
+    meta: {
+      ...(typeof base.meta === "object" && base.meta ? (base.meta as Record<string, unknown>) : {}),
+      contractVersion: WAVE8_CONTRACT_VERSION,
+    },
+  };
+}
+
+function sendContractJson(response: Response, request: Request, status: number, payload: unknown): void {
+  response.setHeader("x-wave-contract-version", WAVE8_CONTRACT_VERSION);
+  response.setHeader("x-wave-contract-stable", "true");
+  response.status(status).json(contractEnvelope(request.path, status, payload));
+}
 
 function getTenantId(request: Request): string {
   const raw = String(request.header("x-tenant-id") || "").trim();
@@ -51,25 +94,25 @@ function errorHandlerMiddleware(error: any, request: Request, response: Response
     message: error?.message || "Unhandled error",
   });
 
-  response.status(status).json({
+  sendContractJson(response, request, status, {
     error: status >= 500 ? "Internal server error" : error?.message || "Request failed",
   });
 }
 
 function registerCoreRoutes(router: Router): void {
-  router.get("/ping", (_request, response) => {
-    response.status(200).json(buildPingPayload());
+  router.get("/ping", (request, response) => {
+    sendContractJson(response, request, 200, buildPingPayload());
   });
 
   const healthHandler = (request: Request, response: Response) => {
     const health = buildHealthPayload(request);
-    response.status(health.status).json(health.body);
+    sendContractJson(response, request, health.status, health.body);
   };
 
   router.get("/gethealth", healthHandler);
   router.get("/ops/health", healthHandler);
-  router.get("/version", (_request, response) => {
-    response.status(200).json(buildVersionPayload());
+  router.get("/version", (request, response) => {
+    sendContractJson(response, request, 200, buildVersionPayload());
   });
 }
 
@@ -99,7 +142,7 @@ function createServer() {
   app.use("/api", apiRouter);
 
   app.use((request, response) => {
-    response.status(404).json({
+    sendContractJson(response, request, 404, {
       error: "Not Found",
       path: request.path,
       method: request.method,

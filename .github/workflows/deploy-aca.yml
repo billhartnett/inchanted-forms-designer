@@ -503,12 +503,17 @@ jobs:
           curl -fsS -H "x-actor-role: viewer" -H "x-tenant-id: aca-deploy" "${BASE_URL}/api/gethealth"
           curl -fsS "${BASE_URL}/api/version"
 
-      - name: Phase 7 endpoint sweep (staging)
+      - name: Wave 8 contract stability sweep (staging)
         shell: bash
         run: |
           set -euo pipefail
           FQDN="$(az containerapp show --name "${{ secrets.ACA_APP_NAME }}" --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" --query properties.configuration.ingress.fqdn -o tsv)"
-          BASE_URL="https://${FQDN}" node backend/api/scripts/phase7_staging_endpoint_sweep.cjs
+          BASE_URL="https://${FQDN}" \
+          WAVE8_ENV=staging \
+          WAVE8_REPORT_PATH=backend_validation_report.staging.wave8.json \
+          node backend/api/scripts/wave8_contract_stability_sweep.cjs
+
+          cat backend_validation_report.staging.wave8.json
 
   deploy-production:
     needs:
@@ -904,3 +909,15 @@ jobs:
           curl -fsS "${BASE_URL}/api/ping"
           curl -fsS -H "x-actor-role: viewer" -H "x-tenant-id: aca-deploy" "${BASE_URL}/api/gethealth"
           curl -fsS "${BASE_URL}/api/version"
+
+      - name: Wave 8 contract stability sweep (production)
+        shell: bash
+        run: |
+          set -euo pipefail
+          FQDN="$(az containerapp show --name "${{ secrets.ACA_APP_NAME }}" --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" --query properties.configuration.ingress.fqdn -o tsv)"
+          BASE_URL="https://${FQDN}" \
+          WAVE8_ENV=production \
+          WAVE8_REPORT_PATH=backend_validation_report.production.wave8.json \
+          node backend/api/scripts/wave8_contract_stability_sweep.cjs
+
+          cat backend_validation_report.production.wave8.json

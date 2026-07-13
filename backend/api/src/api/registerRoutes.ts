@@ -60,6 +60,110 @@ type AzureHandler = (
   context: InvocationContext,
 ) => Promise<HttpResponseInit> | HttpResponseInit;
 
+const WAVE8_CONTRACT_VERSION = "wave8.v1";
+
+type JsonRecord = Record<string, unknown>;
+
+function asObject(value: unknown): JsonRecord | null {
+  if (!value || Array.isArray(value) || typeof value !== "object") {
+    return null;
+  }
+  return value as JsonRecord;
+}
+
+function inferErrorCode(status: number): string {
+  if (status === 400) return "BAD_REQUEST";
+  if (status === 401) return "UNAUTHORIZED";
+  if (status === 403) return "FORBIDDEN";
+  if (status === 404) return "NOT_FOUND";
+  if (status === 409) return "CONFLICT";
+  if (status === 422) return "UNPROCESSABLE_ENTITY";
+  if (status >= 500) return "INTERNAL_ERROR";
+  return "REQUEST_ERROR";
+}
+
+function buildContractMeta(path: string, status: number, ok: boolean): JsonRecord {
+  return {
+    version: WAVE8_CONTRACT_VERSION,
+    path,
+    status,
+    ok,
+    timestamp: new Date().toISOString(),
+  };
+}
+
+function normalizeErrorMessage(value: unknown, status: number): string {
+  if (typeof value === "string" && value.trim()) {
+    return value;
+  }
+  const objectValue = asObject(value);
+  if (objectValue && typeof objectValue.error === "string" && objectValue.error.trim()) {
+    return objectValue.error;
+  }
+  if (objectValue && typeof objectValue.message === "string" && objectValue.message.trim()) {
+    return objectValue.message;
+  }
+  if (status >= 500) return "Internal server error";
+  return "Request failed";
+}
+
+function normalizeJsonBodyForUi(jsonBody: unknown, status: number, path: string): unknown {
+  const contract = buildContractMeta(path, status, status < 400);
+
+  if (status >= 400) {
+    const base = asObject(jsonBody) ?? {};
+    const message = normalizeErrorMessage(jsonBody, status);
+    return {
+      ...base,
+      ok: false,
+      status,
+      data: null,
+      error: message,
+      errorEnvelope: {
+        code: inferErrorCode(status),
+        message,
+        details: base.details ?? null,
+      },
+      contract,
+      meta: {
+        ...(asObject(base.meta) ?? {}),
+        contractVersion: WAVE8_CONTRACT_VERSION,
+      },
+    };
+  }
+
+  const base = asObject(jsonBody);
+  if (base) {
+    return {
+      ...base,
+      ok: true,
+      status,
+      data: base.data ?? base,
+      error: null,
+      errorEnvelope: null,
+      contract,
+      meta: {
+        ...(asObject(base.meta) ?? {}),
+        contractVersion: WAVE8_CONTRACT_VERSION,
+      },
+    };
+  }
+
+  const arrayValue = Array.isArray(jsonBody) ? jsonBody : null;
+  return {
+    ok: true,
+    status,
+    data: jsonBody,
+    items: arrayValue,
+    error: null,
+    errorEnvelope: null,
+    contract,
+    meta: {
+      contractVersion: WAVE8_CONTRACT_VERSION,
+    },
+  };
+}
+
 function toAzureRequest(request: Request): HttpRequest {
   const host = request.get("host") || "localhost";
   const url = new URL(request.originalUrl || request.url, `http://${host}`);
@@ -123,24 +227,124 @@ function toInvocationContext(request: Request): InvocationContext {
 async function runAzureHandlerAsExpress(handler: AzureHandler, request: Request, response: Response): Promise<void> {
   const result = await handler(toAzureRequest(request), toInvocationContext(request));
   const status = result?.status ?? 200;
+  const contractPath = `${request.baseUrl || ""}${request.path}`;
   const headers = result?.headers;
   if (headers) {
     for (const [key, value] of Object.entries(headers)) {
       if (value != null) response.setHeader(key, String(value));
     }
   }
+  response.setHeader("x-wave-contract-version", WAVE8_CONTRACT_VERSION);
+  response.setHeader("x-wave-contract-stable", "true");
   if (typeof (result as any)?.body === "string") {
     response.status(status).send((result as any).body);
     return;
   }
   if ((result as any)?.jsonBody !== undefined) {
-    response.status(status).json((result as any).jsonBody);
+    response.status(status).json(
+      normalizeJsonBodyForUi((result as any).jsonBody, status, contractPath),
+    );
     return;
   }
-  response.sendStatus(status);
+  response.status(status).json(normalizeJsonBodyForUi(null, status, contractPath));
 }
 
 export function registerMigratedFunctionRoutes(router: Router): void {
+  router.route("/wave9/contracts")
+    .get((_request, response) => {
+      response.status(200).json({
+        ok: true,
+        status: 200,
+        data: {
+          version: WAVE8_CONTRACT_VERSION,
+          contracts: {
+            extraction: "/api/wave9/acord/extraction",
+            semanticInference: "/api/wave9/acord/semantic-inference",
+            arbitration: "/api/wave9/arbitration",
+            normalization: "/api/wave9/normalization",
+            scoring: "/api/wave9/scoring",
+            inference: "/api/wave9/inference",
+            preview: "/api/wave9/preview",
+          },
+        },
+        error: null,
+        errorEnvelope: null,
+        contract: buildContractMeta("/api/wave9/contracts", 200, true),
+        meta: { contractVersion: WAVE8_CONTRACT_VERSION },
+      });
+    })
+    ;
+
+  router.route("/wave9/acord/extraction")
+    .post(async (request, response, next) => {
+      try {
+        await runAzureHandlerAsExpress(extractDocument, request, response);
+      } catch (error) {
+        next(error);
+      }
+    })
+    ;
+
+  router.route("/wave9/acord/semantic-inference")
+    .post(async (request, response, next) => {
+      try {
+        await runAzureHandlerAsExpress(evaluateAcordSemanticsHandler, request, response);
+      } catch (error) {
+        next(error);
+      }
+    })
+    ;
+
+  router.route("/wave9/inference")
+    .post(async (request, response, next) => {
+      try {
+        await runAzureHandlerAsExpress(evaluateGraphInferenceHandler, request, response);
+      } catch (error) {
+        next(error);
+      }
+    })
+    ;
+
+  router.route("/wave9/arbitration")
+    .post(async (request, response, next) => {
+      try {
+        await runAzureHandlerAsExpress(evaluateOntologyArbitrationHandler, request, response);
+      } catch (error) {
+        next(error);
+      }
+    })
+    ;
+
+  router.route("/wave9/normalization")
+    .post(async (request, response, next) => {
+      try {
+        await runAzureHandlerAsExpress(evaluateCrossFamilyNormalizationHandler, request, response);
+      } catch (error) {
+        next(error);
+      }
+    })
+    ;
+
+  router.route("/wave9/scoring")
+    .post(async (request, response, next) => {
+      try {
+        await runAzureHandlerAsExpress(evaluateRiskScoringHandler, request, response);
+      } catch (error) {
+        next(error);
+      }
+    })
+    ;
+
+  router.route("/wave9/preview")
+    .post(async (request, response, next) => {
+      try {
+        await runAzureHandlerAsExpress(mapFields, request, response);
+      } catch (error) {
+        next(error);
+      }
+    })
+    ;
+
   router.route("/acord/search")
     .get(async (request, response, next) => {
       try {
