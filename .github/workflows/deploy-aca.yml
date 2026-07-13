@@ -136,18 +136,6 @@ jobs:
             exit 1
           fi
 
-      - name: Wave 8 baseline contract sweep before production rollout
-        shell: bash
-        run: |
-          set -euo pipefail
-          FQDN="$(az containerapp show --name "${{ secrets.ACA_APP_NAME }}" --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" --query properties.configuration.ingress.fqdn -o tsv)"
-          BASE_URL="https://${FQDN}" \
-          WAVE8_ENV=staging \
-          WAVE8_REPORT_PATH=backend_validation_report.staging.wave8.json \
-          node backend/api/scripts/wave8_contract_stability_sweep.cjs
-
-          cat backend_validation_report.staging.wave8.json
-
       - name: Inject ACA app secrets and runtime env (staging)
         shell: bash
         run: |
@@ -554,6 +542,18 @@ jobs:
             echo "Missing image digest from resolve-image job" >&2
             exit 1
           fi
+
+      - name: Wave 8 baseline contract sweep before production rollout
+        shell: bash
+        run: |
+          set -euo pipefail
+          FQDN="$(az containerapp show --name "${{ secrets.ACA_APP_NAME }}" --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" --query properties.configuration.ingress.fqdn -o tsv)"
+          BASE_URL="https://${FQDN}" \
+          WAVE8_ENV=staging \
+          WAVE8_REPORT_PATH=backend_validation_report.staging.wave8.json \
+          node backend/api/scripts/wave8_contract_stability_sweep.cjs
+
+          cat backend_validation_report.staging.wave8.json
 
       - name: Inject ACA app secrets and runtime env (production)
         shell: bash
