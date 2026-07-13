@@ -2520,6 +2520,104 @@ function isAddressComponentPrompt(text: string): boolean {
   return /\b(city|state|zip|postal|address|street)\b/.test(normalized);
 }
 
+function isCityMicroPrompt(text: string): boolean {
+  const normalized = normalizeText(text);
+  return /^(city)\s*:?$/.test(normalized);
+}
+
+function isStateMicroPrompt(text: string): boolean {
+  const normalized = normalizeText(text);
+  return /^(state|st|state province|state\/province)\s*:?$/.test(normalized);
+}
+
+function isZipMicroPrompt(text: string): boolean {
+  const normalized = normalizeText(text);
+  return /^(zip|zip code|postal|postal code)\s*:?$/.test(normalized);
+}
+
+function isPolicyNumberPrompt(text: string): boolean {
+  const normalized = normalizeText(text);
+  return /\bpolicy\b/.test(normalized) && /\b(number|no|#)\b/.test(normalized);
+}
+
+function isMailingAddressAnchorPrompt(text: string): boolean {
+  const normalized = normalizeText(text);
+  if (!normalized) return false;
+  if (!/\bmailing\s+address\b/.test(normalized)) return false;
+  if (isCityMicroPrompt(text) || isStateMicroPrompt(text) || isZipMicroPrompt(text)) {
+    return false;
+  }
+  return true;
+}
+
+function isAgentNamePrompt(text: string): boolean {
+  const normalized = normalizeText(text);
+  return /\b(agent|producer)\b/.test(normalized) && /\bname\b/.test(normalized);
+}
+
+function isNamedInsuredPrompt(text: string): boolean {
+  const normalized = normalizeText(text);
+  return /\b(first\s+named\s+insured|named\s+insured|insured\s+name)\b/.test(normalized);
+}
+
+function isBusinessStartDatePrompt(text: string): boolean {
+  const normalized = normalizeText(text);
+  return /\b(date\s+business\s+started|business\s+start\s+date|date\s+business)\b/.test(normalized);
+}
+
+function applyWave131AnchorCanonicalization(
+  block: ExtractedBlock,
+  suggestions: AcordSuggestion[],
+): AcordSuggestion[] {
+  if (suggestions.length === 0) {
+    return suggestions;
+  }
+
+  const canonicalizeTop = (
+    conceptualCode: string,
+    conceptualLabel: string,
+    floorConfidence: number,
+  ) => {
+    const top = suggestions[0];
+    suggestions[0] = {
+      ...top,
+      acordCode: conceptualCode,
+      label: conceptualLabel,
+      confidenceScore: Number(Math.max(floorConfidence, Number(top.confidenceScore || 0)).toFixed(3)),
+      normalizedConfidenceScore: Number(
+        Math.max(floorConfidence, Number(top.normalizedConfidenceScore || top.confidenceScore || 0)).toFixed(3),
+      ),
+      source: top.source || "heuristic",
+      lexicalScore: Number(Math.max(0.55, Number(top.lexicalScore || 0)).toFixed(3)),
+      semanticSimilarity: Number(Math.max(0.45, Number(top.semanticSimilarity || 0)).toFixed(3)),
+      dictionaryScore: Number(Math.max(0.38, Number(top.dictionaryScore || 0)).toFixed(3)),
+      heuristicScore: Number(Math.max(0.3, Number(top.heuristicScore || 0)).toFixed(3)),
+      rationale: `${String((top as any).rationale || "")} wave13_1_anchor_canonicalization`.trim(),
+    } as AcordSuggestion;
+  };
+
+  const topCode = normalizeText(String(suggestions[0].acordCode || ""));
+  if (isPolicyNumberPrompt(block.text)) {
+    if (topCode.includes("otherpolicy policynumberidentifier") || topCode.includes("policy policynumberidentifier")) {
+      canonicalizeTop("Policy_PolicyNumberIdentifier", "Policy Policy Number Identifier", 0.84);
+    }
+  }
+
+  if (isNamedInsuredPrompt(block.text)) {
+    if (topCode.includes("namedinsured") || topCode.includes("generalinfo namedinsured")) {
+      canonicalizeTop("GeneralInfo.NamedInsured", "General Info Named Insured", 0.85);
+    }
+  }
+
+  if (isMailingAddressAnchorPrompt(block.text)) {
+    if (topCode.includes("mailingaddress") || topCode.includes("contactmailingaddress") || topCode.includes("generalinfo mailingaddress")) {
+      canonicalizeTop("GeneralInfo.MailingAddress", "General Info Mailing Address", 0.84);
+    }
+  }
+
+  return suggestions;
+}
+
 function isProducerCode(acordCode: string): boolean {
   return /^Producer_/i.test(String(acordCode || ""));
 }
@@ -3024,6 +3122,10 @@ function assessWave8HeaderBlock(
   const structureSuppression = getWave8StructureSuppressionSignals(block.text, familyId);
   const nonField = isLikelyNonMappableText(block, familyId);
   const topOfPage = y < WAVE8_HEADER_TOP_BAND_Y;
+  const wave131AnchorPrompt =
+    isPolicyNumberPrompt(block.text) ||
+    isNamedInsuredPrompt(block.text) ||
+    isMailingAddressAnchorPrompt(block.text);
 
   const reasons: string[] = [];
   let score = 0;
@@ -3062,10 +3164,16 @@ function assessWave8HeaderBlock(
     reasons.push("phase3_field_cue_rebalance");
   }
 
+  if (wave131AnchorPrompt) {
+    score -= 0.34;
+    reasons.push("wave13_1_anchor_prompt_override");
+  }
+
   const headerBlock =
-    score >= 0.62 ||
-    (topOfPage && headerLikeText) ||
-    (structureSuppression.kinds.includes("logo") && structureSuppression.score >= 0.35);
+    !wave131AnchorPrompt &&
+    (score >= 0.62 ||
+      (topOfPage && headerLikeText) ||
+      (structureSuppression.kinds.includes("logo") && structureSuppression.score >= 0.35));
 
   return {
     headerBlock,
@@ -4218,6 +4326,11 @@ function applyAnchorOverrideSignals(
 
   if (/\bpolicy\b/.test(normalized) && /\b(number|no|#)\b/.test(normalized)) {
     boostKnownCode(accum, "Policy_PolicyNumberIdentifier", 240);
+    boostKnownCode(accum, "OtherPolicy_PolicyNumberIdentifier", 120);
+  }
+
+  if (isPolicyNumberPrompt(block.text)) {
+    boostKnownCode(accum, "Policy_PolicyNumberIdentifier", 280);
   }
 
   if (/\b(effective|eff)\b/.test(normalized) && /\bdate\b/.test(normalized)) {
@@ -4233,16 +4346,57 @@ function applyAnchorOverrideSignals(
     boostKnownCode(accum, "Producer_ContactPerson_FullName", 220);
   }
 
+  if (isNamedInsuredPrompt(block.text)) {
+    boostKnownCode(accum, "GeneralInfo.NamedInsured", 250);
+    boostKnownCode(accum, "NamedInsured_FullName", 245);
+  }
+
+  if (isMailingAddressAnchorPrompt(block.text)) {
+    boostKnownCode(accum, "GeneralInfo.MailingAddress", 285);
+    boostKnownCode(accum, "GeneralInfo.MailingAddress.Line1", 265);
+    boostKnownCode(accum, "NamedInsured_ContactMailingAddress_LineOne", 250);
+  }
+
+  if (isBusinessStartDatePrompt(block.text)) {
+    boostKnownCode(accum, "BusinessInformation_BusinessStartDate", 245);
+    boostKnownCode(accum, "NamedInsured_BusinessStartDate", 230);
+  }
+
   if (hasAgentOrProducer && hasIdCode) {
     boostKnownCode(accum, "Producer_CustomerIdentifier", 235);
   }
 
   if (hasIdentityAddress) {
     boostKnownCode(accum, "GeneralInfo.MailingAddress.Line1", 240);
+    boostKnownCode(accum, "GeneralInfo.MailingAddress", 235);
+    boostKnownCode(accum, "NamedInsured_ContactMailingAddress_LineOne", 220);
     boostKnownCode(accum, "GeneralInfo.MailingAddress.City", 220);
     boostKnownCode(accum, "GeneralInfo.MailingAddress.State", 220);
     boostKnownCode(accum, "GeneralInfo.MailingAddress.PostalCode", 220);
+    boostKnownCode(accum, "NamedInsured_MailingAddress_CityName", 225);
+    boostKnownCode(accum, "NamedInsured_MailingAddress_StateOrProvinceCode", 225);
+    boostKnownCode(accum, "NamedInsured_MailingAddress_PostalCode", 225);
     boostKnownCode(accum, "CommercialProperty.Building.LocationAddress", 225);
+  }
+
+  if (isCityMicroPrompt(block.text)) {
+    boostKnownCode(accum, "NamedInsured_MailingAddress_CityName", 250);
+    boostKnownCode(accum, "GeneralInfo.MailingAddress.City", 240);
+  }
+
+  if (isStateMicroPrompt(block.text)) {
+    boostKnownCode(accum, "NamedInsured_MailingAddress_StateOrProvinceCode", 250);
+    boostKnownCode(accum, "GeneralInfo.MailingAddress.State", 240);
+  }
+
+  if (isZipMicroPrompt(block.text)) {
+    boostKnownCode(accum, "NamedInsured_MailingAddress_PostalCode", 252);
+    boostKnownCode(accum, "GeneralInfo.MailingAddress.PostalCode", 242);
+  }
+
+  if (isAgentNamePrompt(block.text)) {
+    boostKnownCode(accum, "Producer_FullName", 248);
+    boostKnownCode(accum, "Producer_ContactPerson_FullName", 228);
   }
 
   if (hasOperations) {
@@ -4809,6 +4963,73 @@ function toSuggestions(
       }
     }
 
+    // Wave-13 anchor remediation: strict disambiguation for city/state/zip micro-label prompts.
+    const componentKind = getAddressComponentKind(item.label, item.acordCode);
+    const codeText = normalizeText(`${item.acordCode} ${item.label}`);
+    if (isCityMicroPrompt(block.text)) {
+      if (componentKind === "city") {
+        confidenceScore = Math.max(confidenceScore, 0.78);
+      } else {
+        confidenceScore = Math.min(confidenceScore, 0.44);
+      }
+    }
+    if (isStateMicroPrompt(block.text)) {
+      if (componentKind === "state") {
+        confidenceScore = Math.max(confidenceScore, 0.78);
+      } else {
+        confidenceScore = Math.min(confidenceScore, 0.44);
+      }
+    }
+    if (isZipMicroPrompt(block.text)) {
+      if (componentKind === "postal") {
+        confidenceScore = Math.max(confidenceScore, 0.79);
+      } else {
+        confidenceScore = Math.min(confidenceScore, 0.44);
+      }
+    }
+
+    if (isPolicyNumberPrompt(block.text)) {
+      if (/\bpolicy\s+policynumberidentifier\b/.test(codeText)) {
+        confidenceScore = Math.max(confidenceScore, 0.84);
+      }
+      if (/\botherpolicy\s+policynumberidentifier\b/.test(codeText)) {
+        confidenceScore = Math.min(confidenceScore, 0.42);
+      }
+    }
+
+    if (isAgentNamePrompt(block.text)) {
+      if (/\bproducer_(fullname|contactperson_fullname)\b/.test(codeText)) {
+        confidenceScore = Math.max(confidenceScore, 0.78);
+      }
+      if (/\bnamedinsured_\b/.test(codeText)) {
+        confidenceScore = Math.min(confidenceScore, 0.54);
+      }
+    }
+
+    if (isNamedInsuredPrompt(block.text)) {
+      if (/\b(generalinfo\s+namedinsured|namedinsured\s+fullname)\b/.test(codeText)) {
+        confidenceScore = Math.max(confidenceScore, 0.84);
+      }
+      if (/\bnamedinsured\s+legalentity\s+otherdescription\b/.test(codeText) || /\bothergivennameinitial\b/.test(codeText)) {
+        confidenceScore = Math.min(confidenceScore, 0.4);
+      }
+    }
+
+    if (isMailingAddressAnchorPrompt(block.text)) {
+      if (/\bgeneralinfo\s+mailingaddress(\s+line1)?\b/.test(codeText)) {
+        confidenceScore = Math.max(confidenceScore, 0.84);
+      }
+      if (/\b(contactmailingaddress|mailingaddress)\s+(postalcode|stateorprovincecode|cityname)\b/.test(codeText)) {
+        confidenceScore = Math.min(confidenceScore, 0.46);
+      }
+    }
+
+    if (isBusinessStartDatePrompt(block.text)) {
+      if (/\bbusiness(startdate|information_businessstartdate)\b/.test(codeText)) {
+        confidenceScore = Math.max(confidenceScore, 0.77);
+      }
+    }
+
     if (lowCategoryFallback && normalizedRelative >= 0.64) {
       // Final fallback floor after all clamps to avoid low-category drift into rejected.
       confidenceScore = Math.max(confidenceScore, 0.62);
@@ -4841,6 +5062,17 @@ function toSuggestions(
       }
     }
 
+    const wave131bFieldCueReviewRescue =
+      hasFieldCue(block.text) &&
+      !headerAssessment.headerBlock &&
+      !headerAssessment.nonField &&
+      confidenceScore >= 0.44 &&
+      anchorEvidence >= 0.5 &&
+      dictionaryEvidence >= 0.28;
+    if (wave131bFieldCueReviewRescue) {
+      confidenceScore = Math.max(confidenceScore, 0.56);
+    }
+
     confidenceScore = clamp01(quantize(confidenceScore));
 
     // Reinforce targeted supervision when we have direct matched anchors for this candidate.
@@ -4852,6 +5084,24 @@ function toSuggestions(
           dictionaryHintBoost * 0.05,
       );
       confidenceScore = clamp01(confidenceScore + supervisionConfidenceBoost);
+    }
+
+    if (isMailingAddressAnchorPrompt(block.text) && !isCityStateZipPrompt(block.text)) {
+      if (/\b(contactmailingaddress|mailingaddress)\s+(postalcode|stateorprovincecode|cityname)\b/.test(codeText)) {
+        confidenceScore = Math.min(confidenceScore, 0.48);
+      }
+      if (/\bgeneralinfo\s+mailingaddress(\s+line1)?\b/.test(codeText)) {
+        confidenceScore = Math.max(confidenceScore, 0.84);
+      }
+    }
+
+    if (isNamedInsuredPrompt(block.text)) {
+      if (/\bnamedinsured\s+legalentity\s+otherdescription\b/.test(codeText)) {
+        confidenceScore = Math.min(confidenceScore, 0.42);
+      }
+      if (/\b(generalinfo\s+namedinsured|namedinsured\s+fullname)\b/.test(codeText)) {
+        confidenceScore = Math.max(confidenceScore, 0.84);
+      }
     }
 
     const ontologyPenalty =
@@ -5479,6 +5729,18 @@ export async function mapBlocksToAcord(
       }
       stageTimings.semanticMs = Math.max(1, Date.now() - stageStartedAt);
 
+      // Wave-13 remediation: seed anchor candidates before ranking so supervised
+      // ACORD codes are present in the candidate pool for eLabel weighting.
+      applyAnchorOverrideSignals(block, accum);
+      const wave13SupervisionSeeds = getWave8SupervisionCandidatesForText(
+        block.text,
+        options?.familyId,
+      );
+      for (const seed of wave13SupervisionSeeds) {
+        const seedBoost = Math.max(120, Math.round(190 * Math.max(1, Number(seed.weight || 0))));
+        boostKnownCode(accum, seed.acordCode, seedBoost);
+      }
+
       const candidatePoolCountBeforeFallback = accum.size;
       let starvationFallbackApplied = false;
       let starvationWave48SeededCodeCount = 0;
@@ -5964,6 +6226,29 @@ export async function mapBlocksToAcord(
         }
       }
 
+        if (suggestions.length === 0 && isPolicyNumberPrompt(block.text)) {
+          const policyNumberCode = lookupAcordByCode("Policy_PolicyNumberIdentifier");
+          if (policyNumberCode) {
+            suggestions = [
+              {
+                acordCode: policyNumberCode.acordCode,
+                label: policyNumberCode.label,
+                description: policyNumberCode.description,
+                confidenceScore: 0.84,
+                normalizedConfidenceScore: 0.84,
+                source: "heuristic",
+                lexicalScore: 0.72,
+                semanticSimilarity: 0.46,
+                dictionaryScore: 0.58,
+                heuristicScore: 0.62,
+                confidenceLevel: "accepted",
+                rationale: "wave13_1_policy_number_fallback",
+              } as AcordSuggestion,
+            ];
+            fallbackReason = "confidence_only_fallback";
+          }
+        }
+
       if (suggestions.length > 0 && sectionRoleContext) {
         const roleTopCandidate = suggestions[0];
         const roleConflict = candidateConflictsSectionRole(
@@ -5981,6 +6266,8 @@ export async function mapBlocksToAcord(
           }
         }
       }
+
+      suggestions = applyWave131AnchorCanonicalization(block, suggestions);
 
       const topCandidate = suggestions[0];
       let fieldTyping = deriveUsabilityFieldTyping(
@@ -6154,7 +6441,7 @@ export async function mapBlocksToAcord(
         emitWave49CarrierLog(carrierTelemetryLog);
       }
 
-      const topThresholds = topCandidate
+      const baseTopThresholds = topCandidate
         ? resolveThresholds(
             resolveScopedCalibrationProfile(options?.calibrationProfile, options?.familyId),
             topCandidate.acordCode,
@@ -6178,17 +6465,38 @@ export async function mapBlocksToAcord(
             },
           )
         : undefined;
+      const topThresholds = baseTopThresholds
+        ? {
+            ...baseTopThresholds,
+          }
+        : undefined;
+      if (
+        topThresholds &&
+        topCandidate &&
+        hasFieldCue(block.text) &&
+        !wave8HeaderAssessment.headerBlock &&
+        !wave8HeaderAssessment.nonField
+      ) {
+        const relaxedReview = Number(Math.max(topThresholds.rejected + 0.01, topThresholds.review - 0.05).toFixed(3));
+        const relaxedAccepted = Number(Math.max(relaxedReview + 0.01, topThresholds.accepted - 0.02).toFixed(3));
+        topThresholds.review = relaxedReview;
+        topThresholds.accepted = relaxedAccepted;
+      }
       const topConfidence = Number(topCandidate?.confidenceScore || 0);
       const topConfidenceLevel = (topCandidate as any)?.confidenceLevel ||
         (topThresholds ? resolveConfidenceLevel(topConfidence, topThresholds) : undefined);
       const wave9ThresholdDecision = topCandidate
         ? resolveWave9ThresholdDecision(topConfidence, wave9PredictedRole)
         : undefined;
+      const calibratedThresholdDecision =
+        topCandidate && topThresholds
+          ? resolveConfidenceLevel(topConfidence, topThresholds)
+          : undefined;
       const thresholdDecision =
         wave8HeaderAssessment.headerBlock && suggestions.length === 0
           ? "rejected"
-          : topCandidate && wave9ThresholdDecision
-          ? wave9ThresholdDecision
+          : calibratedThresholdDecision
+          ? calibratedThresholdDecision
           : suggestions.length > 0
             ? "rejected"
             : "none";
@@ -6197,11 +6505,11 @@ export async function mapBlocksToAcord(
           ? "header_strict_gate_reject"
           : "no_candidates_after_reranking"
         : thresholdDecision === "accepted"
-          ? "wave9_calibrated_accepted"
+          ? "wave13_1b_calibrated_accepted"
           : thresholdDecision === "review"
-            ? "wave9_calibrated_review"
+            ? "wave13_1b_calibrated_review"
             : thresholdDecision === "rejected"
-              ? "wave9_calibrated_rejected"
+              ? "wave13_1b_calibrated_rejected"
               : topConfidenceLevel === "accepted"
           ? "meets_accepted_threshold"
           : topConfidenceLevel === "review"
@@ -6218,6 +6526,15 @@ export async function mapBlocksToAcord(
       let isSuppressed =
         (wave8HeaderAssessment.headerBlock || wave8HeaderAssessment.structureSuppressed) &&
         (!topCandidate || !Boolean(topWave8Gating?.passed));
+      const fieldCueSuppressionRescue =
+        Boolean(topCandidate) &&
+        hasFieldCue(block.text) &&
+        !wave8HeaderAssessment.nonField &&
+        !wave8HeaderAssessment.headerBlock &&
+        topConfidence >= Math.max(0.5, Number((topThresholds?.review || 0.6) - 0.12));
+      if (fieldCueSuppressionRescue) {
+        isSuppressed = false;
+      }
       if (wave9Suppression.suppress) {
         isSuppressed = true;
       }

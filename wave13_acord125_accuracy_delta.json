@@ -1,0 +1,623 @@
+{
+  "fixture": "sample-Acord-125.pdf",
+  "generatedAt": "2026-07-13T19:30:57.582Z",
+  "expectations": {
+    "source": "xfdl-dynamic",
+    "path": "backend/api/tests/generated/acord125-xfdl-expectations.json",
+    "generatedAt": "2026-07-13T19:30:57.280Z",
+    "count": 8
+  },
+  "goldStandard": {
+    "available": true,
+    "path": "backend/api/tests/gold-standard/acord-125/ACORD 0125 2016-03r1.xfdl",
+    "bytes": 1382536,
+    "sha256": "3fd6ccd7fcc8e477cb7242cc1c077afbb98a166ea01f80f47331bbc82a4e8a5f",
+    "anchorPresence": {
+      "namedInsured": true,
+      "mailingAddress": true,
+      "policyNumber": true,
+      "businessStartDate": false
+    }
+  },
+  "counts": {
+    "backendMappings": 854,
+    "uiRenderedFields": 744,
+    "suppressedOrUnrenderedDelta": 110,
+    "expectationChecks": 8,
+    "expectationMislabels": 0,
+    "expectationTopNMisses": 0,
+    "lowConfidenceAssignments": 626,
+    "rejectedByThreshold": 626,
+    "reviewBandAssignments": 207,
+    "rationaleDisagreements": 93,
+    "calibrationMismatches": 0,
+    "semanticMisalignmentHighConfidence": 25,
+    "invalidGeometry": 0,
+    "tinyGeometry": 0,
+    "largeGeometry": 3
+  },
+  "baselineQuality": {
+    "exactAccuracy": 0,
+    "topNAccuracy": 0,
+    "lowConfidenceRate": 1,
+    "chosenWithinTopNRate": 0.244582,
+    "fieldsMapped": 79,
+    "fieldsTotal": 323
+  },
+  "calibrationBaseline": {
+    "calibratedAccuracy": 0,
+    "thresholdAdjustedRankingQuality": 0.159439,
+    "lowConfidenceFields": 79,
+    "unstableSignals": 79,
+    "crossFamilyConfidenceDelta": 0
+  },
+  "expectationResults": [
+    {
+      "id": "named-insured",
+      "textPattern": "named\\s+insured|first\\s+named\\s+insured",
+      "expectedAcordCode": "GeneralInfo.NamedInsured",
+      "matchedBlockId": "p1-l92",
+      "matchedText": "NAME (First Named Insured & Other Named Insureds)",
+      "chosenAcordCode": "GeneralInfo.NamedInsured",
+      "chosenConfidence": 0.856,
+      "inTopN": true,
+      "mislabel": false
+    },
+    {
+      "id": "mailing-address",
+      "textPattern": "mailing\\s+address",
+      "expectedAcordCode": "GeneralInfo.MailingAddress",
+      "matchedBlockId": "p1-l93",
+      "matchedText": "MAILING ADDRESS INCL ZIP+4 (of First Named Insured)",
+      "chosenAcordCode": "GeneralInfo.MailingAddress",
+      "chosenConfidence": 0.85,
+      "inTopN": true,
+      "mislabel": false
+    },
+    {
+      "id": "policy-number",
+      "textPattern": "policy\\s+(number|no)",
+      "expectedAcordCode": "Policy_PolicyNumberIdentifier",
+      "matchedBlockId": "p1-l11",
+      "matchedText": "POLICY NUMBER",
+      "chosenAcordCode": "Policy_PolicyNumberIdentifier",
+      "chosenConfidence": 0.969,
+      "inTopN": true,
+      "mislabel": false
+    },
+    {
+      "id": "business-start-date",
+      "textPattern": "business\\s+start|date\\s+business\\s+started",
+      "expectedAcordCode": "BusinessInformation_BusinessStartDate",
+      "matchedBlockId": null,
+      "matchedText": null,
+      "chosenAcordCode": null,
+      "chosenConfidence": 0,
+      "inTopN": false,
+      "mislabel": false
+    },
+    {
+      "id": "city",
+      "textPattern": "\\bcity\\b",
+      "expectedAcordCode": "NamedInsured_MailingAddress_CityName",
+      "matchedBlockId": "p1-l12",
+      "matchedText": "CITY:",
+      "chosenAcordCode": "NamedInsured_MailingAddress_CityName",
+      "chosenConfidence": 0.894,
+      "inTopN": true,
+      "mislabel": false
+    },
+    {
+      "id": "state",
+      "textPattern": "\\bstate\\b|province",
+      "expectedAcordCode": "NamedInsured_MailingAddress_StateOrProvinceCode",
+      "matchedBlockId": "p1-l15",
+      "matchedText": "STATE:",
+      "chosenAcordCode": "NamedInsured_MailingAddress_StateOrProvinceCode",
+      "chosenConfidence": 0.895,
+      "inTopN": true,
+      "mislabel": false
+    },
+    {
+      "id": "zip-code",
+      "textPattern": "zip|postal",
+      "expectedAcordCode": "NamedInsured_MailingAddress_PostalCode",
+      "matchedBlockId": "p1-l16",
+      "matchedText": "ZIP CODE:",
+      "chosenAcordCode": "NamedInsured_MailingAddress_PostalCode",
+      "chosenConfidence": 0.906,
+      "inTopN": true,
+      "mislabel": false
+    },
+    {
+      "id": "agent-name",
+      "textPattern": "agent\\s+name|producer\\s+name|agent",
+      "expectedAcordCode": "Producer_FullName",
+      "matchedBlockId": "p1-l4",
+      "matchedText": "AGENT NAME:",
+      "chosenAcordCode": "Producer_FullName",
+      "chosenConfidence": 0.736,
+      "inTopN": true,
+      "mislabel": false
+    }
+  ],
+  "sampleMislabeled": [],
+  "sampleLowConfidence": [
+    {
+      "blockId": "p1-l1",
+      "text": "COMMERCIAL INSURANCE APPLICATION",
+      "confidence": 0,
+      "thresholdDecision": "rejected",
+      "thresholdReason": "header_strict_gate_reject"
+    },
+    {
+      "blockId": "p1-l3",
+      "text": "APPLICANT INFORMATION SECTION",
+      "confidence": 0,
+      "thresholdDecision": "rejected",
+      "thresholdReason": "header_strict_gate_reject"
+    },
+    {
+      "blockId": "p1-l5",
+      "text": "UNDERWRITER OFF.",
+      "chosenCode": "Insurer_Underwriter_OfficeIdentifier",
+      "chosenLabel": "Insurer Underwriter Office Identifier",
+      "confidence": 0.46,
+      "thresholdDecision": "rejected",
+      "thresholdReason": "wave13_1b_calibrated_rejected"
+    },
+    {
+      "blockId": "p1-l6",
+      "text": "CARRIER",
+      "chosenCode": "BuildersRiskInstallation_Transportation_CommonCarrierRiskPercent",
+      "chosenLabel": "Builders Risk Installation Transportation Common Carrier Risk Percent",
+      "confidence": 0.46,
+      "thresholdDecision": "rejected",
+      "thresholdReason": "wave13_1b_calibrated_rejected"
+    },
+    {
+      "blockId": "p1-l7",
+      "text": "UNDERWRITER",
+      "chosenCode": "Insurer_Underwriter_ApprovedIndicator",
+      "chosenLabel": "Insurer Underwriter Approved Indicator",
+      "confidence": 0.46,
+      "thresholdDecision": "rejected",
+      "thresholdReason": "wave13_1b_calibrated_rejected"
+    },
+    {
+      "blockId": "p1-l10",
+      "text": "POLICIES OR PROGRAM REQUESTED",
+      "chosenCode": "AirportFBOLineOfBusiness_ApplicantParticipateNATASafetyFirstProgramExplanation",
+      "chosenLabel": "Airport FBOLine Of Business Applicant Participate NATASafety First Program Explanation",
+      "confidence": 0.46,
+      "thresholdDecision": "rejected",
+      "thresholdReason": "wave13_1b_calibrated_rejected"
+    },
+    {
+      "blockId": "p1-l13",
+      "text": "selection_mark_unselected_2",
+      "chosenCode": "Client_MarketingObjective",
+      "chosenLabel": "Client Marketing Objective",
+      "confidence": 0.46,
+      "thresholdDecision": "rejected",
+      "thresholdReason": "wave13_1b_calibrated_rejected"
+    },
+    {
+      "blockId": "p1-l14",
+      "text": "selection_mark_unselected_1",
+      "chosenCode": "Client_MarketingObjective",
+      "chosenLabel": "Client Marketing Objective",
+      "confidence": 0.46,
+      "thresholdDecision": "rejected",
+      "thresholdReason": "wave13_1b_calibrated_rejected"
+    },
+    {
+      "blockId": "p1-l17",
+      "text": "EQUIPMENT FLOATER",
+      "chosenCode": "EquipmentFloaterInformation_ApplicationOperatingEquipmentNotListedExplanation",
+      "chosenLabel": "Equipment Floater Information Application Operating Equipment Not Listed Explanation",
+      "confidence": 0.46,
+      "thresholdDecision": "rejected",
+      "thresholdReason": "wave13_1b_calibrated_rejected"
+    },
+    {
+      "blockId": "p1-l18",
+      "text": "GARAGE AND DEALERS",
+      "chosenCode": "GarageAndDealers_AnnualGallonsPumpedCount",
+      "chosenLabel": "Garage And Dealers Annual Gallons Pumped Count",
+      "confidence": 0.46,
+      "thresholdDecision": "rejected",
+      "thresholdReason": "wave13_1b_calibrated_rejected"
+    },
+    {
+      "blockId": "p1-l19",
+      "text": "INDICATE SECTIONS ATTACHED",
+      "chosenCode": "BuildingImprovement_WiringUpdatedNoIndicated",
+      "chosenLabel": "Building Improvement Wiring Updated No Indicated",
+      "confidence": 0.46,
+      "thresholdDecision": "rejected",
+      "thresholdReason": "wave13_1b_calibrated_rejected"
+    },
+    {
+      "blockId": "p1-l20",
+      "text": "selection_mark_unselected_15",
+      "chosenCode": "Client_MarketingObjective",
+      "chosenLabel": "Client Marketing Objective",
+      "confidence": 0.46,
+      "thresholdDecision": "rejected",
+      "thresholdReason": "wave13_1b_calibrated_rejected"
+    }
+  ],
+  "sampleRationaleDisagreements": [
+    {
+      "blockId": "p1-l1",
+      "text": "COMMERCIAL INSURANCE APPLICATION",
+      "confidence": 0,
+      "semanticSimilarity": 0,
+      "lexicalScore": 0,
+      "arbitrationEvidenceCount": 0
+    },
+    {
+      "blockId": "p1-l3",
+      "text": "APPLICANT INFORMATION SECTION",
+      "confidence": 0,
+      "semanticSimilarity": 0,
+      "lexicalScore": 0,
+      "arbitrationEvidenceCount": 0
+    },
+    {
+      "blockId": "p1-l12",
+      "text": "CITY:",
+      "chosenCode": "NamedInsured_MailingAddress_CityName",
+      "chosenLabel": "Named Insured Mailing Address City Name Insured Name",
+      "confidence": 0.894,
+      "semanticSimilarity": 0,
+      "lexicalScore": 1,
+      "arbitrationEvidenceCount": 1
+    },
+    {
+      "blockId": "p1-l15",
+      "text": "STATE:",
+      "chosenCode": "NamedInsured_MailingAddress_StateOrProvinceCode",
+      "chosenLabel": "Named Insured Mailing Address State Or Province Code Insured Name",
+      "confidence": 0.895,
+      "semanticSimilarity": 0,
+      "lexicalScore": 1,
+      "arbitrationEvidenceCount": 1
+    },
+    {
+      "blockId": "p1-l26",
+      "text": "VEHICLE SCHEDULE",
+      "confidence": 0,
+      "semanticSimilarity": 0,
+      "lexicalScore": 0,
+      "arbitrationEvidenceCount": 0
+    },
+    {
+      "blockId": "p1-l35",
+      "text": "(A/C, No):",
+      "confidence": 0,
+      "semanticSimilarity": 0,
+      "lexicalScore": 0,
+      "arbitrationEvidenceCount": 0
+    },
+    {
+      "blockId": "p1-l83",
+      "text": "AM",
+      "chosenCode": "AccidentConviction_PlaceOfIncidentCityName",
+      "chosenLabel": "Accident Conviction Place Of Incident City Name",
+      "confidence": 0.46,
+      "semanticSimilarity": 0,
+      "lexicalScore": 1,
+      "arbitrationEvidenceCount": 0
+    },
+    {
+      "blockId": "p1-l89",
+      "text": "PM",
+      "chosenCode": "AdditionalInterest_Interest_AdditionalInsuredLessorOfLeasedEquipmentIndicator",
+      "chosenLabel": "Additional Interest Interest Additional Insured Lessor Of Leased Equipment Indicator",
+      "confidence": 0.46,
+      "semanticSimilarity": 0,
+      "lexicalScore": 1,
+      "arbitrationEvidenceCount": 0
+    },
+    {
+      "blockId": "p1-l95",
+      "text": "City:",
+      "chosenCode": "NamedInsured_MailingAddress_CityName",
+      "chosenLabel": "Named Insured Mailing Address City Name Insured Name",
+      "confidence": 0.894,
+      "semanticSimilarity": 0,
+      "lexicalScore": 1,
+      "arbitrationEvidenceCount": 1
+    },
+    {
+      "blockId": "p1-l96",
+      "text": "State:",
+      "chosenCode": "NamedInsured_MailingAddress_StateOrProvinceCode",
+      "chosenLabel": "Named Insured Mailing Address State Or Province Code Insured Name",
+      "confidence": 0.895,
+      "semanticSimilarity": 0,
+      "lexicalScore": 1,
+      "arbitrationEvidenceCount": 1
+    },
+    {
+      "blockId": "p1-l125",
+      "text": "PARTNERSHIP",
+      "confidence": 0,
+      "semanticSimilarity": 0,
+      "lexicalScore": 0,
+      "arbitrationEvidenceCount": 0
+    },
+    {
+      "blockId": "p1-l141",
+      "text": "YR",
+      "chosenCode": "BusinessInformation_LocalNationals_PayrollAmount",
+      "chosenLabel": "Business Information Local Nationals Payroll Amount",
+      "confidence": 0.46,
+      "semanticSimilarity": 0,
+      "lexicalScore": 1,
+      "arbitrationEvidenceCount": 0
+    }
+  ],
+  "sampleCalibrationMismatches": [],
+  "sampleSemanticMisalignment": [
+    {
+      "blockId": "p1-l8",
+      "text": "NAIC CODE:",
+      "semanticLabel": "NAIC CODE:",
+      "chosenLabel": "Client NAICSCode",
+      "chosenCode": "Client_NAICSCode",
+      "confidence": 0.62,
+      "alignmentScore": 0
+    },
+    {
+      "blockId": "p1-l27",
+      "text": "(A/C, No, Ext):",
+      "semanticLabel": "(A/C, No, Ext):",
+      "chosenLabel": "Aircraft Loss Notice ACORDForm Remark Text",
+      "chosenCode": "AircraftLossNotice_ACORDForm_RemarkText",
+      "confidence": 0.62,
+      "alignmentScore": 0
+    },
+    {
+      "blockId": "p1-l71",
+      "text": "BOUND (Give Date and/or Attach Copy):",
+      "semanticLabel": "BOUND (Give Date and/or Attach Copy):",
+      "chosenLabel": "Accountants Liability Attachment Retroactive Date Endorsement Indicator",
+      "chosenCode": "AccountantsLiability_Attachment_RetroactiveDateEndorsementIndicator",
+      "confidence": 0.62,
+      "alignmentScore": 0.167
+    },
+    {
+      "blockId": "p1-l92",
+      "text": "NAME (First Named Insured & Other Named Insureds)",
+      "semanticLabel": "person_name",
+      "chosenLabel": "General Info Named Insured",
+      "chosenCode": "GeneralInfo.NamedInsured",
+      "confidence": 0.856,
+      "alignmentScore": 0
+    },
+    {
+      "blockId": "p1-l93",
+      "text": "MAILING ADDRESS INCL ZIP+4 (of First Named Insured)",
+      "semanticLabel": "person_name",
+      "chosenLabel": "General Info Mailing Address",
+      "chosenCode": "GeneralInfo.MailingAddress",
+      "confidence": 0.85,
+      "alignmentScore": 0
+    },
+    {
+      "blockId": "p1-l100",
+      "text": "(of First Named Insured):",
+      "semanticLabel": "person_name",
+      "chosenLabel": "General Info Named Insured",
+      "chosenCode": "GeneralInfo.NamedInsured",
+      "confidence": 0.856,
+      "alignmentScore": 0
+    },
+    {
+      "blockId": "p1-l101",
+      "text": "(A/C, No, Ext):",
+      "semanticLabel": "(A/C, No, Ext):",
+      "chosenLabel": "Aircraft Loss Notice ACORDForm Remark Text",
+      "chosenCode": "AircraftLossNotice_ACORDForm_RemarkText",
+      "confidence": 0.62,
+      "alignmentScore": 0
+    },
+    {
+      "blockId": "p1-l115",
+      "text": "CORPORATION",
+      "semanticLabel": "CORPORATION",
+      "chosenLabel": "Business Information Incorporation Date",
+      "chosenCode": "BusinessInformation_IncorporationDate",
+      "confidence": 0.78,
+      "alignmentScore": 0
+    },
+    {
+      "blockId": "p1-l118",
+      "text": "CORPORATION",
+      "semanticLabel": "CORPORATION",
+      "chosenLabel": "Business Information Incorporation Date",
+      "chosenCode": "BusinessInformation_IncorporationDate",
+      "confidence": 0.78,
+      "alignmentScore": 0
+    },
+    {
+      "blockId": "p1-l135",
+      "text": "(A/C, No, Ext):",
+      "semanticLabel": "(A/C, No, Ext):",
+      "chosenLabel": "Aircraft Loss Notice ACORDForm Remark Text",
+      "chosenCode": "AircraftLossNotice_ACORDForm_RemarkText",
+      "confidence": 0.62,
+      "alignmentScore": 0
+    },
+    {
+      "blockId": "p1-l136",
+      "text": "(A/C, No, Ext):",
+      "semanticLabel": "(A/C, No, Ext):",
+      "chosenLabel": "Aircraft Loss Notice ACORDForm Remark Text",
+      "chosenCode": "AircraftLossNotice_ACORDForm_RemarkText",
+      "confidence": 0.62,
+      "alignmentScore": 0
+    },
+    {
+      "blockId": "p1-l170",
+      "text": "NATURE OF BUSINESS - DESCRIPTION OF OPERATIONS BY PREMISE(S) USE 10 WORDS OR MORE TO DESCRIBE:",
+      "semanticLabel": "coverage",
+      "chosenLabel": "Boiler And Machinery Line Of Business Chlorofluorocarbon Refrigerants Used In Machinery To Cool Premises Or Process Explanation",
+      "chosenCode": "BoilerAndMachineryLineOfBusiness_ChlorofluorocarbonRefrigerantsUsedInMachineryToCoolPremisesOrProcessExplanation",
+      "confidence": 0.638,
+      "alignmentScore": 0
+    },
+    {
+      "blockId": "p1-l225",
+      "text": "ANY FOREIGN OPERATIONS, FOREIGN PRODUCTS DISTRIBUTED IN USA, OR US",
+      "semanticLabel": "ANY FOREIGN OPERATIONS, FOREIGN PRODUCTS DISTRIBUTED IN USA, OR US",
+      "chosenLabel": "Business Information Foreign Fee Income Description",
+      "chosenCode": "BusinessInformation_ForeignFeeIncomeDescription",
+      "confidence": 0.62,
+      "alignmentScore": 0.167
+    },
+    {
+      "blockId": "p1-l250",
+      "text": "PLEASE COMPLETE REVERSE SIDE",
+      "semanticLabel": "PLEASE COMPLETE REVERSE SIDE",
+      "chosenLabel": "Residential Work Completed By Explanation",
+      "chosenCode": "Residential_WorkCompletedByExplanation",
+      "confidence": 0.62,
+      "alignmentScore": 0
+    },
+    {
+      "blockId": "p3-l7",
+      "text": "(A/C, No, Ext):",
+      "semanticLabel": "(A/C, No, Ext):",
+      "chosenLabel": "Aircraft Loss Notice ACORDForm Remark Text",
+      "chosenCode": "AircraftLossNotice_ACORDForm_RemarkText",
+      "confidence": 0.62,
+      "alignmentScore": 0
+    },
+    {
+      "blockId": "p3-l38",
+      "text": "PREMISES/OPERATIONS",
+      "semanticLabel": "coverage",
+      "chosenLabel": "Agricultural Aviation Other States Operations Description",
+      "chosenCode": "AgriculturalAviation_OtherStatesOperationsDescription",
+      "confidence": 0.638,
+      "alignmentScore": 0
+    },
+    {
+      "blockId": "p3-l74",
+      "text": "OTHER COVERAGES, RESTRICTIONS AND/OR ENDORSEMENTS (For hired/non-owned auto coverages attach the applicable state Business Auto Section, ACORD 137)",
+      "semanticLabel": "person_name",
+      "chosenLabel": "Garage And Dealers Line Of Business Attachment Commercial Auto Driver Information Schedule Indicator",
+      "chosenCode": "GarageAndDealersLineOfBusiness_Attachment_CommercialAutoDriverInformationScheduleIndicator",
+      "confidence": 0.62,
+      "alignmentScore": 0
+    },
+    {
+      "blockId": "p3-l102",
+      "text": "1. DEDUCTIBLE PER CLAIM:",
+      "semanticLabel": "currency",
+      "chosenLabel": "General Liability Deductible Per Claim Indicator",
+      "chosenCode": "GeneralLiability_DeductiblePerClaimIndicator",
+      "confidence": 0.63,
+      "alignmentScore": 0
+    },
+    {
+      "blockId": "p3-l123",
+      "text": "PLEASE COMPLETE REVERSE SIDE",
+      "semanticLabel": "PLEASE COMPLETE REVERSE SIDE",
+      "chosenLabel": "Residential Work Completed By Explanation",
+      "chosenCode": "Residential_WorkCompletedByExplanation",
+      "confidence": 0.62,
+      "alignmentScore": 0
+    },
+    {
+      "blockId": "p4-l13",
+      "text": "4. DO YOUR SUBCONTRACTORS CARRY COVERAGES OR LIMITS",
+      "semanticLabel": "currency",
+      "chosenLabel": "Commercial Umbrella Line Of Business Subcontractors Carry Coverages Less Than Applicant Explanation",
+      "chosenCode": "CommercialUmbrellaLineOfBusiness_SubcontractorsCarryCoveragesLessThanApplicantExplanation",
+      "confidence": 0.646,
+      "alignmentScore": 0
+    },
+    {
+      "blockId": "p4-l86",
+      "text": "APPLICANT LABEL?",
+      "semanticLabel": "APPLICANT LABEL?",
+      "chosenLabel": "Boiler And Machinery Coverage Brands And Labels Deductible Amount",
+      "chosenCode": "BoilerAndMachineryCoverage_BrandsAndLabels_DeductibleAmount",
+      "confidence": 0.62,
+      "alignmentScore": 0
+    },
+    {
+      "blockId": "p4-l107",
+      "text": "10. DOES ANY NAMED INSURED SELL TO OTHER NAMED INSUREDS?",
+      "semanticLabel": "person_name",
+      "chosenLabel": "General Info Named Insured",
+      "chosenCode": "GeneralInfo.NamedInsured",
+      "confidence": 0.85,
+      "alignmentScore": 0
+    },
+    {
+      "blockId": "p4-l111",
+      "text": "ACORD 45 attached for additional names",
+      "semanticLabel": "ACORD 45 attached for additional names",
+      "chosenLabel": "Aircraft Insurance Binder ACORDForm Remark Text",
+      "chosenCode": "AircraftInsuranceBinder_ACORDForm_RemarkText",
+      "confidence": 0.62,
+      "alignmentScore": 0
+    },
+    {
+      "blockId": "p4-l120",
+      "text": "LOCATION:",
+      "semanticLabel": "LOCATION:",
+      "chosenLabel": "Commercial Property Premises Anylocation Acquired After Inception Amount",
+      "chosenCode": "CommercialProperty_Premises_AnylocationAcquiredAfterInceptionAmount",
+      "confidence": 0.62,
+      "alignmentScore": 0
+    },
+    {
+      "blockId": "p4-l138",
+      "text": "EXPLAIN ALL \"YES\" RESPONSES (For all past or present operations)",
+      "semanticLabel": "EXPLAIN ALL \"YES\" RESPONSES (For all past or present operations)",
+      "chosenLabel": "Builders Risk Installation Gross Receipts Information Last Year Gross Sales Amount",
+      "chosenCode": "BuildersRiskInstallation_GrossReceiptsInformation_LastYearGrossSalesAmount",
+      "confidence": 0.62,
+      "alignmentScore": 0
+    }
+  ],
+  "geometrySamples": [
+    {
+      "blockId": "p1-l244",
+      "type": "signature",
+      "x": 504.18879999999996,
+      "y": 977.5376,
+      "width": 180,
+      "height": 80,
+      "label": "Producer Authorized Representative Signature",
+      "confidence": 0.634
+    },
+    {
+      "blockId": "p1-l246",
+      "type": "signature",
+      "x": 140.1952,
+      "y": 977.9984,
+      "width": 180,
+      "height": 80,
+      "label": "Additional Interest Signature",
+      "confidence": 0.62
+    },
+    {
+      "blockId": "p1-l32",
+      "type": "signature",
+      "x": 454.4032,
+      "y": 161.2496,
+      "width": 180,
+      "height": 80,
+      "label": "Glass And Sign Glass Class Type Code",
+      "confidence": 0.46
+    }
+  ]
+}

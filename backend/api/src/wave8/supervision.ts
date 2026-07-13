@@ -87,6 +87,62 @@ const TARGETED_ANCHOR_PATTERN_VARIANTS: Record<string, string[]> = {
 };
 
 const TARGETED_ANCHOR_TUNING: Record<string, AnchorTuningProfile> = {
+  "named-insured": {
+    anchorWeightMultiplier: 1.72,
+    synonymVariantWeightBonus: 0.28,
+    dictionaryConfidenceWeight: 1.36,
+    semanticHintWeight: 1.4,
+    categoryHintWeight: 1.34,
+  },
+  "mailing-address": {
+    anchorWeightMultiplier: 1.74,
+    synonymVariantWeightBonus: 0.26,
+    dictionaryConfidenceWeight: 1.24,
+    semanticHintWeight: 1.38,
+    categoryHintWeight: 1.34,
+  },
+  "policy-number": {
+    anchorWeightMultiplier: 1.76,
+    synonymVariantWeightBonus: 0.24,
+    dictionaryConfidenceWeight: 1.34,
+    semanticHintWeight: 1.4,
+    categoryHintWeight: 1.34,
+  },
+  "business-start-date": {
+    anchorWeightMultiplier: 1.5,
+    synonymVariantWeightBonus: 0.18,
+    dictionaryConfidenceWeight: 1.24,
+    semanticHintWeight: 1.28,
+    categoryHintWeight: 1.24,
+  },
+  city: {
+    anchorWeightMultiplier: 1.6,
+    synonymVariantWeightBonus: 0.22,
+    dictionaryConfidenceWeight: 1.3,
+    semanticHintWeight: 1.34,
+    categoryHintWeight: 1.3,
+  },
+  state: {
+    anchorWeightMultiplier: 1.62,
+    synonymVariantWeightBonus: 0.22,
+    dictionaryConfidenceWeight: 1.3,
+    semanticHintWeight: 1.36,
+    categoryHintWeight: 1.3,
+  },
+  "zip-code": {
+    anchorWeightMultiplier: 1.62,
+    synonymVariantWeightBonus: 0.22,
+    dictionaryConfidenceWeight: 1.32,
+    semanticHintWeight: 1.36,
+    categoryHintWeight: 1.3,
+  },
+  "agent-name": {
+    anchorWeightMultiplier: 1.58,
+    synonymVariantWeightBonus: 0.22,
+    dictionaryConfidenceWeight: 1.3,
+    semanticHintWeight: 1.32,
+    categoryHintWeight: 1.3,
+  },
   insured_name: {
     anchorWeightMultiplier: 1.5,
     synonymVariantWeightBonus: 0.2,
@@ -138,6 +194,54 @@ const WAVE8_SYNTHETIC_SUPERVISION_RULES: Array<{
   semanticHint: SemanticHint;
   anchorId: keyof typeof TARGETED_ANCHOR_TUNING;
 }> = [
+  {
+    expectedAcordCode: "Policy_PolicyNumberIdentifier",
+    pattern: "policy\\s+(number|no)|policy\\s*#|policy\\s+number\\s*:?$",
+    semanticHint: { semanticLabel: "policy", categoryMode: "policy_information" },
+    anchorId: "policy-number",
+  },
+  {
+    expectedAcordCode: "BusinessInformation_BusinessStartDate",
+    pattern: "date\\s+business\\s+started|business\\s+start\\s+date|date\\s+business",
+    semanticHint: { semanticLabel: "date", categoryMode: "policy_information" },
+    anchorId: "business-start-date",
+  },
+  {
+    expectedAcordCode: "NamedInsured_MailingAddress_CityName",
+    pattern: "^city\\s*:?$|\\bcity\\b",
+    semanticHint: { semanticLabel: "person_name", categoryMode: "party_information" },
+    anchorId: "city",
+  },
+  {
+    expectedAcordCode: "NamedInsured_MailingAddress_StateOrProvinceCode",
+    pattern: "^state\\s*:?$|\\bstate\\b|\\bprovince\\b|\\bst\\b",
+    semanticHint: { semanticLabel: "person_name", categoryMode: "party_information" },
+    anchorId: "state",
+  },
+  {
+    expectedAcordCode: "NamedInsured_MailingAddress_PostalCode",
+    pattern: "zip\\s*code|postal\\s*code|\\bzip\\b|\\bpostal\\b",
+    semanticHint: { semanticLabel: "person_name", categoryMode: "party_information" },
+    anchorId: "zip-code",
+  },
+  {
+    expectedAcordCode: "Producer_FullName",
+    pattern: "agent\\s+name|producer\\s+name|agent\\s*:|producer\\s*:",
+    semanticHint: { semanticLabel: "person_name", categoryMode: "party_information" },
+    anchorId: "agent-name",
+  },
+  {
+    expectedAcordCode: "GeneralInfo.MailingAddress",
+    pattern: "mailing\\s+address|address\\s+incl\\s+zip|mailing\\s+address\\s+incl\\s+zip\\s*\\+?4",
+    semanticHint: { semanticLabel: "person_name", categoryMode: "party_information" },
+    anchorId: "mailing-address",
+  },
+  {
+    expectedAcordCode: "GeneralInfo.NamedInsured",
+    pattern: "first\\s+named\\s+insured|named\\s+insured|insured\\s+name|name\\s*\\(\\s*first\\s+named\\s+insured",
+    semanticHint: { semanticLabel: "person_name", categoryMode: "party_information" },
+    anchorId: "named-insured",
+  },
   {
     expectedAcordCode: "GeneralInfo.NamedInsured",
     pattern: "named\\s+insured|insured\\s+name|name\\s+of\\s+insured|first\\s+named\\s+insured",
