@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-07-13T04:10:57.098Z",
+  "timestamp": "2026-07-13T12:30:19.480Z",
   "contractVersion": "wave8.v1",
   "environment": "staging",
   "baseUrl": "https://inchanted-api-production.greenriver-7266e28c.eastus.azurecontainerapps.io",
@@ -8,95 +8,11 @@
     "environment": "staging",
     "checked": 75,
     "transportFailures": 0,
-    "statusMismatches": 8,
-    "contractViolations": 75,
-    "failed": 83
+    "statusMismatches": 0,
+    "contractViolations": 0,
+    "failed": 0
   },
-  "failures": [
-    "GET /api/ping contract invalid: missing numeric status",
-    "GET /api/gethealth contract invalid: missing numeric status",
-    "GET /api/ops/health contract invalid: missing numeric status",
-    "GET /api/version contract invalid: missing boolean ok",
-    "GET /api/acord/search contract invalid: missing boolean ok",
-    "GET /api/acord/labels/search contract invalid: missing boolean ok",
-    "GET /api/ops/label-search contract invalid: missing boolean ok",
-    "GET /api/acord/code/sample contract invalid: missing boolean ok",
-    "GET /api/acord/labels/code/sample contract invalid: missing boolean ok",
-    "GET /api/acord/all contract invalid: missing boolean ok",
-    "GET /api/acord/labels/all contract invalid: missing boolean ok",
-    "GET /api/ops/acord-dictionary contract invalid: missing boolean ok",
-    "POST /api/acord/suggest contract invalid: missing boolean ok",
-    "POST /api/acord/labels/suggest contract invalid: missing boolean ok",
-    "POST /api/clusterFormFamilies contract invalid: missing boolean ok",
-    "POST /api/memory/compare-snapshots contract invalid: missing boolean ok",
-    "POST /api/fusion/drift contract invalid: missing boolean ok",
-    "POST /api/detectFamilyDrift contract invalid: missing boolean ok",
-    "POST /api/ontology/multi/drift contract invalid: missing boolean ok",
-    "POST /api/ontology/drift contract invalid: missing boolean ok",
-    "POST /api/evaluateAcordSemantics contract invalid: missing boolean ok",
-    "POST /api/evaluateCalibration contract invalid: missing boolean ok",
-    "POST /api/carrier/adapters/evaluate contract invalid: missing boolean ok",
-    "POST /api/normalize/cross-family contract invalid: missing boolean ok",
-    "POST /api/underwriting/decision/drift contract invalid: missing boolean ok",
-    "POST /api/evaluateFamilyCalibration contract invalid: missing boolean ok",
-    "POST /api/graph/drift contract invalid: missing boolean ok",
-    "POST /api/graph/harmonization contract invalid: missing boolean ok",
-    "POST /api/graph/inference contract invalid: missing boolean ok",
-    "POST /api/memory/longitudinal-drift contract invalid: missing boolean ok",
-    "POST /api/evaluateMappingQuality contract invalid: missing boolean ok",
-    "POST /api/memory/recommendations contract invalid: missing boolean ok",
-    "POST /api/ontology/arbitration contract invalid: missing boolean ok",
-    "POST /api/risk/factors/evaluate contract invalid: missing boolean ok",
-    "POST /api/risk/scoring/evaluate contract invalid: missing boolean ok",
-    "POST /api/conflicts/semantic contract invalid: missing boolean ok",
-    "POST /api/fusion/evaluate contract invalid: missing boolean ok",
-    "POST /api/submission/drift contract invalid: missing boolean ok",
-    "POST /api/underwriting/decision/evaluate contract invalid: missing boolean ok",
-    "POST /api/rules/drift contract invalid: missing boolean ok",
-    "POST /api/rules/evaluate contract invalid: missing boolean ok",
-    "POST /api/exportAcordXml contract invalid: missing boolean ok",
-    "GET /api/ops/audit/export contract invalid: missing boolean ok",
-    "POST /api/extractDocument contract invalid: missing boolean ok",
-    "POST /api/extractText contract invalid: missing boolean ok",
-    "POST /api/submission/package/generate contract invalid: missing boolean ok",
-    "GET /api/ontology contract invalid: missing boolean ok",
-    "GET /api/carrier/adapters contract invalid: missing boolean ok",
-    "POST /api/carrier/adapters contract invalid: missing boolean ok",
-    "POST /api/graph/retrieve contract invalid: missing boolean ok",
-    "GET /api/ops/metrics contract invalid: missing boolean ok",
-    "GET /api/monitoring/dashboard contract invalid: missing boolean ok",
-    "POST /api/memory/snapshot contract invalid: missing boolean ok",
-    "GET /api/submission/status contract invalid: missing boolean ok",
-    "GET /api/fusion/unification-graph contract invalid: missing boolean ok",
-    "GET /api/ingestion-test contract invalid: missing numeric status",
-    "GET /api/loadCalibrationProfile contract invalid: missing boolean ok",
-    "GET /api/loadMapping contract invalid: missing boolean ok",
-    "POST /api/mapFields contract invalid: missing boolean ok",
-    "POST /api/submission/retry/process contract invalid: missing boolean ok",
-    "POST /api/saveCalibrationProfile contract invalid: missing boolean ok",
-    "POST /api/saveMapping contract invalid: missing boolean ok",
-    "POST /api/submission/carrier/submit contract invalid: missing boolean ok",
-    "POST /api/suggestLabels contract invalid: missing boolean ok",
-    "POST /api/graph/update contract invalid: missing boolean ok",
-    "POST /api/memory/update contract invalid: missing boolean ok",
-    "POST /api/ontology/validate contract invalid: missing boolean ok",
-    "GET /api/wave9/contracts expected 200 but got 404",
-    "GET /api/wave9/contracts contract invalid: missing boolean ok",
-    "POST /api/wave9/acord/extraction expected 400 or 500 but got 404",
-    "POST /api/wave9/acord/extraction contract invalid: missing boolean ok",
-    "POST /api/wave9/acord/semantic-inference expected 400 but got 404",
-    "POST /api/wave9/acord/semantic-inference contract invalid: missing boolean ok",
-    "POST /api/wave9/inference expected 400 but got 404",
-    "POST /api/wave9/inference contract invalid: missing boolean ok",
-    "POST /api/wave9/arbitration expected 400 but got 404",
-    "POST /api/wave9/arbitration contract invalid: missing boolean ok",
-    "POST /api/wave9/normalization expected 400 but got 404",
-    "POST /api/wave9/normalization contract invalid: missing boolean ok",
-    "POST /api/wave9/scoring expected 400 but got 404",
-    "POST /api/wave9/scoring contract invalid: missing boolean ok",
-    "POST /api/wave9/preview expected 200 or 400 but got 404",
-    "POST /api/wave9/preview contract invalid: missing boolean ok"
-  ],
+  "failures": [],
   "results": [
     {
       "method": "GET",
@@ -107,10 +23,10 @@
         200
       ],
       "ok": true,
-      "latencyMs": 296,
-      "contractValid": false,
-      "contractError": "missing numeric status",
-      "bodyPreview": "{\"ok\":true,\"status\":\"ok\",\"message\":\"pong\",\"checkedAt\":\"2026-07-13T04:10:49.701Z\"}"
+      "latencyMs": 327,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"ok\":true,\"status\":200,\"message\":\"pong\",\"checkedAt\":\"2026-07-13T12:30:08.583Z\",\"data\":{\"ok\":true,\"status\":\"ok\",\"message\":\"pong\",\"checkedAt\":\"2026-07-13T12:30:08.583Z\"},\"error\":null,\"errorEnvelope\":null,\"contract\":{\"vers"
     },
     {
       "method": "GET",
@@ -121,10 +37,10 @@
         200
       ],
       "ok": true,
-      "latencyMs": 118,
-      "contractValid": false,
-      "contractError": "missing numeric status",
-      "bodyPreview": "{\"ok\":true,\"tenantId\":\"aca-deploy\",\"checks\":{\"documentIntelligence\":true,\"embeddings\":true,\"storage\":true},\"circuits\":{},\"checkedAt\":\"2026-07-13T04:10:49.835Z\"}"
+      "latencyMs": 140,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"ok\":true,\"tenantId\":\"aca-deploy\",\"checks\":{\"documentIntelligence\":true,\"embeddings\":true,\"storage\":true},\"circuits\":{},\"checkedAt\":\"2026-07-13T12:30:08.735Z\",\"status\":200,\"data\":{\"ok\":true,\"tenantId\":\"aca-deploy\",\"chec"
     },
     {
       "method": "GET",
@@ -135,10 +51,10 @@
         200
       ],
       "ok": true,
-      "latencyMs": 47,
-      "contractValid": false,
-      "contractError": "missing numeric status",
-      "bodyPreview": "{\"ok\":true,\"tenantId\":\"aca-deploy\",\"checks\":{\"documentIntelligence\":true,\"embeddings\":true,\"storage\":true},\"circuits\":{},\"checkedAt\":\"2026-07-13T04:10:49.878Z\"}"
+      "latencyMs": 46,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"ok\":true,\"tenantId\":\"aca-deploy\",\"checks\":{\"documentIntelligence\":true,\"embeddings\":true,\"storage\":true},\"circuits\":{},\"checkedAt\":\"2026-07-13T12:30:08.781Z\",\"status\":200,\"data\":{\"ok\":true,\"tenantId\":\"aca-deploy\",\"chec"
     },
     {
       "method": "GET",
@@ -149,10 +65,10 @@
         200
       ],
       "ok": true,
-      "latencyMs": 41,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"gitCommitHash\":\"14d153d260169a6ae651fafd91a1f2c0c8156596\",\"buildTimestamp\":\"2026-07-13T04:04:14Z\",\"wave9EngineVersion\":\"sha-14d153d26016\"}"
+      "latencyMs": 48,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"gitCommitHash\":\"e057a2c75e8f9d1bb34c0aa5d5e3ddd0730ac99a\",\"buildTimestamp\":\"2026-07-13T12:28:34Z\",\"wave9EngineVersion\":\"sha-e057a2c75e8f\",\"ok\":true,\"status\":200,\"data\":{\"gitCommitHash\":\"e057a2c75e8f9d1bb34c0aa5d5e3ddd0"
     },
     {
       "method": "GET",
@@ -163,10 +79,10 @@
         400
       ],
       "ok": true,
-      "latencyMs": 42,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"Missing query parameter\"}"
+      "latencyMs": 38,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Missing query parameter\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Missing query parameter\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/acord/search\""
     },
     {
       "method": "GET",
@@ -178,9 +94,9 @@
       ],
       "ok": true,
       "latencyMs": 48,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"Missing query parameter\"}"
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Missing query parameter\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Missing query parameter\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/acord/labels/"
     },
     {
       "method": "GET",
@@ -192,9 +108,9 @@
       ],
       "ok": true,
       "latencyMs": 44,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"Missing query parameter\"}"
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Missing query parameter\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Missing query parameter\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/ops/label-sea"
     },
     {
       "method": "GET",
@@ -205,10 +121,10 @@
         404
       ],
       "ok": true,
-      "latencyMs": 49,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"ACORD code not found\",\"acordCode\":\"sample\"}"
+      "latencyMs": 44,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"ACORD code not found\",\"acordCode\":\"sample\",\"ok\":false,\"status\":404,\"data\":null,\"errorEnvelope\":{\"code\":\"NOT_FOUND\",\"message\":\"ACORD code not found\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/"
     },
     {
       "method": "GET",
@@ -220,9 +136,9 @@
       ],
       "ok": true,
       "latencyMs": 41,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"ACORD code not found\",\"acordCode\":\"sample\"}"
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"ACORD code not found\",\"acordCode\":\"sample\",\"ok\":false,\"status\":404,\"data\":null,\"errorEnvelope\":{\"code\":\"NOT_FOUND\",\"message\":\"ACORD code not found\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/"
     },
     {
       "method": "GET",
@@ -233,10 +149,10 @@
         200
       ],
       "ok": true,
-      "latencyMs": 225,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"total\":16532,\"dictionary\":{\"loaded\":true,\"csvPath\":\"/app/backend/data/acord-elabels.csv\",\"rowCount\":16532,\"malformedRows\":0,\"loadedAt\":\"2026-07-13T04:04:42.159Z\"},\"items\":[{\"acordCode\":\"Form_CompletionDate\",\"label\":\"Fo"
+      "latencyMs": 344,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"total\":16532,\"dictionary\":{\"loaded\":true,\"csvPath\":\"/app/backend/data/acord-elabels.csv\",\"rowCount\":16532,\"malformedRows\":0,\"loadedAt\":\"2026-07-13T12:29:01.497Z\"},\"items\":[{\"acordCode\":\"Form_CompletionDate\",\"label\":\"Fo"
     },
     {
       "method": "GET",
@@ -247,10 +163,10 @@
         200
       ],
       "ok": true,
-      "latencyMs": 144,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"total\":16532,\"dictionary\":{\"loaded\":true,\"csvPath\":\"/app/backend/data/acord-elabels.csv\",\"rowCount\":16532,\"malformedRows\":0,\"loadedAt\":\"2026-07-13T04:04:42.159Z\"},\"items\":[{\"acordCode\":\"Form_CompletionDate\",\"label\":\"Fo"
+      "latencyMs": 341,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"total\":16532,\"dictionary\":{\"loaded\":true,\"csvPath\":\"/app/backend/data/acord-elabels.csv\",\"rowCount\":16532,\"malformedRows\":0,\"loadedAt\":\"2026-07-13T12:29:01.497Z\"},\"items\":[{\"acordCode\":\"Form_CompletionDate\",\"label\":\"Fo"
     },
     {
       "method": "GET",
@@ -261,10 +177,10 @@
         200
       ],
       "ok": true,
-      "latencyMs": 281,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"total\":16532,\"dictionary\":{\"loaded\":true,\"csvPath\":\"/app/backend/data/acord-elabels.csv\",\"rowCount\":16532,\"malformedRows\":0,\"loadedAt\":\"2026-07-13T04:04:42.159Z\"},\"items\":[{\"acordCode\":\"Form_CompletionDate\",\"label\":\"Fo"
+      "latencyMs": 194,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"total\":16532,\"dictionary\":{\"loaded\":true,\"csvPath\":\"/app/backend/data/acord-elabels.csv\",\"rowCount\":16532,\"malformedRows\":0,\"loadedAt\":\"2026-07-13T12:29:01.497Z\"},\"items\":[{\"acordCode\":\"Form_CompletionDate\",\"label\":\"Fo"
     },
     {
       "method": "POST",
@@ -275,10 +191,10 @@
         400
       ],
       "ok": true,
-      "latencyMs": 46,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"Missing text in request body\"}"
+      "latencyMs": 47,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Missing text in request body\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Missing text in request body\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/aco"
     },
     {
       "method": "POST",
@@ -289,10 +205,10 @@
         400
       ],
       "ok": true,
-      "latencyMs": 42,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"Missing text in request body\"}"
+      "latencyMs": 43,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Missing text in request body\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Missing text in request body\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/aco"
     },
     {
       "method": "POST",
@@ -303,10 +219,10 @@
         400
       ],
       "ok": true,
-      "latencyMs": 43,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"At least one valid document is required\"}"
+      "latencyMs": 40,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"At least one valid document is required\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"At least one valid document is required\",\"details\":null},\"contract\":{\"version\":\"wave"
     },
     {
       "method": "POST",
@@ -317,10 +233,10 @@
         400
       ],
       "ok": true,
-      "latencyMs": 43,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"Both baseline and current semantic memory snapshots are required.\"}"
+      "latencyMs": 36,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Both baseline and current semantic memory snapshots are required.\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Both baseline and current semantic memory snapshots are re"
     },
     {
       "method": "POST",
@@ -331,10 +247,10 @@
         400
       ],
       "ok": true,
-      "latencyMs": 42,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"baseline and current snapshots are required\"}"
+      "latencyMs": 39,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"baseline and current snapshots are required\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"baseline and current snapshots are required\",\"details\":null},\"contract\":{\"versio"
     },
     {
       "method": "POST",
@@ -345,10 +261,10 @@
         400
       ],
       "ok": true,
-      "latencyMs": 45,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"baseline and current family reports are required\"}"
+      "latencyMs": 41,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"baseline and current family reports are required\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"baseline and current family reports are required\",\"details\":null},\"contract"
     },
     {
       "method": "POST",
@@ -359,10 +275,10 @@
         400
       ],
       "ok": true,
-      "latencyMs": 42,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"baseline and current snapshots are required\"}"
+      "latencyMs": 35,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"baseline and current snapshots are required\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"baseline and current snapshots are required\",\"details\":null},\"contract\":{\"versio"
     },
     {
       "method": "POST",
@@ -373,10 +289,10 @@
         400
       ],
       "ok": true,
-      "latencyMs": 43,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"baseline and current ontology snapshots are required\"}"
+      "latencyMs": 48,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"baseline and current ontology snapshots are required\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"baseline and current ontology snapshots are required\",\"details\":null},\""
     },
     {
       "method": "POST",
@@ -387,10 +303,10 @@
         400
       ],
       "ok": true,
-      "latencyMs": 47,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"Unsupported payload version\"}"
+      "latencyMs": 36,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Unsupported payload version\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Unsupported payload version\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/evalu"
     },
     {
       "method": "POST",
@@ -401,10 +317,10 @@
         200
       ],
       "ok": true,
-      "latencyMs": 50,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"profile\":{\"profileId\":\"default-calibration\",\"name\":\"Default Calibration\",\"version\":1,\"createdAt\":\"2026-07-13T04:10:54.683Z\",\"updatedAt\":\"2026-07-13T04:10:54.683Z\",\"globalThresholds\":{\"accepted\":0.8,\"review\":0.6,\"reject"
+      "latencyMs": 42,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"profile\":{\"profileId\":\"default-calibration\",\"name\":\"Default Calibration\",\"version\":1,\"createdAt\":\"2026-07-13T12:30:15.893Z\",\"updatedAt\":\"2026-07-13T12:30:15.893Z\",\"globalThresholds\":{\"accepted\":0.8,\"review\":0.6,\"reject"
     },
     {
       "method": "POST",
@@ -415,10 +331,10 @@
         400
       ],
       "ok": true,
-      "latencyMs": 44,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"Payload must be an object\"}"
+      "latencyMs": 37,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Payload must be an object\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Payload must be an object\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/carrier/a"
     },
     {
       "method": "POST",
@@ -429,10 +345,10 @@
         400
       ],
       "ok": true,
-      "latencyMs": 32,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"At least one valid document payload is required.\"}"
+      "latencyMs": 36,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"At least one valid document payload is required.\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"At least one valid document payload is required.\",\"details\":null},\"contract"
     },
     {
       "method": "POST",
@@ -443,10 +359,10 @@
         400
       ],
       "ok": true,
-      "latencyMs": 44,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"current decision context is required.\"}"
+      "latencyMs": 35,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"current decision context is required.\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"current decision context is required.\",\"details\":null},\"contract\":{\"version\":\"wave8.v1"
     },
     {
       "method": "POST",
@@ -457,10 +373,10 @@
         400
       ],
       "ok": true,
-      "latencyMs": 43,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"Payload must be an object\"}"
+      "latencyMs": 42,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Payload must be an object\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Payload must be an object\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/evaluateF"
     },
     {
       "method": "POST",
@@ -471,10 +387,10 @@
         400
       ],
       "ok": true,
-      "latencyMs": 45,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"current global semantic graph snapshot is required.\"}"
+      "latencyMs": 38,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"current global semantic graph snapshot is required.\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"current global semantic graph snapshot is required.\",\"details\":null},\"co"
     },
     {
       "method": "POST",
@@ -485,10 +401,10 @@
         400
       ],
       "ok": true,
-      "latencyMs": 44,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"At least one valid document payload is required.\"}"
+      "latencyMs": 46,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"At least one valid document payload is required.\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"At least one valid document payload is required.\",\"details\":null},\"contract"
     },
     {
       "method": "POST",
@@ -499,10 +415,10 @@
         400
       ],
       "ok": true,
-      "latencyMs": 47,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"Payload must be an object\"}"
+      "latencyMs": 37,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Payload must be an object\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Payload must be an object\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/graph/inf"
     },
     {
       "method": "POST",
@@ -513,10 +429,10 @@
         400
       ],
       "ok": true,
-      "latencyMs": 36,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"current semantic memory snapshot is required.\"}"
+      "latencyMs": 45,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"current semantic memory snapshot is required.\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"current semantic memory snapshot is required.\",\"details\":null},\"contract\":{\"ve"
     },
     {
       "method": "POST",
@@ -527,10 +443,10 @@
         400
       ],
       "ok": true,
-      "latencyMs": 45,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"Unsupported payload version\"}"
+      "latencyMs": 34,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Unsupported payload version\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Unsupported payload version\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/evalu"
     },
     {
       "method": "POST",
@@ -541,10 +457,10 @@
         400
       ],
       "ok": true,
-      "latencyMs": 46,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"At least one valid document payload is required.\"}"
+      "latencyMs": 47,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"At least one valid document payload is required.\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"At least one valid document payload is required.\",\"details\":null},\"contract"
     },
     {
       "method": "POST",
@@ -555,10 +471,10 @@
         400
       ],
       "ok": true,
-      "latencyMs": 48,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"Payload must be an object\"}"
+      "latencyMs": 37,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Payload must be an object\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Payload must be an object\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/ontology/"
     },
     {
       "method": "POST",
@@ -569,10 +485,10 @@
         400
       ],
       "ok": true,
-      "latencyMs": 39,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"Payload must be an object\"}"
+      "latencyMs": 56,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Payload must be an object\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Payload must be an object\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/risk/fact"
     },
     {
       "method": "POST",
@@ -584,9 +500,9 @@
       ],
       "ok": true,
       "latencyMs": 42,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"Payload must be an object\"}"
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Payload must be an object\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Payload must be an object\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/risk/scor"
     },
     {
       "method": "POST",
@@ -597,10 +513,10 @@
         400
       ],
       "ok": true,
-      "latencyMs": 47,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"Payload must be an object\"}"
+      "latencyMs": 42,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Payload must be an object\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Payload must be an object\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/conflicts"
     },
     {
       "method": "POST",
@@ -611,10 +527,10 @@
         400
       ],
       "ok": true,
-      "latencyMs": 44,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"At least one valid document payload is required.\"}"
+      "latencyMs": 40,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"At least one valid document payload is required.\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"At least one valid document payload is required.\",\"details\":null},\"contract"
     },
     {
       "method": "POST",
@@ -625,10 +541,10 @@
         400
       ],
       "ok": true,
-      "latencyMs": 49,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"current submission state is required.\"}"
+      "latencyMs": 40,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"current submission state is required.\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"current submission state is required.\",\"details\":null},\"contract\":{\"version\":\"wave8.v1"
     },
     {
       "method": "POST",
@@ -639,10 +555,10 @@
         400
       ],
       "ok": true,
-      "latencyMs": 44,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"Payload must be an object\"}"
+      "latencyMs": 41,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Payload must be an object\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Payload must be an object\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/underwrit"
     },
     {
       "method": "POST",
@@ -653,10 +569,10 @@
         400
       ],
       "ok": true,
-      "latencyMs": 47,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"current underwriting rule snapshot is required.\"}"
+      "latencyMs": 35,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"current underwriting rule snapshot is required.\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"current underwriting rule snapshot is required.\",\"details\":null},\"contract\":"
     },
     {
       "method": "POST",
@@ -667,10 +583,10 @@
         400
       ],
       "ok": true,
-      "latencyMs": 45,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"Payload must be an object\"}"
+      "latencyMs": 38,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Payload must be an object\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Payload must be an object\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/rules/eva"
     },
     {
       "method": "POST",
@@ -681,10 +597,10 @@
         400
       ],
       "ok": true,
-      "latencyMs": 43,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"Unsupported payload version\"}"
+      "latencyMs": 38,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Unsupported payload version\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Unsupported payload version\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/expor"
     },
     {
       "method": "GET",
@@ -695,10 +611,10 @@
         403
       ],
       "ok": true,
-      "latencyMs": 40,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"Policy denied for admin:audit-export role=viewer\"}"
+      "latencyMs": 39,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Policy denied for admin:audit-export role=viewer\",\"ok\":false,\"status\":403,\"data\":null,\"errorEnvelope\":{\"code\":\"FORBIDDEN\",\"message\":\"Policy denied for admin:audit-export role=viewer\",\"details\":null},\"contract\":"
     },
     {
       "method": "POST",
@@ -709,10 +625,10 @@
         400
       ],
       "ok": true,
-      "latencyMs": 43,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"Provide blocks[], text, or a multipart file upload with a PDF\"}"
+      "latencyMs": 44,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Provide blocks[], text, or a multipart file upload with a PDF\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Provide blocks[], text, or a multipart file upload with a PDF\""
     },
     {
       "method": "POST",
@@ -724,10 +640,10 @@
         500
       ],
       "ok": true,
-      "latencyMs": 46,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"No file uploaded\"}"
+      "latencyMs": 47,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"No file uploaded\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"No file uploaded\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/extractText\",\"status\":400,\""
     },
     {
       "method": "POST",
@@ -738,10 +654,10 @@
         400
       ],
       "ok": true,
-      "latencyMs": 41,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"Payload must be an object\"}"
+      "latencyMs": 67,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Payload must be an object\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Payload must be an object\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/submissio"
     },
     {
       "method": "GET",
@@ -752,9 +668,9 @@
         200
       ],
       "ok": true,
-      "latencyMs": 40,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
+      "latencyMs": 41,
+      "contractValid": true,
+      "contractError": null,
       "bodyPreview": "{\"ontologyId\":\"acord-canonical-ontology\",\"version\":\"2026.06.10\",\"generatedAt\":\"deterministic\",\"hash\":\"c653ca94\",\"nodes\":{\"CommercialProperty.Building.LocationAddress\":{\"acordCode\":\"CommercialProperty.Building.LocationAdd"
     },
     {
@@ -766,9 +682,9 @@
         200
       ],
       "ok": true,
-      "latencyMs": 43,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
+      "latencyMs": 664,
+      "contractValid": true,
+      "contractError": null,
       "bodyPreview": "{\"familyId\":\"default\",\"bundles\":[{\"carrierId\":\"carrier-markel\",\"carrierLabel\":\"Markel\",\"namespace\":\"carrier-supplemental-markel\",\"version\":\"2026.06.10\",\"precedence\":260,\"compatibility\":[\"acord-core\",\"carrier-supplemental"
     },
     {
@@ -780,9 +696,9 @@
         200
       ],
       "ok": true,
-      "latencyMs": 42,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
+      "latencyMs": 53,
+      "contractValid": true,
+      "contractError": null,
       "bodyPreview": "{\"familyId\":\"default\",\"bundles\":[{\"carrierId\":\"carrier-markel\",\"carrierLabel\":\"Markel\",\"namespace\":\"carrier-supplemental-markel\",\"version\":\"2026.06.10\",\"precedence\":260,\"compatibility\":[\"acord-core\",\"carrier-supplemental"
     },
     {
@@ -794,10 +710,10 @@
         400
       ],
       "ok": true,
-      "latencyMs": 43,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"At least one valid document payload is required.\"}"
+      "latencyMs": 44,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"At least one valid document payload is required.\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"At least one valid document payload is required.\",\"details\":null},\"contract"
     },
     {
       "method": "GET",
@@ -808,10 +724,10 @@
         403
       ],
       "ok": true,
-      "latencyMs": 40,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"Policy denied for admin:metrics role=viewer\"}"
+      "latencyMs": 32,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Policy denied for admin:metrics role=viewer\",\"ok\":false,\"status\":403,\"data\":null,\"errorEnvelope\":{\"code\":\"FORBIDDEN\",\"message\":\"Policy denied for admin:metrics role=viewer\",\"details\":null},\"contract\":{\"version\""
     },
     {
       "method": "GET",
@@ -822,10 +738,10 @@
         200
       ],
       "ok": true,
-      "latencyMs": 33,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"tenantId\":\"local-dev\",\"timestamp\":\"2026-07-13T04:10:55.987Z\",\"system\":{\"status\":\"healthy\",\"passRate\":99.8,\"alerts\":0,\"lastUpdated\":\"2026-07-13T04:10:55.987Z\"},\"strictMode\":{\"enabled\":true,\"status\":\"operational\",\"failur"
+      "latencyMs": 45,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"tenantId\":\"local-dev\",\"timestamp\":\"2026-07-13T12:30:17.784Z\",\"system\":{\"status\":\"healthy\",\"passRate\":99.8,\"alerts\":0,\"lastUpdated\":\"2026-07-13T12:30:17.784Z\"},\"strictMode\":{\"enabled\":true,\"status\":\"operational\",\"failur"
     },
     {
       "method": "POST",
@@ -836,10 +752,10 @@
         400
       ],
       "ok": true,
-      "latencyMs": 34,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"At least one valid document payload is required.\"}"
+      "latencyMs": 47,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"At least one valid document payload is required.\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"At least one valid document payload is required.\",\"details\":null},\"contract"
     },
     {
       "method": "GET",
@@ -850,10 +766,10 @@
         400
       ],
       "ok": true,
-      "latencyMs": 36,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"submissionId query parameter is required.\"}"
+      "latencyMs": 63,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"submissionId query parameter is required.\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"submissionId query parameter is required.\",\"details\":null},\"contract\":{\"version\":\""
     },
     {
       "method": "GET",
@@ -864,9 +780,9 @@
         200
       ],
       "ok": true,
-      "latencyMs": 39,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
+      "latencyMs": 87,
+      "contractValid": true,
+      "contractError": null,
       "bodyPreview": "{\"generatedAt\":\"1970-01-01T00:00:00.000Z\",\"graphHash\":\"51cfc61b\",\"edges\":[{\"sourceCode\":\"Applicant.Address.City\",\"targetCode\":\"Insured.Address.City\",\"relationship\":\"equivalent\",\"unificationClass\":\"acord-126-to-127\"},{\"so"
     },
     {
@@ -878,10 +794,10 @@
         200
       ],
       "ok": true,
-      "latencyMs": 46,
-      "contractValid": false,
-      "contractError": "missing numeric status",
-      "bodyPreview": "{\"ok\":true,\"endpoint\":\"ingestion-test\",\"message\":\"Ingestion test endpoint is active\",\"checkedAt\":\"2026-07-13T04:10:56.143Z\"}"
+      "latencyMs": 66,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"ok\":true,\"endpoint\":\"ingestion-test\",\"message\":\"Ingestion test endpoint is active\",\"checkedAt\":\"2026-07-13T12:30:18.052Z\",\"status\":200,\"data\":{\"ok\":true,\"endpoint\":\"ingestion-test\",\"message\":\"Ingestion test endpoint is"
     },
     {
       "method": "GET",
@@ -892,10 +808,10 @@
         200
       ],
       "ok": true,
-      "latencyMs": 89,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"profile\":{\"profileId\":\"default-calibration\",\"name\":\"Default Calibration\",\"version\":1,\"createdAt\":\"2026-07-13T04:10:56.235Z\",\"updatedAt\":\"2026-07-13T04:10:56.235Z\",\"globalThresholds\":{\"accepted\":0.8,\"review\":0.6,\"reject"
+      "latencyMs": 100,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"profile\":{\"profileId\":\"default-calibration\",\"name\":\"Default Calibration\",\"version\":1,\"createdAt\":\"2026-07-13T12:30:18.143Z\",\"updatedAt\":\"2026-07-13T12:30:18.143Z\",\"globalThresholds\":{\"accepted\":0.8,\"review\":0.6,\"reject"
     },
     {
       "method": "GET",
@@ -906,10 +822,10 @@
         400
       ],
       "ok": true,
-      "latencyMs": 43,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"Missing fileName query parameter\"}"
+      "latencyMs": 33,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Missing fileName query parameter\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Missing fileName query parameter\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\""
     },
     {
       "method": "POST",
@@ -920,10 +836,10 @@
         400
       ],
       "ok": true,
-      "latencyMs": 42,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"blocks must be a non-empty array\"}"
+      "latencyMs": 36,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"blocks must be a non-empty array\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"blocks must be a non-empty array\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\""
     },
     {
       "method": "POST",
@@ -934,10 +850,10 @@
         403
       ],
       "ok": true,
-      "latencyMs": 53,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"Policy denied for submission:retry role=viewer\"}"
+      "latencyMs": 31,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Policy denied for submission:retry role=viewer\",\"ok\":false,\"status\":403,\"data\":null,\"errorEnvelope\":{\"code\":\"FORBIDDEN\",\"message\":\"Policy denied for submission:retry role=viewer\",\"details\":null},\"contract\":{\"ve"
     },
     {
       "method": "POST",
@@ -948,10 +864,10 @@
         400
       ],
       "ok": true,
-      "latencyMs": 45,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"profile is required\"}"
+      "latencyMs": 100,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"profile is required\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"profile is required\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/saveCalibrationProfil"
     },
     {
       "method": "POST",
@@ -962,10 +878,10 @@
         403
       ],
       "ok": true,
-      "latencyMs": 43,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"Policy denied for mapping:save role=viewer\"}"
+      "latencyMs": 528,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Policy denied for mapping:save role=viewer\",\"ok\":false,\"status\":403,\"data\":null,\"errorEnvelope\":{\"code\":\"FORBIDDEN\",\"message\":\"Policy denied for mapping:save role=viewer\",\"details\":null},\"contract\":{\"version\":\""
     },
     {
       "method": "POST",
@@ -976,10 +892,10 @@
         403
       ],
       "ok": true,
-      "latencyMs": 41,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"Policy denied for submission:submit role=viewer\"}"
+      "latencyMs": 39,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Policy denied for submission:submit role=viewer\",\"ok\":false,\"status\":403,\"data\":null,\"errorEnvelope\":{\"code\":\"FORBIDDEN\",\"message\":\"Policy denied for submission:submit role=viewer\",\"details\":null},\"contract\":{\""
     },
     {
       "method": "POST",
@@ -990,10 +906,10 @@
         400
       ],
       "ok": true,
-      "latencyMs": 41,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"Missing text in request body\"}"
+      "latencyMs": 44,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Missing text in request body\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Missing text in request body\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/sug"
     },
     {
       "method": "POST",
@@ -1004,10 +920,10 @@
         400
       ],
       "ok": true,
-      "latencyMs": 43,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"At least one valid document payload is required.\"}"
+      "latencyMs": 40,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"At least one valid document payload is required.\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"At least one valid document payload is required.\",\"details\":null},\"contract"
     },
     {
       "method": "POST",
@@ -1018,10 +934,10 @@
         400
       ],
       "ok": true,
-      "latencyMs": 44,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"At least one valid document payload is required.\"}"
+      "latencyMs": 63,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"At least one valid document payload is required.\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"At least one valid document payload is required.\",\"details\":null},\"contract"
     },
     {
       "method": "POST",
@@ -1032,124 +948,124 @@
         200
       ],
       "ok": true,
-      "latencyMs": 66,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"valid\":true,\"issues\":[]}"
+      "latencyMs": 75,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"valid\":true,\"issues\":[],\"ok\":true,\"status\":200,\"data\":{\"valid\":true,\"issues\":[]},\"error\":null,\"errorEnvelope\":null,\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/ontology/validate\",\"status\":200,\"ok\":true,\"timestamp\":\"20"
     },
     {
       "method": "GET",
       "route": "/api/wave9/contracts",
-      "status": 404,
+      "status": 200,
       "expectedStatus": 200,
       "allowedStatuses": [
         200
       ],
       "ok": true,
-      "latencyMs": 44,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"Not Found\",\"path\":\"/api/wave9/contracts\",\"method\":\"GET\"}"
+      "latencyMs": 37,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"ok\":true,\"status\":200,\"data\":{\"version\":\"wave8.v1\",\"contracts\":{\"extraction\":\"/api/wave9/acord/extraction\",\"semanticInference\":\"/api/wave9/acord/semantic-inference\",\"arbitration\":\"/api/wave9/arbitration\",\"normalization"
     },
     {
       "method": "POST",
       "route": "/api/wave9/acord/extraction",
-      "status": 404,
+      "status": 400,
       "expectedStatus": 400,
       "allowedStatuses": [
         400,
         500
       ],
       "ok": true,
-      "latencyMs": 51,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"Not Found\",\"path\":\"/api/wave9/acord/extraction\",\"method\":\"POST\"}"
+      "latencyMs": 41,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Provide blocks[], text, or a multipart file upload with a PDF\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Provide blocks[], text, or a multipart file upload with a PDF\""
     },
     {
       "method": "POST",
       "route": "/api/wave9/acord/semantic-inference",
-      "status": 404,
+      "status": 400,
       "expectedStatus": 400,
       "allowedStatuses": [
         400
       ],
       "ok": true,
-      "latencyMs": 44,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"Not Found\",\"path\":\"/api/wave9/acord/semantic-inference\",\"method\":\"POST\"}"
+      "latencyMs": 45,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Unsupported payload version\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Unsupported payload version\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/wave9"
     },
     {
       "method": "POST",
       "route": "/api/wave9/inference",
-      "status": 404,
+      "status": 400,
       "expectedStatus": 400,
       "allowedStatuses": [
         400
       ],
       "ok": true,
-      "latencyMs": 44,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"Not Found\",\"path\":\"/api/wave9/inference\",\"method\":\"POST\"}"
+      "latencyMs": 45,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Payload must be an object\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Payload must be an object\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/wave9/inf"
     },
     {
       "method": "POST",
       "route": "/api/wave9/arbitration",
-      "status": 404,
+      "status": 400,
       "expectedStatus": 400,
       "allowedStatuses": [
         400
       ],
       "ok": true,
-      "latencyMs": 43,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"Not Found\",\"path\":\"/api/wave9/arbitration\",\"method\":\"POST\"}"
+      "latencyMs": 32,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Payload must be an object\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Payload must be an object\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/wave9/arb"
     },
     {
       "method": "POST",
       "route": "/api/wave9/normalization",
-      "status": 404,
+      "status": 400,
       "expectedStatus": 400,
       "allowedStatuses": [
         400
       ],
       "ok": true,
-      "latencyMs": 44,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"Not Found\",\"path\":\"/api/wave9/normalization\",\"method\":\"POST\"}"
+      "latencyMs": 32,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"At least one valid document payload is required.\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"At least one valid document payload is required.\",\"details\":null},\"contract"
     },
     {
       "method": "POST",
       "route": "/api/wave9/scoring",
-      "status": 404,
+      "status": 400,
       "expectedStatus": 400,
       "allowedStatuses": [
         400
       ],
       "ok": true,
-      "latencyMs": 74,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"Not Found\",\"path\":\"/api/wave9/scoring\",\"method\":\"POST\"}"
+      "latencyMs": 61,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Payload must be an object\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Payload must be an object\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/wave9/sco"
     },
     {
       "method": "POST",
       "route": "/api/wave9/preview",
-      "status": 404,
+      "status": 400,
       "expectedStatus": 400,
       "allowedStatuses": [
         200,
         400
       ],
       "ok": true,
-      "latencyMs": 48,
-      "contractValid": false,
-      "contractError": "missing boolean ok",
-      "bodyPreview": "{\"error\":\"Not Found\",\"path\":\"/api/wave9/preview\",\"method\":\"POST\"}"
+      "latencyMs": 41,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"blocks must be a non-empty array\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"blocks must be a non-empty array\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\""
     }
   ]
 }
