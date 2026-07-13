@@ -2565,6 +2565,19 @@ function isBusinessStartDatePrompt(text: string): boolean {
   return /\b(date\s+business\s+started|business\s+start\s+date|date\s+business)\b/.test(normalized);
 }
 
+function isWave13AnchorPrompt(text: string): boolean {
+  return (
+    isNamedInsuredPrompt(text) ||
+    isMailingAddressAnchorPrompt(text) ||
+    isPolicyNumberPrompt(text) ||
+    isBusinessStartDatePrompt(text) ||
+    isCityMicroPrompt(text) ||
+    isStateMicroPrompt(text) ||
+    isZipMicroPrompt(text) ||
+    isAgentNamePrompt(text)
+  );
+}
+
 function applyWave131AnchorCanonicalization(
   block: ExtractedBlock,
   suggestions: AcordSuggestion[],
@@ -5063,6 +5076,7 @@ function toSuggestions(
     }
 
     const wave131bFieldCueReviewRescue =
+      !isWave13AnchorPrompt(block.text) &&
       hasFieldCue(block.text) &&
       !headerAssessment.headerBlock &&
       !headerAssessment.nonField &&
@@ -5071,6 +5085,19 @@ function toSuggestions(
       dictionaryEvidence >= 0.28;
     if (wave131bFieldCueReviewRescue) {
       confidenceScore = Math.max(confidenceScore, 0.56);
+    }
+
+    const wave132NonAnchorConfidencePolicy =
+      !isWave13AnchorPrompt(block.text) &&
+      hasFieldCue(block.text) &&
+      !headerAssessment.headerBlock &&
+      !headerAssessment.nonField &&
+      confidenceScore >= 0.4 &&
+      anchorEvidence >= 0.44 &&
+      dictionaryEvidence >= 0.22 &&
+      (semanticEvidence >= 0.12 || heuristicEvidence >= 0.32);
+    if (wave132NonAnchorConfidencePolicy) {
+      confidenceScore = Math.max(confidenceScore, 0.605);
     }
 
     confidenceScore = clamp01(quantize(confidenceScore));
@@ -6470,17 +6497,42 @@ export async function mapBlocksToAcord(
             ...baseTopThresholds,
           }
         : undefined;
+      const nonAnchorPrompt = !isWave13AnchorPrompt(block.text);
       if (
         topThresholds &&
         topCandidate &&
+        nonAnchorPrompt &&
         hasFieldCue(block.text) &&
         !wave8HeaderAssessment.headerBlock &&
         !wave8HeaderAssessment.nonField
       ) {
-        const relaxedReview = Number(Math.max(topThresholds.rejected + 0.01, topThresholds.review - 0.05).toFixed(3));
-        const relaxedAccepted = Number(Math.max(relaxedReview + 0.01, topThresholds.accepted - 0.02).toFixed(3));
+        const relaxedReview = Number(Math.max(topThresholds.rejected + 0.01, topThresholds.review - 0.11).toFixed(3));
+        const relaxedAccepted = Number(Math.max(relaxedReview + 0.01, topThresholds.accepted - 0.065).toFixed(3));
         topThresholds.review = relaxedReview;
         topThresholds.accepted = relaxedAccepted;
+      }
+      if (
+        topThresholds &&
+        topCandidate &&
+        nonAnchorPrompt &&
+        !hasFieldCue(block.text) &&
+        !wave8HeaderAssessment.headerBlock &&
+        !wave8HeaderAssessment.nonField
+      ) {
+        const reviewCurve = Number(Math.max(topThresholds.rejected + 0.01, topThresholds.review - 0.03).toFixed(3));
+        const acceptedCurve = Number(Math.max(reviewCurve + 0.01, topThresholds.accepted - 0.02).toFixed(3));
+        topThresholds.review = reviewCurve;
+        topThresholds.accepted = acceptedCurve;
+      }
+      const wave132HeaderLikeNoiseDemotion =
+        Boolean(topCandidate) &&
+        nonAnchorPrompt &&
+        !hasFieldCue(block.text) &&
+        !wave8HeaderAssessment.nonField &&
+        (wave8HeaderAssessment.structureSuppressed || wave8HeaderAssessment.score >= 0.5) &&
+        Number(topCandidate?.confidenceScore || 0) < Math.max(0.58, Number((topThresholds?.review || 0.62) - 0.02));
+      if (wave132HeaderLikeNoiseDemotion) {
+        suggestions = [];
       }
       const topConfidence = Number(topCandidate?.confidenceScore || 0);
       const topConfidenceLevel = (topCandidate as any)?.confidenceLevel ||
@@ -6505,11 +6557,11 @@ export async function mapBlocksToAcord(
           ? "header_strict_gate_reject"
           : "no_candidates_after_reranking"
         : thresholdDecision === "accepted"
-          ? "wave13_1b_calibrated_accepted"
+          ? "wave13_2_threshold_profile_accepted"
           : thresholdDecision === "review"
-            ? "wave13_1b_calibrated_review"
+            ? "wave13_2_threshold_profile_review"
             : thresholdDecision === "rejected"
-              ? "wave13_1b_calibrated_rejected"
+              ? "wave13_2_threshold_profile_rejected"
               : topConfidenceLevel === "accepted"
           ? "meets_accepted_threshold"
           : topConfidenceLevel === "review"
@@ -6533,6 +6585,15 @@ export async function mapBlocksToAcord(
         !wave8HeaderAssessment.headerBlock &&
         topConfidence >= Math.max(0.5, Number((topThresholds?.review || 0.6) - 0.12));
       if (fieldCueSuppressionRescue) {
+        isSuppressed = false;
+      }
+      const wave132NonAnchorSuppressionRescue =
+        Boolean(topCandidate) &&
+        nonAnchorPrompt &&
+        thresholdDecision === "review" &&
+        !wave8HeaderAssessment.headerBlock &&
+        !wave8HeaderAssessment.nonField;
+      if (wave132NonAnchorSuppressionRescue) {
         isSuppressed = false;
       }
       if (wave9Suppression.suppress) {

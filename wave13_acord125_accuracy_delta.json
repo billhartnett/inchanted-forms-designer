@@ -1,10 +1,10 @@
 {
   "fixture": "sample-Acord-125.pdf",
-  "generatedAt": "2026-07-13T19:30:57.582Z",
+  "generatedAt": "2026-07-13T20:17:50.422Z",
   "expectations": {
     "source": "xfdl-dynamic",
     "path": "backend/api/tests/generated/acord125-xfdl-expectations.json",
-    "generatedAt": "2026-07-13T19:30:57.280Z",
+    "generatedAt": "2026-07-13T20:17:49.885Z",
     "count": 8
   },
   "goldStandard": {
@@ -21,15 +21,15 @@
   },
   "counts": {
     "backendMappings": 854,
-    "uiRenderedFields": 744,
-    "suppressedOrUnrenderedDelta": 110,
+    "uiRenderedFields": 745,
+    "suppressedOrUnrenderedDelta": 109,
     "expectationChecks": 8,
     "expectationMislabels": 0,
     "expectationTopNMisses": 0,
     "lowConfidenceAssignments": 626,
-    "rejectedByThreshold": 626,
+    "rejectedByThreshold": 625,
     "reviewBandAssignments": 207,
-    "rationaleDisagreements": 93,
+    "rationaleDisagreements": 137,
     "calibrationMismatches": 0,
     "semanticMisalignmentHighConfidence": 25,
     "invalidGeometry": 0,
@@ -160,38 +160,30 @@
     {
       "blockId": "p1-l5",
       "text": "UNDERWRITER OFF.",
-      "chosenCode": "Insurer_Underwriter_OfficeIdentifier",
-      "chosenLabel": "Insurer Underwriter Office Identifier",
-      "confidence": 0.46,
+      "confidence": 0,
       "thresholdDecision": "rejected",
-      "thresholdReason": "wave13_1b_calibrated_rejected"
+      "thresholdReason": "wave13_2_threshold_profile_rejected"
     },
     {
       "blockId": "p1-l6",
       "text": "CARRIER",
-      "chosenCode": "BuildersRiskInstallation_Transportation_CommonCarrierRiskPercent",
-      "chosenLabel": "Builders Risk Installation Transportation Common Carrier Risk Percent",
-      "confidence": 0.46,
+      "confidence": 0,
       "thresholdDecision": "rejected",
-      "thresholdReason": "wave13_1b_calibrated_rejected"
+      "thresholdReason": "wave13_2_threshold_profile_rejected"
     },
     {
       "blockId": "p1-l7",
       "text": "UNDERWRITER",
-      "chosenCode": "Insurer_Underwriter_ApprovedIndicator",
-      "chosenLabel": "Insurer Underwriter Approved Indicator",
-      "confidence": 0.46,
+      "confidence": 0,
       "thresholdDecision": "rejected",
-      "thresholdReason": "wave13_1b_calibrated_rejected"
+      "thresholdReason": "wave13_2_threshold_profile_rejected"
     },
     {
       "blockId": "p1-l10",
       "text": "POLICIES OR PROGRAM REQUESTED",
-      "chosenCode": "AirportFBOLineOfBusiness_ApplicantParticipateNATASafetyFirstProgramExplanation",
-      "chosenLabel": "Airport FBOLine Of Business Applicant Participate NATASafety First Program Explanation",
-      "confidence": 0.46,
+      "confidence": 0,
       "thresholdDecision": "rejected",
-      "thresholdReason": "wave13_1b_calibrated_rejected"
+      "thresholdReason": "wave13_2_threshold_profile_rejected"
     },
     {
       "blockId": "p1-l13",
@@ -200,7 +192,7 @@
       "chosenLabel": "Client Marketing Objective",
       "confidence": 0.46,
       "thresholdDecision": "rejected",
-      "thresholdReason": "wave13_1b_calibrated_rejected"
+      "thresholdReason": "wave13_2_threshold_profile_rejected"
     },
     {
       "blockId": "p1-l14",
@@ -209,7 +201,7 @@
       "chosenLabel": "Client Marketing Objective",
       "confidence": 0.46,
       "thresholdDecision": "rejected",
-      "thresholdReason": "wave13_1b_calibrated_rejected"
+      "thresholdReason": "wave13_2_threshold_profile_rejected"
     },
     {
       "blockId": "p1-l17",
@@ -218,7 +210,7 @@
       "chosenLabel": "Equipment Floater Information Application Operating Equipment Not Listed Explanation",
       "confidence": 0.46,
       "thresholdDecision": "rejected",
-      "thresholdReason": "wave13_1b_calibrated_rejected"
+      "thresholdReason": "wave13_2_threshold_profile_rejected"
     },
     {
       "blockId": "p1-l18",
@@ -227,7 +219,7 @@
       "chosenLabel": "Garage And Dealers Annual Gallons Pumped Count",
       "confidence": 0.46,
       "thresholdDecision": "rejected",
-      "thresholdReason": "wave13_1b_calibrated_rejected"
+      "thresholdReason": "wave13_2_threshold_profile_rejected"
     },
     {
       "blockId": "p1-l19",
@@ -236,7 +228,7 @@
       "chosenLabel": "Building Improvement Wiring Updated No Indicated",
       "confidence": 0.46,
       "thresholdDecision": "rejected",
-      "thresholdReason": "wave13_1b_calibrated_rejected"
+      "thresholdReason": "wave13_2_threshold_profile_rejected"
     },
     {
       "blockId": "p1-l20",
@@ -245,7 +237,7 @@
       "chosenLabel": "Client Marketing Objective",
       "confidence": 0.46,
       "thresholdDecision": "rejected",
-      "thresholdReason": "wave13_1b_calibrated_rejected"
+      "thresholdReason": "wave13_2_threshold_profile_rejected"
     }
   ],
   "sampleRationaleDisagreements": [
@@ -260,6 +252,38 @@
     {
       "blockId": "p1-l3",
       "text": "APPLICANT INFORMATION SECTION",
+      "confidence": 0,
+      "semanticSimilarity": 0,
+      "lexicalScore": 0,
+      "arbitrationEvidenceCount": 0
+    },
+    {
+      "blockId": "p1-l5",
+      "text": "UNDERWRITER OFF.",
+      "confidence": 0,
+      "semanticSimilarity": 0,
+      "lexicalScore": 0,
+      "arbitrationEvidenceCount": 0
+    },
+    {
+      "blockId": "p1-l6",
+      "text": "CARRIER",
+      "confidence": 0,
+      "semanticSimilarity": 0,
+      "lexicalScore": 0,
+      "arbitrationEvidenceCount": 0
+    },
+    {
+      "blockId": "p1-l7",
+      "text": "UNDERWRITER",
+      "confidence": 0,
+      "semanticSimilarity": 0,
+      "lexicalScore": 0,
+      "arbitrationEvidenceCount": 0
+    },
+    {
+      "blockId": "p1-l10",
+      "text": "POLICIES OR PROGRAM REQUESTED",
       "confidence": 0,
       "semanticSimilarity": 0,
       "lexicalScore": 0,
@@ -316,44 +340,6 @@
       "text": "PM",
       "chosenCode": "AdditionalInterest_Interest_AdditionalInsuredLessorOfLeasedEquipmentIndicator",
       "chosenLabel": "Additional Interest Interest Additional Insured Lessor Of Leased Equipment Indicator",
-      "confidence": 0.46,
-      "semanticSimilarity": 0,
-      "lexicalScore": 1,
-      "arbitrationEvidenceCount": 0
-    },
-    {
-      "blockId": "p1-l95",
-      "text": "City:",
-      "chosenCode": "NamedInsured_MailingAddress_CityName",
-      "chosenLabel": "Named Insured Mailing Address City Name Insured Name",
-      "confidence": 0.894,
-      "semanticSimilarity": 0,
-      "lexicalScore": 1,
-      "arbitrationEvidenceCount": 1
-    },
-    {
-      "blockId": "p1-l96",
-      "text": "State:",
-      "chosenCode": "NamedInsured_MailingAddress_StateOrProvinceCode",
-      "chosenLabel": "Named Insured Mailing Address State Or Province Code Insured Name",
-      "confidence": 0.895,
-      "semanticSimilarity": 0,
-      "lexicalScore": 1,
-      "arbitrationEvidenceCount": 1
-    },
-    {
-      "blockId": "p1-l125",
-      "text": "PARTNERSHIP",
-      "confidence": 0,
-      "semanticSimilarity": 0,
-      "lexicalScore": 0,
-      "arbitrationEvidenceCount": 0
-    },
-    {
-      "blockId": "p1-l141",
-      "text": "YR",
-      "chosenCode": "BusinessInformation_LocalNationals_PayrollAmount",
-      "chosenLabel": "Business Information Local Nationals Payroll Amount",
       "confidence": 0.46,
       "semanticSimilarity": 0,
       "lexicalScore": 1,
