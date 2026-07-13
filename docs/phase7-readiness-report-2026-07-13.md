@@ -48,17 +48,23 @@ Workflow now contains explicit controls for digest pin verification and staging 
 - production digest pin verification step.
 
 Execution status in this session:
-- Workflow file updated and validated locally.
-- Live sweep checks executed directly against staging and production URLs.
-- GitHub Actions dispatch from terminal was not available in this environment (GitHub CLI not installed), so workflow promotion was not triggered from this machine in-session.
+- Run #24 (run id 29222189836, commit 7217055) failed at staging digest-verify because ACA returned a tag-form image reference in the template path.
+- Fix applied in commit 085ece1 to resolve active digest parity from either digest-form or tag-form references.
+- Run #25 (run id 29222337619, commit 085ece1) completed successfully end-to-end:
+  - resolve-image: success (16s)
+  - deploy-staging: success (1m 55s)
+  - deploy-production: success (1m 35s)
+- Production environment approval was granted during run #25 and deployment proceeded.
+- Production digest verification passed with the updated parity logic.
+
+## Run Links
+- Failed attempt before fix: https://github.com/billhartnett/inchanted-forms-designer/actions/runs/29222189836
+- Successful promoted run: https://github.com/billhartnett/inchanted-forms-designer/actions/runs/29222337619
 
 ## Readiness Decision
-Phase 7 readiness: PASS (code and contract-validation readiness)
+Phase 7 readiness: PASS
 
 Rationale:
 - Phase 7 feature toggles are now explicitly enforced during deployment to prevent stale disabled runtime state.
 - Staging and production endpoint contract sweeps passed with zero transport/status failures.
-- Digest pin verification gates are now codified in workflow.
-
-Operational follow-through required:
-- Trigger Deploy ACA workflow from GitHub Actions UI (or an authenticated CLI host) to execute the staged gate/promotion path with the new checks active.
+- Digest pin verification gates are codified and validated in a successful production promotion run.
