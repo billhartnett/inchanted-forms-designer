@@ -113,6 +113,8 @@ jobs:
   deploy-staging:
     needs: resolve-image
     runs-on: ubuntu-latest
+    outputs:
+      staging_base_url: ${{ steps.staging_base.outputs.base_url }}
     permissions:
       contents: read
       id-token: write
@@ -503,6 +505,18 @@ jobs:
           curl -fsS -H "x-actor-role: viewer" -H "x-tenant-id: aca-deploy" "${BASE_URL}/api/gethealth"
           curl -fsS "${BASE_URL}/api/version"
 
+      - name: Capture staging base URL
+        id: staging_base
+        shell: bash
+        run: |
+          set -euo pipefail
+          FQDN="$(az containerapp show --name "${{ secrets.ACA_APP_NAME }}" --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" --query properties.configuration.ingress.fqdn -o tsv)"
+          if [[ -z "${FQDN}" ]]; then
+            echo "Unable to resolve staging ingress FQDN" >&2
+            exit 1
+          fi
+          echo "base_url=https://${FQDN}" >> "$GITHUB_OUTPUT"
+
       - name: Wave 8 contract stability sweep (staging)
         shell: bash
         run: |
@@ -547,8 +561,13 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          FQDN="$(az containerapp show --name "${{ secrets.ACA_APP_NAME }}" --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" --query properties.configuration.ingress.fqdn -o tsv)"
-          BASE_URL="https://${FQDN}" \
+          BASE_URL="${{ needs.deploy-staging.outputs.staging_base_url }}"
+          if [[ -z "${BASE_URL}" ]]; then
+            echo "Missing staging_base_url output from deploy-staging job" >&2
+            exit 1
+          fi
+
+          BASE_URL="${BASE_URL}" \
           WAVE8_ENV=staging \
           WAVE8_REPORT_PATH=backend_validation_report.staging.wave8.json \
           node backend/api/scripts/wave8_contract_stability_sweep.cjs
