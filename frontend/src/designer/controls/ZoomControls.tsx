@@ -2,10 +2,12 @@ function ZoomControls({
   zoomIn,
   zoomOut,
   reset,
+  fitToPage,
 }: {
   zoomIn: () => void;
   zoomOut: () => void;
   reset: () => void;
+  fitToPage: () => void;
 }) {
   return (
     <div
@@ -25,6 +27,7 @@ function ZoomControls({
     >
       <button onClick={zoomIn}>+</button>
       <button onClick={zoomOut}>−</button>
+      <button onClick={fitToPage}>Fit</button>
       <button onClick={reset}>Reset</button>
     </div>
   );

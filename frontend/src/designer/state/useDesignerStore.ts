@@ -812,40 +812,6 @@ export const useDesignerStore = create<DesignerState>((set, get) => ({
         ...pushHistory(state, before, after),
       };
     }),
-
-
-  moveFieldLayer: (id: string, direction: "forward" | "backward") =>
-    set((state) => {
-      const index = state.fields.findIndex((field) => field.id === id);
-      if (index === -1) {
-        return state;
-      }
-
-      const targetIndex = direction === "forward" ? index + 1 : index - 1;
-      if (targetIndex < 0 || targetIndex >= state.fields.length) {
-        return state;
-      }
-
-      const nextFields = [...state.fields];
-      const [moved] = nextFields.splice(index, 1);
-      nextFields.splice(targetIndex, 0, moved);
-
-      const before = snapshotFromState(state);
-      const after = cloneSnapshot({
-        fields: nextFields,
-        groups: state.groups,
-        selectedIds: state.selectedIds,
-        selectedGroupId: state.selectedGroupId,
-        pdfPages: state.pdfPages,
-        currentPdfPage: state.currentPdfPage,
-      });
-
-      return {
-        fields: nextFields,
-        ...pushHistory(state, before, after),
-      };
-    }),
-
   updateFields: (ids, patch, options) =>
     set((state) => {
       if (ids.length === 0) {

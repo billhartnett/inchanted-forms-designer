@@ -18,6 +18,7 @@ import {
   type DesignerSerializableState,
   useDesignerStore,
 } from "../../designer/state/useDesignerStore";
+import { runExportAcordXml } from "../../api/wave9Integration";
 
 const DESIGNER_STORAGE_KEY = "designerState";
 
@@ -45,28 +46,6 @@ type StageLike = {
   y: () => number;
   batchDraw: () => void;
 };
-
-const API_BASE_URL = (() => {
-  const configured = (import.meta.env.VITE_API_BASE_URL as string | undefined)?.trim();
-  if (configured) {
-    return configured;
-  }
-
-  if (typeof window === "undefined") {
-    return "";
-  }
-
-  const { hostname, protocol } = window.location;
-  if (hostname === "localhost" || hostname === "127.0.0.1") {
-    return `${protocol}//${hostname}:7071`;
-  }
-
-  return "";
-})();
-
-function apiUrl(path: string): string {
-  return API_BASE_URL ? `${API_BASE_URL}${path}` : path;
-}
 
 export function DesignerApp() {
   const [stage, setStage] = useState<StageLike | null>(null);
@@ -544,21 +523,10 @@ export function DesignerApp() {
       let source = "local";
 
       try {
-        const response = await fetch(apiUrl("/api/exportAcordXml"), {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            ...payload,
-          }),
+        const remote = await runExportAcordXml({
+          ...payload,
         });
-
-        if (response.ok) {
-          const remote = (await response.json()) as {
-            xml?: string;
-            includedMappings?: number;
-          };
+        if (remote) {
           if (typeof remote.xml === "string" && remote.xml) {
             xml = remote.xml;
             source = "backend";
@@ -907,6 +875,7 @@ export function DesignerApp() {
             zoomIn={zoomIn}
             zoomOut={zoomOut}
             resetZoom={resetZoom}
+            fitToPage={fitPdfPage}
             toast={toast}
             showPdfModal={showPdfModal}
             pdfModalMode={pdfModalMode}

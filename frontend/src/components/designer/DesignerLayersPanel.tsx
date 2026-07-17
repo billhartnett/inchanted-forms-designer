@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { resolveOntologySemanticMetadata, type OntologySemanticMetadata } from "../../../../shared/src/acord/acord-gating";
 import { useDesignerStore, type Field } from "../../state/designerStore";
 import { useSelectedField } from "../../state/fieldStore";
@@ -6,6 +6,15 @@ import { useSelectedField } from "../../state/fieldStore";
 type ClusterBucket = {
   label: string;
   fields: FieldInsight[];
+};
+
+type MultiInstanceObject = {
+  key: string;
+  label: string;
+  clusterLabel: string;
+  pageIndex: number | null;
+  fieldIds: string[];
+  examples: string;
 };
 
 type FieldInsight = {
@@ -141,6 +150,7 @@ function sortByConfidence(left: FieldInsight, right: FieldInsight) {
 }
 
 export function DesignerLayersPanel() {
+  const [dragTarget, setDragTarget] = useState<string | null>(null);
   const searchQuery = useDesignerStore((s) => s.fieldSearchQuery);
   const setFieldSearchQuery = useDesignerStore((s) => s.setFieldSearchQuery);
   const pdfPages = useDesignerStore((s) => s.pdfPages);
@@ -149,6 +159,8 @@ export function DesignerLayersPanel() {
   const fields = useDesignerStore((s) => s.fields);
   const selectedIds = useDesignerStore((s) => s.selectedIds);
   const selectField = useDesignerStore((s) => s.selectField);
+  const selectFields = useDesignerStore((s) => s.selectFields);
+  const updateField = useDesignerStore((s) => s.updateField);
   const selectedField = useSelectedField();
 
   const fieldInsights = useMemo(() => {
@@ -164,6 +176,7 @@ export function DesignerLayersPanel() {
         rawText,
         semanticLabel,
         acordLabel,
+        field.metadata?.categoryMode || "",
         ontology?.label || "",
         ontology?.cluster || "",
         family,
@@ -236,26 +249,37 @@ export function DesignerLayersPanel() {
   }, [clusterBuckets]);
 
   const multiInstanceObjects = useMemo(() => {
-    const lookups = [
-      { key: "Locations", label: "locations" },
-      { key: "Contact Information", label: "individuals" },
-      { key: "Prior Insurance", label: "prior carriers" },
-      { key: "Loss History", label: "losses" },
-      { key: "Coverage Questions", label: "coverage items" },
-    ];
+    const objects: MultiInstanceObject[] = [];
 
-    return lookups
-      .map(({ key, label }) => {
-        const bucket = clusterBuckets.find((item) => item.label === key);
-        if (!bucket || bucket.fields.length === 0) return null;
-        const examples = bucket.fields.slice(0, 3).map((item) => item.label).join(" • ");
-        return {
-          label,
-          count: bucket.fields.length,
-          examples,
-        };
-      })
-      .filter((item): item is { label: string; count: number; examples: string } => Boolean(item));
+    for (const bucket of clusterBuckets) {
+      const byPage = new Map<number | null, FieldInsight[]>();
+      for (const insight of bucket.fields) {
+        const pageKey = insight.pageIndex ?? null;
+        const list = byPage.get(pageKey) || [];
+        list.push(insight);
+        byPage.set(pageKey, list);
+      }
+
+      if (byPage.size <= 1) {
+        continue;
+      }
+
+      for (const [pageIndex, list] of byPage.entries()) {
+        const pageLabel = pageIndex !== null ? `Page ${pageIndex + 1}` : "Global";
+        objects.push({
+          key: `${bucket.label}:${pageIndex ?? "global"}`,
+          label: `${bucket.label} - ${pageLabel}`,
+          clusterLabel: bucket.label,
+          pageIndex,
+          fieldIds: list.map((item) => item.field.id),
+          examples: list.slice(0, 3).map((item) => item.label).join(" • "),
+        });
+      }
+    }
+
+    return objects
+      .sort((left, right) => right.fieldIds.length - left.fieldIds.length || left.label.localeCompare(right.label))
+      .slice(0, 10);
   }, [clusterBuckets]);
 
   const focusField = (fieldId: string) => {
@@ -269,9 +293,119 @@ export function DesignerLayersPanel() {
     selectField(fieldId, false);
   };
 
-  const filterToCluster = (clusterLabel: string, fieldId: string) => {
+  const filterToCluster = (clusterLabel: string, fieldId: string, fieldIds?: string[]) => {
     setFieldSearchQuery(clusterLabel);
+    if (fieldIds && fieldIds.length > 0) {
+      selectFields(fieldIds);
+    }
     focusField(fieldId);
+  };
+
+  const focusGrouping = (bucket: ClusterBucket) => {
+    const ids = bucket.fields.map((item) => item.field.id);
+    if (ids.length === 0) return;
+    setFieldSearchQuery(bucket.label);
+    selectFields(ids);
+    focusField(ids[0]);
+  };
+
+  const focusInstance = (instance: MultiInstanceObject) => {
+    setFieldSearchQuery(instance.clusterLabel);
+    selectFields(instance.fieldIds);
+    if (instance.pageIndex !== null && instance.pageIndex >= 0 && pdfPages.length > 0) {
+      setCurrentPdfPage(instance.pageIndex);
+    }
+    if (instance.fieldIds.length > 0) {
+      focusField(instance.fieldIds[0]);
+    }
+  };
+
+  const readDraggedIds = (event: React.DragEvent<HTMLElement>): string[] => {
+    const payload = event.dataTransfer.getData("application/x-designer-field-ids");
+    if (payload) {
+      try {
+        const parsed = JSON.parse(payload);
+        if (Array.isArray(parsed)) {
+          const ids = parsed.filter((item): item is string => typeof item === "string");
+          if (ids.length > 0) {
+            return ids;
+          }
+        }
+      } catch {
+        // ignore malformed payload and fall back to selected ids
+      }
+    }
+
+    if (selectedIds.length > 0) {
+      return selectedIds;
+    }
+
+    const plain = event.dataTransfer.getData("text/plain").trim();
+    if (plain) {
+      return [plain];
+    }
+
+    return [];
+  };
+
+  const onFieldDragStart = (event: React.DragEvent<HTMLElement>, fieldId: string) => {
+    const ids = selectedIds.includes(fieldId) ? selectedIds : [fieldId];
+    event.dataTransfer.effectAllowed = "move";
+    event.dataTransfer.setData("application/x-designer-field-ids", JSON.stringify(ids));
+    event.dataTransfer.setData("text/plain", fieldId);
+  };
+
+  const onDropToCluster = (event: React.DragEvent<HTMLElement>, bucket: ClusterBucket) => {
+    event.preventDefault();
+    const ids = readDraggedIds(event);
+    setDragTarget(null);
+    if (ids.length === 0) return;
+
+    for (let index = 0; index < ids.length; index += 1) {
+      const id = ids[index];
+      const field = fields.find((candidate) => candidate.id === id);
+      if (!field?.metadata) continue;
+      updateField(
+        id,
+        {
+          metadata: {
+            ...field.metadata,
+            categoryMode: `cluster:${bucket.label}`,
+          },
+        },
+        { recordHistory: index === 0 },
+      );
+    }
+
+    filterToCluster(bucket.label, ids[0], ids);
+  };
+
+  const onDropToInstance = (event: React.DragEvent<HTMLElement>, instance: MultiInstanceObject) => {
+    event.preventDefault();
+    const ids = readDraggedIds(event);
+    setDragTarget(null);
+    if (ids.length === 0) return;
+
+    for (let index = 0; index < ids.length; index += 1) {
+      const id = ids[index];
+      const field = fields.find((candidate) => candidate.id === id);
+      if (!field) continue;
+
+      const patch: Partial<Field> = {
+        pageIndex: instance.pageIndex,
+      };
+
+      if (field.metadata) {
+        patch.metadata = {
+          ...field.metadata,
+          categoryMode: `instance:${instance.key}`,
+        };
+      }
+
+      updateField(id, patch, { recordHistory: index === 0 });
+    }
+
+    focusInstance(instance);
   };
 
   return (
@@ -300,7 +434,7 @@ export function DesignerLayersPanel() {
         <input
           type="text"
           value={searchQuery}
-          onChange={(event) => setSearchQuery(event.target.value)}
+          onChange={(event) => setFieldSearchQuery(event.target.value)}
           placeholder="Search fields, clusters, families, aliases, or ACORD labels"
           style={{
             width: "100%",
@@ -354,15 +488,22 @@ export function DesignerLayersPanel() {
             <button
               key={bucket.label}
               type="button"
-              onClick={() => filterToCluster(bucket.label, bucket.fields[0].field.id)}
+              onClick={() => filterToCluster(bucket.label, bucket.fields[0].field.id, bucket.fields.map((item) => item.field.id))}
+              onDragOver={(event) => {
+                event.preventDefault();
+                setDragTarget(`cluster:${bucket.label}`);
+              }}
+              onDragLeave={() => setDragTarget(null)}
+              onDrop={(event) => onDropToCluster(event, bucket)}
               style={{
                 textAlign: "left",
                 borderRadius: 10,
-                border: "1px solid #dbe4ee",
-                background: "#ffffff",
+                border: dragTarget === `cluster:${bucket.label}` ? "1px solid #0284c7" : "1px solid #dbe4ee",
+                background: dragTarget === `cluster:${bucket.label}` ? "#e0f2fe" : "#ffffff",
                 padding: "0.7rem 0.75rem",
                 display: "grid",
                 gap: 4,
+                cursor: "pointer",
               }}
             >
               <div style={{ display: "flex", justifyContent: "space-between", gap: 8 }}>
@@ -410,6 +551,23 @@ export function DesignerLayersPanel() {
                 <span style={{ fontWeight: 700, color: "#0f172a" }}>{bucket.label}</span>
                 <span style={{ fontSize: 12, color: "#64748b" }}>{bucket.fields.length} fields</span>
               </div>
+              <button
+                type="button"
+                onClick={() => focusGrouping(bucket)}
+                style={{
+                  justifySelf: "start",
+                  border: "1px solid #cbd5e1",
+                  borderRadius: 999,
+                  background: "#ffffff",
+                  color: "#334155",
+                  padding: "0.2rem 0.55rem",
+                  fontSize: 11,
+                  fontWeight: 700,
+                  cursor: "pointer",
+                }}
+              >
+                Select all in grouping
+              </button>
               <div style={{ fontSize: 12, color: "#334155" }}>
                 Pages: {Array.from(new Set(bucket.fields.map((item) => item.pageIndex ?? 0))).filter((page) => page >= 0).length || 0}
               </div>
@@ -419,6 +577,8 @@ export function DesignerLayersPanel() {
                     key={`suggested-${bucket.label}-${item.field.id}`}
                     type="button"
                     onClick={() => filterToCluster(bucket.label, item.field.id)}
+                    draggable
+                    onDragStart={(event) => onFieldDragStart(event, item.field.id)}
                     style={{
                       border: "1px solid #cbd5e1",
                       borderRadius: 999,
@@ -457,23 +617,37 @@ export function DesignerLayersPanel() {
           </div>
           <div style={{ display: "grid", gap: 8 }}>
             {multiInstanceObjects.map((item) => (
-              <div
+              <button
                 key={item.label}
+                type="button"
+                onClick={() => focusInstance(item)}
+                onDragOver={(event) => {
+                  event.preventDefault();
+                  setDragTarget(`instance:${item.key}`);
+                }}
+                onDragLeave={() => setDragTarget(null)}
+                onDrop={(event) => onDropToInstance(event, item)}
                 style={{
-                  border: "1px solid #dbe4ee",
+                  border:
+                    dragTarget === `instance:${item.key}`
+                      ? "1px solid #0f766e"
+                      : "1px solid #dbe4ee",
                   borderRadius: 10,
-                  background: "#ffffff",
+                  background:
+                    dragTarget === `instance:${item.key}` ? "#ccfbf1" : "#ffffff",
                   padding: 10,
                   display: "grid",
                   gap: 4,
+                  textAlign: "left",
+                  cursor: "pointer",
                 }}
               >
                 <div style={{ display: "flex", justifyContent: "space-between", gap: 8 }}>
                   <span style={{ fontWeight: 700, color: "#0f172a" }}>{item.label}</span>
-                  <span style={{ fontSize: 12, color: "#334155", fontWeight: 700 }}>{item.count}</span>
+                  <span style={{ fontSize: 12, color: "#334155", fontWeight: 700 }}>{item.fieldIds.length}</span>
                 </div>
                 <div style={{ fontSize: 12, color: "#64748b" }}>{item.examples}</div>
-              </div>
+              </button>
             ))}
           </div>
         </section>

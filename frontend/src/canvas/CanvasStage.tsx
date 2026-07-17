@@ -78,30 +78,6 @@ export function CanvasStage({
           setIsMiddlePanning(true);
         }
       }}
-      onWheel={(event) => {
-        const stage = stageRef.current;
-        if (!stage) return;
-
-        event.evt.preventDefault();
-        const oldScale = stage.scaleX() || 1;
-        const pointer = stage.getPointerPosition();
-        if (!pointer) return;
-
-        const zoomFactor = event.evt.deltaY > 0 ? 1 / 1.06 : 1.06;
-        const nextScale = Math.min(4, Math.max(0.25, oldScale * zoomFactor));
-
-        const pointTo = {
-          x: (pointer.x - stage.x()) / oldScale,
-          y: (pointer.y - stage.y()) / oldScale,
-        };
-
-        stage.scale({ x: nextScale, y: nextScale });
-        stage.position({
-          x: pointer.x - pointTo.x * nextScale,
-          y: pointer.y - pointTo.y * nextScale,
-        });
-        stage.batchDraw();
-      }}
       style={{
         background: "#fff",
         cursor: isSpacePanning || isMiddlePanning ? "grab" : "default",

@@ -560,19 +560,6 @@ export function DesignerToolbar({
           ? `PDF loaded • page ${currentPdfPage + 1} of ${pdfPagesCount}`
           : "No PDF loaded"}
       </span>
-      {pdfPagesCount > 0 && (
-        <>
-          <button onClick={() => setCurrentPdfPage(currentPdfPage - 1)} disabled={currentPdfPage <= 0}>
-            Prev
-          </button>
-          <button
-            onClick={() => setCurrentPdfPage(currentPdfPage + 1)}
-            disabled={currentPdfPage >= pdfPagesCount - 1}
-          >
-            Next
-          </button>
-        </>
-      )}
     </div>
   );
 }

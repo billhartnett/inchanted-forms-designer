@@ -59,6 +59,7 @@ type DesignerCanvasProps = {
   zoomIn: () => void;
   zoomOut: () => void;
   resetZoom: () => void;
+  fitToPage: () => void;
   toast: DesignerToast | null;
   showPdfModal: boolean;
   pdfModalMode: "import" | "map-only";
@@ -80,6 +81,7 @@ export function DesignerCanvas({
   zoomIn,
   zoomOut,
   resetZoom,
+  fitToPage,
   toast,
   showPdfModal,
   pdfModalMode,
@@ -95,6 +97,7 @@ export function DesignerCanvas({
   const routedClusters = useMappingStore((s) => s.routedClusters);
   const pdfPages = useDesignerStore((s) => s.pdfPages);
   const currentPdfPage = useDesignerStore((s) => s.currentPdfPage);
+  const fieldSearchQuery = useDesignerStore((s) => s.fieldSearchQuery);
   const showGrid = useDesignerStore((s) => s.showGrid);
   const draftCanvasFields = useDesignerStore((s) => s.draftCanvasFields);
   const draftSelectedIds = useDesignerStore((s) => s.draftSelectedIds);
@@ -102,11 +105,33 @@ export function DesignerCanvas({
   const selectField = useDesignerStore((s) => s.selectField);
   const selectedFields = useSelectedFields();
 
+  const normalizedSearchQuery = fieldSearchQuery.trim().toLowerCase();
+
   const visibleFields = fields.filter((field) => {
     if (field.metadata?.hidden) return false;
     if (pdfPages.length === 0) return true;
     if (field.pageIndex === null || field.pageIndex === undefined) return true;
-    return field.pageIndex === currentPdfPage;
+    if (field.pageIndex !== currentPdfPage) return false;
+
+    if (!normalizedSearchQuery) return true;
+
+    const searchableText = [
+      field.metadata?.acordCode || "",
+      field.metadata?.acordLabel || "",
+      field.metadata?.semanticLabel || "",
+      field.metadata?.categoryMode || "",
+      field.type,
+      field.type === "text" ? field.text || "" : "",
+      field.type === "checkbox" || field.type === "radio" ? field.label || "" : "",
+      field.type === "dropdown" ? field.placeholder || "" : "",
+      field.type === "date" ? field.placeholder || field.value || "" : "",
+      field.type === "numeric" ? field.placeholder || "" : "",
+      field.type === "signature" ? field.placeholder || "" : "",
+    ]
+      .join(" ")
+      .toLowerCase();
+
+    return searchableText.includes(normalizedSearchQuery);
   });
 
   const visibleDraftFields = draftCanvasFields.filter((field) => {
@@ -434,7 +459,7 @@ export function DesignerCanvas({
         />
       </div>
 
-      <ZoomControls zoomIn={zoomIn} zoomOut={zoomOut} reset={resetZoom} />
+      <ZoomControls zoomIn={zoomIn} zoomOut={zoomOut} reset={resetZoom} fitToPage={fitToPage} />
 
       {toast && (
         <div
