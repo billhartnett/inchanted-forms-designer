@@ -610,7 +610,7 @@ export function PropertiesPanel({ selectedField, showAcordMappingSection = true 
               single.type === "numeric" ||
               single.type === "signature"
                 ? "Displayed hint for this field"
-                : "Not applicable for this field type"
+                : "Not applicable to this field type"
             }
           />
         </label>
