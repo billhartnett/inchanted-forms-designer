@@ -526,7 +526,10 @@ export type FieldMapping = {
   };
   fieldType?: SemanticFieldType;
   semanticLabel?: string;
-  fallbackReason?: "role_context_reject";
+  fallbackReason?:
+    | "confidence_only_fallback"
+    | "synthetic_confidence_fallback"
+    | "role_context_reject";
   rationale?: AcordMappingRationale;
 };
 
