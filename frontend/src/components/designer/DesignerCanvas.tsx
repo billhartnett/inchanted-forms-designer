@@ -116,7 +116,7 @@ export function DesignerCanvas({
   });
 
   const visibleSemanticClusters = useMemo(() => {
-    const topRoutedCluster = Object.entries(routedClusters)
+    const topRoutedCluster = Object.entries(routedClusters || {})
       .sort((left, right) => right[1] - left[1] || left[0].localeCompare(right[0]))[0]?.[0];
 
     const byGroup = new Map<
