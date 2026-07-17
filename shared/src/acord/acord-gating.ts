@@ -172,7 +172,16 @@ function seedOntologyIndexes(): void {
     return;
   }
 
-  for (const [className, classEntry] of Object.entries(ACORD_ONTOLOGY_REGISTRY.classes)) {
+  const classRegistry =
+    ACORD_ONTOLOGY_REGISTRY &&
+    typeof ACORD_ONTOLOGY_REGISTRY === "object" &&
+    "classes" in ACORD_ONTOLOGY_REGISTRY &&
+    ACORD_ONTOLOGY_REGISTRY.classes &&
+    typeof ACORD_ONTOLOGY_REGISTRY.classes === "object"
+      ? ACORD_ONTOLOGY_REGISTRY.classes
+      : {};
+
+  for (const [className, classEntry] of Object.entries(classRegistry)) {
     const classFamily = CLASS_TO_FAMILY[className] || "acord";
     for (const property of classEntry.properties) {
       for (const evidence of property.evidence || []) {
