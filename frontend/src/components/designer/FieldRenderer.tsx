@@ -8,15 +8,20 @@ export type FieldRendererProps = {
 
 export function FieldRenderer({ field, showSemanticLabels = true }: FieldRendererProps) {
   const { width, height, metadata } = field;
-  const wave8 = metadata?.wave8;
   const resolvedLabel =
-    metadata?.acordLabel?.trim() || metadata?.acordCode?.trim() || field.type;
+    metadata?.acordLabel?.trim() ||
+    metadata?.semanticLabel?.trim() ||
+    metadata?.acordCode?.trim() ||
+    (field.type === "checkbox" || field.type === "radio" ? (field as any).label : "") ||
+    (field.type === "text" ? (field as any).text : "") ||
+    field.type;
   const semanticLabel = metadata?.semanticLabel?.trim();
   const confidence = metadata?.confidenceScore ?? 0.5;
   const categoryMode = metadata?.categoryMode;
   const checkboxState = metadata?.checkboxState;
   const signatureState = metadata?.signatureState;
   const kvpData = metadata?.kvpData;
+  const textField = field.type === "text" ? (field as any) : null;
 
   // Color coding: confidence (main) + categoryMode (secondary)
   let strokeColor = "#64748b"; // default gray
@@ -41,8 +46,8 @@ export function FieldRenderer({ field, showSemanticLabels = true }: FieldRendere
   }
 
   const checkboxLabel =
-    wave8?.pairedLabel?.text ||
-    wave8?.selectionMarkAssociations?.[0]?.labelText ||
+    metadata?.acordLabel?.trim() ||
+    metadata?.semanticLabel?.trim() ||
     (field.type === "checkbox" ? (field as any).label : undefined);
 
   return (
@@ -136,6 +141,10 @@ export function FieldRenderer({ field, showSemanticLabels = true }: FieldRendere
           }
           fontSize={12}
           fontFamily="Geist Variable"
+          fontStyle={textField?.fontStyle || "normal"}
+          lineHeight={textField?.lineHeight || 1.2}
+          letterSpacing={textField?.letterSpacing || 0}
+          textDecoration={textField?.underline ? "underline" : undefined}
           fill="#0f172a"
           verticalAlign={kvpData ? "top" : "middle"}
           ellipsis

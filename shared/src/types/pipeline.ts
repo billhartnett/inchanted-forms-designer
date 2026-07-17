@@ -145,6 +145,9 @@ export type FieldMetadata = {
   source: FieldMetadataSource;
   extractionBlockId?: string;
   semanticLabel?: string;
+  tooltip?: string;
+  locked?: boolean;
+  hidden?: boolean;
   checkboxState?: CheckboxState;
   signatureState?: SignatureState;
   kvpData?: KvpFieldData;
@@ -291,6 +294,10 @@ export type TextField = {
   fontFamily: string;
   textAlign: "left" | "center" | "right";
   color: string;
+  fontStyle?: "normal" | "bold" | "italic" | "bold italic";
+  underline?: boolean;
+  lineHeight?: number;
+  letterSpacing?: number;
   stroke: string;
   strokeWidth: number;
   groupId?: string | null;
@@ -519,7 +526,7 @@ export type FieldMapping = {
   };
   fieldType?: SemanticFieldType;
   semanticLabel?: string;
-  fallbackReason?: "confidence_only_fallback" | "synthetic_confidence_fallback";
+  fallbackReason?: "role_context_reject";
   rationale?: AcordMappingRationale;
 };
 

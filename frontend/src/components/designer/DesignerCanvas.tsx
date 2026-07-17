@@ -9,8 +9,32 @@ import { useDesignerStore, type Field } from "../../state/designerStore";
 import { FieldControls } from "./FieldControls";
 import FieldRenderer from "./FieldRenderer";
 import PdfBackground from "./PdfBackground";
+import { resolveOntologySemanticMetadata } from "../../../../shared/src/acord/acord-gating";
+import { useMappingStore } from "../../state/mappingStore";
 
 const GRID_SIZE = 20;
+
+function deriveOntologyClusterLabel(field: Field, routedClusterFallback?: string): string {
+  const acordCode = String(field.metadata?.acordCode || "").trim();
+  if (acordCode.length > 0) {
+    const metadata = resolveOntologySemanticMetadata(acordCode);
+    if (metadata.cluster.trim().length > 0) {
+      return metadata.cluster;
+    }
+  }
+
+  const derived = (
+    field.metadata?.semanticLabel?.trim() ||
+    field.metadata?.categoryMode?.trim() ||
+    "general"
+  );
+
+  if (derived === "general" && routedClusterFallback) {
+    return routedClusterFallback;
+  }
+
+  return derived;
+}
 
 type StageLike = {
   scaleX: () => number;
@@ -68,6 +92,7 @@ export function DesignerCanvas({
   const fieldGroupRefs = useRef<Map<string, any>>(new Map());
 
   const fields = useDesignerStore((s) => s.fields);
+  const routedClusters = useMappingStore((s) => s.routedClusters);
   const pdfPages = useDesignerStore((s) => s.pdfPages);
   const currentPdfPage = useDesignerStore((s) => s.currentPdfPage);
   const showGrid = useDesignerStore((s) => s.showGrid);
@@ -78,6 +103,7 @@ export function DesignerCanvas({
   const selectedFields = useSelectedFields();
 
   const visibleFields = fields.filter((field) => {
+    if (field.metadata?.hidden) return false;
     if (pdfPages.length === 0) return true;
     if (field.pageIndex === null || field.pageIndex === undefined) return true;
     return field.pageIndex === currentPdfPage;
@@ -89,7 +115,10 @@ export function DesignerCanvas({
     return field.pageIndex === currentPdfPage;
   });
 
-  const visibleWave8Groups = useMemo(() => {
+  const visibleSemanticClusters = useMemo(() => {
+    const topRoutedCluster = Object.entries(routedClusters)
+      .sort((left, right) => right[1] - left[1] || left[0].localeCompare(right[0]))[0]?.[0];
+
     const byGroup = new Map<
       string,
       {
@@ -103,10 +132,7 @@ export function DesignerCanvas({
 
     for (const field of visibleFields) {
       if (!field.groupId) continue;
-      const wave8 = field.metadata?.wave8;
-      const label =
-        wave8?.groupLabel ||
-        (field.metadata?.semanticLabel || "general").toLowerCase();
+      const label = deriveOntologyClusterLabel(field, topRoutedCluster);
       const x = field.x;
       const y = field.y;
       const maxX = field.x + Math.max(1, field.width);
@@ -133,7 +159,7 @@ export function DesignerCanvas({
       width: Math.max(24, box.maxX - box.x + 12),
       height: Math.max(24, box.maxY - box.y + 26),
     }));
-  }, [visibleFields]);
+  }, [routedClusters, visibleFields]);
 
   const gridLines = useMemo(() => {
     const lines: Array<{ key: string; points: number[] }> = [];
@@ -181,6 +207,7 @@ export function DesignerCanvas({
     if (!transformerRef.current) return;
 
     const nodeList = selectedFields
+      .filter((field) => !field.metadata?.locked)
       .map((field) => fieldGroupRefs.current.get(field.id))
       .filter((node) => !!node);
 
@@ -241,8 +268,8 @@ export function DesignerCanvas({
           overlayChildren={
             visibleFields.length > 0 || selectedFields.length > 0 || visibleDraftFields.length > 0 ? (
               <>
-                {visibleWave8Groups.map((group) => (
-                  <KonvaGroup key={`wave8-group-${group.key}`} listening={false}>
+                {visibleSemanticClusters.map((group) => (
+                  <KonvaGroup key={`semantic-group-${group.key}`} listening={false}>
                     <KonvaRect
                       x={group.x}
                       y={group.y}
@@ -275,7 +302,7 @@ export function DesignerCanvas({
                     y={field.y}
                     rotation={field.rotation ?? 0}
                     opacity={field.opacity ?? 1}
-                    draggable
+                    draggable={!field.metadata?.locked}
                     listening
                     onClick={(event) => {
                       event.cancelBubble = true;
@@ -286,6 +313,9 @@ export function DesignerCanvas({
                       selectField(field.id, Boolean(event.evt.shiftKey));
                     }}
                     onDragEnd={(event) => {
+                      if (field.metadata?.locked) {
+                        return;
+                      }
                       // Update field position after drag
                       const updateField = useDesignerStore.getState().updateField;
                       if (updateField) {
@@ -368,6 +398,12 @@ export function DesignerCanvas({
                     const node = e.target;
                     const scaleX = node.scaleX();
                     const scaleY = node.scaleY();
+
+                    if (selectedFields[0]?.metadata?.locked) {
+                      node.scaleX(1);
+                      node.scaleY(1);
+                      return;
+                    }
                     
                     // Reset scale to 1 so the shape reports correct position
                     node.scaleX(1);

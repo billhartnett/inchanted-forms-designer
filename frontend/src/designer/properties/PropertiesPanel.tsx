@@ -8,6 +8,11 @@ import {
   useDesignerStore,
 } from "../state/useDesignerStore";
 import type { SemanticFieldType } from "../../../../shared/src/types";
+import {
+  runAcordCodeLookup,
+  runAcordSearch,
+  runAcordSuggest,
+} from "../../api/wave9Integration";
 
 function num(value: number, fallback = 0) {
   return Number.isFinite(value) ? value : fallback;
@@ -56,34 +61,6 @@ type AcordSuggestion = {
   source: "ai";
 };
 
-const API_BASE_URL = (() => {
-  const configured = (
-    import.meta.env.VITE_API_BASE_URL as string | undefined
-  )?.trim();
-  if (configured) {
-    return configured;
-  }
-
-  if (typeof window === "undefined") {
-    return "";
-  }
-
-  const { hostname, protocol } = window.location;
-  if (hostname === "localhost" || hostname === "127.0.0.1") {
-    return `${protocol}//${hostname}:7071`;
-  }
-
-  return "";
-})();
-
-function apiUrl(path: string): string {
-  if (!API_BASE_URL) {
-    return path;
-  }
-
-  return `${API_BASE_URL}${path}`;
-}
-
 function toMetadataFieldType(type: Field["type"]): SemanticFieldType {
   if (type === "rect") {
     return "text";
@@ -115,36 +92,19 @@ function getFieldMetadata(field: Field): FieldMetadata {
       metadata?.source === "ai" || metadata?.source === "ocr"
         ? metadata.source
         : "manual",
+    tooltip: typeof metadata?.tooltip === "string" ? metadata.tooltip : "",
+    locked: Boolean(metadata?.locked),
+    hidden: Boolean(metadata?.hidden),
   };
-}
-
-async function fetchJson<T>(url: string, init?: RequestInit): Promise<T> {
-  const response = await fetch(url, init);
-  if (!response.ok) {
-    let message = `Request failed: ${response.status}`;
-    try {
-      const payload = (await response.json()) as { error?: string };
-      if (payload?.error) {
-        message = payload.error;
-      }
-    } catch {
-      // Ignore non-JSON errors.
-    }
-
-    throw new Error(message);
-  }
-
-  return (await response.json()) as T;
 }
 
 async function searchAcordFields(
   query: string,
   limit = 8,
 ): Promise<AcordDictionaryField[]> {
-  const params = new URLSearchParams({ query, limit: String(limit) });
-  const payload = await fetchJson<{ items?: AcordDictionaryField[] }>(
-    apiUrl(`/api/acord/search?${params.toString()}`),
-  );
+  const payload = (await runAcordSearch(query, limit)) as {
+    items?: AcordDictionaryField[];
+  };
   return Array.isArray(payload.items) ? payload.items : [];
 }
 
@@ -156,22 +116,14 @@ async function lookupAcordFieldByCode(
     return null;
   }
 
-  return fetchJson<AcordDictionaryField>(
-    apiUrl(`/api/acord/code/${encodeURIComponent(code)}`),
-  );
+  return (await runAcordCodeLookup(code)) as AcordDictionaryField;
 }
 
 async function requestAcordSuggestion(
   text: string,
   context?: string,
 ): Promise<AcordSuggestion> {
-  return fetchJson<AcordSuggestion>(apiUrl("/api/acord/suggest"), {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ text, context }),
-  });
+  return (await runAcordSuggest({ text, context })) as AcordSuggestion;
 }
 
 function getFieldPromptText(field: Field) {
@@ -200,15 +152,20 @@ function getConfidenceStatus(confidenceScore: number) {
 
 type PropertiesPanelProps = {
   selectedField?: Field | null;
+  showAcordMappingSection?: boolean;
 };
 
-export function PropertiesPanel({ selectedField }: PropertiesPanelProps) {
+export function PropertiesPanel({ selectedField, showAcordMappingSection = true }: PropertiesPanelProps) {
   const fields = useDesignerStore((s) => s.fields);
   const selectedIds = useDesignerStore((s) => s.selectedIds);
   const selectedGroupId = useDesignerStore((s) => s.selectedGroupId);
   const updateField = useDesignerStore((s) => s.updateField);
   const updateFields = useDesignerStore((s) => s.updateFields);
   const moveFieldsBy = useDesignerStore((s) => s.moveFieldsBy);
+  const moveFieldLayer = useDesignerStore((s) => s.moveFieldLayer);
+  const addField = useDesignerStore((s) => s.addField);
+  const setSnapToGrid = useDesignerStore((s) => s.setSnapToGrid);
+  const snapToGrid = useDesignerStore((s) => s.snapToGrid);
   const deleteSelectedField = useDesignerStore((s) => s.deleteSelectedField);
   const [acordQuery, setAcordQuery] = useState("");
   const [matchingAcordFields, setMatchingAcordFields] = useState<
@@ -271,7 +228,7 @@ export function PropertiesPanel({ selectedField }: PropertiesPanelProps) {
     };
   }, [acordQuery]);
 
-  if (selected.length === 0) {
+  if (!selectedSingle && selected.length === 0) {
     return (
       <div style={{ padding: 12 }}>
         <h3 style={{ marginTop: 0 }}>Properties</h3>
@@ -373,7 +330,7 @@ export function PropertiesPanel({ selectedField }: PropertiesPanelProps) {
 
       {hasFill(single) && (
         <label>
-          Fill:
+          Background Color:
           <input
             type="color"
             value={single.fill || "#ffffff"}
@@ -396,11 +353,118 @@ export function PropertiesPanel({ selectedField }: PropertiesPanelProps) {
     const updateMetadata = (patch: Partial<FieldMetadata>) => {
       update({
         metadata: {
+          ...(single.metadata || {}),
           ...metadata,
           ...patch,
           fieldType: toMetadataFieldType(single.type),
         },
       });
+    };
+
+    const setDefaultValue = (value: string) => {
+      if (single.type === "text") {
+        update({ text: value });
+        return;
+      }
+
+      if (single.type === "dropdown") {
+        update({ selectedOption: value } as Partial<DropdownField>);
+        return;
+      }
+
+      if (single.type === "date") {
+        update({ value } as Partial<Field>);
+        return;
+      }
+
+      if (single.type === "numeric") {
+        if (!value.trim()) {
+          update({ value: null } as Partial<NumericField>);
+          return;
+        }
+
+        const parsed = Number(value);
+        update({
+          value: Number.isFinite(parsed) ? parsed : null,
+        } as Partial<NumericField>);
+        return;
+      }
+
+      if (single.type === "checkbox" || single.type === "radio") {
+        const normalized = value.trim().toLowerCase();
+        const checked = normalized === "true" || normalized === "1" || normalized === "yes";
+        update({ checked } as Partial<Field>);
+      }
+    };
+
+    const defaultValue = (() => {
+      if (single.type === "text") return single.text || "";
+      if (single.type === "dropdown") return single.selectedOption || "";
+      if (single.type === "date") return single.value || "";
+      if (single.type === "numeric") return single.value == null ? "" : String(single.value);
+      if (single.type === "checkbox" || single.type === "radio") return String(Boolean(single.checked));
+      return "";
+    })();
+
+    const placeholderValue = (() => {
+      if (single.type === "dropdown") return single.placeholder;
+      if (single.type === "date") return single.placeholder;
+      if (single.type === "numeric") return single.placeholder;
+      if (single.type === "signature") return single.placeholder;
+      return "";
+    })();
+
+    const setPlaceholder = (value: string) => {
+      if (single.type === "dropdown") {
+        update({ placeholder: value } as Partial<DropdownField>);
+        return;
+      }
+
+      if (single.type === "date") {
+        update({ placeholder: value } as Partial<Field>);
+        return;
+      }
+
+      if (single.type === "numeric") {
+        update({ placeholder: value } as Partial<NumericField>);
+        return;
+      }
+
+      if (single.type === "signature") {
+        update({ placeholder: value } as Partial<Field>);
+      }
+    };
+
+    const duplicateField = () => {
+      const draft = {
+        ...(single as Field),
+        x: single.x + 12,
+        y: single.y + 12,
+      } as Parameters<typeof addField>[0];
+
+      addField(draft);
+    };
+
+    const toggleLocked = () => {
+      updateMetadata({ locked: !metadata.locked });
+    };
+
+    const toggleHidden = () => {
+      updateMetadata({ hidden: !metadata.hidden });
+    };
+
+    const toggleSnapToGrid = () => {
+      setSnapToGrid(!snapToGrid);
+    };
+
+    const isBold = String((single as { fontStyle?: string }).fontStyle || "").includes("bold");
+    const isItalic = String((single as { fontStyle?: string }).fontStyle || "").includes("italic");
+    const isUnderlined = Boolean((single as { underline?: boolean }).underline);
+
+    const setFontStyle = (nextBold: boolean, nextItalic: boolean) => {
+      update({
+        fontStyle: nextBold && nextItalic ? "bold italic" : nextBold ? "bold" : nextItalic ? "italic" : "normal",
+      } as Partial<Field>);
     };
 
     const applyManualMapping = () => {
@@ -504,7 +568,88 @@ export function PropertiesPanel({ selectedField }: PropertiesPanelProps) {
       >
         <h3 style={{ marginTop: 0 }}>Properties</h3>
 
+        <label>
+          Field Type:
+          <input type="text" value={single.type} readOnly />
+        </label>
+
+        <label>
+          Required:
+          <input
+            type="checkbox"
+            checked={Boolean(metadata.required)}
+            onChange={(e) => updateMetadata({ required: e.target.checked })}
+          />
+        </label>
+
+        <label>
+          Default Value:
+          <input
+            type="text"
+            value={defaultValue}
+            onChange={(e) => setDefaultValue(e.target.value)}
+            placeholder="Set initial/default value"
+          />
+        </label>
+
+        <label>
+          Placeholder:
+          <input
+            type="text"
+            value={placeholderValue}
+            onChange={(e) => setPlaceholder(e.target.value)}
+            disabled={
+              single.type !== "dropdown" &&
+              single.type !== "date" &&
+              single.type !== "numeric" &&
+              single.type !== "signature"
+            }
+            placeholder={
+              single.type === "dropdown" ||
+              single.type === "date" ||
+              single.type === "numeric" ||
+              single.type === "signature"
+                ? "Displayed hint for this field"
+                : "Not applicable for this field type"
+            }
+          />
+        </label>
+
         {renderSharedSingle(single, update)}
+
+        <label>
+          Tooltip:
+          <input
+            type="text"
+            value={metadata.tooltip || ""}
+            onChange={(e) => updateMetadata({ tooltip: e.target.value })}
+            placeholder="Helpful guidance shown to users"
+          />
+        </label>
+
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: 8 }}>
+          <button type="button" onClick={duplicateField}>
+            Duplicate field
+          </button>
+          <button type="button" onClick={toggleLocked}>
+            {metadata.locked ? "Unlock field" : "Lock field"}
+          </button>
+          <button type="button" onClick={toggleHidden}>
+            {metadata.hidden ? "Show field" : "Hide field"}
+          </button>
+        </div>
+
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: 8 }}>
+          <button type="button" onClick={() => moveFieldLayer(single.id, "backward")}>
+            Send backward
+          </button>
+          <button type="button" onClick={() => moveFieldLayer(single.id, "forward")}>
+            Bring forward
+          </button>
+          <button type="button" onClick={toggleSnapToGrid}>
+            {snapToGrid ? "Snap to grid: on" : "Snap to grid: off"}
+          </button>
+        </div>
 
         {single.type === "rect" && (
           <label>
@@ -550,6 +695,20 @@ export function PropertiesPanel({ selectedField }: PropertiesPanelProps) {
               />
             </label>
             <label>
+              Font Style:
+              <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+                <button type="button" onClick={() => setFontStyle(!isBold, isItalic)}>
+                  Bold
+                </button>
+                <button type="button" onClick={() => setFontStyle(isBold, !isItalic)}>
+                  Italic
+                </button>
+                <button type="button" onClick={() => update({ underline: !isUnderlined } as Partial<Field>)}>
+                  Underline
+                </button>
+              </div>
+            </label>
+            <label>
               Text Alignment:
               <select
                 value={single.textAlign || "left"}
@@ -563,6 +722,25 @@ export function PropertiesPanel({ selectedField }: PropertiesPanelProps) {
                 <option value="center">center</option>
                 <option value="right">right</option>
               </select>
+            </label>
+            <label>
+              Line Height:
+              <input
+                type="number"
+                min={0.5}
+                step={0.1}
+                value={(single as { lineHeight?: number }).lineHeight ?? 1.2}
+                onChange={(e) => update({ lineHeight: Number(e.target.value) } as Partial<Field>)}
+              />
+            </label>
+            <label>
+              Letter Spacing:
+              <input
+                type="number"
+                step={0.1}
+                value={(single as { letterSpacing?: number }).letterSpacing ?? 0}
+                onChange={(e) => update({ letterSpacing: Number(e.target.value) } as Partial<Field>)}
+              />
             </label>
             <label>
               Text Color:
@@ -754,18 +932,19 @@ export function PropertiesPanel({ selectedField }: PropertiesPanelProps) {
           </>
         )}
 
-        <div
-          style={{
-            border: "1px solid #dbe4f0",
-            borderRadius: 8,
-            padding: 10,
-            display: "flex",
-            flexDirection: "column",
-            gap: 8,
-            background: "#f8fbff",
-          }}
-        >
-          <h4 style={{ margin: 0, color: "#0f172a" }}>ACORD Mapping</h4>
+        {showAcordMappingSection ? (
+          <div
+            style={{
+              border: "1px solid #dbe4f0",
+              borderRadius: 8,
+              padding: 10,
+              display: "flex",
+              flexDirection: "column",
+              gap: 8,
+              background: "#f8fbff",
+            }}
+          >
+            <h4 style={{ margin: 0, color: "#0f172a" }}>ACORD Mapping</h4>
 
           <div
             style={{
@@ -979,11 +1158,12 @@ export function PropertiesPanel({ selectedField }: PropertiesPanelProps) {
             </div>
           )}
 
-          <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-            <button onClick={applyManualMapping}>Assign Current Label</button>
-            <button onClick={clearManualMapping}>Clear Mapping</button>
+            <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+              <button onClick={applyManualMapping}>Assign Current Label</button>
+              <button onClick={clearManualMapping}>Clear Mapping</button>
+            </div>
           </div>
-        </div>
+        ) : null}
 
         <button
           onClick={deleteSelectedField}

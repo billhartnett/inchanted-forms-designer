@@ -74,6 +74,7 @@ interface DesignerState {
   currentPdfPage: number;
   showGrid: boolean;
   snapToGrid: boolean;
+  fieldSearchQuery: string;
   canvasCursor: { x: number; y: number } | null;
   historyPast: DesignerSnapshot[];
   historyFuture: DesignerSnapshot[];
@@ -98,6 +99,7 @@ interface DesignerState {
     dy: number,
     options?: UpdateOptions,
   ) => void;
+  moveFieldLayer: (id: string, direction: "forward" | "backward") => void;
   deleteField: (id: string) => void;
   deleteSelectedField: () => void;
   selectField: (id: string | null, additive?: boolean) => void;
@@ -110,6 +112,7 @@ interface DesignerState {
   setCurrentPdfPage: (page: number) => void;
   setShowGrid: (show: boolean) => void;
   setSnapToGrid: (snap: boolean) => void;
+  setFieldSearchQuery: (query: string) => void;
   setDraftCanvasFields: (fields: Field[]) => void;
   toggleDraftSelection: (id: string) => void;
   clearDraftSelection: () => void;
@@ -234,6 +237,9 @@ function normalizeMetadata(
     required: Boolean(parsed.required),
     confidenceScore,
     source,
+    tooltip: typeof parsed.tooltip === "string" ? parsed.tooltip : "",
+    locked: Boolean(parsed.locked),
+    hidden: Boolean(parsed.hidden),
       extractionBlockId:
         typeof parsed.extractionBlockId === "string" && parsed.extractionBlockId
           ? parsed.extractionBlockId
@@ -426,6 +432,13 @@ function normalizeField(
     fontFamily: field.fontFamily || "Geist Variable",
     textAlign: field.textAlign || "left",
     color: field.color || "#000000",
+    fontStyle:
+      field.fontStyle === "bold" || field.fontStyle === "italic" || field.fontStyle === "bold italic"
+        ? field.fontStyle
+        : "normal",
+    underline: Boolean((field as Partial<TextField>).underline),
+    lineHeight: toFiniteNumber((field as Partial<TextField>).lineHeight, 1.2),
+    letterSpacing: toFiniteNumber((field as Partial<TextField>).letterSpacing, 0),
     stroke: field.stroke || "#1e293b",
     strokeWidth: Math.max(0, toFiniteNumber(field.strokeWidth, 0)),
     metadata: normalizeMetadata(field.metadata, "text"),
@@ -731,6 +744,7 @@ export const useDesignerStore = create<DesignerState>((set, get) => ({
   draftSelectedIds: [],
   showGrid: true,
   snapToGrid: true,
+  fieldSearchQuery: "",
   canvasCursor: null,
   historyPast: [],
   historyFuture: [],
@@ -799,6 +813,39 @@ export const useDesignerStore = create<DesignerState>((set, get) => ({
       };
     }),
 
+
+  moveFieldLayer: (id: string, direction: "forward" | "backward") =>
+    set((state) => {
+      const index = state.fields.findIndex((field) => field.id === id);
+      if (index === -1) {
+        return state;
+      }
+
+      const targetIndex = direction === "forward" ? index + 1 : index - 1;
+      if (targetIndex < 0 || targetIndex >= state.fields.length) {
+        return state;
+      }
+
+      const nextFields = [...state.fields];
+      const [moved] = nextFields.splice(index, 1);
+      nextFields.splice(targetIndex, 0, moved);
+
+      const before = snapshotFromState(state);
+      const after = cloneSnapshot({
+        fields: nextFields,
+        groups: state.groups,
+        selectedIds: state.selectedIds,
+        selectedGroupId: state.selectedGroupId,
+        pdfPages: state.pdfPages,
+        currentPdfPage: state.currentPdfPage,
+      });
+
+      return {
+        fields: nextFields,
+        ...pushHistory(state, before, after),
+      };
+    }),
+
   updateFields: (ids, patch, options) =>
     set((state) => {
       if (ids.length === 0) {
@@ -840,6 +887,38 @@ export const useDesignerStore = create<DesignerState>((set, get) => ({
       };
     }),
 
+  moveFieldLayer: (id, direction) =>
+    set((state) => {
+      const index = state.fields.findIndex((field) => field.id === id);
+      if (index === -1) {
+        return state;
+      }
+
+      const targetIndex = direction === "forward" ? index + 1 : index - 1;
+      if (targetIndex < 0 || targetIndex >= state.fields.length) {
+        return state;
+      }
+
+      const nextFields = [...state.fields];
+      const [moved] = nextFields.splice(index, 1);
+      nextFields.splice(targetIndex, 0, moved);
+
+      const before = snapshotFromState(state);
+      const after = cloneSnapshot({
+        fields: nextFields,
+        groups: state.groups,
+        selectedIds: state.selectedIds,
+        selectedGroupId: state.selectedGroupId,
+        pdfPages: state.pdfPages,
+        currentPdfPage: state.currentPdfPage,
+      });
+
+      return {
+        fields: nextFields,
+        ...pushHistory(state, before, after),
+      };
+    }),
+
   moveFieldsBy: (ids, dx, dy, options) =>
     set((state) => {
       if (!Number.isFinite(dx) || !Number.isFinite(dy) || ids.length === 0) {
@@ -848,16 +927,16 @@ export const useDesignerStore = create<DesignerState>((set, get) => ({
 
       const idSet = new Set(ids);
       let changed = false;
-      const nextFields = state.fields.map((f) => {
-        if (!idSet.has(f.id)) {
-          return f;
+      const nextFields = state.fields.map((field) => {
+        if (!idSet.has(field.id)) {
+          return field;
         }
 
         changed = true;
         return {
-          ...f,
-          x: f.x + dx,
-          y: f.y + dy,
+          ...field,
+          x: field.x + dx,
+          y: field.y + dy,
         };
       });
 
@@ -885,40 +964,6 @@ export const useDesignerStore = create<DesignerState>((set, get) => ({
       };
     }),
 
-  deleteField: (id) =>
-    set((state) => {
-      const before = snapshotFromState(state);
-      const nextFields = state.fields.filter((f) => f.id !== id);
-      const validFieldIds = new Set(nextFields.map((f) => f.id));
-      const nextGroups = cleanupGroups(state.groups, validFieldIds);
-
-      const nextSelectedIds = state.selectedIds.filter((selectedId) =>
-        validFieldIds.has(selectedId),
-      );
-      const nextSelectedGroupId =
-        state.selectedGroupId &&
-        nextGroups.some((group) => group.id === state.selectedGroupId)
-          ? state.selectedGroupId
-          : null;
-
-      const after = cloneSnapshot({
-        fields: nextFields,
-        groups: nextGroups,
-        selectedIds: nextSelectedIds,
-        selectedGroupId: nextSelectedGroupId,
-        pdfPages: state.pdfPages,
-        currentPdfPage: state.currentPdfPage,
-      });
-
-      return {
-        fields: nextFields,
-        groups: nextGroups,
-        selectedIds: nextSelectedIds,
-        selectedGroupId: nextSelectedGroupId,
-        ...pushHistory(state, before, after),
-      };
-    }),
-
   deleteSelectedField: () =>
     set((state) => {
       if (state.selectedIds.length === 0) {
@@ -927,8 +972,8 @@ export const useDesignerStore = create<DesignerState>((set, get) => ({
 
       const before = snapshotFromState(state);
       const selectedSet = new Set(state.selectedIds);
-      const nextFields = state.fields.filter((f) => !selectedSet.has(f.id));
-      const validFieldIds = new Set(nextFields.map((f) => f.id));
+      const nextFields = state.fields.filter((field) => !selectedSet.has(field.id));
+      const validFieldIds = new Set(nextFields.map((field) => field.id));
       const nextGroups = cleanupGroups(state.groups, validFieldIds);
 
       const after = cloneSnapshot({
@@ -1160,6 +1205,8 @@ export const useDesignerStore = create<DesignerState>((set, get) => ({
   setShowGrid: (show) => set({ showGrid: Boolean(show) }),
 
   setSnapToGrid: (snap) => set({ snapToGrid: Boolean(snap) }),
+
+  setFieldSearchQuery: (query) => set({ fieldSearchQuery: String(query || "") }),
 
   setDraftCanvasFields: (fields) =>
     set({ draftCanvasFields: fields, draftSelectedIds: fields.map((f) => f.id) }),
