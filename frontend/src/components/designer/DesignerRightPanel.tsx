@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { runAcordSearch } from "../../api/wave9Integration";
 import { resolveOntologySemanticMetadata, type OntologySemanticMetadata } from "../../../../shared/src/acord/acord-gating";
+import { CalibrationDashboard } from "../../mapping/CalibrationDashboard";
+import { FormFamilyPanel } from "../../mapping/FormFamilyPanel";
 import { MappingConfidence } from "../../mapping/MappingConfidence";
 import { PropertiesPanel } from "../../designer/properties/PropertiesPanel";
 import { useDesignerStore, type Field } from "../../state/designerStore";
@@ -27,7 +29,23 @@ type FieldMatch = {
   rawText: string;
   ontology: OntologySemanticMetadata | null;
   searchText: string;
+  acordTokens: string[];
+  semanticTokens: string[];
 };
+
+function tokenizeText(value: string): string[] {
+  return value
+    .toLowerCase()
+    .split(/[^a-z0-9]+/)
+    .map((token) => token.trim())
+    .filter((token) => token.length > 1);
+}
+
+function hasTokenOverlap(left: string[], right: string[]): boolean {
+  if (left.length === 0 || right.length === 0) return false;
+  const leftSet = new Set(left);
+  return right.some((token) => leftSet.has(token));
+}
 
 function getFieldRawText(field: Field): string {
   if (field.type === "text") return field.text || "";
@@ -87,6 +105,7 @@ function formatPercent(score: number): string {
 }
 
 export function DesignerRightPanel() {
+  const [activeTab, setActiveTab] = useState<"field" | "calibration">("field");
   const [acordQuery, setAcordQuery] = useState("");
   const [acordResults, setAcordResults] = useState<AcordSearchResult[]>([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -94,12 +113,7 @@ export function DesignerRightPanel() {
   const selectedField = useSelectedField();
   const selectedMapping = useSelectedFieldMapping();
   const fields = useDesignerStore((state) => state.fields);
-  const fieldSearchQuery = useDesignerStore((state) => state.fieldSearchQuery);
   const updateField = useDesignerStore((state) => state.updateField);
-  const addField = useDesignerStore((state) => state.addField);
-  const moveFieldLayer = useDesignerStore((state) => state.moveFieldLayer);
-  const setSnapToGrid = useDesignerStore((state) => state.setSnapToGrid);
-  const snapToGrid = useDesignerStore((state) => state.snapToGrid);
 
   const chooseCandidate = useMappingStore((state) => state.chooseCandidate);
   const unlinkFieldAssociation = useMappingStore((state) => state.unlinkFieldAssociation);
@@ -166,41 +180,49 @@ export function DesignerRightPanel() {
         rawText,
         ontology,
         searchText,
+        acordTokens: tokenizeText([
+          ontologyCode,
+          acordLabel,
+          field.metadata?.acordDescription || "",
+          ...((field.metadata?.acordCandidates || []).map((candidate) => `${candidate.acordCode} ${candidate.label}`)),
+        ].join(" ")),
+        semanticTokens: tokenizeText([semanticLabel, rawText, ontology?.label || ""].join(" ")),
       } satisfies FieldMatch;
     });
   }, [fields]);
 
   const similarFields = useMemo(() => {
-    const query = fieldSearchQuery.trim().toLowerCase();
-    const selectedId = selectedField?.id;
-    const sorted = [...fieldInsights]
-      .filter((item) => item.field.id !== selectedId)
-      .sort((left, right) => right.confidence - left.confidence || left.label.localeCompare(right.label));
-
-    if (query) {
-      return sorted.filter((item) => item.searchText.includes(query)).slice(0, 25);
+    if (!selectedField) {
+      return [] as FieldMatch[];
     }
 
-    if (selectedField) {
-      const selectedInsight = fieldInsights.find((item) => item.field.id === selectedField.id);
-      if (selectedInsight) {
-        const scored = sorted.map((item) => {
-          let score = item.confidence;
-          if (item.cluster === selectedInsight.cluster) score += 0.35;
-          if (item.family === selectedInsight.family) score += 0.2;
-          if (item.field.type === selectedInsight.field.type) score += 0.15;
-          return { item, score };
-        });
-
-        return scored
-          .sort((left, right) => right.score - left.score || right.item.confidence - left.item.confidence)
-          .map((entry) => entry.item)
-          .slice(0, 25);
-      }
+    const selectedInsight = fieldInsights.find((item) => item.field.id === selectedField.id);
+    if (!selectedInsight) {
+      return [] as FieldMatch[];
     }
 
-    return sorted.slice(0, 25);
-  }, [fieldInsights, fieldSearchQuery, selectedField]);
+    const selectedAcordTokens = tokenizeText([
+      selectedInsight.field.metadata?.acordCode || "",
+      selectedInsight.field.metadata?.acordLabel || "",
+      selectedInsight.field.metadata?.acordDescription || "",
+      ...((selectedInsight.field.metadata?.acordCandidates || []).map((candidate) => `${candidate.acordCode} ${candidate.label}`)),
+      ...((selectedMapping?.candidates || []).map((candidate) => `${candidate.acordCode} ${candidate.label}`)),
+    ].join(" "));
+
+    const selectedSemanticTokens = selectedInsight.semanticTokens;
+
+    const filtered = fieldInsights.filter((item) => {
+      if (item.field.id === selectedInsight.field.id) return false;
+      if (item.cluster !== selectedInsight.cluster) return false;
+      const semanticMatch = hasTokenOverlap(item.semanticTokens, selectedSemanticTokens);
+      const acordMatch = hasTokenOverlap(item.acordTokens, selectedAcordTokens);
+      return semanticMatch && acordMatch;
+    });
+
+    return filtered
+      .sort((left, right) => right.confidence - left.confidence || left.label.localeCompare(right.label))
+      .slice(0, 25);
+  }, [fieldInsights, selectedField, selectedMapping?.candidates]);
 
   const semanticValidity = selectedMapping?.semantic?.confidence?.score ?? selectedFieldMetadata?.confidenceScore ?? 0;
   const rawText = selectedMapping?.record?.mapping?.text || selectedFieldMetadata?.semanticLabel || selectedFieldMetadata?.acordLabel || selectedFieldMetadata?.acordCode || "-";
@@ -305,69 +327,57 @@ export function DesignerRightPanel() {
     } as Partial<Field>);
   };
 
-  const duplicateSelectedField = () => {
-    if (!selectedField) return;
-    const draft = {
-      ...selectedField,
-      x: selectedField.x + 12,
-      y: selectedField.y + 12,
-    } as Parameters<typeof addField>[0];
-
-    addField(draft);
-  };
-
-  const toggleLocked = () => {
-    if (!selectedField) return;
-    updateField(selectedField.id, {
-      metadata: {
-        ...(selectedField.metadata || {}),
-        locked: !selectedField.metadata?.locked,
-      },
-    } as Partial<Field>);
-  };
-
-  const toggleHidden = () => {
-    if (!selectedField) return;
-    updateField(selectedField.id, {
-      metadata: {
-        ...(selectedField.metadata || {}),
-        hidden: !selectedField.metadata?.hidden,
-      },
-    } as Partial<Field>);
-  };
-
-  const toggleSnapToGrid = () => {
-    setSnapToGrid(!snapToGrid);
-  };
-
-  const moveLayer = (direction: "forward" | "backward") => {
-    if (!selectedField) return;
-    moveFieldLayer(selectedField.id, direction);
-  };
-
   const mappingHistory = (selectedMapping?.associationHistory || []).slice(0, 5);
 
   return (
     <div style={{ display: "grid", gap: 16 }}>
-      <div>
-        <div style={{ fontSize: 11, fontWeight: 700, color: "#64748b", letterSpacing: "0.08em", textTransform: "uppercase" }}>Field Workspace</div>
-        <div style={{ fontSize: 12, color: "#475569", marginTop: 2 }}>ACORD-first mapping with semantic interpretation and diagnostics kept secondary.</div>
+      <div style={{ display: "flex", justifyContent: "space-between", gap: 10, alignItems: "flex-end" }}>
+        <div>
+          <div style={{ fontSize: 11, fontWeight: 700, color: "#64748b", letterSpacing: "0.08em", textTransform: "uppercase" }}>Field Workspace</div>
+          <div style={{ fontSize: 12, color: "#475569", marginTop: 2 }}>ACORD-first mapping with semantic interpretation and diagnostics kept secondary.</div>
+        </div>
+        <div style={{ display: "inline-flex", gap: 6, border: "1px solid #d9e2ec", borderRadius: 999, padding: 3, background: "#f8fafc" }}>
+          <button
+            type="button"
+            onClick={() => setActiveTab("field")}
+            style={{
+              border: "none",
+              borderRadius: 999,
+              padding: "0.3rem 0.65rem",
+              fontSize: 12,
+              fontWeight: 700,
+              cursor: "pointer",
+              background: activeTab === "field" ? "#dbeafe" : "transparent",
+              color: activeTab === "field" ? "#1e3a8a" : "#334155",
+            }}
+          >
+            Field
+          </button>
+          <button
+            type="button"
+            onClick={() => setActiveTab("calibration")}
+            style={{
+              border: "none",
+              borderRadius: 999,
+              padding: "0.3rem 0.65rem",
+              fontSize: 12,
+              fontWeight: 700,
+              cursor: "pointer",
+              background: activeTab === "calibration" ? "#ffedd5" : "transparent",
+              color: activeTab === "calibration" ? "#9a3412" : "#334155",
+            }}
+          >
+            Calibration
+          </button>
+        </div>
       </div>
 
-      <div style={{ display: "grid", gap: 14 }}>
+      {activeTab === "field" ? <div style={{ display: "grid", gap: 14 }}>
           <section style={{ border: "1px solid #d9e2ec", borderRadius: 12, background: "linear-gradient(180deg, #ffffff 0%, #f8fafc 100%)", padding: 12, display: "grid", gap: 10 }}>
             <div style={{ display: "flex", justifyContent: "space-between", gap: 8, alignItems: "baseline" }}>
               <div>
                 <h4 style={{ margin: 0, color: "#0f172a" }}>Field Properties</h4>
                 <div style={{ fontSize: 12, color: "#64748b", marginTop: 2 }}>Always visible and centered on the current field.</div>
-              </div>
-              <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-                <button type="button" onClick={duplicateSelectedField} disabled={!selectedField}>Duplicate</button>
-                <button type="button" onClick={toggleLocked} disabled={!selectedField}>{selectedField?.metadata?.locked ? "Unlock" : "Lock"}</button>
-                <button type="button" onClick={toggleHidden} disabled={!selectedField}>{selectedField?.metadata?.hidden ? "Show" : "Hide"}</button>
-                <button type="button" onClick={() => moveLayer("backward")} disabled={!selectedField}>Send backward</button>
-                <button type="button" onClick={() => moveLayer("forward")} disabled={!selectedField}>Bring forward</button>
-                <button type="button" onClick={toggleSnapToGrid}>{snapToGrid ? "Snap to grid: on" : "Snap to grid: off"}</button>
               </div>
             </div>
             <PropertiesPanel selectedField={selectedField} showAcordMappingSection={false} />
@@ -452,13 +462,9 @@ export function DesignerRightPanel() {
           <section style={{ border: "1px solid #d9e2ec", borderRadius: 12, background: "#f8fafc", padding: 12, display: "grid", gap: 10 }}>
             <div>
               <h4 style={{ margin: 0, color: "#0f172a" }}>Similar Fields</h4>
-              <div style={{ fontSize: 12, color: "#64748b", marginTop: 2 }}>Fields related by cluster, family, and confidence for quick bulk mapping.</div>
+              <div style={{ fontSize: 12, color: "#64748b", marginTop: 2 }}>Only fields in the same cluster with overlapping ACORD candidates and semantic labels.</div>
             </div>
-            {fieldSearchQuery.trim() ? (
-              <div style={{ fontSize: 12, color: "#334155" }}>Search: {fieldSearchQuery}</div>
-            ) : (
-              <div style={{ fontSize: 12, color: "#64748b" }}>{selectedField ? "Showing fields similar to current selection." : "Select a field or use left-panel search to focus similar fields."}</div>
-            )}
+            <div style={{ fontSize: 12, color: "#64748b" }}>{selectedField ? "Showing fields with strict semantic and ACORD overlap." : "Select a field to show meaningful similar fields."}</div>
             {similarFields.length > 0 ? (
               <div style={{ display: "grid", gap: 6, maxHeight: 340, overflowY: "auto" }}>
                 {similarFields.map((item) => {
@@ -476,7 +482,7 @@ export function DesignerRightPanel() {
                 })}
               </div>
             ) : (
-              <div style={{ fontSize: 12, color: "#64748b" }}>No similar fields found for the current context.</div>
+              <div style={{ fontSize: 12, color: "#64748b" }}>No fields met cluster + ACORD + semantic similarity requirements.</div>
             )}
           </section>
 
@@ -512,7 +518,12 @@ export function DesignerRightPanel() {
               <div>Builder stats: routedClusters={(ontologyBuilderDiagnostics?.routedClusters || []).length}, appliedByCluster={Object.keys(ontologyBuilderDiagnostics?.appliedByCluster || {}).length}, skippedByCluster={Object.keys(ontologyBuilderDiagnostics?.skippedByCluster || {}).length}</div>
             </div>
           </details>
-      </div>
+      </div> : (
+        <div style={{ display: "grid", gap: 14 }}>
+          <FormFamilyPanel />
+          <CalibrationDashboard />
+        </div>
+      )}
     </div>
   );
 }
