@@ -17,6 +17,33 @@ const DEFAULT_THRESHOLDS: ReviewConfidenceThresholds = {
   rejected: 0.45,
 };
 
+function normalizeSuppressionText(value: string): string {
+  return value.replace(/\s+/g, " ").trim().toLowerCase();
+}
+
+function shouldSuppressExtractionField(field: Field): boolean {
+  const text = normalizeSuppressionText(
+    [
+      "text" in field ? field.text || "" : "",
+      "label" in field ? field.label || "" : "",
+      "placeholder" in field ? field.placeholder || "" : "",
+      field.metadata?.semanticLabel || "",
+      field.metadata?.acordLabel || "",
+      field.metadata?.acordDescription || "",
+    ].join(" "),
+  );
+  const tokens = text.split(" ").filter(Boolean);
+  const headerLike = /(logo|copyright|all rights reserved|confidential|proprietary|disclaimer|do not use|sample|specimen|section\s+\d+|schedule\s+[a-z0-9]+)/.test(text);
+  const instructionLike = /(instructions?|please note|complete this section|if yes|if no|explain|describe|list all|do not write|for office use only)/.test(text);
+  const titleLike = /(application|form|supplement|declaration|policy|coverage|insured|agent|producer|broker|company)/.test(text) && tokens.length <= 8;
+  const allCapsBanner =
+    tokens.length >= 3 &&
+    tokens.every((token) => /^[A-Z0-9&/.,-]+$/.test(token)) &&
+    text === text.toUpperCase();
+
+  return Boolean(headerLike || instructionLike || allCapsBanner || titleLike);
+}
+
 function createEmptyDecisionGraph(): UnifiedDecisionGraph {
   return {
     labels: {},
@@ -95,7 +122,7 @@ export const useExtractionStore = create<ExtractionStoreState>((set) => ({
       documentId: artifacts.documentId,
       pages: artifacts.pages,
       labels: artifacts.labels,
-      fields: artifacts.fields,
+      fields: artifacts.fields.filter((field) => !shouldSuppressExtractionField(field)),
       textBlocks: artifacts.textBlocks,
       normalizedBBoxes: artifacts.normalizedBBoxes,
       decisionGraph: buildDecisionGraph(artifacts),

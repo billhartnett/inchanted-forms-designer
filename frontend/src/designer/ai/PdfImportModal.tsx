@@ -1,6 +1,8 @@
 import { pdfToImages } from "../../utils/pdfToImages";
 import { useState, type ChangeEvent } from "react";
 import type { AcordLabelCandidate } from "../../../../shared/src/acord/acordTypes";
+import type { AcordDocument, ApplyGatedFieldsResult } from "../../../../shared/src/acord/acord-builders";
+import type { DocumentSemanticProfile } from "../../../../shared/src/acord/acord-doc-profile";
 import type {
   BoundingBox,
   ExtractionArtifacts,
@@ -18,7 +20,10 @@ import type {
 import { ExtractionViewer } from "../../extraction";
 import { useExtractionStore } from "../../state";
 import { useMappingStore } from "../../state/mappingStore";
-import { apiUrl } from "../../config/runtimeConfig";
+import {
+  runExtractText,
+  runMappingFlow,
+} from "../../api/wave9Integration";
 import { useDesignerStore } from "../state/useDesignerStore";
 
 type ImportResult = {
@@ -37,6 +42,19 @@ type ExtractTextResponse = Pick<ExtractionResult, "pages"> & { raw?: unknown };
 
 type MapFieldsResponse = {
   mappings?: FieldMapping[];
+  ontologyGating?: {
+    totalPredictions: number;
+    acceptedPredictions: number;
+    rejectedPredictions: number;
+    blocksWithNoAcceptedPredictions: number;
+    routedBlockCount: number;
+    routedClusters: Record<string, number>;
+  };
+  routedClusters?: Record<string, number>;
+  ontologyDocument?: AcordDocument;
+  ontologyDocumentApplyStats?: Pick<ApplyGatedFieldsResult, "appliedCount" | "skippedCount">;
+  ontologyBuilderDiagnostics?: ApplyGatedFieldsResult["builderDiagnostics"];
+  documentSemanticProfile?: DocumentSemanticProfile;
 };
 
 type MapFieldMapping = NonNullable<MapFieldsResponse["mappings"]>[number];
@@ -135,48 +153,6 @@ type AutoMapSummary = {
   keptMappings: number;
   filteredMappings: number;
 };
-
-async function fetchJson<T>(
-  url: string,
-  init?: RequestInit,
-  timeoutMs = 120_000,
-): Promise<T> {
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => {
-    controller.abort();
-  }, timeoutMs);
-
-  let response: Response;
-  try {
-    response = await fetch(url, {
-      ...init,
-      signal: controller.signal,
-    });
-  } catch (error) {
-    clearTimeout(timeoutId);
-    if (error instanceof DOMException && error.name === "AbortError") {
-      throw new Error(`Request timed out after ${Math.round(timeoutMs / 1000)}s`);
-    }
-    throw error;
-  }
-
-  clearTimeout(timeoutId);
-  if (!response.ok) {
-    let message = `Request failed: ${response.status}`;
-    try {
-      const payload = (await response.json()) as { error?: string };
-      if (payload?.error) {
-        message = payload.error;
-      }
-    } catch {
-      // Ignore non-JSON errors.
-    }
-
-    throw new Error(message);
-  }
-
-  return (await response.json()) as T;
-}
 
 function toPointArray(
   polygon:
@@ -1106,6 +1082,41 @@ type AutoMappingResult = {
   mappings: FieldMapping[];
 };
 
+function normalizeSuppressionText(value: string): string {
+  return value.replace(/\s+/g, " ").trim().toLowerCase();
+}
+
+function shouldSuppressDesignerField(field: Field): boolean {
+  const metadataText = normalizeSuppressionText(
+    [
+      field.metadata?.semanticLabel || "",
+      field.metadata?.acordLabel || "",
+      field.metadata?.acordDescription || "",
+      field.metadata?.categoryMode || "",
+    ].join(" "),
+  );
+  const rawText = normalizeSuppressionText(
+    [
+      "text" in field ? field.text || "" : "",
+      "label" in field ? field.label || "" : "",
+      "placeholder" in field ? field.placeholder || "" : "",
+    ].join(" "),
+  );
+  const combined = normalizeSuppressionText(`${metadataText} ${rawText}`);
+  const tokens = combined.split(" ").filter(Boolean);
+  const allCapsBanner =
+    tokens.length >= 3 &&
+    tokens.every((token) => /^[A-Z0-9&/.,-]+$/.test(token)) &&
+    combined === combined.toUpperCase();
+  const shortBanner =
+    tokens.length > 0 && tokens.length <= 8 && (field.width >= 260 || field.height <= 40);
+  const headerLike = /(logo|copyright|all rights reserved|confidential|proprietary|disclaimer|do not use|sample|specimen|section\s+\d+|schedule\s+[a-z0-9]+)/.test(combined);
+  const instructionLike = /(instructions?|please note|complete this section|if yes|if no|explain|describe|list all|do not write|for office use only)/.test(combined);
+  const titleLike = /(application|form|supplement|declaration|policy|coverage|insured|agent|producer|broker|company)/.test(combined) && tokens.length <= 8;
+
+  return Boolean(headerLike || instructionLike || allCapsBanner || (titleLike && shortBanner));
+}
+
 export default function PdfImportModal({
   onClose,
   onImportResult,
@@ -1124,6 +1135,7 @@ export default function PdfImportModal({
   const initializeMappings = useMappingStore((s) => s.initializeMappings);
   const linkFieldToMapping = useMappingStore((s) => s.linkFieldToMapping);
   const clearMappingReview = useMappingStore((s) => s.clear);
+  const setOntologyContractPayload = useMappingStore((s) => s.setOntologyContractPayload);
   const calibrationProfile = useMappingStore((s) => s.calibrationProfile);
   const formFamily = useMappingStore((s) => s.formFamily);
   const [isAutoMapping, setIsAutoMapping] = useState(true);
@@ -1186,17 +1198,7 @@ export default function PdfImportModal({
     limit: number,
   ): Promise<AutoMappingResult> {
     const imageSizes = await Promise.all(pageImages.map(readImageSize));
-    const formData = new FormData();
-    formData.append("file", file);
-
-    const extractPayload = await fetchJson<ExtractTextResponse>(
-      apiUrl("/api/extractText"),
-      {
-        method: "POST",
-        body: formData,
-      },
-      180_000,
-    );
+    const extractPayload = (await runExtractText(file)) as ExtractTextResponse;
 
     const pages: PageExtraction[] = Array.isArray(extractPayload.pages)
       ? extractPayload.pages
@@ -1341,25 +1343,25 @@ export default function PdfImportModal({
     // with their full semantic metadata (acordCode, confidenceScore, source attribution).
     const mappingInputBlocks = keptBlocks;
 
-    const wave8Payload = await fetchJson<{
-      mappings?: FieldMapping[];
-    }>(
-      apiUrl("/api/mapFields"),
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          documentId: file.name,
-          blocks: mappingInputBlocks,
-          context: "PDF import Wave 8 semantic mapping",
-          calibrationProfile,
-          familyId: formFamily?.familyId,
-        }),
-      },
-      180_000,
-    );
+    const wave8Payload = (await runMappingFlow({
+      documentId: file.name,
+      sourceDocumentName: file.name,
+      lockSourceDocument: true,
+      blocks: mappingInputBlocks,
+      context: "PDF import Wave 8 semantic mapping",
+      calibrationProfile,
+      familyId: formFamily?.familyId,
+    })) as MapFieldsResponse;
+
+    setOntologyContractPayload({
+      ontologyGating: wave8Payload.ontologyGating,
+      routedClusters:
+        wave8Payload.routedClusters || wave8Payload.ontologyGating?.routedClusters,
+      ontologyDocument: wave8Payload.ontologyDocument,
+      ontologyDocumentApplyStats: wave8Payload.ontologyDocumentApplyStats,
+      ontologyBuilderDiagnostics: wave8Payload.ontologyBuilderDiagnostics,
+      documentSemanticProfile: wave8Payload.documentSemanticProfile,
+    });
 
     const mappings = Array.isArray(wave8Payload.mappings)
       ? wave8Payload.mappings
@@ -1578,6 +1580,7 @@ export default function PdfImportModal({
         ...(m.fieldPreview as Field),
         id: crypto.randomUUID(),
       }));
+    const visibleFieldObjects = fieldObjects.filter((field) => !shouldSuppressDesignerField(field));
 
     // Wave-8 overlap suppression in placement phase: keep resolver/anchor-promoted
     // fields visible, but avoid stacking by nudging lower-priority overlaps.
@@ -1593,7 +1596,7 @@ export default function PdfImportModal({
       return union > 0 ? inter / union : 0;
     };
 
-    for (const field of fieldObjects) {
+    for (const field of visibleFieldObjects) {
       const page = Math.max(0, field.pageIndex ?? 0);
       const pageFields = placedByPage.get(page) || [];
       const wave8 = (field.metadata as any)?.wave8;
@@ -1704,16 +1707,16 @@ export default function PdfImportModal({
     console.error("[CRITICAL] Field objects constructed: " + fieldObjects.length);
     
     const pageDistribution: Record<number, number> = {};
-    fieldObjects.forEach(f => {
+    visibleFieldObjects.forEach((f) => {
       const pageKey = Math.max(0, f.pageIndex ?? 0);
       pageDistribution[pageKey] = (pageDistribution[pageKey] || 0) + 1;
     });
     const designerStoreDebug = {
       timestamp: new Date().toISOString(),
       draftMappingsInput: mappings.length,
-      fieldObjectsConstructed: fieldObjects.length,
+      fieldObjectsConstructed: visibleFieldObjects.length,
       pageDistribution,
-      sampleFields: fieldObjects.slice(0, 3).map(f => ({
+      sampleFields: visibleFieldObjects.slice(0, 3).map((f) => ({
         id: f.id,
         text: ("text" in f ? f.text : f.metadata?.acordLabel || f.type).substring(0, 30),
         type: f.type,
@@ -1724,7 +1727,7 @@ export default function PdfImportModal({
     console.log("[designerStore-before-persist]", designerStoreDebug);
     (window as any).__debugDesignerStorePersistence = designerStoreDebug;
 
-    if (fieldObjects.length === 0) {
+    if (visibleFieldObjects.length === 0) {
       console.error("[F:0] FATAL: No field objects constructed. Mappings input: " + mappings.length);
       return 0;
     }
@@ -1733,7 +1736,7 @@ export default function PdfImportModal({
     // User reviews visually on the form and clicks "Commit" to finalise.
     const preStoreFieldCount = useDesignerStore.getState().fields.length;
     console.error("[CRITICAL] designerStore fields BEFORE setDraftCanvasFields: " + preStoreFieldCount);
-    useDesignerStore.getState().setDraftCanvasFields(fieldObjects);
+    useDesignerStore.getState().setDraftCanvasFields(visibleFieldObjects);
     const committedDraftCount = useDesignerStore.getState().commitDraftCanvasFields();
     const postStoreFieldCount = useDesignerStore.getState().fields.length;
     console.error("[CRITICAL] designerStore fields AFTER setDraftCanvasFields: " + postStoreFieldCount);
@@ -1830,8 +1833,13 @@ export default function PdfImportModal({
       if (mode === "map-only" || isAutoMapping) {
         try {
           const autoMapping = await runAutoMapping(file, pages, maxMappedFields);
-          mappedFields = autoMapping.draftMappings;
-          extractionArtifacts = autoMapping.artifacts;
+          mappedFields = autoMapping.draftMappings.filter((mapping) => {
+            return mapping.fieldPreview ? !shouldSuppressDesignerField(mapping.fieldPreview) : true;
+          });
+          extractionArtifacts = {
+            ...autoMapping.artifacts,
+            fields: autoMapping.artifacts.fields.filter((field) => !shouldSuppressDesignerField(field)),
+          };
           setExtractionArtifacts(extractionArtifacts);
           initializeMappings(file.name, autoMapping.mappings);
         } catch (mapError) {
