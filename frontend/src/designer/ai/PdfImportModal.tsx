@@ -1113,35 +1113,52 @@ function classifyArtifact(field: Field): ArtifactClassification {
       field.metadata?.categoryMode?.trim(),
   );
 
-  if (confidence > 0.2 || hasAcordSignal) {
-    return field.type === "numeric" || field.type === "date" || field.type === "dropdown" || field.type === "signature"
-      ? "field value"
-      : "field label";
+  const labelPatterns = [
+    /:\s*$/,
+    /\b(applicant|insured|producer|broker|agent|policy|coverage|carrier|company|address|phone|email|name|date)\b/i,
+  ];
+  const valuePatterns = [
+    /^\s*$/,
+    /^\s*[-_]{2,}\s*$/,
+    /\b\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}\b/,
+    /\b\d+(?:\.\d+)?\b/,
+  ];
+  const nonFieldPatterns = [
+    /\b(logo|copyright|all rights reserved|confidential|proprietary|disclaimer|sample|specimen)\b/i,
+    /\b(instructions?|please note|complete this section|for office use only|do not write|explain|describe|list all)\b/i,
+    /\b(section\s+\d+|schedule\s+[a-z0-9]+|page\s+\d+|page\s+title|table of contents)\b/i,
+    /\b(markel|insurance company|subcontractors|general contractor\/artisan contractor|supplemental forms?)\b/i,
+    /\b(do you\b|are you\b|have you\b|yes\s*\/\s*no|no\s*\/\s*yes)\b/i,
+  ];
+
+  const looksLikeLabel =
+    labelPatterns.some((pattern) => pattern.test(field.type === "text" ? field.text || "" : field.label || "")) ||
+    hasAcordSignal ||
+    confidence > 0.2 ||
+    Boolean(field.metadata?.artifactClassification === "field_label");
+
+  const looksLikeValue =
+    valuePatterns.some((pattern) => pattern.test(field.type === "text" ? field.text || "" : field.value?.toString() || field.placeholder || field.label || "")) ||
+    field.type === "numeric" ||
+    field.type === "date" ||
+    field.type === "checkbox" ||
+    field.type === "radio" ||
+    field.type === "dropdown" ||
+    field.type === "signature";
+
+  if (nonFieldPatterns.some((pattern) => pattern.test(combined))) {
+    return "non_field_artifact";
   }
 
-  if (/(logo|copyright|all rights reserved|confidential|proprietary)/.test(combined)) {
-    return "logo";
+  if (looksLikeLabel && !looksLikeValue) {
+    return "field_label";
   }
 
-  if (/(disclaimer|do not use|sample|specimen)/.test(combined)) {
-    return "disclaimer";
+  if (looksLikeValue || confidence > 0.2 || hasAcordSignal) {
+    return "field_value";
   }
 
-  if (/(instructions?|please note|complete this section|if yes|if no|explain|describe|list all|do not write|for office use only)/.test(combined)) {
-    return "instructional text";
-  }
-
-  if (/(section\s+\d+|schedule\s+[a-z0-9]+|application|form|supplement|declaration|policy|coverage|insured|agent|producer|broker|company)/.test(combined) && tokens.length <= 8) {
-    return "section title";
-  }
-
-  if (tokens.length >= 3 && tokens.every((token) => /^[A-Z0-9&/.,-]+$/.test(token)) && combined === combined.toUpperCase()) {
-    return "heading";
-  }
-
-  return field.type === "numeric" || field.type === "date" || field.type === "dropdown" || field.type === "signature"
-    ? "field value"
-    : "field label";
+  return "non_field_artifact";
 }
 
 function classifyField(field: Field): Field {
@@ -1152,6 +1169,30 @@ function classifyField(field: Field): Field {
       artifactClassification: classifyArtifact(field),
     },
   };
+}
+
+function shouldPersistMappedField(field: Field): boolean {
+  const classification = field.metadata?.artifactClassification;
+  if (classification === "non_field_artifact") {
+    return false;
+  }
+
+  const rawText = normalizeClassificationText(
+    [
+      "text" in field ? field.text || "" : "",
+      "label" in field ? field.label || "" : "",
+      "placeholder" in field ? field.placeholder || "" : "",
+      field.metadata?.semanticLabel || "",
+      field.metadata?.acordLabel || "",
+      field.metadata?.categoryMode || "",
+    ].join(" "),
+  );
+
+  if (classification === "field_label" && /^(yes|no|n\/a|na|y|n)$/.test(rawText)) {
+    return false;
+  }
+
+  return true;
 }
 
 export default function PdfImportModal({
@@ -1617,7 +1658,8 @@ export default function PdfImportModal({
         ...(m.fieldPreview as Field),
         id: crypto.randomUUID(),
       }))
-      .map(classifyField);
+      .map(classifyField)
+      .filter(shouldPersistMappedField);
 
     // Wave-8 overlap suppression in placement phase: keep resolver/anchor-promoted
     // fields visible, but avoid stacking by nudging lower-priority overlaps.
@@ -1736,7 +1778,10 @@ export default function PdfImportModal({
           extractionBlockId: m.blockId,
         },
       };
-      fieldObjects.push(fallback);
+      const classifiedFallback = classifyField(fallback);
+      if (shouldPersistMappedField(classifiedFallback)) {
+        fieldObjects.push(classifiedFallback);
+      }
     }
 
     // DEBUG STEP 5: Log field object construction
