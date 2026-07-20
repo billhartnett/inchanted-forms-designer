@@ -1,5 +1,6 @@
 import { apiUrl } from "../config/runtimeConfig";
 import {
+  ApiEnvelopeError,
   fetchEnvelopeJson,
   fetchEnvelopeJsonWithTimeout,
   resolveWave9Endpoint,
@@ -7,15 +8,31 @@ import {
 
 type JsonObject = Record<string, unknown>;
 
+function sameOriginUrl(path: string): string {
+  if (typeof window === "undefined") {
+    return path;
+  }
+  return `${window.location.origin}${path.startsWith("/") ? path : `/${path}`}`;
+}
+
 async function postWave9<T>(key: Parameters<typeof resolveWave9Endpoint>[0], fallbackPath: string, payload: JsonObject): Promise<T> {
   const url = await resolveWave9Endpoint(key, fallbackPath);
-  return fetchEnvelopeJson<T>(url, {
+  const requestInit: RequestInit = {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(payload),
-  });
+  };
+
+  try {
+    return await fetchEnvelopeJson<T>(url, requestInit);
+  } catch (error) {
+    if (error instanceof ApiEnvelopeError && error.status === 404) {
+      return fetchEnvelopeJson<T>(sameOriginUrl(fallbackPath), requestInit);
+    }
+    throw error;
+  }
 }
 
 function withQuery(path: string, params: Record<string, string | number | boolean | undefined>): string {
