@@ -1082,12 +1082,12 @@ type AutoMappingResult = {
   mappings: FieldMapping[];
 };
 
-function normalizeSuppressionText(value: string): string {
+function normalizeClassificationText(value: string): string {
   return value.replace(/\s+/g, " ").trim().toLowerCase();
 }
 
-function shouldSuppressDesignerField(field: Field): boolean {
-  const metadataText = normalizeSuppressionText(
+function classifyArtifact(field: Field): ArtifactClassification {
+  const metadataText = normalizeClassificationText(
     [
       field.metadata?.semanticLabel || "",
       field.metadata?.acordLabel || "",
@@ -1095,26 +1095,63 @@ function shouldSuppressDesignerField(field: Field): boolean {
       field.metadata?.categoryMode || "",
     ].join(" "),
   );
-  const rawText = normalizeSuppressionText(
+  const rawText = normalizeClassificationText(
     [
       "text" in field ? field.text || "" : "",
       "label" in field ? field.label || "" : "",
       "placeholder" in field ? field.placeholder || "" : "",
     ].join(" "),
   );
-  const combined = normalizeSuppressionText(`${metadataText} ${rawText}`);
+  const combined = normalizeClassificationText(`${metadataText} ${rawText}`);
   const tokens = combined.split(" ").filter(Boolean);
-  const allCapsBanner =
-    tokens.length >= 3 &&
-    tokens.every((token) => /^[A-Z0-9&/.,-]+$/.test(token)) &&
-    combined === combined.toUpperCase();
-  const shortBanner =
-    tokens.length > 0 && tokens.length <= 8 && (field.width >= 260 || field.height <= 40);
-  const headerLike = /(logo|copyright|all rights reserved|confidential|proprietary|disclaimer|do not use|sample|specimen|section\s+\d+|schedule\s+[a-z0-9]+)/.test(combined);
-  const instructionLike = /(instructions?|please note|complete this section|if yes|if no|explain|describe|list all|do not write|for office use only)/.test(combined);
-  const titleLike = /(application|form|supplement|declaration|policy|coverage|insured|agent|producer|broker|company)/.test(combined) && tokens.length <= 8;
+  const confidence = Number(field.metadata?.confidenceScore || 0);
+  const hasAcordSignal = Boolean(
+    field.metadata?.acordCode?.trim() ||
+      field.metadata?.acordLabel?.trim() ||
+      (field.metadata?.acordCandidates || []).length > 0 ||
+      field.metadata?.semanticLabel?.trim() ||
+      field.metadata?.categoryMode?.trim(),
+  );
 
-  return Boolean(headerLike || instructionLike || allCapsBanner || (titleLike && shortBanner));
+  if (confidence > 0.2 || hasAcordSignal) {
+    return field.type === "numeric" || field.type === "date" || field.type === "dropdown" || field.type === "signature"
+      ? "field value"
+      : "field label";
+  }
+
+  if (/(logo|copyright|all rights reserved|confidential|proprietary)/.test(combined)) {
+    return "logo";
+  }
+
+  if (/(disclaimer|do not use|sample|specimen)/.test(combined)) {
+    return "disclaimer";
+  }
+
+  if (/(instructions?|please note|complete this section|if yes|if no|explain|describe|list all|do not write|for office use only)/.test(combined)) {
+    return "instructional text";
+  }
+
+  if (/(section\s+\d+|schedule\s+[a-z0-9]+|application|form|supplement|declaration|policy|coverage|insured|agent|producer|broker|company)/.test(combined) && tokens.length <= 8) {
+    return "section title";
+  }
+
+  if (tokens.length >= 3 && tokens.every((token) => /^[A-Z0-9&/.,-]+$/.test(token)) && combined === combined.toUpperCase()) {
+    return "heading";
+  }
+
+  return field.type === "numeric" || field.type === "date" || field.type === "dropdown" || field.type === "signature"
+    ? "field value"
+    : "field label";
+}
+
+function classifyField(field: Field): Field {
+  return {
+    ...field,
+    metadata: {
+      ...(field.metadata || {}),
+      artifactClassification: classifyArtifact(field),
+    },
+  };
 }
 
 export default function PdfImportModal({
@@ -1579,8 +1616,8 @@ export default function PdfImportModal({
       .map((m) => ({
         ...(m.fieldPreview as Field),
         id: crypto.randomUUID(),
-      }));
-    const visibleFieldObjects = fieldObjects.filter((field) => !shouldSuppressDesignerField(field));
+      }))
+      .map(classifyField);
 
     // Wave-8 overlap suppression in placement phase: keep resolver/anchor-promoted
     // fields visible, but avoid stacking by nudging lower-priority overlaps.
@@ -1596,7 +1633,7 @@ export default function PdfImportModal({
       return union > 0 ? inter / union : 0;
     };
 
-    for (const field of visibleFieldObjects) {
+    for (const field of fieldObjects) {
       const page = Math.max(0, field.pageIndex ?? 0);
       const pageFields = placedByPage.get(page) || [];
       const wave8 = (field.metadata as any)?.wave8;
@@ -1707,16 +1744,16 @@ export default function PdfImportModal({
     console.error("[CRITICAL] Field objects constructed: " + fieldObjects.length);
     
     const pageDistribution: Record<number, number> = {};
-    visibleFieldObjects.forEach((f) => {
+    fieldObjects.forEach((f) => {
       const pageKey = Math.max(0, f.pageIndex ?? 0);
       pageDistribution[pageKey] = (pageDistribution[pageKey] || 0) + 1;
     });
     const designerStoreDebug = {
       timestamp: new Date().toISOString(),
       draftMappingsInput: mappings.length,
-      fieldObjectsConstructed: visibleFieldObjects.length,
+      fieldObjectsConstructed: fieldObjects.length,
       pageDistribution,
-      sampleFields: visibleFieldObjects.slice(0, 3).map((f) => ({
+      sampleFields: fieldObjects.slice(0, 3).map((f) => ({
         id: f.id,
         text: ("text" in f ? f.text : f.metadata?.acordLabel || f.type).substring(0, 30),
         type: f.type,
@@ -1727,7 +1764,7 @@ export default function PdfImportModal({
     console.log("[designerStore-before-persist]", designerStoreDebug);
     (window as any).__debugDesignerStorePersistence = designerStoreDebug;
 
-    if (visibleFieldObjects.length === 0) {
+    if (fieldObjects.length === 0) {
       console.error("[F:0] FATAL: No field objects constructed. Mappings input: " + mappings.length);
       return 0;
     }
@@ -1736,7 +1773,7 @@ export default function PdfImportModal({
     // User reviews visually on the form and clicks "Commit" to finalise.
     const preStoreFieldCount = useDesignerStore.getState().fields.length;
     console.error("[CRITICAL] designerStore fields BEFORE setDraftCanvasFields: " + preStoreFieldCount);
-    useDesignerStore.getState().setDraftCanvasFields(visibleFieldObjects);
+    useDesignerStore.getState().setDraftCanvasFields(fieldObjects);
     const committedDraftCount = useDesignerStore.getState().commitDraftCanvasFields();
     const postStoreFieldCount = useDesignerStore.getState().fields.length;
     console.error("[CRITICAL] designerStore fields AFTER setDraftCanvasFields: " + postStoreFieldCount);
@@ -1833,12 +1870,10 @@ export default function PdfImportModal({
       if (mode === "map-only" || isAutoMapping) {
         try {
           const autoMapping = await runAutoMapping(file, pages, maxMappedFields);
-          mappedFields = autoMapping.draftMappings.filter((mapping) => {
-            return mapping.fieldPreview ? !shouldSuppressDesignerField(mapping.fieldPreview) : true;
-          });
+          mappedFields = autoMapping.draftMappings;
           extractionArtifacts = {
             ...autoMapping.artifacts,
-            fields: autoMapping.artifacts.fields.filter((field) => !shouldSuppressDesignerField(field)),
+            fields: autoMapping.artifacts.fields.map(classifyField),
           };
           setExtractionArtifacts(extractionArtifacts);
           initializeMappings(file.name, autoMapping.mappings);

@@ -33,6 +33,15 @@ type FieldMatch = {
   semanticTokens: string[];
 };
 
+const NON_FIELD_CLASSIFICATIONS = new Set([
+  "heading",
+  "section title",
+  "logo",
+  "decorative text",
+  "disclaimer",
+  "instructional text",
+]);
+
 function tokenizeText(value: string): string[] {
   return value
     .toLowerCase()
@@ -151,7 +160,9 @@ export function DesignerRightPanel() {
   }, [rankedCandidates]);
 
   const fieldInsights = useMemo(() => {
-    return fields.map((field) => {
+    return fields
+      .filter((field) => !field.metadata?.artifactClassification || !NON_FIELD_CLASSIFICATIONS.has(field.metadata.artifactClassification))
+      .map((field) => {
       const ontologyCode = field.metadata?.acordCode?.trim() || "";
       const ontology = ontologyCode ? resolveOntologySemanticMetadata(ontologyCode) : null;
       const rawText = getFieldRawText(field).trim();
@@ -188,7 +199,7 @@ export function DesignerRightPanel() {
         ].join(" ")),
         semanticTokens: tokenizeText([semanticLabel, rawText, ontology?.label || ""].join(" ")),
       } satisfies FieldMatch;
-    });
+      });
   }, [fields]);
 
   const similarFields = useMemo(() => {

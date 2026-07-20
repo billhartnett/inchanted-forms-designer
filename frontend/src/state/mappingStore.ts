@@ -28,7 +28,10 @@ import type {
   UnderwritingRuleOverride,
   UnderwritingRuleSnapshot,
 } from "../../../shared/src/acord/acordTypes";
+import type { AcordDocument, ApplyGatedFieldsResult } from "../../../shared/src/acord/acord-builders";
+import type { DocumentSemanticProfile } from "../../../shared/src/acord/acord-doc-profile";
 import { getDefaultOntologyMetadata } from "../../../shared/src/acord/ontology";
+import { resolveOntologySemanticMetadata } from "../../../shared/src/acord/acord-gating";
 import type {
   AssociationEdit,
   CalibrationProfile,
@@ -50,6 +53,8 @@ import { useDesignerStore } from "./designerStore";
 import { useExtractionStore } from "./extractionStore";
 import { useSelectedField } from "./fieldStore";
 import type { Field, DesignerFieldSnapshot } from "./designerStore";
+import { apiUrl } from "../config/runtimeConfig";
+import { fetchEnvelopeJson } from "../api/wave9Client";
 
 const DEFAULT_THRESHOLDS: ReviewConfidenceThresholds = {
   accepted: 0.8,
@@ -58,47 +63,22 @@ const DEFAULT_THRESHOLDS: ReviewConfidenceThresholds = {
 };
 const DEFAULT_CALIBRATION_PROFILE = createDefaultCalibrationProfile();
 
-const API_BASE_URL = (() => {
-  const configured = (
-    import.meta.env.VITE_API_BASE_URL as string | undefined
-  )?.trim();
-  if (configured) {
-    return configured;
-  }
+const NON_FIELD_CLASSIFICATIONS = new Set([
+  "heading",
+  "section title",
+  "logo",
+  "decorative text",
+  "disclaimer",
+  "instructional text",
+]);
 
-  if (typeof window === "undefined") {
-    return "";
-  }
-
-  const { hostname, protocol } = window.location;
-  if (hostname === "localhost" || hostname === "127.0.0.1") {
-    return `${protocol}//${hostname}:7071`;
-  }
-
-  return "";
-})();
-
-function apiUrl(path: string): string {
-  return API_BASE_URL ? `${API_BASE_URL}${path}` : path;
+function isVisibleDesignerField(field: Field): boolean {
+  const classification = field.metadata?.artifactClassification;
+  return !classification || !NON_FIELD_CLASSIFICATIONS.has(classification);
 }
 
 async function fetchJson<T>(url: string, init?: RequestInit): Promise<T> {
-  const response = await fetch(url, init);
-  if (!response.ok) {
-    let message = `Request failed: ${response.status}`;
-    try {
-      const payload = (await response.json()) as { error?: string };
-      if (payload?.error) {
-        message = payload.error;
-      }
-    } catch {
-      // Ignore malformed error payloads.
-    }
-
-    throw new Error(message);
-  }
-
-  return (await response.json()) as T;
+  return fetchEnvelopeJson<T>(url, init);
 }
 
 function createEmptyDecisionGraph(): UnifiedDecisionGraph {
@@ -351,8 +331,36 @@ type MappingStoreState = {
   carrierSubmissionResponse?: CarrierSubmissionResponse;
   submissionDrift?: SubmissionDrift;
   selectedSubmissionVersion?: string;
+  ontologyGating?: {
+    totalPredictions: number;
+    acceptedPredictions: number;
+    rejectedPredictions: number;
+    blocksWithNoAcceptedPredictions: number;
+    routedBlockCount: number;
+    routedClusters: Record<string, number>;
+  };
+  routedClusters: Record<string, number>;
+  ontologyDocument?: AcordDocument;
+  ontologyDocumentApplyStats?: Pick<ApplyGatedFieldsResult, "appliedCount" | "skippedCount">;
+  ontologyBuilderDiagnostics?: ApplyGatedFieldsResult["builderDiagnostics"];
+  documentSemanticProfile?: DocumentSemanticProfile;
   designerFieldSnapshot: Record<string, DesignerFieldSnapshot>;
   lastSavedBlobName?: string;
+  setOntologyContractPayload: (payload: {
+    ontologyGating?: {
+      totalPredictions: number;
+      acceptedPredictions: number;
+      rejectedPredictions: number;
+      blocksWithNoAcceptedPredictions: number;
+      routedBlockCount: number;
+      routedClusters: Record<string, number>;
+    };
+    routedClusters?: Record<string, number>;
+    ontologyDocument?: AcordDocument;
+    ontologyDocumentApplyStats?: Pick<ApplyGatedFieldsResult, "appliedCount" | "skippedCount">;
+    ontologyBuilderDiagnostics?: ApplyGatedFieldsResult["builderDiagnostics"];
+    documentSemanticProfile?: DocumentSemanticProfile;
+  }) => void;
   initializeMappings: (documentId: string | undefined, mappings: FieldMapping[]) => void;
   linkFieldToMapping: (fieldId: string, extractionBlockId: string) => void;
   unlinkFieldAssociation: (fieldId: string, reason?: string) => void;
@@ -466,8 +474,23 @@ export const useMappingStore = create<MappingStoreState>((set, get) => ({
   carrierSubmissionResponse: undefined,
   submissionDrift: undefined,
   selectedSubmissionVersion: undefined,
+  ontologyGating: undefined,
+  routedClusters: {},
+  ontologyDocument: undefined,
+  ontologyDocumentApplyStats: undefined,
+  ontologyBuilderDiagnostics: undefined,
+  documentSemanticProfile: undefined,
   designerFieldSnapshot: {},
   lastSavedBlobName: undefined,
+  setOntologyContractPayload: (payload) =>
+    set(() => ({
+      ontologyGating: payload.ontologyGating,
+      routedClusters: payload.routedClusters || payload.ontologyGating?.routedClusters || {},
+      ontologyDocument: payload.ontologyDocument,
+      ontologyDocumentApplyStats: payload.ontologyDocumentApplyStats,
+      ontologyBuilderDiagnostics: payload.ontologyBuilderDiagnostics,
+      documentSemanticProfile: payload.documentSemanticProfile,
+    })),
   initializeMappings: (documentId, mappings) =>
     set((state) => {
       const nextMappings = Object.fromEntries(
@@ -1317,6 +1340,7 @@ export const useMappingStore = create<MappingStoreState>((set, get) => ({
     })),
   syncDesignerFields: (fields) =>
     set((state) => {
+      const visibleFields = fields.filter(isVisibleDesignerField);
       const designerFieldSnapshot = Object.fromEntries(
         fields.map((field) => [
           field.id,
@@ -1336,7 +1360,7 @@ export const useMappingStore = create<MappingStoreState>((set, get) => ({
       const nextMappings = { ...state.mappings };
       const nextOverrides = { ...state.overrides };
 
-      for (const field of fields) {
+      for (const field of visibleFields) {
         const extractionBlockId = field.metadata?.extractionBlockId;
         if (!extractionBlockId) {
           continue;
@@ -1500,6 +1524,12 @@ export const useMappingStore = create<MappingStoreState>((set, get) => ({
       carrierSubmissionResponse: undefined,
       submissionDrift: undefined,
       selectedSubmissionVersion: undefined,
+      ontologyGating: undefined,
+      routedClusters: {},
+      ontologyDocument: undefined,
+      ontologyDocumentApplyStats: undefined,
+      ontologyBuilderDiagnostics: undefined,
+      documentSemanticProfile: undefined,
       designerFieldSnapshot: {},
       lastSavedBlobName: undefined,
     }),
@@ -1512,6 +1542,68 @@ useDesignerStore.subscribe((next, prev) => {
     useMappingStore.getState().syncDesignerFields(next.fields);
   }
 });
+
+function deriveFieldDisplayName(field: Field): string {
+  if (field.type === "text") {
+    return field.text?.trim() || field.metadata?.acordLabel?.trim() || "Unnamed text field";
+  }
+
+  if (field.type === "checkbox" || field.type === "radio") {
+    return field.label?.trim() || field.metadata?.acordLabel?.trim() || `Unnamed ${field.type} field`;
+  }
+
+  return (
+    field.metadata?.acordLabel?.trim() ||
+    field.metadata?.semanticLabel?.trim() ||
+    `${field.type} field`
+  );
+}
+
+function deriveSemanticCluster(
+  chosenCandidate: AcordLabelCandidate | undefined,
+  wave9Decision: { label?: string } | undefined,
+  selectedField: Field,
+): string {
+  const candidateCode = String(chosenCandidate?.acordCode || "").trim();
+  if (candidateCode.length > 0) {
+    const metadata = resolveOntologySemanticMetadata(candidateCode);
+    if (metadata.cluster.trim().length > 0) {
+      return metadata.cluster;
+    }
+  }
+
+  const fieldCode = String(selectedField.metadata?.acordCode || "").trim();
+  if (fieldCode.length > 0) {
+    const metadata = resolveOntologySemanticMetadata(fieldCode);
+    if (metadata.cluster.trim().length > 0) {
+      return metadata.cluster;
+    }
+  }
+
+  const groups = chosenCandidate?.ontology?.groups || [];
+  if (groups.length > 0) {
+    return groups.join(" / ");
+  }
+
+  const sections = chosenCandidate?.ontology?.sections || [];
+  if (sections.length > 0) {
+    return sections.join(" / ");
+  }
+
+  if (selectedField.metadata?.categoryMode?.trim()) {
+    return selectedField.metadata.categoryMode.trim();
+  }
+
+  if (selectedField.metadata?.semanticLabel?.trim()) {
+    return selectedField.metadata.semanticLabel.trim();
+  }
+
+  if (wave9Decision?.label?.trim()) {
+    return wave9Decision.label.trim();
+  }
+
+  return "general";
+}
 
 export function useSelectedFieldMapping() {
   const selectedField = useSelectedField();
@@ -1566,6 +1658,14 @@ export function useSelectedFieldMapping() {
         : record?.mapping.wave9ConsistencyScore;
     const wave9ConfidenceCalibration =
       wave9Decision?.confidenceCalibration || record?.mapping.wave9ConfidenceCalibration;
+    const fieldName = deriveFieldDisplayName(selectedField);
+    const semanticCluster = deriveSemanticCluster(chosenCandidate, wave9Decision, selectedField);
+    const acordElabel =
+      chosenCandidate?.label ||
+      override?.acordLabel ||
+      wave9Decision?.label ||
+      selectedField.metadata?.acordLabel ||
+      "";
     const candidates = record?.mapping.suggestions || [];
     const rationale = mappingNode?.rationale || record?.mapping.rationale;
     const confidenceScore =
@@ -1574,6 +1674,30 @@ export function useSelectedFieldMapping() {
       override?.confidenceScore ??
       selectedField.metadata?.confidenceScore ??
       0;
+    const semantic = {
+      acordCode: chosenCandidate?.acordCode || override?.acordCode || selectedField.metadata?.acordCode || "",
+      acordElabel,
+      semanticCluster,
+      confidence: {
+        score: confidenceScore,
+        wave9Raw: typeof wave9Decision?.confidenceScore === "number" ? wave9Decision.confidenceScore : undefined,
+        wave9Normalized:
+          typeof wave9Decision?.normalizedConfidenceScore === "number"
+            ? wave9Decision.normalizedConfidenceScore
+            : undefined,
+      },
+      calibration: {
+        decision: wave9ConfidenceCalibration?.decision || null,
+        thresholdReason: wave9ConfidenceCalibration?.thresholdReason || null,
+        confidenceLevel: wave9ConfidenceCalibration?.confidenceLevel || null,
+      },
+      rationaleSignals: {
+        semantic: rationale?.semanticEvidence || [],
+        lexical: rationale?.lexicalEvidence || [],
+        ontology: rationale?.ontologyEvidence || [],
+        arbitration: rationale?.arbitrationEvidence || [],
+      },
+    };
     const source =
       override?.source ||
       (chosenCandidate ? toFieldMetadataSource(chosenCandidate.source) : undefined) ||
@@ -1624,9 +1748,18 @@ export function useSelectedFieldMapping() {
 
     return {
       fieldId: selectedField.id,
+      fieldName,
       extractionBlockId,
-      acordCode: chosenCandidate?.acordCode || override?.acordCode || selectedField.metadata?.acordCode || "",
-      acordLabel: chosenCandidate?.label || override?.acordLabel || selectedField.metadata?.acordLabel || "",
+      acordCode: semantic.acordCode,
+      acordLabel: acordElabel,
+      acordElabel,
+      semanticCluster,
+      field: {
+        id: selectedField.id,
+        name: fieldName,
+        semantic,
+      },
+      semantic,
       confidenceScore,
       source,
       wave9Decision,

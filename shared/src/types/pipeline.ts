@@ -103,6 +103,16 @@ export type SemanticFieldType =
 
 export type FieldMetadataSource = "manual" | "ai" | "ocr";
 
+export type ArtifactClassification =
+  | "field label"
+  | "field value"
+  | "heading"
+  | "section title"
+  | "logo"
+  | "decorative text"
+  | "disclaimer"
+  | "instructional text";
+
 export type CheckboxState = {
   isCheckbox: boolean;
   checked?: boolean;
@@ -152,6 +162,7 @@ export type FieldMetadata = {
   signatureState?: SignatureState;
   kvpData?: KvpFieldData;
   categoryMode?: string;
+  artifactClassification?: ArtifactClassification;
   acordCandidates?: AcordCandidateMetadata[];
   structuralDelta?: StructuralDeltaMetadata;
   wave8?: any;

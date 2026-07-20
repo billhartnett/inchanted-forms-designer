@@ -17,6 +17,15 @@ type MultiInstanceObject = {
   examples: string;
 };
 
+const NON_FIELD_CLASSIFICATIONS = new Set([
+  "heading",
+  "section title",
+  "logo",
+  "decorative text",
+  "disclaimer",
+  "instructional text",
+]);
+
 type FieldInsight = {
   field: Field;
   confidence: number;
@@ -145,6 +154,11 @@ function renderConfidenceBadge(score: number) {
   );
 }
 
+function isVisibleDesignerField(field: Field): boolean {
+  const classification = field.metadata?.artifactClassification;
+  return !classification || !NON_FIELD_CLASSIFICATIONS.has(classification);
+}
+
 function sortByConfidence(left: FieldInsight, right: FieldInsight) {
   return right.confidence - left.confidence || left.label.localeCompare(right.label);
 }
@@ -164,7 +178,9 @@ export function DesignerLayersPanel() {
   const selectedField = useSelectedField();
 
   const fieldInsights = useMemo(() => {
-    return fields.map((field) => {
+    return fields
+      .filter(isVisibleDesignerField)
+      .map((field) => {
       const ontologyCode = field.metadata?.acordCode?.trim() || "";
       const ontology = ontologyCode ? resolveOntologySemanticMetadata(ontologyCode) : null;
       const rawText = getFieldRawText(field).trim();
@@ -203,7 +219,7 @@ export function DesignerLayersPanel() {
         label: getFieldLabel(field, ontology),
         pageIndex: typeof field.pageIndex === "number" && Number.isFinite(field.pageIndex) ? field.pageIndex : null,
       } satisfies FieldInsight;
-    });
+      });
   }, [fields]);
 
   const selectedInsight = useMemo(() => {

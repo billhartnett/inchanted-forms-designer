@@ -13,6 +13,14 @@ import { resolveOntologySemanticMetadata } from "../../../../shared/src/acord/ac
 import { useMappingStore } from "../../state/mappingStore";
 
 const GRID_SIZE = 20;
+const NON_FIELD_CLASSIFICATIONS = new Set([
+  "heading",
+  "section title",
+  "logo",
+  "decorative text",
+  "disclaimer",
+  "instructional text",
+]);
 
 function deriveOntologyClusterLabel(field: Field, routedClusterFallback?: string): string {
   const acordCode = String(field.metadata?.acordCode || "").trim();
@@ -327,18 +335,31 @@ export function DesignerCanvas({
                     y={field.y}
                     rotation={field.rotation ?? 0}
                     opacity={field.opacity ?? 1}
-                    draggable={!field.metadata?.locked}
+                    draggable={!field.metadata?.locked && !(field.metadata?.artifactClassification && NON_FIELD_CLASSIFICATIONS.has(field.metadata.artifactClassification))}
                     listening
+                    onMouseEnter={() => {
+                      if (field.metadata?.artifactClassification && NON_FIELD_CLASSIFICATIONS.has(field.metadata.artifactClassification)) {
+                        return;
+                      }
+                    }}
                     onClick={(event) => {
+                      if (field.metadata?.artifactClassification && NON_FIELD_CLASSIFICATIONS.has(field.metadata.artifactClassification)) {
+                        event.cancelBubble = true;
+                        return;
+                      }
                       event.cancelBubble = true;
                       selectField(field.id, Boolean(event.evt.shiftKey));
                     }}
                     onTap={(event) => {
+                      if (field.metadata?.artifactClassification && NON_FIELD_CLASSIFICATIONS.has(field.metadata.artifactClassification)) {
+                        event.cancelBubble = true;
+                        return;
+                      }
                       event.cancelBubble = true;
                       selectField(field.id, Boolean(event.evt.shiftKey));
                     }}
                     onDragEnd={(event) => {
-                      if (field.metadata?.locked) {
+                      if (field.metadata?.locked || (field.metadata?.artifactClassification && NON_FIELD_CLASSIFICATIONS.has(field.metadata.artifactClassification))) {
                         return;
                       }
                       // Update field position after drag
