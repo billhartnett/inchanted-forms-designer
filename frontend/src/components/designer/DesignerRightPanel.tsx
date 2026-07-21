@@ -1,13 +1,23 @@
 import { useEffect, useMemo, useState } from "react";
 import { runAcordSearch } from "../../api/wave9Integration";
-import { resolveOntologySemanticMetadata, type OntologySemanticMetadata } from "../../../../shared/src/acord/acord-gating";
-import { CalibrationDashboard } from "../../mapping/CalibrationDashboard";
-import { FormFamilyPanel } from "../../mapping/FormFamilyPanel";
 import { MappingConfidence } from "../../mapping/MappingConfidence";
 import { PropertiesPanel } from "../../designer/properties/PropertiesPanel";
 import { useDesignerStore, type Field } from "../../state/designerStore";
 import { useMappingStore, useSelectedFieldMapping } from "../../state/mappingStore";
-import { useSelectedField } from "../../state/fieldStore";
+import { useOntologyFieldIds, useSelectedField } from "../../state/fieldStore";
+
+type OntologySemanticMetadata = {
+  acordCode?: string;
+  label?: string;
+  xmlPath?: string;
+  family?: string;
+  cluster?: string;
+  aliases?: string[];
+};
+
+function resolveOntologySemanticMetadata(_acordCode: string): OntologySemanticMetadata | null {
+  return null;
+}
 
 type AcordSearchResult = {
   acordCode: string;
@@ -32,15 +42,6 @@ type FieldMatch = {
   acordTokens: string[];
   semanticTokens: string[];
 };
-
-const NON_FIELD_CLASSIFICATIONS = new Set([
-  "heading",
-  "section title",
-  "logo",
-  "decorative text",
-  "disclaimer",
-  "instructional text",
-]);
 
 function tokenizeText(value: string): string[] {
   return value
@@ -113,8 +114,53 @@ function formatPercent(score: number): string {
   return `${Math.round(Math.max(0, Math.min(1, score)) * 100)}%`;
 }
 
+function hasMeaningfulSemanticLabel(field: Field): boolean {
+  const label = (field.metadata?.semanticLabel || "").trim().toLowerCase();
+  if (label.length < 3) return false;
+  return !/^(yes|no|n\/a|na|none)$/i.test(label);
+}
+
+function hasMeaningfulAcordCandidates(field: Field, selectedMappingCandidates?: Array<{ acordCode: string; label: string }>): boolean {
+  const tokens = tokenizeText([
+    field.metadata?.acordCode || "",
+    field.metadata?.acordLabel || "",
+    field.metadata?.acordDescription || "",
+    ...((field.metadata?.acordCandidates || []).map((candidate) => `${candidate.acordCode} ${candidate.label}`)),
+    ...((selectedMappingCandidates || []).map((candidate) => `${candidate.acordCode} ${candidate.label}`)),
+  ].join(" "));
+
+  return tokens.length > 0;
+}
+
+function isLikelyNonFieldArtifact(field: Field): boolean {
+  const classification = field.metadata?.artifactClassification;
+  if (classification === "non_field_artifact") {
+    return true;
+  }
+
+  const combinedText = [
+    field.metadata?.semanticLabel || "",
+    field.metadata?.acordLabel || "",
+    field.metadata?.acordDescription || "",
+    field.metadata?.categoryMode || "",
+    getFieldRawText(field),
+  ]
+    .join(" ")
+    .toLowerCase();
+
+  const rawText = getFieldRawText(field).trim().toLowerCase();
+  if (field.metadata?.artifactClassification === "field_label" && /^(yes|no)$/i.test(rawText)) {
+    return true;
+  }
+
+  return /\b(logo|copyright|all rights reserved|confidential|proprietary|disclaimer|sample|specimen|header|footer|section title|section\s+\d+|table of contents|instructions?|for office use only)\b/i.test(
+    combinedText,
+  ) || /\b(markel|insurance company|subcontractors|application|general contractor\/artisan contractor|homes\/units\?|do you\b|are you\b|have you\b)\b/i.test(
+    combinedText,
+  );
+}
+
 export function DesignerRightPanel() {
-  const [activeTab, setActiveTab] = useState<"field" | "calibration">("field");
   const [acordQuery, setAcordQuery] = useState("");
   const [acordResults, setAcordResults] = useState<AcordSearchResult[]>([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -123,18 +169,12 @@ export function DesignerRightPanel() {
   const selectedMapping = useSelectedFieldMapping();
   const fields = useDesignerStore((state) => state.fields);
   const updateField = useDesignerStore((state) => state.updateField);
+  const ontologyFieldIds = useOntologyFieldIds();
 
   const chooseCandidate = useMappingStore((state) => state.chooseCandidate);
   const unlinkFieldAssociation = useMappingStore((state) => state.unlinkFieldAssociation);
-  const ontologyGating = useMappingStore((state) => state.ontologyGating);
-  const routedClusters = useMappingStore((state) => state.routedClusters);
-  const ontologyDocumentApplyStats = useMappingStore((state) => state.ontologyDocumentApplyStats);
-  const ontologyBuilderDiagnostics = useMappingStore((state) => state.ontologyBuilderDiagnostics);
-  const documentSemanticProfile = useMappingStore((state) => state.documentSemanticProfile);
 
   const selectedFieldMetadata = selectedField?.metadata;
-  const selectedCode = String(selectedMapping?.acordCode || selectedFieldMetadata?.acordCode || "").trim();
-  const ontologyMetadata = selectedCode ? resolveOntologySemanticMetadata(selectedCode) : null;
 
   const rankedCandidates = useMemo(() => {
     return [...(selectedMapping?.candidates || [])]
@@ -142,26 +182,15 @@ export function DesignerRightPanel() {
       .slice(0, 5);
   }, [selectedMapping?.candidates]);
 
-  const candidateDistribution = useMemo(() => {
-    return rankedCandidates.reduce(
-      (totals, candidate) => {
-        if (candidate.confidenceScore >= 0.8) {
-          totals.high += 1;
-        } else if (candidate.confidenceScore >= 0.55) {
-          totals.medium += 1;
-        } else {
-          totals.low += 1;
-        }
-
-        return totals;
-      },
-      { high: 0, medium: 0, low: 0 },
-    );
-  }, [rankedCandidates]);
-
   const fieldInsights = useMemo(() => {
     return fields
-      .filter((field) => !field.metadata?.artifactClassification || !NON_FIELD_CLASSIFICATIONS.has(field.metadata.artifactClassification))
+      .filter(
+        (field) =>
+          (field.metadata?.artifactClassification === "field_label" ||
+            field.metadata?.artifactClassification === "field_value") &&
+          !isLikelyNonFieldArtifact(field) &&
+          (ontologyFieldIds.size === 0 || ontologyFieldIds.has(field.id)),
+      )
       .map((field) => {
       const ontologyCode = field.metadata?.acordCode?.trim() || "";
       const ontology = ontologyCode ? resolveOntologySemanticMetadata(ontologyCode) : null;
@@ -200,7 +229,7 @@ export function DesignerRightPanel() {
         semanticTokens: tokenizeText([semanticLabel, rawText, ontology?.label || ""].join(" ")),
       } satisfies FieldMatch;
       });
-  }, [fields]);
+  }, [fields, ontologyFieldIds]);
 
   const similarFields = useMemo(() => {
     if (!selectedField) {
@@ -225,6 +254,8 @@ export function DesignerRightPanel() {
     const filtered = fieldInsights.filter((item) => {
       if (item.field.id === selectedInsight.field.id) return false;
       if (item.cluster !== selectedInsight.cluster) return false;
+      if (!hasMeaningfulSemanticLabel(item.field)) return false;
+      if (!hasMeaningfulAcordCandidates(item.field, selectedMapping?.candidates)) return false;
       const semanticMatch = hasTokenOverlap(item.semanticTokens, selectedSemanticTokens);
       const acordMatch = hasTokenOverlap(item.acordTokens, selectedAcordTokens);
       return semanticMatch && acordMatch;
@@ -234,27 +265,6 @@ export function DesignerRightPanel() {
       .sort((left, right) => right.confidence - left.confidence || left.label.localeCompare(right.label))
       .slice(0, 25);
   }, [fieldInsights, selectedField, selectedMapping?.candidates]);
-
-  const semanticValidity = selectedMapping?.semantic?.confidence?.score ?? selectedFieldMetadata?.confidenceScore ?? 0;
-  const rawText = selectedMapping?.record?.mapping?.text || selectedFieldMetadata?.semanticLabel || selectedFieldMetadata?.acordLabel || selectedFieldMetadata?.acordCode || "-";
-  const boundingBox = selectedMapping?.record?.mapping?.boundingBox || (selectedField
-    ? {
-        x: selectedField.x,
-        y: selectedField.y,
-        width: selectedField.width,
-        height: selectedField.height,
-      }
-    : null);
-
-  const hasSemanticData = Boolean(selectedMapping?.semantic?.semanticCluster || selectedFieldMetadata?.semanticLabel || ontologyMetadata);
-  const hasAcordData = Boolean(selectedMapping?.acordCode || selectedFieldMetadata?.acordCode || ontologyMetadata);
-  const hasDiagnosticsData = Boolean(
-    ontologyGating ||
-      documentSemanticProfile ||
-      ontologyDocumentApplyStats ||
-      ontologyBuilderDiagnostics ||
-      Object.keys(routedClusters || {}).length,
-  );
 
   useEffect(() => {
     const query = acordQuery.trim();
@@ -345,45 +355,11 @@ export function DesignerRightPanel() {
       <div style={{ display: "flex", justifyContent: "space-between", gap: 10, alignItems: "flex-end" }}>
         <div>
           <div style={{ fontSize: 11, fontWeight: 700, color: "#64748b", letterSpacing: "0.08em", textTransform: "uppercase" }}>Field Workspace</div>
-          <div style={{ fontSize: 12, color: "#475569", marginTop: 2 }}>ACORD-first mapping with semantic interpretation and diagnostics kept secondary.</div>
-        </div>
-        <div style={{ display: "inline-flex", gap: 6, border: "1px solid #d9e2ec", borderRadius: 999, padding: 3, background: "#f8fafc" }}>
-          <button
-            type="button"
-            onClick={() => setActiveTab("field")}
-            style={{
-              border: "none",
-              borderRadius: 999,
-              padding: "0.3rem 0.65rem",
-              fontSize: 12,
-              fontWeight: 700,
-              cursor: "pointer",
-              background: activeTab === "field" ? "#dbeafe" : "transparent",
-              color: activeTab === "field" ? "#1e3a8a" : "#334155",
-            }}
-          >
-            Field
-          </button>
-          <button
-            type="button"
-            onClick={() => setActiveTab("calibration")}
-            style={{
-              border: "none",
-              borderRadius: 999,
-              padding: "0.3rem 0.65rem",
-              fontSize: 12,
-              fontWeight: 700,
-              cursor: "pointer",
-              background: activeTab === "calibration" ? "#ffedd5" : "transparent",
-              color: activeTab === "calibration" ? "#9a3412" : "#334155",
-            }}
-          >
-            Calibration
-          </button>
+          <div style={{ fontSize: 12, color: "#475569", marginTop: 2 }}>ACORD-first mapping workflow for the selected field.</div>
         </div>
       </div>
 
-      {activeTab === "field" ? <div style={{ display: "grid", gap: 14 }}>
+      <div style={{ display: "grid", gap: 14 }}>
           <section style={{ border: "1px solid #d9e2ec", borderRadius: 12, background: "linear-gradient(180deg, #ffffff 0%, #f8fafc 100%)", padding: 12, display: "grid", gap: 10 }}>
             <div style={{ display: "flex", justifyContent: "space-between", gap: 8, alignItems: "baseline" }}>
               <div>
@@ -391,7 +367,7 @@ export function DesignerRightPanel() {
                 <div style={{ fontSize: 12, color: "#64748b", marginTop: 2 }}>Always visible and centered on the current field.</div>
               </div>
             </div>
-            <PropertiesPanel selectedField={selectedField} showAcordMappingSection={false} />
+            <PropertiesPanel selectedField={selectedField} showAcordMappingSection={false} compactMode />
           </section>
 
           <section style={{ border: "1px solid #d9e2ec", borderRadius: 12, background: "#f8fafc", padding: 12, display: "grid", gap: 10 }}>
@@ -496,45 +472,7 @@ export function DesignerRightPanel() {
               <div style={{ fontSize: 12, color: "#64748b" }}>No fields met cluster + ACORD + semantic similarity requirements.</div>
             )}
           </section>
-
-          <details style={{ border: "1px solid #d9e2ec", borderRadius: 12, background: "#f8fafc", padding: 12 }}>
-            <summary style={{ cursor: "pointer", fontWeight: 700, color: "#0f172a" }}>Semantic Interpretation</summary>
-            <div style={{ display: "grid", gap: 6, marginTop: 12, fontSize: 12, color: "#334155" }}>
-              <div>Cluster: {selectedMapping?.semanticCluster || ontologyMetadata?.cluster || "-"}</div>
-              <div>Family: {ontologyMetadata?.family || selectedMapping?.semantic?.semanticCluster || "inferred"}</div>
-              <div>Aliases: {ontologyMetadata?.aliases?.slice(0, 8).join(" • ") || selectedFieldMetadata?.semanticLabel || "-"}</div>
-              <div>Semantic score: {selectedMapping?.semantic?.confidence?.score != null ? selectedMapping.semantic.confidence.score.toFixed(3) : selectedFieldMetadata?.confidenceScore != null ? selectedFieldMetadata.confidenceScore.toFixed(3) : "-"}</div>
-              <div>Gating validity: {selectedMapping?.wave9Decision?.suppression?.suppressed ? "rejected" : selectedMapping?.wave9Decision ? "valid" : "-"}</div>
-            </div>
-          </details>
-
-          <details style={{ border: "1px solid #d9e2ec", borderRadius: 12, background: "#f8fafc", padding: 12 }}>
-            <summary style={{ cursor: "pointer", fontWeight: 700, color: "#0f172a" }}>Ontology Metadata</summary>
-            <div style={{ display: "grid", gap: 6, marginTop: 12, fontSize: 12, color: "#334155" }}>
-              <div>ACORD code: {selectedMapping?.acordCode || selectedFieldMetadata?.acordCode || ontologyMetadata?.acordCode || "-"}</div>
-              <div>ACORD label: {selectedMapping?.acordLabel || ontologyMetadata?.label || selectedFieldMetadata?.acordLabel || "-"}</div>
-              <div>xmlPath: {ontologyMetadata?.xmlPath || selectedFieldMetadata?.acordCode || "-"}</div>
-              <div>Form membership: {ontologyMetadata?.formMembership?.join(" • ") || "-"}</div>
-            </div>
-          </details>
-
-          <details style={{ border: "1px solid #d9e2ec", borderRadius: 12, background: "#f8fafc", padding: 12 }}>
-            <summary style={{ cursor: "pointer", fontWeight: 700, color: "#0f172a" }}>Document-Level Diagnostics</summary>
-            <div style={{ display: "grid", gap: 6, marginTop: 12, fontSize: 12, color: "#334155" }}>
-              <div>Semantic profile: {documentSemanticProfile?.familyId || "-"}</div>
-              <div>Cluster density: {documentSemanticProfile ? `${Object.keys(documentSemanticProfile.clusters || {}).length}/${Math.max(1, documentSemanticProfile.predictionCount)}` : "-"}</div>
-              <div>Scoring distribution: high={candidateDistribution.high}, medium={candidateDistribution.medium}, low={candidateDistribution.low}</div>
-              <div>Routing decisions: {Object.entries(routedClusters || {}).sort((left, right) => right[1] - left[1]).slice(0, 8).map(([cluster, count]) => `${cluster}:${count}`).join(" • ") || "-"}</div>
-              <div>Applied fields: {ontologyDocumentApplyStats?.appliedCount ?? 0} • Skipped fields: {ontologyDocumentApplyStats?.skippedCount ?? 0}</div>
-              <div>Builder stats: routedClusters={(ontologyBuilderDiagnostics?.routedClusters || []).length}, appliedByCluster={Object.keys(ontologyBuilderDiagnostics?.appliedByCluster || {}).length}, skippedByCluster={Object.keys(ontologyBuilderDiagnostics?.skippedByCluster || {}).length}</div>
-            </div>
-          </details>
-      </div> : (
-        <div style={{ display: "grid", gap: 14 }}>
-          <FormFamilyPanel />
-          <CalibrationDashboard />
-        </div>
-      )}
+      </div>
     </div>
   );
 }

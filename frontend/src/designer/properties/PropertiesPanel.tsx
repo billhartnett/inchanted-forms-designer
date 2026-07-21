@@ -153,19 +153,16 @@ function getConfidenceStatus(confidenceScore: number) {
 type PropertiesPanelProps = {
   selectedField?: Field | null;
   showAcordMappingSection?: boolean;
+  compactMode?: boolean;
 };
 
-export function PropertiesPanel({ selectedField, showAcordMappingSection = true }: PropertiesPanelProps) {
+export function PropertiesPanel({ selectedField, showAcordMappingSection = true, compactMode = false }: PropertiesPanelProps) {
   const fields = useDesignerStore((s) => s.fields);
   const selectedIds = useDesignerStore((s) => s.selectedIds);
   const selectedGroupId = useDesignerStore((s) => s.selectedGroupId);
   const updateField = useDesignerStore((s) => s.updateField);
   const updateFields = useDesignerStore((s) => s.updateFields);
   const moveFieldsBy = useDesignerStore((s) => s.moveFieldsBy);
-  const moveFieldLayer = useDesignerStore((s) => s.moveFieldLayer);
-  const addField = useDesignerStore((s) => s.addField);
-  const setSnapToGrid = useDesignerStore((s) => s.setSnapToGrid);
-  const snapToGrid = useDesignerStore((s) => s.snapToGrid);
   const deleteSelectedField = useDesignerStore((s) => s.deleteSelectedField);
   const [acordQuery, setAcordQuery] = useState("");
   const [matchingAcordFields, setMatchingAcordFields] = useState<
@@ -435,28 +432,6 @@ export function PropertiesPanel({ selectedField, showAcordMappingSection = true 
       }
     };
 
-    const duplicateField = () => {
-      const draft = {
-        ...(single as Field),
-        x: single.x + 12,
-        y: single.y + 12,
-      } as Parameters<typeof addField>[0];
-
-      addField(draft);
-    };
-
-    const toggleLocked = () => {
-      updateMetadata({ locked: !metadata.locked });
-    };
-
-    const toggleHidden = () => {
-      updateMetadata({ hidden: !metadata.hidden });
-    };
-
-    const toggleSnapToGrid = () => {
-      setSnapToGrid(!snapToGrid);
-    };
-
     const isBold = String((single as { fontStyle?: string }).fontStyle || "").includes("bold");
     const isItalic = String((single as { fontStyle?: string }).fontStyle || "").includes("italic");
     const isUnderlined = Boolean((single as { underline?: boolean }).underline);
@@ -566,6 +541,58 @@ export function PropertiesPanel({ selectedField, showAcordMappingSection = true 
           gap: 12,
         }}
       >
+
+          {compactMode ? (
+            <>
+              <label>
+                Field Name:
+                <input
+                  type="text"
+                  value={getFieldPromptText(single) || single.text || single.label || metadata.acordLabel || metadata.acordCode || ""}
+                  readOnly
+                />
+              </label>
+
+              <label>
+                Field Type:
+                <input type="text" value={single.type} readOnly />
+              </label>
+
+              <label>
+                Required:
+                <input
+                  type="checkbox"
+                  checked={Boolean(metadata.required)}
+                  onChange={(e) => updateMetadata({ required: e.target.checked })}
+                />
+              </label>
+
+              <label>
+                X:
+                <input type="number" value={num(single.x)} readOnly />
+              </label>
+
+              <label>
+                Y:
+                <input type="number" value={num(single.y)} readOnly />
+              </label>
+
+              <label>
+                Width:
+                <input type="number" value={num(single.width, 20)} readOnly />
+              </label>
+
+              <label>
+                Height:
+                <input type="number" value={num(single.height, 20)} readOnly />
+              </label>
+
+              <div style={{ fontSize: 12, color: "#475569" }}>
+                Design controls are intentionally hidden in this workspace.
+              </div>
+            </>
+          ) : (
+            <>
         <h3 style={{ marginTop: 0 }}>Properties</h3>
 
         <label>
@@ -626,30 +653,6 @@ export function PropertiesPanel({ selectedField, showAcordMappingSection = true 
             placeholder="Helpful guidance shown to users"
           />
         </label>
-
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: 8 }}>
-          <button type="button" onClick={duplicateField}>
-            Duplicate field
-          </button>
-          <button type="button" onClick={toggleLocked}>
-            {metadata.locked ? "Unlock field" : "Lock field"}
-          </button>
-          <button type="button" onClick={toggleHidden}>
-            {metadata.hidden ? "Show field" : "Hide field"}
-          </button>
-        </div>
-
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: 8 }}>
-          <button type="button" onClick={() => moveFieldLayer(single.id, "backward")}>
-            Send backward
-          </button>
-          <button type="button" onClick={() => moveFieldLayer(single.id, "forward")}>
-            Bring forward
-          </button>
-          <button type="button" onClick={toggleSnapToGrid}>
-            {snapToGrid ? "Snap to grid: on" : "Snap to grid: off"}
-          </button>
-        </div>
 
         {single.type === "rect" && (
           <label>
@@ -1176,6 +1179,8 @@ export function PropertiesPanel({ selectedField, showAcordMappingSection = true 
         >
           Delete
         </button>
+          </>
+        )}
       </div>
     );
   }

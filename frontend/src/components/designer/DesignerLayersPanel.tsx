@@ -1,7 +1,17 @@
 import { useMemo, useState } from "react";
-import { resolveOntologySemanticMetadata, type OntologySemanticMetadata } from "../../../../shared/src/acord/acord-gating";
 import { useDesignerStore, type Field } from "../../state/designerStore";
-import { useSelectedField } from "../../state/fieldStore";
+import { useOntologyFieldIds, useSelectedField } from "../../state/fieldStore";
+
+type OntologySemanticMetadata = {
+  label?: string;
+  family?: string;
+  cluster?: string;
+  aliases?: string[];
+};
+
+function resolveOntologySemanticMetadata(_acordCode: string): OntologySemanticMetadata | null {
+  return null;
+}
 
 type ClusterBucket = {
   label: string;
@@ -16,15 +26,6 @@ type MultiInstanceObject = {
   fieldIds: string[];
   examples: string;
 };
-
-const NON_FIELD_CLASSIFICATIONS = new Set([
-  "heading",
-  "section title",
-  "logo",
-  "decorative text",
-  "disclaimer",
-  "instructional text",
-]);
 
 type FieldInsight = {
   field: Field;
@@ -154,9 +155,37 @@ function renderConfidenceBadge(score: number) {
   );
 }
 
+function isLikelyNonFieldArtifact(field: Field): boolean {
+  const classification = field.metadata?.artifactClassification;
+  if (classification === "non_field_artifact") {
+    return true;
+  }
+
+  const combinedText = [
+    field.metadata?.semanticLabel || "",
+    field.metadata?.acordLabel || "",
+    field.metadata?.acordDescription || "",
+    field.metadata?.categoryMode || "",
+    getFieldRawText(field),
+  ]
+    .join(" ")
+    .toLowerCase();
+
+  const rawText = getFieldRawText(field).trim().toLowerCase();
+  if (field.metadata?.artifactClassification === "field_label" && /^(yes|no)$/i.test(rawText)) {
+    return true;
+  }
+
+  return /\b(logo|copyright|all rights reserved|confidential|proprietary|disclaimer|sample|specimen|header|footer|section title|section\s+\d+|table of contents|instructions?|for office use only)\b/i.test(
+    combinedText,
+  ) || /\b(markel|insurance company|subcontractors|application|general contractor\/artisan contractor|homes\/units\?|do you\b|are you\b|have you\b)\b/i.test(
+    combinedText,
+  );
+}
+
 function isVisibleDesignerField(field: Field): boolean {
   const classification = field.metadata?.artifactClassification;
-  return !classification || !NON_FIELD_CLASSIFICATIONS.has(classification);
+  return (classification === "field_label" || classification === "field_value") && !isLikelyNonFieldArtifact(field);
 }
 
 function sortByConfidence(left: FieldInsight, right: FieldInsight) {
@@ -171,6 +200,7 @@ export function DesignerLayersPanel() {
   const currentPdfPage = useDesignerStore((s) => s.currentPdfPage);
   const setCurrentPdfPage = useDesignerStore((s) => s.setCurrentPdfPage);
   const fields = useDesignerStore((s) => s.fields);
+  const ontologyFieldIds = useOntologyFieldIds();
   const selectedIds = useDesignerStore((s) => s.selectedIds);
   const selectField = useDesignerStore((s) => s.selectField);
   const selectFields = useDesignerStore((s) => s.selectFields);
@@ -179,48 +209,52 @@ export function DesignerLayersPanel() {
 
   const fieldInsights = useMemo(() => {
     return fields
-      .filter(isVisibleDesignerField)
+      .filter(
+        (field) =>
+          isVisibleDesignerField(field) &&
+          (ontologyFieldIds.size === 0 || ontologyFieldIds.has(field.id)),
+      )
       .map((field) => {
-      const ontologyCode = field.metadata?.acordCode?.trim() || "";
-      const ontology = ontologyCode ? resolveOntologySemanticMetadata(ontologyCode) : null;
-      const rawText = getFieldRawText(field).trim();
-      const semanticLabel = field.metadata?.semanticLabel?.trim() || "";
-      const acordLabel = field.metadata?.acordLabel?.trim() || "";
-      const aliasText = ontology?.aliases?.join(" ") || "";
-      const family = ontology?.family || "unassigned";
-      const searchText = [
-        rawText,
-        semanticLabel,
-        acordLabel,
-        field.metadata?.categoryMode || "",
-        ontology?.label || "",
-        ontology?.cluster || "",
-        family,
-        aliasText,
-        ontologyCode,
-        field.type,
-      ]
-        .join(" ")
-        .toLowerCase();
+        const ontologyCode = field.metadata?.acordCode?.trim() || "";
+        const ontology = ontologyCode ? resolveOntologySemanticMetadata(ontologyCode) : null;
+        const rawText = getFieldRawText(field).trim();
+        const semanticLabel = field.metadata?.semanticLabel?.trim() || "";
+        const acordLabel = field.metadata?.acordLabel?.trim() || "";
+        const aliasText = ontology?.aliases?.join(" ") || "";
+        const family = ontology?.family || "unassigned";
+        const searchText = [
+          rawText,
+          semanticLabel,
+          acordLabel,
+          field.metadata?.categoryMode || "",
+          ontology?.label || "",
+          ontology?.cluster || "",
+          family,
+          aliasText,
+          ontologyCode,
+          field.type,
+        ]
+          .join(" ")
+          .toLowerCase();
 
-      const cluster = inferClusterFromText(
-        [rawText, semanticLabel, acordLabel, ontology?.cluster || "", ontology?.label || "", aliasText].join(" "),
-      );
+        const cluster = inferClusterFromText(
+          [rawText, semanticLabel, acordLabel, ontology?.cluster || "", ontology?.label || "", aliasText].join(" "),
+        );
 
-      return {
-        field,
-        confidence: getConfidenceScore(field),
-        rawText,
-        searchText,
-        cluster,
-        family,
-        ontology,
-        aliasText,
-        label: getFieldLabel(field, ontology),
-        pageIndex: typeof field.pageIndex === "number" && Number.isFinite(field.pageIndex) ? field.pageIndex : null,
-      } satisfies FieldInsight;
+        return {
+          field,
+          confidence: getConfidenceScore(field),
+          rawText,
+          searchText,
+          cluster,
+          family,
+          ontology,
+          aliasText,
+          label: getFieldLabel(field, ontology),
+          pageIndex: typeof field.pageIndex === "number" && Number.isFinite(field.pageIndex) ? field.pageIndex : null,
+        } satisfies FieldInsight;
       });
-  }, [fields]);
+  }, [fields, ontologyFieldIds]);
 
   const selectedInsight = useMemo(() => {
     if (!selectedField) return null;

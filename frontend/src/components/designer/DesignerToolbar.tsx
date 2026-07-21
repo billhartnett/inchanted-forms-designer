@@ -475,6 +475,32 @@ export function DesignerToolbar({
             >
               Reset Zoom
             </button>
+            <button
+              type="button"
+              style={menuItemStyle}
+              onMouseEnter={(e) => onItemHover(e, true)}
+              onMouseLeave={(e) => onItemHover(e, false)}
+              onClick={() => {
+                fitPdfWidth();
+                closeMenus();
+              }}
+              disabled={!hasSelectedPdfSize}
+            >
+              Fit to Width
+            </button>
+            <button
+              type="button"
+              style={menuItemStyle}
+              onMouseEnter={(e) => onItemHover(e, true)}
+              onMouseLeave={(e) => onItemHover(e, false)}
+              onClick={() => {
+                fitPdfPage();
+                closeMenus();
+              }}
+              disabled={!hasSelectedPdfSize}
+            >
+              Fit to Page
+            </button>
             <label
               style={{
                 display: "flex",
