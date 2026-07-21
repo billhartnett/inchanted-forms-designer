@@ -167,6 +167,64 @@ function buildHeaderRowsByPage(fields: Field[]): Map<number, number[]> {
   return rowsByPage;
 }
 
+function buildInteractiveFieldsByPage(fields: Field[]): Map<number, Field[]> {
+  const byPage = new Map<number, Field[]>();
+  for (const field of fields) {
+    if (!isInteractiveFieldType(field)) continue;
+    const pageIndex = getPageIndex(field);
+    const list = byPage.get(pageIndex) || [];
+    list.push(field);
+    byPage.set(pageIndex, list);
+  }
+  return byPage;
+}
+
+function countAlignedInputsBelow(field: Field, interactiveFields: Field[]): number {
+  const left = field.x - 14;
+  const right = field.x + Math.max(24, field.width) + 14;
+  const yMin = field.y + 6;
+  const yMax = field.y + 420;
+
+  return interactiveFields.filter((item) => {
+    const centerX = item.x + Math.max(1, item.width) / 2;
+    return centerX >= left && centerX <= right && item.y >= yMin && item.y <= yMax;
+  }).length;
+}
+
+function hasInputDirectlyToRight(field: Field, interactiveFields: Field[], pageWidth: number): boolean {
+  const sourceTop = field.y - 10;
+  const sourceBottom = field.y + Math.max(16, field.height) + 10;
+  const minX = field.x + Math.max(8, field.width * 0.9);
+  const maxX = Math.min(pageWidth, field.x + pageWidth * 0.7);
+
+  return interactiveFields.some((item) => {
+    const itemTop = item.y;
+    const itemBottom = item.y + Math.max(1, item.height);
+    const overlapsY = itemBottom >= sourceTop && itemTop <= sourceBottom;
+    return overlapsY && item.x >= minX && item.x <= maxX;
+  });
+}
+
+function buildTableRegionByPage(
+  headerRowsByPage: Map<number, number[]>,
+  interactiveByPage: Map<number, Field[]>,
+  pageDimensionsByIndex: Map<number, { width: number; height: number }>,
+): Map<number, { top: number; bottom: number }> {
+  const regions = new Map<number, { top: number; bottom: number }>();
+  for (const [pageIndex, rows] of headerRowsByPage.entries()) {
+    if (rows.length === 0) continue;
+    const interactive = interactiveByPage.get(pageIndex) || [];
+    if (interactive.length < 2) continue;
+
+    const top = Math.min(...rows);
+    const bottomFromInputs = Math.max(...interactive.map((field) => field.y + Math.max(1, field.height)));
+    const pageHeight = pageDimensionsByIndex.get(pageIndex)?.height || 1600;
+    const bottom = Math.min(pageHeight, Math.max(top + 60, bottomFromInputs));
+    regions.set(pageIndex, { top, bottom });
+  }
+  return regions;
+}
+
 function isLikelyNonFieldArtifact(field: Field): boolean {
   if (isInteractiveFieldType(field)) {
     return false;
@@ -320,6 +378,7 @@ export function DesignerCanvas({
   const normalizedSearchQuery = fieldSearchQuery.trim().toLowerCase();
   const actionFilter = useMemo(() => parseActionFilter(fieldSearchQuery), [fieldSearchQuery]);
   const headerRowsByPage = useMemo(() => buildHeaderRowsByPage(fields), [fields]);
+  const interactiveByPage = useMemo(() => buildInteractiveFieldsByPage(fields), [fields]);
   const pageDimensionsByIndex = useMemo(() => {
     const byIndex = new Map<number, { width: number; height: number }>();
     pdfPages.forEach((page: any, index: number) => {
@@ -342,6 +401,10 @@ export function DesignerCanvas({
       ),
     [fields, ontologyFieldIds],
   );
+  const tableRegionByPage = useMemo(
+    () => buildTableRegionByPage(headerRowsByPage, interactiveByPage, pageDimensionsByIndex),
+    [headerRowsByPage, interactiveByPage, pageDimensionsByIndex],
+  );
 
   const visibleFields = fields.filter((field) => {
     if (field.metadata?.hidden) return false;
@@ -363,15 +426,24 @@ export function DesignerCanvas({
         const pageWidth = Math.max(1, pageDimensions.width);
         const bottom = field.y + Math.max(1, field.height);
         const headerRows = headerRowsByPage.get(pageIndex) || [];
+        const interactiveFields = interactiveByPage.get(pageIndex) || [];
+        const tableRegion = tableRegionByPage.get(pageIndex);
         const inHeaderRow = headerRows.some((y) => Math.abs(y - field.y) <= 16);
-        const inLeftColumn = field.x <= pageWidth * 0.35;
+        const inLeftColumn = field.x <= pageWidth * 0.25;
         const inFooterZone = bottom >= pageHeight * 0.9;
+        const hasInputToRight = hasInputDirectlyToRight(field, interactiveFields, pageWidth);
+        const alignedBelow = countAlignedInputsBelow(field, interactiveFields) >= 2;
+        const inTopTableRegion = Boolean(
+          tableRegion &&
+            field.y >= tableRegion.top - 8 &&
+            field.y <= tableRegion.top + Math.max(24, (tableRegion.bottom - tableRegion.top) * 0.1),
+        );
 
-        if (isTableHeaderText(rawText) && inHeaderRow) {
+        if (isTableHeaderText(rawText) && inHeaderRow && inTopTableRegion && alignedBelow) {
           return false;
         }
 
-        if (isRowLabelText(rawText) && inLeftColumn) {
+        if (isRowLabelText(rawText) && inLeftColumn && !hasInputToRight) {
           return false;
         }
 

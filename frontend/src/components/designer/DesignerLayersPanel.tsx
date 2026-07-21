@@ -277,6 +277,64 @@ function buildHeaderRowsByPage(fields: Field[]): Map<number, number[]> {
   return rowsByPage;
 }
 
+function buildInteractiveFieldsByPage(fields: Field[]): Map<number, Field[]> {
+  const byPage = new Map<number, Field[]>();
+  for (const field of fields) {
+    if (!isInteractiveFieldType(field)) continue;
+    const pageIndex = getPageIndex(field);
+    const list = byPage.get(pageIndex) || [];
+    list.push(field);
+    byPage.set(pageIndex, list);
+  }
+  return byPage;
+}
+
+function countAlignedInputsBelow(field: Field, interactiveFields: Field[]): number {
+  const left = field.x - 14;
+  const right = field.x + Math.max(24, field.width) + 14;
+  const yMin = field.y + 6;
+  const yMax = field.y + 420;
+
+  return interactiveFields.filter((item) => {
+    const centerX = item.x + Math.max(1, item.width) / 2;
+    return centerX >= left && centerX <= right && item.y >= yMin && item.y <= yMax;
+  }).length;
+}
+
+function hasInputDirectlyToRight(field: Field, interactiveFields: Field[], pageWidth: number): boolean {
+  const sourceTop = field.y - 10;
+  const sourceBottom = field.y + Math.max(16, field.height) + 10;
+  const minX = field.x + Math.max(8, field.width * 0.9);
+  const maxX = Math.min(pageWidth, field.x + pageWidth * 0.7);
+
+  return interactiveFields.some((item) => {
+    const itemTop = item.y;
+    const itemBottom = item.y + Math.max(1, item.height);
+    const overlapsY = itemBottom >= sourceTop && itemTop <= sourceBottom;
+    return overlapsY && item.x >= minX && item.x <= maxX;
+  });
+}
+
+function buildTableRegionByPage(
+  headerRowsByPage: Map<number, number[]>,
+  interactiveByPage: Map<number, Field[]>,
+  pageDimensionsByIndex: Map<number, { width: number; height: number }>,
+): Map<number, { top: number; bottom: number }> {
+  const regions = new Map<number, { top: number; bottom: number }>();
+  for (const [pageIndex, rows] of headerRowsByPage.entries()) {
+    if (rows.length === 0) continue;
+    const interactive = interactiveByPage.get(pageIndex) || [];
+    if (interactive.length < 2) continue;
+
+    const top = Math.min(...rows);
+    const bottomFromInputs = Math.max(...interactive.map((field) => field.y + Math.max(1, field.height)));
+    const pageHeight = pageDimensionsByIndex.get(pageIndex)?.height || 1600;
+    const bottom = Math.min(pageHeight, Math.max(top + 60, bottomFromInputs));
+    regions.set(pageIndex, { top, bottom });
+  }
+  return regions;
+}
+
 function isLikelyNonFieldArtifact(field: Field): boolean {
   if (isInteractiveFieldType(field)) {
     return false;
@@ -337,6 +395,8 @@ function isLayoutArtifactInMappingMode(
   pageWidth: number,
   pageHeight: number,
   headerRows: number[],
+  interactiveFields: Field[],
+  tableRegion?: { top: number; bottom: number },
 ): boolean {
   if (isInteractiveFieldType(field)) {
     return false;
@@ -344,12 +404,19 @@ function isLayoutArtifactInMappingMode(
 
   const rawText = normalizeText(getFieldRawText(field));
   const inHeaderRow = headerRows.some((y) => Math.abs(y - field.y) <= 16);
-  const inLeftColumn = field.x <= pageWidth * 0.35;
+  const inLeftColumn = field.x <= pageWidth * 0.25;
   const bottom = field.y + Math.max(1, field.height);
   const inFooterZone = bottom >= pageHeight * 0.9;
+  const hasInputToRight = hasInputDirectlyToRight(field, interactiveFields, pageWidth);
+  const alignedBelow = countAlignedInputsBelow(field, interactiveFields) >= 2;
+  const inTopTableRegion = Boolean(
+    tableRegion &&
+      field.y >= tableRegion.top - 8 &&
+      field.y <= tableRegion.top + Math.max(24, (tableRegion.bottom - tableRegion.top) * 0.1),
+  );
 
-  if (isTableHeaderText(rawText) && inHeaderRow) return true;
-  if (isRowLabelText(rawText) && inLeftColumn) return true;
+  if (isTableHeaderText(rawText) && inHeaderRow && inTopTableRegion && alignedBelow) return true;
+  if (isRowLabelText(rawText) && inLeftColumn && !hasInputToRight) return true;
   if (/^(yes|no)$/i.test(rawText)) return true;
   if (inFooterZone) return true;
   return false;
@@ -402,6 +469,7 @@ export function DesignerLayersPanel() {
     return byIndex;
   }, [pdfPages]);
   const headerRowsByPage = useMemo(() => buildHeaderRowsByPage(fields), [fields]);
+  const interactiveByPage = useMemo(() => buildInteractiveFieldsByPage(fields), [fields]);
   const isMappingMode = useMemo(
     () =>
       ontologyFieldIds.size > 0 ||
@@ -411,6 +479,10 @@ export function DesignerLayersPanel() {
           typeof field.metadata?.extractionBlockId === "string",
       ),
     [fields, ontologyFieldIds],
+  );
+  const tableRegionByPage = useMemo(
+    () => buildTableRegionByPage(headerRowsByPage, interactiveByPage, pageDimensionsByIndex),
+    [headerRowsByPage, interactiveByPage, pageDimensionsByIndex],
   );
 
   const fieldInsights = useMemo(() => {
@@ -432,7 +504,16 @@ export function DesignerLayersPanel() {
           const pageIndex = getPageIndex(field);
           const pageDimensions = pageDimensionsByIndex.get(pageIndex) || { width: 1200, height: 1600 };
           const headerRows = headerRowsByPage.get(pageIndex) || [];
-          return !isLayoutArtifactInMappingMode(field, pageDimensions.width, pageDimensions.height, headerRows);
+          const interactiveFields = interactiveByPage.get(pageIndex) || [];
+          const tableRegion = tableRegionByPage.get(pageIndex);
+          return !isLayoutArtifactInMappingMode(
+            field,
+            pageDimensions.width,
+            pageDimensions.height,
+            headerRows,
+            interactiveFields,
+            tableRegion,
+          );
         },
       )
       .map((field) => {
@@ -475,7 +556,7 @@ export function DesignerLayersPanel() {
           pageIndex: typeof field.pageIndex === "number" && Number.isFinite(field.pageIndex) ? field.pageIndex : null,
         } satisfies FieldInsight;
       });
-  }, [fields, headerRowsByPage, isMappingMode, ontologyFieldIds, pageDimensionsByIndex]);
+  }, [fields, headerRowsByPage, interactiveByPage, isMappingMode, ontologyFieldIds, pageDimensionsByIndex, tableRegionByPage]);
 
   const selectedInsight = useMemo(() => {
     if (!selectedField) return null;
