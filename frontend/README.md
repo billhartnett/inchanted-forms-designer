@@ -71,3 +71,5 @@ export default defineConfig([
   },
 ])
 ```
+
+Deployment trigger: 2026-07-21.
