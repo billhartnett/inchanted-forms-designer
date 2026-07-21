@@ -395,6 +395,7 @@ export function DesignerCanvas({
   const fieldGroupRefs = useRef<Map<string, any>>(new Map());
 
   const fields = useDesignerStore((s) => s.fields);
+  const extractedFields = useExtractionStore((s) => s.fields as Field[]);
   const textBlocks = useExtractionStore((s) => s.textBlocks);
   const routedClusters = useMappingStore((s) => s.routedClusters);
   const ontologyFieldIds = useOntologyFieldIds();
@@ -408,10 +409,25 @@ export function DesignerCanvas({
   const selectField = useDesignerStore((s) => s.selectField);
   const selectedFields = useSelectedFields();
 
+  const sourceFields = useMemo(() => {
+    if (extractedFields.length === 0) {
+      return fields;
+    }
+
+    const merged = new Map<string, Field>();
+    for (const field of extractedFields) {
+      merged.set(field.id, field);
+    }
+    for (const field of fields) {
+      merged.set(field.id, field);
+    }
+    return Array.from(merged.values());
+  }, [extractedFields, fields]);
+
   const normalizedSearchQuery = fieldSearchQuery.trim().toLowerCase();
   const actionFilter = useMemo(() => parseActionFilter(fieldSearchQuery), [fieldSearchQuery]);
-  const headerRowsByPage = useMemo(() => buildHeaderRowsByPage(fields), [fields]);
-  const interactiveByPage = useMemo(() => buildInteractiveFieldsByPage(fields), [fields]);
+  const headerRowsByPage = useMemo(() => buildHeaderRowsByPage(sourceFields), [sourceFields]);
+  const interactiveByPage = useMemo(() => buildInteractiveFieldsByPage(sourceFields), [sourceFields]);
   const pageDimensionsByIndex = useMemo(() => {
     const byIndex = new Map<number, { width: number; height: number }>();
     pdfPages.forEach((page: any, index: number) => {
@@ -427,68 +443,21 @@ export function DesignerCanvas({
   const isMappingMode = useMemo(
     () =>
       ontologyFieldIds.size > 0 ||
-      fields.some(
+      sourceFields.some(
         (field) =>
           typeof field.metadata?.artifactClassification === "string" ||
           typeof field.metadata?.extractionBlockId === "string",
       ),
-    [fields, ontologyFieldIds],
+    [ontologyFieldIds, sourceFields],
   );
   const tableRegionByPage = useMemo(
     () => buildTableRegionByPage(headerRowsByPage, interactiveByPage, pageDimensionsByIndex),
     [headerRowsByPage, interactiveByPage, pageDimensionsByIndex],
   );
 
-  const visibleFields = fields.filter((field) => {
+  const visibleFields = sourceFields.filter((field) => {
     if (field.metadata?.hidden) return false;
     if (ontologyFieldIds.size > 0 && !ontologyFieldIds.has(field.id)) return false;
-
-    if (isMappingMode) {
-      if (isLikelyNonFieldArtifact(field)) {
-        return false;
-      }
-
-      if (!isInteractiveFieldType(field)) {
-        const rawText = normalizeText(getFieldRawText(field));
-        const pageIndex = getPageIndex(field);
-        const pageDimensions = pageDimensionsByIndex.get(pageIndex) || {
-          width: canvasSurfaceWidth,
-          height: canvasSurfaceHeight,
-        };
-        const pageHeight = Math.max(1, pageDimensions.height);
-        const pageWidth = Math.max(1, pageDimensions.width);
-        const bottom = field.y + Math.max(1, field.height);
-        const headerRows = headerRowsByPage.get(pageIndex) || [];
-        const interactiveFields = interactiveByPage.get(pageIndex) || [];
-        const tableRegion = tableRegionByPage.get(pageIndex);
-        const inHeaderRow = headerRows.some((y) => Math.abs(y - field.y) <= 16);
-        const inLeftColumn = field.x <= pageWidth * 0.25;
-        const inFooterZone = bottom >= pageHeight * 0.9;
-        const hasInputInside = hasInputInsideBoundingBox(field, interactiveFields);
-        const alignedBelow = countAlignedInputsBelow(field, interactiveFields) >= 2;
-        const inTopTableRegion = Boolean(
-          tableRegion &&
-            field.y >= tableRegion.top - 8 &&
-            field.y <= tableRegion.top + Math.max(24, (tableRegion.bottom - tableRegion.top) * 0.1),
-        );
-
-        if (isTableHeaderText(rawText) && inHeaderRow && inTopTableRegion && alignedBelow) {
-          return false;
-        }
-
-        if (isRowLabelText(rawText) && inLeftColumn && !hasInputInside) {
-          return false;
-        }
-
-        if (inFooterZone) {
-          return false;
-        }
-
-        if (/^(yes|no)$/i.test(rawText)) {
-          return false;
-        }
-      }
-    }
 
     if (actionFilter.ids.size > 0) {
       return actionFilter.ids.has(field.id);
@@ -583,20 +552,29 @@ export function DesignerCanvas({
       return true;
     }
 
-    const hasInputGeometry = hasOverlappingInputGeometry(field, interactiveFields);
-
-    if (field.type === "text" && !hasInputGeometry) {
+    if (field.type !== "text") {
       return false;
     }
 
-    if (field.x < pageWidth * 0.25 && !hasInputGeometry) {
+    if (isLikelyNonFieldArtifact(field)) {
+      return false;
+    }
+
+    const hasInputGeometry = hasOverlappingInputGeometry(field, interactiveFields);
+    const isRowLabel = isRowLabelText(rawText);
+    const isTableHeader = isTableHeaderText(rawText);
+    const isQuestionLabel = isQuestionLabelText(rawText);
+    const isYesNo = rawText === "yes" || rawText === "no";
+    const isLegalOrDecorative = containsPhrase(rawText, LEGAL_DECORATIVE_PATTERNS);
+
+    if (isRowLabel || isTableHeader || isQuestionLabel || isYesNo || isLegalOrDecorative) {
       return false;
     }
 
     const headerRegionY = tableRegion
       ? tableRegion.top + (tableRegion.bottom - tableRegion.top) * 0.1
       : pageHeight * 0.1;
-    if (field.y < headerRegionY && countAlignedInputsBelow(field, interactiveFields) >= 2) {
+    if ((field.y < headerRegionY && countAlignedInputsBelow(field, interactiveFields) >= 2) || isTableHeader) {
       return false;
     }
 
@@ -607,11 +585,11 @@ export function DesignerCanvas({
     const answerFieldX = interactiveFields.length
       ? Math.min(...interactiveFields.map((item) => item.x))
       : pageWidth * 0.45;
-    if (field.x < answerFieldX && !hasInputGeometry && isQuestionLabelText(rawText)) {
+    if (field.x < answerFieldX && !hasInputGeometry && isQuestionLabel) {
       return false;
     }
 
-    if ((rawText === "yes" || rawText === "no") && field.type !== "checkbox") {
+    if (isYesNo) {
       return false;
     }
 
@@ -619,9 +597,41 @@ export function DesignerCanvas({
       return false;
     }
 
+    const inputLikeWidth = field.width >= 70;
+    const inputLikeHeight = field.height >= 16;
+    const hasFieldValueHint =
+      String(field.metadata?.artifactClassification || "").toLowerCase() === "field_value" ||
+      Boolean(String(field.metadata?.acordCode || "").trim()) ||
+      Boolean(String(field.metadata?.extractionBlockId || "").trim());
+
+    if (hasInputGeometry || hasFieldValueHint || (inputLikeWidth && inputLikeHeight)) {
+      return true;
+    }
+
+    if (field.x < pageWidth * 0.25) {
+      return false;
+    }
+
     return true;
   };
 
+  /**
+   * Mapping Mode Filtering Architecture
+   *
+   * ALL non-field suppression (row labels, table headings, footers,
+   * question text, yes/no labels, legal text, decorative text) happens
+   * HERE, immediately before visibleFields.map().
+   *
+   * This ensures:
+   * - Canvas rendering is correct
+   * - Left panel uses the filtered list
+   * - Right panel uses the filtered list
+   * - Similar Fields uses the filtered list
+   * - ACORD mapping uses the filtered list
+   * - Calibration uses the filtered list
+   *
+   * No other component should implement field filtering.
+   */
   const filteredVisibleFields = visibleFields.filter((f) => isRealField(f));
   const renderedVisibleFields = isMappingMode ? filteredVisibleFields : visibleFields;
 
