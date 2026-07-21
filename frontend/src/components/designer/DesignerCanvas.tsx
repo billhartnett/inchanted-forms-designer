@@ -60,10 +60,15 @@ function isInteractiveFieldType(field: Field): boolean {
 const TABLE_HEADER_PATTERNS = [
   "class",
   "subbed cost",
+  "employee payroll",
+  "receipts",
   "payroll",
+  "cost",
+  "year",
   "percentage",
   "value",
   "describe",
+  "description",
   "please explain",
   "other",
   "if yes, please explain",
@@ -74,6 +79,7 @@ const TABLE_HEADER_PATTERNS = [
 
 const ROW_LABEL_PATTERNS = [
   "mechanical",
+  "carpentry - dwellings",
   "carpentry - interior",
   "carpentry – interior",
   "air conditioning/heating",
@@ -88,6 +94,13 @@ const ROW_LABEL_PATTERNS = [
   "railroads",
   "ports",
   "airports",
+  "roofing - residential",
+  "roofing - commercial",
+  "plumbing - residential",
+  "plumbing - commercial",
+  "road/highway/bridge",
+  "swimming pool construction",
+  "wrecking/demolition",
 ];
 
 const QUESTION_LABEL_PATTERNS = [
@@ -98,6 +111,20 @@ const QUESTION_LABEL_PATTERNS = [
   "in the past five years",
   "if yes",
   "please explain",
+  "describe your",
+  "please provide",
+];
+
+const LEGAL_DECORATIVE_PATTERNS = [
+  "fair credit reporting act",
+  "fraud warning",
+  "fraud notice",
+  "this application does not bind",
+  "read all statements carefully",
+  "contractor's supplemental application",
+  "contractor’s supplemental application",
+  "logo",
+  "slogan",
 ];
 
 function containsPhrase(text: string, phrases: string[]): boolean {
@@ -191,17 +218,15 @@ function countAlignedInputsBelow(field: Field, interactiveFields: Field[]): numb
   }).length;
 }
 
-function hasInputDirectlyToRight(field: Field, interactiveFields: Field[], pageWidth: number): boolean {
-  const sourceTop = field.y - 10;
-  const sourceBottom = field.y + Math.max(16, field.height) + 10;
-  const minX = field.x + Math.max(8, field.width * 0.9);
-  const maxX = Math.min(pageWidth, field.x + pageWidth * 0.7);
-
+function hasInputInsideBoundingBox(field: Field, interactiveFields: Field[]): boolean {
+  const left = field.x;
+  const right = field.x + Math.max(1, field.width);
+  const top = field.y;
+  const bottom = field.y + Math.max(1, field.height);
   return interactiveFields.some((item) => {
-    const itemTop = item.y;
-    const itemBottom = item.y + Math.max(1, item.height);
-    const overlapsY = itemBottom >= sourceTop && itemTop <= sourceBottom;
-    return overlapsY && item.x >= minX && item.x <= maxX;
+    const centerX = item.x + Math.max(1, item.width) / 2;
+    const centerY = item.y + Math.max(1, item.height) / 2;
+    return centerX >= left && centerX <= right && centerY >= top && centerY <= bottom;
   });
 }
 
@@ -254,11 +279,19 @@ function isLikelyNonFieldArtifact(field: Field): boolean {
     return true;
   }
 
+  if (containsPhrase(rawText, LEGAL_DECORATIVE_PATTERNS)) {
+    return true;
+  }
+
+  if (rawText.length >= 220) {
+    return true;
+  }
+
   if (/\b[a-z]{2,6}\s*\d{3,5}\s+\d{2}\s+\d{2}\b/i.test(rawText)) {
     return true;
   }
 
-  return /\b(logo|copyright|all rights reserved|confidential|proprietary|disclaimer|sample|specimen|header|footer|section title|section\s+\d+|table of contents|instructions?|for office use only|application|applicant information|general contractor\/artisan contractor|to be attached to acord applications|page\s+\d+\s+of\s+\d+|markel|evanston)\b/i.test(
+  return /\b(logo|copyright|all rights reserved|confidential|proprietary|disclaimer|sample|specimen|header|footer|section title|section\s+\d+|table of contents|instructions?|for office use only|application|applicant information|general contractor\/artisan contractor|to be attached to acord applications|page\s+\d+\s+of\s+\d+|markel|evanston|fair credit reporting act|fraud warning|fraud notice|contractor['’]s supplemental application)\b/i.test(
     combinedText,
   );
 }
@@ -431,7 +464,7 @@ export function DesignerCanvas({
         const inHeaderRow = headerRows.some((y) => Math.abs(y - field.y) <= 16);
         const inLeftColumn = field.x <= pageWidth * 0.25;
         const inFooterZone = bottom >= pageHeight * 0.9;
-        const hasInputToRight = hasInputDirectlyToRight(field, interactiveFields, pageWidth);
+        const hasInputInside = hasInputInsideBoundingBox(field, interactiveFields);
         const alignedBelow = countAlignedInputsBelow(field, interactiveFields) >= 2;
         const inTopTableRegion = Boolean(
           tableRegion &&
@@ -443,7 +476,7 @@ export function DesignerCanvas({
           return false;
         }
 
-        if (isRowLabelText(rawText) && inLeftColumn && !hasInputToRight) {
+        if (isRowLabelText(rawText) && inLeftColumn && !hasInputInside) {
           return false;
         }
 
