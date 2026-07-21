@@ -157,9 +157,9 @@ function isLikelyNonFieldArtifact(field: Field): boolean {
     return true;
   }
 
-  return /\b(logo|copyright|all rights reserved|confidential|proprietary|disclaimer|sample|specimen|header|footer|section title|section\s+\d+|table of contents|instructions?|for office use only)\b/i.test(
+  return /\b(logo|copyright|all rights reserved|confidential|proprietary|disclaimer|sample|specimen|header|footer|section title|section\s+\d+|table of contents|instructions?|for office use only|application|applicant information|general contractor\/artisan contractor|to be attached to acord applications|page\s+\d+\s+of\s+\d+|markel|evanston)\b/i.test(
     combinedText,
-  ) || /\b(markel|insurance company|subcontractors|application|general contractor\/artisan contractor|homes\/units\?|do you\b|are you\b|have you\b)\b/i.test(
+  ) || /\b(markel|evanston|insurance company|subcontractors|application|general contractor\/artisan contractor|homes\/units\?|do you\b|are you\b|have you\b)\b/i.test(
     combinedText,
   );
 }
@@ -189,6 +189,17 @@ export function DesignerRightPanel() {
   const chooseCandidate = useMappingStore((state) => state.chooseCandidate);
   const unlinkFieldAssociation = useMappingStore((state) => state.unlinkFieldAssociation);
 
+  const isMappingContext = useMemo(
+    () =>
+      ontologyFieldIds.size > 0 ||
+      fields.some(
+        (field) =>
+          typeof field.metadata?.artifactClassification === "string" ||
+          typeof field.metadata?.extractionBlockId === "string",
+      ),
+    [fields, ontologyFieldIds],
+  );
+
   const selectedFieldMetadata = selectedField?.metadata;
   const isMappingMode = Boolean(selectedField);
 
@@ -204,7 +215,7 @@ export function DesignerRightPanel() {
         (field) =>
           (field.metadata?.artifactClassification === "field_label" ||
             field.metadata?.artifactClassification === "field_value") &&
-          !isLikelyNonFieldArtifact(field) &&
+          (!isMappingContext || !isLikelyNonFieldArtifact(field)) &&
           (ontologyFieldIds.size === 0 || ontologyFieldIds.has(field.id)),
       )
       .map((field) => {
@@ -245,7 +256,7 @@ export function DesignerRightPanel() {
         semanticTokens: tokenizeText([semanticLabel, rawText, ontology?.label || ""].join(" ")),
       } satisfies FieldMatch;
       });
-  }, [fields, ontologyFieldIds]);
+  }, [fields, isMappingContext, ontologyFieldIds]);
 
   const similarFields = useMemo(() => {
     if (!selectedField) {

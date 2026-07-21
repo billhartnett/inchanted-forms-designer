@@ -181,16 +181,30 @@ function isLikelyNonFieldArtifact(field: Field): boolean {
     return true;
   }
 
-  return /\b(logo|copyright|all rights reserved|confidential|proprietary|disclaimer|sample|specimen|header|footer|section title|section\s+\d+|\d+\.\s+[A-Z][A-Z\s]+|table of contents|instructions?|for office use only|page\s+\d+\s+of\s+\d+)\b/i.test(
+  return /\b(logo|copyright|all rights reserved|confidential|proprietary|disclaimer|sample|specimen|header|footer|section title|section\s+\d+|\d+\.\s+[A-Z][A-Z\s]+|table of contents|instructions?|for office use only|page\s+\d+\s+of\s+\d+|application|applicant information|to be attached to acord applications|general contractor\/artisan contractor|markel|evanston)\b/i.test(
     combinedText,
-  ) || /\b(markel|insurance company|subcontractors|application|general contractor\/artisan contractor|homes\/units\?|do you\b|are you\b|have you\b|please\s+attach|notwithstanding|this\s+application|coverage\s+question)\b/i.test(
+  ) || /\b(markel|evanston|insurance company|subcontractors|application|general contractor\/artisan contractor|homes\/units\?|do you\b|are you\b|have you\b|please\s+attach|notwithstanding|this\s+application|coverage\s+question)\b/i.test(
     combinedText,
   );
 }
 
-function isVisibleDesignerField(field: Field): boolean {
+function isVisibleDesignerField(field: Field, isMappingMode: boolean): boolean {
   const classification = field.metadata?.artifactClassification;
-  return (classification === "field_label" || classification === "field_value") && !isLikelyNonFieldArtifact(field);
+  if (classification !== "field_label" && classification !== "field_value") {
+    return false;
+  }
+
+  if (!isMappingMode) {
+    return true;
+  }
+
+  return !isLikelyNonFieldArtifact(field);
+}
+
+function buildActionFilter(kind: "cluster" | "grouping" | "instance", label: string, fieldIds: string[]): string {
+  const safeLabel = label.replace(/\s+/g, " ").trim();
+  const ids = fieldIds.join(",");
+  return `${kind}:${safeLabel} @ids:${ids}`;
 }
 
 function sortByConfidence(left: FieldInsight, right: FieldInsight) {
@@ -221,12 +235,22 @@ export function DesignerLayersPanel() {
   const selectFields = useDesignerStore((s) => s.selectFields);
   const updateField = useDesignerStore((s) => s.updateField);
   const selectedField = useSelectedField();
+  const isMappingMode = useMemo(
+    () =>
+      ontologyFieldIds.size > 0 ||
+      fields.some(
+        (field) =>
+          typeof field.metadata?.artifactClassification === "string" ||
+          typeof field.metadata?.extractionBlockId === "string",
+      ),
+    [fields, ontologyFieldIds],
+  );
 
   const fieldInsights = useMemo(() => {
     return fields
       .filter(
         (field) =>
-          isVisibleDesignerField(field) &&
+          isVisibleDesignerField(field, isMappingMode) &&
           (ontologyFieldIds.size === 0 || ontologyFieldIds.has(field.id)),
       )
       .map((field) => {
@@ -269,7 +293,7 @@ export function DesignerLayersPanel() {
           pageIndex: typeof field.pageIndex === "number" && Number.isFinite(field.pageIndex) ? field.pageIndex : null,
         } satisfies FieldInsight;
       });
-  }, [fields, ontologyFieldIds]);
+  }, [fields, isMappingMode, ontologyFieldIds]);
 
   const selectedInsight = useMemo(() => {
     if (!selectedField) return null;
@@ -359,7 +383,8 @@ export function DesignerLayersPanel() {
   };
 
   const filterToCluster = (clusterLabel: string, fieldId: string, fieldIds?: string[]) => {
-    setFieldSearchQuery(clusterLabel);
+    const ids = fieldIds && fieldIds.length > 0 ? fieldIds : [fieldId];
+    setFieldSearchQuery(buildActionFilter("cluster", clusterLabel, ids));
     if (fieldIds && fieldIds.length > 0) {
       selectFields(fieldIds);
     }
@@ -369,13 +394,13 @@ export function DesignerLayersPanel() {
   const focusGrouping = (bucket: ClusterBucket) => {
     const ids = bucket.fields.map((item) => item.field.id);
     if (ids.length === 0) return;
-    setFieldSearchQuery(bucket.label);
+    setFieldSearchQuery(buildActionFilter("grouping", bucket.label, ids));
     selectFields(ids);
     focusField(ids[0]);
   };
 
   const focusInstance = (instance: MultiInstanceObject) => {
-    setFieldSearchQuery(instance.clusterLabel);
+    setFieldSearchQuery(buildActionFilter("instance", instance.label, instance.fieldIds));
     selectFields(instance.fieldIds);
     if (instance.pageIndex !== null && instance.pageIndex >= 0 && pdfPages.length > 0) {
       setCurrentPdfPage(instance.pageIndex);
@@ -603,6 +628,7 @@ export function DesignerLayersPanel() {
           {suggestedGroupings.map((bucket) => (
             <div
               key={`suggested-${bucket.label}`}
+              onClick={() => focusGrouping(bucket)}
               style={{
                 border: "1px solid #d9e2ec",
                 borderRadius: 10,
@@ -610,6 +636,7 @@ export function DesignerLayersPanel() {
                 padding: 10,
                 display: "grid",
                 gap: 6,
+                cursor: "pointer",
               }}
             >
               <div style={{ display: "flex", justifyContent: "space-between", gap: 8 }}>

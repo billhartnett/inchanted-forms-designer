@@ -36,6 +36,87 @@ function deriveOntologyClusterLabel(field: Field, routedClusterFallback?: string
   return derived;
 }
 
+function getFieldRawText(field: Field): string {
+  if (field.type === "text") return field.text || "";
+  if (field.type === "checkbox" || field.type === "radio") return field.label || "";
+  if (field.type === "dropdown") return field.selectedOption || field.placeholder || "";
+  if (field.type === "date") return field.value || field.placeholder || "";
+  if (field.type === "numeric") return field.value?.toString() || field.placeholder || "";
+  if (field.type === "signature") return field.placeholder || "Sign here";
+  return "";
+}
+
+function isLikelyNonFieldArtifact(field: Field): boolean {
+  if (field.type === "checkbox" || field.type === "radio" || field.type === "dropdown" || field.type === "date" || field.type === "numeric" || field.type === "signature") {
+    return false;
+  }
+
+  const classification = field.metadata?.artifactClassification;
+  if (classification === "non_field_artifact") {
+    return true;
+  }
+
+  const rawText = getFieldRawText(field).trim().toLowerCase();
+  if (/^(yes|no)$/i.test(rawText)) {
+    return true;
+  }
+
+  const combinedText = [
+    field.metadata?.semanticLabel || "",
+    field.metadata?.acordLabel || "",
+    field.metadata?.acordDescription || "",
+    field.metadata?.categoryMode || "",
+    rawText,
+  ]
+    .join(" ")
+    .toLowerCase();
+
+  return /\b(logo|copyright|all rights reserved|confidential|proprietary|disclaimer|sample|specimen|header|footer|section title|section\s+\d+|table of contents|instructions?|for office use only|application|applicant information|general contractor\/artisan contractor|to be attached to acord applications|page\s+\d+\s+of\s+\d+|markel|evanston)\b/i.test(
+    combinedText,
+  );
+}
+
+function inferClusterFromText(searchText: string): string {
+  const haystack = searchText.toLowerCase();
+  const clusterKeywords: Array<{ label: string; keywords: string[] }> = [
+    { label: "Contact Information", keywords: ["contact", "name", "insured", "producer", "broker", "agent", "phone", "email", "address"] },
+    { label: "Business Details", keywords: ["business", "company", "entity", "legal", "industry", "fein", "tax", "years in business", "corporation"] },
+    { label: "Locations", keywords: ["location", "premises", "site", "address", "office", "branch", "facility", "building"] },
+    { label: "Operations", keywords: ["operations", "operation", "services", "products", "work", "exposure", "hazard", "description"] },
+    { label: "Coverage Questions", keywords: ["coverage", "limit", "deductible", "policy", "quote", "premium", "endorsement", "requested"] },
+    { label: "Loss History", keywords: ["loss", "claim", "accident", "incident", "date of loss", "history", "settlement"] },
+    { label: "Prior Insurance", keywords: ["prior insurance", "previous insurance", "carrier", "renewal", "expiration", "policy number"] },
+    { label: "Additional Interests", keywords: ["additional interest", "mortgagee", "lender", "loss payee", "certificate", "holder"] },
+  ];
+
+  for (const bucket of clusterKeywords) {
+    if (bucket.keywords.some((keyword) => haystack.includes(keyword))) {
+      return bucket.label;
+    }
+  }
+
+  return "Miscellaneous";
+}
+
+function parseActionFilter(query: string): { ids: Set<string>; mode: "cluster" | "grouping" | "instance" | null } {
+  const marker = "@ids:";
+  const markerIndex = query.indexOf(marker);
+  if (markerIndex === -1) {
+    return { ids: new Set<string>(), mode: null };
+  }
+
+  const prefix = query.slice(0, markerIndex).trim().toLowerCase();
+  const idsRaw = query.slice(markerIndex + marker.length).trim();
+  const ids = new Set(idsRaw.split(",").map((item) => item.trim()).filter((item) => item.length > 0));
+
+  let mode: "cluster" | "grouping" | "instance" | null = null;
+  if (prefix.startsWith("cluster:")) mode = "cluster";
+  if (prefix.startsWith("grouping:")) mode = "grouping";
+  if (prefix.startsWith("instance:")) mode = "instance";
+
+  return { ids, mode };
+}
+
 type StageLike = {
   scaleX: () => number;
   scale: (value: { x: number; y: number }) => void;
@@ -108,10 +189,30 @@ export function DesignerCanvas({
   const selectedFields = useSelectedFields();
 
   const normalizedSearchQuery = fieldSearchQuery.trim().toLowerCase();
+  const actionFilter = useMemo(() => parseActionFilter(fieldSearchQuery), [fieldSearchQuery]);
+  const isMappingMode = useMemo(
+    () =>
+      ontologyFieldIds.size > 0 ||
+      fields.some(
+        (field) =>
+          typeof field.metadata?.artifactClassification === "string" ||
+          typeof field.metadata?.extractionBlockId === "string",
+      ),
+    [fields, ontologyFieldIds],
+  );
 
   const visibleFields = fields.filter((field) => {
     if (field.metadata?.hidden) return false;
     if (ontologyFieldIds.size > 0 && !ontologyFieldIds.has(field.id)) return false;
+
+    if (isMappingMode && isLikelyNonFieldArtifact(field)) {
+      return false;
+    }
+
+    if (actionFilter.ids.size > 0) {
+      return actionFilter.ids.has(field.id);
+    }
+
     if (pdfPages.length === 0) return true;
     if (field.pageIndex === null || field.pageIndex === undefined) return true;
     if (field.pageIndex !== currentPdfPage) return false;
@@ -133,6 +234,14 @@ export function DesignerCanvas({
     ]
       .join(" ")
       .toLowerCase();
+
+    if (normalizedSearchQuery.startsWith("cluster:") || normalizedSearchQuery.startsWith("grouping:")) {
+      const semanticLabel = field.metadata?.semanticLabel || "";
+      const acordLabel = field.metadata?.acordLabel || "";
+      const cluster = inferClusterFromText([getFieldRawText(field), semanticLabel, acordLabel].join(" "));
+      const wanted = normalizedSearchQuery.split(":")[1]?.split("@ids:")[0]?.trim() || "";
+      return cluster.toLowerCase() === wanted;
+    }
 
     return searchableText.includes(normalizedSearchQuery);
   });
