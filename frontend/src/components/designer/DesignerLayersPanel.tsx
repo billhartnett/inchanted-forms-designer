@@ -156,8 +156,66 @@ function renderConfidenceBadge(score: number) {
   );
 }
 
+function isInteractiveFieldType(field: Field): boolean {
+  return (
+    field.type === "checkbox" ||
+    field.type === "radio" ||
+    field.type === "dropdown" ||
+    field.type === "date" ||
+    field.type === "numeric" ||
+    field.type === "signature"
+  );
+}
+
+const TABLE_HEADER_PATTERNS = [
+  "class",
+  "subbed cost",
+  "payroll",
+  "percentage",
+  "value",
+  "describe",
+  "please explain",
+  "other",
+  "if yes, please explain",
+  "if yes, list state(s)",
+  "what is the maximum height",
+  "what is the maximum depth",
+];
+
+const ROW_LABEL_PATTERNS = [
+  "mechanical",
+  "carpentry - interior",
+  "carpentry – interior",
+  "air conditioning/heating",
+  "electrical work",
+  "retaining walls",
+  "pile driving",
+  "caissons",
+  "boiler installation",
+  "gas stations",
+  "public utilities",
+  "chemical plants",
+  "railroads",
+  "ports",
+  "airports",
+];
+
+const QUESTION_LABEL_PATTERNS = [
+  "do you",
+  "have you",
+  "are you",
+  "were there",
+  "in the past five years",
+  "if yes",
+  "please explain",
+];
+
+function containsPhrase(text: string, phrases: string[]): boolean {
+  return phrases.some((phrase) => text.includes(phrase));
+}
+
 function isLikelyNonFieldArtifact(field: Field): boolean {
-  if (field.type === "checkbox" || field.type === "radio" || field.type === "dropdown" || field.type === "date" || field.type === "numeric" || field.type === "signature") {
+  if (isInteractiveFieldType(field)) {
     return false;
   }
 
@@ -181,6 +239,22 @@ function isLikelyNonFieldArtifact(field: Field): boolean {
     return true;
   }
 
+  if (containsPhrase(rawText, TABLE_HEADER_PATTERNS)) {
+    return true;
+  }
+
+  if (containsPhrase(rawText, ROW_LABEL_PATTERNS)) {
+    return true;
+  }
+
+  if (containsPhrase(rawText, QUESTION_LABEL_PATTERNS)) {
+    return true;
+  }
+
+  if (/\b[a-z]{2,6}\s*\d{3,5}\s+\d{2}\s+\d{2}\b/i.test(rawText)) {
+    return true;
+  }
+
   return /\b(logo|copyright|all rights reserved|confidential|proprietary|disclaimer|sample|specimen|header|footer|section title|section\s+\d+|\d+\.\s+[A-Z][A-Z\s]+|table of contents|instructions?|for office use only|page\s+\d+\s+of\s+\d+|application|applicant information|to be attached to acord applications|general contractor\/artisan contractor|markel|evanston)\b/i.test(
     combinedText,
   ) || /\b(markel|evanston|insurance company|subcontractors|application|general contractor\/artisan contractor|homes\/units\?|do you\b|are you\b|have you\b|please\s+attach|notwithstanding|this\s+application|coverage\s+question)\b/i.test(
@@ -190,9 +264,11 @@ function isLikelyNonFieldArtifact(field: Field): boolean {
 
 function isVisibleDesignerField(field: Field, isMappingMode: boolean): boolean {
   const classification = field.metadata?.artifactClassification;
-  if (classification !== "field_label" && classification !== "field_value") {
-    return false;
+  if (isInteractiveFieldType(field)) {
+    return true;
   }
+
+  if (classification !== "field_label" && classification !== "field_value") return false;
 
   if (!isMappingMode) {
     return true;
