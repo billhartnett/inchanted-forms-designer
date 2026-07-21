@@ -538,6 +538,93 @@ export function DesignerCanvas({
     return Math.max(0, (block.page || 1) - 1) === currentPdfPage;
   });
 
+  const hasOverlappingInputGeometry = (field: Field, inputs: Field[]): boolean => {
+    const left = field.x;
+    const right = field.x + Math.max(1, field.width);
+    const top = field.y;
+    const bottom = field.y + Math.max(1, field.height);
+
+    return inputs.some((candidate) => {
+      if (candidate.id === field.id) return false;
+      const candidateLeft = candidate.x;
+      const candidateRight = candidate.x + Math.max(1, candidate.width);
+      const candidateTop = candidate.y;
+      const candidateBottom = candidate.y + Math.max(1, candidate.height);
+
+      const overlapsX = candidateRight >= left && candidateLeft <= right;
+      const overlapsY = candidateBottom >= top && candidateTop <= bottom;
+      return overlapsX && overlapsY;
+    });
+  };
+
+  const isRealField = (field: Field): boolean => {
+    if (!isMappingMode) {
+      return true;
+    }
+
+    const pageIndex = getPageIndex(field);
+    const pageDimensions = pageDimensionsByIndex.get(pageIndex) || {
+      width: canvasSurfaceWidth,
+      height: canvasSurfaceHeight,
+    };
+    const pageWidth = Math.max(1, pageDimensions.width);
+    const pageHeight = Math.max(1, pageDimensions.height);
+    const interactiveFields = interactiveByPage.get(pageIndex) || [];
+    const tableRegion = tableRegionByPage.get(pageIndex);
+    const rawText = normalizeText(getFieldRawText(field));
+
+    if (
+      field.type === "numeric" ||
+      field.type === "date" ||
+      field.type === "dropdown" ||
+      field.type === "checkbox" ||
+      field.type === "signature"
+    ) {
+      return true;
+    }
+
+    const hasInputGeometry = hasOverlappingInputGeometry(field, interactiveFields);
+
+    if (field.type === "text" && !hasInputGeometry) {
+      return false;
+    }
+
+    if (field.x < pageWidth * 0.25 && !hasInputGeometry) {
+      return false;
+    }
+
+    const headerRegionY = tableRegion
+      ? tableRegion.top + (tableRegion.bottom - tableRegion.top) * 0.1
+      : pageHeight * 0.1;
+    if (field.y < headerRegionY && countAlignedInputsBelow(field, interactiveFields) >= 2) {
+      return false;
+    }
+
+    if (field.y > pageHeight * 0.9) {
+      return false;
+    }
+
+    const answerFieldX = interactiveFields.length
+      ? Math.min(...interactiveFields.map((item) => item.x))
+      : pageWidth * 0.45;
+    if (field.x < answerFieldX && !hasInputGeometry && isQuestionLabelText(rawText)) {
+      return false;
+    }
+
+    if ((rawText === "yes" || rawText === "no") && field.type !== "checkbox") {
+      return false;
+    }
+
+    if (field.type === "text" && rawText.length > 120) {
+      return false;
+    }
+
+    return true;
+  };
+
+  const filteredVisibleFields = visibleFields.filter((f) => isRealField(f));
+  const renderedVisibleFields = isMappingMode ? filteredVisibleFields : visibleFields;
+
   const visibleSemanticClusters = useMemo(() => {
     const topRoutedCluster = Object.entries(routedClusters || {})
       .sort((left, right) => right[1] - left[1] || left[0].localeCompare(right[0]))[0]?.[0];
@@ -553,7 +640,7 @@ export function DesignerCanvas({
       }
     >();
 
-    for (const field of visibleFields) {
+    for (const field of renderedVisibleFields) {
       if (!field.groupId) continue;
       const label = deriveOntologyClusterLabel(field, topRoutedCluster);
       const x = field.x;
@@ -582,7 +669,7 @@ export function DesignerCanvas({
       width: Math.max(24, box.maxX - box.x + 12),
       height: Math.max(24, box.maxY - box.y + 26),
     }));
-  }, [routedClusters, visibleFields]);
+  }, [renderedVisibleFields, routedClusters]);
 
   const gridLines = useMemo(() => {
     const lines: Array<{ key: string; points: number[] }> = [];
@@ -701,7 +788,7 @@ export function DesignerCanvas({
             </>
           }
           overlayChildren={
-            visibleTextBlocks.length > 0 || visibleFields.length > 0 || selectedFields.length > 0 || visibleDraftFields.length > 0 ? (
+            visibleTextBlocks.length > 0 || renderedVisibleFields.length > 0 || selectedFields.length > 0 || visibleDraftFields.length > 0 ? (
               <>
                 {visibleTextBlocks.map((block) => (
                   <KonvaGroup key={`ocr-${block.id}`} listening={false}>
@@ -749,7 +836,7 @@ export function DesignerCanvas({
                     />
                   </KonvaGroup>
                 ))}
-                {visibleFields.map((field: Field) => (
+                {renderedVisibleFields.map((field: Field) => (
                   <KonvaGroup
                     key={`visual-${field.id}`}
                     ref={(node) => {
