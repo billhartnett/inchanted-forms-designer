@@ -4,7 +4,7 @@ import { MappingConfidence } from "../../mapping/MappingConfidence";
 import { PropertiesPanel } from "../../designer/properties/PropertiesPanel";
 import { useDesignerStore, type Field } from "../../state/designerStore";
 import { useMappingStore, useSelectedFieldMapping } from "../../state/mappingStore";
-import { useOntologyFieldIds, useSelectedField } from "../../state/fieldStore";
+import { useSelectedField } from "../../state/fieldStore";
 
 type OntologySemanticMetadata = {
   acordCode?: string;
@@ -133,6 +133,10 @@ function hasMeaningfulAcordCandidates(field: Field, selectedMappingCandidates?: 
 }
 
 function isLikelyNonFieldArtifact(field: Field): boolean {
+  if (field.type === "checkbox" || field.type === "radio" || field.type === "dropdown" || field.type === "date" || field.type === "numeric" || field.type === "signature") {
+    return false;
+  }
+
   const classification = field.metadata?.artifactClassification;
   if (classification === "non_field_artifact") {
     return true;
@@ -169,12 +173,24 @@ export function DesignerRightPanel() {
   const selectedMapping = useSelectedFieldMapping();
   const fields = useDesignerStore((state) => state.fields);
   const updateField = useDesignerStore((state) => state.updateField);
-  const ontologyFieldIds = useOntologyFieldIds();
+  const ontologyDocument = useMappingStore((state) => state.ontologyDocument);
+  const ontologyFieldIds = useMemo(() => {
+    const ontologyFields = Array.isArray(ontologyDocument?.fields)
+      ? ontologyDocument.fields
+      : [];
+
+    return new Set(
+      ontologyFields
+        .map((field: any) => String(field?.blockId || field?.id || "").trim())
+        .filter((value) => value.length > 0),
+    );
+  }, [ontologyDocument]);
 
   const chooseCandidate = useMappingStore((state) => state.chooseCandidate);
   const unlinkFieldAssociation = useMappingStore((state) => state.unlinkFieldAssociation);
 
   const selectedFieldMetadata = selectedField?.metadata;
+  const isMappingMode = Boolean(selectedField);
 
   const rankedCandidates = useMemo(() => {
     return [...(selectedMapping?.candidates || [])]
@@ -349,22 +365,28 @@ export function DesignerRightPanel() {
   };
 
   const mappingHistory = (selectedMapping?.associationHistory || []).slice(0, 5);
+  const ontologyFieldCount = Array.isArray(ontologyDocument?.fields) ? ontologyDocument.fields.length : 0;
+  const mappedFieldCount = fields.filter((field) => Boolean(field.metadata?.acordCode?.trim())).length;
+  const nonFieldArtifactCount = fields.filter((field) => field.metadata?.artifactClassification === "non_field_artifact").length;
 
   return (
     <div style={{ display: "grid", gap: 16 }}>
       <div style={{ display: "flex", justifyContent: "space-between", gap: 10, alignItems: "flex-end" }}>
         <div>
           <div style={{ fontSize: 11, fontWeight: 700, color: "#64748b", letterSpacing: "0.08em", textTransform: "uppercase" }}>Field Workspace</div>
-          <div style={{ fontSize: 12, color: "#475569", marginTop: 2 }}>ACORD-first mapping workflow for the selected field.</div>
+          <div style={{ fontSize: 12, color: "#475569", marginTop: 2 }}>
+            {isMappingMode ? "ACORD-first mapping workflow for the selected field." : "Select a field on the canvas to enter mapping mode."}
+          </div>
         </div>
       </div>
 
+      {isMappingMode ? (
       <div style={{ display: "grid", gap: 14 }}>
           <section style={{ border: "1px solid #d9e2ec", borderRadius: 12, background: "linear-gradient(180deg, #ffffff 0%, #f8fafc 100%)", padding: 12, display: "grid", gap: 10 }}>
             <div style={{ display: "flex", justifyContent: "space-between", gap: 8, alignItems: "baseline" }}>
               <div>
                 <h4 style={{ margin: 0, color: "#0f172a" }}>Field Properties</h4>
-                <div style={{ fontSize: 12, color: "#64748b", marginTop: 2 }}>Always visible and centered on the current field.</div>
+                <div style={{ fontSize: 12, color: "#64748b", marginTop: 2 }}>Mapping-mode properties for the current field.</div>
               </div>
             </div>
             <PropertiesPanel selectedField={selectedField} showAcordMappingSection={false} compactMode />
@@ -472,7 +494,45 @@ export function DesignerRightPanel() {
               <div style={{ fontSize: 12, color: "#64748b" }}>No fields met cluster + ACORD + semantic similarity requirements.</div>
             )}
           </section>
+
+          <details style={{ border: "1px solid #d9e2ec", borderRadius: 12, background: "#f8fafc", padding: 12 }}>
+            <summary style={{ cursor: "pointer", color: "#0f172a", fontWeight: 700 }}>Semantic Interpretation</summary>
+            <div style={{ marginTop: 10, display: "grid", gap: 6, fontSize: 12, color: "#334155" }}>
+              <div>Semantic label: {selectedFieldMetadata?.semanticLabel || "-"}</div>
+              <div>Artifact classification: {selectedFieldMetadata?.artifactClassification || "-"}</div>
+              <div>Category mode: {selectedFieldMetadata?.categoryMode || "-"}</div>
+              <div>Confidence: {formatPercent(selectedFieldMetadata?.confidenceScore || 0)}</div>
+            </div>
+          </details>
+
+          <details style={{ border: "1px solid #d9e2ec", borderRadius: 12, background: "#f8fafc", padding: 12 }}>
+            <summary style={{ cursor: "pointer", color: "#0f172a", fontWeight: 700 }}>Ontology Metadata</summary>
+            <div style={{ marginTop: 10, display: "grid", gap: 6, fontSize: 12, color: "#334155" }}>
+              <div>ACORD code: {selectedFieldMetadata?.acordCode || "-"}</div>
+              <div>ACORD label: {selectedFieldMetadata?.acordLabel || "-"}</div>
+              <div>Extraction block: {selectedFieldMetadata?.extractionBlockId || "-"}</div>
+              <div>Ontology field coverage: {ontologyFieldCount} field(s)</div>
+            </div>
+          </details>
+
+          <details style={{ border: "1px solid #d9e2ec", borderRadius: 12, background: "#f8fafc", padding: 12 }}>
+            <summary style={{ cursor: "pointer", color: "#0f172a", fontWeight: 700 }}>Document-Level Diagnostics</summary>
+            <div style={{ marginTop: 10, display: "grid", gap: 6, fontSize: 12, color: "#334155" }}>
+              <div>Total fields: {fields.length}</div>
+              <div>Mapped fields: {mappedFieldCount}</div>
+              <div>Non-field artifacts: {nonFieldArtifactCount}</div>
+              <div>Ontology-linked fields: {ontologyFieldIds.size}</div>
+            </div>
+          </details>
       </div>
+      ) : (
+      <section style={{ border: "1px solid #d9e2ec", borderRadius: 12, background: "linear-gradient(180deg, #ffffff 0%, #f8fafc 100%)", padding: 12, display: "grid", gap: 8 }}>
+        <h4 style={{ margin: 0, color: "#0f172a" }}>Mapping Mode</h4>
+        <div style={{ fontSize: 12, color: "#475569" }}>
+          Select any field on the canvas to open mapping-mode properties, ACORD mapping, and similar-field tools.
+        </div>
+      </section>
+      )}
     </div>
   );
 }

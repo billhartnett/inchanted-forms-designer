@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { useDesignerStore, type Field } from "../../state/designerStore";
-import { useOntologyFieldIds, useSelectedField } from "../../state/fieldStore";
+import { useSelectedField } from "../../state/fieldStore";
+import { useMappingStore } from "../../state/mappingStore";
 
 type OntologySemanticMetadata = {
   label?: string;
@@ -156,6 +157,10 @@ function renderConfidenceBadge(score: number) {
 }
 
 function isLikelyNonFieldArtifact(field: Field): boolean {
+  if (field.type === "checkbox" || field.type === "radio" || field.type === "dropdown" || field.type === "date" || field.type === "numeric" || field.type === "signature") {
+    return false;
+  }
+
   const classification = field.metadata?.artifactClassification;
   if (classification === "non_field_artifact") {
     return true;
@@ -176,9 +181,9 @@ function isLikelyNonFieldArtifact(field: Field): boolean {
     return true;
   }
 
-  return /\b(logo|copyright|all rights reserved|confidential|proprietary|disclaimer|sample|specimen|header|footer|section title|section\s+\d+|table of contents|instructions?|for office use only)\b/i.test(
+  return /\b(logo|copyright|all rights reserved|confidential|proprietary|disclaimer|sample|specimen|header|footer|section title|section\s+\d+|\d+\.\s+[A-Z][A-Z\s]+|table of contents|instructions?|for office use only|page\s+\d+\s+of\s+\d+)\b/i.test(
     combinedText,
-  ) || /\b(markel|insurance company|subcontractors|application|general contractor\/artisan contractor|homes\/units\?|do you\b|are you\b|have you\b)\b/i.test(
+  ) || /\b(markel|insurance company|subcontractors|application|general contractor\/artisan contractor|homes\/units\?|do you\b|are you\b|have you\b|please\s+attach|notwithstanding|this\s+application|coverage\s+question)\b/i.test(
     combinedText,
   );
 }
@@ -197,10 +202,20 @@ export function DesignerLayersPanel() {
   const searchQuery = useDesignerStore((s) => s.fieldSearchQuery);
   const setFieldSearchQuery = useDesignerStore((s) => s.setFieldSearchQuery);
   const pdfPages = useDesignerStore((s) => s.pdfPages);
-  const currentPdfPage = useDesignerStore((s) => s.currentPdfPage);
   const setCurrentPdfPage = useDesignerStore((s) => s.setCurrentPdfPage);
   const fields = useDesignerStore((s) => s.fields);
-  const ontologyFieldIds = useOntologyFieldIds();
+  const ontologyDocument = useMappingStore((state) => state.ontologyDocument);
+  const ontologyFieldIds = useMemo(() => {
+    const ontologyFields = Array.isArray(ontologyDocument?.fields)
+      ? ontologyDocument.fields
+      : [];
+
+    return new Set(
+      ontologyFields
+        .map((field: any) => String(field?.blockId || field?.id || "").trim())
+        .filter((value) => value.length > 0),
+    );
+  }, [ontologyDocument]);
   const selectedIds = useDesignerStore((s) => s.selectedIds);
   const selectField = useDesignerStore((s) => s.selectField);
   const selectFields = useDesignerStore((s) => s.selectFields);
@@ -702,46 +717,6 @@ export function DesignerLayersPanel() {
           </div>
         </section>
       ) : null}
-
-      <section
-        style={{
-          border: "1px solid #d9e2ec",
-          borderRadius: 12,
-          background: "#f8fafc",
-          padding: 12,
-          display: "grid",
-          gap: 8,
-        }}
-      >
-        <h4 style={{ margin: 0, color: "#0f172a" }}>Pages</h4>
-        {pdfPages.length === 0 ? (
-          <div style={{ fontSize: 12, color: "#64748b" }}>No PDF pages loaded.</div>
-        ) : (
-          <div style={{ display: "grid", gap: 6 }}>
-            {pdfPages.map((_, index) => {
-              const isActive = currentPdfPage === index;
-              return (
-                <button
-                  key={`page-${index}`}
-                  type="button"
-                  onClick={() => setCurrentPdfPage(index)}
-                  style={{
-                    textAlign: "left",
-                    padding: "0.35rem 0.5rem",
-                    borderRadius: 8,
-                    border: `1px solid ${isActive ? "#93c5fd" : "#cbd5e1"}`,
-                    background: isActive ? "#eff6ff" : "#ffffff",
-                    color: "#0f172a",
-                    fontSize: 12,
-                  }}
-                >
-                  Page {index + 1}
-                </button>
-              );
-            })}
-          </div>
-        )}
-      </section>
     </div>
   );
 }

@@ -109,9 +109,15 @@ export function DesignerToolbar({
   const [showFileMenu, setShowFileMenu] = useState(false);
   const [showToolsMenu, setShowToolsMenu] = useState(false);
   const [showViewMenu, setShowViewMenu] = useState(false);
+  const [showDesignMenu, setShowDesignMenu] = useState(false);
 
   const addField = useDesignerStore((s) => s.addField);
   const selectField = useDesignerStore((s) => s.selectField);
+  const selectFields = useDesignerStore((s) => s.selectFields);
+  const selectedIds = useDesignerStore((s) => s.selectedIds);
+  const fields = useDesignerStore((s) => s.fields);
+  const updateField = useDesignerStore((s) => s.updateField);
+  const moveFieldLayer = useDesignerStore((s) => s.moveFieldLayer);
   const canvasCursor = useDesignerStore((s) => s.canvasCursor);
 
   const getSpawnPoint = () => ({
@@ -259,6 +265,7 @@ export function DesignerToolbar({
       setShowFileMenu(false);
       setShowToolsMenu(false);
       setShowViewMenu(false);
+      setShowDesignMenu(false);
     };
 
     window.addEventListener("mousedown", onPointerDown);
@@ -269,6 +276,7 @@ export function DesignerToolbar({
     setShowFileMenu(false);
     setShowToolsMenu(false);
     setShowViewMenu(false);
+    setShowDesignMenu(false);
   };
 
   const onItemHover = (event: React.MouseEvent<HTMLElement>, active: boolean) => {
@@ -281,6 +289,68 @@ export function DesignerToolbar({
 
     await loadDesignerStateFromFile(file);
     event.currentTarget.value = "";
+  };
+
+  const duplicateSelection = () => {
+    if (selectedIds.length === 0) return;
+
+    const selectedSet = new Set(selectedIds);
+    const ordered = fields.filter((field) => selectedSet.has(field.id));
+    const nextIds: string[] = [];
+
+    for (const field of ordered) {
+      const { id: _ignoredId, ...draft } = field;
+      const createdId = addField({
+        ...(draft as any),
+        x: field.x + 14,
+        y: field.y + 14,
+      });
+      nextIds.push(createdId);
+    }
+
+    if (nextIds.length > 0) {
+      selectFields(nextIds);
+    }
+  };
+
+  const toggleSelectionLock = () => {
+    if (selectedIds.length === 0) return;
+    const selectedSet = new Set(selectedIds);
+    const selectedFields = fields.filter((field) => selectedSet.has(field.id));
+    const shouldLock = selectedFields.some((field) => !field.metadata?.locked);
+
+    for (const field of selectedFields) {
+      updateField(field.id, {
+        metadata: {
+          ...(field.metadata || {}),
+          locked: shouldLock,
+        },
+      });
+    }
+  };
+
+  const toggleSelectionHidden = () => {
+    if (selectedIds.length === 0) return;
+    const selectedSet = new Set(selectedIds);
+    const selectedFields = fields.filter((field) => selectedSet.has(field.id));
+    const shouldHide = selectedFields.some((field) => !field.metadata?.hidden);
+
+    for (const field of selectedFields) {
+      updateField(field.id, {
+        metadata: {
+          ...(field.metadata || {}),
+          hidden: shouldHide,
+        },
+      });
+    }
+  };
+
+  const moveSelectionLayer = (direction: "forward" | "backward") => {
+    if (selectedIds.length === 0) return;
+    const ids = direction === "forward" ? [...selectedIds] : [...selectedIds].reverse();
+    for (const id of ids) {
+      moveFieldLayer(id, direction);
+    }
   };
 
   return (
@@ -302,6 +372,7 @@ export function DesignerToolbar({
             setShowFileMenu((v) => !v);
             setShowToolsMenu(false);
             setShowViewMenu(false);
+            setShowDesignMenu(false);
           }}
         >
           File
@@ -378,6 +449,7 @@ export function DesignerToolbar({
             setShowToolsMenu((v) => !v);
             setShowFileMenu(false);
             setShowViewMenu(false);
+            setShowDesignMenu(false);
           }}
         >
           Tools
@@ -433,6 +505,7 @@ export function DesignerToolbar({
             setShowViewMenu((v) => !v);
             setShowFileMenu(false);
             setShowToolsMenu(false);
+            setShowDesignMenu(false);
           }}
         >
           View
@@ -542,6 +615,125 @@ export function DesignerToolbar({
           </div>
         )}
       </div>
+
+      <div style={{ position: "relative" }}>
+        <button
+          type="button"
+          style={menuTriggerStyle}
+          onClick={() => {
+            setShowDesignMenu((v) => !v);
+            setShowFileMenu(false);
+            setShowToolsMenu(false);
+            setShowViewMenu(false);
+          }}
+        >
+          Design
+        </button>
+        {showDesignMenu && (
+          <div style={menuStyle}>
+            <button
+              type="button"
+              style={menuItemStyle}
+              onMouseEnter={(e) => onItemHover(e, true)}
+              onMouseLeave={(e) => onItemHover(e, false)}
+              onClick={() => {
+                duplicateSelection();
+                closeMenus();
+              }}
+              disabled={selectedIds.length === 0}
+            >
+              Duplicate Selection
+            </button>
+            <button
+              type="button"
+              style={menuItemStyle}
+              onMouseEnter={(e) => onItemHover(e, true)}
+              onMouseLeave={(e) => onItemHover(e, false)}
+              onClick={() => {
+                toggleSelectionLock();
+                closeMenus();
+              }}
+              disabled={selectedIds.length === 0}
+            >
+              Lock or Unlock Selection
+            </button>
+            <button
+              type="button"
+              style={menuItemStyle}
+              onMouseEnter={(e) => onItemHover(e, true)}
+              onMouseLeave={(e) => onItemHover(e, false)}
+              onClick={() => {
+                toggleSelectionHidden();
+                closeMenus();
+              }}
+              disabled={selectedIds.length === 0}
+            >
+              Hide or Show Selection
+            </button>
+            <button
+              type="button"
+              style={menuItemStyle}
+              onMouseEnter={(e) => onItemHover(e, true)}
+              onMouseLeave={(e) => onItemHover(e, false)}
+              onClick={() => {
+                moveSelectionLayer("forward");
+                closeMenus();
+              }}
+              disabled={selectedIds.length === 0}
+            >
+              Bring Forward
+            </button>
+            <button
+              type="button"
+              style={menuItemStyle}
+              onMouseEnter={(e) => onItemHover(e, true)}
+              onMouseLeave={(e) => onItemHover(e, false)}
+              onClick={() => {
+                moveSelectionLayer("backward");
+                closeMenus();
+              }}
+              disabled={selectedIds.length === 0}
+            >
+              Send Backward
+            </button>
+            <label
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 8,
+                padding: "0.4rem 0.5rem",
+                borderRadius: 8,
+                cursor: "pointer",
+              }}
+              onMouseEnter={(e) => onItemHover(e, true)}
+              onMouseLeave={(e) => onItemHover(e, false)}
+            >
+              <input
+                type="checkbox"
+                checked={snapToGrid}
+                onChange={(e) => setSnapToGrid(e.target.checked)}
+              />
+              Snap to Grid
+            </label>
+          </div>
+        )}
+      </div>
+
+      <button onClick={zoomOut} title="Zoom out">
+        Zoom -
+      </button>
+      <button onClick={zoomIn} title="Zoom in">
+        Zoom +
+      </button>
+      <button onClick={resetZoom} title="Reset zoom">
+        Reset Zoom
+      </button>
+      <button onClick={fitPdfWidth} disabled={!hasSelectedPdfSize} title="Fit document to viewport width">
+        Fit Width
+      </button>
+      <button onClick={fitPdfPage} disabled={!hasSelectedPdfSize} title="Fit full page in viewport">
+        Fit Page
+      </button>
 
       <button onClick={undo} disabled={!canUndo} title="Ctrl+Z">
         Undo

@@ -548,8 +548,44 @@ export function PropertiesPanel({ selectedField, showAcordMappingSection = true,
                 Field Name:
                 <input
                   type="text"
-                  value={getFieldPromptText(single) || single.text || single.label || metadata.acordLabel || metadata.acordCode || ""}
-                  readOnly
+                  value={
+                    single.type === "text"
+                      ? single.text || ""
+                      : single.type === "checkbox" || single.type === "radio"
+                        ? single.label || ""
+                        : single.type === "dropdown" ||
+                            single.type === "date" ||
+                            single.type === "numeric" ||
+                            single.type === "signature"
+                          ? single.placeholder || ""
+                          : metadata.acordLabel || metadata.acordCode || ""
+                  }
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    if (single.type === "text") {
+                      update({ text: value });
+                      return;
+                    }
+
+                    if (single.type === "checkbox" || single.type === "radio") {
+                      update({ label: value } as Partial<Field>);
+                      return;
+                    }
+
+                    if (single.type === "dropdown") {
+                      update({ placeholder: value } as Partial<DropdownField>);
+                      return;
+                    }
+
+                    if (single.type === "date" || single.type === "signature") {
+                      update({ placeholder: value } as Partial<Field>);
+                      return;
+                    }
+
+                    if (single.type === "numeric") {
+                      update({ placeholder: value } as Partial<NumericField>);
+                    }
+                  }}
                 />
               </label>
 
@@ -571,36 +607,24 @@ export function PropertiesPanel({ selectedField, showAcordMappingSection = true,
                 X:
                 <input type="number" value={num(single.x)} readOnly />
               </label>
-
+                    Default Value:
               <label>
-                Y:
-                <input type="number" value={num(single.y)} readOnly />
-              </label>
+                      type="text"
+                      value={defaultValue}
+                      onChange={(e) => setDefaultValue(e.target.value)}
+                      placeholder="Set initial/default value"
 
               <label>
                 Width:
                 <input type="number" value={num(single.width, 20)} readOnly />
+                    Tooltip:
+
+                      type="text"
+                      value={metadata.tooltip || ""}
+                      onChange={(e) => updateMetadata({ tooltip: e.target.value })}
+                      placeholder="Helpful guidance shown to users"
               </label>
 
-              <label>
-                Height:
-                <input type="number" value={num(single.height, 20)} readOnly />
-              </label>
-
-              <div style={{ fontSize: 12, color: "#475569" }}>
-                Design controls are intentionally hidden in this workspace.
-              </div>
-            </>
-          ) : (
-            <>
-        <h3 style={{ marginTop: 0 }}>Properties</h3>
-
-        <label>
-          Field Type:
-          <input type="text" value={single.type} readOnly />
-        </label>
-
-        <label>
           Required:
           <input
             type="checkbox"

@@ -4,24 +4,16 @@ import { Rect as KonvaRect, Text as KonvaText } from "react-konva";
 import { CanvasStage } from "../../canvas/CanvasStage";
 import ZoomControls from "../../designer/controls/ZoomControls";
 import PdfImportModal from "../../designer/ai/PdfImportModal";
-import { useSelectedFields } from "../../state/fieldStore";
+import { useOntologyFieldIds, useSelectedFields } from "../../state/fieldStore";
 import { useDesignerStore, type Field } from "../../state/designerStore";
 import { FieldControls } from "./FieldControls";
 import FieldRenderer from "./FieldRenderer";
 import PdfBackground from "./PdfBackground";
 import { resolveOntologySemanticMetadata } from "../../../../shared/src/acord/acord-gating";
 import { useMappingStore } from "../../state/mappingStore";
+import { useExtractionStore } from "../../state/extractionStore";
 
 const GRID_SIZE = 20;
-const NON_FIELD_CLASSIFICATIONS = new Set([
-  "heading",
-  "section title",
-  "logo",
-  "decorative text",
-  "disclaimer",
-  "instructional text",
-]);
-
 function deriveOntologyClusterLabel(field: Field, routedClusterFallback?: string): string {
   const acordCode = String(field.metadata?.acordCode || "").trim();
   if (acordCode.length > 0) {
@@ -102,7 +94,9 @@ export function DesignerCanvas({
   const fieldGroupRefs = useRef<Map<string, any>>(new Map());
 
   const fields = useDesignerStore((s) => s.fields);
+  const textBlocks = useExtractionStore((s) => s.textBlocks);
   const routedClusters = useMappingStore((s) => s.routedClusters);
+  const ontologyFieldIds = useOntologyFieldIds();
   const pdfPages = useDesignerStore((s) => s.pdfPages);
   const currentPdfPage = useDesignerStore((s) => s.currentPdfPage);
   const fieldSearchQuery = useDesignerStore((s) => s.fieldSearchQuery);
@@ -117,6 +111,7 @@ export function DesignerCanvas({
 
   const visibleFields = fields.filter((field) => {
     if (field.metadata?.hidden) return false;
+    if (ontologyFieldIds.size > 0 && !ontologyFieldIds.has(field.id)) return false;
     if (pdfPages.length === 0) return true;
     if (field.pageIndex === null || field.pageIndex === undefined) return true;
     if (field.pageIndex !== currentPdfPage) return false;
@@ -146,6 +141,11 @@ export function DesignerCanvas({
     if (pdfPages.length === 0) return true;
     if (field.pageIndex === null || field.pageIndex === undefined) return true;
     return field.pageIndex === currentPdfPage;
+  });
+
+  const visibleTextBlocks = textBlocks.filter((block) => {
+    if (pdfPages.length === 0) return true;
+    return Math.max(0, (block.page || 1) - 1) === currentPdfPage;
   });
 
   const visibleSemanticClusters = useMemo(() => {
@@ -259,6 +259,18 @@ export function DesignerCanvas({
   return (
     <div
       ref={canvasHostRef}
+      onWheel={(event) => {
+        if (!event.ctrlKey) {
+          return;
+        }
+
+        event.preventDefault();
+        if (event.deltaY < 0) {
+          zoomIn();
+        } else {
+          zoomOut();
+        }
+      }}
       style={{
         position: "absolute",
         inset: 0,
@@ -299,8 +311,31 @@ export function DesignerCanvas({
             </>
           }
           overlayChildren={
-            visibleFields.length > 0 || selectedFields.length > 0 || visibleDraftFields.length > 0 ? (
+            visibleTextBlocks.length > 0 || visibleFields.length > 0 || selectedFields.length > 0 || visibleDraftFields.length > 0 ? (
               <>
+                {visibleTextBlocks.map((block) => (
+                  <KonvaGroup key={`ocr-${block.id}`} listening={false}>
+                    <KonvaRect
+                      x={block.boundingBox.x}
+                      y={block.boundingBox.y}
+                      width={block.boundingBox.width}
+                      height={block.boundingBox.height}
+                      fill="rgba(226, 232, 240, 0.12)"
+                      stroke={"#cbd5e1"}
+                      strokeWidth={1}
+                      cornerRadius={2}
+                    />
+                    <KonvaText
+                      x={block.boundingBox.x + 3}
+                      y={block.boundingBox.y + 2}
+                      text={block.text}
+                      fontSize={10}
+                      fontFamily="Geist Variable"
+                      fill="#334155"
+                      width={Math.max(16, block.boundingBox.width - 6)}
+                    />
+                  </KonvaGroup>
+                ))}
                 {visibleSemanticClusters.map((group) => (
                   <KonvaGroup key={`semantic-group-${group.key}`} listening={false}>
                     <KonvaRect
@@ -335,15 +370,15 @@ export function DesignerCanvas({
                     y={field.y}
                     rotation={field.rotation ?? 0}
                     opacity={field.opacity ?? 1}
-                    draggable={!field.metadata?.locked && !(field.metadata?.artifactClassification && NON_FIELD_CLASSIFICATIONS.has(field.metadata.artifactClassification))}
+                    draggable={!field.metadata?.locked && (ontologyFieldIds.size === 0 || ontologyFieldIds.has(field.id))}
                     listening
                     onMouseEnter={() => {
-                      if (field.metadata?.artifactClassification && NON_FIELD_CLASSIFICATIONS.has(field.metadata.artifactClassification)) {
+                      if (ontologyFieldIds.size > 0 && !ontologyFieldIds.has(field.id)) {
                         return;
                       }
                     }}
                     onClick={(event) => {
-                      if (field.metadata?.artifactClassification && NON_FIELD_CLASSIFICATIONS.has(field.metadata.artifactClassification)) {
+                      if (ontologyFieldIds.size > 0 && !ontologyFieldIds.has(field.id)) {
                         event.cancelBubble = true;
                         return;
                       }
@@ -351,7 +386,7 @@ export function DesignerCanvas({
                       selectField(field.id, Boolean(event.evt.shiftKey));
                     }}
                     onTap={(event) => {
-                      if (field.metadata?.artifactClassification && NON_FIELD_CLASSIFICATIONS.has(field.metadata.artifactClassification)) {
+                      if (ontologyFieldIds.size > 0 && !ontologyFieldIds.has(field.id)) {
                         event.cancelBubble = true;
                         return;
                       }
@@ -359,7 +394,7 @@ export function DesignerCanvas({
                       selectField(field.id, Boolean(event.evt.shiftKey));
                     }}
                     onDragEnd={(event) => {
-                      if (field.metadata?.locked || (field.metadata?.artifactClassification && NON_FIELD_CLASSIFICATIONS.has(field.metadata.artifactClassification))) {
+                      if (field.metadata?.locked || (ontologyFieldIds.size > 0 && !ontologyFieldIds.has(field.id))) {
                         return;
                       }
                       // Update field position after drag
