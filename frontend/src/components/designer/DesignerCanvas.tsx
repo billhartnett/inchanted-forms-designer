@@ -104,6 +104,69 @@ function containsPhrase(text: string, phrases: string[]): boolean {
   return phrases.some((phrase) => text.includes(phrase));
 }
 
+function normalizeText(value: string): string {
+  return value
+    .toLowerCase()
+    .replace(/[\u2013\u2014]/g, "-")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function getPageIndex(field: Field): number {
+  return typeof field.pageIndex === "number" && Number.isFinite(field.pageIndex) ? Math.max(0, Math.floor(field.pageIndex)) : 0;
+}
+
+function isTableHeaderText(text: string): boolean {
+  const normalized = normalizeText(text);
+  return TABLE_HEADER_PATTERNS.some((item) => normalized === normalizeText(item));
+}
+
+function isRowLabelText(text: string): boolean {
+  const normalized = normalizeText(text);
+  return ROW_LABEL_PATTERNS.some((item) => normalized.includes(normalizeText(item)));
+}
+
+function isQuestionLabelText(text: string): boolean {
+  const normalized = normalizeText(text);
+  return QUESTION_LABEL_PATTERNS.some((item) => normalized.includes(normalizeText(item)));
+}
+
+function buildHeaderRowsByPage(fields: Field[]): Map<number, number[]> {
+  const candidatesByPage = new Map<number, number[]>();
+
+  for (const field of fields) {
+    if (isInteractiveFieldType(field)) continue;
+    const rawText = getFieldRawText(field);
+    if (!isTableHeaderText(rawText)) continue;
+    const pageIndex = getPageIndex(field);
+    const list = candidatesByPage.get(pageIndex) || [];
+    list.push(field.y);
+    candidatesByPage.set(pageIndex, list);
+  }
+
+  const rowsByPage = new Map<number, number[]>();
+  for (const [pageIndex, yValues] of candidatesByPage.entries()) {
+    const sorted = [...yValues].sort((a, b) => a - b);
+    const clustered: Array<{ y: number; count: number }> = [];
+    for (const y of sorted) {
+      const cluster = clustered.find((item) => Math.abs(item.y - y) <= 14);
+      if (cluster) {
+        cluster.y = (cluster.y * cluster.count + y) / (cluster.count + 1);
+        cluster.count += 1;
+      } else {
+        clustered.push({ y, count: 1 });
+      }
+    }
+
+    rowsByPage.set(
+      pageIndex,
+      clustered.filter((item) => item.count >= 2).map((item) => item.y),
+    );
+  }
+
+  return rowsByPage;
+}
+
 function isLikelyNonFieldArtifact(field: Field): boolean {
   if (isInteractiveFieldType(field)) {
     return false;
@@ -114,7 +177,7 @@ function isLikelyNonFieldArtifact(field: Field): boolean {
     return true;
   }
 
-  const rawText = getFieldRawText(field).trim().toLowerCase();
+  const rawText = normalizeText(getFieldRawText(field));
   if (/^(yes|no)$/i.test(rawText)) {
     return true;
   }
@@ -129,15 +192,7 @@ function isLikelyNonFieldArtifact(field: Field): boolean {
     .join(" ")
     .toLowerCase();
 
-  if (containsPhrase(rawText, TABLE_HEADER_PATTERNS)) {
-    return true;
-  }
-
-  if (containsPhrase(rawText, ROW_LABEL_PATTERNS)) {
-    return true;
-  }
-
-  if (containsPhrase(rawText, QUESTION_LABEL_PATTERNS)) {
+  if (isQuestionLabelText(rawText)) {
     return true;
   }
 
@@ -264,6 +319,19 @@ export function DesignerCanvas({
 
   const normalizedSearchQuery = fieldSearchQuery.trim().toLowerCase();
   const actionFilter = useMemo(() => parseActionFilter(fieldSearchQuery), [fieldSearchQuery]);
+  const headerRowsByPage = useMemo(() => buildHeaderRowsByPage(fields), [fields]);
+  const pageDimensionsByIndex = useMemo(() => {
+    const byIndex = new Map<number, { width: number; height: number }>();
+    pdfPages.forEach((page: any, index: number) => {
+      const width = Number((page && (page.width ?? page.viewport?.width)) || 0);
+      const height = Number((page && (page.height ?? page.viewport?.height)) || 0);
+      byIndex.set(index, {
+        width: Number.isFinite(width) && width > 0 ? width : canvasSurfaceWidth,
+        height: Number.isFinite(height) && height > 0 ? height : canvasSurfaceHeight,
+      });
+    });
+    return byIndex;
+  }, [canvasSurfaceHeight, canvasSurfaceWidth, pdfPages]);
   const isMappingMode = useMemo(
     () =>
       ontologyFieldIds.size > 0 ||
@@ -279,8 +347,42 @@ export function DesignerCanvas({
     if (field.metadata?.hidden) return false;
     if (ontologyFieldIds.size > 0 && !ontologyFieldIds.has(field.id)) return false;
 
-    if (isMappingMode && isLikelyNonFieldArtifact(field)) {
-      return false;
+    if (isMappingMode) {
+      if (isLikelyNonFieldArtifact(field)) {
+        return false;
+      }
+
+      if (!isInteractiveFieldType(field)) {
+        const rawText = normalizeText(getFieldRawText(field));
+        const pageIndex = getPageIndex(field);
+        const pageDimensions = pageDimensionsByIndex.get(pageIndex) || {
+          width: canvasSurfaceWidth,
+          height: canvasSurfaceHeight,
+        };
+        const pageHeight = Math.max(1, pageDimensions.height);
+        const pageWidth = Math.max(1, pageDimensions.width);
+        const bottom = field.y + Math.max(1, field.height);
+        const headerRows = headerRowsByPage.get(pageIndex) || [];
+        const inHeaderRow = headerRows.some((y) => Math.abs(y - field.y) <= 16);
+        const inLeftColumn = field.x <= pageWidth * 0.35;
+        const inFooterZone = bottom >= pageHeight * 0.9;
+
+        if (isTableHeaderText(rawText) && inHeaderRow) {
+          return false;
+        }
+
+        if (isRowLabelText(rawText) && inLeftColumn) {
+          return false;
+        }
+
+        if (inFooterZone) {
+          return false;
+        }
+
+        if (/^(yes|no)$/i.test(rawText)) {
+          return false;
+        }
+      }
     }
 
     if (actionFilter.ids.size > 0) {
