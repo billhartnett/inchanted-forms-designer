@@ -9,7 +9,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "inchanted-forms-designer": "file:..",
     "konva": "^9.3.22",
     "pdfjs-dist": "^4.10.38",
     "react": "^18.2.0",

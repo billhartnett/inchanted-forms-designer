@@ -132,6 +132,38 @@ function hasMeaningfulAcordCandidates(field: Field, selectedMappingCandidates?: 
   return tokens.length > 0;
 }
 
+function isLikelyNonFieldArtifact(field: Field): boolean {
+  if (field.type === "checkbox" || field.type === "radio" || field.type === "dropdown" || field.type === "date" || field.type === "numeric" || field.type === "signature") {
+    return false;
+  }
+
+  const classification = field.metadata?.artifactClassification;
+  if (classification === "non_field_artifact") {
+    return true;
+  }
+
+  const combinedText = [
+    field.metadata?.semanticLabel || "",
+    field.metadata?.acordLabel || "",
+    field.metadata?.acordDescription || "",
+    field.metadata?.categoryMode || "",
+    getFieldRawText(field),
+  ]
+    .join(" ")
+    .toLowerCase();
+
+  const rawText = getFieldRawText(field).trim().toLowerCase();
+  if (field.metadata?.artifactClassification === "field_label" && /^(yes|no)$/i.test(rawText)) {
+    return true;
+  }
+
+  return /\b(logo|copyright|all rights reserved|confidential|proprietary|disclaimer|sample|specimen|header|footer|section title|section\s+\d+|table of contents|instructions?|for office use only)\b/i.test(
+    combinedText,
+  ) || /\b(markel|insurance company|subcontractors|application|general contractor\/artisan contractor|homes\/units\?|do you\b|are you\b|have you\b)\b/i.test(
+    combinedText,
+  );
+}
+
 export function DesignerRightPanel() {
   const [acordQuery, setAcordQuery] = useState("");
   const [acordResults, setAcordResults] = useState<AcordSearchResult[]>([]);
@@ -168,12 +200,13 @@ export function DesignerRightPanel() {
 
   const fieldInsights = useMemo(() => {
     return fields
-      .filter((field) => {
-        if (ontologyFieldIds.size > 0 && !ontologyFieldIds.has(field.id)) {
-          return false;
-        }
-        return true;
-      })
+      .filter(
+        (field) =>
+          (field.metadata?.artifactClassification === "field_label" ||
+            field.metadata?.artifactClassification === "field_value") &&
+          !isLikelyNonFieldArtifact(field) &&
+          (ontologyFieldIds.size === 0 || ontologyFieldIds.has(field.id)),
+      )
       .map((field) => {
       const ontologyCode = field.metadata?.acordCode?.trim() || "";
       const ontology = ontologyCode ? resolveOntologySemanticMetadata(ontologyCode) : null;
@@ -334,6 +367,7 @@ export function DesignerRightPanel() {
   const mappingHistory = (selectedMapping?.associationHistory || []).slice(0, 5);
   const ontologyFieldCount = Array.isArray(ontologyDocument?.fields) ? ontologyDocument.fields.length : 0;
   const mappedFieldCount = fields.filter((field) => Boolean(field.metadata?.acordCode?.trim())).length;
+  const nonFieldArtifactCount = fields.filter((field) => field.metadata?.artifactClassification === "non_field_artifact").length;
 
   return (
     <div style={{ display: "grid", gap: 16 }}>
@@ -486,6 +520,7 @@ export function DesignerRightPanel() {
             <div style={{ marginTop: 10, display: "grid", gap: 6, fontSize: 12, color: "#334155" }}>
               <div>Total fields: {fields.length}</div>
               <div>Mapped fields: {mappedFieldCount}</div>
+              <div>Non-field artifacts: {nonFieldArtifactCount}</div>
               <div>Ontology-linked fields: {ontologyFieldIds.size}</div>
             </div>
           </details>

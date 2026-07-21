@@ -46,15 +46,12 @@ function getFieldRawText(field: Field): string {
   return "";
 }
 
-function isInteractiveFieldType(field: Field): boolean {
-  return (
-    field.type === "checkbox" ||
-    field.type === "radio" ||
-    field.type === "dropdown" ||
-    field.type === "date" ||
-    field.type === "numeric" ||
-    field.type === "signature"
-  );
+function normalizeText(value: string): string {
+  return value
+    .toLowerCase()
+    .replace(/[\u2013\u2014]/g, "-")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 const TABLE_HEADER_PATTERNS = [
@@ -131,18 +128,6 @@ function containsPhrase(text: string, phrases: string[]): boolean {
   return phrases.some((phrase) => text.includes(phrase));
 }
 
-function normalizeText(value: string): string {
-  return value
-    .toLowerCase()
-    .replace(/[\u2013\u2014]/g, "-")
-    .replace(/\s+/g, " ")
-    .trim();
-}
-
-function getPageIndex(field: Field): number {
-  return typeof field.pageIndex === "number" && Number.isFinite(field.pageIndex) ? Math.max(0, Math.floor(field.pageIndex)) : 0;
-}
-
 function isTableHeaderText(text: string): boolean {
   const normalized = normalizeText(text);
   return TABLE_HEADER_PATTERNS.some((item) => normalized === normalizeText(item));
@@ -158,183 +143,28 @@ function isQuestionLabelText(text: string): boolean {
   return QUESTION_LABEL_PATTERNS.some((item) => normalized.includes(normalizeText(item)));
 }
 
-function buildHeaderRowsByPage(fields: Field[]): Map<number, number[]> {
-  const candidatesByPage = new Map<number, number[]>();
-
-  for (const field of fields) {
-    if (isInteractiveFieldType(field)) continue;
-    const rawText = getFieldRawText(field);
-    if (!isTableHeaderText(rawText)) continue;
-    const pageIndex = getPageIndex(field);
-    const list = candidatesByPage.get(pageIndex) || [];
-    list.push(field.y);
-    candidatesByPage.set(pageIndex, list);
-  }
-
-  const rowsByPage = new Map<number, number[]>();
-  for (const [pageIndex, yValues] of candidatesByPage.entries()) {
-    const sorted = [...yValues].sort((a, b) => a - b);
-    const clustered: Array<{ y: number; count: number }> = [];
-    for (const y of sorted) {
-      const cluster = clustered.find((item) => Math.abs(item.y - y) <= 14);
-      if (cluster) {
-        cluster.y = (cluster.y * cluster.count + y) / (cluster.count + 1);
-        cluster.count += 1;
-      } else {
-        clustered.push({ y, count: 1 });
-      }
-    }
-
-    rowsByPage.set(
-      pageIndex,
-      clustered.filter((item) => item.count >= 2).map((item) => item.y),
-    );
-  }
-
-  return rowsByPage;
-}
-
-function buildInteractiveFieldsByPage(fields: Field[]): Map<number, Field[]> {
-  const byPage = new Map<number, Field[]>();
-  for (const field of fields) {
-    if (!isInteractiveFieldType(field)) continue;
-    const pageIndex = getPageIndex(field);
-    const list = byPage.get(pageIndex) || [];
-    list.push(field);
-    byPage.set(pageIndex, list);
-  }
-  return byPage;
-}
-
-function countAlignedInputsBelow(field: Field, interactiveFields: Field[]): number {
-  const left = field.x - 14;
-  const right = field.x + Math.max(24, field.width) + 14;
-  const yMin = field.y + 6;
-  const yMax = field.y + 420;
-
-  return interactiveFields.filter((item) => {
-    const centerX = item.x + Math.max(1, item.width) / 2;
-    return centerX >= left && centerX <= right && item.y >= yMin && item.y <= yMax;
-  }).length;
-}
-
-function hasInputInsideBoundingBox(field: Field, interactiveFields: Field[]): boolean {
+function hasOverlappingInputGeometry(field: Field, inputs: Field[]): boolean {
   const left = field.x;
   const right = field.x + Math.max(1, field.width);
   const top = field.y;
   const bottom = field.y + Math.max(1, field.height);
-  return interactiveFields.some((item) => {
-    const centerX = item.x + Math.max(1, item.width) / 2;
-    const centerY = item.y + Math.max(1, item.height) / 2;
-    return centerX >= left && centerX <= right && centerY >= top && centerY <= bottom;
+
+  return inputs.some((candidate) => {
+    if (candidate.id === field.id) return false;
+    const candidateLeft = candidate.x;
+    const candidateRight = candidate.x + Math.max(1, candidate.width);
+    const candidateTop = candidate.y;
+    const candidateBottom = candidate.y + Math.max(1, candidate.height);
+    const overlapsX = candidateRight >= left && candidateLeft <= right;
+    const overlapsY = candidateBottom >= top && candidateTop <= bottom;
+    return overlapsX && overlapsY;
   });
 }
 
-function buildTableRegionByPage(
-  headerRowsByPage: Map<number, number[]>,
-  interactiveByPage: Map<number, Field[]>,
-  pageDimensionsByIndex: Map<number, { width: number; height: number }>,
-): Map<number, { top: number; bottom: number }> {
-  const regions = new Map<number, { top: number; bottom: number }>();
-  for (const [pageIndex, rows] of headerRowsByPage.entries()) {
-    if (rows.length === 0) continue;
-    const interactive = interactiveByPage.get(pageIndex) || [];
-    if (interactive.length < 2) continue;
-
-    const top = Math.min(...rows);
-    const bottomFromInputs = Math.max(...interactive.map((field) => field.y + Math.max(1, field.height)));
-    const pageHeight = pageDimensionsByIndex.get(pageIndex)?.height || 1600;
-    const bottom = Math.min(pageHeight, Math.max(top + 60, bottomFromInputs));
-    regions.set(pageIndex, { top, bottom });
-  }
-  return regions;
-}
-
-function isLikelyNonFieldArtifact(field: Field): boolean {
-  if (isInteractiveFieldType(field)) {
-    return false;
-  }
-
-  const classification = field.metadata?.artifactClassification;
-  if (classification === "non_field_artifact") {
-    return true;
-  }
-
-  const rawText = normalizeText(getFieldRawText(field));
-  if (/^(yes|no)$/i.test(rawText)) {
-    return true;
-  }
-
-  const combinedText = [
-    field.metadata?.semanticLabel || "",
-    field.metadata?.acordLabel || "",
-    field.metadata?.acordDescription || "",
-    field.metadata?.categoryMode || "",
-    rawText,
-  ]
-    .join(" ")
-    .toLowerCase();
-
-  if (isQuestionLabelText(rawText)) {
-    return true;
-  }
-
-  if (containsPhrase(rawText, LEGAL_DECORATIVE_PATTERNS)) {
-    return true;
-  }
-
-  if (rawText.length >= 220) {
-    return true;
-  }
-
-  if (/\b[a-z]{2,6}\s*\d{3,5}\s+\d{2}\s+\d{2}\b/i.test(rawText)) {
-    return true;
-  }
-
-  return /\b(logo|copyright|all rights reserved|confidential|proprietary|disclaimer|sample|specimen|header|footer|section title|section\s+\d+|table of contents|instructions?|for office use only|application|applicant information|general contractor\/artisan contractor|to be attached to acord applications|page\s+\d+\s+of\s+\d+|markel|evanston|fair credit reporting act|fraud warning|fraud notice|contractor['’]s supplemental application)\b/i.test(
-    combinedText,
-  );
-}
-
-function inferClusterFromText(searchText: string): string {
-  const haystack = searchText.toLowerCase();
-  const clusterKeywords: Array<{ label: string; keywords: string[] }> = [
-    { label: "Contact Information", keywords: ["contact", "name", "insured", "producer", "broker", "agent", "phone", "email", "address"] },
-    { label: "Business Details", keywords: ["business", "company", "entity", "legal", "industry", "fein", "tax", "years in business", "corporation"] },
-    { label: "Locations", keywords: ["location", "premises", "site", "address", "office", "branch", "facility", "building"] },
-    { label: "Operations", keywords: ["operations", "operation", "services", "products", "work", "exposure", "hazard", "description"] },
-    { label: "Coverage Questions", keywords: ["coverage", "limit", "deductible", "policy", "quote", "premium", "endorsement", "requested"] },
-    { label: "Loss History", keywords: ["loss", "claim", "accident", "incident", "date of loss", "history", "settlement"] },
-    { label: "Prior Insurance", keywords: ["prior insurance", "previous insurance", "carrier", "renewal", "expiration", "policy number"] },
-    { label: "Additional Interests", keywords: ["additional interest", "mortgagee", "lender", "loss payee", "certificate", "holder"] },
-  ];
-
-  for (const bucket of clusterKeywords) {
-    if (bucket.keywords.some((keyword) => haystack.includes(keyword))) {
-      return bucket.label;
-    }
-  }
-
-  return "Miscellaneous";
-}
-
-function parseActionFilter(query: string): { ids: Set<string>; mode: "cluster" | "grouping" | "instance" | null } {
-  const marker = "@ids:";
-  const markerIndex = query.indexOf(marker);
-  if (markerIndex === -1) {
-    return { ids: new Set<string>(), mode: null };
-  }
-
-  const prefix = query.slice(0, markerIndex).trim().toLowerCase();
-  const idsRaw = query.slice(markerIndex + marker.length).trim();
-  const ids = new Set(idsRaw.split(",").map((item) => item.trim()).filter((item) => item.length > 0));
-
-  let mode: "cluster" | "grouping" | "instance" | null = null;
-  if (prefix.startsWith("cluster:")) mode = "cluster";
-  if (prefix.startsWith("grouping:")) mode = "grouping";
-  if (prefix.startsWith("instance:")) mode = "instance";
-
-  return { ids, mode };
+function getPageIndex(field: Field): number {
+  return typeof field.pageIndex === "number" && Number.isFinite(field.pageIndex)
+    ? Math.max(0, Math.floor(field.pageIndex))
+    : 0;
 }
 
 type StageLike = {
@@ -395,7 +225,6 @@ export function DesignerCanvas({
   const fieldGroupRefs = useRef<Map<string, any>>(new Map());
 
   const fields = useDesignerStore((s) => s.fields);
-  const extractedFields = useExtractionStore((s) => s.fields as Field[]);
   const textBlocks = useExtractionStore((s) => s.textBlocks);
   const routedClusters = useMappingStore((s) => s.routedClusters);
   const ontologyFieldIds = useOntologyFieldIds();
@@ -409,60 +238,33 @@ export function DesignerCanvas({
   const selectField = useDesignerStore((s) => s.selectField);
   const selectedFields = useSelectedFields();
 
-  const sourceFields = useMemo(() => {
-    if (extractedFields.length === 0) {
-      return fields;
-    }
-
-    const merged = new Map<string, Field>();
-    for (const field of extractedFields) {
-      merged.set(field.id, field);
-    }
-    for (const field of fields) {
-      merged.set(field.id, field);
-    }
-    return Array.from(merged.values());
-  }, [extractedFields, fields]);
-
   const normalizedSearchQuery = fieldSearchQuery.trim().toLowerCase();
-  const actionFilter = useMemo(() => parseActionFilter(fieldSearchQuery), [fieldSearchQuery]);
-  const headerRowsByPage = useMemo(() => buildHeaderRowsByPage(sourceFields), [sourceFields]);
-  const interactiveByPage = useMemo(() => buildInteractiveFieldsByPage(sourceFields), [sourceFields]);
-  const pageDimensionsByIndex = useMemo(() => {
-    const byIndex = new Map<number, { width: number; height: number }>();
-    pdfPages.forEach((page: any, index: number) => {
-      const width = Number((page && (page.width ?? page.viewport?.width)) || 0);
-      const height = Number((page && (page.height ?? page.viewport?.height)) || 0);
-      byIndex.set(index, {
-        width: Number.isFinite(width) && width > 0 ? width : canvasSurfaceWidth,
-        height: Number.isFinite(height) && height > 0 ? height : canvasSurfaceHeight,
-      });
-    });
-    return byIndex;
-  }, [canvasSurfaceHeight, canvasSurfaceWidth, pdfPages]);
-  const isMappingMode = useMemo(
-    () =>
-      ontologyFieldIds.size > 0 ||
-      sourceFields.some(
-        (field) =>
-          typeof field.metadata?.artifactClassification === "string" ||
-          typeof field.metadata?.extractionBlockId === "string",
-      ),
-    [ontologyFieldIds, sourceFields],
-  );
-  const tableRegionByPage = useMemo(
-    () => buildTableRegionByPage(headerRowsByPage, interactiveByPage, pageDimensionsByIndex),
-    [headerRowsByPage, interactiveByPage, pageDimensionsByIndex],
-  );
 
-  const visibleFields = sourceFields.filter((field) => {
+  const interactiveByPage = useMemo(() => {
+    const byPage = new Map<number, Field[]>();
+    for (const field of fields) {
+      if (
+        field.type !== "checkbox" &&
+        field.type !== "radio" &&
+        field.type !== "dropdown" &&
+        field.type !== "date" &&
+        field.type !== "numeric" &&
+        field.type !== "signature"
+      ) {
+        continue;
+      }
+
+      const pageIndex = getPageIndex(field);
+      const list = byPage.get(pageIndex) || [];
+      list.push(field);
+      byPage.set(pageIndex, list);
+    }
+    return byPage;
+  }, [fields]);
+
+  const visibleFields = fields.filter((field) => {
     if (field.metadata?.hidden) return false;
     if (ontologyFieldIds.size > 0 && !ontologyFieldIds.has(field.id)) return false;
-
-    if (actionFilter.ids.size > 0) {
-      return actionFilter.ids.has(field.id);
-    }
-
     if (pdfPages.length === 0) return true;
     if (field.pageIndex === null || field.pageIndex === undefined) return true;
     if (field.pageIndex !== currentPdfPage) return false;
@@ -485,14 +287,6 @@ export function DesignerCanvas({
       .join(" ")
       .toLowerCase();
 
-    if (normalizedSearchQuery.startsWith("cluster:") || normalizedSearchQuery.startsWith("grouping:")) {
-      const semanticLabel = field.metadata?.semanticLabel || "";
-      const acordLabel = field.metadata?.acordLabel || "";
-      const cluster = inferClusterFromText([getFieldRawText(field), semanticLabel, acordLabel].join(" "));
-      const wanted = normalizedSearchQuery.split(":")[1]?.split("@ids:")[0]?.trim() || "";
-      return cluster.toLowerCase() === wanted;
-    }
-
     return searchableText.includes(normalizedSearchQuery);
   });
 
@@ -507,40 +301,9 @@ export function DesignerCanvas({
     return Math.max(0, (block.page || 1) - 1) === currentPdfPage;
   });
 
-  const hasOverlappingInputGeometry = (field: Field, inputs: Field[]): boolean => {
-    const left = field.x;
-    const right = field.x + Math.max(1, field.width);
-    const top = field.y;
-    const bottom = field.y + Math.max(1, field.height);
-
-    return inputs.some((candidate) => {
-      if (candidate.id === field.id) return false;
-      const candidateLeft = candidate.x;
-      const candidateRight = candidate.x + Math.max(1, candidate.width);
-      const candidateTop = candidate.y;
-      const candidateBottom = candidate.y + Math.max(1, candidate.height);
-
-      const overlapsX = candidateRight >= left && candidateLeft <= right;
-      const overlapsY = candidateBottom >= top && candidateTop <= bottom;
-      return overlapsX && overlapsY;
-    });
-  };
-
   const isRealField = (field: Field): boolean => {
-    if (!isMappingMode) {
-      return true;
-    }
-
     const pageIndex = getPageIndex(field);
-    const pageDimensions = pageDimensionsByIndex.get(pageIndex) || {
-      width: canvasSurfaceWidth,
-      height: canvasSurfaceHeight,
-    };
-    const pageWidth = Math.max(1, pageDimensions.width);
-    const pageHeight = Math.max(1, pageDimensions.height);
     const interactiveFields = interactiveByPage.get(pageIndex) || [];
-    const tableRegion = tableRegionByPage.get(pageIndex);
-    const rawText = normalizeText(getFieldRawText(field));
 
     if (
       field.type === "numeric" ||
@@ -556,84 +319,39 @@ export function DesignerCanvas({
       return false;
     }
 
-    if (isLikelyNonFieldArtifact(field)) {
+    const rawText = normalizeText(getFieldRawText(field));
+    if (rawText.length === 0) {
+      return false;
+    }
+
+    if (rawText === "yes" || rawText === "no") {
+      return false;
+    }
+
+    if (isTableHeaderText(rawText) || isRowLabelText(rawText) || isQuestionLabelText(rawText)) {
+      return false;
+    }
+
+    if (containsPhrase(rawText, LEGAL_DECORATIVE_PATTERNS)) {
+      return false;
+    }
+
+    if (field.y + Math.max(1, field.height) >= canvasSurfaceHeight * 0.9) {
       return false;
     }
 
     const hasInputGeometry = hasOverlappingInputGeometry(field, interactiveFields);
-    const isRowLabel = isRowLabelText(rawText);
-    const isTableHeader = isTableHeaderText(rawText);
-    const isQuestionLabel = isQuestionLabelText(rawText);
-    const isYesNo = rawText === "yes" || rawText === "no";
-    const isLegalOrDecorative = containsPhrase(rawText, LEGAL_DECORATIVE_PATTERNS);
-
-    if (isRowLabel || isTableHeader || isQuestionLabel || isYesNo || isLegalOrDecorative) {
-      return false;
-    }
-
-    const headerRegionY = tableRegion
-      ? tableRegion.top + (tableRegion.bottom - tableRegion.top) * 0.1
-      : pageHeight * 0.1;
-    if ((field.y < headerRegionY && countAlignedInputsBelow(field, interactiveFields) >= 2) || isTableHeader) {
-      return false;
-    }
-
-    if (field.y > pageHeight * 0.9) {
-      return false;
-    }
-
-    const answerFieldX = interactiveFields.length
-      ? Math.min(...interactiveFields.map((item) => item.x))
-      : pageWidth * 0.45;
-    if (field.x < answerFieldX && !hasInputGeometry && isQuestionLabel) {
-      return false;
-    }
-
-    if (isYesNo) {
-      return false;
-    }
-
-    if (field.type === "text" && rawText.length > 120) {
-      return false;
-    }
-
-    const inputLikeWidth = field.width >= 70;
-    const inputLikeHeight = field.height >= 16;
-    const hasFieldValueHint =
-      String(field.metadata?.artifactClassification || "").toLowerCase() === "field_value" ||
+    const inputLikeShape = field.width >= 70 && field.height >= 16;
+    const hasMappingSignal =
       Boolean(String(field.metadata?.acordCode || "").trim()) ||
-      Boolean(String(field.metadata?.extractionBlockId || "").trim());
+      Boolean(String(field.metadata?.extractionBlockId || "").trim()) ||
+      String(field.metadata?.artifactClassification || "").toLowerCase() === "field_value";
 
-    if (hasInputGeometry || hasFieldValueHint || (inputLikeWidth && inputLikeHeight)) {
-      return true;
-    }
-
-    if (field.x < pageWidth * 0.25) {
-      return false;
-    }
-
-    return true;
+    return hasInputGeometry || inputLikeShape || hasMappingSignal;
   };
 
-  /**
-   * Mapping Mode Filtering Architecture
-   *
-   * ALL non-field suppression (row labels, table headings, footers,
-   * question text, yes/no labels, legal text, decorative text) happens
-   * HERE, immediately before visibleFields.map().
-   *
-   * This ensures:
-   * - Canvas rendering is correct
-   * - Left panel uses the filtered list
-   * - Right panel uses the filtered list
-   * - Similar Fields uses the filtered list
-   * - ACORD mapping uses the filtered list
-   * - Calibration uses the filtered list
-   *
-   * No other component should implement field filtering.
-   */
   const filteredVisibleFields = visibleFields.filter((f) => isRealField(f));
-  const renderedVisibleFields = isMappingMode ? filteredVisibleFields : visibleFields;
+  const renderedVisibleFields = filteredVisibleFields;
 
   const visibleSemanticClusters = useMemo(() => {
     const topRoutedCluster = Object.entries(routedClusters || {})

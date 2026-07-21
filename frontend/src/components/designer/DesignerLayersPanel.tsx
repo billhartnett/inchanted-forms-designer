@@ -156,10 +156,41 @@ function renderConfidenceBadge(score: number) {
   );
 }
 
-function buildActionFilter(kind: "cluster" | "grouping" | "instance", label: string, fieldIds: string[]): string {
-  const safeLabel = label.replace(/\s+/g, " ").trim();
-  const ids = fieldIds.join(",");
-  return `${kind}:${safeLabel} @ids:${ids}`;
+function isLikelyNonFieldArtifact(field: Field): boolean {
+  if (field.type === "checkbox" || field.type === "radio" || field.type === "dropdown" || field.type === "date" || field.type === "numeric" || field.type === "signature") {
+    return false;
+  }
+
+  const classification = field.metadata?.artifactClassification;
+  if (classification === "non_field_artifact") {
+    return true;
+  }
+
+  const combinedText = [
+    field.metadata?.semanticLabel || "",
+    field.metadata?.acordLabel || "",
+    field.metadata?.acordDescription || "",
+    field.metadata?.categoryMode || "",
+    getFieldRawText(field),
+  ]
+    .join(" ")
+    .toLowerCase();
+
+  const rawText = getFieldRawText(field).trim().toLowerCase();
+  if (field.metadata?.artifactClassification === "field_label" && /^(yes|no)$/i.test(rawText)) {
+    return true;
+  }
+
+  return /\b(logo|copyright|all rights reserved|confidential|proprietary|disclaimer|sample|specimen|header|footer|section title|section\s+\d+|\d+\.\s+[A-Z][A-Z\s]+|table of contents|instructions?|for office use only|page\s+\d+\s+of\s+\d+)\b/i.test(
+    combinedText,
+  ) || /\b(markel|insurance company|subcontractors|application|general contractor\/artisan contractor|homes\/units\?|do you\b|are you\b|have you\b|please\s+attach|notwithstanding|this\s+application|coverage\s+question)\b/i.test(
+    combinedText,
+  );
+}
+
+function isVisibleDesignerField(field: Field): boolean {
+  const classification = field.metadata?.artifactClassification;
+  return (classification === "field_label" || classification === "field_value") && !isLikelyNonFieldArtifact(field);
 }
 
 function sortByConfidence(left: FieldInsight, right: FieldInsight) {
@@ -193,12 +224,11 @@ export function DesignerLayersPanel() {
 
   const fieldInsights = useMemo(() => {
     return fields
-      .filter((field) => {
-        if (ontologyFieldIds.size > 0 && !ontologyFieldIds.has(field.id)) {
-          return false;
-        }
-        return true;
-      })
+      .filter(
+        (field) =>
+          isVisibleDesignerField(field) &&
+          (ontologyFieldIds.size === 0 || ontologyFieldIds.has(field.id)),
+      )
       .map((field) => {
         const ontologyCode = field.metadata?.acordCode?.trim() || "";
         const ontology = ontologyCode ? resolveOntologySemanticMetadata(ontologyCode) : null;
@@ -329,8 +359,7 @@ export function DesignerLayersPanel() {
   };
 
   const filterToCluster = (clusterLabel: string, fieldId: string, fieldIds?: string[]) => {
-    const ids = fieldIds && fieldIds.length > 0 ? fieldIds : [fieldId];
-    setFieldSearchQuery(buildActionFilter("cluster", clusterLabel, ids));
+    setFieldSearchQuery(clusterLabel);
     if (fieldIds && fieldIds.length > 0) {
       selectFields(fieldIds);
     }
@@ -340,13 +369,13 @@ export function DesignerLayersPanel() {
   const focusGrouping = (bucket: ClusterBucket) => {
     const ids = bucket.fields.map((item) => item.field.id);
     if (ids.length === 0) return;
-    setFieldSearchQuery(buildActionFilter("grouping", bucket.label, ids));
+    setFieldSearchQuery(bucket.label);
     selectFields(ids);
     focusField(ids[0]);
   };
 
   const focusInstance = (instance: MultiInstanceObject) => {
-    setFieldSearchQuery(buildActionFilter("instance", instance.label, instance.fieldIds));
+    setFieldSearchQuery(instance.clusterLabel);
     selectFields(instance.fieldIds);
     if (instance.pageIndex !== null && instance.pageIndex >= 0 && pdfPages.length > 0) {
       setCurrentPdfPage(instance.pageIndex);
@@ -574,7 +603,6 @@ export function DesignerLayersPanel() {
           {suggestedGroupings.map((bucket) => (
             <div
               key={`suggested-${bucket.label}`}
-              onClick={() => focusGrouping(bucket)}
               style={{
                 border: "1px solid #d9e2ec",
                 borderRadius: 10,
@@ -582,7 +610,6 @@ export function DesignerLayersPanel() {
                 padding: 10,
                 display: "grid",
                 gap: 6,
-                cursor: "pointer",
               }}
             >
               <div style={{ display: "flex", justifyContent: "space-between", gap: 8 }}>
