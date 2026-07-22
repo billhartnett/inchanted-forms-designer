@@ -14,6 +14,14 @@ import type {
   SignatureField,
   TextField,
 } from "../../../../shared/src/types";
+import type {
+  CheckboxGroup,
+  ExtractionDiagnostics,
+  FieldCatalog,
+  GroupedStructures,
+  QuestionAnswerPair,
+  TableStructure,
+} from "../../types/extraction";
 
 const HISTORY_LIMIT = 150;
 export type {
@@ -62,8 +70,92 @@ type UpdateOptions = {
   recordHistory?: boolean;
 };
 
+type GroupedStructureRefs = {
+  tableIds: string[];
+  tableMap: Record<string, TableStructure>;
+  qaIds: string[];
+  qaMap: Record<string, QuestionAnswerPair>;
+  checkboxGroupIds: string[];
+  checkboxGroupMap: Record<string, CheckboxGroup>;
+};
+
+function createEmptyGroupedStructureRefs(): GroupedStructureRefs {
+  return {
+    tableIds: [],
+    tableMap: {},
+    qaIds: [],
+    qaMap: {},
+    checkboxGroupIds: [],
+    checkboxGroupMap: {},
+  };
+}
+
+function createEmptyExtractionDiagnostics(): ExtractionDiagnostics {
+  return {
+    blankFieldCount: 0,
+    tableCount: 0,
+    qaPairCount: 0,
+    checkboxGroupCount: 0,
+  };
+}
+
+function normalizeGroupedStructures(
+  groupedStructures: GroupedStructures | null | undefined,
+): GroupedStructureRefs {
+  if (!groupedStructures) {
+    return createEmptyGroupedStructureRefs();
+  }
+
+  const tableIds: string[] = [];
+  const tableMap: Record<string, TableStructure> = {};
+  for (const table of groupedStructures.tables || []) {
+    if (!table?.id) continue;
+    tableIds.push(table.id);
+    tableMap[table.id] = table;
+  }
+
+  const qaIds: string[] = [];
+  const qaMap: Record<string, QuestionAnswerPair> = {};
+  for (const pair of groupedStructures.questionAnswerPairs || []) {
+    if (!pair?.id) continue;
+    qaIds.push(pair.id);
+    qaMap[pair.id] = pair;
+  }
+
+  const checkboxGroupIds: string[] = [];
+  const checkboxGroupMap: Record<string, CheckboxGroup> = {};
+  for (const group of groupedStructures.checkboxGroups || []) {
+    if (!group?.id) continue;
+    checkboxGroupIds.push(group.id);
+    checkboxGroupMap[group.id] = group;
+  }
+
+  return {
+    tableIds,
+    tableMap,
+    qaIds,
+    qaMap,
+    checkboxGroupIds,
+    checkboxGroupMap,
+  };
+}
+
+function normalizeExtractionDiagnostics(
+  extractionDiagnostics: ExtractionDiagnostics | null | undefined,
+): ExtractionDiagnostics {
+  return {
+    blankFieldCount: Number(extractionDiagnostics?.blankFieldCount || 0),
+    tableCount: Number(extractionDiagnostics?.tableCount || 0),
+    qaPairCount: Number(extractionDiagnostics?.qaPairCount || 0),
+    checkboxGroupCount: Number(extractionDiagnostics?.checkboxGroupCount || 0),
+  };
+}
+
 interface DesignerState {
   fields: Field[];
+  fieldCatalog: FieldCatalog;
+  groupedStructures: GroupedStructureRefs;
+  extractionDiagnostics: ExtractionDiagnostics;
   groups: ShapeGroup[];
   draftCanvasFields: Field[];
   draftSelectedIds: string[];
@@ -110,6 +202,9 @@ interface DesignerState {
   ungroupSelected: () => void;
   setPdfPages: (pages: string[]) => void;
   setCurrentPdfPage: (page: number) => void;
+  setFieldCatalog: (fieldCatalog: FieldCatalog | null | undefined) => void;
+  setGroupedStructures: (groupedStructures: GroupedStructures | null | undefined) => void;
+  setExtractionDiagnostics: (extractionDiagnostics: ExtractionDiagnostics | null | undefined) => void;
   setShowGrid: (show: boolean) => void;
   setSnapToGrid: (snap: boolean) => void;
   setFieldSearchQuery: (query: string) => void;
@@ -734,6 +829,9 @@ function sanitizeSerializableState(value: DesignerSerializableState) {
 
 export const useDesignerStore = create<DesignerState>((set, get) => ({
   fields: [],
+  fieldCatalog: {},
+  groupedStructures: createEmptyGroupedStructureRefs(),
+  extractionDiagnostics: createEmptyExtractionDiagnostics(),
   groups: [],
   selectedIds: [],
   selectedGroupId: null,
@@ -1167,6 +1265,14 @@ export const useDesignerStore = create<DesignerState>((set, get) => ({
         ...pushHistory(state, before, after),
       };
     }),
+
+  setFieldCatalog: (fieldCatalog) => set({ fieldCatalog: fieldCatalog || {} }),
+
+  setGroupedStructures: (groupedStructures) =>
+    set({ groupedStructures: normalizeGroupedStructures(groupedStructures) }),
+
+  setExtractionDiagnostics: (extractionDiagnostics) =>
+    set({ extractionDiagnostics: normalizeExtractionDiagnostics(extractionDiagnostics) }),
 
   setShowGrid: (show) => set({ showGrid: Boolean(show) }),
 

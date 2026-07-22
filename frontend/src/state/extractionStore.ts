@@ -10,6 +10,11 @@ import type {
   ReviewConfidenceThresholds,
   UnifiedDecisionGraph,
 } from "@shared/types";
+import type {
+  ExtractionDiagnostics,
+  FieldCatalog,
+  GroupedStructures,
+} from "../types/extraction";
 
 const DEFAULT_THRESHOLDS: ReviewConfidenceThresholds = {
   accepted: 0.8,
@@ -23,6 +28,27 @@ function createEmptyDecisionGraph(): UnifiedDecisionGraph {
     fields: {},
     mappings: {},
     confidenceThresholds: DEFAULT_THRESHOLDS,
+  };
+}
+
+function createEmptyFieldCatalog(): FieldCatalog {
+  return {};
+}
+
+function createEmptyGroupedStructures(): GroupedStructures {
+  return {
+    tables: [],
+    questionAnswerPairs: [],
+    checkboxGroups: [],
+  };
+}
+
+function createEmptyExtractionDiagnostics(): ExtractionDiagnostics {
+  return {
+    blankFieldCount: 0,
+    tableCount: 0,
+    qaPairCount: 0,
+    checkboxGroupCount: 0,
   };
 }
 
@@ -63,12 +89,18 @@ type ExtractionStoreState = {
   pages: PageExtraction[];
   labels: LabelDetection[];
   fields: Field[];
+  fieldCatalog: FieldCatalog;
+  groupedStructures: GroupedStructures;
+  extractionDiagnostics: ExtractionDiagnostics;
   textBlocks: ExtractedBlock[];
   normalizedBBoxes: NormalizedBoundingBox[];
   decisionGraph: UnifiedDecisionGraph;
   suppressedOcrBlockIds: string[];
   highlightedAssociationBlockId: string | null;
   setExtractionArtifacts: (artifacts: ExtractionArtifacts) => void;
+  setFieldCatalog: (fieldCatalog: FieldCatalog) => void;
+  setGroupedStructures: (groupedStructures: GroupedStructures) => void;
+  setExtractionDiagnostics: (extractionDiagnostics: ExtractionDiagnostics) => void;
   setDecisionGraph: (decisionGraph: UnifiedDecisionGraph) => void;
   acceptLabel: (blockId: string) => void;
   rejectLabel: (blockId: string) => void;
@@ -85,6 +117,9 @@ export const useExtractionStore = create<ExtractionStoreState>((set) => ({
   pages: [],
   labels: [],
   fields: [],
+  fieldCatalog: createEmptyFieldCatalog(),
+  groupedStructures: createEmptyGroupedStructures(),
+  extractionDiagnostics: createEmptyExtractionDiagnostics(),
   textBlocks: [],
   normalizedBBoxes: [],
   decisionGraph: createEmptyDecisionGraph(),
@@ -99,9 +134,15 @@ export const useExtractionStore = create<ExtractionStoreState>((set) => ({
       textBlocks: artifacts.textBlocks,
       normalizedBBoxes: artifacts.normalizedBBoxes,
       decisionGraph: buildDecisionGraph(artifacts),
+      fieldCatalog: createEmptyFieldCatalog(),
+      groupedStructures: createEmptyGroupedStructures(),
+      extractionDiagnostics: createEmptyExtractionDiagnostics(),
       suppressedOcrBlockIds: [],
       highlightedAssociationBlockId: null,
     }),
+  setFieldCatalog: (fieldCatalog) => set({ fieldCatalog }),
+  setGroupedStructures: (groupedStructures) => set({ groupedStructures }),
+  setExtractionDiagnostics: (extractionDiagnostics) => set({ extractionDiagnostics }),
   setDecisionGraph: (decisionGraph) => set({ decisionGraph }),
   acceptLabel: (blockId) =>
     set((state) => ({
@@ -184,6 +225,9 @@ export const useExtractionStore = create<ExtractionStoreState>((set) => ({
       pages: [],
       labels: [],
       fields: [],
+      fieldCatalog: createEmptyFieldCatalog(),
+      groupedStructures: createEmptyGroupedStructures(),
+      extractionDiagnostics: createEmptyExtractionDiagnostics(),
       textBlocks: [],
       normalizedBBoxes: [],
       decisionGraph: createEmptyDecisionGraph(),

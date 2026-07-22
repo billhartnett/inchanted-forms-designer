@@ -9,32 +9,8 @@ import { useDesignerStore, type Field } from "../../state/designerStore";
 import { FieldControls } from "./FieldControls";
 import FieldRenderer from "./FieldRenderer";
 import PdfBackground from "./PdfBackground";
-import { resolveOntologySemanticMetadata } from "../../../../shared/src/acord/acord-gating";
-import { useMappingStore } from "../../state/mappingStore";
-import { useExtractionStore } from "../../state/extractionStore";
 
 const GRID_SIZE = 20;
-function deriveOntologyClusterLabel(field: Field, routedClusterFallback?: string): string {
-  const acordCode = String(field.metadata?.acordCode || "").trim();
-  if (acordCode.length > 0) {
-    const metadata = resolveOntologySemanticMetadata(acordCode);
-    if (metadata.cluster.trim().length > 0) {
-      return metadata.cluster;
-    }
-  }
-
-  const derived = (
-    field.metadata?.semanticLabel?.trim() ||
-    field.metadata?.categoryMode?.trim() ||
-    "general"
-  );
-
-  if (derived === "general" && routedClusterFallback) {
-    return routedClusterFallback;
-  }
-
-  return derived;
-}
 
 type StageLike = {
   scaleX: () => number;
@@ -94,8 +70,6 @@ export function DesignerCanvas({
   const fieldGroupRefs = useRef<Map<string, any>>(new Map());
 
   const fields = useDesignerStore((s) => s.fields);
-  const textBlocks = useExtractionStore((s) => s.textBlocks);
-  const routedClusters = useMappingStore((s) => s.routedClusters);
   const pdfPages = useDesignerStore((s) => s.pdfPages);
   const currentPdfPage = useDesignerStore((s) => s.currentPdfPage);
   const fieldSearchQuery = useDesignerStore((s) => s.fieldSearchQuery);
@@ -108,32 +82,15 @@ export function DesignerCanvas({
 
   const normalizedSearchQuery = fieldSearchQuery.trim().toLowerCase();
 
-  const visibleFields = fields.filter((field) => {
-    if (field.metadata?.hidden) return false;
-    if (pdfPages.length === 0) return true;
-    if (field.pageIndex === null || field.pageIndex === undefined) return true;
-    if (field.pageIndex !== currentPdfPage) return false;
-
-    if (!normalizedSearchQuery) return true;
-
-    const searchableText = [
-      field.metadata?.acordCode || "",
-      field.metadata?.acordLabel || "",
-      field.metadata?.semanticLabel || "",
-      field.metadata?.categoryMode || "",
-      field.type,
-      field.type === "text" ? field.text || "" : "",
-      field.type === "checkbox" || field.type === "radio" ? field.label || "" : "",
-      field.type === "dropdown" ? field.placeholder || "" : "",
-      field.type === "date" ? field.placeholder || field.value || "" : "",
-      field.type === "numeric" ? field.placeholder || "" : "",
-      field.type === "signature" ? field.placeholder || "" : "",
-    ]
-      .join(" ")
-      .toLowerCase();
-
-    return searchableText.includes(normalizedSearchQuery);
-  });
+  const fieldIds = useMemo(() => fields.map((field) => field.id), [fields]);
+  const fieldMap = useMemo(
+    () =>
+      fields.reduce<Record<string, Field>>((acc, field) => {
+        acc[field.id] = field;
+        return acc;
+      }, {}),
+    [fields],
+  );
 
   const isRealField = (field: Field): boolean => {
     const artifactClassification = String(field.metadata?.artifactClassification || "").toLowerCase();
@@ -151,7 +108,40 @@ export function DesignerCanvas({
     return true;
   };
 
-  const filteredVisibleFields = visibleFields.filter(isRealField);
+  const filteredVisibleFields = useMemo(
+    () =>
+      fieldIds
+        .map((id) => fieldMap[id])
+        .filter((field): field is Field => Boolean(field))
+        .filter((field) => {
+          if (field.metadata?.hidden) return false;
+          if (pdfPages.length > 0) {
+            if (field.pageIndex !== null && field.pageIndex !== undefined && field.pageIndex !== currentPdfPage) {
+              return false;
+            }
+          }
+
+          if (!normalizedSearchQuery) return true;
+
+          const searchableText = [
+            field.metadata?.acordCode || "",
+            field.metadata?.acordLabel || "",
+            field.metadata?.semanticLabel || "",
+            field.metadata?.categoryMode || "",
+            "text" in field ? field.text || "" : "",
+            "label" in field ? field.label || "" : "",
+            "placeholder" in field ? field.placeholder || "" : "",
+            "value" in field ? String(field.value ?? "") : "",
+          ]
+            .join(" ")
+            .toLowerCase();
+
+          return searchableText.includes(normalizedSearchQuery);
+        })
+        .filter(isRealField),
+    [fieldIds, fieldMap, pdfPages.length, currentPdfPage, normalizedSearchQuery],
+  );
+
   const renderedVisibleFields = filteredVisibleFields;
 
   const visibleDraftFields = draftCanvasFields.filter((field) => {
@@ -159,57 +149,6 @@ export function DesignerCanvas({
     if (field.pageIndex === null || field.pageIndex === undefined) return true;
     return field.pageIndex === currentPdfPage;
   });
-
-  const visibleTextBlocks = textBlocks.filter((block) => {
-    if (pdfPages.length === 0) return true;
-    return Math.max(0, (block.page || 1) - 1) === currentPdfPage;
-  });
-
-  const visibleSemanticClusters = useMemo(() => {
-    const topRoutedCluster = Object.entries(routedClusters || {})
-      .sort((left, right) => right[1] - left[1] || left[0].localeCompare(right[0]))[0]?.[0];
-
-    const byGroup = new Map<
-      string,
-      {
-        x: number;
-        y: number;
-        maxX: number;
-        maxY: number;
-        label: string;
-      }
-    >();
-
-    for (const field of visibleFields) {
-      if (!field.groupId) continue;
-      const label = deriveOntologyClusterLabel(field, topRoutedCluster);
-      const x = field.x;
-      const y = field.y;
-      const maxX = field.x + Math.max(1, field.width);
-      const maxY = field.y + Math.max(1, field.height);
-      const existing = byGroup.get(field.groupId);
-      if (!existing) {
-        byGroup.set(field.groupId, { x, y, maxX, maxY, label });
-        continue;
-      }
-      existing.x = Math.min(existing.x, x);
-      existing.y = Math.min(existing.y, y);
-      existing.maxX = Math.max(existing.maxX, maxX);
-      existing.maxY = Math.max(existing.maxY, maxY);
-      if (existing.label === "general" && label !== "general") {
-        existing.label = label;
-      }
-    }
-
-    return Array.from(byGroup.entries()).map(([key, box]) => ({
-      key,
-      label: box.label,
-      x: box.x - 6,
-      y: box.y - 18,
-      width: Math.max(24, box.maxX - box.x + 12),
-      height: Math.max(24, box.maxY - box.y + 26),
-    }));
-  }, [routedClusters, visibleFields]);
 
   const gridLines = useMemo(() => {
     const lines: Array<{ key: string; points: number[] }> = [];
@@ -252,7 +191,6 @@ export function DesignerCanvas({
     }
   }, [pdfUrl, onSelectedPdfSizeChange]);
 
-  // Update transformer when selected fields change
   useEffect(() => {
     if (!transformerRef.current) return;
 
@@ -266,7 +204,6 @@ export function DesignerCanvas({
     } else if (nodeList.length === 1) {
       transformerRef.current.nodes(nodeList);
     } else {
-      // Multiple selections: don't use transformer for now
       transformerRef.current.nodes([]);
     }
 
@@ -328,54 +265,8 @@ export function DesignerCanvas({
             </>
           }
           overlayChildren={
-            visibleTextBlocks.length > 0 || visibleFields.length > 0 || selectedFields.length > 0 || visibleDraftFields.length > 0 ? (
+            renderedVisibleFields.length > 0 || selectedFields.length > 0 || visibleDraftFields.length > 0 ? (
               <>
-                {visibleTextBlocks.map((block) => (
-                  <KonvaGroup key={`ocr-${block.id}`} listening={false}>
-                    <KonvaRect
-                      x={block.boundingBox.x}
-                      y={block.boundingBox.y}
-                      width={block.boundingBox.width}
-                      height={block.boundingBox.height}
-                      fill="rgba(226, 232, 240, 0.12)"
-                      stroke={"#cbd5e1"}
-                      strokeWidth={1}
-                      cornerRadius={2}
-                    />
-                    <KonvaText
-                      x={block.boundingBox.x + 3}
-                      y={block.boundingBox.y + 2}
-                      text={block.text}
-                      fontSize={10}
-                      fontFamily="Geist Variable"
-                      fill="#334155"
-                      width={Math.max(16, block.boundingBox.width - 6)}
-                    />
-                  </KonvaGroup>
-                ))}
-                {visibleSemanticClusters.map((group) => (
-                  <KonvaGroup key={`semantic-group-${group.key}`} listening={false}>
-                    <KonvaRect
-                      x={group.x}
-                      y={group.y}
-                      width={group.width}
-                      height={group.height}
-                      stroke="#7dd3fc"
-                      strokeWidth={1}
-                      dash={[5, 4]}
-                      fill="rgba(125, 211, 252, 0.04)"
-                      cornerRadius={4}
-                    />
-                    <KonvaText
-                      x={group.x + 6}
-                      y={group.y + 2}
-                      text={group.label}
-                      fontSize={10}
-                      fontFamily="Geist Variable"
-                      fill="#0369a1"
-                    />
-                  </KonvaGroup>
-                ))}
                 {renderedVisibleFields.map((field: Field) => (
                   <KonvaGroup
                     key={`visual-${field.id}`}
@@ -401,7 +292,6 @@ export function DesignerCanvas({
                       if (field.metadata?.locked) {
                         return;
                       }
-                      // Update field position after drag
                       const updateField = useDesignerStore.getState().updateField;
                       if (updateField) {
                         updateField(field.id, {
@@ -414,105 +304,106 @@ export function DesignerCanvas({
                     <FieldRenderer field={field} />
                   </KonvaGroup>
                 ))}
-                {visibleDraftFields.map((draft) => {
-                  const isSelected = draftSelectedIds.includes(draft.id);
-                  return (
-                    <KonvaGroup
-                      key={`draft-${draft.id}`}
-                      x={draft.x}
-                      y={draft.y}
-                      listening
-                      onClick={(event) => {
-                        event.cancelBubble = true;
-                        toggleDraftSelection(draft.id);
-                      }}
-                      onTap={(event) => {
-                        event.cancelBubble = true;
-                        toggleDraftSelection(draft.id);
-                      }}
-                    >
-                      <KonvaRect
-                        x={0}
-                        y={0}
-                        width={Math.max(24, draft.width)}
-                        height={Math.max(18, draft.height)}
-                        fill={isSelected ? "rgba(251, 191, 36, 0.24)" : "rgba(251, 191, 36, 0.12)"}
-                        stroke={isSelected ? "#d97706" : "#f59e0b"}
-                        strokeWidth={2}
-                        dash={[6, 4]}
-                        cornerRadius={3}
-                      />
-                      <KonvaText
-                        x={4}
-                        y={3}
-                        width={Math.max(0, draft.width - 8)}
-                        height={Math.max(0, draft.height - 6)}
-                        text={
-                          draft.metadata?.acordLabel?.trim() ||
-                          draft.metadata?.acordCode?.trim() ||
-                          draft.type
-                        }
-                        fontSize={11}
-                        fontFamily="Geist Variable"
-                        fill={isSelected ? "#7c2d12" : "#b45309"}
-                        verticalAlign="middle"
-                        ellipsis
-                      />
-                    </KonvaGroup>
-                  );
-                })}
-                {selectedFields.map((f) => {
-                  const stageRef = document.querySelector("canvas")?.parentElement?.querySelector("[role='presentation']");
-                  return (
-                    <FieldControls key={f.id} field={f} />
-                  );
-                })}
-                {/* Transformer for resize/rotate handles */}
-                <Transformer
-                  ref={transformerRef}
-                  rotateEnabled
-                  enabledAnchors={["top-left", "top-center", "top-right", "middle-left", "middle-right", "bottom-left", "bottom-center", "bottom-right"]}
-                  boundBoxStrokeWidth={2}
-                  anchorStroke="#0ea5e9"
-                  anchorFill="#ffffff"
-                  anchorSize={8}
-                  borderStroke="#0ea5e9"
-                  borderStrokeWidth={2}
-                  rotateAnchorOffset={30}
-                  onTransformEnd={(e) => {
-                    const node = e.target;
-                    const scaleX = node.scaleX();
-                    const scaleY = node.scaleY();
+                {pdfModalMode !== "map-only" && (
+                  <>
+                    {visibleDraftFields.map((draft) => {
+                      const isSelected = draftSelectedIds.includes(draft.id);
+                      return (
+                        <KonvaGroup
+                          key={`draft-${draft.id}`}
+                          x={draft.x}
+                          y={draft.y}
+                          listening
+                          onClick={(event) => {
+                            event.cancelBubble = true;
+                            toggleDraftSelection(draft.id);
+                          }}
+                          onTap={(event) => {
+                            event.cancelBubble = true;
+                            toggleDraftSelection(draft.id);
+                          }}
+                        >
+                          <KonvaRect
+                            x={0}
+                            y={0}
+                            width={Math.max(24, draft.width)}
+                            height={Math.max(18, draft.height)}
+                            fill={isSelected ? "rgba(251, 191, 36, 0.24)" : "rgba(251, 191, 36, 0.12)"}
+                            stroke={isSelected ? "#d97706" : "#f59e0b"}
+                            strokeWidth={2}
+                            dash={[6, 4]}
+                            cornerRadius={3}
+                          />
+                          <KonvaText
+                            x={4}
+                            y={3}
+                            width={Math.max(0, draft.width - 8)}
+                            height={Math.max(0, draft.height - 6)}
+                            text={
+                              draft.metadata?.acordLabel?.trim() ||
+                              draft.metadata?.acordCode?.trim() ||
+                              draft.type
+                            }
+                            fontSize={11}
+                            fontFamily="Geist Variable"
+                            fill={isSelected ? "#7c2d12" : "#b45309"}
+                            verticalAlign="middle"
+                            ellipsis
+                          />
+                        </KonvaGroup>
+                      );
+                    })}
+                    {selectedFields.map((f) => {
+                      return <FieldControls key={f.id} field={f} />;
+                    })}
+                    <Transformer
+                      ref={transformerRef}
+                      rotateEnabled
+                      enabledAnchors={["top-left", "top-center", "top-right", "middle-left", "middle-right", "bottom-left", "bottom-center", "bottom-right"]}
+                      boundBoxStrokeWidth={2}
+                      anchorStroke="#0ea5e9"
+                      anchorFill="#ffffff"
+                      anchorSize={8}
+                      borderStroke="#0ea5e9"
+                      borderStrokeWidth={2}
+                      rotateAnchorOffset={30}
+                      onTransformEnd={(e) => {
+                        const node = e.target;
+                        const scaleX = node.scaleX();
+                        const scaleY = node.scaleY();
 
-                    if (selectedFields[0]?.metadata?.locked) {
-                      node.scaleX(1);
-                      node.scaleY(1);
-                      return;
-                    }
-                    
-                    // Reset scale to 1 so the shape reports correct position
-                    node.scaleX(1);
-                    node.scaleY(1);
-                    
-                    const updateField = useDesignerStore.getState().updateField;
-                    const selectedField = selectedFields[0];
-                    
-                    if (updateField && selectedField) {
-                      updateField(selectedField.id, {
-                        x: node.x(),
-                        y: node.y(),
-                        width: Math.max(20, node.width() * scaleX),
-                        height: Math.max(20, node.height() * scaleY),
-                        rotation: node.rotation(),
-                      }, { recordHistory: true });
-                      
-                      // Force re-render of node with new dimensions
-                      node.width(Math.max(20, node.width() * scaleX));
-                      node.height(Math.max(20, node.height() * scaleY));
-                    }
-                  }}
-                />
-              
+                        if (selectedFields[0]?.metadata?.locked) {
+                          node.scaleX(1);
+                          node.scaleY(1);
+                          return;
+                        }
+
+                        node.scaleX(1);
+                        node.scaleY(1);
+
+                        const updateField = useDesignerStore.getState().updateField;
+                        const selectedField = selectedFields[0];
+
+                        if (updateField && selectedField) {
+                          updateField(
+                            selectedField.id,
+                            {
+                              x: node.x(),
+                              y: node.y(),
+                              width: Math.max(20, node.width() * scaleX),
+                              height: Math.max(20, node.height() * scaleY),
+                              rotation: node.rotation(),
+                            },
+                            { recordHistory: true },
+                          );
+
+                          node.width(Math.max(20, node.width() * scaleX));
+                          node.height(Math.max(20, node.height() * scaleY));
+                        }
+                      }}
+                    />
+                  </>
+                )}
               </>
             ) : undefined
           }
