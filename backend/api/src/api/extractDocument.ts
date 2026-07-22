@@ -5,9 +5,18 @@ import {
   createDocumentAnalysisClient,
   normalizeExtractedPages,
   inferSemanticFields,
+  buildHybridFieldExtraction,
 } from "../extraction";
 import { mapBlocksWithAcord } from "../mapping";
-import type { ExtractedBlock, FieldMapping, PageExtraction } from "../types";
+import type {
+  ExtractedBlock,
+  FieldMapping,
+  PageExtraction,
+  ExtractDocumentErrorResponse,
+  ExtractDocumentMultipartSuccessResponse,
+  ExtractDocumentJsonBlocksSuccessResponse,
+  ExtractDocumentPlainTextSuccessResponse,
+} from "../types";
 
 type ExtractDocumentRequest = {
   documentId?: string;
@@ -121,7 +130,7 @@ async function enrichWithMappingEngine(
 function buildStructuralDelta(
   blocks: ExtractedBlock[],
   baselineDocumentId: string | null = null,
-) {
+): ExtractDocumentMultipartSuccessResponse["structuralDelta"] {
   return {
     addedBlocks: blocks.length,
     removedBlocks: 0,
@@ -148,22 +157,24 @@ export async function extractDocument(
 
       const client = createDocumentAnalysisClient();
       if (!client) {
+        const jsonBody: ExtractDocumentErrorResponse = {
+          error: "Document Intelligence is not configured",
+          details:
+            "Set DI_ENDPOINT and DI_KEY in backend/api/local.settings.json. " +
+            "See backend/api/local.settings.example.json for the required shape.",
+          requiredEnvVars: ["DI_ENDPOINT", "DI_KEY"],
+        };
         return {
           status: 503,
-          jsonBody: {
-            error: "Document Intelligence is not configured",
-            details:
-              "Set DI_ENDPOINT and DI_KEY in backend/api/local.settings.json. " +
-              "See backend/api/local.settings.example.json for the required shape.",
-            requiredEnvVars: ["DI_ENDPOINT", "DI_KEY"],
-          },
+          jsonBody,
         };
       }
 
       const form = await request.formData();
       const file = form.get("file") as File | null;
       if (!file) {
-        return { status: 400, jsonBody: { error: "No file uploaded" } };
+        const jsonBody: ExtractDocumentErrorResponse = { error: "No file uploaded" };
+        return { status: 400, jsonBody };
       }
 
       const buffer = Buffer.from(await file.arrayBuffer());
@@ -171,6 +182,10 @@ export async function extractDocument(
       const result = await poller.pollUntilDone();
       const pages = normalizeExtractedPages(result.pages ?? []);
       const blocks = buildBlocksFromPages(pages);
+      const hybridExtraction = await buildHybridFieldExtraction({
+        pages,
+        rawResult: result,
+      });
       const documentId = `doc-${Date.now()}`;
 
       const { mappings, fieldTypes } = await enrichWithMappingEngine(blocks, documentId, context);
@@ -179,39 +194,48 @@ export async function extractDocument(
         page: p.pageNumber,
         width: (p as any).pixelWidth ?? p.width ?? 816,
         height: (p as any).pixelHeight ?? p.height ?? 1056,
-        unit: "pixel",
+        unit: "pixel" as const,
       }));
 
       const structuralDelta = buildStructuralDelta(blocks);
       const selectionMarks = blocks.filter((b) => /^selection_mark_(selected|unselected)_\d+$/i.test(b.text));
+      const jsonBody: ExtractDocumentMultipartSuccessResponse = {
+        documentId,
+        fileName,
+        extractionMethod: "document-intelligence-wave8",
+        extractedAt: new Date().toISOString(),
+        pages,
+        blocks,
+        fields: hybridExtraction.fields,
+        fieldCatalog: hybridExtraction.fieldCatalog,
+        groupedStructures: {
+          tables: hybridExtraction.tables,
+          questionAnswerPairs: hybridExtraction.questionAnswerPairs,
+          checkboxGroups: hybridExtraction.checkboxGroups,
+        },
+        extractionDiagnostics: hybridExtraction.diagnostics,
+        selectionMarks,
+        mappings,
+        fieldTypes,
+        pageDimensions,
+        structuralDelta,
+        summary: {
+          totalPages: pages.length,
+          totalBlocks: blocks.length,
+          totalMappings: mappings.length,
+          selectionMarkCount: selectionMarks.length,
+          checkboxCount: blocks.filter((b) => b.type === "checkbox").length,
+          signatureCount: blocks.filter((b) => b.type === "signature").length,
+          kvpCount: blocks.filter((b) => b.type === "kvp").length,
+          averageConfidence:
+            blocks.reduce((sum, b) => sum + b.confidence, 0) / (blocks.length || 1),
+          language: "en",
+        },
+      };
 
       return {
         status: 200,
-        jsonBody: {
-          documentId,
-          fileName,
-          extractionMethod: "document-intelligence-wave8",
-          extractedAt: new Date().toISOString(),
-          pages,
-          blocks,
-          selectionMarks,
-          mappings,
-          fieldTypes,
-          pageDimensions,
-          structuralDelta,
-          summary: {
-            totalPages: pages.length,
-            totalBlocks: blocks.length,
-            totalMappings: mappings.length,
-            selectionMarkCount: selectionMarks.length,
-            checkboxCount: blocks.filter((b) => b.type === "checkbox").length,
-            signatureCount: blocks.filter((b) => b.type === "signature").length,
-            kvpCount: blocks.filter((b) => b.type === "kvp").length,
-            averageConfidence:
-              blocks.reduce((sum, b) => sum + b.confidence, 0) / (blocks.length || 1),
-            language: "en",
-          },
-        },
+        jsonBody,
       };
     }
 
@@ -221,46 +245,9 @@ export async function extractDocument(
       const blocks = body.blocks.map((block, index) => coerceExtractedBlock(block, index));
       const documentId = body.documentId ?? `doc-json-${Date.now()}`;
       const { mappings, fieldTypes } = await enrichWithMappingEngine(blocks, documentId, context);
-
-      return {
-        status: 200,
-        jsonBody: {
-          documentId,
-          extractionMethod: "json-blocks-wave8",
-          blocks,
-          mappings,
-          fieldTypes,
-          structuralDelta: buildStructuralDelta(blocks),
-          summary: {
-            totalBlocks: blocks.length,
-            totalMappings: mappings.length,
-            checkboxCount: blocks.filter((b) => b.type === "checkbox").length,
-          },
-        },
-      };
-    }
-
-    const text = typeof body?.text === "string" ? body.text : "";
-    const lines = text.split(/\r?\n/).map((l: string) => l.trim()).filter(Boolean);
-
-    if (lines.length === 0) {
-      return {
-        status: 400,
-        jsonBody: {
-          error: "Provide blocks[], text, or a multipart file upload with a PDF",
-        },
-      };
-    }
-
-    const blocks: ExtractedBlock[] = extractBlocksFromPlainText(lines.join("\n"));
-    const documentId = body?.documentId ?? `doc-text-${Date.now()}`;
-    const { mappings, fieldTypes } = await enrichWithMappingEngine(blocks, documentId, context);
-
-    return {
-      status: 200,
-      jsonBody: {
+      const jsonBody: ExtractDocumentJsonBlocksSuccessResponse = {
         documentId,
-        extractionMethod: "plain-text-wave8",
+        extractionMethod: "json-blocks-wave8",
         blocks,
         mappings,
         fieldTypes,
@@ -268,17 +255,58 @@ export async function extractDocument(
         summary: {
           totalBlocks: blocks.length,
           totalMappings: mappings.length,
+          checkboxCount: blocks.filter((b) => b.type === "checkbox").length,
         },
+      };
+
+      return {
+        status: 200,
+        jsonBody,
+      };
+    }
+
+    const text = typeof body?.text === "string" ? body.text : "";
+    const lines = text.split(/\r?\n/).map((l: string) => l.trim()).filter(Boolean);
+
+    if (lines.length === 0) {
+      const jsonBody: ExtractDocumentErrorResponse = {
+        error: "Provide blocks[], text, or a multipart file upload with a PDF",
+      };
+      return {
+        status: 400,
+        jsonBody,
+      };
+    }
+
+    const blocks: ExtractedBlock[] = extractBlocksFromPlainText(lines.join("\n"));
+    const documentId = body?.documentId ?? `doc-text-${Date.now()}`;
+    const { mappings, fieldTypes } = await enrichWithMappingEngine(blocks, documentId, context);
+    const jsonBody: ExtractDocumentPlainTextSuccessResponse = {
+      documentId,
+      extractionMethod: "plain-text-wave8",
+      blocks,
+      mappings,
+      fieldTypes,
+      structuralDelta: buildStructuralDelta(blocks),
+      summary: {
+        totalBlocks: blocks.length,
+        totalMappings: mappings.length,
       },
+    };
+
+    return {
+      status: 200,
+      jsonBody,
     };
   } catch (error: any) {
     context.error("[extractDocument] unhandled error:", error);
+    const jsonBody: ExtractDocumentErrorResponse = {
+      error: "Failed to extract document",
+      details: error?.message ?? "Unknown error",
+    };
     return {
       status: 500,
-      jsonBody: {
-        error: "Failed to extract document",
-        details: error?.message ?? "Unknown error",
-      },
+      jsonBody,
     };
   }
 }

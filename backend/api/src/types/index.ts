@@ -27,3 +27,15 @@ export type {
   AcordLabelCandidate,
   AcordMappingRationale,
 } from "shared/acord";
+
+export type {
+  ExtractDocumentResponseBody,
+  ExtractDocumentErrorResponse,
+  ExtractDocumentPlainTextSuccessResponse,
+  ExtractDocumentJsonBlocksSuccessResponse,
+  ExtractDocumentMultipartSuccessResponse,
+  ExtractDocumentFieldCatalogEntry,
+  ExtractDocumentGroupedStructures,
+  ExtractDocumentDiagnostics,
+  ExtractDocumentStructuralDelta,
+} from "./extractDocumentContract";

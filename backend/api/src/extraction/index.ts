@@ -6,6 +6,7 @@ export { buildTypedField, buildTypedFields } from "./fieldFactory";
 export { detectLabel, detectLabels } from "./labelDetection";
 export { normalizeExtractedPages, normalizeExtractedLine } from "./pageExtraction";
 export { inferSemanticField, inferSemanticFields } from "./semanticInference";
+export { buildHybridFieldExtraction } from "./hybridFieldExtraction";
 export {
   classifyBlockSemantic,
   classifyCategoryMode,
