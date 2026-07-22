@@ -541,90 +541,61 @@ export function PropertiesPanel({ selectedField, showAcordMappingSection = true,
           gap: 12,
         }}
       >
-
-          {compactMode ? (
-            <>
-              <label>
-                Field Name:
-                <input
-                  type="text"
-                  value={
-                    single.type === "text"
-                      ? single.text || ""
-                      : single.type === "checkbox" || single.type === "radio"
-                        ? single.label || ""
-                        : single.type === "dropdown" ||
-                            single.type === "date" ||
-                            single.type === "numeric" ||
-                            single.type === "signature"
-                          ? single.placeholder || ""
-                          : metadata.acordLabel || metadata.acordCode || ""
+        {compactMode ? (
+          <>
+            <label>
+              Field Name:
+              <input
+                type="text"
+                value={
+                  single.type === "text"
+                    ? single.text || ""
+                    : single.type === "checkbox" || single.type === "radio"
+                      ? single.label || ""
+                      : single.type === "dropdown" ||
+                          single.type === "date" ||
+                          single.type === "numeric" ||
+                          single.type === "signature"
+                        ? single.placeholder || ""
+                        : metadata.acordLabel || metadata.acordCode || ""
+                }
+                onChange={(e) => {
+                  const value = e.target.value;
+                  if (single.type === "text") {
+                    update({ text: value });
+                    return;
                   }
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    if (single.type === "text") {
-                      update({ text: value });
-                      return;
-                    }
 
-                    if (single.type === "checkbox" || single.type === "radio") {
-                      update({ label: value } as Partial<Field>);
-                      return;
-                    }
+                  if (single.type === "checkbox" || single.type === "radio") {
+                    update({ label: value } as Partial<Field>);
+                    return;
+                  }
 
-                    if (single.type === "dropdown") {
-                      update({ placeholder: value } as Partial<DropdownField>);
-                      return;
-                    }
+                  if (single.type === "dropdown") {
+                    update({ placeholder: value } as Partial<DropdownField>);
+                    return;
+                  }
 
-                    if (single.type === "date" || single.type === "signature") {
-                      update({ placeholder: value } as Partial<Field>);
-                      return;
-                    }
+                  if (single.type === "date" || single.type === "signature") {
+                    update({ placeholder: value } as Partial<Field>);
+                    return;
+                  }
 
-                    if (single.type === "numeric") {
-                      update({ placeholder: value } as Partial<NumericField>);
-                    }
-                  }}
-                />
-              </label>
+                  if (single.type === "numeric") {
+                    update({ placeholder: value } as Partial<NumericField>);
+                  }
+                }}
+              />
+            </label>
 
-              <label>
-                Field Type:
-                <input type="text" value={single.type} readOnly />
-              </label>
+            <label>
+              Field Type:
+              <input type="text" value={single.type} readOnly />
+            </label>
+          </>
+        ) : null}
 
-              <label>
-                Required:
-                <input
-                  type="checkbox"
-                  checked={Boolean(metadata.required)}
-                  onChange={(e) => updateMetadata({ required: e.target.checked })}
-                />
-              </label>
-
-              <label>
-                X:
-                <input type="number" value={num(single.x)} readOnly />
-              </label>
-                    Default Value:
-              <label>
-                      type="text"
-                      value={defaultValue}
-                      onChange={(e) => setDefaultValue(e.target.value)}
-                      placeholder="Set initial/default value"
-
-              <label>
-                Width:
-                <input type="number" value={num(single.width, 20)} readOnly />
-                    Tooltip:
-
-                      type="text"
-                      value={metadata.tooltip || ""}
-                      onChange={(e) => updateMetadata({ tooltip: e.target.value })}
-                      placeholder="Helpful guidance shown to users"
-              </label>
-
+        <label>
           Required:
           <input
             type="checkbox"
@@ -1203,8 +1174,6 @@ export function PropertiesPanel({ selectedField, showAcordMappingSection = true,
         >
           Delete
         </button>
-          </>
-        )}
       </div>
     );
   }
