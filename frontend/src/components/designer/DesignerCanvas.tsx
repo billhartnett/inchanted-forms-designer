@@ -93,19 +93,35 @@ export function DesignerCanvas({
   );
 
   const isRealField = (field: Field): boolean => {
-    const artifactClassification = String(field.metadata?.artifactClassification || "").toLowerCase();
-    if (artifactClassification === "field_label" || artifactClassification === "non_field_artifact") {
-      return false;
-    }
+    const candidate = field as unknown as {
+      id?: unknown;
+      pageIndex?: unknown;
+      x?: unknown;
+      y?: unknown;
+      width?: unknown;
+      height?: unknown;
+    };
 
-    if (field.type === "text") {
-      const textValue = String(field.text || "").trim();
-      if (/^selection_mark_(selected|unselected)_\d+$/i.test(textValue)) {
-        return false;
-      }
-    }
+    const hasFiniteBounds =
+      typeof candidate.x === "number" &&
+      Number.isFinite(candidate.x) &&
+      typeof candidate.y === "number" &&
+      Number.isFinite(candidate.y) &&
+      typeof candidate.width === "number" &&
+      Number.isFinite(candidate.width) &&
+      candidate.width > 0 &&
+      typeof candidate.height === "number" &&
+      Number.isFinite(candidate.height) &&
+      candidate.height > 0;
 
-    return true;
+    return (
+      Boolean(candidate) &&
+      typeof candidate.id === "string" &&
+      candidate.id.trim().length > 0 &&
+      typeof candidate.pageIndex === "number" &&
+      Number.isFinite(candidate.pageIndex) &&
+      hasFiniteBounds
+    );
   };
 
   const filteredVisibleFields = useMemo(
