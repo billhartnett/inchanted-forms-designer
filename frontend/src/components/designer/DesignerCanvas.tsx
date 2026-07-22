@@ -36,137 +36,6 @@ function deriveOntologyClusterLabel(field: Field, routedClusterFallback?: string
   return derived;
 }
 
-function getFieldRawText(field: Field): string {
-  if (field.type === "text") return field.text || "";
-  if (field.type === "checkbox" || field.type === "radio") return field.label || "";
-  if (field.type === "dropdown") return field.selectedOption || field.placeholder || "";
-  if (field.type === "date") return field.value || field.placeholder || "";
-  if (field.type === "numeric") return field.value?.toString() || field.placeholder || "";
-  if (field.type === "signature") return field.placeholder || "Sign here";
-  return "";
-}
-
-function normalizeText(value: string): string {
-  return value
-    .toLowerCase()
-    .replace(/[\u2013\u2014]/g, "-")
-    .replace(/\s+/g, " ")
-    .trim();
-}
-
-const TABLE_HEADER_PATTERNS = [
-  "class",
-  "subbed cost",
-  "employee payroll",
-  "receipts",
-  "payroll",
-  "cost",
-  "year",
-  "percentage",
-  "value",
-  "describe",
-  "description",
-  "please explain",
-  "other",
-  "if yes, please explain",
-  "if yes, list state(s)",
-  "what is the maximum height",
-  "what is the maximum depth",
-];
-
-const ROW_LABEL_PATTERNS = [
-  "mechanical",
-  "carpentry - dwellings",
-  "carpentry - interior",
-  "carpentry – interior",
-  "air conditioning/heating",
-  "electrical work",
-  "retaining walls",
-  "pile driving",
-  "caissons",
-  "boiler installation",
-  "gas stations",
-  "public utilities",
-  "chemical plants",
-  "railroads",
-  "ports",
-  "airports",
-  "roofing - residential",
-  "roofing - commercial",
-  "plumbing - residential",
-  "plumbing - commercial",
-  "road/highway/bridge",
-  "swimming pool construction",
-  "wrecking/demolition",
-];
-
-const QUESTION_LABEL_PATTERNS = [
-  "do you",
-  "have you",
-  "are you",
-  "were there",
-  "in the past five years",
-  "if yes",
-  "please explain",
-  "describe your",
-  "please provide",
-];
-
-const LEGAL_DECORATIVE_PATTERNS = [
-  "fair credit reporting act",
-  "fraud warning",
-  "fraud notice",
-  "this application does not bind",
-  "read all statements carefully",
-  "contractor's supplemental application",
-  "contractor’s supplemental application",
-  "logo",
-  "slogan",
-];
-
-function containsPhrase(text: string, phrases: string[]): boolean {
-  return phrases.some((phrase) => text.includes(phrase));
-}
-
-function isTableHeaderText(text: string): boolean {
-  const normalized = normalizeText(text);
-  return TABLE_HEADER_PATTERNS.some((item) => normalized === normalizeText(item));
-}
-
-function isRowLabelText(text: string): boolean {
-  const normalized = normalizeText(text);
-  return ROW_LABEL_PATTERNS.some((item) => normalized.includes(normalizeText(item)));
-}
-
-function isQuestionLabelText(text: string): boolean {
-  const normalized = normalizeText(text);
-  return QUESTION_LABEL_PATTERNS.some((item) => normalized.includes(normalizeText(item)));
-}
-
-function hasOverlappingInputGeometry(field: Field, inputs: Field[]): boolean {
-  const left = field.x;
-  const right = field.x + Math.max(1, field.width);
-  const top = field.y;
-  const bottom = field.y + Math.max(1, field.height);
-
-  return inputs.some((candidate) => {
-    if (candidate.id === field.id) return false;
-    const candidateLeft = candidate.x;
-    const candidateRight = candidate.x + Math.max(1, candidate.width);
-    const candidateTop = candidate.y;
-    const candidateBottom = candidate.y + Math.max(1, candidate.height);
-    const overlapsX = candidateRight >= left && candidateLeft <= right;
-    const overlapsY = candidateBottom >= top && candidateTop <= bottom;
-    return overlapsX && overlapsY;
-  });
-}
-
-function getPageIndex(field: Field): number {
-  return typeof field.pageIndex === "number" && Number.isFinite(field.pageIndex)
-    ? Math.max(0, Math.floor(field.pageIndex))
-    : 0;
-}
-
 type StageLike = {
   scaleX: () => number;
   scale: (value: { x: number; y: number }) => void;
@@ -240,28 +109,6 @@ export function DesignerCanvas({
 
   const normalizedSearchQuery = fieldSearchQuery.trim().toLowerCase();
 
-  const interactiveByPage = useMemo(() => {
-    const byPage = new Map<number, Field[]>();
-    for (const field of fields) {
-      if (
-        field.type !== "checkbox" &&
-        field.type !== "radio" &&
-        field.type !== "dropdown" &&
-        field.type !== "date" &&
-        field.type !== "numeric" &&
-        field.type !== "signature"
-      ) {
-        continue;
-      }
-
-      const pageIndex = getPageIndex(field);
-      const list = byPage.get(pageIndex) || [];
-      list.push(field);
-      byPage.set(pageIndex, list);
-    }
-    return byPage;
-  }, [fields]);
-
   const visibleFields = fields.filter((field) => {
     if (field.metadata?.hidden) return false;
     if (ontologyFieldIds.size > 0 && !ontologyFieldIds.has(field.id)) return false;
@@ -301,58 +148,6 @@ export function DesignerCanvas({
     return Math.max(0, (block.page || 1) - 1) === currentPdfPage;
   });
 
-  const isRealField = (field: Field): boolean => {
-    const pageIndex = getPageIndex(field);
-    const interactiveFields = interactiveByPage.get(pageIndex) || [];
-
-    if (
-      field.type === "numeric" ||
-      field.type === "date" ||
-      field.type === "dropdown" ||
-      field.type === "checkbox" ||
-      field.type === "signature"
-    ) {
-      return true;
-    }
-
-    if (field.type !== "text") {
-      return false;
-    }
-
-    const rawText = normalizeText(getFieldRawText(field));
-    if (rawText.length === 0) {
-      return false;
-    }
-
-    if (rawText === "yes" || rawText === "no") {
-      return false;
-    }
-
-    if (isTableHeaderText(rawText) || isRowLabelText(rawText) || isQuestionLabelText(rawText)) {
-      return false;
-    }
-
-    if (containsPhrase(rawText, LEGAL_DECORATIVE_PATTERNS)) {
-      return false;
-    }
-
-    if (field.y + Math.max(1, field.height) >= canvasSurfaceHeight * 0.9) {
-      return false;
-    }
-
-    const hasInputGeometry = hasOverlappingInputGeometry(field, interactiveFields);
-    const inputLikeShape = field.width >= 70 && field.height >= 16;
-    const hasMappingSignal =
-      Boolean(String(field.metadata?.acordCode || "").trim()) ||
-      Boolean(String(field.metadata?.extractionBlockId || "").trim()) ||
-      String(field.metadata?.artifactClassification || "").toLowerCase() === "field_value";
-
-    return hasInputGeometry || inputLikeShape || hasMappingSignal;
-  };
-
-  const filteredVisibleFields = visibleFields.filter((f) => isRealField(f));
-  const renderedVisibleFields = filteredVisibleFields;
-
   const visibleSemanticClusters = useMemo(() => {
     const topRoutedCluster = Object.entries(routedClusters || {})
       .sort((left, right) => right[1] - left[1] || left[0].localeCompare(right[0]))[0]?.[0];
@@ -368,7 +163,7 @@ export function DesignerCanvas({
       }
     >();
 
-    for (const field of renderedVisibleFields) {
+    for (const field of visibleFields) {
       if (!field.groupId) continue;
       const label = deriveOntologyClusterLabel(field, topRoutedCluster);
       const x = field.x;
@@ -397,7 +192,26 @@ export function DesignerCanvas({
       width: Math.max(24, box.maxX - box.x + 12),
       height: Math.max(24, box.maxY - box.y + 26),
     }));
-  }, [renderedVisibleFields, routedClusters]);
+  }, [routedClusters, visibleFields]);
+
+  const isRealField = (field: Field): boolean => {
+    const artifactClassification = String(field.metadata?.artifactClassification || "").toLowerCase();
+    if (artifactClassification === "field_label" || artifactClassification === "non_field_artifact") {
+      return false;
+    }
+
+    if (field.type === "text") {
+      const textValue = String(field.text || "").trim();
+      if (/^selection_mark_(selected|unselected)_\d+$/i.test(textValue)) {
+        return false;
+      }
+    }
+
+    return true;
+  };
+
+  const filteredVisibleFields = visibleFields.filter(isRealField);
+  const renderedVisibleFields = filteredVisibleFields;
 
   const gridLines = useMemo(() => {
     const lines: Array<{ key: string; points: number[] }> = [];
@@ -516,7 +330,7 @@ export function DesignerCanvas({
             </>
           }
           overlayChildren={
-            visibleTextBlocks.length > 0 || renderedVisibleFields.length > 0 || selectedFields.length > 0 || visibleDraftFields.length > 0 ? (
+            visibleTextBlocks.length > 0 || visibleFields.length > 0 || selectedFields.length > 0 || visibleDraftFields.length > 0 ? (
               <>
                 {visibleTextBlocks.map((block) => (
                   <KonvaGroup key={`ocr-${block.id}`} listening={false}>
