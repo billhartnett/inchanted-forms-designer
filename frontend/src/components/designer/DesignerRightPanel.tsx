@@ -153,7 +153,7 @@ function isLikelyNonFieldArtifact(field: Field): boolean {
     .toLowerCase();
 
   const rawText = getFieldRawText(field).trim().toLowerCase();
-  if (field.metadata?.artifactClassification === "field_label" && /^(yes|no)$/i.test(rawText)) {
+  if (field.metadata?.artifactClassification === "field label" && /^(yes|no)$/i.test(rawText)) {
     return true;
   }
 
@@ -202,8 +202,8 @@ export function DesignerRightPanel() {
     return fields
       .filter(
         (field) =>
-          (field.metadata?.artifactClassification === "field_label" ||
-            field.metadata?.artifactClassification === "field_value") &&
+          (field.metadata?.artifactClassification === "field label" ||
+            field.metadata?.artifactClassification === "field value") &&
           !isLikelyNonFieldArtifact(field) &&
           (ontologyFieldIds.size === 0 || ontologyFieldIds.has(field.id)),
       )

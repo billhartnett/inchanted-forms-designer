@@ -224,8 +224,8 @@ function createFieldFromCatalog(entry: HybridCatalogEntry): Field {
 
   const artifactClassification: ArtifactClassification =
     entry.role === "input" || entry.role === "table_cell" || entry.role === "checkbox_group_member"
-      ? "field_value"
-      : "field_label";
+      ? "field value"
+      : "field label";
 
   const metadataBase = {
     acordCode: "",
