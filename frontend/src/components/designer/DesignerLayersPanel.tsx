@@ -177,7 +177,7 @@ function isLikelyNonFieldArtifact(field: Field): boolean {
     .toLowerCase();
 
   const rawText = getFieldRawText(field).trim().toLowerCase();
-  if (field.metadata?.artifactClassification === "field_label" && /^(yes|no)$/i.test(rawText)) {
+  if (field.metadata?.artifactClassification === "field label" && /^(yes|no)$/i.test(rawText)) {
     return true;
   }
 
@@ -190,7 +190,7 @@ function isLikelyNonFieldArtifact(field: Field): boolean {
 
 function isVisibleDesignerField(field: Field): boolean {
   const classification = field.metadata?.artifactClassification;
-  return (classification === "field_label" || classification === "field_value") && !isLikelyNonFieldArtifact(field);
+  return (classification === "field label" || classification === "field value") && !isLikelyNonFieldArtifact(field);
 }
 
 function sortByConfidence(left: FieldInsight, right: FieldInsight) {
