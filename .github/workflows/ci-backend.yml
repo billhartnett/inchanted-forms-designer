@@ -30,12 +30,12 @@ jobs:
         run: |
           pnpm install
 
-      - name: Monorepo build chain (shared -> wave8 -> wave9 -> backend/api)
+      - name: Monorepo build chain (shared -> wave8 -> wave9 -> inchanted-api)
         run: |
           pnpm --filter shared build
           pnpm --filter wave8 build
           pnpm --filter wave9 build
-          pnpm --filter backend/api build
+          pnpm --filter inchanted-api build
 
       - name: TypeScript compile checks
         run: |
