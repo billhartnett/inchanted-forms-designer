@@ -1,0 +1,6 @@
+packages:
+  - "shared"
+  - "frontend"
+  - "backend/api"
+  - "wave8"
+  - "wave9"

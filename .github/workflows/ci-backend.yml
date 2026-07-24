@@ -19,28 +19,28 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: "22.x"
-          cache: npm
-          cache-dependency-path: |
-            shared/package-lock.json
-            backend/api/package-lock.json
+          node-version: "18.x"
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
 
       - name: Install dependencies
         run: |
-          npm --prefix shared ci --no-audit --no-fund
-          npm --prefix backend/api ci --no-audit --no-fund
+          pnpm install
 
       - name: Monorepo build chain (shared -> wave8 -> wave9 -> backend/api)
         run: |
-          npm --prefix shared run build
-          npm --prefix wave8 run build
-          npm --prefix wave9 run build
-          npm --prefix backend/api run build
+          pnpm --filter shared build
+          pnpm --filter wave8 build
+          pnpm --filter wave9 build
+          pnpm --filter backend/api build
 
       - name: TypeScript compile checks
         run: |
-          node shared/node_modules/typescript/bin/tsc -p shared/tsconfig.json --noEmit
-          node backend/api/node_modules/typescript/bin/tsc -p backend/api/tsconfig.json --noEmit
+          node node_modules/.bin/tsc -p shared/tsconfig.json --noEmit
+          node node_modules/.bin/tsc -p backend/api/tsconfig.json --noEmit
 
       - name: Start Express backend and run endpoint smoke tests
         run: |
