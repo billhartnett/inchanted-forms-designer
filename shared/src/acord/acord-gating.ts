@@ -1,4 +1,5 @@
 import type { AcordDictionaryEntry } from "./acordTypes";
+import * as acordOntology from "./ontology";
 import { getAcordOntologyNode } from "./ontology";
 import { ACORD_ONTOLOGY_REGISTRY } from "./acord-ontology";
 
@@ -200,7 +201,7 @@ function seedOntologyIndexes(): void {
         pushAlias(code, property.name);
         pushAlias(code, `${className} ${property.name}`);
 
-        const ontologyNode = getAcordOntologyNode(code);
+        const ontologyNode = acordOntology.getAcordOntologyNode(code);
         for (const alias of ontologyNode?.aliases || []) {
           pushAlias(code, alias);
         }
@@ -218,7 +219,7 @@ export function getOntologyDictionaryEntries(): AcordDictionaryEntry[] {
 
   for (const [code, className] of classByCode.entries()) {
     const label = labelByCode.get(code) || code;
-    const ontologyNode = getAcordOntologyNode(code);
+    const ontologyNode = acordOntology.getAcordOntologyNode(code);
     entries.push({
       acordCode: code,
       label,
@@ -240,7 +241,7 @@ export function resolveOntologySemanticMetadata(acordCode: string): OntologySema
   const resolvedCode = code || "Unknown";
   const cluster = classByCode.get(resolvedCode) || inferCluster(resolvedCode);
   const family = inferFamilyFromCode(resolvedCode);
-  const ontologyNode = getAcordOntologyNode(resolvedCode);
+  const ontologyNode = acordOntology.getAcordOntologyNode(resolvedCode);
   const label = labelByCode.get(resolvedCode) || resolvedCode;
   const aliases = unique([
     resolvedCode,

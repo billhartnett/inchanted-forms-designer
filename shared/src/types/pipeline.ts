@@ -104,14 +104,9 @@ export type SemanticFieldType =
 export type FieldMetadataSource = "manual" | "ai" | "ocr";
 
 export type ArtifactClassification =
-  | "field label"
-  | "field value"
-  | "heading"
-  | "section title"
-  | "logo"
-  | "decorative text"
-  | "disclaimer"
-  | "instructional text";
+  | "field_label"
+  | "field_value"
+  | "non_field_artifact";
 
 export type CheckboxState = {
   isCheckbox: boolean;

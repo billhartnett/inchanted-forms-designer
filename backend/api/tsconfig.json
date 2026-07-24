@@ -5,18 +5,12 @@
     "moduleResolution": "Node16",
     "outDir": "./dist",
     "rootDir": "./src",
-    "ignoreDeprecations": "5.0",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": false,
     "types": ["node"],
     "skipLibCheck": true,
-    "resolveJsonModule": true,
-    "baseUrl": ".",
-    "paths": {
-      "shared": ["../../shared/dist/index.d.ts"],
-      "shared/*": ["../../shared/dist/*"]
-    }
+    "resolveJsonModule": true
   },
   "include": [
     "src/**/*.ts",
