@@ -10,7 +10,12 @@
     "strict": false,
     "types": ["node"],
     "skipLibCheck": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "baseUrl": ".",
+    "paths": {
+      "shared": ["../../shared/dist"],
+      "shared/*": ["../../shared/dist/*"]
+    }
   },
   "include": [
     "src/**/*.ts",
