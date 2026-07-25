@@ -38,10 +38,9 @@ jobs:
           pnpm --filter inchanted-api build
 
       - name: TypeScript compile checks
-        continue-on-error: true
         run: |
-          node node_modules/.bin/tsc -p shared/tsconfig.json --noEmit || true
-          node node_modules/.bin/tsc -p backend/api/tsconfig.json --noEmit || true
+          pnpm --filter shared exec tsc -p tsconfig.json --noEmit
+          pnpm --filter inchanted-api exec tsc -p tsconfig.json --noEmit
 
       - name: Start Express backend and run endpoint smoke tests
         continue-on-error: true
