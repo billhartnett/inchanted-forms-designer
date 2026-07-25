@@ -28,7 +28,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pnpm install
+          pnpm install --no-frozen-lockfile
 
       - name: Monorepo build chain (shared -> wave8 -> wave9 -> inchanted-api)
         run: |
