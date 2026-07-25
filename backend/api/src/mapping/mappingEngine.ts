@@ -8,7 +8,6 @@ import { buildMappingRationale } from "./mappingRationale";
 import type { CalibrationProfile } from "shared/types";
 import { resolveSemanticConflicts } from "shared/quality";
 import type { ConflictResolutionDecision } from "shared/quality";
-import { applyWave8Gating } from "./wave8Gating";
 
 export async function mapBlocksWithAcord(
   blocks: ExtractedBlock[],
@@ -51,13 +50,14 @@ export async function mapBlocksWithAcord(
         }>;
       }
     >;
+    ontologyClusterByBlock?: Record<string, string>;
     carrierAdapterOverrides?: MappingPersistencePayload["carrierAdapterOverrides"];
     underwritingRuleOverrides?: MappingPersistencePayload["underwritingRuleOverrides"];
   },
 ): Promise<FieldMapping[]> {
   const mappings = await mapBlocksToAcord(blocks, options);
 
-  const gatedMappings = applyWave8Gating(mappings);
+  const gatedMappings = mappings;
 
   const payload = {
     version: 1 as const,

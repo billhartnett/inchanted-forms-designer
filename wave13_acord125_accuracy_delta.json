@@ -1,10 +1,10 @@
 {
   "fixture": "sample-Acord-125.pdf",
-  "generatedAt": "2026-07-13T20:17:50.422Z",
+  "generatedAt": "2026-07-14T01:34:49.113Z",
   "expectations": {
     "source": "xfdl-dynamic",
     "path": "backend/api/tests/generated/acord125-xfdl-expectations.json",
-    "generatedAt": "2026-07-13T20:17:49.885Z",
+    "generatedAt": "2026-07-14T01:34:48.626Z",
     "count": 8
   },
   "goldStandard": {

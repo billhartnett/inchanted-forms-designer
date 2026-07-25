@@ -1,4 +1,5 @@
 import {
+  getAllAcordEntries,
   searchAcordDictionary,
   lookupAcordByCode,
   getEmbeddingCache,
@@ -11,11 +12,6 @@ import {
   getWave8SupervisionCandidatesForText,
   getWave8SupervisionRuleCount,
 } from "../wave8/supervision";
-import {
-  getAcordCodesForCategory,
-  getCategoryForAcordCode,
-  isTaxonomyLoaded,
-} from "./acordTaxonomy";
 import { embedText, cosineSimilarity } from "./embeddings";
 import fs from "node:fs";
 import path from "node:path";
@@ -27,7 +23,9 @@ import type {
 } from "shared/acord";
 import {
   arbitrateCandidateByOntology,
+  buildOntologySemanticText,
   getAcordOntologyNode,
+  resolveOntologySemanticMetadata,
   selectOntologyBundlesForFamily,
 } from "shared/acord";
 import {
@@ -249,10 +247,6 @@ const DEFAULT_WAVE44_FUSION: Wave44FusionWeights = {
 };
 
 const WAVE8_USABILITY_MODE = process.env.WAVE8_USABILITY_MODE !== "0";
-const WAVE8_CONFIDENCE_FALLBACK_THRESHOLD = Math.max(
-  0,
-  Math.min(1, Number(process.env.WAVE8_CONFIDENCE_FALLBACK_THRESHOLD || 0.3)),
-);
 const WAVE8_OVERLAP_IOU_THRESHOLD = Math.max(
   0,
   Math.min(1, Number(process.env.WAVE8_OVERLAP_IOU_THRESHOLD || 0.68)),
@@ -1095,37 +1089,6 @@ function normalizeWave49Error(stage: string, error: unknown): Wave49ErrorStatus 
   }
 }
 
-function buildWave49FallbackSuggestions(
-  accum: Map<string, ScoreAccumulator>,
-  limit = 3,
-): AcordSuggestion[] {
-  const ordered = [...accum.values()].sort(compareScoreAccumulator).slice(0, limit);
-  if (ordered.length === 0) {
-    return [];
-  }
-
-  const topScore = Math.max(ordered[0]?.score || 0, 1);
-  return ordered.map((item) => {
-    const found = lookupAcordByCode(item.acordCode);
-    const confidenceScore = Number(
-      Math.min(0.48, Math.max(0.18, (item.score / topScore) * 0.46)).toFixed(3),
-    );
-
-    return {
-      acordCode: item.acordCode,
-      label: found?.label || item.label,
-      description: found?.description || item.description,
-      confidenceScore,
-      normalizedConfidenceScore: confidenceScore,
-      source: item.source,
-      lexicalScore: Number(Math.min(1, item.score / topScore).toFixed(3)),
-      semanticSimilarity: Number(item.semanticSimilarity.toFixed(3)),
-      dictionaryScore: Number(item.dictionaryScore.toFixed(3)),
-      heuristicScore: Number(item.heuristicScore.toFixed(3)),
-    } as AcordSuggestion;
-  });
-}
-
 function normalizeText(value: string): string {
   return value
     .toLowerCase()
@@ -1602,6 +1565,7 @@ function applyContractorsInsuredNameResolver(
   results: FieldMapping[],
   familyId?: string,
 ): FieldMapping[] {
+  const familyAllowedCodes = resolveOntologyFamilyAllowedCodes(familyId);
   const normalizedFamily = normalizeText(String(familyId || ""));
   const isContractorsDoc =
     normalizedFamily.includes("contractors") ||
@@ -1643,9 +1607,12 @@ function applyContractorsInsuredNameResolver(
   }
 
   const seededNamedInsured =
-    lookupAcordByCode("NamedInsured_FullName") ||
-    lookupAcordByCode("NamedInsured_GivenName") ||
-    safeDictionarySearch("named insured full name", 8)
+    safeLookupAcordCode("NamedInsured_FullName", familyId, familyAllowedCodes) ||
+    safeLookupAcordCode("NamedInsured_GivenName", familyId, familyAllowedCodes) ||
+    safeDictionarySearch("named insured full name", 8, {
+      familyId,
+      allowedCodes: familyAllowedCodes,
+    })
       .map((hit) => hit.entry)
       .find((entry) => {
         const code = normalizeText(String(entry.acordCode || "")).replace(/\s+/g, "");
@@ -1788,12 +1755,18 @@ function applyContractorsInsuredNameResolver(
   }
 
   const namedInsuredHits = [
-    ...safeDictionarySearch("named insured full name", 8),
-    ...safeDictionarySearch("named insured given name", 6),
+    ...safeDictionarySearch("named insured full name", 8, {
+      familyId,
+      allowedCodes: familyAllowedCodes,
+    }),
+    ...safeDictionarySearch("named insured given name", 6, {
+      familyId,
+      allowedCodes: familyAllowedCodes,
+    }),
   ];
   const found =
-    lookupAcordByCode("NamedInsured_FullName") ||
-    lookupAcordByCode("NamedInsured_GivenName") ||
+    safeLookupAcordCode("NamedInsured_FullName", familyId, familyAllowedCodes) ||
+    safeLookupAcordCode("NamedInsured_GivenName", familyId, familyAllowedCodes) ||
     namedInsuredHits
       .map((hit) => hit.entry)
       .find((entry) => {
@@ -1854,6 +1827,7 @@ function promoteTargetedAnchorMappings(
   results: FieldMapping[],
   familyId?: string,
 ): FieldMapping[] {
+  const familyAllowedCodes = resolveOntologyFamilyAllowedCodes(familyId);
   const isNamedInsuredIdentityCode = (acordCode: string): boolean => {
     const code = normalizeText(acordCode).replace(/\s+/g, "");
     if (!code.startsWith("namedinsured")) {
@@ -1910,7 +1884,11 @@ function promoteTargetedAnchorMappings(
         wave8TargetedAnchorPromoted: "insured_name",
       };
     } else {
-      const syntheticNamedInsured = lookupAcordByCode("NamedInsured_FullName");
+      const syntheticNamedInsured = safeLookupAcordCode(
+        "NamedInsured_FullName",
+        familyId,
+        familyAllowedCodes,
+      );
       const targetMapping = [...results]
         .sort(
           (left, right) =>
@@ -2080,24 +2058,6 @@ function normalizeAnchorFriendlyLabel(acordCode: string, label: string): string 
   return label;
 }
 
-function buildSyntheticConfidenceFallbackCandidate(block: ExtractedBlock): AcordSuggestion {
-  const semanticLabel = deriveUsabilitySemanticLabel(block);
-  const confidence = WAVE8_CONFIDENCE_FALLBACK_THRESHOLD;
-  return {
-    acordCode: "UNMAPPED_CONFIDENCE_FALLBACK",
-    label: semanticLabel,
-    description: "Synthetic confidence-only fallback candidate",
-    confidenceScore: Number(confidence.toFixed(3)),
-    normalizedConfidenceScore: Number(confidence.toFixed(3)),
-    source: "heuristic",
-    lexicalScore: 0,
-    semanticSimilarity: 0,
-    dictionaryScore: 0,
-    heuristicScore: Number(confidence.toFixed(3)),
-    rationale: "confidence_only_fallback",
-  } as AcordSuggestion;
-}
-
 function summarizeWave49Latency(stageTimings: Wave49StageTimings) {
   const stageEntries = [
     ["layoutLmMs", stageTimings.layoutLmMs],
@@ -2217,7 +2177,7 @@ function resolveThresholds(
       }
     : relaxedBase;
 
-  const category = getCategoryForAcordCode(acordCode);
+  const category = deriveOntologyClusterForCode(acordCode);
   const categoryOverride = category
     ? wave42.category_threshold_overrides?.[category]
     : undefined;
@@ -2478,12 +2438,197 @@ function normalizeSignalWeights(
   };
 }
 
-function safeDictionarySearch(query: string, limit: number) {
+function normalizeFamilyIdForOntology(value: string | undefined): string {
+  return String(value || "")
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9_.-]/g, " ")
+    .replace(/[_.]+/g, "-")
+    .replace(/\s+/g, "-")
+    .trim();
+}
+
+function resolveOntologyFamilyAllowedCodes(
+  familyId?: string,
+): Set<string> | undefined {
+  const normalizedFamily = normalizeFamilyIdForOntology(familyId);
+  if (!normalizedFamily) {
+    return undefined;
+  }
+
+  const allowed = new Set<string>();
+  for (const entry of getAllAcordEntries()) {
+    const code = String(entry.acordCode || "").trim();
+    if (!code) continue;
+    const metadata = resolveOntologySemanticMetadata(code);
+    const hasFormMembershipMatch = metadata.formMembership.some(
+      (member) => normalizeFamilyIdForOntology(member) === normalizedFamily,
+    );
+    const hasFamilyMatch = normalizeFamilyIdForOntology(metadata.family) === normalizedFamily;
+    if (hasFormMembershipMatch || hasFamilyMatch) {
+      allowed.add(code);
+    }
+  }
+
+  // Fail-open for unsupported forms/carrier/unknown families.
+  if (allowed.size === 0) {
+    return undefined;
+  }
+
+  return allowed;
+}
+
+function resolveOntologyClusterAllowedCodes(
+  cluster: string | undefined,
+  options?: { familyId?: string; allowedCodes?: ReadonlySet<string> },
+): Set<string> | undefined {
+  const normalizedCluster = normalizeOntologyCategoryToken(String(cluster || ""));
+  if (!normalizedCluster) {
+    return undefined;
+  }
+
+  const byCluster = new Set<string>();
+  for (const entry of getAllAcordEntries()) {
+    const code = String(entry.acordCode || "").trim();
+    if (!code) {
+      continue;
+    }
+    if (options?.allowedCodes && options.allowedCodes.size > 0 && !options.allowedCodes.has(code)) {
+      continue;
+    }
+
+    const metadata = resolveOntologySemanticMetadata(code);
+    if (normalizeOntologyCategoryToken(metadata.cluster) === normalizedCluster) {
+      byCluster.add(code);
+    }
+  }
+
+  if (byCluster.size === 0) {
+    return undefined;
+  }
+
+  return byCluster;
+}
+
+function filterAccumulatorToAllowedCodes(
+  accum: Map<string, ScoreAccumulator>,
+  allowedCodes?: ReadonlySet<string>,
+): void {
+  if (!allowedCodes || allowedCodes.size === 0) {
+    return;
+  }
+
+  for (const code of [...accum.keys()]) {
+    if (!allowedCodes.has(code)) {
+      accum.delete(code);
+    }
+  }
+}
+
+function filterSuggestionsToAllowedCodes(
+  suggestions: AcordSuggestion[],
+  allowedCodes?: ReadonlySet<string>,
+): AcordSuggestion[] {
+  if (!allowedCodes || allowedCodes.size === 0) {
+    return suggestions;
+  }
+
+  return suggestions.filter((candidate) => allowedCodes.has(candidate.acordCode));
+}
+
+function safeLookupAcordCode(
+  acordCode: string,
+  familyId?: string,
+  allowedCodes?: ReadonlySet<string>,
+) {
+  if (allowedCodes && allowedCodes.size > 0 && !allowedCodes.has(acordCode)) {
+    return null;
+  }
+
+  return lookupAcordByCode(acordCode);
+}
+
+function safeDictionarySearch(
+  query: string,
+  limit: number,
+  options?: { familyId?: string; allowedCodes?: ReadonlySet<string> },
+) {
   try {
-    return searchAcordDictionary(query, limit);
+    const base = searchAcordDictionary(query, limit);
+
+    const allowedCodes = options?.allowedCodes;
+    if (!allowedCodes || allowedCodes.size === 0) {
+      return base;
+    }
+
+    return base.filter((hit) => allowedCodes.has(hit.entry.acordCode));
   } catch {
     return [] as ReturnType<typeof searchAcordDictionary>;
   }
+}
+
+function normalizeOntologyCategoryToken(value: string): string {
+  return String(value || "")
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9\s_.-]/g, " ")
+    .replace(/[_.-]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function deriveOntologyClusterForCode(acordCode: string): string {
+  const metadata = resolveOntologySemanticMetadata(acordCode);
+  return String(metadata.cluster || "general").trim() || "general";
+}
+
+function codeMatchesOntologyCategory(acordCode: string, category: string): boolean {
+  const normalizedCategory = normalizeOntologyCategoryToken(category);
+  if (!normalizedCategory) {
+    return false;
+  }
+
+  const metadata = resolveOntologySemanticMetadata(acordCode);
+  const haystack = normalizeOntologyCategoryToken(
+    [
+      metadata.cluster,
+      metadata.family,
+      metadata.formMembership.join(" "),
+      metadata.aliases.join(" "),
+      metadata.xmlPath,
+      metadata.label,
+      metadata.description,
+      metadata.eLabelName,
+    ].join(" "),
+  );
+
+  return haystack.includes(normalizedCategory);
+}
+
+function getOntologyCodesForLayoutCategory(
+  category: string,
+  allowedCodes?: ReadonlySet<string>,
+): Set<string> {
+  const normalizedCategory = normalizeOntologyCategoryToken(category);
+  if (!normalizedCategory) {
+    return new Set<string>();
+  }
+
+  const codes = new Set<string>();
+  for (const entry of getAllAcordEntries()) {
+    const code = String(entry.acordCode || "").trim();
+    if (!code) {
+      continue;
+    }
+    if (allowedCodes && allowedCodes.size > 0 && !allowedCodes.has(code)) {
+      continue;
+    }
+    if (codeMatchesOntologyCategory(code, normalizedCategory)) {
+      codes.add(code);
+    }
+  }
+
+  return codes;
 }
 
 function hasAnyToken(normalizedText: string, tokens: string[]): boolean {
@@ -2581,6 +2726,7 @@ function isWave13AnchorPrompt(text: string): boolean {
 function applyWave131AnchorCanonicalization(
   block: ExtractedBlock,
   suggestions: AcordSuggestion[],
+  allowedCodes?: ReadonlySet<string>,
 ): AcordSuggestion[] {
   if (suggestions.length === 0) {
     return suggestions;
@@ -2591,6 +2737,10 @@ function applyWave131AnchorCanonicalization(
     conceptualLabel: string,
     floorConfidence: number,
   ) => {
+    if (allowedCodes && allowedCodes.size > 0 && !allowedCodes.has(conceptualCode)) {
+      return;
+    }
+
     const top = suggestions[0];
     suggestions[0] = {
       ...top,
@@ -3341,6 +3491,8 @@ function ensureAccumulator(
 function applyIntentSignals(
   block: ExtractedBlock,
   accum: Map<string, ScoreAccumulator>,
+  familyId?: string,
+  allowedCodes?: ReadonlySet<string>,
 ) {
   const normalized = normalizeText(block.text);
   const multiplier = getBlockScoreMultiplier(block);
@@ -3376,7 +3528,7 @@ function applyIntentSignals(
   }
 
   for (const intent of intents) {
-    const hits = safeDictionarySearch(intent.query, 3);
+    const hits = safeDictionarySearch(intent.query, 3, { familyId, allowedCodes });
     for (const hit of hits) {
       const weighted = quantize(hit.score * 0.9 * intent.weight * multiplier);
       const entry = ensureAccumulator(accum, hit.entry.acordCode, {
@@ -3397,12 +3549,12 @@ function applyIntentSignals(
 function applyDictionarySignals(
   block: ExtractedBlock,
   accum: Map<string, ScoreAccumulator>,
-  allowedCodes?: Set<string>,
+  allowedCodes?: ReadonlySet<string>,
   familyId?: string,
 ) {
   const multiplier = getBlockScoreMultiplier(block);
   const headerAssessment = assessWave8HeaderBlock(block, false, familyId);
-  const primary = safeDictionarySearch(block.text, 6);
+  const primary = safeDictionarySearch(block.text, 6, { familyId, allowedCodes });
   for (const hit of primary) {
     if (allowedCodes && !allowedCodes.has(hit.entry.acordCode)) {
       continue;
@@ -3433,7 +3585,7 @@ function applyDictionarySignals(
 
   const keywordTokens = tokenize(block.text).slice(0, 8);
   for (const token of keywordTokens) {
-    const hits = safeDictionarySearch(token, 3);
+    const hits = safeDictionarySearch(token, 3, { familyId, allowedCodes });
     for (const hit of hits) {
       if (allowedCodes && !allowedCodes.has(hit.entry.acordCode)) {
         continue;
@@ -3459,7 +3611,7 @@ function applyDictionarySignals(
 
   const supervisionCandidates = getWave8SupervisionCandidatesForText(block.text, familyId);
   for (const candidate of supervisionCandidates) {
-    const found = lookupAcordByCode(candidate.acordCode);
+    const found = safeLookupAcordCode(candidate.acordCode, familyId, allowedCodes);
     if (found) {
       if (allowedCodes && !allowedCodes.has(found.acordCode)) {
         continue;
@@ -3479,31 +3631,15 @@ function applyDictionarySignals(
       continue;
     }
 
-    // Fallback: supervision can provide conceptual codes (e.g., GeneralInfo.NamedInsured)
-    // that may not exist verbatim in the dictionary. Seed closest dictionary matches.
-    const fallbackHits = safeDictionarySearch(candidate.acordCode, 4);
-    for (const fallbackHit of fallbackHits) {
-      if (allowedCodes && !allowedCodes.has(fallbackHit.entry.acordCode)) {
-        continue;
-      }
-      const headerPenalty = headerAssessment.headerBlock ? 0.3 : 1;
-      const weighted = quantize(
-        (85 + candidate.weight * 70) * candidate.dictionaryConfidenceWeight * multiplier * headerPenalty,
-      );
-      const entry = ensureAccumulator(accum, fallbackHit.entry.acordCode, {
-        label: fallbackHit.entry.label,
-        description: fallbackHit.entry.description,
-        source: "dictionary",
-      });
-      entry.score = quantize(entry.score + weighted);
-      entry.dictionaryScore = quantize(entry.dictionaryScore + weighted);
-    }
+    // Supervision codes must resolve directly; skip non-verbatim fallback seeding.
   }
 }
 
 function applyHeuristicSignals(
   block: ExtractedBlock,
   accum: Map<string, ScoreAccumulator>,
+  allowedCodes?: ReadonlySet<string>,
+  familyId?: string,
 ) {
   const normalized = normalizeText(block.text);
   const multiplier = getBlockScoreMultiplier(block);
@@ -3577,7 +3713,7 @@ function applyHeuristicSignals(
   }
 
   for (const query of heuristicQueries) {
-    const hits = safeDictionarySearch(query, 2);
+    const hits = safeDictionarySearch(query, 2, { familyId, allowedCodes });
     for (const hit of hits) {
       const weighted = quantize(hit.score * 0.65 * multiplier);
       const entry = ensureAccumulator(accum, hit.entry.acordCode, {
@@ -3599,8 +3735,10 @@ function boostKnownCode(
   accum: Map<string, ScoreAccumulator>,
   acordCode: string,
   boost: number,
+  allowedCodes?: ReadonlySet<string>,
+  familyId?: string,
 ) {
-  const found = lookupAcordByCode(acordCode);
+  const found = safeLookupAcordCode(acordCode, familyId, allowedCodes);
   if (!found) return;
 
   const entry = ensureAccumulator(accum, found.acordCode, {
@@ -3618,6 +3756,8 @@ function applyLayoutLmSignals(
   block: ExtractedBlock,
   accum: Map<string, ScoreAccumulator>,
   evaluation?: LayoutLmFieldEvaluationInput,
+  allowedCodes?: ReadonlySet<string>,
+  familyId?: string,
 ) {
   if (!evaluation || !Array.isArray(evaluation.topPredictions) || evaluation.topPredictions.length === 0) {
     return;
@@ -3630,8 +3770,11 @@ function applyLayoutLmSignals(
     const prediction = capped[index];
     const acordCode = String(prediction.eLabelName || "").trim();
     if (!acordCode) continue;
+    if (allowedCodes && allowedCodes.size > 0 && !allowedCodes.has(acordCode)) {
+      continue;
+    }
 
-    const found = lookupAcordByCode(acordCode);
+    const found = safeLookupAcordCode(acordCode, familyId, allowedCodes);
     if (!found) continue;
 
     const probability = clamp01(Number(prediction.probability || 0));
@@ -3658,10 +3801,12 @@ function applyLayoutLmSignals(
 function getLayoutLmPrimaryCodes(
   evaluation?: LayoutLmFieldEvaluationInput,
   topK = LAYOUTLM_PRIMARY_TOP_K,
+  schemaAllowedCodes?: ReadonlySet<string>,
+  familyId?: string,
 ): Set<string> {
-  const allowedCodes = new Set<string>();
+  const seededCodes = new Set<string>();
   if (!evaluation?.topPredictions?.length) {
-    return allowedCodes;
+    return seededCodes;
   }
 
   const topPredictions = evaluation.topPredictions.slice(0, Math.max(topK, 4));
@@ -3673,16 +3818,19 @@ function getLayoutLmPrimaryCodes(
     .slice(0, topK);
 
   if (WAVE44_CATEGORY_PRUNING_ENABLED && confidentCategoryPredictions.length === 0 && maxProbability < 0.3) {
-    return allowedCodes;
+    return seededCodes;
   }
 
   for (const prediction of topPredictions) {
     const code = String(prediction.eLabelName || "").trim();
     if (!code) continue;
+    if (schemaAllowedCodes && schemaAllowedCodes.size > 0 && !schemaAllowedCodes.has(code)) {
+      continue;
+    }
 
     const probability = clamp01(Number(prediction.probability || 0));
-    if (lookupAcordByCode(code) && probability >= 0.22) {
-      allowedCodes.add(code);
+    if (safeLookupAcordCode(code, familyId, schemaAllowedCodes) && probability >= 0.22) {
+      seededCodes.add(code);
     }
   }
 
@@ -3693,14 +3841,14 @@ function getLayoutLmPrimaryCodes(
   for (const prediction of categorySeedPredictions) {
     const category = String(prediction.category || "").trim();
     if (category) {
-      const categoryCodes = getAcordCodesForCategory(category);
+      const categoryCodes = getOntologyCodesForLayoutCategory(category, schemaAllowedCodes);
       for (const categoryCode of categoryCodes) {
-        allowedCodes.add(categoryCode);
+        seededCodes.add(categoryCode);
       }
     }
   }
 
-  return allowedCodes;
+  return seededCodes;
 }
 
 function getAddressComponentKind(
@@ -3812,6 +3960,8 @@ function resolveWave45AlignmentConcept(
 function normalizeSuggestionsByAlignment(
   suggestions: AcordSuggestion[],
   block: ExtractedBlock,
+  familyId?: string,
+  allowedCodes?: ReadonlySet<string>,
 ): AcordSuggestion[] {
   if (!WAVE45_ALIGNMENT_ENABLED || suggestions.length === 0) {
     return suggestions;
@@ -3829,7 +3979,11 @@ function normalizeSuggestionsByAlignment(
       continue;
     }
 
-    const canonical = lookupAcordByCode(concept.canonicalAcordCode);
+    const canonical = safeLookupAcordCode(
+      concept.canonicalAcordCode,
+      familyId,
+      allowedCodes,
+    );
     const canonicalCode = canonical?.acordCode || suggestion.acordCode;
     const normalized: AcordSuggestion = {
       ...suggestion,
@@ -4229,6 +4383,7 @@ function rerankSuggestionsForWave45(
   priorConsistencyCode?: string,
   categorySeenCodes?: Set<string>,
   familyId?: string,
+  allowedCodes?: ReadonlySet<string>,
 ): AcordSuggestion[] {
   if (!WAVE45_RERANK_ENABLED || suggestions.length === 0) {
     return suggestions;
@@ -4244,7 +4399,7 @@ function rerankSuggestionsForWave45(
   );
 
   const categoryPriorCodes = primaryCategory
-    ? new Set(getAcordCodesForCategory(primaryCategory))
+    ? getOntologyCodesForLayoutCategory(primaryCategory, allowedCodes)
     : new Set<string>();
 
   const rescored = suggestions.map((candidate) => {
@@ -4252,7 +4407,7 @@ function rerankSuggestionsForWave45(
     const carrierSignals = resolveWave46CarrierSignals(block, candidate, familyId);
     const wave48Signals = resolveWave48ExceptionSignals(block, candidate, familyId);
     const wave47Signals = resolveWave47GeneralizationSignals(block, candidate, familyId);
-    const category = getCategoryForAcordCode(candidate.acordCode);
+    const category = deriveOntologyClusterForCode(candidate.acordCode);
     const geometryAgreement = Number((candidate as any).geometryAgreement || 0);
     const ontologyViolations = Number((candidate as any).ontology?.violatedConstraints?.length || 0);
     let score = Number(candidate.confidenceScore || 0);
@@ -4327,6 +4482,8 @@ function rerankSuggestionsForWave45(
 function applyAnchorOverrideSignals(
   block: ExtractedBlock,
   accum: Map<string, ScoreAccumulator>,
+  _allowedCodes?: ReadonlySet<string>,
+  _familyId?: string,
 ) {
   const normalized = normalizeText(block.text);
   if (!normalized) return;
@@ -4356,17 +4513,13 @@ function applyAnchorOverrideSignals(
 
   if (hasAgentOrProducer && hasName) {
     boostKnownCode(accum, "Producer_FullName", 235);
-    boostKnownCode(accum, "Producer_ContactPerson_FullName", 220);
   }
 
   if (isNamedInsuredPrompt(block.text)) {
-    boostKnownCode(accum, "GeneralInfo.NamedInsured", 250);
     boostKnownCode(accum, "NamedInsured_FullName", 245);
   }
 
   if (isMailingAddressAnchorPrompt(block.text)) {
-    boostKnownCode(accum, "GeneralInfo.MailingAddress", 285);
-    boostKnownCode(accum, "GeneralInfo.MailingAddress.Line1", 265);
     boostKnownCode(accum, "NamedInsured_ContactMailingAddress_LineOne", 250);
   }
 
@@ -4380,12 +4533,7 @@ function applyAnchorOverrideSignals(
   }
 
   if (hasIdentityAddress) {
-    boostKnownCode(accum, "GeneralInfo.MailingAddress.Line1", 240);
-    boostKnownCode(accum, "GeneralInfo.MailingAddress", 235);
     boostKnownCode(accum, "NamedInsured_ContactMailingAddress_LineOne", 220);
-    boostKnownCode(accum, "GeneralInfo.MailingAddress.City", 220);
-    boostKnownCode(accum, "GeneralInfo.MailingAddress.State", 220);
-    boostKnownCode(accum, "GeneralInfo.MailingAddress.PostalCode", 220);
     boostKnownCode(accum, "NamedInsured_MailingAddress_CityName", 225);
     boostKnownCode(accum, "NamedInsured_MailingAddress_StateOrProvinceCode", 225);
     boostKnownCode(accum, "NamedInsured_MailingAddress_PostalCode", 225);
@@ -4394,22 +4542,18 @@ function applyAnchorOverrideSignals(
 
   if (isCityMicroPrompt(block.text)) {
     boostKnownCode(accum, "NamedInsured_MailingAddress_CityName", 250);
-    boostKnownCode(accum, "GeneralInfo.MailingAddress.City", 240);
   }
 
   if (isStateMicroPrompt(block.text)) {
     boostKnownCode(accum, "NamedInsured_MailingAddress_StateOrProvinceCode", 250);
-    boostKnownCode(accum, "GeneralInfo.MailingAddress.State", 240);
   }
 
   if (isZipMicroPrompt(block.text)) {
     boostKnownCode(accum, "NamedInsured_MailingAddress_PostalCode", 252);
-    boostKnownCode(accum, "GeneralInfo.MailingAddress.PostalCode", 242);
   }
 
   if (isAgentNamePrompt(block.text)) {
     boostKnownCode(accum, "Producer_FullName", 248);
-    boostKnownCode(accum, "Producer_ContactPerson_FullName", 228);
   }
 
   if (hasOperations) {
@@ -4430,7 +4574,8 @@ async function applySemanticSignals(
   block: ExtractedBlock,
   accum: Map<string, ScoreAccumulator>,
   deterministic = false,
-  allowedCodes?: Set<string>,
+  allowedCodes?: ReadonlySet<string>,
+  familyId?: string,
 ): Promise<void> {
   // Skip when explicitly disabled or running in deterministic mode.
   // Dictionary + heuristic scoring covers 91% of mappings without embeddings.
@@ -4441,15 +4586,25 @@ async function applySemanticSignals(
   const multiplier = getBlockScoreMultiplier(block);
   const cache = getEmbeddingCache();
   if (cache.size === 0) {
-    const approximateHits = safeDictionarySearch(block.text, 12);
+    const approximateHits = safeDictionarySearch(block.text, 12, {
+      familyId,
+      allowedCodes,
+    });
     for (const hit of approximateHits) {
       const acordCode = hit.entry.acordCode;
       if (allowedCodes && !allowedCodes.has(acordCode)) {
         continue;
       }
 
+      const metadata = resolveOntologySemanticMetadata(acordCode);
+      const semanticText = buildOntologySemanticText({
+        ...metadata,
+        label: hit.entry.label || metadata.label,
+        description: hit.entry.description || metadata.description,
+      });
+
       const approxSim = clamp01(
-        lexicalAnchorScore(block.text, hit.entry.label, hit.entry.acordCode),
+        lexicalAnchorScore(block.text, semanticText, metadata.eLabelName),
       );
       if (approxSim <= 0) {
         continue;
@@ -4457,8 +4612,8 @@ async function applySemanticSignals(
 
       const semanticScore = quantize(approxSim * 150 * multiplier);
       const entry = ensureAccumulator(accum, acordCode, {
-        label: hit.entry.label,
-        description: hit.entry.description,
+        label: metadata.label || hit.entry.label,
+        description: metadata.description || hit.entry.description,
         source: "ai",
       });
       entry.score = quantize(entry.score + semanticScore);
@@ -4502,12 +4657,14 @@ async function applySemanticSignals(
     // (dictionary exact-code match = 200, label match = 160).
     const semanticScore = quantize(sim * 240 * multiplier);
 
-    const found = lookupAcordByCode(acordCode);
+    const found = safeLookupAcordCode(acordCode, familyId, allowedCodes);
     if (!found) continue;
 
+    const metadata = resolveOntologySemanticMetadata(acordCode);
+
     const entry = ensureAccumulator(accum, acordCode, {
-      label: found.label,
-      description: found.description,
+      label: metadata.label || found.label,
+      description: metadata.description || found.description,
       source: "ai",
     });
     entry.score = quantize(entry.score + semanticScore);
@@ -4526,6 +4683,7 @@ function toSuggestions(
   blockConfidence: number,
   calibrationProfile?: CalibrationProfile,
   familyId?: string,
+  allowedCodes?: ReadonlySet<string>,
   graphSnapshot?: GlobalSemanticGraphSnapshot,
   carrierAdapterOverrides?: CarrierAdapterOverride[],
   underwritingRuleOverrides?: UnderwritingRuleOverride[],
@@ -4582,48 +4740,6 @@ function toSuggestions(
     return null;
   };
 
-  const buildLocationFallback = (
-    kind: "city" | "state" | "postal",
-  ): ScoreAccumulator | null => {
-    const queryByKind: Record<typeof kind, string> = {
-      city: "mailing address city name",
-      state: "mailing address state or province code",
-      postal: "mailing address postal code",
-    };
-
-    const fallbackHits = [...safeDictionarySearch(queryByKind[kind], 5)].sort(
-      (left, right) => right.score - left.score || left.entry.acordCode.localeCompare(right.entry.acordCode),
-    );
-    const picked =
-      fallbackHits.find(
-        (hit) => getLocationKind(hit.entry.label, hit.entry.acordCode) === kind,
-      ) ?? fallbackHits[0];
-
-    if (!picked) return null;
-
-    const syntheticBase = scored[0]?.score || 100;
-    const syntheticWeightByKind: Record<typeof kind, number> = {
-      city: 1.35,
-      state: 1.25,
-      postal: 1.15,
-    };
-
-    const syntheticScore = quantize(syntheticBase * syntheticWeightByKind[kind]);
-
-    return {
-      acordCode: picked.entry.acordCode,
-      label: picked.entry.label,
-      description: picked.entry.description,
-      score: syntheticScore,
-      dictionaryScore: syntheticScore,
-      heuristicScore: 0,
-      layoutlmScore: 0,
-      categoryConfidenceScore: 0,
-      semanticSimilarity: 0,
-      source: "dictionary",
-    };
-  };
-
   const enforceCityStatePostalOrder = (
     items: ScoreAccumulator[],
   ): ScoreAccumulator[] => {
@@ -4648,28 +4764,6 @@ function toSuggestions(
       if (index >= 0) {
         const [matched] = remaining.splice(index, 1);
         pinned.push(matched);
-        continue;
-      }
-
-      const fallback = buildLocationFallback(kind);
-      if (fallback) {
-        const duplicateIndex = remaining.findIndex(
-          (item) => item.acordCode === fallback.acordCode,
-        );
-        if (duplicateIndex >= 0) {
-          const [matchedExisting] = remaining.splice(duplicateIndex, 1);
-          pinned.push({
-            ...matchedExisting,
-            score: fallback.score,
-            dictionaryScore: Math.max(
-              matchedExisting.dictionaryScore,
-              fallback.dictionaryScore,
-            ),
-            source: matchedExisting.source === "ai" ? "ai" : fallback.source,
-          });
-        } else {
-          pinned.push(fallback);
-        }
       }
     }
 
@@ -4680,23 +4774,6 @@ function toSuggestions(
 
   const all = ordered;
   if (all.length === 0) {
-    // If we have a clear field cue but no scored candidates, provide a low-confidence
-    // fallback set so downstream review can still inspect probable ACORD options.
-    if (hasExplicitFieldCue) {
-      const fallback = safeDictionarySearch(block.text, 3).map((hit) => ({
-        acordCode: hit.entry.acordCode,
-        label: hit.entry.label,
-        description: hit.entry.description,
-        confidenceScore: 0.12,
-        normalizedConfidenceScore: 0.12,
-        source: "dictionary" as const,
-        lexicalScore: 0.15,
-        semanticSimilarity: 0,
-        dictionaryScore: 0.35,
-        heuristicScore: 0,
-      }));
-      return fallback;
-    }
     return [];
   }
 
@@ -5529,6 +5606,7 @@ export async function mapBlocksToAcord(
     calibrationProfile?: CalibrationProfile;
     familyId?: string;
     layoutLmByBlock?: Record<string, LayoutLmFieldEvaluationInput>;
+    ontologyClusterByBlock?: Record<string, string>;
     layoutLmPrimaryClassifier?: boolean;
     carrierAdapterOverrides?: CarrierAdapterOverride[];
     underwritingRuleOverrides?: UnderwritingRuleOverride[];
@@ -5554,6 +5632,7 @@ export async function mapBlocksToAcord(
   },
 ): Promise<FieldMapping[]> {
   const reducerDebugEntries: ReducerDebugEntry[] = [];
+  const familyAllowedCodes = resolveOntologyFamilyAllowedCodes(options?.familyId);
 
   if (!options?.deterministic) {
     ensureEmbeddings().catch(() => {});
@@ -5675,6 +5754,14 @@ export async function mapBlocksToAcord(
 
       const accum = new Map<string, ScoreAccumulator>();
       const layoutLmEvaluation = options?.layoutLmByBlock?.[block.id];
+      const ontologyClusterRoute = options?.ontologyClusterByBlock?.[block.id];
+      const ontologyClusterAllowedCodes = resolveOntologyClusterAllowedCodes(
+        ontologyClusterRoute,
+        {
+          familyId: options?.familyId,
+          allowedCodes: familyAllowedCodes,
+        },
+      );
       const hasLayoutLmEvidence =
         Boolean(layoutLmEvaluation) &&
         Array.isArray(layoutLmEvaluation?.topPredictions) &&
@@ -5683,7 +5770,12 @@ export async function mapBlocksToAcord(
         options?.layoutLmPrimaryClassifier !== false;
       const layoutLmPrimaryCodes =
         useLayoutLmPrimaryClassifier && hasLayoutLmEvidence
-          ? getLayoutLmPrimaryCodes(layoutLmEvaluation)
+          ? getLayoutLmPrimaryCodes(
+              layoutLmEvaluation,
+              LAYOUTLM_PRIMARY_TOP_K,
+              familyAllowedCodes,
+              options?.familyId,
+            )
           : undefined;
       const rerankAllowedCodes =
         layoutLmPrimaryCodes && layoutLmPrimaryCodes.size > 0
@@ -5696,11 +5788,10 @@ export async function mapBlocksToAcord(
             ),
           )
         : 0;
-      const lowCategoryConfidenceFallbackActive =
-        Boolean(rerankAllowedCodes) && maxLayoutLmProbability < 0.42;
-      const effectiveAllowedCodes = lowCategoryConfidenceFallbackActive
-        ? undefined
-        : rerankAllowedCodes;
+      const lowCategoryConfidenceFallbackActive = false;
+      const effectiveAllowedCodes = rerankAllowedCodes;
+      const runAllowedCodes =
+        ontologyClusterAllowedCodes || familyAllowedCodes || effectiveAllowedCodes;
       const primaryCategory = String(
         layoutLmEvaluation?.topPredictions?.[0]?.category || "",
       ).trim();
@@ -5712,16 +5803,22 @@ export async function mapBlocksToAcord(
       const wave49Errors: Wave49ErrorStatus[] = [];
 
       let stageStartedAt = Date.now();
-      applyLayoutLmSignals(block, accum, layoutLmEvaluation);
+      applyLayoutLmSignals(
+        block,
+        accum,
+        layoutLmEvaluation,
+        runAllowedCodes,
+        options?.familyId,
+      );
       stageTimings.layoutLmMs = Date.now() - stageStartedAt;
       const layoutLmSeededCandidateCount = accum.size;
 
       const preGateCandidateCount = accum.size;
 
       stageStartedAt = Date.now();
-      if (effectiveAllowedCodes) {
+      if (runAllowedCodes) {
         for (const code of [...accum.keys()]) {
-          if (!effectiveAllowedCodes.has(code)) {
+          if (!runAllowedCodes.has(code)) {
             accum.delete(code);
           }
         }
@@ -5731,13 +5828,13 @@ export async function mapBlocksToAcord(
       const postGateCandidateCount = accum.size;
       const gatedOutCandidateCount = Math.max(0, preGateCandidateCount - postGateCandidateCount);
       const categoryModeGateDecision =
-        preGateCandidateCount > 0 && postGateCandidateCount === 0 && !lowCategoryConfidenceFallbackActive
+        preGateCandidateCount > 0 && postGateCandidateCount === 0
           ? "dropped_all"
           : "passed_or_relaxed";
 
       stageStartedAt = Date.now();
       try {
-        applyDictionarySignals(block, accum, effectiveAllowedCodes, options?.familyId);
+        applyDictionarySignals(block, accum, runAllowedCodes, options?.familyId);
       } catch (error) {
         wave49Errors.push(normalizeWave49Error("dictionary", error));
       }
@@ -5749,7 +5846,8 @@ export async function mapBlocksToAcord(
           block,
           accum,
           options?.deterministic === true,
-          effectiveAllowedCodes,
+          runAllowedCodes,
+          options?.familyId,
         );
       } catch (error) {
         wave49Errors.push(normalizeWave49Error("semantic", error));
@@ -5758,15 +5856,17 @@ export async function mapBlocksToAcord(
 
       // Wave-13 remediation: seed anchor candidates before ranking so supervised
       // ACORD codes are present in the candidate pool for eLabel weighting.
-      applyAnchorOverrideSignals(block, accum);
+      applyAnchorOverrideSignals(block, accum, runAllowedCodes, options?.familyId);
+      filterAccumulatorToAllowedCodes(accum, runAllowedCodes);
       const wave13SupervisionSeeds = getWave8SupervisionCandidatesForText(
         block.text,
         options?.familyId,
       );
       for (const seed of wave13SupervisionSeeds) {
         const seedBoost = Math.max(120, Math.round(190 * Math.max(1, Number(seed.weight || 0))));
-        boostKnownCode(accum, seed.acordCode, seedBoost);
+        boostKnownCode(accum, seed.acordCode, seedBoost, runAllowedCodes, options?.familyId);
       }
+      filterAccumulatorToAllowedCodes(accum, runAllowedCodes);
 
       const candidatePoolCountBeforeFallback = accum.size;
       let starvationFallbackApplied = false;
@@ -5782,6 +5882,7 @@ export async function mapBlocksToAcord(
           block.confidence,
           options?.calibrationProfile,
           options?.familyId,
+          runAllowedCodes,
           runtimeGraph,
           options?.carrierAdapterOverrides,
           options?.underwritingRuleOverrides,
@@ -5797,7 +5898,8 @@ export async function mapBlocksToAcord(
 
       if (suggestions.length === 0 && !wave8HeaderAssessment.headerBlock) {
         const beforeHeuristic = accum.size;
-        applyHeuristicSignals(block, accum);
+        applyHeuristicSignals(block, accum, runAllowedCodes, options?.familyId);
+        filterAccumulatorToAllowedCodes(accum, runAllowedCodes);
         let afterHeuristic = accum.size;
 
         if (afterHeuristic === beforeHeuristic) {
@@ -5819,24 +5921,25 @@ export async function mapBlocksToAcord(
             boostKnownCode(accum, code, boost);
           }
           starvationWave48SeededCodeCount = boostByCode.size;
+          filterAccumulatorToAllowedCodes(accum, runAllowedCodes);
           afterHeuristic = accum.size;
         }
 
         starvationFallbackApplied = afterHeuristic > beforeHeuristic;
-        if (starvationFallbackApplied) {
-          suggestions = buildWave49FallbackSuggestions(accum);
-        }
       }
 
-      if (suggestions.length === 0 && accum.size > 0 && !wave8HeaderAssessment.headerBlock) {
-        suggestions = buildWave49FallbackSuggestions(accum);
-      }
+      suggestions = filterSuggestionsToAllowedCodes(suggestions, runAllowedCodes);
 
       const candidatePoolCountAfterFallback = accum.size;
 
       stageStartedAt = Date.now();
       try {
-        suggestions = normalizeSuggestionsByAlignment(suggestions, block);
+        suggestions = normalizeSuggestionsByAlignment(
+          suggestions,
+          block,
+          options?.familyId,
+          runAllowedCodes,
+        );
       } catch (error) {
         wave49Errors.push(normalizeWave49Error("alignment-normalization", error));
       }
@@ -5848,6 +5951,7 @@ export async function mapBlocksToAcord(
           priorConsistency?.acordCode,
           seenCodes,
           options?.familyId,
+          runAllowedCodes,
         );
       } catch (error) {
         wave49Errors.push(normalizeWave49Error("rerank", error));
@@ -5868,6 +5972,7 @@ export async function mapBlocksToAcord(
         block,
         wave9PredictedRole,
       );
+      suggestions = filterSuggestionsToAllowedCodes(suggestions, runAllowedCodes);
       stageTimings.rerankMs = Date.now() - stageStartedAt;
 
       let wave5FusionApplied = false;
@@ -5966,6 +6071,7 @@ export async function mapBlocksToAcord(
                 left.candidate.acordCode.localeCompare(right.candidate.acordCode),
             )
             .map((entry) => entry.candidate);
+          suggestions = filterSuggestionsToAllowedCodes(suggestions, runAllowedCodes);
 
           wave5FusionApplied = fusionResults.length > 0;
           wave5GeometryDiagnostics = emitGeometryModeDiagnostics({
@@ -6049,6 +6155,7 @@ export async function mapBlocksToAcord(
                 left.candidate.acordCode.localeCompare(right.candidate.acordCode),
             )
             .map((entry) => entry.candidate);
+          suggestions = filterSuggestionsToAllowedCodes(suggestions, runAllowedCodes);
 
           wave5CategoryModeApplied = scoringResults.length > 0;
           wave5CategoryModeDiagnostics = emitCategoryModeDiagnostics({
@@ -6133,6 +6240,7 @@ export async function mapBlocksToAcord(
                 left.candidate.acordCode.localeCompare(right.candidate.acordCode),
             )
             .map((entry) => entry.candidate);
+          suggestions = filterSuggestionsToAllowedCodes(suggestions, runAllowedCodes);
 
           const topFusionScore = reranked.length > 0 ? Number(reranked[0].score || 0) : 0;
           wave5ReflowApplied = reranked.length > 0;
@@ -6169,7 +6277,7 @@ export async function mapBlocksToAcord(
             const [match] = suggestions.splice(existingIndex, 1);
             suggestions.unshift(match);
           } else if (existingIndex < 0) {
-            const found = lookupAcordByCode(priorConsistency.acordCode);
+            const found = safeLookupAcordCode(priorConsistency.acordCode, options?.familyId, runAllowedCodes);
             if (found) {
               suggestions.unshift({
                 acordCode: found.acordCode,
@@ -6201,80 +6309,7 @@ export async function mapBlocksToAcord(
         }
       }
 
-      let fallbackReason:
-        | "confidence_only_fallback"
-        | "synthetic_confidence_fallback"
-        | "role_context_reject"
-        | undefined;
-      if (WAVE8_USABILITY_MODE && !wave8HeaderAssessment.headerBlock) {
-        if (suggestions.length === 0) {
-          suggestions = [buildSyntheticConfidenceFallbackCandidate(block)];
-          fallbackReason = "synthetic_confidence_fallback";
-        } else {
-          const confidenceEligible = suggestions.filter(
-            (candidate) => Number(candidate.confidenceScore || 0) >= WAVE8_CONFIDENCE_FALLBACK_THRESHOLD,
-          );
-
-          const hasFusionPass = suggestions.some((candidate) => {
-            const fusionScore = Number(
-              fusionByAcordCode.get(candidate.acordCode)?.fusionScore ||
-                candidate.normalizedConfidenceScore ||
-                candidate.confidenceScore ||
-                0,
-            );
-            return fusionScore >= fusionThreshold;
-          });
-
-          const hasPositiveContributions = suggestions.some((candidate) => {
-            const details = fusionByAcordCode.get(candidate.acordCode);
-            return (
-              Number(details?.semanticContribution || 0) > 0 ||
-              Number(details?.geometryContribution || 0) > 0
-            );
-          });
-
-          if (!hasFusionPass && confidenceEligible.length > 0) {
-            confidenceEligible.sort(
-              (left, right) =>
-                Number(right.confidenceScore || 0) - Number(left.confidenceScore || 0) ||
-                left.acordCode.localeCompare(right.acordCode),
-            );
-            const selected = confidenceEligible[0];
-            suggestions = [
-              selected,
-              ...suggestions.filter((candidate) => candidate.acordCode !== selected.acordCode),
-            ];
-            fallbackReason = "confidence_only_fallback";
-          }
-
-          if (!hasPositiveContributions && confidenceEligible.length > 0 && !fallbackReason) {
-            fallbackReason = "confidence_only_fallback";
-          }
-        }
-      }
-
-        if (suggestions.length === 0 && isPolicyNumberPrompt(block.text)) {
-          const policyNumberCode = lookupAcordByCode("Policy_PolicyNumberIdentifier");
-          if (policyNumberCode) {
-            suggestions = [
-              {
-                acordCode: policyNumberCode.acordCode,
-                label: policyNumberCode.label,
-                description: policyNumberCode.description,
-                confidenceScore: 0.84,
-                normalizedConfidenceScore: 0.84,
-                source: "heuristic",
-                lexicalScore: 0.72,
-                semanticSimilarity: 0.46,
-                dictionaryScore: 0.58,
-                heuristicScore: 0.62,
-                confidenceLevel: "accepted",
-                rationale: "wave13_1_policy_number_fallback",
-              } as AcordSuggestion,
-            ];
-            fallbackReason = "confidence_only_fallback";
-          }
-        }
+      let fallbackReason: "role_context_reject" | undefined;
 
       if (suggestions.length > 0 && sectionRoleContext) {
         const roleTopCandidate = suggestions[0];
@@ -6294,7 +6329,8 @@ export async function mapBlocksToAcord(
         }
       }
 
-      suggestions = applyWave131AnchorCanonicalization(block, suggestions);
+      suggestions = applyWave131AnchorCanonicalization(block, suggestions, runAllowedCodes);
+      suggestions = filterSuggestionsToAllowedCodes(suggestions, runAllowedCodes);
 
       const topCandidate = suggestions[0];
       let fieldTyping = deriveUsabilityFieldTyping(
@@ -6364,18 +6400,7 @@ export async function mapBlocksToAcord(
                   candidate.confidenceScore ||
                   0,
               );
-              const confidenceScore = Number(candidate.confidenceScore || 0);
-              const semanticContribution = Number(
-                fusionByAcordCode.get(candidate.acordCode)?.semanticContribution || 0,
-              );
-              const geometryContribution = Number(
-                fusionByAcordCode.get(candidate.acordCode)?.geometryContribution || 0,
-              );
-              const contributionMissing = semanticContribution <= 0 && geometryContribution <= 0;
-              const confidenceFallbackPass = WAVE8_USABILITY_MODE &&
-                confidenceScore >= WAVE8_CONFIDENCE_FALLBACK_THRESHOLD &&
-                contributionMissing;
-              return fusionScore >= fusionThreshold || confidenceFallbackPass
+              return fusionScore >= fusionThreshold
                 ? "kept"
                 : "dropped";
             })(),
@@ -6423,11 +6448,9 @@ export async function mapBlocksToAcord(
         ? starvationWave48SeededCodeCount > 0
           ? "starvation_seeded_recovery"
           : "heuristic_starvation_recovery"
-        : lowCategoryConfidenceFallbackActive
-          ? "low_category_fallback"
-          : effectiveAllowedCodes
-            ? "category_gate"
-            : "standard";
+        : effectiveAllowedCodes
+          ? "category_gate"
+          : "standard";
 
       const carrierTelemetry = topCandidate
         ? resolveWave46CarrierSignals(
@@ -6748,9 +6771,10 @@ export async function mapBlocksToAcord(
           wave44GateEnabled: WAVE44_GATE_ENABLED,
           wave44CategoryPruningEnabled: WAVE44_CATEGORY_PRUNING_ENABLED,
           layoutLmEvidencePresent: hasLayoutLmEvidence,
-          taxonomyCategoryGateActive: isTaxonomyLoaded(),
+          ontologyCategoryViewGateActive: true,
+          ontologyClusterRoute: ontologyClusterRoute || null,
+          ontologyClusterRouteActive: Boolean(ontologyClusterRoute),
           layoutLmTopK: LAYOUTLM_PRIMARY_TOP_K,
-          lowCategoryConfidenceFallbackActive,
           maxLayoutLmProbability: Number(maxLayoutLmProbability.toFixed(3)),
           wave45AlignmentEnabled: WAVE45_ALIGNMENT_ENABLED,
           wave45ConsistencyEnabled: WAVE45_CONSISTENCY_ENABLED,
@@ -6795,7 +6819,6 @@ export async function mapBlocksToAcord(
           starvationFallbackApplied,
           starvationWave48SeededCodeCount,
           starvationWave48ExceptionIds,
-          fallbackPath,
           latencyHotspotStage: wave49LatencySummary.hotspotStage,
           latencyHotspotMs: wave49LatencySummary.hotspotMs,
           activeStages: wave49LatencySummary.activeStages,

@@ -22,6 +22,16 @@ const ENDPOINTS = [
   { method: "POST", route: "/api/wave9/mapping/flow", expectedStatuses: [200, 400] },
 ];
 
+const REQUIRED_CONTRACT_ENDPOINTS = [
+  "semanticSummary",
+  "acordValidate",
+  "arbitrationTrace",
+  "mappingFlow",
+  "normalization",
+  "scoring",
+  "preview",
+];
+
 function normalizeBaseUrl(input) {
   const trimmed = String(input || "").trim();
   if (!trimmed) {
@@ -105,6 +115,7 @@ async function probe(baseUrl, endpoint) {
       statusValid: endpoint.expectedStatuses.includes(response.status),
       contractValid: envelope.valid,
       contractError: envelope.reason,
+      parsedBody: jsonBody,
       bodyPreview: bodyText.slice(0, 220),
     };
   } catch (error) {
@@ -155,6 +166,38 @@ async function main() {
     contractViolations: results.filter((r) => r.ok && !r.contractValid).length,
     failed: failures.length,
   };
+
+  const contractResult = results.find((item) => item.route === "/api/wave9/contracts");
+  if (!contractResult || !contractResult.ok) {
+    failures.push("GET /api/wave9/contracts unavailable for schema binding validation");
+  } else {
+    const contractJson = contractResult.parsedBody;
+
+    if (!contractJson || !isObject(contractJson.data)) {
+      failures.push("/api/wave9/contracts missing data payload for schema binding");
+    } else {
+      const contractData = contractJson.data;
+      if (!isObject(contractData.endpoints)) {
+        failures.push("/api/wave9/contracts missing endpoints map");
+      } else {
+        for (const key of REQUIRED_CONTRACT_ENDPOINTS) {
+          const endpoint = contractData.endpoints[key];
+          if (!isObject(endpoint) || typeof endpoint.path !== "string" || !endpoint.path.trim()) {
+            failures.push(`/api/wave9/contracts missing endpoint path for ${key}`);
+          }
+        }
+      }
+
+      if (!isObject(contractData.envelopes)) {
+        failures.push("/api/wave9/contracts missing envelopes schema");
+      }
+      if (!isObject(contractData.payloadFormats)) {
+        failures.push("/api/wave9/contracts missing payloadFormats schema");
+      }
+    }
+  }
+
+  summary.failed = failures.length;
 
   const report = {
     timestamp: new Date().toISOString(),

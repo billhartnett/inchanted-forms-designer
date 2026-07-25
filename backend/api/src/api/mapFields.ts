@@ -5,7 +5,15 @@ import {
   getLastReducerDebugSnapshot,
   mapBlocksWithAcord,
 } from "../mapping";
-import { getDefaultOntologyMetadata } from "shared/acord";
+import {
+  applyGatedFields,
+  buildDocumentSemanticProfile,
+  deriveOntologyClusterFromCode,
+  gatePredictions,
+  getDefaultOntologyMetadata,
+  type FieldPrediction,
+  type GatedFieldPrediction,
+} from "shared/acord";
 import { coerceExtractedBlock } from "../extraction";
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
@@ -42,6 +50,15 @@ type LayoutLmFieldEvaluation = {
   topPredictions: LayoutLmTopPrediction[];
 };
 
+type LayoutLmGatingDiagnostics = {
+  totalPredictions: number;
+  acceptedPredictions: number;
+  rejectedPredictions: number;
+  blocksWithNoAcceptedPredictions: number;
+  routedBlockCount: number;
+  routedClusters: Record<string, number>;
+};
+
 type LayoutLmInferResponse = {
   top_n_predictions?: Array<{
     eLabelName?: string;
@@ -64,6 +81,8 @@ type LayoutLmInferResponse = {
 
 type MapFieldsRequest = {
   documentId?: string;
+  sourceDocumentName?: string;
+  lockSourceDocument?: boolean;
   blocks?: ExtractedBlock[];
   context?: string;
   deterministic?: boolean;
@@ -95,6 +114,27 @@ type MapFieldsRequest = {
     carrierPolicyBoost?: number;
   };
 };
+
+function normalizeFamilyId(value: string | undefined): string {
+  return String(value || "")
+    .trim()
+    .toLowerCase()
+    .replace(/[_\-]+/g, " ")
+    .replace(/\s+/g, " ");
+}
+
+function isSampleLikeDocumentId(value: string): boolean {
+  const normalized = value
+    .trim()
+    .toLowerCase()
+    .replace(/[_\-]+/g, " ")
+    .replace(/\s+/g, " ");
+  return (
+    normalized.includes("wave11 sample") ||
+    normalized.includes("sample acord") ||
+    normalized.includes("demo")
+  );
+}
 
 type ReducerFailureClass =
   | "emptyAccum"
@@ -394,11 +434,8 @@ async function writeUsabilityArtifacts(args: {
     documentId: args.documentId,
     totalBlocks: args.totalBlocks,
     mappingsCount: mappingCount,
-    confidenceOnlyFallbackCount: fallbackMappings.filter(
-      (mapping) => mapping.fallbackReason === "confidence_only_fallback",
-    ).length,
-    syntheticFallbackCount: fallbackMappings.filter(
-      (mapping) => mapping.fallbackReason === "synthetic_confidence_fallback",
+    roleContextRejectCount: fallbackMappings.filter(
+      (mapping) => mapping.fallbackReason === "role_context_reject",
     ).length,
     fallbackSamples: fallbackMappings.slice(0, 50).map((mapping) => ({
       blockId: mapping.blockId,
@@ -1433,12 +1470,141 @@ function sanitizeBlock(raw: any, index: number): ExtractedBlock {
   };
 }
 
+function gateLayoutLmPredictions(args: {
+  blocks: ExtractedBlock[];
+  layoutLmByBlock: Record<string, LayoutLmFieldEvaluation>;
+  familyId?: string;
+}): {
+  gatedByBlock: Record<string, LayoutLmFieldEvaluation>;
+  ontologyClusterByBlock: Record<string, string>;
+  gatedPredictions: GatedFieldPrediction[];
+  diagnostics: LayoutLmGatingDiagnostics;
+} {
+  const blockById = new Map(args.blocks.map((block) => [block.id, block]));
+  const gatedByBlock: Record<string, LayoutLmFieldEvaluation> = {};
+  const ontologyClusterByBlock: Record<string, string> = {};
+  const gatedPredictions: GatedFieldPrediction[] = [];
+
+  let totalPredictions = 0;
+  let acceptedPredictions = 0;
+  let rejectedPredictions = 0;
+  let blocksWithNoAcceptedPredictions = 0;
+  const routedClusters: Record<string, number> = {};
+
+  for (const [blockId, evaluation] of Object.entries(args.layoutLmByBlock || {})) {
+    const block = blockById.get(blockId);
+    const predictions: FieldPrediction[] = (evaluation.topPredictions || []).map((candidate) => ({
+      blockId,
+      page: Number(evaluation.page || block?.page || 1),
+      text: String(block?.text || ""),
+      eLabelName: String(candidate.eLabelName || ""),
+      probability: Number(candidate.probability || 0),
+      logit: Number(candidate.logit || 0),
+      category: candidate.category,
+      refinementPath: candidate.refinementPath,
+    }));
+
+    totalPredictions += predictions.length;
+    const gateResult = gatePredictions(predictions, {
+      familyId: args.familyId,
+      formId: args.familyId,
+    });
+
+    gatedPredictions.push(...gateResult.accepted, ...gateResult.rejected);
+    acceptedPredictions += gateResult.accepted.length;
+    rejectedPredictions += gateResult.rejected.length;
+
+    const routedCluster =
+      gateResult.accepted[0]?.cluster ||
+      deriveOntologyClusterFromCode(gateResult.rejected[0]?.acordCode || "") ||
+      "General";
+    ontologyClusterByBlock[blockId] = routedCluster;
+    routedClusters[routedCluster] = (routedClusters[routedCluster] || 0) + 1;
+
+    const clusterScopedAccepted = gateResult.accepted.filter(
+      (prediction) => prediction.cluster === routedCluster,
+    );
+
+    if (clusterScopedAccepted.length === 0) {
+      blocksWithNoAcceptedPredictions += 1;
+    }
+
+    gatedByBlock[blockId] = {
+      ...evaluation,
+      topPredictions: clusterScopedAccepted.map((accepted) => ({
+        eLabelName: accepted.acordCode,
+        logit: Number(accepted.logit || 0),
+        probability: Number(accepted.modelConfidence || 0),
+        category: accepted.category,
+        refinementPath: accepted.refinementPath,
+      })),
+    };
+  }
+
+  return {
+    gatedByBlock,
+    ontologyClusterByBlock,
+    gatedPredictions,
+    diagnostics: {
+      totalPredictions,
+      acceptedPredictions,
+      rejectedPredictions,
+      blocksWithNoAcceptedPredictions,
+      routedBlockCount: Object.keys(ontologyClusterByBlock).length,
+      routedClusters,
+    },
+  };
+}
+
 export async function mapFields(
   request: HttpRequest,
   context: InvocationContext,
 ): Promise<HttpResponseInit> {
   try {
     const body = (await request.json()) as MapFieldsRequest;
+    const normalizedFamilyId = normalizeFamilyId(body.familyId);
+
+    if (normalizedFamilyId === "acord 125") {
+      const lockSourceDocument = body.lockSourceDocument !== false;
+      if (lockSourceDocument) {
+        const documentId = String(body.documentId || "").trim();
+        const sourceDocumentName = String(body.sourceDocumentName || "").trim();
+
+        if (!documentId || !sourceDocumentName) {
+          return {
+            status: 400,
+            jsonBody: {
+              error:
+                "ACORD-125 mapping requires both documentId and sourceDocumentName when source document lock is enabled.",
+            },
+          };
+        }
+
+        if (documentId !== sourceDocumentName) {
+          return {
+            status: 400,
+            jsonBody: {
+              error:
+                "Source document lock violation: documentId must exactly match sourceDocumentName for ACORD-125 mapping.",
+              documentId,
+              sourceDocumentName,
+            },
+          };
+        }
+
+        if (isSampleLikeDocumentId(documentId) || isSampleLikeDocumentId(sourceDocumentName)) {
+          return {
+            status: 400,
+            jsonBody: {
+              error:
+                "Source document lock violation: sample/demo document identifiers are not allowed for ACORD-125 mapping.",
+              documentId,
+              sourceDocumentName,
+            },
+          };
+        }
+      }
+    }
 
     if (!Array.isArray(body?.blocks) || body.blocks.length === 0) {
       return {
@@ -1493,6 +1659,16 @@ export async function mapFields(
 
     const layoutLmEvaluation = await layoutLmByBlockPromise;
     const layoutLmByBlock = layoutLmEvaluation.byBlockId;
+    const gating = gateLayoutLmPredictions({
+      blocks,
+      layoutLmByBlock,
+      familyId: body.familyId,
+    });
+    const ontologyApplied = applyGatedFields(gating.gatedPredictions);
+    const ontologySemanticProfile = buildDocumentSemanticProfile(gating.gatedPredictions, {
+      familyId: body.familyId,
+      formId: body.familyId,
+    });
 
     const mappings = await mapBlocksWithAcord(blocks, {
       context: body.context,
@@ -1501,7 +1677,8 @@ export async function mapFields(
       familyId: body.familyId,
       semanticMemorySnapshot: body.semanticMemorySnapshot,
       semanticMemoryDecisions: body.semanticMemoryDecisions,
-      layoutLmByBlock,
+      layoutLmByBlock: gating.gatedByBlock,
+      ontologyClusterByBlock: gating.ontologyClusterByBlock,
       layoutLmPrimaryClassifier: body.layoutLmPrimaryClassifier,
       wave5GeometryEnabled: body.wave5GeometryEnabled,
       wave5CategoryModeEnabled: body.wave5CategoryModeEnabled,
@@ -1524,7 +1701,7 @@ export async function mapFields(
     const mappingsWithLayoutLm = mappings.map((mapping) => ({
       ...mapping,
       // Evaluation-only enrichment: no candidate scores or selected mapping are changed.
-      layoutlmEvaluation: layoutLmByBlock[mapping.blockId],
+      layoutlmEvaluation: gating.gatedByBlock[mapping.blockId],
     }));
 
     return {
@@ -1534,6 +1711,15 @@ export async function mapFields(
         mappings: mappingsWithLayoutLm,
         decisionGraph: createMappingDecisionGraph(mappings, body.decisionGraph),
         layoutlmDiagnostics: layoutLmEvaluation.diagnostics,
+        ontologyGating: gating.diagnostics,
+        routedClusters: gating.diagnostics.routedClusters,
+        ontologyDocument: ontologyApplied.document,
+        ontologyDocumentApplyStats: {
+          appliedCount: ontologyApplied.appliedCount,
+          skippedCount: ontologyApplied.skippedCount,
+        },
+        ontologyBuilderDiagnostics: ontologyApplied.builderDiagnostics,
+        documentSemanticProfile: ontologySemanticProfile,
         ontologyAlignment: getDefaultOntologyMetadata(),
       },
     };

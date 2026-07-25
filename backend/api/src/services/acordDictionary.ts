@@ -1,7 +1,14 @@
 import fs from "node:fs";
 import path from "node:path";
 import { embedBatch, isEmbeddingsAvailable } from "./embeddings";
-import type { AcordDictionaryEntry } from "shared/acord";
+import {
+  buildOntologySemanticText,
+  getAcordDictionaryEntries,
+  resolveOntologySemanticMetadata,
+  getAcordSchemaDefinition,
+  getAcordSchemaEntries,
+  type AcordDictionaryEntry,
+} from "shared/acord";
 
 export type { AcordDictionaryEntry };
 
@@ -36,6 +43,17 @@ const FALLBACK_CSV_PATH = path.resolve(
 let entries: AcordDictionaryEntry[] = [];
 let index: IndexedEntry[] = [];
 let codeIndex = new Map<string, AcordDictionaryEntry>();
+
+let acord125SchemaEntriesCache: AcordDictionaryEntry[] | null = null;
+let acord125SchemaIndexCache: IndexedEntry[] | null = null;
+let acord125SchemaCodeIndexCache: Map<string, AcordDictionaryEntry> | null = null;
+
+const ACORD125_SCHEMA_CLUSTERS = new Set([
+  "Producer",
+  "NamedInsured",
+  "Policy",
+  "Insurer",
+]);
 
 // ---------------------------------------------------------------------------
 // Embedding cache – keyed by acordCode, populated asynchronously after load.
@@ -218,6 +236,25 @@ function createEntry(columns: string[]): AcordDictionaryEntry | null {
   };
 }
 
+function mergeAcordEntries(
+  primary: AcordDictionaryEntry[],
+  overlay: AcordDictionaryEntry[],
+): AcordDictionaryEntry[] {
+  const merged = new Map<string, AcordDictionaryEntry>();
+
+  for (const entry of primary) {
+    merged.set(normalizeText(entry.acordCode), entry);
+  }
+
+  for (const entry of overlay) {
+    merged.set(normalizeText(entry.acordCode), entry);
+  }
+
+  return Array.from(merged.values()).sort((left, right) =>
+    left.acordCode.localeCompare(right.acordCode),
+  );
+}
+
 function getScore(
   entry: IndexedEntry,
   queryText: string,
@@ -267,6 +304,92 @@ function getScore(
   return score;
 }
 
+function toIndexedEntries(sourceEntries: AcordDictionaryEntry[]): {
+  indexed: IndexedEntry[];
+  byCode: Map<string, AcordDictionaryEntry>;
+} {
+  const byCode = new Map<string, AcordDictionaryEntry>();
+  const indexed = sourceEntries.map((entry) => {
+    const normalizedCode = normalizeText(entry.acordCode);
+    byCode.set(normalizedCode, entry);
+
+    return {
+      entry,
+      normalizedCode,
+      normalizedLabel: normalizeText(entry.label),
+      normalizedDescription: normalizeText(entry.description),
+      normalizedKeywords: entry.keywords.map((keyword) => normalizeText(keyword)),
+    };
+  });
+
+  return { indexed, byCode };
+}
+
+function ensureAcord125SchemaCaches(): void {
+  if (acord125SchemaEntriesCache && acord125SchemaIndexCache && acord125SchemaCodeIndexCache) {
+    return;
+  }
+
+  const schema = getAcordSchemaDefinition();
+  const allSchemaEntries = getAcordSchemaEntries();
+
+  const filteredEntries = schema?.clusters
+    ? Object.entries(schema.clusters)
+        .filter(([clusterName]) => ACORD125_SCHEMA_CLUSTERS.has(clusterName))
+        .flatMap(([, cluster]) => {
+          const fields = Array.isArray(cluster.fields) ? cluster.fields : [];
+          return fields
+            .map((field) => {
+              const code = String(field?.elabel || field?.id || "").trim();
+              return code;
+            })
+            .filter((code) => code.length > 0);
+        })
+    : [];
+
+  const allowedCodes = new Set(filteredEntries);
+  const scopedEntries = (allowedCodes.size > 0
+    ? allSchemaEntries.filter((entry) => allowedCodes.has(entry.acordCode))
+    : allSchemaEntries
+  ).sort((left, right) => left.acordCode.localeCompare(right.acordCode));
+
+  const { indexed, byCode } = toIndexedEntries(scopedEntries);
+
+  acord125SchemaEntriesCache = scopedEntries;
+  acord125SchemaIndexCache = indexed;
+  acord125SchemaCodeIndexCache = byCode;
+}
+
+function searchInIndexedEntries(
+  indexedEntries: IndexedEntry[],
+  query: string,
+  limit = 20,
+): SearchResult[] {
+  const queryText = normalizeText(query);
+  if (!queryText) {
+    return [];
+  }
+
+  const queryTokens = queryText
+    .split(" ")
+    .map((token) => token.trim())
+    .filter((token) => token.length > 1);
+
+  return indexedEntries
+    .map((entry) => ({
+      entry: entry.entry,
+      score: getScore(entry, queryText, queryTokens),
+    }))
+    .filter((result) => result.score > 0)
+    .sort(
+      (a, b) =>
+        b.score - a.score ||
+        a.entry.acordCode.localeCompare(b.entry.acordCode) ||
+        a.entry.label.localeCompare(b.entry.label),
+    )
+    .slice(0, Math.max(1, Math.min(limit, 100)));
+}
+
 function loadCsvFromDisk(): string {
   const configuredPath = process.env.ACORD_DICTIONARY_CSV_PATH;
   if (configuredPath && fs.existsSync(configuredPath)) {
@@ -294,52 +417,21 @@ export function initializeAcordDictionary(): DictionaryState {
     return { ...state };
   }
 
-  const csv = loadCsvFromDisk();
-  const rows = parseCsv(csv);
-  if (rows.length === 0) {
-    throw new Error(`ACORD CSV is empty at ${state.csvPath}`);
-  }
+  const mergedEntries = mergeAcordEntries(
+    getAcordDictionaryEntries(),
+    getAcordSchemaEntries(),
+  );
 
-  const bodyRows = rows.slice(1);
-  const parsedEntries: AcordDictionaryEntry[] = [];
-  let malformed = 0;
+  const { indexed, byCode } = toIndexedEntries(mergedEntries);
 
-  for (const row of bodyRows) {
-    try {
-      const entry = createEntry(row);
-      if (!entry) {
-        malformed += 1;
-        continue;
-      }
-      parsedEntries.push(entry);
-    } catch {
-      malformed += 1;
-    }
-  }
-
-  const byCode = new Map<string, AcordDictionaryEntry>();
-  const indexed = parsedEntries.map((entry) => {
-    const normalizedCode = normalizeText(entry.acordCode);
-    byCode.set(normalizedCode, entry);
-
-    return {
-      entry,
-      normalizedCode,
-      normalizedLabel: normalizeText(entry.label),
-      normalizedDescription: normalizeText(entry.description),
-      normalizedKeywords: entry.keywords.map((keyword) =>
-        normalizeText(keyword),
-      ),
-    };
-  });
-
-  entries = parsedEntries;
+  entries = mergedEntries;
   codeIndex = byCode;
   index = indexed;
 
   state.loaded = true;
-  state.rowCount = parsedEntries.length;
-  state.malformedRows = malformed;
+  state.csvPath = "ontology://shared/acord";
+  state.rowCount = mergedEntries.length;
+  state.malformedRows = 0;
   state.loadedAt = new Date().toISOString();
 
   return { ...state };
@@ -368,29 +460,33 @@ export function searchAcordDictionary(
 ): SearchResult[] {
   initializeAcordDictionary();
 
-  const queryText = normalizeText(query);
-  if (!queryText) {
-    return [];
-  }
+  return searchInIndexedEntries(index, query, limit);
+}
 
-  const queryTokens = queryText
-    .split(" ")
-    .map((token) => token.trim())
-    .filter((token) => token.length > 1);
+export function getAcord125SchemaEntries(): AcordDictionaryEntry[] {
+  ensureAcord125SchemaCaches();
+  return acord125SchemaEntriesCache ? [...acord125SchemaEntriesCache] : [];
+}
 
-  return index
-    .map((entry) => ({
-      entry: entry.entry,
-      score: getScore(entry, queryText, queryTokens),
-    }))
-    .filter((result) => result.score > 0)
-    .sort(
-      (a, b) =>
-        b.score - a.score ||
-        a.entry.acordCode.localeCompare(b.entry.acordCode) ||
-        a.entry.label.localeCompare(b.entry.label),
-    )
-    .slice(0, Math.max(1, Math.min(limit, 100)));
+export function getAcord125SchemaCodeSet(): Set<string> {
+  ensureAcord125SchemaCaches();
+  return new Set((acord125SchemaEntriesCache || []).map((entry) => entry.acordCode));
+}
+
+export function lookupAcord125SchemaByCode(
+  acordCode: string,
+): AcordDictionaryEntry | null {
+  ensureAcord125SchemaCaches();
+  const key = normalizeText(acordCode);
+  return acord125SchemaCodeIndexCache?.get(key) || null;
+}
+
+export function searchAcord125SchemaDictionary(
+  query: string,
+  limit = 20,
+): SearchResult[] {
+  ensureAcord125SchemaCaches();
+  return searchInIndexedEntries(acord125SchemaIndexCache || [], query, limit);
 }
 
 // ---------------------------------------------------------------------------
@@ -410,7 +506,14 @@ async function precomputeEmbeddings(): Promise<void> {
 
   for (let i = 0; i < snapshot.length; i += EMBED_BATCH_SIZE) {
     const batch = snapshot.slice(i, i + EMBED_BATCH_SIZE);
-    const texts = batch.map((e) => `${e.label}: ${e.description}`);
+    const texts = batch.map((entry) => {
+      const metadata = resolveOntologySemanticMetadata(entry.acordCode);
+      return buildOntologySemanticText({
+        ...metadata,
+        label: entry.label || metadata.label,
+        description: entry.description || metadata.description,
+      });
+    });
 
     try {
       const embeddings = await embedBatch(texts);

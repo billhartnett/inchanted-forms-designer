@@ -9,7 +9,11 @@ import { boundsFromPolygon } from "./bboxNormalization";
 import { classifyBlockSemantic } from "./semanticLabelClassifier";
 
 const CANVAS_DPI = 96;
-const LAYOUTLM_INFER_URL = process.env.LAYOUTLM_INFER_URL || "http://localhost:8090/infer";
+const LAYOUTLM_ENDPOINT =
+  process.env.LAYOUTLM_ENDPOINT ||
+  process.env.LAYOUTLM_INFER_URL ||
+  "http://localhost:8090/infer";
+const LAYOUTLM_KEY = process.env.LAYOUTLM_KEY || "";
 
 type HybridFieldRole =
   | "input"
@@ -131,6 +135,61 @@ type BuildHybridExtractionArgs = {
   pages: Array<{ pageNumber: number; width?: number; height?: number; unit?: string; lines: any[] }>;
   rawResult?: any;
 };
+
+type HybridStageMetrics = {
+  candidateLabels: number;
+  candidateValues: number;
+  pairedFields: number;
+  groupedStructures: number;
+  semanticClusters: number;
+  acordCandidates: number;
+  layoutLmSemanticLabelsReturned: number;
+};
+
+function isLabelCandidate(entry: HybridCatalogEntry): boolean {
+  return (
+    entry.valueType === "label" ||
+    entry.role === "question" ||
+    entry.role === "row_label" ||
+    entry.role === "column_header"
+  );
+}
+
+function countAcordCandidates(fields: Field[]): number {
+  let total = 0;
+  for (const field of fields) {
+    const metadata = (field as any)?.metadata;
+    if (!metadata || typeof metadata !== "object") continue;
+
+    const candidates =
+      (Array.isArray(metadata.acordCandidates) && metadata.acordCandidates) ||
+      (Array.isArray(metadata.candidates) && metadata.candidates) ||
+      [];
+
+    if (candidates.length > 0) {
+      total += candidates.length;
+      continue;
+    }
+
+    if (typeof metadata.acordCode === "string" && metadata.acordCode.trim().length > 0) {
+      total += 1;
+    }
+  }
+  return total;
+}
+
+function countSemanticClusters(fields: Field[]): number {
+  const labels = new Set<string>();
+  for (const field of fields) {
+    const semanticLabel = String((field as any)?.metadata?.semanticLabel || "").trim();
+    if (semanticLabel) labels.add(semanticLabel);
+  }
+  return labels.size;
+}
+
+function logHybridStage(stage: string, metrics: HybridStageMetrics): void {
+  console.info(`[hybridFieldExtraction][stage:${stage}] ${JSON.stringify(metrics)}`);
+}
 
 function toFinite(value: unknown, fallback: number): number {
   return typeof value === "number" && Number.isFinite(value) ? value : fallback;
@@ -665,9 +724,17 @@ async function classifyPageWithLayoutLm(
   const timeout = setTimeout(() => controller.abort(), 6000);
 
   try {
-    const response = await fetch(LAYOUTLM_INFER_URL, {
+    const headers: Record<string, string> = {
+      "Content-Type": "application/json",
+    };
+    if (LAYOUTLM_KEY.trim()) {
+      headers.Authorization = `Bearer ${LAYOUTLM_KEY.trim()}`;
+      headers["x-api-key"] = LAYOUTLM_KEY.trim();
+    }
+
+    const response = await fetch(LAYOUTLM_ENDPOINT, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers,
       signal: controller.signal,
       body: JSON.stringify({
         image_base64: "",
@@ -678,13 +745,25 @@ async function classifyPageWithLayoutLm(
     });
 
     if (!response.ok) {
+      console.warn(
+        `[hybridFieldExtraction] LayoutLM request failed page=${page} status=${response.status}`,
+      );
       return undefined;
     }
 
     const payload = (await response.json()) as any;
     const top = payload?.top_n_predictions?.[0]?.eLabelName;
-    return typeof top === "string" && top.trim().length > 0 ? top.trim() : undefined;
-  } catch {
+    const label = typeof top === "string" && top.trim().length > 0 ? top.trim() : undefined;
+    console.info(
+      `[hybridFieldExtraction] LayoutLM request succeeded page=${page} label=${label || "none"}`,
+    );
+    return label;
+  } catch (error) {
+    console.warn(
+      `[hybridFieldExtraction] LayoutLM request error page=${page} message=${
+        error instanceof Error ? error.message : "unknown"
+      }`,
+    );
     return undefined;
   } finally {
     clearTimeout(timeout);
@@ -694,6 +773,11 @@ async function classifyPageWithLayoutLm(
 export async function buildHybridFieldExtraction(
   args: BuildHybridExtractionArgs,
 ): Promise<HybridExtractionResult> {
+  const diPages = Array.isArray(args.rawResult?.pages) ? args.rawResult.pages.length : 0;
+  console.info(
+    `[hybridFieldExtraction] DI input received pages=${diPages} normalizedPages=${args.pages.length}`,
+  );
+
   const { tokens, blocks, pageSizeByPage } = extractInternalTokens(args.pages, args.rawResult);
   const tableExtraction = extractTableCells(args.rawResult);
   const blankFromTokens = detectBlankCandidatesFromTokens(tokens);
@@ -704,6 +788,7 @@ export async function buildHybridFieldExtraction(
   ];
 
   const catalog: HybridCatalogEntry[] = [];
+  let tableHeaderAssociationCount = 0;
 
   for (const cell of tableExtraction.cells) {
     const pageSize = pageSizeByPage.get(cell.page) || { width: 816, height: 1056 };
@@ -717,17 +802,20 @@ export async function buildHybridFieldExtraction(
         ? "row_label"
         : "table_cell";
 
-    const context = [
-      cell.content,
-      tableExtraction.cells
-        .filter((other) =>
-          other.tableId === cell.tableId &&
-          other.rowIndex === 0 &&
-          other.columnIndex === cell.columnIndex,
-        )
-        .map((other) => other.content)
-        .join(" "),
-    ].join(" ");
+    const columnHeaderText = tableExtraction.cells
+      .filter((other) =>
+        other.tableId === cell.tableId &&
+        other.rowIndex === 0 &&
+        other.columnIndex === cell.columnIndex,
+      )
+      .map((other) => other.content)
+      .join(" ");
+
+    if (role === "table_cell" && columnHeaderText.trim().length > 0) {
+      tableHeaderAssociationCount += 1;
+    }
+
+    const context = [cell.content, columnHeaderText].join(" ");
 
     const inferredType =
       role === "row_label" || role === "column_header"
@@ -843,6 +931,19 @@ export async function buildHybridFieldExtraction(
     dedupedCatalog.push(entry);
   }
 
+  const labelCandidateCount = dedupedCatalog.filter(isLabelCandidate).length;
+  const valueCandidateCount = Math.max(0, dedupedCatalog.length - labelCandidateCount);
+
+  logHybridStage("table_header_association", {
+    candidateLabels: labelCandidateCount,
+    candidateValues: valueCandidateCount,
+    pairedFields: tableHeaderAssociationCount,
+    groupedStructures: tableExtraction.tables.length,
+    semanticClusters: 0,
+    acordCandidates: 0,
+    layoutLmSemanticLabelsReturned: 0,
+  });
+
   const layoutLmLabelByPage: LayoutLmLabelByPage = {};
   let layoutLmEvaluatedPages = 0;
   let layoutLmFailures = 0;
@@ -859,6 +960,12 @@ export async function buildHybridFieldExtraction(
     }
   }
 
+  console.info(
+    `[hybridFieldExtraction] LayoutLM summary evaluatedPages=${layoutLmEvaluatedPages} failures=${layoutLmFailures}`,
+  );
+
+  const layoutLmSemanticLabelsReturned = Object.keys(layoutLmLabelByPage).length;
+
   for (const entry of dedupedCatalog) {
     if (layoutLmLabelByPage[entry.page]) {
       entry.layoutLmLabel = layoutLmLabelByPage[entry.page];
@@ -866,6 +973,30 @@ export async function buildHybridFieldExtraction(
   }
 
   const questionAnswerPairs = pairQuestionsToInputs(questionTokens, dedupedCatalog);
+  const qaValueCandidates = dedupedCatalog.filter(
+    (entry) => entry.role === "input" || entry.role === "table_cell",
+  ).length;
+
+  logHybridStage("label_value_pairing", {
+    candidateLabels: labelCandidateCount,
+    candidateValues: valueCandidateCount,
+    pairedFields: questionAnswerPairs.length,
+    groupedStructures: 0,
+    semanticClusters: 0,
+    acordCandidates: 0,
+    layoutLmSemanticLabelsReturned,
+  });
+
+  logHybridStage("question_answer_pairing", {
+    candidateLabels: questionTokens.length,
+    candidateValues: qaValueCandidates,
+    pairedFields: questionAnswerPairs.length,
+    groupedStructures: questionAnswerPairs.length,
+    semanticClusters: 0,
+    acordCandidates: 0,
+    layoutLmSemanticLabelsReturned,
+  });
+
   for (const pair of questionAnswerPairs) {
     const question = dedupedCatalog.find((item) => item.id === pair.questionFieldId);
     const answer = dedupedCatalog.find((item) => item.id === pair.answerFieldId);
@@ -879,7 +1010,45 @@ export async function buildHybridFieldExtraction(
   }
 
   const checkboxGroups = buildCheckboxGroups(dedupedCatalog);
+  logHybridStage("checkbox_grouping", {
+    candidateLabels: labelCandidateCount,
+    candidateValues: dedupedCatalog.filter((entry) => entry.valueType === "checkbox").length,
+    pairedFields: checkboxGroups.reduce((sum, group) => sum + group.checkboxFieldIds.length, 0),
+    groupedStructures: checkboxGroups.length,
+    semanticClusters: 0,
+    acordCandidates: 0,
+    layoutLmSemanticLabelsReturned,
+  });
+
   const fields = dedupedCatalog.map((entry) => createFieldFromCatalog(entry));
+  const semanticClusters = countSemanticClusters(fields);
+  const acordCandidates = countAcordCandidates(fields);
+  const groupedStructuresCount =
+    tableExtraction.tables.length + questionAnswerPairs.length + checkboxGroups.length;
+
+  logHybridStage("semantic_role_type_assignment", {
+    candidateLabels: labelCandidateCount,
+    candidateValues: valueCandidateCount,
+    pairedFields: questionAnswerPairs.length,
+    groupedStructures: groupedStructuresCount,
+    semanticClusters,
+    acordCandidates,
+    layoutLmSemanticLabelsReturned,
+  });
+
+  logHybridStage("acord_label_matching", {
+    candidateLabels: labelCandidateCount,
+    candidateValues: valueCandidateCount,
+    pairedFields: questionAnswerPairs.length,
+    groupedStructures: groupedStructuresCount,
+    semanticClusters,
+    acordCandidates,
+    layoutLmSemanticLabelsReturned,
+  });
+
+  console.info(
+    `[hybridFieldExtraction] Extraction summary fields=${fields.length} catalog=${dedupedCatalog.length} tables=${tableExtraction.tables.length} qaPairs=${questionAnswerPairs.length} checkboxGroups=${checkboxGroups.length}`,
+  );
 
   return {
     blocks,
