@@ -36,13 +36,24 @@ jobs:
       shell: bash
       env:
         AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+        AZURE_CLIENT_ID_LEGACY: ${{ secrets.AZUREAPPSERVICE_CLIENTID_986A7A2873804FA28E16B668A4EB50D0 }}
+        AZURE_TENANT_ID_LEGACY: ${{ secrets.AZUREAPPSERVICE_TENANTID_05C710938C214567A566D4BD60D6672C }}
+        AZURE_SUBSCRIPTION_ID_LEGACY: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_F116AB14D00D49978DCE3FAC69ACCB4B }}
         AZURE_RG: ${{ secrets.AZURE_RG }}
         AZURE_FRONTEND_APP: ${{ secrets.AZURE_FRONTEND_APP }}
         AZURE_FRONTEND_IMAGE: ${{ secrets.AZURE_FRONTEND_IMAGE }}
       run: |
         set -euo pipefail
         missing=0
-        if [[ -z "${AZURE_CREDENTIALS}" ]]; then echo "Missing required secret: AZURE_CREDENTIALS"; missing=1; fi
+        auth_mode=""
+        if [[ -n "${AZURE_CREDENTIALS}" ]]; then
+          auth_mode="creds"
+        elif [[ -n "${AZURE_CLIENT_ID_LEGACY}" && -n "${AZURE_TENANT_ID_LEGACY}" && -n "${AZURE_SUBSCRIPTION_ID_LEGACY}" ]]; then
+          auth_mode="sp"
+        else
+          echo "Missing Azure login secrets: provide AZURE_CREDENTIALS or the legacy AZUREAPPSERVICE_* trio"
+          missing=1
+        fi
         if [[ -z "${AZURE_RG}" ]]; then echo "Missing required secret: AZURE_RG"; missing=1; fi
         if [[ -z "${AZURE_FRONTEND_APP}" ]]; then echo "Missing required secret: AZURE_FRONTEND_APP"; missing=1; fi
         if [[ -z "${AZURE_FRONTEND_IMAGE}" ]]; then echo "Missing required secret: AZURE_FRONTEND_IMAGE"; missing=1; fi
@@ -50,6 +61,7 @@ jobs:
           echo "should_skip=true" >> "$GITHUB_OUTPUT"
           exit 0
         fi
+        echo "auth_mode=${auth_mode}" >> "$GITHUB_OUTPUT"
         echo "should_skip=false" >> "$GITHUB_OUTPUT"
 
     - name: Skip deploy when required secrets are missing
@@ -58,10 +70,18 @@ jobs:
         echo "Skipping frontend ACA deploy because required secrets are not configured in the staging environment."
 
     - name: Login to Azure
-      if: ${{ steps.deploy_prereq.outputs.should_skip != 'true' }}
+      if: ${{ steps.deploy_prereq.outputs.should_skip != 'true' && steps.deploy_prereq.outputs.auth_mode == 'creds' }}
       uses: azure/login@v2
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Login to Azure (legacy service principal)
+      if: ${{ steps.deploy_prereq.outputs.should_skip != 'true' && steps.deploy_prereq.outputs.auth_mode == 'sp' }}
+      uses: azure/login@v2
+      with:
+        client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_986A7A2873804FA28E16B668A4EB50D0 }}
+        tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_05C710938C214567A566D4BD60D6672C }}
+        subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_F116AB14D00D49978DCE3FAC69ACCB4B }}
 
     - name: Deploy to ACA
       if: ${{ steps.deploy_prereq.outputs.should_skip != 'true' }}
