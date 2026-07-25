@@ -55,7 +55,7 @@
     "multer": "^1.4.5-lts.2",
     "inchanted-forms-designer": "file:../..",
     "openai": "^4.0.0",
-    "shared": "file:../../shared"
+    "shared": "workspace:*"
   },
   "devDependencies": {
     "@types/express": "^4.17.23",
