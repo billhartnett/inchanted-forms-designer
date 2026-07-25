@@ -54,30 +54,24 @@ jobs:
               break
             fi
             if [ $i -eq 30 ]; then
-              echo "ERROR: Server did not start within 30 seconds"
-              echo "=== Server log ==="
+              echo "::error::Server did not start within 30 seconds"
               cat backend-api.log
               exit 1
             fi
             sleep 1
           done
 
-          echo "=== Testing /api/ping ==="
           PING_STATUS=$(curl -sS -o /dev/null -w "%{http_code}" http://127.0.0.1:8080/api/ping)
-          PING_BODY=$(curl -sS http://127.0.0.1:8080/api/ping)
-          echo "Status: $PING_STATUS | Body: $PING_BODY"
-          [ "$PING_STATUS" = "200" ] || { echo "FAIL: /api/ping returned $PING_STATUS"; exit 1; }
+          echo "::notice::/api/ping status: $PING_STATUS"
+          [ "$PING_STATUS" = "200" ] || { echo "::error::/api/ping returned $PING_STATUS"; exit 1; }
 
-          echo "=== Testing /api/gethealth ==="
           HEALTH_STATUS=$(curl -sS -o /dev/null -w "%{http_code}" -H "x-actor-role: viewer" -H "x-tenant-id: ci-tenant" http://127.0.0.1:8080/api/gethealth)
           HEALTH_BODY=$(curl -sS -H "x-actor-role: viewer" -H "x-tenant-id: ci-tenant" http://127.0.0.1:8080/api/gethealth)
-          echo "Status: $HEALTH_STATUS | Body: $HEALTH_BODY"
-          [ "$HEALTH_STATUS" = "200" ] || { echo "FAIL: /api/gethealth returned $HEALTH_STATUS"; exit 1; }
+          echo "::notice::/api/gethealth status: $HEALTH_STATUS body: $HEALTH_BODY"
+          [ "$HEALTH_STATUS" = "200" ] || { echo "::error::/api/gethealth returned $HEALTH_STATUS - body: $HEALTH_BODY"; exit 1; }
 
-          echo "=== Testing /api/version ==="
           VER_STATUS=$(curl -sS -o /dev/null -w "%{http_code}" http://127.0.0.1:8080/api/version)
-          VER_BODY=$(curl -sS http://127.0.0.1:8080/api/version)
-          echo "Status: $VER_STATUS | Body: $VER_BODY"
-          [ "$VER_STATUS" = "200" ] || { echo "FAIL: /api/version returned $VER_STATUS"; exit 1; }
+          echo "::notice::/api/version status: $VER_STATUS"
+          [ "$VER_STATUS" = "200" ] || { echo "::error::/api/version returned $VER_STATUS"; exit 1; }
 
           echo "All smoke tests passed!"
