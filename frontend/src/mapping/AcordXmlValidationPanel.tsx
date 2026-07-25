@@ -6,8 +6,8 @@ import {
   type MultiDocumentConsistencyReport,
   type XmlSemanticValidationReport,
   validateAcordXmlSemantic,
-} from "../../../shared/src/quality";
-import type { MappingPersistencePayload } from "../../../shared/src/types";
+} from "@shared/quality";
+import type { MappingPersistencePayload } from "@shared/types";
 import { generateAcordXml } from "../schema";
 import { useDesignerStore } from "../designer/state/useDesignerStore";
 import { useExtractionStore } from "../state/extractionStore";

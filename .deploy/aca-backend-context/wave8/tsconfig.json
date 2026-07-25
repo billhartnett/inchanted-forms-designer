@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "Node16",
+    "moduleResolution": "Node16",
+    "ignoreDeprecations": "5.0",
+    "types": ["node"],
+    "typeRoots": ["../shared/node_modules/@types"],
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "noEmit": true,
+    "baseUrl": ".",
+    "paths": {
+      "shared": ["../shared/src/index.ts"],
+      "shared/*": ["../shared/src/*"]
+    }
+  },
+  "include": [
+    "*.ts",
+    "../backend/wave8/**/*.ts",
+    "../shared/src/acord/**/*.ts",
+    "../shared/src/mapping/wave8Gating.ts",
+    "../shared/src/types/**/*.ts"
+  ]
+}

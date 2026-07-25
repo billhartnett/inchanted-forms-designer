@@ -1,0 +1,11 @@
+**/node_modules/
+.git/
+**/.git/
+**/dist/
+**/coverage/
+**/.next/
+**/.turbo/
+**/__blobstorage__/
+**/__queuestorage__/
+backend/api/tests/diagnostics/
+*.log

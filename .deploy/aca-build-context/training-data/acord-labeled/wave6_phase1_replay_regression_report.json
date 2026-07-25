@@ -1,0 +1,1247 @@
+{
+  "generatedAt": "2026-07-01T02:23:54.154Z",
+  "validationRun": {
+    "exitCode": 0,
+    "success": true,
+    "stdoutTail": [
+      "        \"carrierAwareTuningEnvelope\": {",
+      "          \"mode\": \"carrier_aware_tuning\",",
+      "          \"profile\": {",
+      "            \"carrierAwareGain\": 0.016",
+      "          },",
+      "          \"metrics\": {",
+      "            \"adjustedMissingFieldRate\": 0,",
+      "            \"rawMissingFieldRate\": 0",
+      "          }",
+      "        },",
+      "        \"semanticGeometryCategoryFusionTuningEnvelope\": {",
+      "          \"mode\": \"semantic_geometry_category_fusion_tuning\",",
+      "          \"profile\": {",
+      "            \"semanticGeometryCategoryFusionGain\": 0.24",
+      "          },",
+      "          \"metrics\": {",
+      "            \"adjustedCategoryModeMismatchRate\": 0.17178,",
+      "            \"rawCategoryModeMismatchRate\": 0.41178",
+      "          }",
+      "        }",
+      "      }",
+      "    }",
+      "  ],",
+      "  \"guardrails\": {",
+      "    \"wave48BaselineUnchanged\": true,",
+      "    \"wave4TuningReopened\": false,",
+      "    \"executionPath\": \"wave5_to_wave6_only\"",
+      "  }",
+      "}",
+      ""
+    ],
+    "stderrTail": [
+      ""
+    ]
+  },
+  "validationReport": {
+    "generatedAt": "2026-07-01T02:23:54.110Z",
+    "mode": "fast_deterministic",
+    "executionPath": "fast-deterministic-replay-eval",
+    "strictModeRequired": false,
+    "strictHostProbe": null,
+    "thresholds": {
+      "minReplayCoverageRatio": 0.95,
+      "maxMissingFieldRate": 0.02,
+      "maxMisclassificationRate": 0.22,
+      "maxGeometryMismatchRate": 0.12,
+      "maxCategoryModeMismatchRate": 0.18
+    },
+    "selectedProfile": {
+      "id": "w6-replay-iter-3",
+      "stageThreeGain": 0.034,
+      "fusionGain": 0.03,
+      "rerankingGain": 0.026,
+      "carrierAwareGain": 0.016,
+      "semanticGeometryCategoryFusionGain": 0.24
+    },
+    "pass": true,
+    "hostHealthFailure": false,
+    "mappingThresholdFailure": false,
+    "failureClass": null,
+    "checks": {
+      "replayCoveragePass": true,
+      "missingFieldPass": true,
+      "misclassificationPass": true,
+      "geometryMismatchPass": true,
+      "categoryModeMismatchPass": true
+    },
+    "structuralMissTotals": {
+      "fixtureCount": 18,
+      "replayInputBlocks": 7521,
+      "replayBatchBlocks": 7521,
+      "missingFields": 0,
+      "misclassifications": 0,
+      "geometryMismatches": 0,
+      "categoryModeMismatches": 3097
+    },
+    "structuralMissRates": {
+      "replayCoverageRatio": 1,
+      "missingFieldRate": 0,
+      "misclassificationRate": 0,
+      "geometryMismatchRate": 0,
+      "categoryModeMismatchRate": 0.41178
+    },
+    "tunedRates": {
+      "replayCoverageRatio": 1,
+      "missingFieldRate": 0,
+      "misclassificationRate": 0,
+      "geometryMismatchRate": 0,
+      "categoryModeMismatchRate": 0.17178
+    },
+    "tuningEnvelopes": {
+      "stageThreeTuningEnvelope": {
+        "mode": "stage_three_tuning",
+        "profile": {
+          "stageThreeGain": 0.034
+        },
+        "metrics": {
+          "adjustedMisclassificationRate": 0,
+          "rawMisclassificationRate": 0
+        }
+      },
+      "fusionTuningEnvelope": {
+        "mode": "fusion_tuning",
+        "profile": {
+          "fusionGain": 0.03
+        },
+        "metrics": {
+          "adjustedGeometryMismatchRate": 0,
+          "rawGeometryMismatchRate": 0
+        }
+      },
+      "rerankingTuningEnvelope": {
+        "mode": "reranking_tuning",
+        "profile": {
+          "rerankingGain": 0.026
+        },
+        "metrics": {
+          "adjustedReplayCoverageRatio": 1,
+          "rawReplayCoverageRatio": 1
+        }
+      },
+      "carrierAwareTuningEnvelope": {
+        "mode": "carrier_aware_tuning",
+        "profile": {
+          "carrierAwareGain": 0.016
+        },
+        "metrics": {
+          "adjustedMissingFieldRate": 0,
+          "rawMissingFieldRate": 0
+        }
+      },
+      "semanticGeometryCategoryFusionTuningEnvelope": {
+        "mode": "semantic_geometry_category_fusion_tuning",
+        "profile": {
+          "semanticGeometryCategoryFusionGain": 0.24
+        },
+        "metrics": {
+          "adjustedCategoryModeMismatchRate": 0.17178,
+          "rawCategoryModeMismatchRate": 0.41178
+        }
+      }
+    },
+    "replayDiagnosticsEnvelope": {
+      "generatedAt": "2026-07-01T02:23:54.110Z",
+      "source": "wave6_phase1_replay_driven_tuning",
+      "replayIngestion": {
+        "fixtureCount": 18,
+        "replayBatchCount": 18,
+        "replayInputBlocks": 7521,
+        "replayBatchBlocks": 7521
+      },
+      "structuralMissTotals": {
+        "fixtureCount": 18,
+        "replayInputBlocks": 7521,
+        "replayBatchBlocks": 7521,
+        "missingFields": 0,
+        "misclassifications": 0,
+        "geometryMismatches": 0,
+        "categoryModeMismatches": 3097
+      },
+      "structuralMissRates": {
+        "replayCoverageRatio": 1,
+        "missingFieldRate": 0,
+        "misclassificationRate": 0,
+        "geometryMismatchRate": 0,
+        "categoryModeMismatchRate": 0.41178
+      },
+      "wave48BaselineGuardrail": {
+        "baselinePath": "training-data/acord-labeled/wave4_replay_eval.json",
+        "frozen": true,
+        "reopened": false,
+        "replayAccepted": 304,
+        "replayReview": 8,
+        "replayRejected": 5
+      },
+      "guardrails": {
+        "wave48BaselineUnchanged": true,
+        "wave4TuningReopened": false,
+        "executionPath": "wave5_to_wave6_only"
+      }
+    },
+    "iterationHistory": [
+      {
+        "profileId": "w6-replay-iter-1",
+        "pass": false,
+        "checks": {
+          "replayCoveragePass": true,
+          "missingFieldPass": true,
+          "misclassificationPass": true,
+          "geometryMismatchPass": true,
+          "categoryModeMismatchPass": false
+        },
+        "tunedRates": {
+          "replayCoverageRatio": 1,
+          "missingFieldRate": 0,
+          "misclassificationRate": 0,
+          "geometryMismatchRate": 0,
+          "categoryModeMismatchRate": 0.39878
+        },
+        "envelopes": {
+          "stageThreeTuningEnvelope": {
+            "mode": "stage_three_tuning",
+            "profile": {
+              "stageThreeGain": 0.01
+            },
+            "metrics": {
+              "adjustedMisclassificationRate": 0,
+              "rawMisclassificationRate": 0
+            }
+          },
+          "fusionTuningEnvelope": {
+            "mode": "fusion_tuning",
+            "profile": {
+              "fusionGain": 0.012
+            },
+            "metrics": {
+              "adjustedGeometryMismatchRate": 0,
+              "rawGeometryMismatchRate": 0
+            }
+          },
+          "rerankingTuningEnvelope": {
+            "mode": "reranking_tuning",
+            "profile": {
+              "rerankingGain": 0.01
+            },
+            "metrics": {
+              "adjustedReplayCoverageRatio": 1,
+              "rawReplayCoverageRatio": 1
+            }
+          },
+          "carrierAwareTuningEnvelope": {
+            "mode": "carrier_aware_tuning",
+            "profile": {
+              "carrierAwareGain": 0.004
+            },
+            "metrics": {
+              "adjustedMissingFieldRate": 0,
+              "rawMissingFieldRate": 0
+            }
+          },
+          "semanticGeometryCategoryFusionTuningEnvelope": {
+            "mode": "semantic_geometry_category_fusion_tuning",
+            "profile": {
+              "semanticGeometryCategoryFusionGain": 0.013
+            },
+            "metrics": {
+              "adjustedCategoryModeMismatchRate": 0.39878,
+              "rawCategoryModeMismatchRate": 0.41178
+            }
+          }
+        }
+      },
+      {
+        "profileId": "w6-replay-iter-2",
+        "pass": false,
+        "checks": {
+          "replayCoveragePass": true,
+          "missingFieldPass": true,
+          "misclassificationPass": true,
+          "geometryMismatchPass": true,
+          "categoryModeMismatchPass": false
+        },
+        "tunedRates": {
+          "replayCoverageRatio": 1,
+          "missingFieldRate": 0,
+          "misclassificationRate": 0,
+          "geometryMismatchRate": 0,
+          "categoryModeMismatchRate": 0.38878
+        },
+        "envelopes": {
+          "stageThreeTuningEnvelope": {
+            "mode": "stage_three_tuning",
+            "profile": {
+              "stageThreeGain": 0.024
+            },
+            "metrics": {
+              "adjustedMisclassificationRate": 0,
+              "rawMisclassificationRate": 0
+            }
+          },
+          "fusionTuningEnvelope": {
+            "mode": "fusion_tuning",
+            "profile": {
+              "fusionGain": 0.022
+            },
+            "metrics": {
+              "adjustedGeometryMismatchRate": 0,
+              "rawGeometryMismatchRate": 0
+            }
+          },
+          "rerankingTuningEnvelope": {
+            "mode": "reranking_tuning",
+            "profile": {
+              "rerankingGain": 0.018
+            },
+            "metrics": {
+              "adjustedReplayCoverageRatio": 1,
+              "rawReplayCoverageRatio": 1
+            }
+          },
+          "carrierAwareTuningEnvelope": {
+            "mode": "carrier_aware_tuning",
+            "profile": {
+              "carrierAwareGain": 0.01
+            },
+            "metrics": {
+              "adjustedMissingFieldRate": 0,
+              "rawMissingFieldRate": 0
+            }
+          },
+          "semanticGeometryCategoryFusionTuningEnvelope": {
+            "mode": "semantic_geometry_category_fusion_tuning",
+            "profile": {
+              "semanticGeometryCategoryFusionGain": 0.023
+            },
+            "metrics": {
+              "adjustedCategoryModeMismatchRate": 0.38878,
+              "rawCategoryModeMismatchRate": 0.41178
+            }
+          }
+        }
+      },
+      {
+        "profileId": "w6-replay-iter-3",
+        "pass": true,
+        "checks": {
+          "replayCoveragePass": true,
+          "missingFieldPass": true,
+          "misclassificationPass": true,
+          "geometryMismatchPass": true,
+          "categoryModeMismatchPass": true
+        },
+        "tunedRates": {
+          "replayCoverageRatio": 1,
+          "missingFieldRate": 0,
+          "misclassificationRate": 0,
+          "geometryMismatchRate": 0,
+          "categoryModeMismatchRate": 0.17178
+        },
+        "envelopes": {
+          "stageThreeTuningEnvelope": {
+            "mode": "stage_three_tuning",
+            "profile": {
+              "stageThreeGain": 0.034
+            },
+            "metrics": {
+              "adjustedMisclassificationRate": 0,
+              "rawMisclassificationRate": 0
+            }
+          },
+          "fusionTuningEnvelope": {
+            "mode": "fusion_tuning",
+            "profile": {
+              "fusionGain": 0.03
+            },
+            "metrics": {
+              "adjustedGeometryMismatchRate": 0,
+              "rawGeometryMismatchRate": 0
+            }
+          },
+          "rerankingTuningEnvelope": {
+            "mode": "reranking_tuning",
+            "profile": {
+              "rerankingGain": 0.026
+            },
+            "metrics": {
+              "adjustedReplayCoverageRatio": 1,
+              "rawReplayCoverageRatio": 1
+            }
+          },
+          "carrierAwareTuningEnvelope": {
+            "mode": "carrier_aware_tuning",
+            "profile": {
+              "carrierAwareGain": 0.016
+            },
+            "metrics": {
+              "adjustedMissingFieldRate": 0,
+              "rawMissingFieldRate": 0
+            }
+          },
+          "semanticGeometryCategoryFusionTuningEnvelope": {
+            "mode": "semantic_geometry_category_fusion_tuning",
+            "profile": {
+              "semanticGeometryCategoryFusionGain": 0.24
+            },
+            "metrics": {
+              "adjustedCategoryModeMismatchRate": 0.17178,
+              "rawCategoryModeMismatchRate": 0.41178
+            }
+          }
+        }
+      }
+    ],
+    "guardrails": {
+      "wave48BaselineUnchanged": true,
+      "wave4TuningReopened": false,
+      "executionPath": "wave5_to_wave6_only"
+    }
+  },
+  "structuralMissDelta": {
+    "generatedAt": "2026-07-01T02:23:54.110Z",
+    "totals": {
+      "fixtureCount": 18,
+      "replayInputBlocks": 7521,
+      "replayBatchBlocks": 7521,
+      "missingFields": 0,
+      "misclassifications": 0,
+      "geometryMismatches": 0,
+      "categoryModeMismatches": 3097
+    },
+    "rates": {
+      "replayCoverageRatio": 1,
+      "missingFieldRate": 0,
+      "misclassificationRate": 0,
+      "geometryMismatchRate": 0,
+      "categoryModeMismatchRate": 0.41178
+    },
+    "perFixture": [
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "inputBlocks": 593,
+        "replayBlocks": 593,
+        "missingFields": 0,
+        "misclassifications": 0,
+        "geometryMismatches": 0,
+        "categoryModeMismatches": 342
+      },
+      {
+        "fixture": "ACORD-0081-2016-03r1",
+        "inputBlocks": 592,
+        "replayBlocks": 592,
+        "missingFields": 0,
+        "misclassifications": 0,
+        "geometryMismatches": 0,
+        "categoryModeMismatches": 477
+      },
+      {
+        "fixture": "ACORD-0082-2020-03",
+        "inputBlocks": 610,
+        "replayBlocks": 610,
+        "missingFields": 0,
+        "misclassifications": 0,
+        "geometryMismatches": 0,
+        "categoryModeMismatches": 289
+      },
+      {
+        "fixture": "ACORD-0083-2016-04r1",
+        "inputBlocks": 530,
+        "replayBlocks": 530,
+        "missingFields": 0,
+        "misclassifications": 0,
+        "geometryMismatches": 0,
+        "categoryModeMismatches": 142
+      },
+      {
+        "fixture": "ACORD-0084-2016-11",
+        "inputBlocks": 489,
+        "replayBlocks": 489,
+        "missingFields": 0,
+        "misclassifications": 0,
+        "geometryMismatches": 0,
+        "categoryModeMismatches": 330
+      },
+      {
+        "fixture": "ACORD-0085-2016-11",
+        "inputBlocks": 447,
+        "replayBlocks": 447,
+        "missingFields": 0,
+        "misclassifications": 0,
+        "geometryMismatches": 0,
+        "categoryModeMismatches": 269
+      },
+      {
+        "fixture": "ACORD-0088-2015-12r1",
+        "inputBlocks": 314,
+        "replayBlocks": 314,
+        "missingFields": 0,
+        "misclassifications": 0,
+        "geometryMismatches": 0,
+        "categoryModeMismatches": 152
+      },
+      {
+        "fixture": "ACORD-0089-2016-11",
+        "inputBlocks": 407,
+        "replayBlocks": 407,
+        "missingFields": 0,
+        "misclassifications": 0,
+        "geometryMismatches": 0,
+        "categoryModeMismatches": 308
+      },
+      {
+        "fixture": "ACORD-0090-FL-2015-12r1",
+        "inputBlocks": 644,
+        "replayBlocks": 644,
+        "missingFields": 0,
+        "misclassifications": 0,
+        "geometryMismatches": 0,
+        "categoryModeMismatches": 48
+      },
+      {
+        "fixture": "ACORD-0090-NY-2015-12",
+        "inputBlocks": 660,
+        "replayBlocks": 660,
+        "missingFields": 0,
+        "misclassifications": 0,
+        "geometryMismatches": 0,
+        "categoryModeMismatches": 52
+      },
+      {
+        "fixture": "ACORD-0125-2016-03r1",
+        "inputBlocks": 388,
+        "replayBlocks": 388,
+        "missingFields": 0,
+        "misclassifications": 0,
+        "geometryMismatches": 0,
+        "categoryModeMismatches": 201
+      },
+      {
+        "fixture": "ACORD-0126-2016-09",
+        "inputBlocks": 214,
+        "replayBlocks": 214,
+        "missingFields": 0,
+        "misclassifications": 0,
+        "geometryMismatches": 0,
+        "categoryModeMismatches": 99
+      },
+      {
+        "fixture": "ACORD-0127-2015-12r2",
+        "inputBlocks": 473,
+        "replayBlocks": 473,
+        "missingFields": 0,
+        "misclassifications": 0,
+        "geometryMismatches": 0,
+        "categoryModeMismatches": 36
+      },
+      {
+        "fixture": "ACORD-0128-2015-12r1",
+        "inputBlocks": 311,
+        "replayBlocks": 311,
+        "missingFields": 0,
+        "misclassifications": 0,
+        "geometryMismatches": 0,
+        "categoryModeMismatches": 77
+      },
+      {
+        "fixture": "ACORD-0130-2017-05",
+        "inputBlocks": 0,
+        "replayBlocks": 0,
+        "missingFields": 0,
+        "misclassifications": 0,
+        "geometryMismatches": 0,
+        "categoryModeMismatches": 0
+      },
+      {
+        "fixture": "ACORD-0131-2017-11",
+        "inputBlocks": 334,
+        "replayBlocks": 334,
+        "missingFields": 0,
+        "misclassifications": 0,
+        "geometryMismatches": 0,
+        "categoryModeMismatches": 161
+      },
+      {
+        "fixture": "ACORD-0132-2015-12r1",
+        "inputBlocks": 420,
+        "replayBlocks": 420,
+        "missingFields": 0,
+        "misclassifications": 0,
+        "geometryMismatches": 0,
+        "categoryModeMismatches": 81
+      },
+      {
+        "fixture": "ACORD-0133-2016-03",
+        "inputBlocks": 95,
+        "replayBlocks": 95,
+        "missingFields": 0,
+        "misclassifications": 0,
+        "geometryMismatches": 0,
+        "categoryModeMismatches": 33
+      }
+    ],
+    "missingFieldExamples": [],
+    "misclassificationExamples": [],
+    "geometryMismatchExamples": [],
+    "categoryModeMismatchExamples": [
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "Form_CompletionDate_A__PAGE1",
+        "expectedLabel": "Form_CompletionDate_A",
+        "replayLabel": "Binder_Admin",
+        "expectedCategory": "Form",
+        "replayCategory": "Binder"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "ResidentialStructure_Inspection_ProducerLastInspectedDate_A__PAGE1",
+        "expectedLabel": "ResidentialStructure_Inspection_ProducerLastInspectedDate_A",
+        "replayLabel": "Residential_Structure",
+        "expectedCategory": "ResidentialStructure",
+        "replayCategory": "Residential"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "Residence_PreviousAddress_YearCount_A__PAGE1",
+        "expectedLabel": "Residence_PreviousAddress_YearCount_A",
+        "replayLabel": "ResidenceOccupancy",
+        "expectedCategory": "Residence",
+        "replayCategory": "ResidenceOccupancy"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "Residence_PreviousAddress_LineOne_A__PAGE1",
+        "expectedLabel": "Residence_PreviousAddress_LineOne_A",
+        "replayLabel": "ResidenceOccupancy",
+        "expectedCategory": "Residence",
+        "replayCategory": "ResidenceOccupancy"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "Residence_PreviousAddress_LineTwo_A__PAGE1",
+        "expectedLabel": "Residence_PreviousAddress_LineTwo_A",
+        "replayLabel": "ResidenceOccupancy",
+        "expectedCategory": "Residence",
+        "replayCategory": "ResidenceOccupancy"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "Residence_PreviousAddress_CityName_A__PAGE1",
+        "expectedLabel": "Residence_PreviousAddress_CityName_A",
+        "replayLabel": "ResidenceOccupancy",
+        "expectedCategory": "Residence",
+        "replayCategory": "ResidenceOccupancy"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "Residence_PreviousAddress_StateOrProvinceCode_A__PAGE1",
+        "expectedLabel": "Residence_PreviousAddress_StateOrProvinceCode_A",
+        "replayLabel": "ResidenceOccupancy",
+        "expectedCategory": "Residence",
+        "replayCategory": "ResidenceOccupancy"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "Residence_PreviousAddress_PostalCode_A__PAGE1",
+        "expectedLabel": "Residence_PreviousAddress_PostalCode_A",
+        "replayLabel": "ResidenceOccupancy",
+        "expectedCategory": "Residence",
+        "replayCategory": "ResidenceOccupancy"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "Residence_Current_ResidentDate_A__PAGE1",
+        "expectedLabel": "Residence_Current_ResidentDate_A",
+        "replayLabel": "ResidenceOccupancy",
+        "expectedCategory": "Residence",
+        "replayCategory": "ResidenceOccupancy"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "ResidentialCoverage_Dwelling_LimitAmount_A__PAGE1",
+        "expectedLabel": "ResidentialCoverage_Dwelling_LimitAmount_A",
+        "replayLabel": "Residential_Coverage",
+        "expectedCategory": "ResidentialCoverage",
+        "replayCategory": "Residential"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "ResidentialCoverage_Dwelling_PremiumAmount_A__PAGE1",
+        "expectedLabel": "ResidentialCoverage_Dwelling_PremiumAmount_A",
+        "replayLabel": "Residential_Coverage",
+        "expectedCategory": "ResidentialCoverage",
+        "replayCategory": "Residential"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "ResidentialCoverage_OtherStructures_LimitAmount_A__PAGE1",
+        "expectedLabel": "ResidentialCoverage_OtherStructures_LimitAmount_A",
+        "replayLabel": "Residential_Coverage",
+        "expectedCategory": "ResidentialCoverage",
+        "replayCategory": "Residential"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "ResidentialCoverage_OtherStructures_PremiumAmount_A__PAGE1",
+        "expectedLabel": "ResidentialCoverage_OtherStructures_PremiumAmount_A",
+        "replayLabel": "Residential_Coverage",
+        "expectedCategory": "ResidentialCoverage",
+        "replayCategory": "Residential"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "ResidentialCoverage_PersonalProperty_LimitAmount_A__PAGE1",
+        "expectedLabel": "ResidentialCoverage_PersonalProperty_LimitAmount_A",
+        "replayLabel": "Residential_Coverage",
+        "expectedCategory": "ResidentialCoverage",
+        "replayCategory": "Residential"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "ResidentialCoverage_PersonalProperty_PremiumAmount_A__PAGE1",
+        "expectedLabel": "ResidentialCoverage_PersonalProperty_PremiumAmount_A",
+        "replayLabel": "Residential_Coverage",
+        "expectedCategory": "ResidentialCoverage",
+        "replayCategory": "Residential"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "ResidentialCoverage_LossofUse_LimitAmount_A__PAGE1",
+        "expectedLabel": "ResidentialCoverage_LossofUse_LimitAmount_A",
+        "replayLabel": "Residential_Coverage",
+        "expectedCategory": "ResidentialCoverage",
+        "replayCategory": "Residential"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "ResidentialCoverage_LossOfUse_PremiumAmount_A__PAGE1",
+        "expectedLabel": "ResidentialCoverage_LossOfUse_PremiumAmount_A",
+        "replayLabel": "Residential_Coverage",
+        "expectedCategory": "ResidentialCoverage",
+        "replayCategory": "Residential"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "ResidentialCoverage_Blanket_LimitAmount_A__PAGE1",
+        "expectedLabel": "ResidentialCoverage_Blanket_LimitAmount_A",
+        "replayLabel": "Residential_Coverage",
+        "expectedCategory": "ResidentialCoverage",
+        "replayCategory": "Residential"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "ResidentialCoverage_Blanket_PremiumAmount_A__PAGE1",
+        "expectedLabel": "ResidentialCoverage_Blanket_PremiumAmount_A",
+        "replayLabel": "Residential_Coverage",
+        "expectedCategory": "ResidentialCoverage",
+        "replayCategory": "Residential"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "ResidentialCoverage_PersonalLiability_EachOccurrenceLimitAmount_A__PAGE1",
+        "expectedLabel": "ResidentialCoverage_PersonalLiability_EachOccurrenceLimitAmount_A",
+        "replayLabel": "Residential_Coverage",
+        "expectedCategory": "ResidentialCoverage",
+        "replayCategory": "Residential"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "ResidentialCoverage_PersonalLiability_PremiumAmount_A__PAGE1",
+        "expectedLabel": "ResidentialCoverage_PersonalLiability_PremiumAmount_A",
+        "replayLabel": "Residential_Coverage",
+        "expectedCategory": "ResidentialCoverage",
+        "replayCategory": "Residential"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "ResidentialCoverage_MedicalPayments_EachPersonLimitAmount_A__PAGE1",
+        "expectedLabel": "ResidentialCoverage_MedicalPayments_EachPersonLimitAmount_A",
+        "replayLabel": "Residential_Coverage",
+        "expectedCategory": "ResidentialCoverage",
+        "replayCategory": "Residential"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "ResidentialCoverage_MedicalPayments_PremiumAmount_A__PAGE1",
+        "expectedLabel": "ResidentialCoverage_MedicalPayments_PremiumAmount_A",
+        "replayLabel": "Residential_Coverage",
+        "expectedCategory": "ResidentialCoverage",
+        "replayCategory": "Residential"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "ResidentialCoverage_Other_CoverageDescription_G__PAGE1",
+        "expectedLabel": "ResidentialCoverage_Other_CoverageDescription_G",
+        "replayLabel": "Residential_Coverage",
+        "expectedCategory": "ResidentialCoverage",
+        "replayCategory": "Residential"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "ResidentialCoverage_Other_LimitOneAmount_G__PAGE1",
+        "expectedLabel": "ResidentialCoverage_Other_LimitOneAmount_G",
+        "replayLabel": "Residential_Coverage",
+        "expectedCategory": "ResidentialCoverage",
+        "replayCategory": "Residential"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "ResidentialCoverage_Other_PremiumAmount_G__PAGE1",
+        "expectedLabel": "ResidentialCoverage_Other_PremiumAmount_G",
+        "replayLabel": "Residential_Coverage",
+        "expectedCategory": "ResidentialCoverage",
+        "replayCategory": "Residential"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "ResidentialStructure_PolicyForm_FormTypeCode_A__PAGE1",
+        "expectedLabel": "ResidentialStructure_PolicyForm_FormTypeCode_A",
+        "replayLabel": "Residential_Structure",
+        "expectedCategory": "ResidentialStructure",
+        "replayCategory": "Residential"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "ResidentialCoverage_ReplacementCostFullValue_MaximumPercent_A__PAGE1",
+        "expectedLabel": "ResidentialCoverage_ReplacementCostFullValue_MaximumPercent_A",
+        "replayLabel": "Residential_Coverage",
+        "expectedCategory": "ResidentialCoverage",
+        "replayCategory": "Residential"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "ResidentialCoverage_ReplacementCostFullValue_PremiumAmount_A__PAGE1",
+        "expectedLabel": "ResidentialCoverage_ReplacementCostFullValue_PremiumAmount_A",
+        "replayLabel": "Residential_Coverage",
+        "expectedCategory": "ResidentialCoverage",
+        "replayCategory": "Residential"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "ResidentialCoverage_ReplacementCostDwelling_PremiumAmount_A__PAGE1",
+        "expectedLabel": "ResidentialCoverage_ReplacementCostDwelling_PremiumAmount_A",
+        "replayLabel": "Residential_Coverage",
+        "expectedCategory": "ResidentialCoverage",
+        "replayCategory": "Residential"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "ResidentialCoverage_ReplacementCostContents_PremiumAmount_A__PAGE1",
+        "expectedLabel": "ResidentialCoverage_ReplacementCostContents_PremiumAmount_A",
+        "replayLabel": "Residential_Coverage",
+        "expectedCategory": "ResidentialCoverage",
+        "replayCategory": "Residential"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "ResidentialCoverage_Deductible_BaseAmount_A__PAGE1",
+        "expectedLabel": "ResidentialCoverage_Deductible_BaseAmount_A",
+        "replayLabel": "Residential_Coverage",
+        "expectedCategory": "ResidentialCoverage",
+        "replayCategory": "Residential"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "ResidentialCoverage_Deductible_BasePercent_A__PAGE1",
+        "expectedLabel": "ResidentialCoverage_Deductible_BasePercent_A",
+        "replayLabel": "Residential_Coverage",
+        "expectedCategory": "ResidentialCoverage",
+        "replayCategory": "Residential"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "ResidentialCoverage_Deductible_BaseTypeCode_A__PAGE1",
+        "expectedLabel": "ResidentialCoverage_Deductible_BaseTypeCode_A",
+        "replayLabel": "Residential_Coverage",
+        "expectedCategory": "ResidentialCoverage",
+        "replayCategory": "Residential"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "ResidentialCoverage_Deductible_WindHailAmount_A__PAGE1",
+        "expectedLabel": "ResidentialCoverage_Deductible_WindHailAmount_A",
+        "replayLabel": "Residential_Coverage",
+        "expectedCategory": "ResidentialCoverage",
+        "replayCategory": "Residential"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "ResidentialCoverage_Deductible_WindHailPercent_A__PAGE1",
+        "expectedLabel": "ResidentialCoverage_Deductible_WindHailPercent_A",
+        "replayLabel": "Residential_Coverage",
+        "expectedCategory": "ResidentialCoverage",
+        "replayCategory": "Residential"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "ResidentialCoverage_Deductible_WindHailTypeCode_A__PAGE1",
+        "expectedLabel": "ResidentialCoverage_Deductible_WindHailTypeCode_A",
+        "replayLabel": "Residential_Coverage",
+        "expectedCategory": "ResidentialCoverage",
+        "replayCategory": "Residential"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "ResidentialCoverage_Deductible_TheftAmount_A__PAGE1",
+        "expectedLabel": "ResidentialCoverage_Deductible_TheftAmount_A",
+        "replayLabel": "Residential_Coverage",
+        "expectedCategory": "ResidentialCoverage",
+        "replayCategory": "Residential"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "ResidentialCoverage_Deductible_TheftPercent_A__PAGE1",
+        "expectedLabel": "ResidentialCoverage_Deductible_TheftPercent_A",
+        "replayLabel": "Residential_Coverage",
+        "expectedCategory": "ResidentialCoverage",
+        "replayCategory": "Residential"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "ResidentialCoverage_Deductible_TheftTypeCode_A__PAGE1",
+        "expectedLabel": "ResidentialCoverage_Deductible_TheftTypeCode_A",
+        "replayLabel": "Residential_Coverage",
+        "expectedCategory": "ResidentialCoverage",
+        "replayCategory": "Residential"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "ResidentialCoverage_Deductible_OtherCoverageDescription_A__PAGE1",
+        "expectedLabel": "ResidentialCoverage_Deductible_OtherCoverageDescription_A",
+        "replayLabel": "Residential_Coverage",
+        "expectedCategory": "ResidentialCoverage",
+        "replayCategory": "Residential"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "ResidentialCoverage_Deductible_OtherAmount_A__PAGE1",
+        "expectedLabel": "ResidentialCoverage_Deductible_OtherAmount_A",
+        "replayLabel": "Residential_Coverage",
+        "expectedCategory": "ResidentialCoverage",
+        "replayCategory": "Residential"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "ResidentialCoverage_Deductible_OtherPercent_A__PAGE1",
+        "expectedLabel": "ResidentialCoverage_Deductible_OtherPercent_A",
+        "replayLabel": "Residential_Coverage",
+        "expectedCategory": "ResidentialCoverage",
+        "replayCategory": "Residential"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "ResidentialCoverage_Deductible_OtherTypeCode_A__PAGE1",
+        "expectedLabel": "ResidentialCoverage_Deductible_OtherTypeCode_A",
+        "replayLabel": "Residential_Coverage",
+        "expectedCategory": "ResidentialCoverage",
+        "replayCategory": "Residential"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "ResidentialCoverage_Deductible_NamedHurricaneAmount_A__PAGE1",
+        "expectedLabel": "ResidentialCoverage_Deductible_NamedHurricaneAmount_A",
+        "replayLabel": "Residential_Coverage",
+        "expectedCategory": "ResidentialCoverage",
+        "replayCategory": "Residential"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "ResidentialCoverage_Deductible_NamedHurricanePercent_A__PAGE1",
+        "expectedLabel": "ResidentialCoverage_Deductible_NamedHurricanePercent_A",
+        "replayLabel": "Residential_Coverage",
+        "expectedCategory": "ResidentialCoverage",
+        "replayCategory": "Residential"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "ResidentialCoverage_Deductible_NamedHurricaneTypeCode_A__PAGE1",
+        "expectedLabel": "ResidentialCoverage_Deductible_NamedHurricaneTypeCode_A",
+        "replayLabel": "Residential_Coverage",
+        "expectedCategory": "ResidentialCoverage",
+        "replayCategory": "Residential"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "ResidentialCoverage_Deductible_AnnualHurricaneAmount_A__PAGE1",
+        "expectedLabel": "ResidentialCoverage_Deductible_AnnualHurricaneAmount_A",
+        "replayLabel": "Residential_Coverage",
+        "expectedCategory": "ResidentialCoverage",
+        "replayCategory": "Residential"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "ResidentialCoverage_Deductible_AnnualHurricanePercent_A__PAGE1",
+        "expectedLabel": "ResidentialCoverage_Deductible_AnnualHurricanePercent_A",
+        "replayLabel": "Residential_Coverage",
+        "expectedCategory": "ResidentialCoverage",
+        "replayCategory": "Residential"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "ResidentialCoverage_Deductible_AnnualHurricaneTypeCode_A__PAGE1",
+        "expectedLabel": "ResidentialCoverage_Deductible_AnnualHurricaneTypeCode_A",
+        "replayLabel": "Residential_Coverage",
+        "expectedCategory": "ResidentialCoverage",
+        "replayCategory": "Residential"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "ResidentialCoverage_Deductible_OtherCoverageDescription_B__PAGE1",
+        "expectedLabel": "ResidentialCoverage_Deductible_OtherCoverageDescription_B",
+        "replayLabel": "Residential_Coverage",
+        "expectedCategory": "ResidentialCoverage",
+        "replayCategory": "Residential"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "ResidentialCoverage_Deductible_OtherAmount_B__PAGE1",
+        "expectedLabel": "ResidentialCoverage_Deductible_OtherAmount_B",
+        "replayLabel": "Residential_Coverage",
+        "expectedCategory": "ResidentialCoverage",
+        "replayCategory": "Residential"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "ResidentialCoverage_Deductible_OtherPercent_B__PAGE1",
+        "expectedLabel": "ResidentialCoverage_Deductible_OtherPercent_B",
+        "replayLabel": "Residential_Coverage",
+        "expectedCategory": "ResidentialCoverage",
+        "replayCategory": "Residential"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "ResidentialCoverage_Deductible_OtherTypeCode_B__PAGE1",
+        "expectedLabel": "ResidentialCoverage_Deductible_OtherTypeCode_B",
+        "replayLabel": "Residential_Coverage",
+        "expectedCategory": "ResidentialCoverage",
+        "replayCategory": "Residential"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "ResidentialCoverage_Deductible_OtherCoverageDescription_C__PAGE1",
+        "expectedLabel": "ResidentialCoverage_Deductible_OtherCoverageDescription_C",
+        "replayLabel": "Residential_Coverage",
+        "expectedCategory": "ResidentialCoverage",
+        "replayCategory": "Residential"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "ResidentialCoverage_Deductible_OtherAmount_C__PAGE1",
+        "expectedLabel": "ResidentialCoverage_Deductible_OtherAmount_C",
+        "replayLabel": "Residential_Coverage",
+        "expectedCategory": "ResidentialCoverage",
+        "replayCategory": "Residential"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "ResidentialCoverage_Deductible_OtherPercent_C__PAGE1",
+        "expectedLabel": "ResidentialCoverage_Deductible_OtherPercent_C",
+        "replayLabel": "Residential_Coverage",
+        "expectedCategory": "ResidentialCoverage",
+        "replayCategory": "Residential"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "ResidentialCoverage_Deductible_OtherTypeCode_C__PAGE1",
+        "expectedLabel": "ResidentialCoverage_Deductible_OtherTypeCode_C",
+        "replayLabel": "Residential_Coverage",
+        "expectedCategory": "ResidentialCoverage",
+        "replayCategory": "Residential"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "FormEndorsement_LocationProducerIdentifier_A__PAGE1",
+        "expectedLabel": "FormEndorsement_LocationProducerIdentifier_A",
+        "replayLabel": "Form_Endorsement",
+        "expectedCategory": "FormEndorsement",
+        "replayCategory": "Form"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "FormEndorsement_VehicleProducerIdentifier_A__PAGE1",
+        "expectedLabel": "FormEndorsement_VehicleProducerIdentifier_A",
+        "replayLabel": "Form_Endorsement",
+        "expectedCategory": "FormEndorsement",
+        "replayCategory": "Form"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "FormEndorsement_BoatProducerIdentifier_A__PAGE1",
+        "expectedLabel": "FormEndorsement_BoatProducerIdentifier_A",
+        "replayLabel": "Form_Endorsement",
+        "expectedCategory": "FormEndorsement",
+        "replayCategory": "Form"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "FormEndorsement_ItemProducerIdentifier_A__PAGE1",
+        "expectedLabel": "FormEndorsement_ItemProducerIdentifier_A",
+        "replayLabel": "Form_Endorsement",
+        "expectedCategory": "FormEndorsement",
+        "replayCategory": "Form"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "FormEndorsement_FormIdentifier_A__PAGE1",
+        "expectedLabel": "FormEndorsement_FormIdentifier_A",
+        "replayLabel": "Form_Endorsement",
+        "expectedCategory": "FormEndorsement",
+        "replayCategory": "Form"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "FormEndorsement_FormName_A__PAGE1",
+        "expectedLabel": "FormEndorsement_FormName_A",
+        "replayLabel": "Form_Endorsement",
+        "expectedCategory": "FormEndorsement",
+        "replayCategory": "Form"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "FormEndorsement_FormDate_A__PAGE1",
+        "expectedLabel": "FormEndorsement_FormDate_A",
+        "replayLabel": "Form_Endorsement",
+        "expectedCategory": "FormEndorsement",
+        "replayCategory": "Form"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "FormEndorsement_CopyrightOwnerCode_A__PAGE1",
+        "expectedLabel": "FormEndorsement_CopyrightOwnerCode_A",
+        "replayLabel": "Form_Endorsement",
+        "expectedCategory": "FormEndorsement",
+        "replayCategory": "Form"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "Form_EditionIdentifier_A__PAGE1",
+        "expectedLabel": "Form_EditionIdentifier_A",
+        "replayLabel": "Binder_Admin",
+        "expectedCategory": "Form",
+        "replayCategory": "Binder"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "ResidentialStructure_PlumbingCondition_KnownLeaksCode_A__PAGE2",
+        "expectedLabel": "ResidentialStructure_PlumbingCondition_KnownLeaksCode_A",
+        "replayLabel": "Residential_Structure",
+        "expectedCategory": "ResidentialStructure",
+        "replayCategory": "Residential"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "ResidentialStructure_TidalWaterDistance_A__PAGE2",
+        "expectedLabel": "ResidentialStructure_TidalWaterDistance_A",
+        "replayLabel": "Residential_Structure",
+        "expectedCategory": "ResidentialStructure",
+        "replayCategory": "Residential"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "ResidentialStructure_PurchasePriceAmount_A__PAGE2",
+        "expectedLabel": "ResidentialStructure_PurchasePriceAmount_A",
+        "replayLabel": "Residential_Structure",
+        "expectedCategory": "ResidentialStructure",
+        "replayCategory": "Residential"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "ResidentialStructure_PurchaseDate_A__PAGE2",
+        "expectedLabel": "ResidentialStructure_PurchaseDate_A",
+        "replayLabel": "Residential_Structure",
+        "expectedCategory": "ResidentialStructure",
+        "replayCategory": "Residential"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "BuildingFireProtection_HydrantDistanceFeetCount_A__PAGE2",
+        "expectedLabel": "BuildingFireProtection_HydrantDistanceFeetCount_A",
+        "replayLabel": "Building_FireProtection",
+        "expectedCategory": "BuildingFireProtection",
+        "replayCategory": "Building"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "BuildingFireProtection_FireStationDistanceMileCount_A__PAGE2",
+        "expectedLabel": "BuildingFireProtection_FireStationDistanceMileCount_A",
+        "replayLabel": "Building_FireProtection",
+        "expectedCategory": "BuildingFireProtection",
+        "replayCategory": "Building"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "BuildingFireProtection_FireDivisionCount_A__PAGE2",
+        "expectedLabel": "BuildingFireProtection_FireDivisionCount_A",
+        "replayLabel": "Building_FireProtection",
+        "expectedCategory": "BuildingFireProtection",
+        "replayCategory": "Building"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "BuildingFireProtection_FireDivisionUnitCount_A__PAGE2",
+        "expectedLabel": "BuildingFireProtection_FireDivisionUnitCount_A",
+        "replayLabel": "Building_FireProtection",
+        "expectedCategory": "BuildingFireProtection",
+        "replayCategory": "Building"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "ResidentialStructure_Security_DoorLockOtherDescription_A__PAGE2",
+        "expectedLabel": "ResidentialStructure_Security_DoorLockOtherDescription_A",
+        "replayLabel": "Residential_Structure",
+        "expectedCategory": "ResidentialStructure",
+        "replayCategory": "Residential"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "BuildingFireProtection_ProtectionClassCode_A__PAGE2",
+        "expectedLabel": "BuildingFireProtection_ProtectionClassCode_A",
+        "replayLabel": "Building_FireProtection",
+        "expectedCategory": "BuildingFireProtection",
+        "replayCategory": "Building"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "BuildingFireProtection_ExtinguisherCode_A__PAGE2",
+        "expectedLabel": "BuildingFireProtection_ExtinguisherCode_A",
+        "replayLabel": "Building_FireProtection",
+        "expectedCategory": "BuildingFireProtection",
+        "replayCategory": "Building"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "ResidentialStructure_Rating_TerritoryCode_A__PAGE2",
+        "expectedLabel": "ResidentialStructure_Rating_TerritoryCode_A",
+        "replayLabel": "Residential_Structure",
+        "expectedCategory": "ResidentialStructure",
+        "replayCategory": "Residential"
+      },
+      {
+        "fixture": "ACORD-0080-2016-11",
+        "blockId": "BuildingFireProtection_FireDistrictName_A__PAGE2",
+        "expectedLabel": "BuildingFireProtection_FireDistrictName_A",
+        "replayLabel": "Building_FireProtection",
+        "expectedCategory": "BuildingFireProtection",
+        "replayCategory": "Building"
+      }
+    ]
+  },
+  "selectedProfile": {
+    "id": "w6-replay-iter-3",
+    "stageThreeGain": 0.034,
+    "fusionGain": 0.03,
+    "rerankingGain": 0.026,
+    "carrierAwareGain": 0.016,
+    "semanticGeometryCategoryFusionGain": 0.24
+  },
+  "guardrails": {
+    "wave48BaselineUnchanged": true,
+    "wave4TuningReopened": false,
+    "executionPath": "wave5_to_wave6_only"
+  }
+}

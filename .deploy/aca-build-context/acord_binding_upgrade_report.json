@@ -1,0 +1,132 @@
+﻿{
+  "report": "acord_binding_upgrade_report",
+  "timestamp": "2026-07-01T00:00:00Z",
+  "status": "FULLY_ENHANCED",
+  "summary": "ACORD binding panel fully enhanced to display Wave 8 mapping engine candidates with semantic context and category mode.",
+  "binding_panel_enhancements": {
+    "extraction_details_section": {
+      "feature": "New section showing Wave 8 semantic metadata",
+      "display_fields": [
+        "Semantic Label - Extracted semantic field label",
+        "Field Type - Inferred field type (text, date, numeric, checkbox, signature, radio)",
+        "Confidence - Confidence score as percentage"
+      ],
+      "styling": {
+        "background": "#f0f9ff (light blue)",
+        "border": "#bfdbfe (medium blue)",
+        "text_color": "#0369a1 (dark blue)"
+      }
+    },
+    "field_status_badges": {
+      "required_badge": {
+        "feature": "Shows Required or Optional status",
+        "styling": {
+          "required": "Red background (#fee2e2), red text (#b91c1c)",
+          "optional": "Gray background (#f1f5f9), gray text (#475569)"
+        }
+      },
+      "category_mode_badge": {
+        "feature": "Shows ACORD category mode (NEW)",
+        "strict_mode": {
+          "display": "STRICT",
+          "background": "#ede9fe (violet)",
+          "text": "#5b21b6 (dark violet)",
+          "border": "#d8b4fe (light violet)"
+        },
+        "permissive_mode": {
+          "display": "PERMISSIVE",
+          "background": "#f0fdf4 (light green)",
+          "text": "#15803d (dark green)",
+          "border": "#86efac (light green)"
+        }
+      }
+    },
+    "acord_candidates_list": {
+      "feature": "Full ranked list of ACORD candidates from Wave 8",
+      "per_candidate_display": {
+        "acord_code": "Code of candidate with check mark if chosen",
+        "label": "Full ACORD label text",
+        "source": "Source signal: dictionary, heuristic, embeddings, geometry, category, or fusion",
+        "confidence_score": "Visual confidence indicator with color coding"
+      },
+      "candidate_styling": {
+        "chosen": {
+          "background": "#eff6ff (light blue)",
+          "border": "#93c5fd (medium blue)",
+          "indicator": "✓ checkmark"
+        },
+        "not_chosen": {
+          "background": "#ffffff (white)",
+          "border": "#e2e8f0 (light gray)",
+          "hover": {
+            "background": "#f0f9ff (very light blue)",
+            "border": "#bfdbfe (blue)"
+          }
+        }
+      },
+      "interaction": "Click candidate to select and apply to field metadata"
+    },
+    "metadata_flow": {
+      "selection_event": "User clicks ACORD candidate",
+      "callback": "handleSelectCandidate(candidate)",
+      "function_called": "chooseCandidate(extractionBlockId, acordCode)",
+      "store_updated": "mappingStore decision graph",
+      "field_updated": "Field metadata with chosen ACORD label and code",
+      "ui_refresh": "Properties panel and binding panel update"
+    }
+  },
+  "wave8_integration_points": {
+    "mapping_response": {
+      "source": "mapFields API from backend",
+      "contains": [
+        "FieldMapping[] with suggestions[]",
+        "Each suggestion has: acordCode, label, confidenceScore, source, description",
+        "Each mapping has: chosen candidate, rationale"
+      ]
+    },
+    "field_metadata_mapping": {
+      "acord_code": "mapping.chosen?.acordCode",
+      "acord_label": "mapping.chosen?.label",
+      "semantic_label": "mapping.text (OCR text)",
+      "field_type": "Inferred from sourceBlock.type",
+      "confidence": "mapping.chosen?.confidenceScore",
+      "acord_candidates": "Extracted from mapping.suggestions[]",
+      "category_mode": "Extracted from mapping.chosen?.categoryMode"
+    }
+  },
+  "candidate_source_attribution": {
+    "dictionary": "Direct ACORD code lookup by text similarity",
+    "heuristic": "Field cue matching (name, address, zip, etc.)",
+    "embeddings": "Semantic text similarity to ACORD labels",
+    "geometry": "Spatial context within form layout",
+    "category": "ACORD category priors and window search",
+    "fusion": "Combined signal fusion with learned weights",
+    "color_coding": "Each source displays with standard Wave 8 styling"
+  },
+  "binding_panel_states": {
+    "no_field_selected": {
+      "display": "Help text: Select a field to inspect ACORD bindings"
+    },
+    "field_selected": {
+      "display": [
+        "Required/Optional badge",
+        "Category Mode badge (if applicable)",
+        "Extraction Details section",
+        "ACORD Candidates ranked by confidence",
+        "Full candidate metadata with sources",
+        "Click handlers for candidate selection"
+      ]
+    },
+    "mapping_empty": {
+      "display": "Candidates list shows available ACORD codes"
+    }
+  },
+  "validation": {
+    "panel_renders": "PASS - Binding panel fully renders Wave 8 metadata",
+    "candidates_display": "PASS - All candidates shown with sources",
+    "category_mode_badge": "PASS - Shows with color coding",
+    "extraction_details": "PASS - Semantic metadata section renders",
+    "click_handlers": "PASS - Candidate selection updates field metadata",
+    "styling_consistency": "PASS - Follows design system colors and spacing"
+  }
+}

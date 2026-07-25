@@ -1,0 +1,54 @@
+{
+  "report": "designer_mapping_reintegration_report",
+  "timestamp": "2026-07-01T00:00:00Z",
+  "phase": "Designer → Mapping Engine Reintegration",
+  "status": "COMPLETED",
+  "summary": "Connected extractDocument to Wave 8 mapping engine. The endpoint now returns full semantic extraction including field types, ACORD candidates, bounding boxes, page dimensions, structural delta metadata, and confidence scores.",
+  "changes": [
+    {
+      "file": "backend/api/extractDocument/index.ts",
+      "type": "MAJOR_ENHANCEMENT",
+      "description": "Connected to Wave 8 mapping engine (mapBlocksWithAcord). All code paths (file upload, JSON blocks, plain text) now call enrichWithMappingEngine() which runs inferSemanticFields() + mapBlocksWithAcord().",
+      "before": "Returned raw OCR blocks or mock data without ACORD enrichment",
+      "after": "Returns full semantic extraction: blocks, mappings (FieldMapping[]), fieldTypes, pageDimensions, structuralDelta, enriched summary",
+      "new_exports": ["pages", "blocks", "mappings", "fieldTypes", "pageDimensions", "structuralDelta"],
+      "functions_added": [
+        "scaleBoundingBoxToPixels(bbox, unit) — converts Document Intelligence inch coords to canvas pixels (96 DPI)",
+        "buildBlocksFromPages(pages) — converts PageExtraction lines to typed ExtractedBlock[] with checkbox/signature/kvp detection",
+        "generateMockBlocks() — 30-block realistic ACORD 125 form mock replacing the 4-block simplified mock",
+        "enrichWithMappingEngine(blocks, documentId, context) — runs inferSemanticFields + mapBlocksWithAcord, graceful fallback on error"
+      ]
+    },
+    {
+      "file": "frontend/src/components/designer/DesignerBindingsPanel.tsx",
+      "type": "BUG_FIX",
+      "description": "Fixed binding panel ACORD candidate click handler. Was calling non-existent updateMapping(), now correctly calls chooseCandidate(extractionBlockId, acordCode) from mappingStore.",
+      "before": "updateMapping(selectedMapping.fieldId, {...}) — TypeError at runtime",
+      "after": "chooseCandidate(extractionBlockId, candidate.acordCode) — correctly updates mapping store"
+    }
+  ],
+  "pipeline_flow": {
+    "step1": "PDF upload → extractDocument endpoint",
+    "step2": "Document Intelligence extraction (or mock) → normalized PageExtraction[]",
+    "step3": "buildBlocksFromPages() → typed ExtractedBlock[] with DPI-scaled bboxes",
+    "step4": "inferSemanticFields() → fieldType per block (text/date/numeric/checkbox/signature/radio)",
+    "step5": "mapBlocksWithAcord() → FieldMapping[] with ranked ACORD candidates + confidence scores",
+    "step6": "Response includes all artifacts: pages, blocks, mappings, fieldTypes, pageDimensions, structuralDelta",
+    "step7": "Frontend PdfImportModal calls initializeMappings() → mappingStore populated",
+    "step8": "DesignerBindingsPanel shows candidates; user clicks → chooseCandidate() persists choice"
+  },
+  "wave8_integration": {
+    "services_called": [
+      "backend/mapping/mappingEngine.ts → mapBlocksWithAcord()",
+      "backend/extraction/semanticInference.ts → inferSemanticFields()",
+      "backend/api/src/services/mappingEngine.ts → mapBlocksToAcord() (via mapBlocksWithAcord)",
+      "backend/api/src/services/acordDictionary.ts — ACORD code lookup",
+      "backend/api/src/services/wave5/ — geometry, category, reflow scoring"
+    ],
+    "graceful_degradation": "If mapping engine throws, stubs FieldMapping[] without candidates and logs warning"
+  },
+  "validation": {
+    "backend_tsc": "PASSED — 0 TypeScript errors",
+    "frontend_build": "PASSED — 176 modules transformed"
+  }
+}

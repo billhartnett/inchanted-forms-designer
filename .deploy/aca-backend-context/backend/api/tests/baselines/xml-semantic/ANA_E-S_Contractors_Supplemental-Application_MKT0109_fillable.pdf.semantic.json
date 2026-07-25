@@ -1,0 +1,60 @@
+{
+  "fixtureId": "ANA_E-S_Contractors_Supplemental-Application_MKT0109_fillable.pdf",
+  "generatedAt": "2026-06-10T20:23:10.104Z",
+  "structuralHash": "120aaccb",
+  "semanticHash": "267346a2",
+  "nodeCount": 47,
+  "codes": [
+    "AccidentConviction_AccidentViolationCode",
+    "AccidentConviction_ViolationYesNoCode",
+    "AccountantsLiability_Attachment_DeclarationsPageIndicator",
+    "AccountantsLiability_BusinessClientFiledBankruptcy_BankruptcyDate",
+    "AdditionalInterest_MailingAddress_CityName",
+    "AdditionalInterest_MailingAddress_LineOneStreetNumber",
+    "AgriculturalAviation_OtherStatesOperationsDescription",
+    "BuildingImprovement_PlumbingCompleteIndicator",
+    "BuildingOccupancy_MercantileIndicator",
+    "BuildingSecurity_DoorsOrWindows_WindowBarsIndicator",
+    "BusinessInformation_BusinessType_ApartmentsIndicator",
+    "BusinessInformation_BusinessType_InstitutionalIndicator",
+    "BusinessInformation_OperationsDescription",
+    "Client_WebsiteAddress",
+    "CommercialCoverage_MaterialLossOrDamageCoverage_LandscapingLimitAmount",
+    "Construction_Siding_AsbestosIndicator",
+    "Construction_StructuralChangesIndicator",
+    "Contractors_SubcontractorsPaidAmount",
+    "ContractorsUnderwriting_LicenseNumberIdentifier",
+    "CustomerOrSupplier_BusinessPercent",
+    "EmployeeClass_OtherOfficersAndEmployees_EmployeeCount",
+    "Fuelling_FuellingDoneDescription",
+    "GeneralLiability_AdditionalInsuredEndorsement_EngineersArchitectsSurveyorsNotEngagedByNamedInsuredIndicator",
+    "GeneralLiability_OwnersAndContractorsProtectiveIndicator",
+    "IndustrialSpecialRisks_DeductibleAmount",
+    "LossHistory_LastFiveYears_TheftCount",
+    "NamedInsured_GivenName",
+    "OtherInsurance_NAICCode",
+    "PayrollService_FullName",
+    "Residence_Current_YearCount",
+    "Residential_AnyLeadPaintExplanation",
+    "SuretyLineOfBusiness_JobCostBreakdown_SubcontractorPercent",
+    "WorkersCompensationLineOfBusiness_WorkPerformedOnVesselsDocksBridgesExplanation"
+  ],
+  "issues": [
+    {
+      "severity": "warning",
+      "code": "cardinality-max-1",
+      "message": "NamedInsured_GivenName appears 2 times but is expected to be singular.",
+      "path": "/ACORD/Submission/NamedInsured_GivenName"
+    },
+    {
+      "severity": "warning",
+      "code": "cardinality-max-1",
+      "message": "GeneralLiability_AdditionalInsuredEndorsement_EngineersArchitectsSurveyorsNotEngagedByNamedInsuredIndicator appears 2 times but is expected to be singular.",
+      "path": "/ACORD/Submission/GeneralLiability_AdditionalInsuredEndorsement_EngineersArchitectsSurveyorsNotEngagedByNamedInsuredIndicator"
+    }
+  ],
+  "crossFieldWarnings": [],
+  "isValid": true,
+  "familyId": "contractors-supplement",
+  "familySignatureHash": "ce38ef55"
+}

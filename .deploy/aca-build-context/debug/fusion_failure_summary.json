@@ -1,0 +1,16 @@
+{
+  "timestamp": "2026-07-13T19:30:48.840Z",
+  "documentId": "sample-Acord-125.pdf",
+  "totalBlocks": 854,
+  "sampledBlocks": 20,
+  "accumCount": 315,
+  "suggestionsCount": 109,
+  "sampledCandidateCount": 70,
+  "checks": {
+    "allFusionBelowThreshold": false,
+    "categoryModeRemovesAll": false,
+    "confidenceNormalizationZero": false,
+    "fusionWeightsZero": false
+  },
+  "fusionFailureClass": "none"
+}

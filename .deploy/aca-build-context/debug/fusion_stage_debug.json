@@ -1,0 +1,1656 @@
+{
+  "timestamp": "2026-07-13T19:30:48.839Z",
+  "documentId": "sample-Acord-125.pdf",
+  "totalBlocks": 854,
+  "sampledBlocks": 20,
+  "entries": [
+    {
+      "blockIndex": 0,
+      "blockId": "p1-l1",
+      "page": 1,
+      "accumCount": 21,
+      "candidateCount": 0,
+      "fusionThreshold": 0.15,
+      "confidenceNormalization": {
+        "topCandidateConfidence": 0,
+        "topCandidateNormalizedConfidence": 0
+      },
+      "categoryMode": {
+        "gateDecision": "passed_or_relaxed",
+        "lowCategoryConfidenceFallbackActive": false,
+        "preGateCandidateCount": 0,
+        "postGateCandidateCount": 0,
+        "gatedOutCandidateCount": 0
+      },
+      "fusionWeights": {
+        "category": 0.38,
+        "heuristic": 0.12,
+        "geometry": 0.2,
+        "ontology": 0.15,
+        "semantic": 0.1,
+        "dictionary": 0.03,
+        "lexical": 0.02
+      },
+      "candidates": []
+    },
+    {
+      "blockIndex": 1,
+      "blockId": "p1-l2",
+      "page": 1,
+      "accumCount": 15,
+      "candidateCount": 10,
+      "fusionThreshold": 0.15,
+      "confidenceNormalization": {
+        "topCandidateConfidence": 0.62,
+        "topCandidateNormalizedConfidence": 0.62
+      },
+      "categoryMode": {
+        "gateDecision": "passed_or_relaxed",
+        "lowCategoryConfidenceFallbackActive": false,
+        "preGateCandidateCount": 0,
+        "postGateCandidateCount": 0,
+        "gatedOutCandidateCount": 0
+      },
+      "fusionWeights": {
+        "category": 0.38,
+        "heuristic": 0.12,
+        "geometry": 0.2,
+        "ontology": 0.15,
+        "semantic": 0.1,
+        "dictionary": 0.03,
+        "lexical": 0.02
+      },
+      "candidates": [
+        {
+          "acordCode": "CommercialPropertyCoverage_PeakSeasonAdditional_FormDate",
+          "label": "Commercial Property Coverage Peak Season Additional Form Date",
+          "fusionScore": 0.62,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 1,
+          "heuristicScore": 0,
+          "semanticScore": 0.62,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.62,
+          "normalizedConfidenceScore": 0.62,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        },
+        {
+          "acordCode": "Driver_LicensedDate",
+          "label": "Driver Licensed Date",
+          "fusionScore": 0.62,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 0.875,
+          "heuristicScore": 0,
+          "semanticScore": 0.62,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.62,
+          "normalizedConfidenceScore": 0.62,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        },
+        {
+          "acordCode": "FinancialStatement_EndDate",
+          "label": "Financial Statement End Date",
+          "fusionScore": 0.62,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 0.875,
+          "heuristicScore": 0,
+          "semanticScore": 0.62,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.62,
+          "normalizedConfidenceScore": 0.62,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        },
+        {
+          "acordCode": "CommercialPropertyCoverage_CombinedDemolitionCostAndIncreasedConstructionCost_FormDate",
+          "label": "Commercial Property Coverage Combined Demolition Cost And Increased Construction Cost Form Date",
+          "fusionScore": 0.411,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 1,
+          "heuristicScore": 0,
+          "semanticScore": 0.411,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.411,
+          "normalizedConfidenceScore": 0.411,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        },
+        {
+          "acordCode": "ResidentialCoverage_AdditionalPremisesLiabilityExtension_FormDate",
+          "label": "Residential Coverage Additional Premises Liability Extension Form Date",
+          "fusionScore": 0.407,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 0.988,
+          "heuristicScore": 0,
+          "semanticScore": 0.407,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.407,
+          "normalizedConfidenceScore": 0.407,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        }
+      ]
+    },
+    {
+      "blockIndex": 2,
+      "blockId": "p1-l3",
+      "page": 1,
+      "accumCount": 20,
+      "candidateCount": 0,
+      "fusionThreshold": 0.15,
+      "confidenceNormalization": {
+        "topCandidateConfidence": 0,
+        "topCandidateNormalizedConfidence": 0
+      },
+      "categoryMode": {
+        "gateDecision": "passed_or_relaxed",
+        "lowCategoryConfidenceFallbackActive": false,
+        "preGateCandidateCount": 0,
+        "postGateCandidateCount": 0,
+        "gatedOutCandidateCount": 0
+      },
+      "fusionWeights": {
+        "category": 0.38,
+        "heuristic": 0.12,
+        "geometry": 0.2,
+        "ontology": 0.15,
+        "semantic": 0.1,
+        "dictionary": 0.03,
+        "lexical": 0.02
+      },
+      "candidates": []
+    },
+    {
+      "blockIndex": 3,
+      "blockId": "p1-l4",
+      "page": 1,
+      "accumCount": 18,
+      "candidateCount": 9,
+      "fusionThreshold": 0.15,
+      "confidenceNormalization": {
+        "topCandidateConfidence": 0.736,
+        "topCandidateNormalizedConfidence": 0.736
+      },
+      "categoryMode": {
+        "gateDecision": "passed_or_relaxed",
+        "lowCategoryConfidenceFallbackActive": false,
+        "preGateCandidateCount": 0,
+        "postGateCandidateCount": 0,
+        "gatedOutCandidateCount": 0
+      },
+      "fusionWeights": {
+        "category": 0.38,
+        "heuristic": 0.12,
+        "geometry": 0.2,
+        "ontology": 0.15,
+        "semantic": 0.1,
+        "dictionary": 0.03,
+        "lexical": 0.02
+      },
+      "candidates": [
+        {
+          "acordCode": "Producer_FullName",
+          "label": "Producer Full Name",
+          "fusionScore": 0.736,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 1,
+          "heuristicScore": 0.689,
+          "semanticScore": 0.736,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.736,
+          "normalizedConfidenceScore": 0.736,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        },
+        {
+          "acordCode": "NamedInsured_AccountingContact_EmailAddress",
+          "label": "Named Insured Accounting Contact Email Address Insured Name",
+          "fusionScore": 0.407,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 1,
+          "heuristicScore": 0,
+          "semanticScore": 0.407,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.407,
+          "normalizedConfidenceScore": 0.407,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        },
+        {
+          "acordCode": "NamedInsured_AccountingContact_PhoneNumber",
+          "label": "Named Insured Accounting Contact Phone Number Insured Name",
+          "fusionScore": 0.388,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 0.881,
+          "heuristicScore": 0,
+          "semanticScore": 0.388,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.388,
+          "normalizedConfidenceScore": 0.388,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        },
+        {
+          "acordCode": "NamedInsured_InspectionContact_EmailAddress",
+          "label": "Named Insured Inspection Contact Email Address Insured Name",
+          "fusionScore": 0.388,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 0.881,
+          "heuristicScore": 0,
+          "semanticScore": 0.388,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.388,
+          "normalizedConfidenceScore": 0.388,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        },
+        {
+          "acordCode": "NamedInsured_AccountingContact_FullName",
+          "label": "Named Insured Accounting Contact Full Name Insured Name",
+          "fusionScore": 0.381,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 0.759,
+          "heuristicScore": 0,
+          "semanticScore": 0.381,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.381,
+          "normalizedConfidenceScore": 0.381,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        }
+      ]
+    },
+    {
+      "blockIndex": 4,
+      "blockId": "p1-l5",
+      "page": 1,
+      "accumCount": 15,
+      "candidateCount": 3,
+      "fusionThreshold": 0.15,
+      "confidenceNormalization": {
+        "topCandidateConfidence": 0.46,
+        "topCandidateNormalizedConfidence": 0.46
+      },
+      "categoryMode": {
+        "gateDecision": "passed_or_relaxed",
+        "lowCategoryConfidenceFallbackActive": false,
+        "preGateCandidateCount": 0,
+        "postGateCandidateCount": 0,
+        "gatedOutCandidateCount": 0
+      },
+      "fusionWeights": {
+        "category": 0.38,
+        "heuristic": 0.12,
+        "geometry": 0.2,
+        "ontology": 0.15,
+        "semantic": 0.1,
+        "dictionary": 0.03,
+        "lexical": 0.02
+      },
+      "candidates": [
+        {
+          "acordCode": "Insurer_Underwriter_OfficeIdentifier",
+          "label": "Insurer Underwriter Office Identifier",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 112.289,
+          "heuristicScore": 0,
+          "semanticScore": 0.46,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.46,
+          "normalizedConfidenceScore": 0.46,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        },
+        {
+          "acordCode": "AccountantsLiability_ApplicantFirmProvidedServicesForInstitutionWhereOfficerDirectorGeneralCounselExplanation",
+          "label": "Accountants Liability Applicant Firm Provided Services For Institution Where Officer Director General Counsel Explanation",
+          "fusionScore": 0.201,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 39.519,
+          "heuristicScore": 0,
+          "semanticScore": 0.201,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.201,
+          "normalizedConfidenceScore": 0.201,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        },
+        {
+          "acordCode": "AccountantsLiability_BranchOffice_AddressLineOne",
+          "label": "Accountants Liability Branch Office Address Line One",
+          "fusionScore": 0.201,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 39.519,
+          "heuristicScore": 0,
+          "semanticScore": 0.201,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.201,
+          "normalizedConfidenceScore": 0.201,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        }
+      ]
+    },
+    {
+      "blockIndex": 5,
+      "blockId": "p1-l6",
+      "page": 1,
+      "accumCount": 12,
+      "candidateCount": 3,
+      "fusionThreshold": 0.15,
+      "confidenceNormalization": {
+        "topCandidateConfidence": 0.46,
+        "topCandidateNormalizedConfidence": 0.46
+      },
+      "categoryMode": {
+        "gateDecision": "passed_or_relaxed",
+        "lowCategoryConfidenceFallbackActive": false,
+        "preGateCandidateCount": 0,
+        "postGateCandidateCount": 0,
+        "gatedOutCandidateCount": 0
+      },
+      "fusionWeights": {
+        "category": 0.38,
+        "heuristic": 0.12,
+        "geometry": 0.2,
+        "ontology": 0.15,
+        "semantic": 0.1,
+        "dictionary": 0.03,
+        "lexical": 0.02
+      },
+      "candidates": [
+        {
+          "acordCode": "BuildersRiskInstallation_Transportation_CommonCarrierRiskPercent",
+          "label": "Builders Risk Installation Transportation Common Carrier Risk Percent",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 113.135,
+          "heuristicScore": 0,
+          "semanticScore": 0.46,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.46,
+          "normalizedConfidenceScore": 0.46,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        },
+        {
+          "acordCode": "CommercialInlandMarineLineOfBusiness_ShippingInterest_CommonCarrierIndicator",
+          "label": "Commercial Inland Marine Line Of Business Shipping Interest Common Carrier Indicator",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 113.135,
+          "heuristicScore": 0,
+          "semanticScore": 0.46,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.46,
+          "normalizedConfidenceScore": 0.46,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        },
+        {
+          "acordCode": "CommercialInlandMarineLineOfBusiness_ShippingInterest_ContractCarrierIndicator",
+          "label": "Commercial Inland Marine Line Of Business Shipping Interest Contract Carrier Indicator",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 113.135,
+          "heuristicScore": 0,
+          "semanticScore": 0.46,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.46,
+          "normalizedConfidenceScore": 0.46,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        }
+      ]
+    },
+    {
+      "blockIndex": 6,
+      "blockId": "p1-l7",
+      "page": 1,
+      "accumCount": 6,
+      "candidateCount": 3,
+      "fusionThreshold": 0.15,
+      "confidenceNormalization": {
+        "topCandidateConfidence": 0.46,
+        "topCandidateNormalizedConfidence": 0.46
+      },
+      "categoryMode": {
+        "gateDecision": "passed_or_relaxed",
+        "lowCategoryConfidenceFallbackActive": false,
+        "preGateCandidateCount": 0,
+        "postGateCandidateCount": 0,
+        "gatedOutCandidateCount": 0
+      },
+      "fusionWeights": {
+        "category": 0.38,
+        "heuristic": 0.12,
+        "geometry": 0.2,
+        "ontology": 0.15,
+        "semantic": 0.1,
+        "dictionary": 0.03,
+        "lexical": 0.02
+      },
+      "candidates": [
+        {
+          "acordCode": "Insurer_Underwriter_ApprovedIndicator",
+          "label": "Insurer Underwriter Approved Indicator",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 113.135,
+          "heuristicScore": 0,
+          "semanticScore": 0.46,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.46,
+          "normalizedConfidenceScore": 0.46,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        },
+        {
+          "acordCode": "Insurer_Underwriter_FullName",
+          "label": "Insurer Underwriter Full Name",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 113.135,
+          "heuristicScore": 0,
+          "semanticScore": 0.46,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.46,
+          "normalizedConfidenceScore": 0.46,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        },
+        {
+          "acordCode": "Insurer_Underwriter_InitialDate",
+          "label": "Insurer Underwriter Initial Date",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 113.135,
+          "heuristicScore": 0,
+          "semanticScore": 0.46,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.46,
+          "normalizedConfidenceScore": 0.46,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        }
+      ]
+    },
+    {
+      "blockIndex": 7,
+      "blockId": "p1-l8",
+      "page": 1,
+      "accumCount": 13,
+      "candidateCount": 10,
+      "fusionThreshold": 0.15,
+      "confidenceNormalization": {
+        "topCandidateConfidence": 0.62,
+        "topCandidateNormalizedConfidence": 0.62
+      },
+      "categoryMode": {
+        "gateDecision": "passed_or_relaxed",
+        "lowCategoryConfidenceFallbackActive": false,
+        "preGateCandidateCount": 0,
+        "postGateCandidateCount": 0,
+        "gatedOutCandidateCount": 0
+      },
+      "fusionWeights": {
+        "category": 0.38,
+        "heuristic": 0.12,
+        "geometry": 0.2,
+        "ontology": 0.15,
+        "semantic": 0.1,
+        "dictionary": 0.03,
+        "lexical": 0.02
+      },
+      "candidates": [
+        {
+          "acordCode": "Client_NAICSCode",
+          "label": "Client NAICSCode",
+          "fusionScore": 0.62,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 1,
+          "heuristicScore": 0,
+          "semanticScore": 0.62,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.62,
+          "normalizedConfidenceScore": 0.62,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        },
+        {
+          "acordCode": "Client_NAICSCodeDescription",
+          "label": "Client NAICSCode Description",
+          "fusionScore": 0.62,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 1,
+          "heuristicScore": 0,
+          "semanticScore": 0.62,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.62,
+          "normalizedConfidenceScore": 0.62,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        },
+        {
+          "acordCode": "Insurer_NAICCode",
+          "label": "Insurer NAICCode",
+          "fusionScore": 0.62,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 1,
+          "heuristicScore": 0,
+          "semanticScore": 0.62,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.62,
+          "normalizedConfidenceScore": 0.62,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        },
+        {
+          "acordCode": "NamedInsured_NAICSCode",
+          "label": "Named Insured NAICSCode Insured Name",
+          "fusionScore": 0.62,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 1,
+          "heuristicScore": 0,
+          "semanticScore": 0.62,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.62,
+          "normalizedConfidenceScore": 0.62,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        },
+        {
+          "acordCode": "OtherInsurance_NAICCode",
+          "label": "Other Insurance NAICCode",
+          "fusionScore": 0.62,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 1,
+          "heuristicScore": 0,
+          "semanticScore": 0.62,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.62,
+          "normalizedConfidenceScore": 0.62,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        }
+      ]
+    },
+    {
+      "blockIndex": 8,
+      "blockId": "p1-l9",
+      "page": 1,
+      "accumCount": 16,
+      "candidateCount": 10,
+      "fusionThreshold": 0.15,
+      "confidenceNormalization": {
+        "topCandidateConfidence": 0.62,
+        "topCandidateNormalizedConfidence": 0.62
+      },
+      "categoryMode": {
+        "gateDecision": "passed_or_relaxed",
+        "lowCategoryConfidenceFallbackActive": false,
+        "preGateCandidateCount": 0,
+        "postGateCandidateCount": 0,
+        "gatedOutCandidateCount": 0
+      },
+      "fusionWeights": {
+        "category": 0.38,
+        "heuristic": 0.12,
+        "geometry": 0.2,
+        "ontology": 0.15,
+        "semantic": 0.1,
+        "dictionary": 0.03,
+        "lexical": 0.02
+      },
+      "candidates": [
+        {
+          "acordCode": "AdditionalInterest_MailingAddress_CityName",
+          "label": "Additional Interest Mailing Address City Name",
+          "fusionScore": 0.62,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 1,
+          "heuristicScore": 0,
+          "semanticScore": 0.62,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.62,
+          "normalizedConfidenceScore": 0.62,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        },
+        {
+          "acordCode": "AdditionalInterest_MailingAddress_CityName_AA",
+          "label": "Additional Interest Mailing Address City Name AA",
+          "fusionScore": 0.62,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 1,
+          "heuristicScore": 0,
+          "semanticScore": 0.62,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.62,
+          "normalizedConfidenceScore": 0.62,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        },
+        {
+          "acordCode": "AdditionalInterest_MailingAddress_CountryCode",
+          "label": "Additional Interest Mailing Address Country Code",
+          "fusionScore": 0.62,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 1,
+          "heuristicScore": 0,
+          "semanticScore": 0.62,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.62,
+          "normalizedConfidenceScore": 0.62,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        },
+        {
+          "acordCode": "AdditionalInterest_MailingAddress_CountyName",
+          "label": "Additional Interest Mailing Address County Name",
+          "fusionScore": 0.62,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 1,
+          "heuristicScore": 0,
+          "semanticScore": 0.62,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.62,
+          "normalizedConfidenceScore": 0.62,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        },
+        {
+          "acordCode": "AdditionalInterest_MailingAddress_LineOne",
+          "label": "Additional Interest Mailing Address Line One",
+          "fusionScore": 0.62,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 1,
+          "heuristicScore": 0,
+          "semanticScore": 0.62,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.62,
+          "normalizedConfidenceScore": 0.62,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        }
+      ]
+    },
+    {
+      "blockIndex": 9,
+      "blockId": "p1-l10",
+      "page": 1,
+      "accumCount": 20,
+      "candidateCount": 3,
+      "fusionThreshold": 0.15,
+      "confidenceNormalization": {
+        "topCandidateConfidence": 0.46,
+        "topCandidateNormalizedConfidence": 0.46
+      },
+      "categoryMode": {
+        "gateDecision": "passed_or_relaxed",
+        "lowCategoryConfidenceFallbackActive": false,
+        "preGateCandidateCount": 0,
+        "postGateCandidateCount": 0,
+        "gatedOutCandidateCount": 0
+      },
+      "fusionWeights": {
+        "category": 0.38,
+        "heuristic": 0.12,
+        "geometry": 0.2,
+        "ontology": 0.15,
+        "semantic": 0.1,
+        "dictionary": 0.03,
+        "lexical": 0.02
+      },
+      "candidates": [
+        {
+          "acordCode": "AirportFBOLineOfBusiness_ApplicantParticipateNATASafetyFirstProgramExplanation",
+          "label": "Airport FBOLine Of Business Applicant Participate NATASafety First Program Explanation",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 63.179,
+          "heuristicScore": 0,
+          "semanticScore": 0.46,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.46,
+          "normalizedConfidenceScore": 0.46,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        },
+        {
+          "acordCode": "DirectorsAndOfficersCoverage_CompanyEntityLiability_RequestedAggregateLimitAmount",
+          "label": "Directors And Officers Coverage Company Entity Liability Requested Aggregate Limit Amount",
+          "fusionScore": 0.36,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 38.48,
+          "heuristicScore": 0,
+          "semanticScore": 0.36,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.36,
+          "normalizedConfidenceScore": 0.36,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        },
+        {
+          "acordCode": "DirectorsAndOfficersCoverage_CompanyEntityLiability_RequestedPerClaimLimitAmount",
+          "label": "Directors And Officers Coverage Company Entity Liability Requested Per Claim Limit Amount",
+          "fusionScore": 0.36,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 38.48,
+          "heuristicScore": 0,
+          "semanticScore": 0.36,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.36,
+          "normalizedConfidenceScore": 0.36,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        }
+      ]
+    },
+    {
+      "blockIndex": 10,
+      "blockId": "p1-l11",
+      "page": 1,
+      "accumCount": 18,
+      "candidateCount": 10,
+      "fusionThreshold": 0.15,
+      "confidenceNormalization": {
+        "topCandidateConfidence": 0.969,
+        "topCandidateNormalizedConfidence": 0.969
+      },
+      "categoryMode": {
+        "gateDecision": "passed_or_relaxed",
+        "lowCategoryConfidenceFallbackActive": false,
+        "preGateCandidateCount": 0,
+        "postGateCandidateCount": 0,
+        "gatedOutCandidateCount": 0
+      },
+      "fusionWeights": {
+        "category": 0.38,
+        "heuristic": 0.12,
+        "geometry": 0.2,
+        "ontology": 0.15,
+        "semantic": 0.1,
+        "dictionary": 0.03,
+        "lexical": 0.02
+      },
+      "candidates": [
+        {
+          "acordCode": "Policy_PolicyNumberIdentifier",
+          "label": "Policy Policy Number Identifier",
+          "fusionScore": 0.969,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 1,
+          "heuristicScore": 0.75,
+          "semanticScore": 0.969,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.969,
+          "normalizedConfidenceScore": 0.969,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        },
+        {
+          "acordCode": "Binder_ExpiringPolicyNumberIdentifier",
+          "label": "Binder Expiring Policy Number Identifier",
+          "fusionScore": 0.645,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 1,
+          "heuristicScore": 0,
+          "semanticScore": 0.645,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.645,
+          "normalizedConfidenceScore": 0.645,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        },
+        {
+          "acordCode": "ExcessFlood_PolicyNumberIdentifier",
+          "label": "Excess Flood Policy Number Identifier",
+          "fusionScore": 0.645,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 1,
+          "heuristicScore": 0,
+          "semanticScore": 0.645,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.645,
+          "normalizedConfidenceScore": 0.645,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        },
+        {
+          "acordCode": "LossHistory_PolicyNumberIdentifier",
+          "label": "Loss History Policy Number Identifier",
+          "fusionScore": 0.645,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 1,
+          "heuristicScore": 0,
+          "semanticScore": 0.645,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.645,
+          "normalizedConfidenceScore": 0.645,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        },
+        {
+          "acordCode": "OtherInsurance_PolicyNumberIdentifier",
+          "label": "Other Insurance Policy Number Identifier",
+          "fusionScore": 0.645,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 1,
+          "heuristicScore": 0,
+          "semanticScore": 0.645,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.645,
+          "normalizedConfidenceScore": 0.645,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        }
+      ]
+    },
+    {
+      "blockIndex": 11,
+      "blockId": "p1-l12",
+      "page": 1,
+      "accumCount": 16,
+      "candidateCount": 10,
+      "fusionThreshold": 0.15,
+      "confidenceNormalization": {
+        "topCandidateConfidence": 0.894,
+        "topCandidateNormalizedConfidence": 0.894
+      },
+      "categoryMode": {
+        "gateDecision": "passed_or_relaxed",
+        "lowCategoryConfidenceFallbackActive": false,
+        "preGateCandidateCount": 0,
+        "postGateCandidateCount": 0,
+        "gatedOutCandidateCount": 0
+      },
+      "fusionWeights": {
+        "category": 0.38,
+        "heuristic": 0.12,
+        "geometry": 0.2,
+        "ontology": 0.15,
+        "semantic": 0.1,
+        "dictionary": 0.03,
+        "lexical": 0.02
+      },
+      "candidates": [
+        {
+          "acordCode": "NamedInsured_MailingAddress_CityName",
+          "label": "Named Insured Mailing Address City Name Insured Name",
+          "fusionScore": 0.894,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 0.92,
+          "heuristicScore": 0.684,
+          "semanticScore": 0.894,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.894,
+          "normalizedConfidenceScore": 0.894,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        },
+        {
+          "acordCode": "AccidentConviction_PlaceOfIncidentCityName",
+          "label": "Accident Conviction Place Of Incident City Name",
+          "fusionScore": 0.78,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 0,
+          "heuristicScore": 0,
+          "semanticScore": 0.78,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.78,
+          "normalizedConfidenceScore": 0.78,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        },
+        {
+          "acordCode": "Aircraft_SeatingCapacityCount",
+          "label": "Aircraft Seating Capacity Count",
+          "fusionScore": 0.78,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 0.92,
+          "heuristicScore": 0,
+          "semanticScore": 0.78,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.78,
+          "normalizedConfidenceScore": 0.78,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        },
+        {
+          "acordCode": "BuildingFeatures_SeatingCapacityCount",
+          "label": "Building Features Seating Capacity Count",
+          "fusionScore": 0.78,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 0.92,
+          "heuristicScore": 0,
+          "semanticScore": 0.78,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.78,
+          "normalizedConfidenceScore": 0.78,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        },
+        {
+          "acordCode": "GeneralLiabilityLineOfBusiness_RefrigerationSystemUtilizedAnySpareCapacityExplanation",
+          "label": "General Liability Line Of Business Refrigeration System Utilized Any Spare Capacity Explanation",
+          "fusionScore": 0.78,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 0.92,
+          "heuristicScore": 0,
+          "semanticScore": 0.78,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.78,
+          "normalizedConfidenceScore": 0.78,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        }
+      ]
+    },
+    {
+      "blockIndex": 12,
+      "blockId": "p1-l13",
+      "page": 1,
+      "accumCount": 15,
+      "candidateCount": 3,
+      "fusionThreshold": 0.15,
+      "confidenceNormalization": {
+        "topCandidateConfidence": 0.46,
+        "topCandidateNormalizedConfidence": 0.46
+      },
+      "categoryMode": {
+        "gateDecision": "passed_or_relaxed",
+        "lowCategoryConfidenceFallbackActive": false,
+        "preGateCandidateCount": 0,
+        "postGateCandidateCount": 0,
+        "gatedOutCandidateCount": 0
+      },
+      "fusionWeights": {
+        "category": 0.38,
+        "heuristic": 0.12,
+        "geometry": 0.2,
+        "ontology": 0.15,
+        "semantic": 0.1,
+        "dictionary": 0.03,
+        "lexical": 0.02
+      },
+      "candidates": [
+        {
+          "acordCode": "Client_MarketingObjective",
+          "label": "Client Marketing Objective",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 167.45,
+          "heuristicScore": 0,
+          "semanticScore": 0.46,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.46,
+          "normalizedConfidenceScore": 0.46,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        },
+        {
+          "acordCode": "ErrorsAndOmissions_Marketing_SalesTrainingDescription",
+          "label": "Errors And Omissions Marketing Sales Training Description",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 167.45,
+          "heuristicScore": 0,
+          "semanticScore": 0.46,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.46,
+          "normalizedConfidenceScore": 0.46,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        },
+        {
+          "acordCode": "FloodCoverage_AlternativeMarketPrimaryBuilding_AcceptIndicator",
+          "label": "Flood Coverage Alternative Market Primary Building Accept Indicator",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 167.45,
+          "heuristicScore": 0,
+          "semanticScore": 0.46,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.46,
+          "normalizedConfidenceScore": 0.46,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        }
+      ]
+    },
+    {
+      "blockIndex": 13,
+      "blockId": "p1-l14",
+      "page": 1,
+      "accumCount": 15,
+      "candidateCount": 3,
+      "fusionThreshold": 0.15,
+      "confidenceNormalization": {
+        "topCandidateConfidence": 0.46,
+        "topCandidateNormalizedConfidence": 0.46
+      },
+      "categoryMode": {
+        "gateDecision": "passed_or_relaxed",
+        "lowCategoryConfidenceFallbackActive": false,
+        "preGateCandidateCount": 0,
+        "postGateCandidateCount": 0,
+        "gatedOutCandidateCount": 0
+      },
+      "fusionWeights": {
+        "category": 0.38,
+        "heuristic": 0.12,
+        "geometry": 0.2,
+        "ontology": 0.15,
+        "semantic": 0.1,
+        "dictionary": 0.03,
+        "lexical": 0.02
+      },
+      "candidates": [
+        {
+          "acordCode": "Client_MarketingObjective",
+          "label": "Client Marketing Objective",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 167.45,
+          "heuristicScore": 0,
+          "semanticScore": 0.46,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.46,
+          "normalizedConfidenceScore": 0.46,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        },
+        {
+          "acordCode": "ErrorsAndOmissions_Marketing_SalesTrainingDescription",
+          "label": "Errors And Omissions Marketing Sales Training Description",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 167.45,
+          "heuristicScore": 0,
+          "semanticScore": 0.46,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.46,
+          "normalizedConfidenceScore": 0.46,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        },
+        {
+          "acordCode": "FloodCoverage_AlternativeMarketPrimaryBuilding_AcceptIndicator",
+          "label": "Flood Coverage Alternative Market Primary Building Accept Indicator",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 167.45,
+          "heuristicScore": 0,
+          "semanticScore": 0.46,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.46,
+          "normalizedConfidenceScore": 0.46,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        }
+      ]
+    },
+    {
+      "blockIndex": 14,
+      "blockId": "p1-l15",
+      "page": 1,
+      "accumCount": 16,
+      "candidateCount": 10,
+      "fusionThreshold": 0.15,
+      "confidenceNormalization": {
+        "topCandidateConfidence": 0.895,
+        "topCandidateNormalizedConfidence": 0.895
+      },
+      "categoryMode": {
+        "gateDecision": "passed_or_relaxed",
+        "lowCategoryConfidenceFallbackActive": false,
+        "preGateCandidateCount": 0,
+        "postGateCandidateCount": 0,
+        "gatedOutCandidateCount": 0
+      },
+      "fusionWeights": {
+        "category": 0.38,
+        "heuristic": 0.12,
+        "geometry": 0.2,
+        "ontology": 0.15,
+        "semantic": 0.1,
+        "dictionary": 0.03,
+        "lexical": 0.02
+      },
+      "candidates": [
+        {
+          "acordCode": "NamedInsured_MailingAddress_StateOrProvinceCode",
+          "label": "Named Insured Mailing Address State Or Province Code Insured Name",
+          "fusionScore": 0.895,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 0.92,
+          "heuristicScore": 0.686,
+          "semanticScore": 0.895,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.895,
+          "normalizedConfidenceScore": 0.895,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        },
+        {
+          "acordCode": "StatementOfValues_CauseOfLoss_BasicIndicator",
+          "label": "Statement Of Values Cause Of Loss Basic Indicator",
+          "fusionScore": 0.78,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 0.92,
+          "heuristicScore": 0,
+          "semanticScore": 0.78,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.78,
+          "normalizedConfidenceScore": 0.78,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        },
+        {
+          "acordCode": "StatementOfValues_CauseOfLoss_BroadIndicator",
+          "label": "Statement Of Values Cause Of Loss Broad Indicator",
+          "fusionScore": 0.78,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 0.92,
+          "heuristicScore": 0,
+          "semanticScore": 0.78,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.78,
+          "normalizedConfidenceScore": 0.78,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        },
+        {
+          "acordCode": "StatementOfValues_CauseOfLoss_EarthquakeIndicator",
+          "label": "Statement Of Values Cause Of Loss Earthquake Indicator",
+          "fusionScore": 0.78,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 0.92,
+          "heuristicScore": 0,
+          "semanticScore": 0.78,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.78,
+          "normalizedConfidenceScore": 0.78,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        },
+        {
+          "acordCode": "StatementOfValues_CauseOfLoss_FloodIndicator",
+          "label": "Statement Of Values Cause Of Loss Flood Indicator",
+          "fusionScore": 0.78,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 0.92,
+          "heuristicScore": 0,
+          "semanticScore": 0.78,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.78,
+          "normalizedConfidenceScore": 0.78,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        }
+      ]
+    },
+    {
+      "blockIndex": 15,
+      "blockId": "p1-l16",
+      "page": 1,
+      "accumCount": 16,
+      "candidateCount": 10,
+      "fusionThreshold": 0.15,
+      "confidenceNormalization": {
+        "topCandidateConfidence": 0.906,
+        "topCandidateNormalizedConfidence": 0.906
+      },
+      "categoryMode": {
+        "gateDecision": "passed_or_relaxed",
+        "lowCategoryConfidenceFallbackActive": false,
+        "preGateCandidateCount": 0,
+        "postGateCandidateCount": 0,
+        "gatedOutCandidateCount": 0
+      },
+      "fusionWeights": {
+        "category": 0.38,
+        "heuristic": 0.12,
+        "geometry": 0.2,
+        "ontology": 0.15,
+        "semantic": 0.1,
+        "dictionary": 0.03,
+        "lexical": 0.02
+      },
+      "candidates": [
+        {
+          "acordCode": "NamedInsured_MailingAddress_PostalCode",
+          "label": "Named Insured Mailing Address Postal Code Insured Name",
+          "fusionScore": 0.906,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 0.92,
+          "heuristicScore": 0.688,
+          "semanticScore": 0.906,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.906,
+          "normalizedConfidenceScore": 0.906,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        },
+        {
+          "acordCode": "AccountantsLiability_BranchOffice_PostalCode",
+          "label": "Accountants Liability Branch Office Postal Code",
+          "fusionScore": 0.79,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 0,
+          "heuristicScore": 0,
+          "semanticScore": 0.79,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.79,
+          "normalizedConfidenceScore": 0.79,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        },
+        {
+          "acordCode": "AccidentConviction_AccidentViolationCode",
+          "label": "Accident Conviction Accident Violation Code",
+          "fusionScore": 0.62,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 0.92,
+          "heuristicScore": 0,
+          "semanticScore": 0.62,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.62,
+          "normalizedConfidenceScore": 0.62,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        },
+        {
+          "acordCode": "AccidentConviction_BodilyInjuryOrDeathCode",
+          "label": "Accident Conviction Bodily Injury Or Death Code",
+          "fusionScore": 0.39,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 0.92,
+          "heuristicScore": 0,
+          "semanticScore": 0.39,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.39,
+          "normalizedConfidenceScore": 0.39,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        },
+        {
+          "acordCode": "AccidentConviction_PlaceOfIncidentStateOrProvinceCode",
+          "label": "Accident Conviction Place Of Incident State Or Province Code",
+          "fusionScore": 0.39,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 0.92,
+          "heuristicScore": 0,
+          "semanticScore": 0.39,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.39,
+          "normalizedConfidenceScore": 0.39,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        }
+      ]
+    },
+    {
+      "blockIndex": 16,
+      "blockId": "p1-l17",
+      "page": 1,
+      "accumCount": 18,
+      "candidateCount": 3,
+      "fusionThreshold": 0.15,
+      "confidenceNormalization": {
+        "topCandidateConfidence": 0.46,
+        "topCandidateNormalizedConfidence": 0.46
+      },
+      "categoryMode": {
+        "gateDecision": "passed_or_relaxed",
+        "lowCategoryConfidenceFallbackActive": false,
+        "preGateCandidateCount": 0,
+        "postGateCandidateCount": 0,
+        "gatedOutCandidateCount": 0
+      },
+      "fusionWeights": {
+        "category": 0.38,
+        "heuristic": 0.12,
+        "geometry": 0.2,
+        "ontology": 0.15,
+        "semantic": 0.1,
+        "dictionary": 0.03,
+        "lexical": 0.02
+      },
+      "candidates": [
+        {
+          "acordCode": "EquipmentFloaterInformation_ApplicationOperatingEquipmentNotListedExplanation",
+          "label": "Equipment Floater Information Application Operating Equipment Not Listed Explanation",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 334.28,
+          "heuristicScore": 0,
+          "semanticScore": 0.46,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.46,
+          "normalizedConfidenceScore": 0.46,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        },
+        {
+          "acordCode": "EquipmentFloaterInformation_EquipmentRentedLoanedToOrFromOperatorsWithOrWithoutOperatorsExplanation",
+          "label": "Equipment Floater Information Equipment Rented Loaned To Or From Operators With Or Without Operators Explanation",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 334.28,
+          "heuristicScore": 0,
+          "semanticScore": 0.46,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.46,
+          "normalizedConfidenceScore": 0.46,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        },
+        {
+          "acordCode": "EquipmentFloaterInformation_EquipmentRentedLoanedToOthersWithOrWithoutOperatorsExplanation",
+          "label": "Equipment Floater Information Equipment Rented Loaned To Others With Or Without Operators Explanation",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 334.28,
+          "heuristicScore": 0,
+          "semanticScore": 0.46,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.46,
+          "normalizedConfidenceScore": 0.46,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        }
+      ]
+    },
+    {
+      "blockIndex": 17,
+      "blockId": "p1-l18",
+      "page": 1,
+      "accumCount": 18,
+      "candidateCount": 3,
+      "fusionThreshold": 0.15,
+      "confidenceNormalization": {
+        "topCandidateConfidence": 0.46,
+        "topCandidateNormalizedConfidence": 0.46
+      },
+      "categoryMode": {
+        "gateDecision": "passed_or_relaxed",
+        "lowCategoryConfidenceFallbackActive": false,
+        "preGateCandidateCount": 0,
+        "postGateCandidateCount": 0,
+        "gatedOutCandidateCount": 0
+      },
+      "fusionWeights": {
+        "category": 0.38,
+        "heuristic": 0.12,
+        "geometry": 0.2,
+        "ontology": 0.15,
+        "semantic": 0.1,
+        "dictionary": 0.03,
+        "lexical": 0.02
+      },
+      "candidates": [
+        {
+          "acordCode": "GarageAndDealers_AnnualGallonsPumpedCount",
+          "label": "Garage And Dealers Annual Gallons Pumped Count",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 476.47,
+          "heuristicScore": 0,
+          "semanticScore": 0.46,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.46,
+          "normalizedConfidenceScore": 0.46,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        },
+        {
+          "acordCode": "GarageAndDealers_ClassOneEmployees_OtherOperatorCount",
+          "label": "Garage And Dealers Class One Employees Other Operator Count",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 476.47,
+          "heuristicScore": 0,
+          "semanticScore": 0.46,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.46,
+          "normalizedConfidenceScore": 0.46,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        },
+        {
+          "acordCode": "GarageAndDealers_ClassOneEmployees_RegularOperatorCount",
+          "label": "Garage And Dealers Class One Employees Regular Operator Count",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 476.47,
+          "heuristicScore": 0,
+          "semanticScore": 0.46,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.46,
+          "normalizedConfidenceScore": 0.46,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        }
+      ]
+    },
+    {
+      "blockIndex": 18,
+      "blockId": "p1-l19",
+      "page": 1,
+      "accumCount": 12,
+      "candidateCount": 3,
+      "fusionThreshold": 0.15,
+      "confidenceNormalization": {
+        "topCandidateConfidence": 0.46,
+        "topCandidateNormalizedConfidence": 0.46
+      },
+      "categoryMode": {
+        "gateDecision": "passed_or_relaxed",
+        "lowCategoryConfidenceFallbackActive": false,
+        "preGateCandidateCount": 0,
+        "postGateCandidateCount": 0,
+        "gatedOutCandidateCount": 0
+      },
+      "fusionWeights": {
+        "category": 0.38,
+        "heuristic": 0.12,
+        "geometry": 0.2,
+        "ontology": 0.15,
+        "semantic": 0.1,
+        "dictionary": 0.03,
+        "lexical": 0.02
+      },
+      "candidates": [
+        {
+          "acordCode": "BuildingImprovement_WiringUpdatedNoIndicated",
+          "label": "Building Improvement Wiring Updated No Indicated",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 32.299,
+          "heuristicScore": 0,
+          "semanticScore": 0.46,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.46,
+          "normalizedConfidenceScore": 0.46,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        },
+        {
+          "acordCode": "CertificateOfMarineEnergyInsurance_Vessel_AttachedToRemarksIndicator",
+          "label": "Certificate Of Marine Energy Insurance Vessel Attached To Remarks Indicator",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 32.299,
+          "heuristicScore": 0,
+          "semanticScore": 0.46,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.46,
+          "normalizedConfidenceScore": 0.46,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        },
+        {
+          "acordCode": "CertificateOfMarineEnergyInsurance_Vessel_ScheduleAttachedIndicator",
+          "label": "Certificate Of Marine Energy Insurance Vessel Schedule Attached Indicator",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 32.299,
+          "heuristicScore": 0,
+          "semanticScore": 0.46,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.46,
+          "normalizedConfidenceScore": 0.46,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        }
+      ]
+    },
+    {
+      "blockIndex": 19,
+      "blockId": "p1-l20",
+      "page": 1,
+      "accumCount": 15,
+      "candidateCount": 3,
+      "fusionThreshold": 0.15,
+      "confidenceNormalization": {
+        "topCandidateConfidence": 0.46,
+        "topCandidateNormalizedConfidence": 0.46
+      },
+      "categoryMode": {
+        "gateDecision": "passed_or_relaxed",
+        "lowCategoryConfidenceFallbackActive": false,
+        "preGateCandidateCount": 0,
+        "postGateCandidateCount": 0,
+        "gatedOutCandidateCount": 0
+      },
+      "fusionWeights": {
+        "category": 0.38,
+        "heuristic": 0.12,
+        "geometry": 0.2,
+        "ontology": 0.15,
+        "semantic": 0.1,
+        "dictionary": 0.03,
+        "lexical": 0.02
+      },
+      "candidates": [
+        {
+          "acordCode": "Client_MarketingObjective",
+          "label": "Client Marketing Objective",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 167.45,
+          "heuristicScore": 0,
+          "semanticScore": 0.46,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.46,
+          "normalizedConfidenceScore": 0.46,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        },
+        {
+          "acordCode": "ErrorsAndOmissions_Marketing_SalesTrainingDescription",
+          "label": "Errors And Omissions Marketing Sales Training Description",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 167.45,
+          "heuristicScore": 0,
+          "semanticScore": 0.46,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.46,
+          "normalizedConfidenceScore": 0.46,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        },
+        {
+          "acordCode": "FloodCoverage_AlternativeMarketPrimaryBuilding_AcceptIndicator",
+          "label": "Flood Coverage Alternative Market Primary Building Accept Indicator",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.15,
+          "dictionaryScore": 167.45,
+          "heuristicScore": 0,
+          "semanticScore": 0.46,
+          "geometryScore": 0,
+          "categoryScore": 0,
+          "confidenceScore": 0.46,
+          "normalizedConfidenceScore": 0.46,
+          "semanticContribution": 0,
+          "geometryContribution": 0
+        }
+      ]
+    }
+  ]
+}

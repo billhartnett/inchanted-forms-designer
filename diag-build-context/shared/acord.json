@@ -1,0 +1,85 @@
+{
+  "familyId": "acord-125",
+  "form": "ACORD_125",
+  "version": "1.0.0",
+  "familyLabel": "ACORD 125 Commercial Insurance Application",
+  "clusters": {
+    "Producer": {
+      "description": "Producer / Agent information block on ACORD 125 page 1",
+      "fields": [
+        { "id": "Producer_FullName", "label": "Producer Name", "elabel": "Producer_FullName", "type": "string", "required": true },
+        { "id": "Producer_MailingAddress_LineOne", "label": "Producer Address Line 1", "elabel": "Producer_MailingAddress_LineOne", "type": "string", "required": true },
+        { "id": "Producer_MailingAddress_LineTwo", "label": "Producer Address Line 2", "elabel": "Producer_MailingAddress_LineTwo", "type": "string", "required": false },
+        { "id": "Producer_MailingAddress_CityName", "label": "Producer City", "elabel": "Producer_MailingAddress_CityName", "type": "string", "required": true },
+        { "id": "Producer_MailingAddress_StateOrProvinceCode", "label": "Producer State", "elabel": "Producer_MailingAddress_StateOrProvinceCode", "type": "string", "required": true },
+        { "id": "Producer_MailingAddress_PostalCode", "label": "Producer Zip Code", "elabel": "Producer_MailingAddress_PostalCode", "type": "string", "required": true },
+        { "id": "Producer_ContactPerson_FullName", "label": "Producer Contact Name", "elabel": "Producer_ContactPerson_FullName", "type": "string", "required": false },
+        { "id": "Producer_ContactPerson_PhoneNumber", "label": "Producer Contact Phone", "elabel": "Producer_ContactPerson_PhoneNumber", "type": "string", "required": false },
+        { "id": "Producer_ContactPerson_EmailAddress", "label": "Producer Contact Email", "elabel": "Producer_ContactPerson_EmailAddress", "type": "string", "required": false },
+        { "id": "Producer_FaxNumber", "label": "Producer Fax Number", "elabel": "Producer_FaxNumber", "type": "string", "required": false },
+        { "id": "Producer_CustomerIdentifier", "label": "Producer Customer ID", "elabel": "Producer_CustomerIdentifier", "type": "string", "required": false }
+      ]
+    },
+    "Insurer": {
+      "description": "Insurer information associated with ACORD 125",
+      "fields": [
+        { "id": "Insurer_FullName", "label": "Insurer Name", "elabel": "Insurer_FullName", "type": "string" },
+        { "id": "Insurer_NAICCode", "label": "Insurer NAIC Code", "elabel": "Insurer_NAICCode", "type": "string" },
+        { "id": "Insurer_ProducerIdentifier", "label": "Insurer Producer ID", "elabel": "Insurer_ProducerIdentifier", "type": "string" },
+        { "id": "Insurer_SubProducerIdentifier", "label": "Insurer Sub-Producer ID", "elabel": "Insurer_SubProducerIdentifier", "type": "string" },
+        { "id": "Insurer_ProductCode", "label": "Insurer Product Code", "elabel": "Insurer_ProductCode", "type": "string" },
+        { "id": "Insurer_FacilityIdentifier", "label": "Insurer Facility ID", "elabel": "Insurer_FacilityIdentifier", "type": "string" }
+      ]
+    },
+    "Policy": {
+      "description": "Policy header fields on ACORD 125",
+      "fields": [
+        { "id": "Policy_PolicyNumberIdentifier", "label": "Policy Number", "elabel": "Policy_PolicyNumberIdentifier", "type": "string", "required": true },
+        { "id": "Policy_EffectiveDate", "label": "Policy Effective Date", "elabel": "Policy_EffectiveDate", "type": "date", "required": true },
+        { "id": "Policy_ExpirationDate", "label": "Policy Expiration Date", "elabel": "Policy_ExpirationDate", "type": "date", "required": true }
+      ]
+    },
+    "NamedInsured": {
+      "description": "Named insured information block on ACORD 125 page 1",
+      "fields": [
+        { "id": "NamedInsured_GivenName", "label": "Named Insured Given Name", "elabel": "NamedInsured_GivenName", "type": "string", "required": true },
+        { "id": "NamedInsured_OtherGivenNameInitial", "label": "Named Insured Middle Initial", "elabel": "NamedInsured_OtherGivenNameInitial", "type": "string", "required": false },
+        { "id": "NamedInsured_Surname", "label": "Named Insured Surname", "elabel": "NamedInsured_Surname", "type": "string", "required": true },
+        { "id": "NamedInsured_BirthDate", "label": "Named Insured Birth Date", "elabel": "NamedInsured_BirthDate", "type": "date", "required": false },
+        { "id": "NamedInsured_TaxIdentifier", "label": "Named Insured Tax ID", "elabel": "NamedInsured_TaxIdentifier", "type": "string", "required": false },
+        { "id": "NamedInsured_MaritalStatusCode", "label": "Named Insured Marital Status", "elabel": "NamedInsured_MaritalStatusCode", "type": "string", "required": false },
+        { "id": "NamedInsured_MailingAddress_LineOne", "label": "Mailing Address Line 1", "elabel": "NamedInsured_MailingAddress_LineOne", "type": "string", "required": true },
+        { "id": "NamedInsured_MailingAddress_LineTwo", "label": "Mailing Address Line 2", "elabel": "NamedInsured_MailingAddress_LineTwo", "type": "string", "required": false },
+        { "id": "NamedInsured_MailingAddress_CityName", "label": "Mailing City", "elabel": "NamedInsured_MailingAddress_CityName", "type": "string", "required": true },
+        { "id": "NamedInsured_MailingAddress_StateOrProvinceCode", "label": "Mailing State", "elabel": "NamedInsured_MailingAddress_StateOrProvinceCode", "type": "string", "required": true },
+        { "id": "NamedInsured_MailingAddress_PostalCode", "label": "Mailing Postal Code", "elabel": "NamedInsured_MailingAddress_PostalCode", "type": "string", "required": true },
+        { "id": "NamedInsured_Primary_PhoneNumber", "label": "Primary Phone Number", "elabel": "NamedInsured_Primary_PhoneNumber", "type": "string", "required": false },
+        { "id": "NamedInsured_Secondary_PhoneNumber", "label": "Secondary Phone Number", "elabel": "NamedInsured_Secondary_PhoneNumber", "type": "string", "required": false },
+        { "id": "NamedInsured_Primary_EmailAddress", "label": "Primary Email Address", "elabel": "NamedInsured_Primary_EmailAddress", "type": "string", "required": false },
+        { "id": "NamedInsured_Secondary_EmailAddress", "label": "Secondary Email Address", "elabel": "NamedInsured_Secondary_EmailAddress", "type": "string", "required": false },
+        { "id": "Residence_PreviousAddress_YearCount", "label": "Years at Previous Address", "elabel": "Residence_PreviousAddress_YearCount", "type": "number", "required": false },
+        { "id": "Residence_PreviousAddress_LineOne", "label": "Previous Address Line 1", "elabel": "Residence_PreviousAddress_LineOne", "type": "string", "required": false },
+        { "id": "Residence_PreviousAddress_LineTwo", "label": "Previous Address Line 2", "elabel": "Residence_PreviousAddress_LineTwo", "type": "string", "required": false },
+        { "id": "Residence_PreviousAddress_CityName", "label": "Previous Address City", "elabel": "Residence_PreviousAddress_CityName", "type": "string", "required": false },
+        { "id": "Residence_PreviousAddress_StateOrProvinceCode", "label": "Previous Address State", "elabel": "Residence_PreviousAddress_StateOrProvinceCode", "type": "string", "required": false },
+        { "id": "Residence_PreviousAddress_PostalCode", "label": "Previous Address Postal Code", "elabel": "Residence_PreviousAddress_PostalCode", "type": "string", "required": false },
+        { "id": "NamedInsured_PhysicalAddress_LineOne", "label": "Physical Address Line 1", "elabel": "NamedInsured_PhysicalAddress_LineOne", "type": "string", "required": false },
+        { "id": "NamedInsured_PhysicalAddress_LineTwo", "label": "Physical Address Line 2", "elabel": "NamedInsured_PhysicalAddress_LineTwo", "type": "string", "required": false },
+        { "id": "NamedInsured_PhysicalAddress_CityName", "label": "Physical Address City", "elabel": "NamedInsured_PhysicalAddress_CityName", "type": "string", "required": false },
+        { "id": "NamedInsured_PhysicalAddress_StateOrProvinceCode", "label": "Physical Address State", "elabel": "NamedInsured_PhysicalAddress_StateOrProvinceCode", "type": "string", "required": false },
+        { "id": "NamedInsured_PhysicalAddress_PostalCode", "label": "Physical Address Postal Code", "elabel": "NamedInsured_PhysicalAddress_PostalCode", "type": "string", "required": false },
+        { "id": "Residence_Current_ResidentDate", "label": "Current Residence Move-In Date", "elabel": "Residence_Current_ResidentDate", "type": "date", "required": false },
+        { "id": "NamedInsured_CurrentEmployerYearCount", "label": "Years with Current Employer", "elabel": "NamedInsured_CurrentEmployerYearCount", "type": "number", "required": false },
+        { "id": "Employer_FullName", "label": "Employer Name", "elabel": "Employer_FullName", "type": "string", "required": false },
+        { "id": "Employer_PhysicalAddress_LineOne", "label": "Employer Address Line 1", "elabel": "Employer_PhysicalAddress_LineOne", "type": "string", "required": false },
+        { "id": "Employer_PhysicalAddress_LineTwo", "label": "Employer Address Line 2", "elabel": "Employer_PhysicalAddress_LineTwo", "type": "string", "required": false },
+        { "id": "Employer_PhysicalAddress_CityName", "label": "Employer City", "elabel": "Employer_PhysicalAddress_CityName", "type": "string", "required": false },
+        { "id": "Employer_PhysicalAddress_StateOrProvinceCode", "label": "Employer State", "elabel": "Employer_PhysicalAddress_StateOrProvinceCode", "type": "string", "required": false },
+        { "id": "Employer_PhysicalAddress_PostalCode", "label": "Employer Postal Code", "elabel": "Employer_PhysicalAddress_PostalCode", "type": "string", "required": false },
+        { "id": "NamedInsured_OccupationDescription", "label": "Occupation Description", "elabel": "NamedInsured_OccupationDescription", "type": "string", "required": false },
+        { "id": "NamedInsured_CurrentOccupationYearCount", "label": "Years in Current Occupation", "elabel": "NamedInsured_CurrentOccupationYearCount", "type": "number", "required": false },
+        { "id": "NamedInsured_PreviousEmployerYearCount", "label": "Years with Previous Employer", "elabel": "NamedInsured_PreviousEmployerYearCount", "type": "number", "required": false }
+      ]
+    }
+  }
+}

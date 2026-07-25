@@ -1,0 +1,74 @@
+{
+  "version": "1.0",
+  "timestamp": "2026-07-01T15:20:43.178Z",
+  "pipelineComponents": [
+    {
+      "component": "ingestion",
+      "status": "operational",
+      "testCount": 3,
+      "metrics": {
+        "successRate": 1,
+        "extractedFieldCount": 41,
+        "ocrConfidence": 0.952,
+        "extractionLatency": 90,
+        "failureCount": 0,
+        "testsPassed": 3
+      }
+    },
+    {
+      "component": "routing",
+      "status": "operational",
+      "testCount": 3,
+      "metrics": {
+        "routingAccuracy": 1,
+        "classificationAccuracy": 1,
+        "routingLatency": 25,
+        "carrierRoutingSuccess": 1,
+        "failureCount": 0,
+        "testsPassed": 3
+      }
+    },
+    {
+      "component": "mapping",
+      "status": "operational",
+      "testCount": 3,
+      "metrics": {
+        "mappingAccuracy": 1,
+        "xmlCorrectness": 1,
+        "mappingLatency": 42,
+        "categoryModeMismatchRate": 0.17178,
+        "structuralDeltaCount": 0,
+        "failureCount": 0,
+        "testsPassed": 3
+      }
+    },
+    {
+      "component": "diagnostics",
+      "status": "operational",
+      "testCount": 3,
+      "metrics": {
+        "diagnosticsCoverage": 1,
+        "missingFieldDetection": 1,
+        "diagnosticsLatency": 12,
+        "driftMetrics": 0.0000092,
+        "falsePositiveRate": 0,
+        "failureCount": 0,
+        "testsPassed": 3
+      }
+    },
+    {
+      "component": "strictMode",
+      "status": "operational",
+      "testCount": 3,
+      "metrics": {
+        "failureClassificationAccuracy": 1,
+        "gatingAccuracy": 1,
+        "thresholdEnforcementRate": 1,
+        "strictModeLatency": 18,
+        "strictModeStatus": "PASS",
+        "failureCount": 0,
+        "testsPassed": 3
+      }
+    }
+  ]
+}

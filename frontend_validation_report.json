@@ -1,0 +1,65 @@
+{
+    "timestamp":  "2026-07-15T18:15:55.4064915-04:00",
+    "appServiceName":  "forms-designer",
+    "urls":  {
+                 "root":  {
+                              "method":  "GET",
+                              "url":  "https://forms-designer-f0dpd7ckbwdeh2g0.centralus-01.azurewebsites.net",
+                              "status":  503,
+                              "ok":  false,
+                              "contentLength":  0,
+                              "error":  "The remote server returned an error: (503) Server Unavailable.",
+                              "bodyPreview":  null
+                          },
+                 "designer":  {
+                                  "method":  "GET",
+                                  "url":  "https://forms-designer-f0dpd7ckbwdeh2g0.centralus-01.azurewebsites.net/designer",
+                                  "status":  503,
+                                  "ok":  false,
+                                  "contentLength":  0,
+                                  "error":  "The remote server returned an error: (503) Server Unavailable.",
+                                  "bodyPreview":  null
+                              },
+                 "ingestionTester":  {
+                                         "method":  "GET",
+                                         "url":  "https://forms-designer-f0dpd7ckbwdeh2g0.centralus-01.azurewebsites.net/ingestion-test",
+                                         "status":  503,
+                                         "ok":  false,
+                                         "contentLength":  0,
+                                         "error":  "The remote server returned an error: (503) Server Unavailable.",
+                                         "bodyPreview":  null
+                                     },
+                 "envJs":  {
+                               "method":  "GET",
+                               "url":  "https://forms-designer-f0dpd7ckbwdeh2g0.centralus-01.azurewebsites.net/env.js",
+                               "status":  503,
+                               "ok":  false,
+                               "contentLength":  0,
+                               "error":  "The remote server returned an error: (503) Server Unavailable.",
+                               "bodyPreview":  null
+                           },
+                 "assets":  [
+
+                            ]
+             },
+    "backendConnectivity":  {
+                                "apiBaseUrl":  "https://inchanted-api-production.greenriver-7266e28c.eastus.azurecontainerapps.io",
+                                "extractDocument":  {
+                                                        "ok":  true,
+                                                        "status":  200,
+                                                        "extractionMethod":  "document-intelligence-wave8",
+                                                        "blocks":  380,
+                                                        "mappings":  380
+                                                    },
+                                "mapFields":  {
+                                                  "method":  "POST",
+                                                  "url":  "https://inchanted-api-production.greenriver-7266e28c.eastus.azurecontainerapps.io/api/mapfields",
+                                                  "status":  200,
+                                                  "ok":  true,
+                                                  "contentLength":  8135837,
+                                                  "error":  null,
+                                                  "bodyPreview":  "{\"documentId\":\"frontend-deploy-validation\",\"mappings\":[{\"blockId\":\"p1-l1\",\"page\":1,\"text\":\"®\",\"boundingBox\":{\"x\":110.4768,\"y\":32.0832,\"width\":96,\"height\":96},\"wave9Decision\":null,\"roleClassifierOutput\":{\"predictedRole\":null,\"source\":\"wave8\"},\"familyOntologyResolverOutput\":{\"familyId\":null,\"applied\":"
+                                              },
+                                "wave8UsabilityModeActive":  true
+                            }
+}

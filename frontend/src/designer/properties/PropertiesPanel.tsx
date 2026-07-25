@@ -7,7 +7,7 @@ import {
   type DropdownField,
   useDesignerStore,
 } from "../state/useDesignerStore";
-import type { SemanticFieldType } from "../../../../shared/src/types";
+import type { SemanticFieldType } from "@shared/types";
 import {
   runAcordCodeLookup,
   runAcordSearch,

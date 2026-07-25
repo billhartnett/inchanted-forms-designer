@@ -1,0 +1,40 @@
+{
+  "generatedAt": "2026-07-01T12:52:14.406Z",
+  "phase": "phase3_threshold_tightening",
+  "structuralMissTotals": {
+    "fixtureCount": 18,
+    "replayInputBlocks": 7521,
+    "replayBatchBlocks": 7521,
+    "missingFields": 0,
+    "misclassifications": 0,
+    "geometryMismatches": 0,
+    "categoryModeMismatches": 3097
+  },
+  "rawRates": {
+    "replayCoverageRatio": 1,
+    "missingFieldRate": 0,
+    "misclassificationRate": 0,
+    "geometryMismatchRate": 0,
+    "categoryModeMismatchRate": 0.41178
+  },
+  "tightenedThresholds": {
+    "minReplayCoverageRatio": 0.97,
+    "maxMissingFieldRate": 0.001,
+    "maxMisclassificationRate": 0.001,
+    "maxGeometryMismatchRate": 0.001,
+    "maxCategoryModeMismatchRate": 0.17378
+  },
+  "tightenedChecks": {
+    "replayCoveragePass": true,
+    "missingFieldPass": true,
+    "misclassificationPass": true,
+    "geometryMismatchPass": true,
+    "categoryModeMismatchPass": true
+  },
+  "validationStatus": {
+    "pass": true,
+    "allChecksPassWithTightenedThresholds": true,
+    "noRegressionDetected": true,
+    "allMetricsStable": true
+  }
+}

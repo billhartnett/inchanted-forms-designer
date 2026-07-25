@@ -1,6 +1,6 @@
 import type { Field, MappingPersistencePayload } from "@shared/types";
-import { getAcordOntologyNode } from "../../../shared/src/acord/ontology";
-import { resolveUnificationForCode } from "../../../shared/src/quality";
+import { getAcordOntologyNode } from "@shared/acord/ontology";
+import { resolveUnificationForCode } from "@shared/quality";
 import {
   buildAcordMappings,
   collectAcceptedBindings,

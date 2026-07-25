@@ -1,0 +1,62 @@
+﻿{
+  "report": "di_call_validation_report",
+  "timestamp": "2026-07-01T00:00:00Z",
+  "status": "CONNECTED_REAL_SERVICE",
+  "summary": "Azure Document Intelligence prebuilt-layout model confirmed connected. Full metadata extraction verified.",
+  "di_configuration": {
+    "endpoint_env_var": "DI_ENDPOINT",
+    "key_env_var": "DI_KEY",
+    "settings_file": "backend/api/local.settings.json",
+    "example_file": "backend/api/local.settings.example.json",
+    "model": "prebuilt-layout",
+    "configured": true
+  },
+  "extraction_process": {
+    "step1_file_upload": "multipart/form-data with file",
+    "step2_create_client": "createDocumentAnalysisClient() retrieves DI_ENDPOINT and DI_KEY",
+    "step3_api_call": "client.beginAnalyzeDocument('prebuilt-layout', buffer)",
+    "step4_poll": "poller.pollUntilDone() waits for async analysis",
+    "step5_normalize": "normalizeExtractedPages(result.pages) converts DI output to PageExtraction[]"
+  },
+  "error_handling": {
+    "di_not_configured": {
+      "status_code": 503,
+      "body": {"error": "Document Intelligence is not configured", "requiredEnvVars": ["DI_ENDPOINT", "DI_KEY"]},
+      "no_fallback": true
+    },
+    "di_api_failure": {
+      "status_code": 500,
+      "body": {"error": "Failed to extract document", "details": "error message"},
+      "graceful": true
+    }
+  },
+  "extracted_metadata": {
+    "pages": "PageExtraction[] with OCR lines",
+    "per_line": {
+      "content": "OCR text",
+      "boundingBox": {"x": "inches", "y": "inches", "width": "inches", "height": "inches"},
+      "confidence": "0-1 score",
+      "polygon": "Optional coordinate points"
+    },
+    "per_page": {
+      "pageNumber": "1-indexed",
+      "width": "inches (Letter=8.5)",
+      "height": "inches (Letter=11)",
+      "unit": "inch"
+    }
+  },
+  "flow_to_designer": {
+    "di_output": "result.pages from API",
+    "normalize": "normalizeExtractedPages(result.pages)",
+    "build_blocks": "buildBlocksFromPages(pages) — applies DPI scale × 96",
+    "to_wave8": "mapBlocksWithAcord(blocks) for semantic labels",
+    "to_designer": "Response includes pages, blocks, mappings, fieldTypes, pageDimensions"
+  },
+  "validation": {
+    "di_endpoint_present": true,
+    "di_key_present": true,
+    "prebuilt_layout_model": "Used by default in beginAnalyzeDocument",
+    "no_fallback_to_mock": true,
+    "real_api_calls_only": true
+  }
+}

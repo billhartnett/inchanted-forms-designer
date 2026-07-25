@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import {
   getAcordOntology,
   validateOntologySelection,
-} from "../../../shared/src/acord/ontology";
+} from "@shared/acord/ontology";
 import { useMappingStore, useSelectedFieldMapping } from "../state";
 
 function downloadJson(fileName: string, payload: unknown) {

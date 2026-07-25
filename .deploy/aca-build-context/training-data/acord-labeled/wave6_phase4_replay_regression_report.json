@@ -1,0 +1,38 @@
+{
+  "generatedAt": "2026-07-01T13:01:06.831Z",
+  "phase": "phase4_diagnostics_stabilization",
+  "mode": "diagnostics_stabilization",
+  "regressionCount": 0,
+  "regressionMetrics": {
+    "categoryModeMismatchRateRegression": false,
+    "structuralDeltaRegression": false,
+    "validationCheckRegression": false
+  },
+  "phase3ToPhase4Changes": {
+    "phase3RawRates": {
+      "replayCoverageRatio": 1,
+      "missingFieldRate": 0,
+      "misclassificationRate": 0,
+      "geometryMismatchRate": 0,
+      "categoryModeMismatchRate": 0.41178
+    },
+    "phase4RawRates": {
+      "replayCoverageRatio": 1,
+      "missingFieldRate": 0,
+      "misclassificationRate": 0,
+      "geometryMismatchRate": 0,
+      "categoryModeMismatchRate": 0.41178
+    },
+    "phase3AdjustedRates": {},
+    "categoryModeMismatchChange": 0,
+    "structuralDeltaChange": 0
+  },
+  "diagnosticsCoverage": 1,
+  "validationStatus": {
+    "pass": true,
+    "allChecksPass": true,
+    "noRegressionDetected": true,
+    "allMetricsStable": true,
+    "diagnosticsCoverageThreshold": true
+  }
+}

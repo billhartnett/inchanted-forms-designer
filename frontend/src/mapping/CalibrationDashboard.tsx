@@ -2,12 +2,12 @@ import { useMemo, useState } from "react";
 import {
   createDefaultCalibrationProfile,
   evaluateMappingQuality,
-} from "../../../shared/src/quality";
+} from "@shared/quality";
 import type {
   CalibrationProfile,
   MappingPersistencePayload,
   ReviewConfidenceThresholds,
-} from "../../../shared/src/types";
+} from "@shared/types";
 import { useDesignerStore } from "../designer/state/useDesignerStore";
 import { useExtractionStore } from "../state/extractionStore";
 import { useMappingStore } from "../state/mappingStore";

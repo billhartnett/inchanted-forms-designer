@@ -1,0 +1,13 @@
+$schema: https://azuremlschemas.azureedge.net/latest/managedOnlineDeployment.schema.json
+name: blue
+endpoint_name: layoutlm-prod-eus
+instance_type: Standard_DS1_v2
+instance_count: 1
+request_settings:
+  request_timeout_ms: 120000
+environment:
+  image: mcr.microsoft.com/azureml/minimal-ubuntu20.04-py38-cpu-inference:latest
+  conda_file: conda.yml
+code_configuration:
+  code: code
+  scoring_script: score.py

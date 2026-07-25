@@ -1,0 +1,48 @@
+{
+    "timestamp":  "2026-07-15T18:15:55.3700359-04:00",
+    "appServiceName":  "forms-designer",
+    "resourceGroup":  "inchanted-forms-rg",
+    "appServiceHostName":  "forms-designer-f0dpd7ckbwdeh2g0.centralus-01.azurewebsites.net",
+    "deploymentMethod":  "Kudu zipdeploy single-shot",
+    "deploymentEndpoint":  "https://forms-designer-f0dpd7ckbwdeh2g0.scm.centralus-01.azurewebsites.net/api/zipdeploy",
+    "deploymentTransport":  "kudu_zipdeploy_api",
+    "packagePath":  "f:\\inchanted-forms-designer\\.deploy\\frontend-single-shot\\forms-designer-frontend.zip",
+    "runtime":  {
+                    "nodeVersion":  "~22",
+                    "runtimeRequirement":  "Node 20+",
+                    "runtimeRequirementSatisfied":  true,
+                    "runtimeConfigMode":  "window.__APP_CONFIG__.API_BASE_URL",
+                    "compileTimeViteApiBaseUsed":  false
+                },
+    "buildChecks":  {
+                        "indexHtml":  true,
+                        "runtimeEnvLoader":  true,
+                        "assetCount":  8,
+                        "designerAssetsDetected":  true,
+                        "ingestionTesterAssetsDetected":  true
+                    },
+    "appSettings":  {
+                        "API_BASE_URL":  "https://inchanted-api-production.greenriver-7266e28c.eastus.azurecontainerapps.io",
+                        "matchesExpected":  true
+                    },
+    "zipDeploy":  {
+                      "status":  4,
+                      "statusText":  "",
+                      "progress":  "",
+                      "complete":  true
+                  },
+    "wwwroot":  {
+                    "contains_index_html":  true,
+                    "contains_env_js":  true,
+                    "contains_assets_dir":  true,
+                    "entries":  [
+                                    "acord-dictionary.json",
+                                    "assets",
+                                    "env.js",
+                                    "favicon.svg",
+                                    "icons.svg",
+                                    "index.html",
+                                    "web.config"
+                                ]
+                }
+}

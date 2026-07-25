@@ -1,0 +1,46 @@
+@import "@fontsource-variable/geist";
+
+:root {
+  font-family:
+    Geist Variable,
+    "Segoe UI",
+    Arial,
+    sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  width: 100%;
+  min-height: 100vh;
+}
+
+body {
+  color: #0f172a;
+  background: #f8fafc;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #0f172a;
+  padding: 0.45rem 0.65rem;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #f1f5f9;
+}

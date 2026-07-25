@@ -1,0 +1,160 @@
+{
+  "version": "wave9.frontend.v1",
+  "contractVersion": "wave8.v1",
+  "envelope": {
+    "success": {
+      "ok": "boolean",
+      "status": "number",
+      "data": "object|array|null",
+      "error": null,
+      "errorEnvelope": null,
+      "contract": {
+        "version": "wave8.v1",
+        "path": "string",
+        "status": "number",
+        "ok": "boolean",
+        "timestamp": "ISO-8601"
+      },
+      "meta": {
+        "contractVersion": "wave8.v1"
+      }
+    },
+    "failure": {
+      "ok": false,
+      "status": "number",
+      "data": null,
+      "error": "string",
+      "errorEnvelope": {
+        "code": "string",
+        "message": "string",
+        "details": "object|null"
+      },
+      "contract": {
+        "version": "wave8.v1",
+        "path": "string",
+        "status": "number",
+        "ok": false,
+        "timestamp": "ISO-8601"
+      },
+      "meta": {
+        "contractVersion": "wave8.v1"
+      }
+    }
+  },
+  "endpoints": {
+    "contracts": {
+      "method": "GET",
+      "path": "/api/wave9/contracts"
+    },
+    "acordExtraction": {
+      "method": "POST",
+      "path": "/api/wave9/acord/extraction"
+    },
+    "semanticInference": {
+      "method": "POST",
+      "path": "/api/wave9/acord/semantic-inference"
+    },
+    "semanticSummary": {
+      "method": "POST",
+      "path": "/api/wave9/semantic-summary"
+    },
+    "acordValidate": {
+      "method": "POST",
+      "path": "/api/wave9/acord/validate"
+    },
+    "inference": {
+      "method": "POST",
+      "path": "/api/wave9/inference"
+    },
+    "arbitration": {
+      "method": "POST",
+      "path": "/api/wave9/arbitration"
+    },
+    "arbitrationTrace": {
+      "method": "POST",
+      "path": "/api/wave9/arbitration/trace"
+    },
+    "normalization": {
+      "method": "POST",
+      "path": "/api/wave9/normalization"
+    },
+    "scoring": {
+      "method": "POST",
+      "path": "/api/wave9/scoring"
+    },
+    "preview": {
+      "method": "POST",
+      "path": "/api/wave9/preview"
+    },
+    "mappingFlow": {
+      "method": "POST",
+      "path": "/api/wave9/mapping/flow"
+    }
+  },
+  "payloadFormats": {
+    "inferenceRequest": {
+      "submissionId": "string",
+      "fields": [
+        {
+          "id": "string",
+          "label": "string",
+          "value": "unknown",
+          "page": "number"
+        }
+      ],
+      "context": {
+        "carrier": "string",
+        "formId": "string",
+        "jurisdiction": "string"
+      }
+    },
+    "acordMapping": {
+      "acordCode": "string",
+      "acordLabel": "string",
+      "confidence": "number",
+      "sourceFieldId": "string"
+    },
+    "arbitrationOutput": {
+      "decision": "string",
+      "winningCandidate": "object|null",
+      "alternatives": [
+        {
+          "reason": "string",
+          "candidate": "object"
+        }
+      ]
+    },
+    "normalizationOutput": {
+      "normalizedFields": [
+        {
+          "id": "string",
+          "canonicalValue": "unknown",
+          "transforms": [
+            "string"
+          ]
+        }
+      ]
+    },
+    "scoringOutput": {
+      "totalScore": "number",
+      "factors": [
+        {
+          "name": "string",
+          "score": "number",
+          "weight": "number"
+        }
+      ]
+    },
+    "previewOutput": {
+      "preview": {
+        "xml": "string",
+        "warnings": [
+          "string"
+        ],
+        "artifacts": [
+          "object"
+        ]
+      }
+    }
+  }
+}

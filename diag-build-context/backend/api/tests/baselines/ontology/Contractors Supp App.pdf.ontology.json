@@ -1,0 +1,19 @@
+{
+  "fixtureId": "Contractors Supp App.pdf",
+  "ontology": {
+    "ontologyId": "acord-canonical-ontology",
+    "ontologyVersion": "2026.06.10",
+    "ontologyHash": "c653ca94",
+    "selectedCodeCount": 52,
+    "valid": true,
+    "issues": []
+  },
+  "transferability": {
+    "transferabilityScore": 1,
+    "confidenceDrift": 0,
+    "rationaleSignalDrift": 0.001893,
+    "candidateStabilityDrift": 0.814077
+  },
+  "familyId": "contractors-supplement",
+  "familySignatureHash": "79593ad0"
+}

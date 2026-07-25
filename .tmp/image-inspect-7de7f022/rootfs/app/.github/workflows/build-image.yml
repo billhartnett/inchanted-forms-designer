@@ -1,0 +1,124 @@
+name: Build Image
+
+on:
+  push:
+    branches: [main]
+    tags:
+      - "v*"
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate required image build secrets
+        id: prereq
+        shell: bash
+        env:
+          AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+          ACR_NAME: ${{ secrets.ACR_NAME }}
+          ACR_LOGIN_SERVER: ${{ secrets.ACR_LOGIN_SERVER }}
+        run: |
+          set -euo pipefail
+          MISSING=0
+          if [[ -z "${AZURE_CREDENTIALS}" ]]; then
+            echo "Missing required secret: AZURE_CREDENTIALS"
+            MISSING=1
+          fi
+          if [[ -z "${ACR_NAME}" ]]; then
+            echo "Missing required secret: ACR_NAME"
+            MISSING=1
+          fi
+          if [[ -z "${ACR_LOGIN_SERVER}" ]]; then
+            echo "Missing required secret: ACR_LOGIN_SERVER"
+            MISSING=1
+          fi
+
+          if [[ "${MISSING}" -eq 1 ]]; then
+            echo "should_skip=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          echo "should_skip=false" >> "$GITHUB_OUTPUT"
+
+      - name: Skip build when required secrets are missing
+        if: ${{ steps.prereq.outputs.should_skip == 'true' }}
+        run: |
+          echo "Skipping image build because required secrets are not configured."
+          echo "Expected secrets: AZURE_CREDENTIALS, ACR_NAME, ACR_LOGIN_SERVER"
+
+      - name: Azure login
+        if: ${{ steps.prereq.outputs.should_skip != 'true' }}
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Setup Docker Buildx
+        if: ${{ steps.prereq.outputs.should_skip != 'true' }}
+        uses: docker/setup-buildx-action@v3
+
+      - name: ACR login
+        if: ${{ steps.prereq.outputs.should_skip != 'true' }}
+        run: az acr login --name "${{ secrets.ACR_NAME }}"
+
+      - name: Resolve image metadata
+        if: ${{ steps.prereq.outputs.should_skip != 'true' }}
+        id: meta
+        shell: bash
+        run: |
+          set -euo pipefail
+          SHA_TAG="sha-${GITHUB_SHA::12}"
+          IMAGE_REPO="${{ secrets.ACR_LOGIN_SERVER }}/wave9-backend-api"
+          if [[ "${GITHUB_REF}" == refs/tags/v* ]]; then
+            SEMVER_TAG="${GITHUB_REF_NAME}"
+          else
+            SEMVER_TAG=""
+          fi
+          echo "image_repo=${IMAGE_REPO}" >> "$GITHUB_OUTPUT"
+          echo "sha_tag=${SHA_TAG}" >> "$GITHUB_OUTPUT"
+          echo "semver_tag=${SEMVER_TAG}" >> "$GITHUB_OUTPUT"
+
+      - name: Build and push backend/api Docker image
+        if: ${{ steps.prereq.outputs.should_skip != 'true' }}
+        id: build
+        shell: bash
+        run: |
+          set -euo pipefail
+          IMAGE_REPO="${{ steps.meta.outputs.image_repo }}"
+          SHA_TAG="${{ steps.meta.outputs.sha_tag }}"
+          SEMVER_TAG="${{ steps.meta.outputs.semver_tag }}"
+
+          TAG_ARGS=( -t "${IMAGE_REPO}:${SHA_TAG}" )
+          if [[ -n "${SEMVER_TAG}" ]]; then
+            TAG_ARGS+=( -t "${IMAGE_REPO}:${SEMVER_TAG}" )
+          fi
+
+          docker buildx build \
+            --push \
+            --file backend/api/Dockerfile \
+            "${TAG_ARGS[@]}" \
+            --iidfile image.iid \
+            .
+
+          DIGEST="$(cat image.iid | sed 's/^.*@//')"
+          if [[ "${DIGEST}" != sha256:* ]]; then
+            echo "Digest format not recognized: ${DIGEST}" >&2
+            exit 1
+          fi
+
+          echo "digest=${DIGEST}" >> "$GITHUB_OUTPUT"
+          printf "image_repo=%s\nsha_tag=%s\nsemver_tag=%s\ndigest=%s\n" \
+            "${IMAGE_REPO}" "${SHA_TAG}" "${SEMVER_TAG}" "${DIGEST}" > image-digest.txt
+
+      - name: Upload image digest artifact
+        if: ${{ steps.prereq.outputs.should_skip != 'true' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-image-digest
+          path: image-digest.txt

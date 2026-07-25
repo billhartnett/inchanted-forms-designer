@@ -1,0 +1,22 @@
+{
+  "timestamp": "2026-07-01T13:38:46.837Z",
+  "batchCount": 0,
+  "wave7Baseline": {
+    "avgLatencyMs": 0,
+    "p95LatencyMs": 0,
+    "p99LatencyMs": 0,
+    "avgThroughputBlocksPerSec": 0
+  },
+  "wave8Optimized": {
+    "avgLatencyMs": 0,
+    "p95LatencyMs": 0,
+    "p99LatencyMs": 0,
+    "avgThroughputBlocksPerSec": 0
+  },
+  "improvements": {
+    "avgLatency": "100.00%",
+    "p95Latency": "100.00%",
+    "p99Latency": "100.00%",
+    "throughput": "-100.00%"
+  }
+}

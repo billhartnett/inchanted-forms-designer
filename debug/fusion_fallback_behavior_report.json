@@ -1,0 +1,360 @@
+{
+  "timestamp": "2026-07-13T20:17:46.794Z",
+  "documentId": "sample-Acord-125.pdf",
+  "totalBlocks": 854,
+  "mappingsCount": 854,
+  "confidenceOnlyFallbackCount": 795,
+  "syntheticFallbackCount": 5,
+  "fallbackSamples": [
+    {
+      "blockId": "p1-l2",
+      "page": 1,
+      "fallbackReason": "confidence_only_fallback",
+      "topCandidateCode": "CommercialPropertyCoverage_PeakSeasonAdditional_FormDate",
+      "topCandidateConfidence": 0.62
+    },
+    {
+      "blockId": "p1-l4",
+      "page": 1,
+      "fallbackReason": "confidence_only_fallback",
+      "topCandidateCode": "Producer_FullName",
+      "topCandidateConfidence": 0.736
+    },
+    {
+      "blockId": "p1-l5",
+      "page": 1,
+      "fallbackReason": "confidence_only_fallback",
+      "topCandidateCode": null,
+      "topCandidateConfidence": 0
+    },
+    {
+      "blockId": "p1-l6",
+      "page": 1,
+      "fallbackReason": "confidence_only_fallback",
+      "topCandidateCode": null,
+      "topCandidateConfidence": 0
+    },
+    {
+      "blockId": "p1-l7",
+      "page": 1,
+      "fallbackReason": "confidence_only_fallback",
+      "topCandidateCode": null,
+      "topCandidateConfidence": 0
+    },
+    {
+      "blockId": "p1-l8",
+      "page": 1,
+      "fallbackReason": "confidence_only_fallback",
+      "topCandidateCode": "Client_NAICSCode",
+      "topCandidateConfidence": 0.62
+    },
+    {
+      "blockId": "p1-l9",
+      "page": 1,
+      "fallbackReason": "confidence_only_fallback",
+      "topCandidateCode": "AdditionalInterest_MailingAddress_CityName",
+      "topCandidateConfidence": 0.62
+    },
+    {
+      "blockId": "p1-l10",
+      "page": 1,
+      "fallbackReason": "confidence_only_fallback",
+      "topCandidateCode": null,
+      "topCandidateConfidence": 0
+    },
+    {
+      "blockId": "p1-l11",
+      "page": 1,
+      "fallbackReason": "confidence_only_fallback",
+      "topCandidateCode": "Policy_PolicyNumberIdentifier",
+      "topCandidateConfidence": 0.969
+    },
+    {
+      "blockId": "p1-l12",
+      "page": 1,
+      "fallbackReason": "confidence_only_fallback",
+      "topCandidateCode": "NamedInsured_MailingAddress_CityName",
+      "topCandidateConfidence": 0.894
+    },
+    {
+      "blockId": "p1-l13",
+      "page": 1,
+      "fallbackReason": "confidence_only_fallback",
+      "topCandidateCode": "Client_MarketingObjective",
+      "topCandidateConfidence": 0.46
+    },
+    {
+      "blockId": "p1-l14",
+      "page": 1,
+      "fallbackReason": "confidence_only_fallback",
+      "topCandidateCode": "Client_MarketingObjective",
+      "topCandidateConfidence": 0.46
+    },
+    {
+      "blockId": "p1-l15",
+      "page": 1,
+      "fallbackReason": "confidence_only_fallback",
+      "topCandidateCode": "NamedInsured_MailingAddress_StateOrProvinceCode",
+      "topCandidateConfidence": 0.895
+    },
+    {
+      "blockId": "p1-l16",
+      "page": 1,
+      "fallbackReason": "confidence_only_fallback",
+      "topCandidateCode": "NamedInsured_MailingAddress_PostalCode",
+      "topCandidateConfidence": 0.906
+    },
+    {
+      "blockId": "p1-l17",
+      "page": 1,
+      "fallbackReason": "confidence_only_fallback",
+      "topCandidateCode": "EquipmentFloaterInformation_ApplicationOperatingEquipmentNotListedExplanation",
+      "topCandidateConfidence": 0.46
+    },
+    {
+      "blockId": "p1-l18",
+      "page": 1,
+      "fallbackReason": "confidence_only_fallback",
+      "topCandidateCode": "GarageAndDealers_AnnualGallonsPumpedCount",
+      "topCandidateConfidence": 0.46
+    },
+    {
+      "blockId": "p1-l19",
+      "page": 1,
+      "fallbackReason": "confidence_only_fallback",
+      "topCandidateCode": "BuildingImprovement_WiringUpdatedNoIndicated",
+      "topCandidateConfidence": 0.46
+    },
+    {
+      "blockId": "p1-l20",
+      "page": 1,
+      "fallbackReason": "confidence_only_fallback",
+      "topCandidateCode": "Client_MarketingObjective",
+      "topCandidateConfidence": 0.46
+    },
+    {
+      "blockId": "p1-l21",
+      "page": 1,
+      "fallbackReason": "confidence_only_fallback",
+      "topCandidateCode": "AdditionalInterest_CellPhoneNumber",
+      "topCandidateConfidence": 0.717
+    },
+    {
+      "blockId": "p1-l22",
+      "page": 1,
+      "fallbackReason": "confidence_only_fallback",
+      "topCandidateCode": "Client_MarketingObjective",
+      "topCandidateConfidence": 0.46
+    },
+    {
+      "blockId": "p1-l23",
+      "page": 1,
+      "fallbackReason": "confidence_only_fallback",
+      "topCandidateCode": "Client_MarketingObjective",
+      "topCandidateConfidence": 0.46
+    },
+    {
+      "blockId": "p1-l24",
+      "page": 1,
+      "fallbackReason": "confidence_only_fallback",
+      "topCandidateCode": "Property_AccidentalDamage_DeductibleAmount",
+      "topCandidateConfidence": 0.46
+    },
+    {
+      "blockId": "p1-l25",
+      "page": 1,
+      "fallbackReason": "confidence_only_fallback",
+      "topCandidateCode": "BuildersRiskInstallation_GrossReceiptsInformation_LastYearGrossSalesAmount",
+      "topCandidateConfidence": 0.46
+    },
+    {
+      "blockId": "p1-l27",
+      "page": 1,
+      "fallbackReason": "confidence_only_fallback",
+      "topCandidateCode": "AircraftLossNotice_ACORDForm_RemarkText",
+      "topCandidateConfidence": 0.62
+    },
+    {
+      "blockId": "p1-l28",
+      "page": 1,
+      "fallbackReason": "confidence_only_fallback",
+      "topCandidateCode": "Client_MarketingObjective",
+      "topCandidateConfidence": 0.46
+    },
+    {
+      "blockId": "p1-l29",
+      "page": 1,
+      "fallbackReason": "confidence_only_fallback",
+      "topCandidateCode": "Client_MarketingObjective",
+      "topCandidateConfidence": 0.46
+    },
+    {
+      "blockId": "p1-l30",
+      "page": 1,
+      "fallbackReason": "confidence_only_fallback",
+      "topCandidateCode": "Client_MarketingObjective",
+      "topCandidateConfidence": 0.46
+    },
+    {
+      "blockId": "p1-l31",
+      "page": 1,
+      "fallbackReason": "confidence_only_fallback",
+      "topCandidateCode": "AdditionalInterest_Primary_FaxNumber",
+      "topCandidateConfidence": 0.701
+    },
+    {
+      "blockId": "p1-l32",
+      "page": 1,
+      "fallbackReason": "confidence_only_fallback",
+      "topCandidateCode": "GlassAndSign_Glass_ClassTypeCode",
+      "topCandidateConfidence": 0.46
+    },
+    {
+      "blockId": "p1-l33",
+      "page": 1,
+      "fallbackReason": "confidence_only_fallback",
+      "topCandidateCode": "Policy_SectionAttached_ElectronicDataProcessingIndicator",
+      "topCandidateConfidence": 0.46
+    },
+    {
+      "blockId": "p1-l34",
+      "page": 1,
+      "fallbackReason": "confidence_only_fallback",
+      "topCandidateCode": "BoilerAndMachineryCoverage_AmmoniaContamination_LimitAmount",
+      "topCandidateConfidence": 0.46
+    },
+    {
+      "blockId": "p1-l36",
+      "page": 1,
+      "fallbackReason": "confidence_only_fallback",
+      "topCandidateCode": "Employee_MailingAddress_CityName",
+      "topCandidateConfidence": 0.46
+    },
+    {
+      "blockId": "p1-l37",
+      "page": 1,
+      "fallbackReason": "confidence_only_fallback",
+      "topCandidateCode": "AccountsReceivableCoverage_Coinsurance_FireContentsRate",
+      "topCandidateConfidence": 0.46
+    },
+    {
+      "blockId": "p1-l38",
+      "page": 1,
+      "fallbackReason": "confidence_only_fallback",
+      "topCandidateCode": "Client_MarketingObjective",
+      "topCandidateConfidence": 0.46
+    },
+    {
+      "blockId": "p1-l39",
+      "page": 1,
+      "fallbackReason": "confidence_only_fallback",
+      "topCandidateCode": "Client_MarketingObjective",
+      "topCandidateConfidence": 0.46
+    },
+    {
+      "blockId": "p1-l40",
+      "page": 1,
+      "fallbackReason": "confidence_only_fallback",
+      "topCandidateCode": "CommercialCoverage_AdditionalIncreaseCostOfWorking_DeclaredValueLimitAmount",
+      "topCandidateConfidence": 0.46
+    },
+    {
+      "blockId": "p1-l41",
+      "page": 1,
+      "fallbackReason": "confidence_only_fallback",
+      "topCandidateCode": "Client_MarketingObjective",
+      "topCandidateConfidence": 0.46
+    },
+    {
+      "blockId": "p1-l42",
+      "page": 1,
+      "fallbackReason": "confidence_only_fallback",
+      "topCandidateCode": "WorkersCompensation_AdditionalClassCodesIndicator",
+      "topCandidateConfidence": 0.46
+    },
+    {
+      "blockId": "p1-l43",
+      "page": 1,
+      "fallbackReason": "confidence_only_fallback",
+      "topCandidateCode": "AdditionalInterest_MailingAddress_CityName",
+      "topCandidateConfidence": 0.62
+    },
+    {
+      "blockId": "p1-l44",
+      "page": 1,
+      "fallbackReason": "confidence_only_fallback",
+      "topCandidateCode": "ValuablePapersInformation_PapersReplacedNoIndicator",
+      "topCandidateConfidence": 0.46
+    },
+    {
+      "blockId": "p1-l45",
+      "page": 1,
+      "fallbackReason": "confidence_only_fallback",
+      "topCandidateCode": "GeneralLiability_AdditionalInsured_ClaimsNotCoveredYesIndicator",
+      "topCandidateConfidence": 0.46
+    },
+    {
+      "blockId": "p1-l46",
+      "page": 1,
+      "fallbackReason": "confidence_only_fallback",
+      "topCandidateCode": "Client_MarketingObjective",
+      "topCandidateConfidence": 0.46
+    },
+    {
+      "blockId": "p1-l47",
+      "page": 1,
+      "fallbackReason": "confidence_only_fallback",
+      "topCandidateCode": "Client_MarketingObjective",
+      "topCandidateConfidence": 0.46
+    },
+    {
+      "blockId": "p1-l48",
+      "page": 1,
+      "fallbackReason": "confidence_only_fallback",
+      "topCandidateCode": "Client_MarketingObjective",
+      "topCandidateConfidence": 0.46
+    },
+    {
+      "blockId": "p1-l49",
+      "page": 1,
+      "fallbackReason": "confidence_only_fallback",
+      "topCandidateCode": "CommercialPropertyCoverage_CrimeEmployeeDishonesty_DeductibleAmount",
+      "topCandidateConfidence": 0.46
+    },
+    {
+      "blockId": "p1-l50",
+      "page": 1,
+      "fallbackReason": "confidence_only_fallback",
+      "topCandidateCode": "Vehicle_BusinessAutoSymbol_EightIndicator",
+      "topCandidateConfidence": 0.46
+    },
+    {
+      "blockId": "p1-l51",
+      "page": 1,
+      "fallbackReason": "confidence_only_fallback",
+      "topCandidateCode": "Binder_ExcessUmbrella_CoverageFormsDescription",
+      "topCandidateConfidence": 0.46
+    },
+    {
+      "blockId": "p1-l52",
+      "page": 1,
+      "fallbackReason": "confidence_only_fallback",
+      "topCandidateCode": "AccidentConviction_AccidentViolationCode",
+      "topCandidateConfidence": 0.739
+    },
+    {
+      "blockId": "p1-l53",
+      "page": 1,
+      "fallbackReason": "confidence_only_fallback",
+      "topCandidateCode": "AirportFBO_SubrogationWaivedCode",
+      "topCandidateConfidence": 0.78
+    },
+    {
+      "blockId": "p1-l54",
+      "page": 1,
+      "fallbackReason": "confidence_only_fallback",
+      "topCandidateCode": "Client_MarketingObjective",
+      "topCandidateConfidence": 0.46
+    }
+  ]
+}

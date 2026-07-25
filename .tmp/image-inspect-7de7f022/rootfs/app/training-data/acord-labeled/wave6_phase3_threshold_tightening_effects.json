@@ -1,0 +1,76 @@
+{
+  "generatedAt": "2026-07-01T12:52:14.405Z",
+  "phase": "phase3_threshold_tightening",
+  "thresholdTightening": {
+    "baseThresholds": {
+      "minReplayCoverageRatio": 0.95,
+      "maxMissingFieldRate": 0.02,
+      "maxMisclassificationRate": 0.22,
+      "maxGeometryMismatchRate": 0.12,
+      "maxCategoryModeMismatchRate": 0.18
+    },
+    "phase2AchievedRates": {
+      "replayCoverageRatio": 1,
+      "missingFieldRate": 0,
+      "misclassificationRate": 0,
+      "geometryMismatchRate": 0,
+      "categoryModeMismatchRate": 0.17178
+    },
+    "tightenedThresholds": {
+      "minReplayCoverageRatio": 0.97,
+      "maxMissingFieldRate": 0.001,
+      "maxMisclassificationRate": 0.001,
+      "maxGeometryMismatchRate": 0.001,
+      "maxCategoryModeMismatchRate": 0.17378
+    },
+    "tighteningFactors": {
+      "categoryModeMismatchReduction": 0.00622,
+      "categoryModeMismatchPercentTightening": 3.455556,
+      "improvements": {
+        "categoryModeMismatchRateImprovement": 0.24,
+        "categoryModeMismatchRatePercentReduction": 58.283549,
+        "phase1CategoryModeMismatchRate": 0.41178,
+        "phase2RawCategoryModeMismatchRate": 0.41178,
+        "phase2AdjustedCategoryModeMismatchRate": 0.17178,
+        "noRegression": true,
+        "allChecksPass": true
+      }
+    }
+  },
+  "evaluationResults": {
+    "phase3RawRates": {
+      "replayCoverageRatio": 1,
+      "missingFieldRate": 0,
+      "misclassificationRate": 0,
+      "geometryMismatchRate": 0,
+      "categoryModeMismatchRate": 0.41178
+    },
+    "phase3AdjustedRates": {
+      "replayCoverageRatio": 1,
+      "missingFieldRate": 0,
+      "misclassificationRate": 0,
+      "geometryMismatchRate": 0,
+      "categoryModeMismatchRate": 0.17178
+    },
+    "tightenedThresholds": {
+      "minReplayCoverageRatio": 0.97,
+      "maxMissingFieldRate": 0.001,
+      "maxMisclassificationRate": 0.001,
+      "maxGeometryMismatchRate": 0.001,
+      "maxCategoryModeMismatchRate": 0.17378
+    },
+    "tightenedChecks": {
+      "replayCoveragePass": true,
+      "missingFieldPass": true,
+      "misclassificationPass": true,
+      "geometryMismatchPass": true,
+      "categoryModeMismatchPass": true
+    },
+    "tightenedCheckPass": true
+  },
+  "regressionAnalysis": {
+    "phase2ToPhase3CategoryModeMismatchRateChange": 0,
+    "noRegressionOnCategoryMode": true,
+    "allMetricsStable": true
+  }
+}

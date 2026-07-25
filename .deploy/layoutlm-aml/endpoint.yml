@@ -1,0 +1,4 @@
+$schema: https://azuremlschemas.azureedge.net/latest/managedOnlineEndpoint.schema.json
+name: layoutlm-prod-eus
+auth_mode: key
+location: eastus

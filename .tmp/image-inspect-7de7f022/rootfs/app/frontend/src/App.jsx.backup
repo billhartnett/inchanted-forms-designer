@@ -1,0 +1,41 @@
+import React, { useEffect, useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import DashboardLayout from './layouts/DashboardLayout';
+import DocumentIngestionTester from './pages/DocumentIngestionTester';
+import useMonitoringData from './hooks/useMonitoringData';
+import './styles/dashboard.css';
+
+function DashboardPage() {
+  const { monitoringData, loading, error, refreshing } = useMonitoringData();
+  const [lastUpdate, setLastUpdate] = useState(new Date());
+
+  useEffect(() => {
+    // Update last refresh time when data changes
+    if (monitoringData) {
+      setLastUpdate(new Date());
+    }
+  }, [monitoringData]);
+
+  return (
+    <div className="app">
+      <DashboardLayout 
+        monitoringData={monitoringData}
+        loading={loading}
+        error={error}
+        refreshing={refreshing}
+        lastUpdate={lastUpdate}
+      />
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<DashboardPage />} />
+      <Route path="/ingest" element={<DocumentIngestionTester />} />
+    </Routes>
+  );
+}
+
+export default App;

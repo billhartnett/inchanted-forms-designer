@@ -1,4 +1,4 @@
-import type { Field } from "../../../shared/src/types";
+import type { Field } from "@shared/types";
 
 export interface FieldCatalog {
   [fieldId: string]: {

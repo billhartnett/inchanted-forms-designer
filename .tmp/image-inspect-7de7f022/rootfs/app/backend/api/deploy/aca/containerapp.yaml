@@ -1,0 +1,49 @@
+name: inchanted-api
+location: eastus
+properties:
+  environmentId: /subscriptions/<SUBSCRIPTION_ID>/resourceGroups/<RG>/providers/Microsoft.App/managedEnvironments/<ACA_ENV_NAME>
+  configuration:
+    ingress:
+      external: true
+      targetPort: 8080
+      transport: auto
+      traffic:
+        - latestRevision: true
+          weight: 100
+    registries:
+      - server: <ACR_NAME>.azurecr.io
+        identity: system
+  template:
+    revisionSuffix: wave9-express
+    containers:
+      - name: backend-api
+        image: <ACR_NAME>.azurecr.io/wave9-backend-api:<TAG>
+        env:
+          - name: NODE_ENV
+            value: production
+          - name: PORT
+            value: "8080"
+          - name: BUILD_TIMESTAMP
+            value: "<BUILD_TIMESTAMP_ISO8601>"
+          - name: GIT_COMMIT_HASH
+            value: "<GIT_COMMIT_SHA>"
+          - name: WAVE9_ENGINE_VERSION
+            value: "<WAVE9_ENGINE_VERSION>"
+          - name: AZURE_STORAGE_CONNECTION_STRING
+            secretRef: azure-storage-connection-string
+          - name: OPENAI_ENDPOINT
+            secretRef: openai-endpoint
+          - name: OPENAI_API_KEY
+            secretRef: openai-api-key
+          - name: EMBEDDING_MODEL
+            value: "text-embedding-3-large"
+          - name: DI_ENDPOINT
+            secretRef: di-endpoint
+          - name: DI_KEY
+            secretRef: di-key
+        resources:
+          cpu: 1.0
+          memory: 2Gi
+    scale:
+      minReplicas: 1
+      maxReplicas: 4

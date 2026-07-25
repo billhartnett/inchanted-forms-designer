@@ -1,6 +1,5 @@
 import type { AcordDictionaryEntry } from "./acordTypes";
 import * as acordOntology from "./ontology";
-import { getAcordOntologyNode } from "./ontology";
 import { ACORD_ONTOLOGY_REGISTRY } from "./acord-ontology";
 
 export type FieldPrediction = {
@@ -351,8 +350,8 @@ export function gateField(prediction: FieldPrediction, context?: GateContext): G
   const family = inferFamilyFromCode(code);
   const aliases = unique([
     code,
-    ...(getAcordOntologyNode(code)?.aliases || []),
-    ...(getAcordOntologyNode(code)?.synonyms || []),
+    ...(acordOntology.getAcordOntologyNode(code)?.aliases || []),
+    ...(acordOntology.getAcordOntologyNode(code)?.synonyms || []),
   ]);
 
   const gatedPrediction: GatedFieldPrediction = {

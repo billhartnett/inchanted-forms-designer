@@ -4,7 +4,11 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
-      "@shared/*": ["../shared/src/*"]
+      "@shared/*": ["../shared/dist/*"],
+      "@shared/acord/*": ["../shared/dist/acord/*"],
+      "@shared/acord": ["../shared/dist/acord/index.js"],
+      "@shared/quality": ["../shared/dist/quality/index.js"],
+      "@shared/types": ["../shared/dist/types/index.js"]
     },
 
     "target": "ESNext",

@@ -1,0 +1,17 @@
+{
+  "timestamp": "2026-07-13T19:30:54.245Z",
+  "documentId": "sample-Acord-125.pdf",
+  "totalBlocks": 854,
+  "mappingsCount": 854,
+  "renderRule": {
+    "requiresFieldType": true,
+    "requiresSemanticLabel": true,
+    "ignoresFusionThresholdForRendering": true
+  },
+  "renderableMappingsCount": 854,
+  "nonRenderableMappingsCount": 0,
+  "renderableCoverageRate": 1,
+  "checks": {
+    "allBlocksRenderable": true
+  }
+}

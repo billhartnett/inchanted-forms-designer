@@ -13,7 +13,7 @@ import type {
   SemanticFieldType,
   SignatureField,
   TextField,
-} from "../../../../shared/src/types";
+} from "@shared/types";
 import type {
   CheckboxGroup,
   ExtractionDiagnostics,

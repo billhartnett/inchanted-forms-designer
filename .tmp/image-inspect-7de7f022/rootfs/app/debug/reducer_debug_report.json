@@ -1,0 +1,1108 @@
+{
+  "timestamp": "2026-07-02T17:50:22.087Z",
+  "documentId": "sample-Acord-125.pdf",
+  "totalBlocks": 714,
+  "sampledBlocks": 20,
+  "entries": [
+    {
+      "blockIndex": 0,
+      "blockId": "p1-l1",
+      "page": 1,
+      "textSample": "COMMERCIAL INSURANCE APPLICATION",
+      "accumCount": 15,
+      "suggestionsCount": 3,
+      "preGateCandidateCount": 0,
+      "postGateCandidateCount": 0,
+      "gatedOutCandidateCount": 0,
+      "lowCategoryConfidenceFallbackActive": false,
+      "wave5GeometryFusionApplied": false,
+      "wave5CategoryModeApplied": false,
+      "wave5ReflowApplied": false,
+      "topCandidateConfidence": 0.46,
+      "topCandidateNormalizedConfidence": 0.46,
+      "firstFiveCandidates": [
+        {
+          "acordCode": "CommercialPropertyCoverage_DependentProperty_CoinsurancePercentage",
+          "label": "Commercial Property Coverage Dependent Property Coinsurance Percentage",
+          "confidenceScore": 0.46,
+          "normalizedConfidenceScore": 0.46,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "AustraliaCommercialLineOfBusiness_InsuranceDeclinedCancelledExplanation",
+          "label": "Australia Commercial Line Of Business Insurance Declined Cancelled Explanation",
+          "confidenceScore": 0.39,
+          "normalizedConfidenceScore": 0.39,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "CommercialInlandMarineCoverage_CoinsurancePercent",
+          "label": "Commercial Inland Marine Coverage Coinsurance Percent",
+          "confidenceScore": 0.39,
+          "normalizedConfidenceScore": 0.39,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        }
+      ]
+    },
+    {
+      "blockIndex": 1,
+      "blockId": "p1-l2",
+      "page": 1,
+      "textSample": "DATE (MM/DD/YYYY)",
+      "accumCount": 9,
+      "suggestionsCount": 5,
+      "preGateCandidateCount": 0,
+      "postGateCandidateCount": 0,
+      "gatedOutCandidateCount": 0,
+      "lowCategoryConfidenceFallbackActive": false,
+      "wave5GeometryFusionApplied": false,
+      "wave5CategoryModeApplied": false,
+      "wave5ReflowApplied": false,
+      "topCandidateConfidence": 0.62,
+      "topCandidateNormalizedConfidence": 0.62,
+      "firstFiveCandidates": [
+        {
+          "acordCode": "CommercialPropertyCoverage_CombinedDemolitionCostAndIncreasedConstructionCost_FormDate",
+          "label": "Commercial Property Coverage Combined Demolition Cost And Increased Construction Cost Form Date",
+          "confidenceScore": 0.62,
+          "normalizedConfidenceScore": 0.62,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "CommercialPropertyCoverage_PeakSeasonAdditional_FormDate",
+          "label": "Commercial Property Coverage Peak Season Additional Form Date",
+          "confidenceScore": 0.62,
+          "normalizedConfidenceScore": 0.62,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "Driver_LicensedDate",
+          "label": "Driver Licensed Date",
+          "confidenceScore": 0.62,
+          "normalizedConfidenceScore": 0.62,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "FinancialStatement_EndDate",
+          "label": "Financial Statement End Date",
+          "confidenceScore": 0.62,
+          "normalizedConfidenceScore": 0.62,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "ResidentialCoverage_AdditionalPremisesLiabilityExtension_FormDate",
+          "label": "Residential Coverage Additional Premises Liability Extension Form Date",
+          "confidenceScore": 0.275,
+          "normalizedConfidenceScore": 0.275,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        }
+      ]
+    },
+    {
+      "blockIndex": 2,
+      "blockId": "p1-l3",
+      "page": 1,
+      "textSample": "APPLICANT INFORMATION SECTION",
+      "accumCount": 14,
+      "suggestionsCount": 5,
+      "preGateCandidateCount": 0,
+      "postGateCandidateCount": 0,
+      "gatedOutCandidateCount": 0,
+      "lowCategoryConfidenceFallbackActive": false,
+      "wave5GeometryFusionApplied": false,
+      "wave5CategoryModeApplied": false,
+      "wave5ReflowApplied": false,
+      "topCandidateConfidence": 0.62,
+      "topCandidateNormalizedConfidence": 0.62,
+      "firstFiveCandidates": [
+        {
+          "acordCode": "AccountsReceivableInformation_BuildingSectionDescription",
+          "label": "Accounts Receivable Information Building Section Description",
+          "confidenceScore": 0.62,
+          "normalizedConfidenceScore": 0.62,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "BusinessInformation_DirectorOrOfficer_StartedWithApplicantYear",
+          "label": "Business Information Director Or Officer Started With Applicant Year",
+          "confidenceScore": 0.274,
+          "normalizedConfidenceScore": 0.274,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "AccountantInformation_PredecessorFirm_FullName",
+          "label": "Accountant Information Predecessor Firm Full Name",
+          "confidenceScore": 0.212,
+          "normalizedConfidenceScore": 0.212,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "Location_PhysicalAddress_Section",
+          "label": "Location Physical Address Section",
+          "confidenceScore": 0.212,
+          "normalizedConfidenceScore": 0.212,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "BusinessInformation_OperationsDescription",
+          "label": "Business Information Operations Description",
+          "confidenceScore": 0.204,
+          "normalizedConfidenceScore": 0.204,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        }
+      ]
+    },
+    {
+      "blockIndex": 3,
+      "blockId": "p1-l4",
+      "page": 1,
+      "textSample": "AGENT NAME:",
+      "accumCount": 11,
+      "suggestionsCount": 5,
+      "preGateCandidateCount": 0,
+      "postGateCandidateCount": 0,
+      "gatedOutCandidateCount": 0,
+      "lowCategoryConfidenceFallbackActive": false,
+      "wave5GeometryFusionApplied": false,
+      "wave5CategoryModeApplied": false,
+      "wave5ReflowApplied": false,
+      "topCandidateConfidence": 0.62,
+      "topCandidateNormalizedConfidence": 0.62,
+      "firstFiveCandidates": [
+        {
+          "acordCode": "NamedInsured_AccountingContact_EmailAddress",
+          "label": "Named Insured Accounting Contact Email Address",
+          "confidenceScore": 0.62,
+          "normalizedConfidenceScore": 0.62,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "NamedInsured_AccountingContact_FullName",
+          "label": "Named Insured Accounting Contact Full Name",
+          "confidenceScore": 0.62,
+          "normalizedConfidenceScore": 0.62,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "NamedInsured_AccountingContact_PhoneNumber",
+          "label": "Named Insured Accounting Contact Phone Number",
+          "confidenceScore": 0.225,
+          "normalizedConfidenceScore": 0.225,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "NamedInsured_InspectionContact_EmailAddress",
+          "label": "Named Insured Inspection Contact Email Address",
+          "confidenceScore": 0.225,
+          "normalizedConfidenceScore": 0.225,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "CancelNonRenew_Distribution_FullName",
+          "label": "Cancel Non Renew Distribution Full Name",
+          "confidenceScore": 0.192,
+          "normalizedConfidenceScore": 0.192,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        }
+      ]
+    },
+    {
+      "blockIndex": 4,
+      "blockId": "p1-l5",
+      "page": 1,
+      "textSample": "UNDERWRITER OFF.",
+      "accumCount": 9,
+      "suggestionsCount": 3,
+      "preGateCandidateCount": 0,
+      "postGateCandidateCount": 0,
+      "gatedOutCandidateCount": 0,
+      "lowCategoryConfidenceFallbackActive": false,
+      "wave5GeometryFusionApplied": false,
+      "wave5CategoryModeApplied": false,
+      "wave5ReflowApplied": false,
+      "topCandidateConfidence": 0.46,
+      "topCandidateNormalizedConfidence": 0.46,
+      "firstFiveCandidates": [
+        {
+          "acordCode": "Insurer_Underwriter_OfficeIdentifier",
+          "label": "Insurer Underwriter Office Identifier",
+          "confidenceScore": 0.46,
+          "normalizedConfidenceScore": 0.46,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "AccountantsLiability_ApplicantFirmProvidedServicesForInstitutionWhereOfficerDirectorGeneralCounselExplanation",
+          "label": "Accountants Liability Applicant Firm Provided Services For Institution Where Officer Director General Counsel Explanation",
+          "confidenceScore": 0.218,
+          "normalizedConfidenceScore": 0.218,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "AccountantsLiability_BranchOffice_AddressLineOne",
+          "label": "Accountants Liability Branch Office Address Line One",
+          "confidenceScore": 0.218,
+          "normalizedConfidenceScore": 0.218,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        }
+      ]
+    },
+    {
+      "blockIndex": 5,
+      "blockId": "p1-l6",
+      "page": 1,
+      "textSample": "CARRIER",
+      "accumCount": 6,
+      "suggestionsCount": 3,
+      "preGateCandidateCount": 0,
+      "postGateCandidateCount": 0,
+      "gatedOutCandidateCount": 0,
+      "lowCategoryConfidenceFallbackActive": false,
+      "wave5GeometryFusionApplied": false,
+      "wave5CategoryModeApplied": false,
+      "wave5ReflowApplied": false,
+      "topCandidateConfidence": 0.46,
+      "topCandidateNormalizedConfidence": 0.46,
+      "firstFiveCandidates": [
+        {
+          "acordCode": "BuildersRiskInstallation_Transportation_CommonCarrierRiskPercent",
+          "label": "Builders Risk Installation Transportation Common Carrier Risk Percent",
+          "confidenceScore": 0.46,
+          "normalizedConfidenceScore": 0.46,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "CommercialInlandMarineLineOfBusiness_ShippingInterest_CommonCarrierIndicator",
+          "label": "Commercial Inland Marine Line Of Business Shipping Interest Common Carrier Indicator",
+          "confidenceScore": 0.46,
+          "normalizedConfidenceScore": 0.46,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "CommercialInlandMarineLineOfBusiness_ShippingInterest_ContractCarrierIndicator",
+          "label": "Commercial Inland Marine Line Of Business Shipping Interest Contract Carrier Indicator",
+          "confidenceScore": 0.46,
+          "normalizedConfidenceScore": 0.46,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        }
+      ]
+    },
+    {
+      "blockIndex": 6,
+      "blockId": "p1-l7",
+      "page": 1,
+      "textSample": "UNDERWRITER",
+      "accumCount": 6,
+      "suggestionsCount": 3,
+      "preGateCandidateCount": 0,
+      "postGateCandidateCount": 0,
+      "gatedOutCandidateCount": 0,
+      "lowCategoryConfidenceFallbackActive": false,
+      "wave5GeometryFusionApplied": false,
+      "wave5CategoryModeApplied": false,
+      "wave5ReflowApplied": false,
+      "topCandidateConfidence": 0.46,
+      "topCandidateNormalizedConfidence": 0.46,
+      "firstFiveCandidates": [
+        {
+          "acordCode": "Insurer_Underwriter_ApprovedIndicator",
+          "label": "Insurer Underwriter Approved Indicator",
+          "confidenceScore": 0.46,
+          "normalizedConfidenceScore": 0.46,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "Insurer_Underwriter_FullName",
+          "label": "Insurer Underwriter Full Name",
+          "confidenceScore": 0.46,
+          "normalizedConfidenceScore": 0.46,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "Insurer_Underwriter_InitialDate",
+          "label": "Insurer Underwriter Initial Date",
+          "confidenceScore": 0.46,
+          "normalizedConfidenceScore": 0.46,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        }
+      ]
+    },
+    {
+      "blockIndex": 7,
+      "blockId": "p1-l8",
+      "page": 1,
+      "textSample": "NAIC CODE:",
+      "accumCount": 9,
+      "suggestionsCount": 5,
+      "preGateCandidateCount": 0,
+      "postGateCandidateCount": 0,
+      "gatedOutCandidateCount": 0,
+      "lowCategoryConfidenceFallbackActive": false,
+      "wave5GeometryFusionApplied": false,
+      "wave5CategoryModeApplied": false,
+      "wave5ReflowApplied": false,
+      "topCandidateConfidence": 0.62,
+      "topCandidateNormalizedConfidence": 0.62,
+      "firstFiveCandidates": [
+        {
+          "acordCode": "Client_NAICSCode",
+          "label": "Client NAICSCode",
+          "confidenceScore": 0.62,
+          "normalizedConfidenceScore": 0.62,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "Client_NAICSCodeDescription",
+          "label": "Client NAICSCode Description",
+          "confidenceScore": 0.62,
+          "normalizedConfidenceScore": 0.62,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "Insurer_NAICCode",
+          "label": "Insurer NAICCode",
+          "confidenceScore": 0.62,
+          "normalizedConfidenceScore": 0.62,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "NamedInsured_NAICSCode",
+          "label": "Named Insured NAICSCode",
+          "confidenceScore": 0.22,
+          "normalizedConfidenceScore": 0.22,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "OtherInsurance_NAICCode",
+          "label": "Other Insurance NAICCode",
+          "confidenceScore": 0.22,
+          "normalizedConfidenceScore": 0.22,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        }
+      ]
+    },
+    {
+      "blockIndex": 8,
+      "blockId": "p1-l9",
+      "page": 1,
+      "textSample": "ADDRESS:",
+      "accumCount": 6,
+      "suggestionsCount": 5,
+      "preGateCandidateCount": 0,
+      "postGateCandidateCount": 0,
+      "gatedOutCandidateCount": 0,
+      "lowCategoryConfidenceFallbackActive": false,
+      "wave5GeometryFusionApplied": false,
+      "wave5CategoryModeApplied": false,
+      "wave5ReflowApplied": false,
+      "topCandidateConfidence": 0.62,
+      "topCandidateNormalizedConfidence": 0.62,
+      "firstFiveCandidates": [
+        {
+          "acordCode": "AdditionalInterest_MailingAddress_LineOne",
+          "label": "Additional Interest Mailing Address Line One",
+          "confidenceScore": 0.62,
+          "normalizedConfidenceScore": 0.62,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "AdditionalInterest_MailingAddress_CityName",
+          "label": "Additional Interest Mailing Address City Name",
+          "confidenceScore": 0.62,
+          "normalizedConfidenceScore": 0.62,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "AdditionalInterest_MailingAddress_CityName_AA",
+          "label": "Additional Interest Mailing Address City Name AA",
+          "confidenceScore": 0.62,
+          "normalizedConfidenceScore": 0.62,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "AdditionalInterest_MailingAddress_CountryCode",
+          "label": "Additional Interest Mailing Address Country Code",
+          "confidenceScore": 0.62,
+          "normalizedConfidenceScore": 0.62,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "AdditionalInterest_MailingAddress_CountyName",
+          "label": "Additional Interest Mailing Address County Name",
+          "confidenceScore": 0.62,
+          "normalizedConfidenceScore": 0.62,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        }
+      ]
+    },
+    {
+      "blockIndex": 9,
+      "blockId": "p1-l10",
+      "page": 1,
+      "textSample": "POLICIES OR PROGRAM REQUESTED",
+      "accumCount": 14,
+      "suggestionsCount": 3,
+      "preGateCandidateCount": 0,
+      "postGateCandidateCount": 0,
+      "gatedOutCandidateCount": 0,
+      "lowCategoryConfidenceFallbackActive": false,
+      "wave5GeometryFusionApplied": false,
+      "wave5CategoryModeApplied": false,
+      "wave5ReflowApplied": false,
+      "topCandidateConfidence": 0.46,
+      "topCandidateNormalizedConfidence": 0.46,
+      "firstFiveCandidates": [
+        {
+          "acordCode": "AirportFBOLineOfBusiness_ApplicantParticipateNATASafetyFirstProgramExplanation",
+          "label": "Airport FBOLine Of Business Applicant Participate NATASafety First Program Explanation",
+          "confidenceScore": 0.46,
+          "normalizedConfidenceScore": 0.46,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "DirectorsAndOfficersCoverage_CompanyEntityLiability_RequestedAggregateLimitAmount",
+          "label": "Directors And Officers Coverage Company Entity Liability Requested Aggregate Limit Amount",
+          "confidenceScore": 0.263,
+          "normalizedConfidenceScore": 0.263,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "DirectorsAndOfficersCoverage_CompanyEntityLiability_RequestedPerClaimLimitAmount",
+          "label": "Directors And Officers Coverage Company Entity Liability Requested Per Claim Limit Amount",
+          "confidenceScore": 0.263,
+          "normalizedConfidenceScore": 0.263,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        }
+      ]
+    },
+    {
+      "blockIndex": 10,
+      "blockId": "p1-l11",
+      "page": 1,
+      "textSample": "POLICY NUMBER",
+      "accumCount": 11,
+      "suggestionsCount": 5,
+      "preGateCandidateCount": 0,
+      "postGateCandidateCount": 0,
+      "gatedOutCandidateCount": 0,
+      "lowCategoryConfidenceFallbackActive": false,
+      "wave5GeometryFusionApplied": false,
+      "wave5CategoryModeApplied": false,
+      "wave5ReflowApplied": false,
+      "topCandidateConfidence": 0.62,
+      "topCandidateNormalizedConfidence": 0.62,
+      "firstFiveCandidates": [
+        {
+          "acordCode": "OtherPolicy_PolicyNumberIdentifier",
+          "label": "Other Policy Policy Number Identifier",
+          "confidenceScore": 0.62,
+          "normalizedConfidenceScore": 0.62,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "Policy_AircraftLiability_PolicyNumberIdentifier",
+          "label": "Policy Aircraft Liability Policy Number Identifier",
+          "confidenceScore": 0.62,
+          "normalizedConfidenceScore": 0.62,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "Binder_ExpiringPolicyNumberIdentifier",
+          "label": "Binder Expiring Policy Number Identifier",
+          "confidenceScore": 0.321,
+          "normalizedConfidenceScore": 0.321,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "ExcessFlood_PolicyNumberIdentifier",
+          "label": "Excess Flood Policy Number Identifier",
+          "confidenceScore": 0.321,
+          "normalizedConfidenceScore": 0.321,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "LossHistory_PolicyNumberIdentifier",
+          "label": "Loss History Policy Number Identifier",
+          "confidenceScore": 0.321,
+          "normalizedConfidenceScore": 0.321,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        }
+      ]
+    },
+    {
+      "blockIndex": 11,
+      "blockId": "p1-l12",
+      "page": 1,
+      "textSample": "CITY:",
+      "accumCount": 6,
+      "suggestionsCount": 5,
+      "preGateCandidateCount": 0,
+      "postGateCandidateCount": 0,
+      "gatedOutCandidateCount": 0,
+      "lowCategoryConfidenceFallbackActive": false,
+      "wave5GeometryFusionApplied": false,
+      "wave5CategoryModeApplied": false,
+      "wave5ReflowApplied": false,
+      "topCandidateConfidence": 0.62,
+      "topCandidateNormalizedConfidence": 0.62,
+      "firstFiveCandidates": [
+        {
+          "acordCode": "Aircraft_SeatingCapacityCount",
+          "label": "Aircraft Seating Capacity Count",
+          "confidenceScore": 0.62,
+          "normalizedConfidenceScore": 0.62,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "BuildingFeatures_SeatingCapacityCount",
+          "label": "Building Features Seating Capacity Count",
+          "confidenceScore": 0.62,
+          "normalizedConfidenceScore": 0.62,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "LiquorInformation_BanquetRooms_MaximumCapacityCount",
+          "label": "Liquor Information Banquet Rooms Maximum Capacity Count",
+          "confidenceScore": 0.237,
+          "normalizedConfidenceScore": 0.237,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "LiquorInformation_Bar_MaximumCapacityCount",
+          "label": "Liquor Information Bar Maximum Capacity Count",
+          "confidenceScore": 0.237,
+          "normalizedConfidenceScore": 0.237,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "LiquorInformation_DiningRoom_MaximumCapacityCount",
+          "label": "Liquor Information Dining Room Maximum Capacity Count",
+          "confidenceScore": 0.237,
+          "normalizedConfidenceScore": 0.237,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        }
+      ]
+    },
+    {
+      "blockIndex": 12,
+      "blockId": "p1-l13",
+      "page": 1,
+      "textSample": "STATE:",
+      "accumCount": 6,
+      "suggestionsCount": 5,
+      "preGateCandidateCount": 0,
+      "postGateCandidateCount": 0,
+      "gatedOutCandidateCount": 0,
+      "lowCategoryConfidenceFallbackActive": false,
+      "wave5GeometryFusionApplied": false,
+      "wave5CategoryModeApplied": false,
+      "wave5ReflowApplied": false,
+      "topCandidateConfidence": 0.62,
+      "topCandidateNormalizedConfidence": 0.62,
+      "firstFiveCandidates": [
+        {
+          "acordCode": "StatementOfValues_CauseOfLoss_BasicIndicator",
+          "label": "Statement Of Values Cause Of Loss Basic Indicator",
+          "confidenceScore": 0.62,
+          "normalizedConfidenceScore": 0.62,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "StatementOfValues_CauseOfLoss_BroadIndicator",
+          "label": "Statement Of Values Cause Of Loss Broad Indicator",
+          "confidenceScore": 0.62,
+          "normalizedConfidenceScore": 0.62,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "StatementOfValues_CauseOfLoss_EarthquakeIndicator",
+          "label": "Statement Of Values Cause Of Loss Earthquake Indicator",
+          "confidenceScore": 0.62,
+          "normalizedConfidenceScore": 0.62,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "StatementOfValues_CauseOfLoss_FloodIndicator",
+          "label": "Statement Of Values Cause Of Loss Flood Indicator",
+          "confidenceScore": 0.62,
+          "normalizedConfidenceScore": 0.62,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "StatementOfValues_CauseOfLoss_OtherDescription",
+          "label": "Statement Of Values Cause Of Loss Other Description",
+          "confidenceScore": 0.62,
+          "normalizedConfidenceScore": 0.62,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        }
+      ]
+    },
+    {
+      "blockIndex": 13,
+      "blockId": "p1-l14",
+      "page": 1,
+      "textSample": "ZIP CODE:",
+      "accumCount": 6,
+      "suggestionsCount": 5,
+      "preGateCandidateCount": 0,
+      "postGateCandidateCount": 0,
+      "gatedOutCandidateCount": 0,
+      "lowCategoryConfidenceFallbackActive": false,
+      "wave5GeometryFusionApplied": false,
+      "wave5CategoryModeApplied": false,
+      "wave5ReflowApplied": false,
+      "topCandidateConfidence": 0.62,
+      "topCandidateNormalizedConfidence": 0.62,
+      "firstFiveCandidates": [
+        {
+          "acordCode": "AccidentConviction_AccidentViolationCode",
+          "label": "Accident Conviction Accident Violation Code",
+          "confidenceScore": 0.62,
+          "normalizedConfidenceScore": 0.62,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "AccidentConviction_BodilyInjuryOrDeathCode",
+          "label": "Accident Conviction Bodily Injury Or Death Code",
+          "confidenceScore": 0.62,
+          "normalizedConfidenceScore": 0.62,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "AccidentConviction_PlaceOfIncidentStateOrProvinceCode",
+          "label": "Accident Conviction Place Of Incident State Or Province Code",
+          "confidenceScore": 0.62,
+          "normalizedConfidenceScore": 0.62,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "AccidentConviction_ViolationYesNoCode",
+          "label": "Accident Conviction Violation Yes No Code",
+          "confidenceScore": 0.201,
+          "normalizedConfidenceScore": 0.201,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "AccountantsLiability_AuditOther_EngagementLetterYesNoCode",
+          "label": "Accountants Liability Audit Other Engagement Letter Yes No Code",
+          "confidenceScore": 0.188,
+          "normalizedConfidenceScore": 0.188,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        }
+      ]
+    },
+    {
+      "blockIndex": 14,
+      "blockId": "p1-l15",
+      "page": 1,
+      "textSample": "EQUIPMENT FLOATER",
+      "accumCount": 12,
+      "suggestionsCount": 3,
+      "preGateCandidateCount": 0,
+      "postGateCandidateCount": 0,
+      "gatedOutCandidateCount": 0,
+      "lowCategoryConfidenceFallbackActive": false,
+      "wave5GeometryFusionApplied": false,
+      "wave5CategoryModeApplied": false,
+      "wave5ReflowApplied": false,
+      "topCandidateConfidence": 0.46,
+      "topCandidateNormalizedConfidence": 0.46,
+      "firstFiveCandidates": [
+        {
+          "acordCode": "EquipmentFloaterInformation_ApplicationOperatingEquipmentNotListedExplanation",
+          "label": "Equipment Floater Information Application Operating Equipment Not Listed Explanation",
+          "confidenceScore": 0.46,
+          "normalizedConfidenceScore": 0.46,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "EquipmentFloaterInformation_EquipmentRentedLoanedToOrFromOperatorsWithOrWithoutOperatorsExplanation",
+          "label": "Equipment Floater Information Equipment Rented Loaned To Or From Operators With Or Without Operators Explanation",
+          "confidenceScore": 0.46,
+          "normalizedConfidenceScore": 0.46,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "EquipmentFloaterInformation_EquipmentRentedLoanedToOthersWithOrWithoutOperatorsExplanation",
+          "label": "Equipment Floater Information Equipment Rented Loaned To Others With Or Without Operators Explanation",
+          "confidenceScore": 0.46,
+          "normalizedConfidenceScore": 0.46,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        }
+      ]
+    },
+    {
+      "blockIndex": 15,
+      "blockId": "p1-l16",
+      "page": 1,
+      "textSample": "GARAGE AND DEALERS",
+      "accumCount": 12,
+      "suggestionsCount": 3,
+      "preGateCandidateCount": 0,
+      "postGateCandidateCount": 0,
+      "gatedOutCandidateCount": 0,
+      "lowCategoryConfidenceFallbackActive": false,
+      "wave5GeometryFusionApplied": false,
+      "wave5CategoryModeApplied": false,
+      "wave5ReflowApplied": false,
+      "topCandidateConfidence": 0.46,
+      "topCandidateNormalizedConfidence": 0.46,
+      "firstFiveCandidates": [
+        {
+          "acordCode": "GarageAndDealers_AnnualGallonsPumpedCount",
+          "label": "Garage And Dealers Annual Gallons Pumped Count",
+          "confidenceScore": 0.46,
+          "normalizedConfidenceScore": 0.46,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "GarageAndDealers_ClassOneEmployees_OtherOperatorCount",
+          "label": "Garage And Dealers Class One Employees Other Operator Count",
+          "confidenceScore": 0.46,
+          "normalizedConfidenceScore": 0.46,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "GarageAndDealers_ClassOneEmployees_RegularOperatorCount",
+          "label": "Garage And Dealers Class One Employees Regular Operator Count",
+          "confidenceScore": 0.46,
+          "normalizedConfidenceScore": 0.46,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        }
+      ]
+    },
+    {
+      "blockIndex": 16,
+      "blockId": "p1-l17",
+      "page": 1,
+      "textSample": "INDICATE SECTIONS ATTACHED",
+      "accumCount": 6,
+      "suggestionsCount": 3,
+      "preGateCandidateCount": 0,
+      "postGateCandidateCount": 0,
+      "gatedOutCandidateCount": 0,
+      "lowCategoryConfidenceFallbackActive": false,
+      "wave5GeometryFusionApplied": false,
+      "wave5CategoryModeApplied": false,
+      "wave5ReflowApplied": false,
+      "topCandidateConfidence": 0.46,
+      "topCandidateNormalizedConfidence": 0.46,
+      "firstFiveCandidates": [
+        {
+          "acordCode": "BuildingImprovement_WiringUpdatedNoIndicated",
+          "label": "Building Improvement Wiring Updated No Indicated",
+          "confidenceScore": 0.46,
+          "normalizedConfidenceScore": 0.46,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "CertificateOfMarineEnergyInsurance_Vessel_AttachedToRemarksIndicator",
+          "label": "Certificate Of Marine Energy Insurance Vessel Attached To Remarks Indicator",
+          "confidenceScore": 0.46,
+          "normalizedConfidenceScore": 0.46,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "CertificateOfMarineEnergyInsurance_Vessel_ScheduleAttachedIndicator",
+          "label": "Certificate Of Marine Energy Insurance Vessel Schedule Attached Indicator",
+          "confidenceScore": 0.46,
+          "normalizedConfidenceScore": 0.46,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        }
+      ]
+    },
+    {
+      "blockIndex": 17,
+      "blockId": "p1-l18",
+      "page": 1,
+      "textSample": "PHONE",
+      "accumCount": 6,
+      "suggestionsCount": 5,
+      "preGateCandidateCount": 0,
+      "postGateCandidateCount": 0,
+      "gatedOutCandidateCount": 0,
+      "lowCategoryConfidenceFallbackActive": false,
+      "wave5GeometryFusionApplied": false,
+      "wave5CategoryModeApplied": false,
+      "wave5ReflowApplied": false,
+      "topCandidateConfidence": 0.62,
+      "topCandidateNormalizedConfidence": 0.62,
+      "firstFiveCandidates": [
+        {
+          "acordCode": "AdditionalInterest_CellPhoneNumber",
+          "label": "Additional Interest Cell Phone Number",
+          "confidenceScore": 0.62,
+          "normalizedConfidenceScore": 0.62,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "AdditionalInterest_Primary_PhoneNumber",
+          "label": "Additional Interest Primary Phone Number",
+          "confidenceScore": 0.62,
+          "normalizedConfidenceScore": 0.62,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "AdditionalInterest_Primary_PhoneNumber_AA",
+          "label": "Additional Interest Primary Phone Number AA",
+          "confidenceScore": 0.62,
+          "normalizedConfidenceScore": 0.62,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "AttorneyInformation_PhoneNumber",
+          "label": "Attorney Information Phone Number",
+          "confidenceScore": 0.62,
+          "normalizedConfidenceScore": 0.62,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "ClaimAdministrator_Primary_PhoneNumber",
+          "label": "Claim Administrator Primary Phone Number",
+          "confidenceScore": 0.342,
+          "normalizedConfidenceScore": 0.342,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        }
+      ]
+    },
+    {
+      "blockIndex": 18,
+      "blockId": "p1-l19",
+      "page": 1,
+      "textSample": "PROPERTY",
+      "accumCount": 6,
+      "suggestionsCount": 3,
+      "preGateCandidateCount": 0,
+      "postGateCandidateCount": 0,
+      "gatedOutCandidateCount": 0,
+      "lowCategoryConfidenceFallbackActive": false,
+      "wave5GeometryFusionApplied": false,
+      "wave5CategoryModeApplied": false,
+      "wave5ReflowApplied": false,
+      "topCandidateConfidence": 0.46,
+      "topCandidateNormalizedConfidence": 0.46,
+      "firstFiveCandidates": [
+        {
+          "acordCode": "Property_AccidentalDamage_DeductibleAmount",
+          "label": "Property Accidental Damage Deductible Amount",
+          "confidenceScore": 0.46,
+          "normalizedConfidenceScore": 0.46,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "Property_AccidentalDamage_LimitAmount",
+          "label": "Property Accidental Damage Limit Amount",
+          "confidenceScore": 0.46,
+          "normalizedConfidenceScore": 0.46,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "Property_AgriculturalMachineryTractors_ValueAmount",
+          "label": "Property Agricultural Machinery Tractors Value Amount",
+          "confidenceScore": 0.46,
+          "normalizedConfidenceScore": 0.46,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        }
+      ]
+    },
+    {
+      "blockIndex": 19,
+      "blockId": "p1-l20",
+      "page": 1,
+      "textSample": "INSTALLATION/BUILDERS RISK",
+      "accumCount": 11,
+      "suggestionsCount": 3,
+      "preGateCandidateCount": 0,
+      "postGateCandidateCount": 0,
+      "gatedOutCandidateCount": 0,
+      "lowCategoryConfidenceFallbackActive": false,
+      "wave5GeometryFusionApplied": false,
+      "wave5CategoryModeApplied": false,
+      "wave5ReflowApplied": false,
+      "topCandidateConfidence": 0.46,
+      "topCandidateNormalizedConfidence": 0.46,
+      "firstFiveCandidates": [
+        {
+          "acordCode": "BuildersRiskInstallation_GrossReceiptsInformation_LastYearGrossSalesAmount",
+          "label": "Builders Risk Installation Gross Receipts Information Last Year Gross Sales Amount",
+          "confidenceScore": 0.46,
+          "normalizedConfidenceScore": 0.46,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "CommercialInlandMarineCoverage_InstallationBuildersRisk_PerDisasterLimitAmount",
+          "label": "Commercial Inland Marine Coverage Installation Builders Risk Per Disaster Limit Amount",
+          "confidenceScore": 0.295,
+          "normalizedConfidenceScore": 0.295,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        },
+        {
+          "acordCode": "CommercialInlandMarineCoverage_InstallationBuildersRisk_SingleLocationLimitAmount",
+          "label": "Commercial Inland Marine Coverage Installation Builders Risk Single Location Limit Amount",
+          "confidenceScore": 0.295,
+          "normalizedConfidenceScore": 0.295,
+          "source": "dictionary",
+          "geometryAgreement": 0,
+          "categoryEvidence": 0
+        }
+      ]
+    }
+  ]
+}

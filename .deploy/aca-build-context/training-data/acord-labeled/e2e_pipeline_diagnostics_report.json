@@ -1,0 +1,20 @@
+{
+  "timestamp": "2026-07-01T15:20:43.180Z",
+  "diagnosticsMetrics": {
+    "coverage": {
+      "expected": 0.9,
+      "actual": 1,
+      "passed": true
+    },
+    "driftMetrics": {
+      "value": 0.0000092,
+      "threshold": 0.0001,
+      "withinThreshold": true
+    },
+    "falsePositiveRate": {
+      "value": 0,
+      "acceptable": true
+    }
+  },
+  "diagnosticsHealth": "HEALTHY"
+}

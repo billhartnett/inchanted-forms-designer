@@ -1,0 +1,62 @@
+[
+  {
+    "code": "ACORD.101.ApplicantName",
+    "label": "Applicant Name",
+    "description": "Full legal name of the insurance applicant.",
+    "keywords": ["applicant", "insured", "name", "legal"]
+  },
+  {
+    "code": "ACORD.101.ApplicantAddress",
+    "label": "Applicant Address",
+    "description": "Primary mailing address for the applicant.",
+    "keywords": ["applicant", "address", "street", "mailing"]
+  },
+  {
+    "code": "ACORD.125.ProducerName",
+    "label": "Producer Name",
+    "description": "Name of the producer or agency handling the submission.",
+    "keywords": ["producer", "agency", "broker", "name"]
+  },
+  {
+    "code": "ACORD.125.PolicyNumber",
+    "label": "Policy Number",
+    "description": "Unique identifier for an issued policy.",
+    "keywords": ["policy", "number", "id", "identifier"]
+  },
+  {
+    "code": "ACORD.125.EffectiveDate",
+    "label": "Effective Date",
+    "description": "The date coverage begins.",
+    "keywords": ["effective", "date", "coverage", "start"]
+  },
+  {
+    "code": "ACORD.125.ExpirationDate",
+    "label": "Expiration Date",
+    "description": "The date coverage ends.",
+    "keywords": ["expiration", "date", "coverage", "end"]
+  },
+  {
+    "code": "ACORD.125.BusinessPhone",
+    "label": "Business Phone",
+    "description": "Primary business phone number.",
+    "keywords": ["business", "phone", "telephone", "contact"]
+  },
+  {
+    "code": "ACORD.140.LocationAddress",
+    "label": "Location Address",
+    "description": "Address of insured property or risk location.",
+    "keywords": ["location", "address", "risk", "property"]
+  },
+  {
+    "code": "ACORD.140.ConstructionType",
+    "label": "Construction Type",
+    "description": "Building construction classification for underwriting.",
+    "keywords": ["construction", "building", "class", "underwriting"]
+  },
+  {
+    "code": "ACORD.140.Occupancy",
+    "label": "Occupancy",
+    "description": "How the building is occupied or used.",
+    "keywords": ["occupancy", "usage", "building", "risk"]
+  }
+]

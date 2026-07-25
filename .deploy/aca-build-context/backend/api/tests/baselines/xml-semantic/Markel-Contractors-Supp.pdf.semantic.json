@@ -1,0 +1,54 @@
+{
+  "fixtureId": "Markel-Contractors-Supp.pdf",
+  "generatedAt": "2026-06-10T20:23:53.844Z",
+  "structuralHash": "6cb8665b",
+  "semanticHash": "e1365359",
+  "nodeCount": 48,
+  "codes": [
+    "AccidentConviction_ViolationYesNoCode",
+    "AccountantsLiability_Attachment_DeclarationsPageIndicator",
+    "AdditionalInterest_MailingAddress_CityName",
+    "Aircraft_LoggedHours_AnnualLastYearCount",
+    "Aircraft_ValueAmount",
+    "AircraftLineOfBusiness_AnticipateAircraftOperatedOutsideContiguousUnitedStatesExplanation",
+    "BuildingOccupancy_MercantileIndicator",
+    "BusinessInformation_BusinessType_ApartmentsIndicator",
+    "BusinessInformation_BusinessType_InstitutionalIndicator",
+    "BusinessInformation_TotalPayrollAmount",
+    "BusinessOwnersLineOfBusiness_ReceiptsOffPremisesOperationsPercent",
+    "Construction_StartDate",
+    "Construction_StructuralChangesIndicator",
+    "Contractors_SubcontractorsPaidAmount",
+    "ContractorsUnderwriting_RemodelWorkPercent",
+    "CustomerOrSupplier_BusinessPercent",
+    "Driver_LicensedYear",
+    "ErrorsAndOmissions_ApplicantUseWrittenContractWithSubcontractors_AllCasesIndicator",
+    "FarmLineOfBusiness_Equipment_OperationsRadius",
+    "GeneralLiability_OwnersAndContractorsProtectiveIndicator",
+    "IndustrialSpecialRisks_DeductibleAmount",
+    "NamedInsured_GivenName",
+    "OtherInsurance_NAICCode",
+    "PayrollService_FullName",
+    "Residential_AnyLeadPaintExplanation"
+  ],
+  "issues": [
+    {
+      "severity": "warning",
+      "code": "cardinality-max-1",
+      "message": "NamedInsured_GivenName appears 2 times but is expected to be singular.",
+      "path": "/ACORD/Submission/NamedInsured_GivenName"
+    },
+    {
+      "severity": "warning",
+      "code": "dependency-applicant-address",
+      "message": "Applicant information requires at least one applicant address-related node.",
+      "path": "/ACORD/Submission"
+    }
+  ],
+  "crossFieldWarnings": [
+    "Applicant information exists without applicant address fields."
+  ],
+  "isValid": true,
+  "familyId": "contractors-supplement",
+  "familySignatureHash": "5a31f874"
+}

@@ -1,0 +1,11 @@
+name: layoutlm-env
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10
+  - pip
+  - pip:
+    - azureml-inference-server-http
+    - transformers==4.42.4
+    - torch==2.3.1

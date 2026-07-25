@@ -1,0 +1,190 @@
+{
+  "generatedAt": "2026-07-13T19:30:57.280Z",
+  "source": {
+    "xfdlPath": "backend/api/tests/gold-standard/acord-125/ACORD 0125 2016-03r1.xfdl",
+    "bytes": 1382536,
+    "pages": 4,
+    "derivedFields": 388,
+    "derivedLabels": 581,
+    "derivedHelps": 548
+  },
+  "fixture": "sample-Acord-125.pdf",
+  "expectations": [
+    {
+      "id": "named-insured",
+      "textPattern": "named\\s+insured|first\\s+named\\s+insured",
+      "expectedAcordCode": "GeneralInfo.NamedInsured",
+      "expectedTopN": 3,
+      "anchorSid": "NamedInsured_FullName_A",
+      "semanticPath": "NamedInsured_FullName",
+      "anchorLabel": "NAME (First Named Insured) AND MAILING ADDRESS (including ZIP+4)",
+      "anchorLabelSid": "HG_",
+      "pageSid": "PAGE1",
+      "pageNumber": 1,
+      "geometry": {
+        "x": 6,
+        "y": 810,
+        "width": 469,
+        "height": 21,
+        "page": null
+      },
+      "helpText": "Enter text: The named insured(s) as it / they will appear on the policy declarations page.",
+      "sharedAddressHeader": null,
+      "sharedAddressHeaderSid": null
+    },
+    {
+      "id": "mailing-address",
+      "textPattern": "mailing\\s+address",
+      "expectedAcordCode": "GeneralInfo.MailingAddress",
+      "expectedTopN": 5,
+      "anchorSid": "NamedInsured_MailingAddress_LineOne_A",
+      "semanticPath": "NamedInsured_MailingAddress_LineOne",
+      "anchorLabel": "NAME (First Named Insured) AND MAILING ADDRESS (including ZIP+4)",
+      "anchorLabelSid": "HG_",
+      "pageSid": "PAGE1",
+      "pageNumber": 1,
+      "geometry": {
+        "x": 6,
+        "y": 830,
+        "width": 469,
+        "height": 21,
+        "page": null
+      },
+      "helpText": "Enter text: The named insured's mailing address line one.",
+      "sharedAddressHeader": null,
+      "sharedAddressHeaderSid": null
+    },
+    {
+      "id": "policy-number",
+      "textPattern": "policy\\s+(number|no)",
+      "expectedAcordCode": "Policy_PolicyNumberIdentifier",
+      "expectedTopN": 5,
+      "anchorSid": "Policy_PolicyNumberIdentifier_A",
+      "semanticPath": "Policy_PolicyNumberIdentifier",
+      "anchorLabel": "POLICY NUMBER",
+      "anchorLabelSid": "RU_",
+      "pageSid": "PAGE1",
+      "pageNumber": 1,
+      "geometry": {
+        "x": 486,
+        "y": 160,
+        "width": 469,
+        "height": 21,
+        "page": null
+      },
+      "helpText": "Enter identifier: The identifier assigned by the insurer to the policy, or submission, being referenced exactly as it appears on the policy, including prefix and suffix symbols. If required for self-insurance, the self-insured license or contract number.",
+      "sharedAddressHeader": null,
+      "sharedAddressHeaderSid": null
+    },
+    {
+      "id": "business-start-date",
+      "textPattern": "business\\s+start|date\\s+business\\s+started",
+      "expectedAcordCode": "BusinessInformation_BusinessStartDate",
+      "expectedTopN": 5,
+      "anchorSid": "NamedInsured_BusinessStartDate_A",
+      "semanticPath": "NamedInsured_BusinessStartDate",
+      "anchorLabel": "DATE BUSINESS",
+      "anchorLabelSid": "NK_",
+      "pageSid": "PAGE2",
+      "pageNumber": 2,
+      "geometry": {
+        "x": 816,
+        "y": 620,
+        "width": 139,
+        "height": 21,
+        "page": null
+      },
+      "helpText": "Enter date: The date the applicant began in business. This is important because it helps the underwriter determine the expertise and business success of the applicant.",
+      "sharedAddressHeader": null,
+      "sharedAddressHeaderSid": null
+    },
+    {
+      "id": "city",
+      "textPattern": "\\bcity\\b",
+      "expectedAcordCode": "NamedInsured_MailingAddress_CityName",
+      "expectedTopN": 5,
+      "anchorSid": "NamedInsured_MailingAddress_CityName_A",
+      "semanticPath": "NamedInsured_MailingAddress_CityName",
+      "anchorLabel": "NAME (First Named Insured) AND MAILING ADDRESS (including ZIP+4)",
+      "anchorLabelSid": "HG_",
+      "pageSid": "PAGE1",
+      "pageNumber": 1,
+      "geometry": {
+        "x": 6,
+        "y": 870,
+        "width": 361,
+        "height": 21,
+        "page": null
+      },
+      "helpText": "Enter text: The named insured's mailing address city name.",
+      "sharedAddressHeader": "NAME (First Named Insured) AND MAILING ADDRESS (including ZIP+4)",
+      "sharedAddressHeaderSid": "HG_"
+    },
+    {
+      "id": "state",
+      "textPattern": "\\bstate\\b|province",
+      "expectedAcordCode": "NamedInsured_MailingAddress_StateOrProvinceCode",
+      "expectedTopN": 5,
+      "anchorSid": "NamedInsured_MailingAddress_StateOrProvinceCode_A",
+      "semanticPath": "NamedInsured_MailingAddress_StateOrProvinceCode",
+      "anchorLabel": "NAME (First Named Insured) AND MAILING ADDRESS (including ZIP+4)",
+      "anchorLabelSid": "HG_",
+      "pageSid": "PAGE1",
+      "pageNumber": 1,
+      "geometry": {
+        "x": 366,
+        "y": 870,
+        "width": 31,
+        "height": 21,
+        "page": null
+      },
+      "helpText": "Enter code: The named insured's mailing address state or province code.",
+      "sharedAddressHeader": "NAME (First Named Insured) AND MAILING ADDRESS (including ZIP+4)",
+      "sharedAddressHeaderSid": "HG_"
+    },
+    {
+      "id": "zip-code",
+      "textPattern": "zip|postal",
+      "expectedAcordCode": "NamedInsured_MailingAddress_PostalCode",
+      "expectedTopN": 5,
+      "anchorSid": "NamedInsured_MailingAddress_PostalCode_A",
+      "semanticPath": "NamedInsured_MailingAddress_PostalCode",
+      "anchorLabel": "NAME (First Named Insured) AND MAILING ADDRESS (including ZIP+4)",
+      "anchorLabelSid": "HG_",
+      "pageSid": "PAGE1",
+      "pageNumber": 1,
+      "geometry": {
+        "x": 396,
+        "y": 870,
+        "width": 79,
+        "height": 21,
+        "page": null
+      },
+      "helpText": "Enter code: The named insured's mailing address postal code.",
+      "sharedAddressHeader": "NAME (First Named Insured) AND MAILING ADDRESS (including ZIP+4)",
+      "sharedAddressHeaderSid": "HG_"
+    },
+    {
+      "id": "agent-name",
+      "textPattern": "agent\\s+name|producer\\s+name|agent",
+      "expectedAcordCode": "Producer_FullName",
+      "expectedTopN": 5,
+      "anchorSid": "Producer_FullName_A",
+      "semanticPath": "Producer_FullName",
+      "anchorLabel": "AGENCY",
+      "anchorLabelSid": "PL_",
+      "pageSid": "PAGE1",
+      "pageNumber": 1,
+      "geometry": {
+        "x": 6,
+        "y": 80,
+        "width": 469,
+        "height": 21,
+        "page": null
+      },
+      "helpText": "Enter text: The full name of the producer / agency.",
+      "sharedAddressHeader": null,
+      "sharedAddressHeaderSid": null
+    }
+  ]
+}

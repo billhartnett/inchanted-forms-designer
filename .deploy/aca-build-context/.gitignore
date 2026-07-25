@@ -1,0 +1,77 @@
+# Node modules
+node_modules/
+**/node_modules/
+
+# Build output
+dist/
+build/
+.swa/
+
+# Vite cache
+frontend/.vite/
+
+# Local environment files
+*.env
+*.env.local
+*.env.development
+*.env.production
+
+# Azure Functions local settings (contains secrets)
+backend/api/local.settings.json
+
+# Azurite emulator artifacts
+backend/api/__azurite_db_*
+backend/api/AzuriteConfig
+backend/api/configDump.json
+backend/api/__blobstorage__/
+backend/api/__queuestorage__/
+
+# Generated diagnostics/runtime outputs
+backend/api/tests/diagnostics/*.json
+
+# Compiled JS from TypeScript (backend)
+backend/api/*.js
+backend/api/*/*.js
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vscode/
+
+# Python local env and caches
+**/.venv/
+**/__pycache__/
+*.pyc
+
+# LayoutLM local artifacts (models, logs, caches)
+backend/layoutlmv3-service/models/
+backend/layoutlmv3-service/*.log
+backend/layoutlmv3-service/*.pt
+
+# Sample PDFs
+test-fixtures/
+
+# Wave 5/6 runner output artifacts (generated)
+training-data/acord-labeled/sprint5_tuning_validation_report.json
+training-data/acord-labeled/wave5_phase2_sprint5_tuning_diagnostics_summary.json
+training-data/acord-labeled/wave5_phase2_sprint5_tuning_regression_report.json
+training-data/acord-labeled/wave5_phase2_sprint5_tuning_integration_report.md
+training-data/acord-labeled/wave5_phase2_sprint4_reflow_diagnostics_summary.json
+training-data/acord-labeled/wave5_phase2_sprint4_reflow_regression_report.json
+training-data/acord-labeled/wave5_phase2_sprint4_reflow_integration_report.md
+training-data/acord-labeled/wave5_phase2_sprint4_reflow_skip_reason_summary.json
+training-data/acord-labeled/wave5_phase2_sprint4_reflow_gate_echo_report.md
+
+# Local host/runtime logs and snapshots
+backend/*.log
+backend/api/*.log
+backend/api/scripts/*.log
+training-data/acord-labeled/*local_state_snapshot*.json
+

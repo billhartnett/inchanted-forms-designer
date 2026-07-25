@@ -1,0 +1,600 @@
+{
+  "timestamp": "2026-07-02T18:01:34.281Z",
+  "documentId": "sample-Acord-125.pdf",
+  "totalBlocks": 714,
+  "sampledBlocks": 20,
+  "entries": [
+    {
+      "blockIndex": 0,
+      "blockId": "p1-l1",
+      "accumCount": 15,
+      "candidateCount": 3,
+      "reducerDecisions": [
+        {
+          "acordCode": "CommercialPropertyCoverage_DependentProperty_CoinsurancePercentage",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "dropped"
+        },
+        {
+          "acordCode": "AustraliaCommercialLineOfBusiness_InsuranceDeclinedCancelledExplanation",
+          "fusionScore": 0.39,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "dropped"
+        },
+        {
+          "acordCode": "CommercialInlandMarineCoverage_CoinsurancePercent",
+          "fusionScore": 0.39,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "dropped"
+        }
+      ]
+    },
+    {
+      "blockIndex": 1,
+      "blockId": "p1-l3",
+      "accumCount": 14,
+      "candidateCount": 5,
+      "reducerDecisions": [
+        {
+          "acordCode": "AccountsReceivableInformation_BuildingSectionDescription",
+          "fusionScore": 0.62,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "kept"
+        },
+        {
+          "acordCode": "BusinessInformation_DirectorOrOfficer_StartedWithApplicantYear",
+          "fusionScore": 0.274,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "dropped"
+        },
+        {
+          "acordCode": "AccountantInformation_PredecessorFirm_FullName",
+          "fusionScore": 0.212,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "dropped"
+        },
+        {
+          "acordCode": "Location_PhysicalAddress_Section",
+          "fusionScore": 0.212,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "dropped"
+        },
+        {
+          "acordCode": "BusinessInformation_OperationsDescription",
+          "fusionScore": 0.204,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "dropped"
+        }
+      ]
+    },
+    {
+      "blockIndex": 2,
+      "blockId": "p1-l6",
+      "accumCount": 6,
+      "candidateCount": 3,
+      "reducerDecisions": [
+        {
+          "acordCode": "BuildersRiskInstallation_Transportation_CommonCarrierRiskPercent",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "dropped"
+        },
+        {
+          "acordCode": "CommercialInlandMarineLineOfBusiness_ShippingInterest_CommonCarrierIndicator",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "dropped"
+        },
+        {
+          "acordCode": "CommercialInlandMarineLineOfBusiness_ShippingInterest_ContractCarrierIndicator",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "dropped"
+        }
+      ]
+    },
+    {
+      "blockIndex": 3,
+      "blockId": "p1-l7",
+      "accumCount": 6,
+      "candidateCount": 3,
+      "reducerDecisions": [
+        {
+          "acordCode": "Insurer_Underwriter_ApprovedIndicator",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "dropped"
+        },
+        {
+          "acordCode": "Insurer_Underwriter_FullName",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "dropped"
+        },
+        {
+          "acordCode": "Insurer_Underwriter_InitialDate",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "dropped"
+        }
+      ]
+    },
+    {
+      "blockIndex": 4,
+      "blockId": "p1-l10",
+      "accumCount": 14,
+      "candidateCount": 3,
+      "reducerDecisions": [
+        {
+          "acordCode": "AirportFBOLineOfBusiness_ApplicantParticipateNATASafetyFirstProgramExplanation",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "dropped"
+        },
+        {
+          "acordCode": "DirectorsAndOfficersCoverage_CompanyEntityLiability_RequestedAggregateLimitAmount",
+          "fusionScore": 0.263,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "dropped"
+        },
+        {
+          "acordCode": "DirectorsAndOfficersCoverage_CompanyEntityLiability_RequestedPerClaimLimitAmount",
+          "fusionScore": 0.263,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "dropped"
+        }
+      ]
+    },
+    {
+      "blockIndex": 5,
+      "blockId": "p1-l11",
+      "accumCount": 11,
+      "candidateCount": 5,
+      "reducerDecisions": [
+        {
+          "acordCode": "OtherPolicy_PolicyNumberIdentifier",
+          "fusionScore": 0.62,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "kept"
+        },
+        {
+          "acordCode": "Policy_AircraftLiability_PolicyNumberIdentifier",
+          "fusionScore": 0.62,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "kept"
+        },
+        {
+          "acordCode": "Binder_ExpiringPolicyNumberIdentifier",
+          "fusionScore": 0.321,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "dropped"
+        },
+        {
+          "acordCode": "ExcessFlood_PolicyNumberIdentifier",
+          "fusionScore": 0.321,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "dropped"
+        },
+        {
+          "acordCode": "LossHistory_PolicyNumberIdentifier",
+          "fusionScore": 0.321,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "dropped"
+        }
+      ]
+    },
+    {
+      "blockIndex": 6,
+      "blockId": "p1-l15",
+      "accumCount": 12,
+      "candidateCount": 3,
+      "reducerDecisions": [
+        {
+          "acordCode": "EquipmentFloaterInformation_ApplicationOperatingEquipmentNotListedExplanation",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "dropped"
+        },
+        {
+          "acordCode": "EquipmentFloaterInformation_EquipmentRentedLoanedToOrFromOperatorsWithOrWithoutOperatorsExplanation",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "dropped"
+        },
+        {
+          "acordCode": "EquipmentFloaterInformation_EquipmentRentedLoanedToOthersWithOrWithoutOperatorsExplanation",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "dropped"
+        }
+      ]
+    },
+    {
+      "blockIndex": 7,
+      "blockId": "p1-l16",
+      "accumCount": 12,
+      "candidateCount": 3,
+      "reducerDecisions": [
+        {
+          "acordCode": "GarageAndDealers_AnnualGallonsPumpedCount",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "dropped"
+        },
+        {
+          "acordCode": "GarageAndDealers_ClassOneEmployees_OtherOperatorCount",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "dropped"
+        },
+        {
+          "acordCode": "GarageAndDealers_ClassOneEmployees_RegularOperatorCount",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "dropped"
+        }
+      ]
+    },
+    {
+      "blockIndex": 8,
+      "blockId": "p1-l17",
+      "accumCount": 6,
+      "candidateCount": 3,
+      "reducerDecisions": [
+        {
+          "acordCode": "BuildingImprovement_WiringUpdatedNoIndicated",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "dropped"
+        },
+        {
+          "acordCode": "CertificateOfMarineEnergyInsurance_Vessel_AttachedToRemarksIndicator",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "dropped"
+        },
+        {
+          "acordCode": "CertificateOfMarineEnergyInsurance_Vessel_ScheduleAttachedIndicator",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "dropped"
+        }
+      ]
+    },
+    {
+      "blockIndex": 9,
+      "blockId": "p1-l18",
+      "accumCount": 6,
+      "candidateCount": 5,
+      "reducerDecisions": [
+        {
+          "acordCode": "AdditionalInterest_CellPhoneNumber",
+          "fusionScore": 0.62,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "kept"
+        },
+        {
+          "acordCode": "AdditionalInterest_Primary_PhoneNumber",
+          "fusionScore": 0.62,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "kept"
+        },
+        {
+          "acordCode": "AdditionalInterest_Primary_PhoneNumber_AA",
+          "fusionScore": 0.62,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "kept"
+        },
+        {
+          "acordCode": "AttorneyInformation_PhoneNumber",
+          "fusionScore": 0.62,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "kept"
+        },
+        {
+          "acordCode": "ClaimAdministrator_Primary_PhoneNumber",
+          "fusionScore": 0.342,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "dropped"
+        }
+      ]
+    },
+    {
+      "blockIndex": 10,
+      "blockId": "p1-l19",
+      "accumCount": 6,
+      "candidateCount": 3,
+      "reducerDecisions": [
+        {
+          "acordCode": "Property_AccidentalDamage_DeductibleAmount",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "dropped"
+        },
+        {
+          "acordCode": "Property_AccidentalDamage_LimitAmount",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "dropped"
+        },
+        {
+          "acordCode": "Property_AgriculturalMachineryTractors_ValueAmount",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "dropped"
+        }
+      ]
+    },
+    {
+      "blockIndex": 11,
+      "blockId": "p1-l21",
+      "accumCount": 12,
+      "candidateCount": 3,
+      "reducerDecisions": [
+        {
+          "acordCode": "Vehicle_ScheduledAutosIndicator",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "dropped"
+        },
+        {
+          "acordCode": "CommercialVehicleLineOfBusiness_Attachment_VehicleScheduleIndicator",
+          "fusionScore": 0.258,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "dropped"
+        },
+        {
+          "acordCode": "Policy_SectionAttached_VehicleScheduleIndicator",
+          "fusionScore": 0.258,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "dropped"
+        }
+      ]
+    },
+    {
+      "blockIndex": 12,
+      "blockId": "p1-l23",
+      "accumCount": 6,
+      "candidateCount": 3,
+      "reducerDecisions": [
+        {
+          "acordCode": "AdditionalInterest_Primary_FaxNumber",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "dropped"
+        },
+        {
+          "acordCode": "Client_ContactPerson_FaxNumber",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "dropped"
+        },
+        {
+          "acordCode": "CrimeLineOfBusiness_ApplicantTransferFundsViaPhoneOrFaxExplanation",
+          "fusionScore": 0.425,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "dropped"
+        }
+      ]
+    },
+    {
+      "blockIndex": 13,
+      "blockId": "p1-l24",
+      "accumCount": 15,
+      "candidateCount": 3,
+      "reducerDecisions": [
+        {
+          "acordCode": "GlassAndSign_Glass_ClassTypeCode",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "dropped"
+        },
+        {
+          "acordCode": "GlassAndSign_Glass_ItemIdentifier",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "dropped"
+        },
+        {
+          "acordCode": "GlassAndSign_Glass_OutsideTenantAreaIndicator",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "dropped"
+        }
+      ]
+    },
+    {
+      "blockIndex": 14,
+      "blockId": "p1-l25",
+      "accumCount": 14,
+      "candidateCount": 3,
+      "reducerDecisions": [
+        {
+          "acordCode": "Policy_SectionAttached_ElectronicDataProcessingIndicator",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "dropped"
+        },
+        {
+          "acordCode": "CommercialVehicleLineOfBusiness_ElectronicDataMonitoringDevice_AdditionalDescription",
+          "fusionScore": 0.398,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "dropped"
+        },
+        {
+          "acordCode": "CommercialVehicleLineOfBusiness_ElectronicDataMonitoringDevice_FleetMonitoredPercent",
+          "fusionScore": 0.227,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "dropped"
+        }
+      ]
+    },
+    {
+      "blockIndex": 15,
+      "blockId": "p1-l28",
+      "accumCount": 9,
+      "candidateCount": 3,
+      "reducerDecisions": [
+        {
+          "acordCode": "Employee_MailingAddress_CityName",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "dropped"
+        },
+        {
+          "acordCode": "Employee_MailingAddress_LineOne",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "dropped"
+        },
+        {
+          "acordCode": "Employee_MailingAddress_PostalCode",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "dropped"
+        }
+      ]
+    },
+    {
+      "blockIndex": 16,
+      "blockId": "p1-l30",
+      "accumCount": 6,
+      "candidateCount": 3,
+      "reducerDecisions": [
+        {
+          "acordCode": "CommercialCoverage_AdditionalIncreaseCostOfWorking_DeclaredValueLimitAmount",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "dropped"
+        },
+        {
+          "acordCode": "CommercialCoverage_BasicExcess_DeductibleAmount",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "dropped"
+        },
+        {
+          "acordCode": "CommercialCoverage_Burglary_AlcoholExcessAmount",
+          "fusionScore": 0.46,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "dropped"
+        }
+      ]
+    },
+    {
+      "blockIndex": 17,
+      "blockId": "p1-l168",
+      "accumCount": 12,
+      "candidateCount": 5,
+      "reducerDecisions": [
+        {
+          "acordCode": "Producer_AuthorizedRepresentative_Signature",
+          "fusionScore": 0.62,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "kept"
+        },
+        {
+          "acordCode": "Producer_AuthorizedRepresentative_SignatureDate",
+          "fusionScore": 0.62,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "kept"
+        },
+        {
+          "acordCode": "Producer_AuthorizedRepresentative_SignatureTime",
+          "fusionScore": 0.62,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "kept"
+        },
+        {
+          "acordCode": "Producer_Cancellation_Signature",
+          "fusionScore": 0.62,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "kept"
+        },
+        {
+          "acordCode": "Producer_SignatureDate",
+          "fusionScore": 0.62,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "kept"
+        }
+      ]
+    },
+    {
+      "blockIndex": 18,
+      "blockId": "p1-l170",
+      "accumCount": 9,
+      "candidateCount": 5,
+      "reducerDecisions": [
+        {
+          "acordCode": "AdditionalInterest_Signature",
+          "fusionScore": 0.62,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "kept"
+        },
+        {
+          "acordCode": "AdditionalInterest_SignatureDate",
+          "fusionScore": 0.62,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "kept"
+        },
+        {
+          "acordCode": "Beneficiary_IrrevocableBeneficiary_Signature",
+          "fusionScore": 0.62,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "kept"
+        },
+        {
+          "acordCode": "GlassAndSign_ApplicantWishToInsureLetteringOnGlassExplanation",
+          "fusionScore": 0.265,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "dropped"
+        },
+        {
+          "acordCode": "Beneficiary_IrrevocableBeneficiary_SignatureDate",
+          "fusionScore": 0.193,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "dropped"
+        }
+      ]
+    },
+    {
+      "blockIndex": 19,
+      "blockId": "p2-l138",
+      "accumCount": 24,
+      "candidateCount": 5,
+      "reducerDecisions": [
+        {
+          "acordCode": "LossHistory_LastFiveYears_ClaimCount",
+          "fusionScore": 0.62,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "kept"
+        },
+        {
+          "acordCode": "LossHistory_LastFiveYears_TheftCount",
+          "fusionScore": 0.62,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "kept"
+        },
+        {
+          "acordCode": "LossHistory_InformationYearCount",
+          "fusionScore": 0.62,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "kept"
+        },
+        {
+          "acordCode": "LossHistory_TotalIncurredAmount",
+          "fusionScore": 0.167,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "dropped"
+        },
+        {
+          "acordCode": "SalesRevenueHistory_CurrentFiscalYear_TotalSalesAmount",
+          "fusionScore": 0.167,
+          "fusionThreshold": 0.6,
+          "reducerDecision": "dropped"
+        }
+      ]
+    }
+  ]
+}

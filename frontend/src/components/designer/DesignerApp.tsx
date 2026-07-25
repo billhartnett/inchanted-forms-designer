@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import type { MappingPersistencePayload } from "../../../../shared/src/types";
-import { getDefaultOntologyMetadata } from "../../../../shared/src/acord/ontology";
+import type { MappingPersistencePayload } from "@shared/types";
+import { getDefaultOntologyMetadata } from "@shared/acord/ontology";
 import { DesignerLayout } from "../../designer/layout/DesignerLayout";
 import DesignerCanvas from "./DesignerCanvas";
 import DesignerLayersPanel from "./DesignerLayersPanel";

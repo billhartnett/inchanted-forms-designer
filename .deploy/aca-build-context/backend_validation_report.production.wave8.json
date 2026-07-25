@@ -1,0 +1,1071 @@
+{
+  "timestamp": "2026-07-13T13:12:15.542Z",
+  "contractVersion": "wave8.v1",
+  "environment": "production",
+  "baseUrl": "https://inchanted-api-production.greenriver-7266e28c.eastus.azurecontainerapps.io",
+  "expectationsPath": "F:\\inchanted-forms-designer\\backend\\api\\phase3-endpoint-sweep.json",
+  "summary": {
+    "environment": "production",
+    "checked": 75,
+    "transportFailures": 0,
+    "statusMismatches": 0,
+    "contractViolations": 0,
+    "failed": 0
+  },
+  "failures": [],
+  "results": [
+    {
+      "method": "GET",
+      "route": "/api/ping",
+      "status": 200,
+      "expectedStatus": 200,
+      "allowedStatuses": [
+        200
+      ],
+      "ok": true,
+      "latencyMs": 227,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"ok\":true,\"status\":200,\"message\":\"pong\",\"checkedAt\":\"2026-07-13T13:12:00.767Z\",\"data\":{\"ok\":true,\"status\":\"ok\",\"message\":\"pong\",\"checkedAt\":\"2026-07-13T13:12:00.767Z\"},\"error\":null,\"errorEnvelope\":null,\"contract\":{\"vers"
+    },
+    {
+      "method": "GET",
+      "route": "/api/gethealth",
+      "status": 200,
+      "expectedStatus": 200,
+      "allowedStatuses": [
+        200
+      ],
+      "ok": true,
+      "latencyMs": 118,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"ok\":true,\"tenantId\":\"aca-deploy\",\"checks\":{\"documentIntelligence\":true,\"embeddings\":true,\"storage\":true},\"circuits\":{},\"checkedAt\":\"2026-07-13T13:12:00.899Z\",\"status\":200,\"data\":{\"ok\":true,\"tenantId\":\"aca-deploy\",\"chec"
+    },
+    {
+      "method": "GET",
+      "route": "/api/ops/health",
+      "status": 200,
+      "expectedStatus": 200,
+      "allowedStatuses": [
+        200
+      ],
+      "ok": true,
+      "latencyMs": 49,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"ok\":true,\"tenantId\":\"aca-deploy\",\"checks\":{\"documentIntelligence\":true,\"embeddings\":true,\"storage\":true},\"circuits\":{},\"checkedAt\":\"2026-07-13T13:12:00.946Z\",\"status\":200,\"data\":{\"ok\":true,\"tenantId\":\"aca-deploy\",\"chec"
+    },
+    {
+      "method": "GET",
+      "route": "/api/version",
+      "status": 200,
+      "expectedStatus": 200,
+      "allowedStatuses": [
+        200
+      ],
+      "ok": true,
+      "latencyMs": 36,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"gitCommitHash\":\"3df7de633965df7d45e3689ce143a924ac7faf58\",\"buildTimestamp\":\"2026-07-13T12:47:21Z\",\"wave9EngineVersion\":\"sha-3df7de633965\",\"ok\":true,\"status\":200,\"data\":{\"gitCommitHash\":\"3df7de633965df7d45e3689ce143a924"
+    },
+    {
+      "method": "GET",
+      "route": "/api/acord/search",
+      "status": 400,
+      "expectedStatus": 400,
+      "allowedStatuses": [
+        400
+      ],
+      "ok": true,
+      "latencyMs": 34,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Missing query parameter\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Missing query parameter\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/acord/search\""
+    },
+    {
+      "method": "GET",
+      "route": "/api/acord/labels/search",
+      "status": 400,
+      "expectedStatus": 400,
+      "allowedStatuses": [
+        400
+      ],
+      "ok": true,
+      "latencyMs": 42,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Missing query parameter\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Missing query parameter\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/acord/labels/"
+    },
+    {
+      "method": "GET",
+      "route": "/api/ops/label-search",
+      "status": 400,
+      "expectedStatus": 400,
+      "allowedStatuses": [
+        400
+      ],
+      "ok": true,
+      "latencyMs": 41,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Missing query parameter\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Missing query parameter\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/ops/label-sea"
+    },
+    {
+      "method": "GET",
+      "route": "/api/acord/code/sample",
+      "status": 404,
+      "expectedStatus": 404,
+      "allowedStatuses": [
+        404
+      ],
+      "ok": true,
+      "latencyMs": 39,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"ACORD code not found\",\"acordCode\":\"sample\",\"ok\":false,\"status\":404,\"data\":null,\"errorEnvelope\":{\"code\":\"NOT_FOUND\",\"message\":\"ACORD code not found\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/"
+    },
+    {
+      "method": "GET",
+      "route": "/api/acord/labels/code/sample",
+      "status": 404,
+      "expectedStatus": 404,
+      "allowedStatuses": [
+        404
+      ],
+      "ok": true,
+      "latencyMs": 43,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"ACORD code not found\",\"acordCode\":\"sample\",\"ok\":false,\"status\":404,\"data\":null,\"errorEnvelope\":{\"code\":\"NOT_FOUND\",\"message\":\"ACORD code not found\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/"
+    },
+    {
+      "method": "GET",
+      "route": "/api/acord/all",
+      "status": 200,
+      "expectedStatus": 200,
+      "allowedStatuses": [
+        200
+      ],
+      "ok": true,
+      "latencyMs": 336,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"total\":16532,\"dictionary\":{\"loaded\":true,\"csvPath\":\"/app/backend/data/acord-elabels.csv\",\"rowCount\":16532,\"malformedRows\":0,\"loadedAt\":\"2026-07-13T12:47:45.654Z\"},\"items\":[{\"acordCode\":\"Form_CompletionDate\",\"label\":\"Fo"
+    },
+    {
+      "method": "GET",
+      "route": "/api/acord/labels/all",
+      "status": 200,
+      "expectedStatus": 200,
+      "allowedStatuses": [
+        200
+      ],
+      "ok": true,
+      "latencyMs": 346,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"total\":16532,\"dictionary\":{\"loaded\":true,\"csvPath\":\"/app/backend/data/acord-elabels.csv\",\"rowCount\":16532,\"malformedRows\":0,\"loadedAt\":\"2026-07-13T12:47:45.654Z\"},\"items\":[{\"acordCode\":\"Form_CompletionDate\",\"label\":\"Fo"
+    },
+    {
+      "method": "GET",
+      "route": "/api/ops/acord-dictionary",
+      "status": 200,
+      "expectedStatus": 200,
+      "allowedStatuses": [
+        200
+      ],
+      "ok": true,
+      "latencyMs": 294,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"total\":16532,\"dictionary\":{\"loaded\":true,\"csvPath\":\"/app/backend/data/acord-elabels.csv\",\"rowCount\":16532,\"malformedRows\":0,\"loadedAt\":\"2026-07-13T12:47:45.654Z\"},\"items\":[{\"acordCode\":\"Form_CompletionDate\",\"label\":\"Fo"
+    },
+    {
+      "method": "POST",
+      "route": "/api/acord/suggest",
+      "status": 400,
+      "expectedStatus": 400,
+      "allowedStatuses": [
+        400
+      ],
+      "ok": true,
+      "latencyMs": 48,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Missing text in request body\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Missing text in request body\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/aco"
+    },
+    {
+      "method": "POST",
+      "route": "/api/acord/labels/suggest",
+      "status": 400,
+      "expectedStatus": 400,
+      "allowedStatuses": [
+        400
+      ],
+      "ok": true,
+      "latencyMs": 44,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Missing text in request body\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Missing text in request body\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/aco"
+    },
+    {
+      "method": "POST",
+      "route": "/api/clusterFormFamilies",
+      "status": 400,
+      "expectedStatus": 400,
+      "allowedStatuses": [
+        400
+      ],
+      "ok": true,
+      "latencyMs": 53,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"At least one valid document is required\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"At least one valid document is required\",\"details\":null},\"contract\":{\"version\":\"wave"
+    },
+    {
+      "method": "POST",
+      "route": "/api/memory/compare-snapshots",
+      "status": 400,
+      "expectedStatus": 400,
+      "allowedStatuses": [
+        400
+      ],
+      "ok": true,
+      "latencyMs": 47,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Both baseline and current semantic memory snapshots are required.\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Both baseline and current semantic memory snapshots are re"
+    },
+    {
+      "method": "POST",
+      "route": "/api/fusion/drift",
+      "status": 400,
+      "expectedStatus": 400,
+      "allowedStatuses": [
+        400
+      ],
+      "ok": true,
+      "latencyMs": 44,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"baseline and current snapshots are required\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"baseline and current snapshots are required\",\"details\":null},\"contract\":{\"versio"
+    },
+    {
+      "method": "POST",
+      "route": "/api/detectFamilyDrift",
+      "status": 400,
+      "expectedStatus": 400,
+      "allowedStatuses": [
+        400
+      ],
+      "ok": true,
+      "latencyMs": 48,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"baseline and current family reports are required\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"baseline and current family reports are required\",\"details\":null},\"contract"
+    },
+    {
+      "method": "POST",
+      "route": "/api/ontology/multi/drift",
+      "status": 400,
+      "expectedStatus": 400,
+      "allowedStatuses": [
+        400
+      ],
+      "ok": true,
+      "latencyMs": 33,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"baseline and current snapshots are required\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"baseline and current snapshots are required\",\"details\":null},\"contract\":{\"versio"
+    },
+    {
+      "method": "POST",
+      "route": "/api/ontology/drift",
+      "status": 400,
+      "expectedStatus": 400,
+      "allowedStatuses": [
+        400
+      ],
+      "ok": true,
+      "latencyMs": 41,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"baseline and current ontology snapshots are required\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"baseline and current ontology snapshots are required\",\"details\":null},\""
+    },
+    {
+      "method": "POST",
+      "route": "/api/evaluateAcordSemantics",
+      "status": 400,
+      "expectedStatus": 400,
+      "allowedStatuses": [
+        400
+      ],
+      "ok": true,
+      "latencyMs": 48,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Unsupported payload version\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Unsupported payload version\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/evalu"
+    },
+    {
+      "method": "POST",
+      "route": "/api/evaluateCalibration",
+      "status": 200,
+      "expectedStatus": 200,
+      "allowedStatuses": [
+        200
+      ],
+      "ok": true,
+      "latencyMs": 42,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"profile\":{\"profileId\":\"default-calibration\",\"name\":\"Default Calibration\",\"version\":1,\"createdAt\":\"2026-07-13T13:12:13.047Z\",\"updatedAt\":\"2026-07-13T13:12:13.047Z\",\"globalThresholds\":{\"accepted\":0.8,\"review\":0.6,\"reject"
+    },
+    {
+      "method": "POST",
+      "route": "/api/carrier/adapters/evaluate",
+      "status": 400,
+      "expectedStatus": 400,
+      "allowedStatuses": [
+        400
+      ],
+      "ok": true,
+      "latencyMs": 41,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Payload must be an object\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Payload must be an object\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/carrier/a"
+    },
+    {
+      "method": "POST",
+      "route": "/api/normalize/cross-family",
+      "status": 400,
+      "expectedStatus": 400,
+      "allowedStatuses": [
+        400
+      ],
+      "ok": true,
+      "latencyMs": 52,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"At least one valid document payload is required.\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"At least one valid document payload is required.\",\"details\":null},\"contract"
+    },
+    {
+      "method": "POST",
+      "route": "/api/underwriting/decision/drift",
+      "status": 400,
+      "expectedStatus": 400,
+      "allowedStatuses": [
+        400
+      ],
+      "ok": true,
+      "latencyMs": 58,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"current decision context is required.\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"current decision context is required.\",\"details\":null},\"contract\":{\"version\":\"wave8.v1"
+    },
+    {
+      "method": "POST",
+      "route": "/api/evaluateFamilyCalibration",
+      "status": 400,
+      "expectedStatus": 400,
+      "allowedStatuses": [
+        400
+      ],
+      "ok": true,
+      "latencyMs": 49,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Payload must be an object\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Payload must be an object\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/evaluateF"
+    },
+    {
+      "method": "POST",
+      "route": "/api/graph/drift",
+      "status": 400,
+      "expectedStatus": 400,
+      "allowedStatuses": [
+        400
+      ],
+      "ok": true,
+      "latencyMs": 39,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"current global semantic graph snapshot is required.\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"current global semantic graph snapshot is required.\",\"details\":null},\"co"
+    },
+    {
+      "method": "POST",
+      "route": "/api/graph/harmonization",
+      "status": 400,
+      "expectedStatus": 400,
+      "allowedStatuses": [
+        400
+      ],
+      "ok": true,
+      "latencyMs": 39,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"At least one valid document payload is required.\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"At least one valid document payload is required.\",\"details\":null},\"contract"
+    },
+    {
+      "method": "POST",
+      "route": "/api/graph/inference",
+      "status": 400,
+      "expectedStatus": 400,
+      "allowedStatuses": [
+        400
+      ],
+      "ok": true,
+      "latencyMs": 36,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Payload must be an object\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Payload must be an object\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/graph/inf"
+    },
+    {
+      "method": "POST",
+      "route": "/api/memory/longitudinal-drift",
+      "status": 400,
+      "expectedStatus": 400,
+      "allowedStatuses": [
+        400
+      ],
+      "ok": true,
+      "latencyMs": 38,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"current semantic memory snapshot is required.\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"current semantic memory snapshot is required.\",\"details\":null},\"contract\":{\"ve"
+    },
+    {
+      "method": "POST",
+      "route": "/api/evaluateMappingQuality",
+      "status": 400,
+      "expectedStatus": 400,
+      "allowedStatuses": [
+        400
+      ],
+      "ok": true,
+      "latencyMs": 40,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Unsupported payload version\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Unsupported payload version\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/evalu"
+    },
+    {
+      "method": "POST",
+      "route": "/api/memory/recommendations",
+      "status": 400,
+      "expectedStatus": 400,
+      "allowedStatuses": [
+        400
+      ],
+      "ok": true,
+      "latencyMs": 51,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"At least one valid document payload is required.\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"At least one valid document payload is required.\",\"details\":null},\"contract"
+    },
+    {
+      "method": "POST",
+      "route": "/api/ontology/arbitration",
+      "status": 400,
+      "expectedStatus": 400,
+      "allowedStatuses": [
+        400
+      ],
+      "ok": true,
+      "latencyMs": 52,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Payload must be an object\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Payload must be an object\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/ontology/"
+    },
+    {
+      "method": "POST",
+      "route": "/api/risk/factors/evaluate",
+      "status": 400,
+      "expectedStatus": 400,
+      "allowedStatuses": [
+        400
+      ],
+      "ok": true,
+      "latencyMs": 42,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Payload must be an object\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Payload must be an object\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/risk/fact"
+    },
+    {
+      "method": "POST",
+      "route": "/api/risk/scoring/evaluate",
+      "status": 400,
+      "expectedStatus": 400,
+      "allowedStatuses": [
+        400
+      ],
+      "ok": true,
+      "latencyMs": 43,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Payload must be an object\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Payload must be an object\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/risk/scor"
+    },
+    {
+      "method": "POST",
+      "route": "/api/conflicts/semantic",
+      "status": 400,
+      "expectedStatus": 400,
+      "allowedStatuses": [
+        400
+      ],
+      "ok": true,
+      "latencyMs": 47,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Payload must be an object\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Payload must be an object\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/conflicts"
+    },
+    {
+      "method": "POST",
+      "route": "/api/fusion/evaluate",
+      "status": 400,
+      "expectedStatus": 400,
+      "allowedStatuses": [
+        400
+      ],
+      "ok": true,
+      "latencyMs": 41,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"At least one valid document payload is required.\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"At least one valid document payload is required.\",\"details\":null},\"contract"
+    },
+    {
+      "method": "POST",
+      "route": "/api/submission/drift",
+      "status": 400,
+      "expectedStatus": 400,
+      "allowedStatuses": [
+        400
+      ],
+      "ok": true,
+      "latencyMs": 39,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"current submission state is required.\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"current submission state is required.\",\"details\":null},\"contract\":{\"version\":\"wave8.v1"
+    },
+    {
+      "method": "POST",
+      "route": "/api/underwriting/decision/evaluate",
+      "status": 400,
+      "expectedStatus": 400,
+      "allowedStatuses": [
+        400
+      ],
+      "ok": true,
+      "latencyMs": 43,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Payload must be an object\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Payload must be an object\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/underwrit"
+    },
+    {
+      "method": "POST",
+      "route": "/api/rules/drift",
+      "status": 400,
+      "expectedStatus": 400,
+      "allowedStatuses": [
+        400
+      ],
+      "ok": true,
+      "latencyMs": 44,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"current underwriting rule snapshot is required.\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"current underwriting rule snapshot is required.\",\"details\":null},\"contract\":"
+    },
+    {
+      "method": "POST",
+      "route": "/api/rules/evaluate",
+      "status": 400,
+      "expectedStatus": 400,
+      "allowedStatuses": [
+        400
+      ],
+      "ok": true,
+      "latencyMs": 49,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Payload must be an object\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Payload must be an object\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/rules/eva"
+    },
+    {
+      "method": "POST",
+      "route": "/api/exportAcordXml",
+      "status": 400,
+      "expectedStatus": 400,
+      "allowedStatuses": [
+        400
+      ],
+      "ok": true,
+      "latencyMs": 43,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Unsupported payload version\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Unsupported payload version\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/expor"
+    },
+    {
+      "method": "GET",
+      "route": "/api/ops/audit/export",
+      "status": 403,
+      "expectedStatus": 403,
+      "allowedStatuses": [
+        403
+      ],
+      "ok": true,
+      "latencyMs": 44,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Policy denied for admin:audit-export role=viewer\",\"ok\":false,\"status\":403,\"data\":null,\"errorEnvelope\":{\"code\":\"FORBIDDEN\",\"message\":\"Policy denied for admin:audit-export role=viewer\",\"details\":null},\"contract\":"
+    },
+    {
+      "method": "POST",
+      "route": "/api/extractDocument",
+      "status": 400,
+      "expectedStatus": 400,
+      "allowedStatuses": [
+        400
+      ],
+      "ok": true,
+      "latencyMs": 52,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Provide blocks[], text, or a multipart file upload with a PDF\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Provide blocks[], text, or a multipart file upload with a PDF\""
+    },
+    {
+      "method": "POST",
+      "route": "/api/extractText",
+      "status": 400,
+      "expectedStatus": 500,
+      "allowedStatuses": [
+        400,
+        500
+      ],
+      "ok": true,
+      "latencyMs": 47,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"No file uploaded\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"No file uploaded\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/extractText\",\"status\":400,\""
+    },
+    {
+      "method": "POST",
+      "route": "/api/submission/package/generate",
+      "status": 400,
+      "expectedStatus": 400,
+      "allowedStatuses": [
+        400
+      ],
+      "ok": true,
+      "latencyMs": 39,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Payload must be an object\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Payload must be an object\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/submissio"
+    },
+    {
+      "method": "GET",
+      "route": "/api/ontology",
+      "status": 200,
+      "expectedStatus": 200,
+      "allowedStatuses": [
+        200
+      ],
+      "ok": true,
+      "latencyMs": 34,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"ontologyId\":\"acord-canonical-ontology\",\"version\":\"2026.06.10\",\"generatedAt\":\"deterministic\",\"hash\":\"c653ca94\",\"nodes\":{\"CommercialProperty.Building.LocationAddress\":{\"acordCode\":\"CommercialProperty.Building.LocationAdd"
+    },
+    {
+      "method": "GET",
+      "route": "/api/carrier/adapters",
+      "status": 200,
+      "expectedStatus": 200,
+      "allowedStatuses": [
+        200
+      ],
+      "ok": true,
+      "latencyMs": 33,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"familyId\":\"default\",\"bundles\":[{\"carrierId\":\"carrier-markel\",\"carrierLabel\":\"Markel\",\"namespace\":\"carrier-supplemental-markel\",\"version\":\"2026.06.10\",\"precedence\":260,\"compatibility\":[\"acord-core\",\"carrier-supplemental"
+    },
+    {
+      "method": "POST",
+      "route": "/api/carrier/adapters",
+      "status": 200,
+      "expectedStatus": 200,
+      "allowedStatuses": [
+        200
+      ],
+      "ok": true,
+      "latencyMs": 60,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"familyId\":\"default\",\"bundles\":[{\"carrierId\":\"carrier-markel\",\"carrierLabel\":\"Markel\",\"namespace\":\"carrier-supplemental-markel\",\"version\":\"2026.06.10\",\"precedence\":260,\"compatibility\":[\"acord-core\",\"carrier-supplemental"
+    },
+    {
+      "method": "POST",
+      "route": "/api/graph/retrieve",
+      "status": 400,
+      "expectedStatus": 400,
+      "allowedStatuses": [
+        400
+      ],
+      "ok": true,
+      "latencyMs": 46,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"At least one valid document payload is required.\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"At least one valid document payload is required.\",\"details\":null},\"contract"
+    },
+    {
+      "method": "GET",
+      "route": "/api/ops/metrics",
+      "status": 403,
+      "expectedStatus": 403,
+      "allowedStatuses": [
+        403
+      ],
+      "ok": true,
+      "latencyMs": 43,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Policy denied for admin:metrics role=viewer\",\"ok\":false,\"status\":403,\"data\":null,\"errorEnvelope\":{\"code\":\"FORBIDDEN\",\"message\":\"Policy denied for admin:metrics role=viewer\",\"details\":null},\"contract\":{\"version\""
+    },
+    {
+      "method": "GET",
+      "route": "/api/monitoring/dashboard",
+      "status": 200,
+      "expectedStatus": 200,
+      "allowedStatuses": [
+        200
+      ],
+      "ok": true,
+      "latencyMs": 50,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"tenantId\":\"local-dev\",\"timestamp\":\"2026-07-13T13:12:14.398Z\",\"system\":{\"status\":\"healthy\",\"passRate\":99.8,\"alerts\":0,\"lastUpdated\":\"2026-07-13T13:12:14.398Z\"},\"strictMode\":{\"enabled\":true,\"status\":\"operational\",\"failur"
+    },
+    {
+      "method": "POST",
+      "route": "/api/memory/snapshot",
+      "status": 400,
+      "expectedStatus": 400,
+      "allowedStatuses": [
+        400
+      ],
+      "ok": true,
+      "latencyMs": 51,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"At least one valid document payload is required.\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"At least one valid document payload is required.\",\"details\":null},\"contract"
+    },
+    {
+      "method": "GET",
+      "route": "/api/submission/status",
+      "status": 400,
+      "expectedStatus": 400,
+      "allowedStatuses": [
+        400
+      ],
+      "ok": true,
+      "latencyMs": 48,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"submissionId query parameter is required.\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"submissionId query parameter is required.\",\"details\":null},\"contract\":{\"version\":\""
+    },
+    {
+      "method": "GET",
+      "route": "/api/fusion/unification-graph",
+      "status": 200,
+      "expectedStatus": 200,
+      "allowedStatuses": [
+        200
+      ],
+      "ok": true,
+      "latencyMs": 40,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"generatedAt\":\"1970-01-01T00:00:00.000Z\",\"graphHash\":\"51cfc61b\",\"edges\":[{\"sourceCode\":\"Applicant.Address.City\",\"targetCode\":\"Insured.Address.City\",\"relationship\":\"equivalent\",\"unificationClass\":\"acord-126-to-127\"},{\"so"
+    },
+    {
+      "method": "GET",
+      "route": "/api/ingestion-test",
+      "status": 200,
+      "expectedStatus": 200,
+      "allowedStatuses": [
+        200
+      ],
+      "ok": true,
+      "latencyMs": 50,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"ok\":true,\"endpoint\":\"ingestion-test\",\"message\":\"Ingestion test endpoint is active\",\"checkedAt\":\"2026-07-13T13:12:14.590Z\",\"status\":200,\"data\":{\"ok\":true,\"endpoint\":\"ingestion-test\",\"message\":\"Ingestion test endpoint is"
+    },
+    {
+      "method": "GET",
+      "route": "/api/loadCalibrationProfile",
+      "status": 200,
+      "expectedStatus": 200,
+      "allowedStatuses": [
+        200
+      ],
+      "ok": true,
+      "latencyMs": 195,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"profile\":{\"profileId\":\"default-calibration\",\"name\":\"Default Calibration\",\"version\":1,\"createdAt\":\"2026-07-13T13:12:14.784Z\",\"updatedAt\":\"2026-07-13T13:12:14.784Z\",\"globalThresholds\":{\"accepted\":0.8,\"review\":0.6,\"reject"
+    },
+    {
+      "method": "GET",
+      "route": "/api/loadMapping",
+      "status": 400,
+      "expectedStatus": 400,
+      "allowedStatuses": [
+        400
+      ],
+      "ok": true,
+      "latencyMs": 36,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Missing fileName query parameter\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Missing fileName query parameter\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\""
+    },
+    {
+      "method": "POST",
+      "route": "/api/mapFields",
+      "status": 400,
+      "expectedStatus": 400,
+      "allowedStatuses": [
+        400
+      ],
+      "ok": true,
+      "latencyMs": 41,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"blocks must be a non-empty array\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"blocks must be a non-empty array\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\""
+    },
+    {
+      "method": "POST",
+      "route": "/api/submission/retry/process",
+      "status": 403,
+      "expectedStatus": 403,
+      "allowedStatuses": [
+        403
+      ],
+      "ok": true,
+      "latencyMs": 43,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Policy denied for submission:retry role=viewer\",\"ok\":false,\"status\":403,\"data\":null,\"errorEnvelope\":{\"code\":\"FORBIDDEN\",\"message\":\"Policy denied for submission:retry role=viewer\",\"details\":null},\"contract\":{\"ve"
+    },
+    {
+      "method": "POST",
+      "route": "/api/saveCalibrationProfile",
+      "status": 400,
+      "expectedStatus": 400,
+      "allowedStatuses": [
+        400
+      ],
+      "ok": true,
+      "latencyMs": 42,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"profile is required\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"profile is required\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/saveCalibrationProfil"
+    },
+    {
+      "method": "POST",
+      "route": "/api/saveMapping",
+      "status": 403,
+      "expectedStatus": 403,
+      "allowedStatuses": [
+        403
+      ],
+      "ok": true,
+      "latencyMs": 51,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Policy denied for mapping:save role=viewer\",\"ok\":false,\"status\":403,\"data\":null,\"errorEnvelope\":{\"code\":\"FORBIDDEN\",\"message\":\"Policy denied for mapping:save role=viewer\",\"details\":null},\"contract\":{\"version\":\""
+    },
+    {
+      "method": "POST",
+      "route": "/api/submission/carrier/submit",
+      "status": 403,
+      "expectedStatus": 403,
+      "allowedStatuses": [
+        403
+      ],
+      "ok": true,
+      "latencyMs": 39,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Policy denied for submission:submit role=viewer\",\"ok\":false,\"status\":403,\"data\":null,\"errorEnvelope\":{\"code\":\"FORBIDDEN\",\"message\":\"Policy denied for submission:submit role=viewer\",\"details\":null},\"contract\":{\""
+    },
+    {
+      "method": "POST",
+      "route": "/api/suggestLabels",
+      "status": 400,
+      "expectedStatus": 400,
+      "allowedStatuses": [
+        400
+      ],
+      "ok": true,
+      "latencyMs": 49,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Missing text in request body\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Missing text in request body\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/sug"
+    },
+    {
+      "method": "POST",
+      "route": "/api/graph/update",
+      "status": 400,
+      "expectedStatus": 400,
+      "allowedStatuses": [
+        400
+      ],
+      "ok": true,
+      "latencyMs": 50,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"At least one valid document payload is required.\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"At least one valid document payload is required.\",\"details\":null},\"contract"
+    },
+    {
+      "method": "POST",
+      "route": "/api/memory/update",
+      "status": 400,
+      "expectedStatus": 400,
+      "allowedStatuses": [
+        400
+      ],
+      "ok": true,
+      "latencyMs": 43,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"At least one valid document payload is required.\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"At least one valid document payload is required.\",\"details\":null},\"contract"
+    },
+    {
+      "method": "POST",
+      "route": "/api/ontology/validate",
+      "status": 200,
+      "expectedStatus": 200,
+      "allowedStatuses": [
+        200
+      ],
+      "ok": true,
+      "latencyMs": 33,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"valid\":true,\"issues\":[],\"ok\":true,\"status\":200,\"data\":{\"valid\":true,\"issues\":[]},\"error\":null,\"errorEnvelope\":null,\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/ontology/validate\",\"status\":200,\"ok\":true,\"timestamp\":\"20"
+    },
+    {
+      "method": "GET",
+      "route": "/api/wave9/contracts",
+      "status": 200,
+      "expectedStatus": 200,
+      "allowedStatuses": [
+        200
+      ],
+      "ok": true,
+      "latencyMs": 43,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"ok\":true,\"status\":200,\"data\":{\"version\":\"wave9.frontend.v1\",\"contractVersion\":\"wave8.v1\",\"endpoints\":{\"contracts\":{\"method\":\"GET\",\"path\":\"/api/wave9/contracts\"},\"extraction\":{\"method\":\"POST\",\"path\":\"/api/wave9/acord/ex"
+    },
+    {
+      "method": "POST",
+      "route": "/api/wave9/acord/extraction",
+      "status": 400,
+      "expectedStatus": 400,
+      "allowedStatuses": [
+        400,
+        500
+      ],
+      "ok": true,
+      "latencyMs": 47,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Provide blocks[], text, or a multipart file upload with a PDF\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Provide blocks[], text, or a multipart file upload with a PDF\""
+    },
+    {
+      "method": "POST",
+      "route": "/api/wave9/acord/semantic-inference",
+      "status": 400,
+      "expectedStatus": 400,
+      "allowedStatuses": [
+        400
+      ],
+      "ok": true,
+      "latencyMs": 48,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Unsupported payload version\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Unsupported payload version\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/wave9"
+    },
+    {
+      "method": "POST",
+      "route": "/api/wave9/inference",
+      "status": 400,
+      "expectedStatus": 400,
+      "allowedStatuses": [
+        400
+      ],
+      "ok": true,
+      "latencyMs": 43,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Payload must be an object\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Payload must be an object\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/wave9/inf"
+    },
+    {
+      "method": "POST",
+      "route": "/api/wave9/arbitration",
+      "status": 400,
+      "expectedStatus": 400,
+      "allowedStatuses": [
+        400
+      ],
+      "ok": true,
+      "latencyMs": 45,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Payload must be an object\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Payload must be an object\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/wave9/arb"
+    },
+    {
+      "method": "POST",
+      "route": "/api/wave9/normalization",
+      "status": 400,
+      "expectedStatus": 400,
+      "allowedStatuses": [
+        400
+      ],
+      "ok": true,
+      "latencyMs": 39,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"At least one valid document payload is required.\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"At least one valid document payload is required.\",\"details\":null},\"contract"
+    },
+    {
+      "method": "POST",
+      "route": "/api/wave9/scoring",
+      "status": 400,
+      "expectedStatus": 400,
+      "allowedStatuses": [
+        400
+      ],
+      "ok": true,
+      "latencyMs": 39,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"Payload must be an object\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"Payload must be an object\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\"/api/wave9/sco"
+    },
+    {
+      "method": "POST",
+      "route": "/api/wave9/preview",
+      "status": 400,
+      "expectedStatus": 400,
+      "allowedStatuses": [
+        200,
+        400
+      ],
+      "ok": true,
+      "latencyMs": 30,
+      "contractValid": true,
+      "contractError": null,
+      "bodyPreview": "{\"error\":\"blocks must be a non-empty array\",\"ok\":false,\"status\":400,\"data\":null,\"errorEnvelope\":{\"code\":\"BAD_REQUEST\",\"message\":\"blocks must be a non-empty array\",\"details\":null},\"contract\":{\"version\":\"wave8.v1\",\"path\":\""
+    }
+  ]
+}

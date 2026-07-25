@@ -1,0 +1,83 @@
+{
+    "timestamp":  "2026-07-13T11:58:29.7793123-04:00",
+    "appServiceName":  "forms-designer",
+    "urls":  {
+                 "root":  {
+                              "method":  "GET",
+                              "url":  "https://forms-designer-f0dpd7ckbwdeh2g0.centralus-01.azurewebsites.net",
+                              "status":  200,
+                              "ok":  true,
+                              "contentLength":  510,
+                              "error":  null,
+                              "bodyPreview":  "\u003c!doctype html\u003e\r\n\u003chtml lang=\"en\"\u003e\r\n  \u003chead\u003e\r\n    \u003cmeta charset=\"UTF-8\" /\u003e\r\n    \u003clink rel=\"icon\" type=\"image/svg+xml\" href=\"/favicon.svg\" /\u003e\r\n    \u003cmeta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" /\u003e\r\n    \u003ctitle\u003efrontend\u003c/title\u003e\r\n    \u003cscript type=\"module\" crossorigin src=\"/assets/i"
+                          },
+                 "designer":  {
+                                  "method":  "GET",
+                                  "url":  "https://forms-designer-f0dpd7ckbwdeh2g0.centralus-01.azurewebsites.net/designer",
+                                  "status":  200,
+                                  "ok":  true,
+                                  "contentLength":  510,
+                                  "error":  null,
+                                  "bodyPreview":  "\u003c!doctype html\u003e\r\n\u003chtml lang=\"en\"\u003e\r\n  \u003chead\u003e\r\n    \u003cmeta charset=\"UTF-8\" /\u003e\r\n    \u003clink rel=\"icon\" type=\"image/svg+xml\" href=\"/favicon.svg\" /\u003e\r\n    \u003cmeta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" /\u003e\r\n    \u003ctitle\u003efrontend\u003c/title\u003e\r\n    \u003cscript type=\"module\" crossorigin src=\"/assets/i"
+                              },
+                 "ingestionTester":  {
+                                         "method":  "GET",
+                                         "url":  "https://forms-designer-f0dpd7ckbwdeh2g0.centralus-01.azurewebsites.net/ingestion-test",
+                                         "status":  200,
+                                         "ok":  true,
+                                         "contentLength":  510,
+                                         "error":  null,
+                                         "bodyPreview":  "\u003c!doctype html\u003e\r\n\u003chtml lang=\"en\"\u003e\r\n  \u003chead\u003e\r\n    \u003cmeta charset=\"UTF-8\" /\u003e\r\n    \u003clink rel=\"icon\" type=\"image/svg+xml\" href=\"/favicon.svg\" /\u003e\r\n    \u003cmeta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" /\u003e\r\n    \u003ctitle\u003efrontend\u003c/title\u003e\r\n    \u003cscript type=\"module\" crossorigin src=\"/assets/i"
+                                     },
+                 "envJs":  {
+                               "method":  "GET",
+                               "url":  "https://forms-designer-f0dpd7ckbwdeh2g0.centralus-01.azurewebsites.net/env.js",
+                               "status":  200,
+                               "ok":  true,
+                               "contentLength":  148,
+                               "error":  null,
+                               "bodyPreview":  "﻿window.__APP_CONFIG__ = window.__APP_CONFIG__ || {};\nwindow.__APP_CONFIG__.API_BASE_URL = \u0027https://forms-designer-backend.azurewebsites.net\u0027;\r\n\r\n"
+                           },
+                 "assets":  [
+                                {
+                                    "method":  "GET",
+                                    "url":  "https://forms-designer-f0dpd7ckbwdeh2g0.centralus-01.azurewebsites.net/assets/index-BpEwTpri.js",
+                                    "status":  200,
+                                    "ok":  true,
+                                    "contentLength":  1214863,
+                                    "error":  null,
+                                    "bodyPreview":  "var e=Object.create,t=Object.defineProperty,n=Object.getOwnPropertyDescriptor,r=Object.getOwnPropertyNames,i=Object.getPrototypeOf,a=Object.prototype.hasOwnProperty,o=(e,t)=\u003e()=\u003e(t||(e((t={exports:{}}).exports,t),e=null),t.exports),s=(e,n)=\u003e{let r={};for(var i in e)t(r,i,{get:e[i],enumerable:!0});re"
+                                },
+                                {
+                                    "method":  "GET",
+                                    "url":  "https://forms-designer-f0dpd7ckbwdeh2g0.centralus-01.azurewebsites.net/assets/index-D6UKGAP-.css",
+                                    "status":  200,
+                                    "ok":  true,
+                                    "contentLength":  18320,
+                                    "error":  null,
+                                    "bodyPreview":  ":root{--color-primary:#3b82f6;--color-primary-dark:#1d4ed8;--color-secondary:#6b7280;--color-success:#10b981;--color-error:#ef4444;--color-warning:#f59e0b;--color-bg:#0f172a;--color-surface:#1e293b;--color-surface-hover:#334155;--color-border:#334155;--color-text:#f1f5f9;--color-text-dim:#cbd5e1;--s"
+                                },
+                                {
+                                    "method":  "GET",
+                                    "url":  "https://forms-designer-f0dpd7ckbwdeh2g0.centralus-01.azurewebsites.net/assets/pdf.worker.min-BQQyBz9N.js",
+                                    "status":  200,
+                                    "ok":  true,
+                                    "contentLength":  1298221,
+                                    "error":  null,
+                                    "bodyPreview":  "(function(){var e={d:(t,n)=\u003e{for(var r in n)e.o(n,r)\u0026\u0026!e.o(t,r)\u0026\u0026Object.defineProperty(t,r,{enumerable:!0,get:n[r]})},o:(e,t)=\u003eObject.prototype.hasOwnProperty.call(e,t)},t=globalThis.pdfjsWorker={};e.d(t,{WorkerMessageHandler:()=\u003eby});let n=!(typeof process!=`object`||process+``!=`[object process]`|"
+                                }
+                            ]
+             },
+    "backendConnectivity":  {
+                                "apiBaseUrl":  "https://forms-designer-backend.azurewebsites.net",
+                                "extractDocument":  {
+                                                        "ok":  false,
+                                                        "error":  "No PDF fixture found under test-fixtures/pdf"
+                                                    },
+                                "mapFields":  {
+                                                  "ok":  false,
+                                                  "error":  "mapFields skipped because no PDF fixture was available"
+                                              },
+                                "wave8UsabilityModeActive":  false
+                            }
+}

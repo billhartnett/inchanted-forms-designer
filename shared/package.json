@@ -17,6 +17,26 @@
       "types": "./dist/acord/index.d.ts",
       "default": "./dist/acord/index.js"
     },
+    "./acord/ontology": {
+      "types": "./dist/acord/ontology.d.ts",
+      "default": "./dist/acord/ontology.js"
+    },
+    "./acord/acord-builders": {
+      "types": "./dist/acord/acord-builders.d.ts",
+      "default": "./dist/acord/acord-builders.js"
+    },
+    "./acord/acord-doc-profile": {
+      "types": "./dist/acord/acord-doc-profile.d.ts",
+      "default": "./dist/acord/acord-doc-profile.js"
+    },
+    "./acord/acord-gating": {
+      "types": "./dist/acord/acord-gating.d.ts",
+      "default": "./dist/acord/acord-gating.js"
+    },
+    "./acord/acordTypes": {
+      "types": "./dist/acord/acordTypes.d.ts",
+      "default": "./dist/acord/acordTypes.js"
+    },
     "./types": {
       "types": "./dist/types/index.d.ts",
       "default": "./dist/types/index.js"

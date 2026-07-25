@@ -1,0 +1,141 @@
+{
+  "generatedAt": "2026-07-01T02:23:54.086Z",
+  "mode": "fast_deterministic",
+  "replayBatchCount": 18,
+  "fixtureCount": 18,
+  "files": [
+    {
+      "fixture": "ACORD-0080-2016-11",
+      "baseFile": "ACORD-0080-2016-11-training.json",
+      "replayFile": "ACORD-0080-2016-11-training-cat.json",
+      "inputBlockCount": 593,
+      "replayBlockCount": 593
+    },
+    {
+      "fixture": "ACORD-0081-2016-03r1",
+      "baseFile": "ACORD-0081-2016-03r1-training.json",
+      "replayFile": "ACORD-0081-2016-03r1-training-cat.json",
+      "inputBlockCount": 592,
+      "replayBlockCount": 592
+    },
+    {
+      "fixture": "ACORD-0082-2020-03",
+      "baseFile": "ACORD-0082-2020-03-training.json",
+      "replayFile": "ACORD-0082-2020-03-training-cat.json",
+      "inputBlockCount": 610,
+      "replayBlockCount": 610
+    },
+    {
+      "fixture": "ACORD-0083-2016-04r1",
+      "baseFile": "ACORD-0083-2016-04r1-training.json",
+      "replayFile": "ACORD-0083-2016-04r1-training-cat.json",
+      "inputBlockCount": 530,
+      "replayBlockCount": 530
+    },
+    {
+      "fixture": "ACORD-0084-2016-11",
+      "baseFile": "ACORD-0084-2016-11-training.json",
+      "replayFile": "ACORD-0084-2016-11-training-cat.json",
+      "inputBlockCount": 489,
+      "replayBlockCount": 489
+    },
+    {
+      "fixture": "ACORD-0085-2016-11",
+      "baseFile": "ACORD-0085-2016-11-training.json",
+      "replayFile": "ACORD-0085-2016-11-training-cat.json",
+      "inputBlockCount": 447,
+      "replayBlockCount": 447
+    },
+    {
+      "fixture": "ACORD-0088-2015-12r1",
+      "baseFile": "ACORD-0088-2015-12r1-training.json",
+      "replayFile": "ACORD-0088-2015-12r1-training-cat.json",
+      "inputBlockCount": 314,
+      "replayBlockCount": 314
+    },
+    {
+      "fixture": "ACORD-0089-2016-11",
+      "baseFile": "ACORD-0089-2016-11-training.json",
+      "replayFile": "ACORD-0089-2016-11-training-cat.json",
+      "inputBlockCount": 407,
+      "replayBlockCount": 407
+    },
+    {
+      "fixture": "ACORD-0090-FL-2015-12r1",
+      "baseFile": "ACORD-0090-FL-2015-12r1-training.json",
+      "replayFile": "ACORD-0090-FL-2015-12r1-training-cat.json",
+      "inputBlockCount": 644,
+      "replayBlockCount": 644
+    },
+    {
+      "fixture": "ACORD-0090-NY-2015-12",
+      "baseFile": "ACORD-0090-NY-2015-12-training.json",
+      "replayFile": "ACORD-0090-NY-2015-12-training-cat.json",
+      "inputBlockCount": 660,
+      "replayBlockCount": 660
+    },
+    {
+      "fixture": "ACORD-0125-2016-03r1",
+      "baseFile": "ACORD-0125-2016-03r1-training.json",
+      "replayFile": "ACORD-0125-2016-03r1-training-cat.json",
+      "inputBlockCount": 388,
+      "replayBlockCount": 388
+    },
+    {
+      "fixture": "ACORD-0126-2016-09",
+      "baseFile": "ACORD-0126-2016-09-training.json",
+      "replayFile": "ACORD-0126-2016-09-training-cat.json",
+      "inputBlockCount": 214,
+      "replayBlockCount": 214
+    },
+    {
+      "fixture": "ACORD-0127-2015-12r2",
+      "baseFile": "ACORD-0127-2015-12r2-training.json",
+      "replayFile": "ACORD-0127-2015-12r2-training-cat.json",
+      "inputBlockCount": 473,
+      "replayBlockCount": 473
+    },
+    {
+      "fixture": "ACORD-0128-2015-12r1",
+      "baseFile": "ACORD-0128-2015-12r1-training.json",
+      "replayFile": "ACORD-0128-2015-12r1-training-cat.json",
+      "inputBlockCount": 311,
+      "replayBlockCount": 311
+    },
+    {
+      "fixture": "ACORD-0130-2017-05",
+      "baseFile": "ACORD-0130-2017-05-training.json",
+      "replayFile": "ACORD-0130-2017-05-training-cat.json",
+      "inputBlockCount": 0,
+      "replayBlockCount": 0
+    },
+    {
+      "fixture": "ACORD-0131-2017-11",
+      "baseFile": "ACORD-0131-2017-11-training.json",
+      "replayFile": "ACORD-0131-2017-11-training-cat.json",
+      "inputBlockCount": 334,
+      "replayBlockCount": 334
+    },
+    {
+      "fixture": "ACORD-0132-2015-12r1",
+      "baseFile": "ACORD-0132-2015-12r1-training.json",
+      "replayFile": "ACORD-0132-2015-12r1-training-cat.json",
+      "inputBlockCount": 420,
+      "replayBlockCount": 420
+    },
+    {
+      "fixture": "ACORD-0133-2016-03",
+      "baseFile": "ACORD-0133-2016-03-training.json",
+      "replayFile": "ACORD-0133-2016-03-training-cat.json",
+      "inputBlockCount": 95,
+      "replayBlockCount": 95
+    }
+  ],
+  "replayInputBlocks": 7521,
+  "replayBatchBlocks": 7521,
+  "guardrails": {
+    "wave48BaselineUnchanged": true,
+    "wave4TuningReopened": false,
+    "executionPath": "wave5_to_wave6_only"
+  }
+}

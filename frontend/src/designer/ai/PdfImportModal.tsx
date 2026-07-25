@@ -1,5 +1,5 @@
 import { useState, type ChangeEvent } from "react";
-import type { Field } from "../../../../shared/src/types";
+import type { Field } from "@shared/types";
 import { runExtractDocument } from "../../api/wave9Integration";
 import { useExtractionStore } from "../../state";
 import { pdfToImages } from "../../utils/pdfToImages";

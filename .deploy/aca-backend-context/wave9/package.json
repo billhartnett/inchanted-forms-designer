@@ -1,0 +1,12 @@
+{
+  "name": "wave9",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "build": "node ../shared/node_modules/typescript/bin/tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@azure/ai-form-recognizer": "^5.0.0"
+  },
+  "devDependencies": {}
+}

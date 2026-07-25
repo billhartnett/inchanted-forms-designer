@@ -1,0 +1,7 @@
+ticketId,title,area,priority,status,owner,notes
+W6-P1-001,Replay harness seed control,replay,high,planned,unassigned,Deterministic seed + fixture partitioning
+W6-P1-002,Replay threshold policy,replay,high,planned,unassigned,Define pass/fail envelopes for Wave 6
+W6-P1-003,Strict failure telemetry carry-forward,diagnostics,high,planned,unassigned,Emit failureClass in Wave 6 replay runs
+W6-P1-004,CI replay nightly gate,ci,medium,planned,unassigned,Nightly replay + strict classification validation
+W6-P1-005,Release/sprint-exit replay enforcement,ci,medium,planned,unassigned,Branch policies for replay strict mode
+W6-P1-006,Replay regression report schema,reporting,medium,planned,unassigned,Structured regression output for replay runs

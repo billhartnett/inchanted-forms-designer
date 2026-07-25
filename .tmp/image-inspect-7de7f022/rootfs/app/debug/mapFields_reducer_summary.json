@@ -1,0 +1,10 @@
+{
+  "timestamp": "2026-07-02T17:50:22.087Z",
+  "documentId": "sample-Acord-125.pdf",
+  "totalBlocks": 714,
+  "accumCount": 181,
+  "suggestionsCount": 80,
+  "mappingsCount": 714,
+  "sampledBlocks": 20,
+  "reducerFailureClass": "fusionCollapse"
+}

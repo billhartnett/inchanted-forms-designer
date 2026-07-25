@@ -1,0 +1,18 @@
+{
+  "timestamp": "2026-07-01T13:18:33.888Z",
+  "config": {
+    "totalBatches": 0,
+    "concurrency": 5,
+    "iterations": 0
+  },
+  "avgLatencyMs": 0,
+  "failureCount": 0,
+  "pass": true,
+  "failureClass": "none",
+  "concurrencyBaselines": {
+    "latencyThreshold": 120,
+    "maxConcurrency": 5,
+    "passRate": 100
+  },
+  "iterationResults": []
+}

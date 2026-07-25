@@ -3,9 +3,9 @@ import {
   buildCarrierAdapterSnapshot,
   evaluateCarrierAdapterDrift,
   evaluateCarrierAdapterMappings,
-} from "../../../shared/src/quality";
-import type { MappingPersistencePayload } from "../../../shared/src/types";
-import { getDefaultOntologyMetadata } from "../../../shared/src/acord/ontology";
+} from "@shared/quality";
+import type { MappingPersistencePayload } from "@shared/types";
+import { getDefaultOntologyMetadata } from "@shared/acord/ontology";
 import { useDesignerStore } from "../designer/state/useDesignerStore";
 import { useExtractionStore } from "../state/extractionStore";
 import { useMappingStore } from "../state/mappingStore";

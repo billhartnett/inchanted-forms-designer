@@ -1,0 +1,158 @@
+{
+  "version": "1.0",
+  "timestamp": "2026-07-01T16:00:00.000Z",
+  "dashboardName": "Production Monitoring Dashboard",
+  "dashboardType": "React",
+  "components": {
+    "core": {
+      "App": {
+        "path": "src/App.jsx",
+        "description": "Main application component, integrates monitoring data with dashboard layout",
+        "dependencies": ["DashboardLayout", "useMonitoringData"]
+      },
+      "DashboardLayout": {
+        "path": "src/layouts/DashboardLayout.jsx",
+        "description": "Main layout component with grid arrangement of monitoring panels",
+        "responsibilities": ["Panel arrangement", "Data distribution", "Loading/error states"]
+      }
+    },
+    "hooks": {
+      "useMonitoringData": {
+        "path": "src/hooks/useMonitoringData.js",
+        "description": "Custom hook for fetching monitoring data with 5-second auto-refresh",
+        "refreshInterval": 5000,
+        "features": ["Auto-refresh", "Error handling", "Cleanup"]
+      }
+    },
+    "services": {
+      "monitoringApi": {
+        "path": "src/services/monitoringApi.js",
+        "description": "API service for backend monitoring data",
+        "endpoints": ["/api/monitoring/dashboard", "/api/monitoring/:module"],
+        "transforms": ["Monitoring data transformation", "Schema normalization"]
+      }
+    },
+    "components": {
+      "SystemHealthBar": {
+        "path": "src/components/SystemHealthBar.jsx",
+        "grid": "full-width header",
+        "responsibility": "Overall system health status display",
+        "metrics": ["Overall status", "Pass rate", "Alert count", "Critical alerts"]
+      },
+      "StrictModePanel": {
+        "path": "src/components/StrictModePanel.jsx",
+        "grid": "span-2",
+        "responsibility": "Strict mode validation and gating",
+        "metrics": ["Status", "Failure class", "Latency", "Consecutive failures"]
+      },
+      "DiagnosticsPanel": {
+        "path": "src/components/DiagnosticsPanel.jsx",
+        "grid": "span-2",
+        "responsibility": "Diagnostics envelope coverage",
+        "metrics": ["Coverage", "Drift", "Latency", "Missing fields"]
+      },
+      "StructuralDeltaPanel": {
+        "path": "src/components/StructuralDeltaPanel.jsx",
+        "grid": "span-2",
+        "responsibility": "Structural stability tracking",
+        "metrics": ["Category mode mismatch rate", "Regression count", "Drift"]
+      },
+      "ThresholdsPanel": {
+        "path": "src/components/ThresholdsPanel.jsx",
+        "grid": "span-2",
+        "responsibility": "Wave 6 Phase 3 threshold enforcement",
+        "metrics": ["minReplayCoverageRatio", "maxMissingFieldRate", "maxMisclassificationRate", "maxGeometryMismatchRate", "maxCategoryModeMismatchRate", "driftThreshold"]
+      },
+      "PerformancePanel": {
+        "path": "src/components/PerformancePanel.jsx",
+        "grid": "span-2",
+        "responsibility": "Latency and performance metrics",
+        "metrics": ["P95 latency", "P99 latency", "Total latency", "Component latencies"]
+      },
+      "DriftPanel": {
+        "path": "src/components/DriftPanel.jsx",
+        "grid": "span-2",
+        "responsibility": "Drift detection and trending",
+        "metrics": ["Current max drift", "Drift trend", "Incidents"]
+      },
+      "RegressionPanel": {
+        "path": "src/components/RegressionPanel.jsx",
+        "grid": "span-2",
+        "responsibility": "Regression detection tracking",
+        "metrics": ["Regression count", "Trend", "Consecutive successes"]
+      },
+      "CarrierPanel": {
+        "path": "src/components/CarrierPanel.jsx",
+        "grid": "span-2",
+        "responsibility": "Carrier adapter health",
+        "metrics": ["Carrier health", "Enabled carriers", "Healthy carriers", "Failures"]
+      },
+      "IngestionPanel": {
+        "path": "src/components/IngestionPanel.jsx",
+        "grid": "span-2",
+        "responsibility": "Document ingestion pipeline",
+        "metrics": ["Status", "Success rate", "Documents processed", "Failure rate"]
+      },
+      "TimelinePanel": {
+        "path": "src/components/TimelinePanel.jsx",
+        "grid": "span-4",
+        "responsibility": "Timeline visualization of events",
+        "features": ["Event markers", "Chronological ordering", "Color coding"]
+      },
+      "IncidentLog": {
+        "path": "src/components/IncidentLog.jsx",
+        "grid": "span-2",
+        "responsibility": "Recent incident tracking",
+        "features": ["Level-based color coding", "Timestamp display", "Incident count"]
+      }
+    }
+  },
+  "layout": {
+    "structure": "12-column grid (6 item span-2 or 4 item span-4)",
+    "rows": [
+      {
+        "row": 1,
+        "items": ["SystemHealthBar (full-width)"]
+      },
+      {
+        "row": 2,
+        "items": ["StrictModePanel (span-2)", "DiagnosticsPanel (span-2)", "StructuralDeltaPanel (span-2)"]
+      },
+      {
+        "row": 3,
+        "items": ["PerformancePanel (span-2)", "ThresholdsPanel (span-2)", "DriftPanel (span-2)"]
+      },
+      {
+        "row": 4,
+        "items": ["RegressionPanel (span-2)", "CarrierPanel (span-2)", "IngestionPanel (span-2)"]
+      },
+      {
+        "row": 5,
+        "items": ["TimelinePanel (span-4)", "IncidentLog (span-2)"]
+      }
+    ]
+  },
+  "styling": {
+    "framework": "CSS3 with CSS Custom Properties (--variables)",
+    "theme": "Dark mode (Slate/Slate)",
+    "colorScheme": {
+      "healthy": "#10b981",
+      "warning": "#f59e0b",
+      "critical": "#ef4444",
+      "info": "#3b82f6",
+      "background": "#0f172a",
+      "surface": "#1e293b"
+    },
+    "responsive": ["1920px", "1200px", "768px", "480px"],
+    "animations": ["pulse", "spin"]
+  },
+  "dataFlow": {
+    "source": "/api/monitoring/dashboard",
+    "refreshInterval": 5000,
+    "transformation": "monitoringApi.transformMonitoringData()",
+    "distribution": "Props passed to DashboardLayout → Individual Panels"
+  },
+  "buildStatus": "ready",
+  "integrationStatus": "ready",
+  "productionReady": true
+}

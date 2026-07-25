@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import type { SemanticFieldType } from "../../../../shared/src/types";
+import type { SemanticFieldType } from "@shared/types";
 import { PropertiesPanel } from "../../designer/properties/PropertiesPanel";
 import { useDesignerStore, type Field } from "../../state/designerStore";
 

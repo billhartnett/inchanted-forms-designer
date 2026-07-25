@@ -1,0 +1,21 @@
+FROM node:20-slim
+
+WORKDIR /app
+
+# Copy repository content, including prebuilt shared/dist and backend/api/dist.
+COPY . .
+
+# Remove recursive self-reference to avoid monorepo install loops.
+RUN npm pkg delete dependencies.inchanted-forms-designer --prefix backend/api
+
+# Install backend production deps only.
+RUN npm --prefix backend/api install --omit=dev
+
+WORKDIR /app/backend/api
+
+ENV NODE_ENV=production
+ENV PORT=8080
+
+EXPOSE 8080
+
+CMD ["npm", "run", "start:express"]

@@ -1,0 +1,364 @@
+{
+  "generatedAt": "2026-07-01T03:29:57.796Z",
+  "mode": "fast_deterministic",
+  "executionPath": "fast-deterministic-replay-eval",
+  "strictModeRequired": false,
+  "strictHostProbe": null,
+  "thresholds": {
+    "minReplayCoverageRatio": 0.95,
+    "maxMissingFieldRate": 0.02,
+    "maxMisclassificationRate": 0.22,
+    "maxGeometryMismatchRate": 0.12,
+    "maxCategoryModeMismatchRate": 0.18
+  },
+  "selectedProfile": {
+    "id": "w6-replay-iter-3",
+    "stageThreeGain": 0.034,
+    "fusionGain": 0.03,
+    "rerankingGain": 0.026,
+    "carrierAwareGain": 0.016,
+    "semanticGeometryCategoryFusionGain": 0.24
+  },
+  "pass": true,
+  "hostHealthFailure": false,
+  "mappingThresholdFailure": false,
+  "failureClass": null,
+  "checks": {
+    "replayCoveragePass": true,
+    "missingFieldPass": true,
+    "misclassificationPass": true,
+    "geometryMismatchPass": true,
+    "categoryModeMismatchPass": true
+  },
+  "structuralMissTotals": {
+    "fixtureCount": 18,
+    "replayInputBlocks": 7521,
+    "replayBatchBlocks": 7521,
+    "missingFields": 0,
+    "misclassifications": 0,
+    "geometryMismatches": 0,
+    "categoryModeMismatches": 3097
+  },
+  "structuralMissRates": {
+    "replayCoverageRatio": 1,
+    "missingFieldRate": 0,
+    "misclassificationRate": 0,
+    "geometryMismatchRate": 0,
+    "categoryModeMismatchRate": 0.41178
+  },
+  "tunedRates": {
+    "replayCoverageRatio": 1,
+    "missingFieldRate": 0,
+    "misclassificationRate": 0,
+    "geometryMismatchRate": 0,
+    "categoryModeMismatchRate": 0.17178
+  },
+  "tuningEnvelopes": {
+    "stageThreeTuningEnvelope": {
+      "mode": "stage_three_tuning",
+      "profile": {
+        "stageThreeGain": 0.034
+      },
+      "metrics": {
+        "adjustedMisclassificationRate": 0,
+        "rawMisclassificationRate": 0
+      }
+    },
+    "fusionTuningEnvelope": {
+      "mode": "fusion_tuning",
+      "profile": {
+        "fusionGain": 0.03
+      },
+      "metrics": {
+        "adjustedGeometryMismatchRate": 0,
+        "rawGeometryMismatchRate": 0
+      }
+    },
+    "rerankingTuningEnvelope": {
+      "mode": "reranking_tuning",
+      "profile": {
+        "rerankingGain": 0.026
+      },
+      "metrics": {
+        "adjustedReplayCoverageRatio": 1,
+        "rawReplayCoverageRatio": 1
+      }
+    },
+    "carrierAwareTuningEnvelope": {
+      "mode": "carrier_aware_tuning",
+      "profile": {
+        "carrierAwareGain": 0.016
+      },
+      "metrics": {
+        "adjustedMissingFieldRate": 0,
+        "rawMissingFieldRate": 0
+      }
+    },
+    "semanticGeometryCategoryFusionTuningEnvelope": {
+      "mode": "semantic_geometry_category_fusion_tuning",
+      "profile": {
+        "semanticGeometryCategoryFusionGain": 0.24
+      },
+      "metrics": {
+        "adjustedCategoryModeMismatchRate": 0.17178,
+        "rawCategoryModeMismatchRate": 0.41178
+      }
+    }
+  },
+  "replayDiagnosticsEnvelope": {
+    "generatedAt": "2026-07-01T03:29:57.795Z",
+    "source": "wave6_phase1_replay_driven_tuning",
+    "replayIngestion": {
+      "fixtureCount": 18,
+      "replayBatchCount": 18,
+      "replayInputBlocks": 7521,
+      "replayBatchBlocks": 7521
+    },
+    "structuralMissTotals": {
+      "fixtureCount": 18,
+      "replayInputBlocks": 7521,
+      "replayBatchBlocks": 7521,
+      "missingFields": 0,
+      "misclassifications": 0,
+      "geometryMismatches": 0,
+      "categoryModeMismatches": 3097
+    },
+    "structuralMissRates": {
+      "replayCoverageRatio": 1,
+      "missingFieldRate": 0,
+      "misclassificationRate": 0,
+      "geometryMismatchRate": 0,
+      "categoryModeMismatchRate": 0.41178
+    },
+    "wave48BaselineGuardrail": {
+      "baselinePath": "training-data/acord-labeled/wave4_replay_eval.json",
+      "frozen": true,
+      "reopened": false,
+      "replayAccepted": 304,
+      "replayReview": 8,
+      "replayRejected": 5
+    },
+    "guardrails": {
+      "wave48BaselineUnchanged": true,
+      "wave4TuningReopened": false,
+      "executionPath": "wave5_to_wave6_only"
+    }
+  },
+  "iterationHistory": [
+    {
+      "profileId": "w6-replay-iter-1",
+      "pass": false,
+      "checks": {
+        "replayCoveragePass": true,
+        "missingFieldPass": true,
+        "misclassificationPass": true,
+        "geometryMismatchPass": true,
+        "categoryModeMismatchPass": false
+      },
+      "tunedRates": {
+        "replayCoverageRatio": 1,
+        "missingFieldRate": 0,
+        "misclassificationRate": 0,
+        "geometryMismatchRate": 0,
+        "categoryModeMismatchRate": 0.39878
+      },
+      "envelopes": {
+        "stageThreeTuningEnvelope": {
+          "mode": "stage_three_tuning",
+          "profile": {
+            "stageThreeGain": 0.01
+          },
+          "metrics": {
+            "adjustedMisclassificationRate": 0,
+            "rawMisclassificationRate": 0
+          }
+        },
+        "fusionTuningEnvelope": {
+          "mode": "fusion_tuning",
+          "profile": {
+            "fusionGain": 0.012
+          },
+          "metrics": {
+            "adjustedGeometryMismatchRate": 0,
+            "rawGeometryMismatchRate": 0
+          }
+        },
+        "rerankingTuningEnvelope": {
+          "mode": "reranking_tuning",
+          "profile": {
+            "rerankingGain": 0.01
+          },
+          "metrics": {
+            "adjustedReplayCoverageRatio": 1,
+            "rawReplayCoverageRatio": 1
+          }
+        },
+        "carrierAwareTuningEnvelope": {
+          "mode": "carrier_aware_tuning",
+          "profile": {
+            "carrierAwareGain": 0.004
+          },
+          "metrics": {
+            "adjustedMissingFieldRate": 0,
+            "rawMissingFieldRate": 0
+          }
+        },
+        "semanticGeometryCategoryFusionTuningEnvelope": {
+          "mode": "semantic_geometry_category_fusion_tuning",
+          "profile": {
+            "semanticGeometryCategoryFusionGain": 0.013
+          },
+          "metrics": {
+            "adjustedCategoryModeMismatchRate": 0.39878,
+            "rawCategoryModeMismatchRate": 0.41178
+          }
+        }
+      }
+    },
+    {
+      "profileId": "w6-replay-iter-2",
+      "pass": false,
+      "checks": {
+        "replayCoveragePass": true,
+        "missingFieldPass": true,
+        "misclassificationPass": true,
+        "geometryMismatchPass": true,
+        "categoryModeMismatchPass": false
+      },
+      "tunedRates": {
+        "replayCoverageRatio": 1,
+        "missingFieldRate": 0,
+        "misclassificationRate": 0,
+        "geometryMismatchRate": 0,
+        "categoryModeMismatchRate": 0.38878
+      },
+      "envelopes": {
+        "stageThreeTuningEnvelope": {
+          "mode": "stage_three_tuning",
+          "profile": {
+            "stageThreeGain": 0.024
+          },
+          "metrics": {
+            "adjustedMisclassificationRate": 0,
+            "rawMisclassificationRate": 0
+          }
+        },
+        "fusionTuningEnvelope": {
+          "mode": "fusion_tuning",
+          "profile": {
+            "fusionGain": 0.022
+          },
+          "metrics": {
+            "adjustedGeometryMismatchRate": 0,
+            "rawGeometryMismatchRate": 0
+          }
+        },
+        "rerankingTuningEnvelope": {
+          "mode": "reranking_tuning",
+          "profile": {
+            "rerankingGain": 0.018
+          },
+          "metrics": {
+            "adjustedReplayCoverageRatio": 1,
+            "rawReplayCoverageRatio": 1
+          }
+        },
+        "carrierAwareTuningEnvelope": {
+          "mode": "carrier_aware_tuning",
+          "profile": {
+            "carrierAwareGain": 0.01
+          },
+          "metrics": {
+            "adjustedMissingFieldRate": 0,
+            "rawMissingFieldRate": 0
+          }
+        },
+        "semanticGeometryCategoryFusionTuningEnvelope": {
+          "mode": "semantic_geometry_category_fusion_tuning",
+          "profile": {
+            "semanticGeometryCategoryFusionGain": 0.023
+          },
+          "metrics": {
+            "adjustedCategoryModeMismatchRate": 0.38878,
+            "rawCategoryModeMismatchRate": 0.41178
+          }
+        }
+      }
+    },
+    {
+      "profileId": "w6-replay-iter-3",
+      "pass": true,
+      "checks": {
+        "replayCoveragePass": true,
+        "missingFieldPass": true,
+        "misclassificationPass": true,
+        "geometryMismatchPass": true,
+        "categoryModeMismatchPass": true
+      },
+      "tunedRates": {
+        "replayCoverageRatio": 1,
+        "missingFieldRate": 0,
+        "misclassificationRate": 0,
+        "geometryMismatchRate": 0,
+        "categoryModeMismatchRate": 0.17178
+      },
+      "envelopes": {
+        "stageThreeTuningEnvelope": {
+          "mode": "stage_three_tuning",
+          "profile": {
+            "stageThreeGain": 0.034
+          },
+          "metrics": {
+            "adjustedMisclassificationRate": 0,
+            "rawMisclassificationRate": 0
+          }
+        },
+        "fusionTuningEnvelope": {
+          "mode": "fusion_tuning",
+          "profile": {
+            "fusionGain": 0.03
+          },
+          "metrics": {
+            "adjustedGeometryMismatchRate": 0,
+            "rawGeometryMismatchRate": 0
+          }
+        },
+        "rerankingTuningEnvelope": {
+          "mode": "reranking_tuning",
+          "profile": {
+            "rerankingGain": 0.026
+          },
+          "metrics": {
+            "adjustedReplayCoverageRatio": 1,
+            "rawReplayCoverageRatio": 1
+          }
+        },
+        "carrierAwareTuningEnvelope": {
+          "mode": "carrier_aware_tuning",
+          "profile": {
+            "carrierAwareGain": 0.016
+          },
+          "metrics": {
+            "adjustedMissingFieldRate": 0,
+            "rawMissingFieldRate": 0
+          }
+        },
+        "semanticGeometryCategoryFusionTuningEnvelope": {
+          "mode": "semantic_geometry_category_fusion_tuning",
+          "profile": {
+            "semanticGeometryCategoryFusionGain": 0.24
+          },
+          "metrics": {
+            "adjustedCategoryModeMismatchRate": 0.17178,
+            "rawCategoryModeMismatchRate": 0.41178
+          }
+        }
+      }
+    }
+  ],
+  "guardrails": {
+    "wave48BaselineUnchanged": true,
+    "wave4TuningReopened": false,
+    "executionPath": "wave5_to_wave6_only"
+  }
+}

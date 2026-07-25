@@ -1,0 +1,529 @@
+{
+  "summary": {
+    "mode": "before",
+    "generatedAt": "2026-07-06T13:03:57.508Z",
+    "startedAt": "2026-07-06T12:54:04.922Z",
+    "fixtureCount": 4,
+    "totalMappings": 2994,
+    "totalHeaderSuppressed": 0,
+    "totalHeaderMapped": 67,
+    "totalGateRejected": 2303,
+    "totalTargetedFields": 407,
+    "totalTargetedAligned": 401,
+    "totalSemanticAligned": 0,
+    "totalDictionaryAligned": 2859,
+    "totalCategoryAligned": 0,
+    "totalSupervisionPresent": 1
+  },
+  "results": [
+    {
+      "fixture": "ACORD 125",
+      "file": "sample-Acord-125.pdf",
+      "mappingCount": 1091,
+      "headerSuppressedCount": 0,
+      "headerMappedCount": 22,
+      "gateRejectedCount": 828,
+      "targetedFieldCount": 162,
+      "targetedAlignedCount": 160,
+      "semanticAlignedCount": 0,
+      "dictionaryAlignedCount": 1040,
+      "categoryAlignedCount": 0,
+      "supervisionPresentCount": 0,
+      "top20Mislabels": [
+        {
+          "blockId": "p1-l1",
+          "text": "COMMERCIAL INSURANCE APPLICATION",
+          "predictedAcordCode": "CommercialPropertyCoverage_DependentProperty_CoinsurancePercentage",
+          "predictedLabel": "Commercial Property Coverage Dependent Property Coinsurance Percentage",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p1-l3",
+          "text": "APPLICANT INFORMATION SECTION",
+          "predictedAcordCode": "AccountsReceivableInformation_BuildingSectionDescription",
+          "predictedLabel": "Accounts Receivable Information Building Section Description",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p1-l236",
+          "text": "ACORD 815 for Liability Exposure and/or ACORD 816 for Property Exposure)",
+          "predictedAcordCode": "ResidentialPropertyReplacementCost_ACORDForm_RemarkText",
+          "predictedLabel": "Residential Property Replacement Cost ACORDForm Remark Text",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p1-l248",
+          "text": "ACORD 125 (2005/06)",
+          "predictedAcordCode": "AircraftInsuranceBinder_ACORDForm_RemarkText",
+          "predictedLabel": "Aircraft Insurance Binder ACORDForm Remark Text",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p1-l249",
+          "text": "C ACORD CORPORATION 1993-2005",
+          "predictedAcordCode": "AircraftInsuranceBinder_ACORDForm_RemarkText",
+          "predictedLabel": "Aircraft Insurance Binder ACORDForm Remark Text",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p2-l173",
+          "text": "ACORD 125 (2005/06)",
+          "predictedAcordCode": "AircraftInsuranceBinder_ACORDForm_RemarkText",
+          "predictedLabel": "Aircraft Insurance Binder ACORDForm Remark Text",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p3-l2",
+          "text": "ACORD®",
+          "predictedAcordCode": "AircraftInsuranceBinder_ACORDForm_RemarkText",
+          "predictedLabel": "Aircraft Insurance Binder ACORDForm Remark Text",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p3-l74",
+          "text": "OTHER COVERAGES, RESTRICTIONS AND/OR ENDORSEMENTS (For hired/non-owned auto coverages attach the applicable state Business Auto Section, ACORD 137)",
+          "predictedAcordCode": "ResidenceBusinessCoverage_NonOwnedAuto_FormDate",
+          "predictedLabel": "Residence Business Coverage Non Owned Auto Form Date",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p3-l121",
+          "text": "ACORD 126 (2004/03)",
+          "predictedAcordCode": "AircraftInsuranceBinder_ACORDForm_RemarkText",
+          "predictedLabel": "Aircraft Insurance Binder ACORDForm Remark Text",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p3-l122",
+          "text": "@ ACORD CORPORATION 1993",
+          "predictedAcordCode": "AircraftInsuranceBinder_ACORDForm_RemarkText",
+          "predictedLabel": "Aircraft Insurance Binder ACORDForm Remark Text",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p4-l111",
+          "text": "ACORD 45 attached for additional names",
+          "predictedAcordCode": "AircraftInsuranceBinder_ACORDForm_RemarkText",
+          "predictedLabel": "Aircraft Insurance Binder ACORDForm Remark Text",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p4-l236",
+          "text": "ACORD 126 (2004/03)",
+          "predictedAcordCode": "AircraftInsuranceBinder_ACORDForm_RemarkText",
+          "predictedLabel": "Aircraft Insurance Binder ACORDForm Remark Text",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p4-l237",
+          "text": "ATTACH TO APPLICANT INFORMATION SECTION",
+          "predictedAcordCode": "Policy_SectionAttached_DriverInformationScheduleIndicator",
+          "predictedLabel": "Policy Section Attached Driver Information Schedule Indicator",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p5-l3",
+          "text": "ACORD®",
+          "predictedAcordCode": "AircraftInsuranceBinder_ACORDForm_RemarkText",
+          "predictedLabel": "Aircraft Insurance Binder ACORDForm Remark Text",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p5-l55",
+          "text": "BUSINESS INCOME / EXTRA EXPENSE - Attach ACORD 810",
+          "predictedAcordCode": "BoilerAndMachineryCoverage_BusinessIncomeExtraExpense_DeductibleAmount",
+          "predictedLabel": "Boiler And Machinery Coverage Business Income Extra Expense Deductible Amount",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p5-l56",
+          "text": "VALUE REPORTING INFORMATION - Attach ACORD 811",
+          "predictedAcordCode": "CommercialProperty_Attachment_ValueReportingIndicator",
+          "predictedLabel": "Commercial Property Attachment Value Reporting Indicator",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p5-l166",
+          "text": "ATTACH TO APPLICANT INFORMATION SECTION",
+          "predictedAcordCode": "Policy_SectionAttached_DriverInformationScheduleIndicator",
+          "predictedLabel": "Policy Section Attached Driver Information Schedule Indicator",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p5-l167",
+          "text": "@ ACORD CORPORATION 1985-2005",
+          "predictedAcordCode": "AircraftInsuranceBinder_ACORDForm_RemarkText",
+          "predictedLabel": "Aircraft Insurance Binder ACORDForm Remark Text",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p5-l168",
+          "text": "ACORD 140 (2005/01)",
+          "predictedAcordCode": "AircraftInsuranceBinder_ACORDForm_RemarkText",
+          "predictedLabel": "Aircraft Insurance Binder ACORDForm Remark Text",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p6-l24",
+          "text": "BUSINESS INCOME / EXTRA EXPENSE - Attach ACORD 810",
+          "predictedAcordCode": "BoilerAndMachineryCoverage_BusinessIncomeExtraExpense_DeductibleAmount",
+          "predictedLabel": "Boiler And Machinery Coverage Business Income Extra Expense Deductible Amount",
+          "reason": "header_region_false_positive"
+        }
+      ],
+      "extractedBlockCount": 1091
+    },
+    {
+      "fixture": "ACORD 126",
+      "file": "sample-Acord-126.pdf",
+      "mappingCount": 1091,
+      "headerSuppressedCount": 0,
+      "headerMappedCount": 22,
+      "gateRejectedCount": 828,
+      "targetedFieldCount": 162,
+      "targetedAlignedCount": 160,
+      "semanticAlignedCount": 0,
+      "dictionaryAlignedCount": 1040,
+      "categoryAlignedCount": 0,
+      "supervisionPresentCount": 0,
+      "top20Mislabels": [
+        {
+          "blockId": "p1-l1",
+          "text": "COMMERCIAL INSURANCE APPLICATION",
+          "predictedAcordCode": "CommercialPropertyCoverage_DependentProperty_CoinsurancePercentage",
+          "predictedLabel": "Commercial Property Coverage Dependent Property Coinsurance Percentage",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p1-l3",
+          "text": "APPLICANT INFORMATION SECTION",
+          "predictedAcordCode": "AccountsReceivableInformation_BuildingSectionDescription",
+          "predictedLabel": "Accounts Receivable Information Building Section Description",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p1-l236",
+          "text": "ACORD 815 for Liability Exposure and/or ACORD 816 for Property Exposure)",
+          "predictedAcordCode": "ResidentialPropertyReplacementCost_ACORDForm_RemarkText",
+          "predictedLabel": "Residential Property Replacement Cost ACORDForm Remark Text",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p1-l248",
+          "text": "ACORD 125 (2005/06)",
+          "predictedAcordCode": "AircraftInsuranceBinder_ACORDForm_RemarkText",
+          "predictedLabel": "Aircraft Insurance Binder ACORDForm Remark Text",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p1-l249",
+          "text": "C ACORD CORPORATION 1993-2005",
+          "predictedAcordCode": "AircraftInsuranceBinder_ACORDForm_RemarkText",
+          "predictedLabel": "Aircraft Insurance Binder ACORDForm Remark Text",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p2-l173",
+          "text": "ACORD 125 (2005/06)",
+          "predictedAcordCode": "AircraftInsuranceBinder_ACORDForm_RemarkText",
+          "predictedLabel": "Aircraft Insurance Binder ACORDForm Remark Text",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p3-l2",
+          "text": "ACORD®",
+          "predictedAcordCode": "AircraftInsuranceBinder_ACORDForm_RemarkText",
+          "predictedLabel": "Aircraft Insurance Binder ACORDForm Remark Text",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p3-l74",
+          "text": "OTHER COVERAGES, RESTRICTIONS AND/OR ENDORSEMENTS (For hired/non-owned auto coverages attach the applicable state Business Auto Section, ACORD 137)",
+          "predictedAcordCode": "ResidenceBusinessCoverage_NonOwnedAuto_FormDate",
+          "predictedLabel": "Residence Business Coverage Non Owned Auto Form Date",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p3-l121",
+          "text": "ACORD 126 (2004/03)",
+          "predictedAcordCode": "AircraftInsuranceBinder_ACORDForm_RemarkText",
+          "predictedLabel": "Aircraft Insurance Binder ACORDForm Remark Text",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p3-l122",
+          "text": "@ ACORD CORPORATION 1993",
+          "predictedAcordCode": "AircraftInsuranceBinder_ACORDForm_RemarkText",
+          "predictedLabel": "Aircraft Insurance Binder ACORDForm Remark Text",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p4-l111",
+          "text": "ACORD 45 attached for additional names",
+          "predictedAcordCode": "AircraftInsuranceBinder_ACORDForm_RemarkText",
+          "predictedLabel": "Aircraft Insurance Binder ACORDForm Remark Text",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p4-l236",
+          "text": "ACORD 126 (2004/03)",
+          "predictedAcordCode": "AircraftInsuranceBinder_ACORDForm_RemarkText",
+          "predictedLabel": "Aircraft Insurance Binder ACORDForm Remark Text",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p4-l237",
+          "text": "ATTACH TO APPLICANT INFORMATION SECTION",
+          "predictedAcordCode": "Policy_SectionAttached_DriverInformationScheduleIndicator",
+          "predictedLabel": "Policy Section Attached Driver Information Schedule Indicator",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p5-l3",
+          "text": "ACORD®",
+          "predictedAcordCode": "AircraftInsuranceBinder_ACORDForm_RemarkText",
+          "predictedLabel": "Aircraft Insurance Binder ACORDForm Remark Text",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p5-l55",
+          "text": "BUSINESS INCOME / EXTRA EXPENSE - Attach ACORD 810",
+          "predictedAcordCode": "BoilerAndMachineryCoverage_BusinessIncomeExtraExpense_DeductibleAmount",
+          "predictedLabel": "Boiler And Machinery Coverage Business Income Extra Expense Deductible Amount",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p5-l56",
+          "text": "VALUE REPORTING INFORMATION - Attach ACORD 811",
+          "predictedAcordCode": "CommercialProperty_Attachment_ValueReportingIndicator",
+          "predictedLabel": "Commercial Property Attachment Value Reporting Indicator",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p5-l166",
+          "text": "ATTACH TO APPLICANT INFORMATION SECTION",
+          "predictedAcordCode": "Policy_SectionAttached_DriverInformationScheduleIndicator",
+          "predictedLabel": "Policy Section Attached Driver Information Schedule Indicator",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p5-l167",
+          "text": "@ ACORD CORPORATION 1985-2005",
+          "predictedAcordCode": "AircraftInsuranceBinder_ACORDForm_RemarkText",
+          "predictedLabel": "Aircraft Insurance Binder ACORDForm Remark Text",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p5-l168",
+          "text": "ACORD 140 (2005/01)",
+          "predictedAcordCode": "AircraftInsuranceBinder_ACORDForm_RemarkText",
+          "predictedLabel": "Aircraft Insurance Binder ACORDForm Remark Text",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p6-l24",
+          "text": "BUSINESS INCOME / EXTRA EXPENSE - Attach ACORD 810",
+          "predictedAcordCode": "BoilerAndMachineryCoverage_BusinessIncomeExtraExpense_DeductibleAmount",
+          "predictedLabel": "Boiler And Machinery Coverage Business Income Extra Expense Deductible Amount",
+          "reason": "header_region_false_positive"
+        }
+      ],
+      "extractedBlockCount": 1091
+    },
+    {
+      "fixture": "ACORD 140",
+      "file": "sample-Acord-140.pdf",
+      "mappingCount": 455,
+      "headerSuppressedCount": 0,
+      "headerMappedCount": 16,
+      "gateRejectedCount": 353,
+      "targetedFieldCount": 47,
+      "targetedAlignedCount": 46,
+      "semanticAlignedCount": 0,
+      "dictionaryAlignedCount": 435,
+      "categoryAlignedCount": 0,
+      "supervisionPresentCount": 0,
+      "top20Mislabels": [
+        {
+          "blockId": "p1-l4",
+          "text": "ACORD®",
+          "predictedAcordCode": "AircraftInsuranceBinder_ACORDForm_RemarkText",
+          "predictedLabel": "Aircraft Insurance Binder ACORDForm Remark Text",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p1-l49",
+          "text": "BUSINESS INCOME / EXTRA EXPENSE - Attach ACORD 810",
+          "predictedAcordCode": "BoilerAndMachineryCoverage_BusinessIncomeExtraExpense_DeductibleAmount",
+          "predictedLabel": "Boiler And Machinery Coverage Business Income Extra Expense Deductible Amount",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p1-l50",
+          "text": "VALUE REPORTING INFORMATION - Attach ACORD 811",
+          "predictedAcordCode": "CommercialProperty_Attachment_ValueReportingIndicator",
+          "predictedLabel": "Commercial Property Attachment Value Reporting Indicator",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p1-l183",
+          "text": "ACORD 45 attached for additional names",
+          "predictedAcordCode": "AircraftInsuranceBinder_ACORDForm_RemarkText",
+          "predictedLabel": "Aircraft Insurance Binder ACORDForm Remark Text",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p1-l205",
+          "text": "@ 1985-2015 ACORD CORPORATION. All rights reserved.",
+          "predictedAcordCode": "AircraftInsuranceBinder_ACORDForm_RemarkText",
+          "predictedLabel": "Aircraft Insurance Binder ACORDForm Remark Text",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p1-l206",
+          "text": "Attach to ACORD 125",
+          "predictedAcordCode": "PersonalVehicleLineOfBusiness_Attachment_StateSupplementACORDEightSixZeroCaliforniaIndicator",
+          "predictedLabel": "Personal Vehicle Line Of Business Attachment State Supplement ACORDEight Six Zero California Indicator",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p1-l207",
+          "text": "ACORD 140 (2016/03)",
+          "predictedAcordCode": "AircraftInsuranceBinder_ACORDForm_RemarkText",
+          "predictedLabel": "Aircraft Insurance Binder ACORDForm Remark Text",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p1-l208",
+          "text": "The ACORD name and logo are registered marks of ACORD",
+          "predictedAcordCode": "",
+          "predictedLabel": "",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p2-l36",
+          "text": "BUSINESS INCOME / EXTRA EXPENSE - Attach ACORD 810",
+          "predictedAcordCode": "BoilerAndMachineryCoverage_BusinessIncomeExtraExpense_DeductibleAmount",
+          "predictedLabel": "Boiler And Machinery Coverage Business Income Extra Expense Deductible Amount",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p2-l38",
+          "text": "VALUE REPORTING INFORMATION - Attach ACORD 811",
+          "predictedAcordCode": "CommercialProperty_Attachment_ValueReportingIndicator",
+          "predictedLabel": "Commercial Property Attachment Value Reporting Indicator",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p2-l172",
+          "text": "ACORD 45 attached for additional names",
+          "predictedAcordCode": "AircraftInsuranceBinder_ACORDForm_RemarkText",
+          "predictedLabel": "Aircraft Insurance Binder ACORDForm Remark Text",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p2-l194",
+          "text": "REMARKS (ACORD 101, Additional Remarks Schedule, may be attached if more space is required)",
+          "predictedAcordCode": "CertificateOfMarineEnergyInsurance_Vessel_AttachedToRemarksIndicator",
+          "predictedLabel": "Certificate Of Marine Energy Insurance Vessel Attached To Remarks Indicator",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p2-l195",
+          "text": "ACORD 140 (2016/03)",
+          "predictedAcordCode": "AircraftInsuranceBinder_ACORDForm_RemarkText",
+          "predictedLabel": "Aircraft Insurance Binder ACORDForm Remark Text",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p2-l196",
+          "text": "Page 2 of 3",
+          "predictedAcordCode": "AccountantsLiability_Attachment_DeclarationsPageIndicator",
+          "predictedLabel": "Accountants Liability Attachment Declarations Page Indicator",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p3-l50",
+          "text": "ACORD 140 (2016/03)",
+          "predictedAcordCode": "AircraftInsuranceBinder_ACORDForm_RemarkText",
+          "predictedLabel": "Aircraft Insurance Binder ACORDForm Remark Text",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p3-l51",
+          "text": "Page 3 of 3",
+          "predictedAcordCode": "AccountantsLiability_Attachment_DeclarationsPageIndicator",
+          "predictedLabel": "Accountants Liability Attachment Declarations Page Indicator",
+          "reason": "header_region_false_positive"
+        }
+      ],
+      "extractedBlockCount": 455
+    },
+    {
+      "fixture": "Contractors",
+      "file": "Contractors Supp App.pdf",
+      "mappingCount": 357,
+      "headerSuppressedCount": 0,
+      "headerMappedCount": 7,
+      "gateRejectedCount": 294,
+      "targetedFieldCount": 36,
+      "targetedAlignedCount": 35,
+      "semanticAlignedCount": 0,
+      "dictionaryAlignedCount": 344,
+      "categoryAlignedCount": 0,
+      "supervisionPresentCount": 1,
+      "top20Mislabels": [
+        {
+          "blockId": "p1-l5",
+          "text": "Contractors Supplemental Application",
+          "predictedAcordCode": "EmployeeBenefits_Attachment_ApplicationsEnrolmentFormsEmployeeVoluntarySupplementalLifeIndicator",
+          "predictedLabel": "Employee Benefits Attachment Applications Enrolment Forms Employee Voluntary Supplemental Life Indicator",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p1-l6",
+          "text": "(To be submitted with ACORD Applications)",
+          "predictedAcordCode": "EmployeeBenefits_Attachment_ApplicationsEnrolmentFormsEmployeeDentalIndicator",
+          "predictedLabel": "Employee Benefits Attachment Applications Enrolment Forms Employee Dental Indicator",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p1-l96",
+          "text": "Page 1 of 3",
+          "predictedAcordCode": "AccountantsLiability_Attachment_DeclarationsPageIndicator",
+          "predictedLabel": "Accountants Liability Attachment Declarations Page Indicator",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p2-l6",
+          "text": "(To be submitted with a ACORD General Liability Application)",
+          "predictedAcordCode": "GeneralLiability_AdditionalInsured_ClaimsNotCoveredNoOtherOptionAvailableWithThisInsurerIndicator",
+          "predictedLabel": "General Liability Additional Insured Claims Not Covered No Other Option Available With This Insurer Indicator",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p2-l159",
+          "text": "Page 2 of 3",
+          "predictedAcordCode": "AccountantsLiability_Attachment_DeclarationsPageIndicator",
+          "predictedLabel": "Accountants Liability Attachment Declarations Page Indicator",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p3-l6",
+          "text": "(To be submitted with a ACORD General Liability Application)",
+          "predictedAcordCode": "GeneralLiability_AdditionalInsured_ClaimsNotCoveredNoOtherOptionAvailableWithThisInsurerIndicator",
+          "predictedLabel": "General Liability Additional Insured Claims Not Covered No Other Option Available With This Insurer Indicator",
+          "reason": "header_region_false_positive"
+        },
+        {
+          "blockId": "p3-l98",
+          "text": "Page 3 of 3",
+          "predictedAcordCode": "AccountantsLiability_Attachment_DeclarationsPageIndicator",
+          "predictedLabel": "Accountants Liability Attachment Declarations Page Indicator",
+          "reason": "header_region_false_positive"
+        }
+      ],
+      "extractedBlockCount": 357
+    }
+  ]
+}

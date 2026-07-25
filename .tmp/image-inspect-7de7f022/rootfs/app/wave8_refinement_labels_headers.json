@@ -1,0 +1,219 @@
+{
+  "generatedAt": "2026-07-06T13:36:18.761Z",
+  "scope": {
+    "objective": "Wave-8 refinement pass for label accuracy and header/non-field suppression",
+    "constraintsRespected": [
+      "No grouping logic changes",
+      "No checkbox logic changes",
+      "No contractors resolver changes",
+      "Refinements applied in semantic/dictionary/supervision and header gating paths only"
+    ],
+    "baselineSource": "c:\\Users\\First\\source\\repos\\inchanted-forms-designer\\.deploy\\wave8_labels_headers_before.json",
+    "afterSource": "c:\\Users\\First\\source\\repos\\inchanted-forms-designer\\.deploy\\wave8_labels_headers_after_local.json",
+    "mapperSource": "local"
+  },
+  "summary": {
+    "totalMappings": {
+      "before": 2994,
+      "after": 2994,
+      "delta": 0
+    },
+    "targetedLabelAccuracy": {
+      "before": 98.53,
+      "after": 99.51,
+      "deltaPctPoints": 0.98
+    },
+    "headerSuppressionCount": {
+      "before": 0,
+      "after": 151,
+      "delta": 151
+    },
+    "headerSuppressionRate": {
+      "before": 0,
+      "after": 92.07,
+      "deltaPctPoints": 92.07
+    },
+    "headerFalsePositiveCount": {
+      "before": 67,
+      "after": 13,
+      "delta": -54
+    },
+    "headerFalsePositiveRate": {
+      "before": 2.24,
+      "after": 0.43,
+      "deltaPctPoints": -1.81
+    },
+    "gateRejectedCount": {
+      "before": 2303,
+      "after": 2318,
+      "delta": 15
+    },
+    "gateRejectionRate": {
+      "before": 76.92,
+      "after": 77.42,
+      "deltaPctPoints": 0.5
+    },
+    "supervisionCoverage": {
+      "before": 0.03,
+      "after": 4.14,
+      "deltaPctPoints": 4.11
+    },
+    "semanticConsistencyProxy": {
+      "beforeAlignedCount": 0,
+      "afterAlignedCount": 0,
+      "delta": 0,
+      "note": "Current diagnostics script semantic threshold remains strict and shows no threshold-crossing changes."
+    },
+    "dictionaryConsistencyProxy": {
+      "beforeAlignedCount": 2859,
+      "afterAlignedCount": 2765,
+      "delta": -94,
+      "note": "Dictionary alignment count decreased because header-like blocks now get suppressed/penalized under strict gating."
+    }
+  },
+  "perFixture": [
+    {
+      "fixture": "ACORD 125",
+      "mappingCount": {
+        "before": 1091,
+        "after": 1091,
+        "delta": 0
+      },
+      "headerSuppressed": {
+        "before": 0,
+        "after": 54,
+        "delta": 54
+      },
+      "headerMapped": {
+        "before": 22,
+        "after": 4,
+        "delta": -18
+      },
+      "targetedAccuracy": {
+        "before": 98.77,
+        "after": 99.4,
+        "deltaPctPoints": 0.63
+      },
+      "supervisionPresent": {
+        "before": 0,
+        "after": 54,
+        "delta": 54
+      },
+      "gatingRejected": {
+        "before": 828,
+        "after": 834,
+        "delta": 6
+      }
+    },
+    {
+      "fixture": "ACORD 126",
+      "mappingCount": {
+        "before": 1091,
+        "after": 1091,
+        "delta": 0
+      },
+      "headerSuppressed": {
+        "before": 0,
+        "after": 54,
+        "delta": 54
+      },
+      "headerMapped": {
+        "before": 22,
+        "after": 4,
+        "delta": -18
+      },
+      "targetedAccuracy": {
+        "before": 98.77,
+        "after": 99.4,
+        "deltaPctPoints": 0.63
+      },
+      "supervisionPresent": {
+        "before": 0,
+        "after": 54,
+        "delta": 54
+      },
+      "gatingRejected": {
+        "before": 828,
+        "after": 834,
+        "delta": 6
+      }
+    },
+    {
+      "fixture": "ACORD 140",
+      "mappingCount": {
+        "before": 455,
+        "after": 455,
+        "delta": 0
+      },
+      "headerSuppressed": {
+        "before": 0,
+        "after": 33,
+        "delta": 33
+      },
+      "headerMapped": {
+        "before": 16,
+        "after": 4,
+        "delta": -12
+      },
+      "targetedAccuracy": {
+        "before": 97.87,
+        "after": 100,
+        "deltaPctPoints": 2.13
+      },
+      "supervisionPresent": {
+        "before": 0,
+        "after": 10,
+        "delta": 10
+      },
+      "gatingRejected": {
+        "before": 353,
+        "after": 356,
+        "delta": 3
+      }
+    },
+    {
+      "fixture": "Contractors",
+      "mappingCount": {
+        "before": 357,
+        "after": 357,
+        "delta": 0
+      },
+      "headerSuppressed": {
+        "before": 0,
+        "after": 10,
+        "delta": 10
+      },
+      "headerMapped": {
+        "before": 7,
+        "after": 1,
+        "delta": -6
+      },
+      "targetedAccuracy": {
+        "before": 97.22,
+        "after": 100,
+        "deltaPctPoints": 2.78
+      },
+      "supervisionPresent": {
+        "before": 1,
+        "after": 6,
+        "delta": 5
+      },
+      "gatingRejected": {
+        "before": 294,
+        "after": 294,
+        "delta": 0
+      }
+    }
+  ],
+  "derivedChanges": {
+    "supervisionSignalGain": {
+      "absolute": 123,
+      "relativeMultiplier": 62.5
+    },
+    "headerMappingReductionFactor": 4.86,
+    "notes": [
+      "After metrics are computed against local refined mapper output.",
+      "Remote/live endpoint report was unchanged during this pass because deployment was not part of this step."
+    ]
+  }
+}

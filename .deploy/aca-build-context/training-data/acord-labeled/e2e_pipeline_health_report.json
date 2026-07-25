@@ -1,0 +1,43 @@
+{
+  "timestamp": "2026-07-01T15:20:43.179Z",
+  "pipelineHealth": {
+    "overallStatus": "DEGRADED",
+    "readinessForMonitoring": "NOT_READY",
+    "allValidationsPassed": false
+  },
+  "componentHealth": {
+    "ingestion": {
+      "healthy": true,
+      "successRate": 1,
+      "testsPassed": 3
+    },
+    "routing": {
+      "healthy": true,
+      "routingAccuracy": 1,
+      "testsPassed": 3
+    },
+    "mapping": {
+      "healthy": true,
+      "mappingAccuracy": 1,
+      "testsPassed": 3
+    },
+    "diagnostics": {
+      "healthy": true,
+      "diagnosticsCoverage": 1,
+      "testsPassed": 3
+    },
+    "strictMode": {
+      "healthy": true,
+      "status": "PASS",
+      "testsPassed": 3
+    }
+  },
+  "pipelineLatency": {
+    "ingestionLatency": "90ms",
+    "routingLatency": "25ms",
+    "mappingLatency": "42ms",
+    "diagnosticsLatency": "12ms",
+    "strictModeLatency": "18ms",
+    "totalLatency": "187ms"
+  }
+}

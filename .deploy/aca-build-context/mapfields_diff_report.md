@@ -1,0 +1,83 @@
+# mapFields Backend vs UI Diff Report
+
+UI rollback baseline: pre-Wave-8 parser/renderer behavior (no Wave-8 grouping/suppression overlays).
+
+## sample-Acord-125.pdf
+- backend returned: 854
+- UI rendered: 120
+- dropped by UI path: 734
+- properties UI reads:
+  - label: mapping.chosen.label -> mapping.suggestions[0].label -> mapping.text
+  - geometry: mapping.boundingBox.{x,y,width,height} (then right-side anchor offset in field preview)
+  - type: sourceBlock.type + inferFieldType using candidate label/description text
+- dropped field samples:
+  - p1-l1 | header_line | COMMERCIAL INSURANCE APPLICATION
+  - p1-l3 | header_line | APPLICANT INFORMATION SECTION
+  - p1-l4 | hard_mismatch | AGENT NAME:
+  - p1-l10 | header_line | POLICIES OR PROGRAM REQUESTED
+  - p1-l13 | candidate_incompatible | selection_mark_unselected_2
+  - p1-l14 | candidate_incompatible | selection_mark_unselected_1
+  - p1-l16 | hard_mismatch | ZIP CODE:
+  - p1-l18 | section_title | GARAGE AND DEALERS
+  - p1-l19 | section_title | INDICATE SECTIONS ATTACHED
+  - p1-l22 | candidate_incompatible | selection_mark_unselected_8
+  - p1-l25 | section_title | INSTALLATION/BUILDERS RISK
+  - p1-l28 | candidate_incompatible | selection_mark_unselected_16
+  - p1-l30 | candidate_incompatible | selection_mark_unselected_9
+  - p1-l32 | section_title | GLASS AND SIGN
+  - p1-l33 | section_title | ELECTRONIC DATA PROC
+  - p1-l35 | no_chosen | (A/C, No):
+  - p1-l38 | candidate_incompatible | selection_mark_unselected_5
+  - p1-l46 | candidate_incompatible | selection_mark_unselected_18
+  - p1-l47 | candidate_incompatible | selection_mark_unselected_11
+  - p1-l49 | section_title | CRIME/MISCELLANEOUS CRIME
+  - p1-l54 | candidate_incompatible | selection_mark_unselected_14
+  - p1-l56 | candidate_incompatible | selection_mark_unselected_13
+  - p1-l57 | candidate_incompatible | selection_mark_unselected_19
+  - p1-l59 | section_title | TRUCKERS/MOTOR CARRIER
+  - p1-l60 | section_title | MOTOR TRUCK CARGO
+  - p1-l61 | section_title | STATUS OF TRANSACTION
+  - p1-l65 | candidate_incompatible | selection_mark_unselected_7
+  - p1-l70 | no_chosen | selection_mark_unselected_21
+  - p1-l83 | candidate_incompatible | AM
+  - p1-l85 | candidate_incompatible | selection_mark_unselected_24
+
+## Contractors Supp App.pdf
+- backend returned: 322
+- UI rendered: 120
+- dropped by UI path: 202
+- properties UI reads:
+  - label: mapping.chosen.label -> mapping.suggestions[0].label -> mapping.text
+  - geometry: mapping.boundingBox.{x,y,width,height} (then right-side anchor offset in field preview)
+  - type: sourceBlock.type + inferFieldType using candidate label/description text
+- dropped field samples:
+  - p1-l1 | candidate_incompatible | PO Box 8010 . Goldsboro, NC 27533
+  - p1-l3 | low_confidence_strict | Phone: 877-225-5744 · Fax: 919-751-1042
+  - p1-l5 | section_title | Contractors Supplemental Application
+  - p1-l6 | header_line | (To be submitted with ACORD Applications)
+  - p1-l7 | candidate_incompatible | Applicant:
+  - p1-l13 | candidate_incompatible | No
+  - p1-l31 | candidate_incompatible | No
+  - p1-l35 | candidate_incompatible | c.
+  - p1-l39 | candidate_incompatible | a.
+  - p1-l41 | candidate_incompatible | b.
+  - p1-l44 | candidate_incompatible | d.
+  - p1-l45 | candidate_incompatible | c.
+  - p1-l49 | candidate_incompatible | f.
+  - p1-l54 | low_confidence_strict | 11. List the past three projects including location, receipts, type of work perf
+  - p1-l55 | low_confidence_strict | please provide the names of any partnerships, joint ventures, or corporations, e
+  - p1-l70 | section_title | 13. Are certificates of insurance obtained from subcontractors?
+  - p1-l74 | candidate_incompatible | No
+  - p1-l75 | no_chosen | a. Are all subcontractors required to carry GL limits equal to or higher than yo
+  - p1-l79 | candidate_incompatible | No
+  - p1-l84 | candidate_incompatible | No
+  - p1-l85 | section_title | 14. Do you normally use the same subcontractors?
+  - p1-l89 | candidate_incompatible | No
+  - p1-l90 | section_title | 15. Do you use a written contract for all your subcontractors that includes a ho
+  - p1-l94 | candidate_incompatible | No
+  - p1-l97 | section_title | 10-08 Contractors.doc
+  - p2-l1 | candidate_incompatible | PO Box 8010 . Goldsboro, NC 27533
+  - p2-l3 | low_confidence_strict | Phone: 877-225-5744 · Fax: 919-751-1042
+  - p2-l5 | section_title | Contractors Supplemental Questionnaire
+  - p2-l6 | header_line | (To be submitted with a ACORD General Liability Application)
+  - p2-l12 | candidate_incompatible | N/A

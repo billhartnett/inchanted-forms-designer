@@ -1,0 +1,19 @@
+{
+  "fixtureId": "ANA_E-S_Contractors_Supplemental-Application_MKT0109_fillable.pdf",
+  "ontology": {
+    "ontologyId": "acord-canonical-ontology",
+    "ontologyVersion": "2026.06.10",
+    "ontologyHash": "c653ca94",
+    "selectedCodeCount": 47,
+    "valid": true,
+    "issues": []
+  },
+  "transferability": {
+    "transferabilityScore": 1,
+    "confidenceDrift": 0,
+    "rationaleSignalDrift": 0.001822,
+    "candidateStabilityDrift": 0.804023
+  },
+  "familyId": "contractors-supplement",
+  "familySignatureHash": "ce38ef55"
+}

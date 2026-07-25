@@ -27,11 +27,11 @@ import type {
   UnderwritingRuleDecision,
   UnderwritingRuleOverride,
   UnderwritingRuleSnapshot,
-} from "../../../shared/src/acord/acordTypes";
-import type { AcordDocument, ApplyGatedFieldsResult } from "../../../shared/src/acord/acord-builders";
-import type { DocumentSemanticProfile } from "../../../shared/src/acord/acord-doc-profile";
-import { getDefaultOntologyMetadata } from "../../../shared/src/acord/ontology";
-import { resolveOntologySemanticMetadata } from "../../../shared/src/acord/acord-gating";
+} from "@shared/acord/acordTypes";
+import type { AcordDocument, ApplyGatedFieldsResult } from "@shared/acord/acord-builders";
+import type { DocumentSemanticProfile } from "@shared/acord/acord-doc-profile";
+import { getDefaultOntologyMetadata } from "@shared/acord/ontology";
+import { resolveOntologySemanticMetadata } from "@shared/acord/acord-gating";
 import type {
   AssociationEdit,
   CalibrationProfile,
@@ -48,7 +48,7 @@ import type {
   SchemaArtifactMetadata,
   UnifiedDecisionGraph,
 } from "@shared/types";
-import { createDefaultCalibrationProfile } from "../../../shared/src/quality";
+import { createDefaultCalibrationProfile } from "@shared/quality";
 import { useDesignerStore } from "./designerStore";
 import { useExtractionStore } from "./extractionStore";
 import { useSelectedField } from "./fieldStore";
