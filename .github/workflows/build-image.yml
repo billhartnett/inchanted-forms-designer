@@ -22,22 +22,27 @@ jobs:
         id: prereq
         shell: bash
         env:
-          AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
-          ACR_NAME: ${{ secrets.ACR_NAME }}
-          ACR_LOGIN_SERVER: ${{ secrets.ACR_LOGIN_SERVER }}
+          AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          AZURE_REGISTRY_URL: ${{ secrets.AZURE_REGISTRY_URL }}
         run: |
           set -euo pipefail
           MISSING=0
-          if [[ -z "${AZURE_CREDENTIALS}" ]]; then
-            echo "Missing required secret: AZURE_CREDENTIALS"
+          if [[ -z "${AZURE_CLIENT_ID}" ]]; then
+            echo "Missing required secret: AZURE_CLIENT_ID"
             MISSING=1
           fi
-          if [[ -z "${ACR_NAME}" ]]; then
-            echo "Missing required secret: ACR_NAME"
+          if [[ -z "${AZURE_TENANT_ID}" ]]; then
+            echo "Missing required secret: AZURE_TENANT_ID"
             MISSING=1
           fi
-          if [[ -z "${ACR_LOGIN_SERVER}" ]]; then
-            echo "Missing required secret: ACR_LOGIN_SERVER"
+          if [[ -z "${AZURE_SUBSCRIPTION_ID}" ]]; then
+            echo "Missing required secret: AZURE_SUBSCRIPTION_ID"
+            MISSING=1
+          fi
+          if [[ -z "${AZURE_REGISTRY_URL}" ]]; then
+            echo "Missing required secret: AZURE_REGISTRY_URL"
             MISSING=1
           fi
 
@@ -52,13 +57,15 @@ jobs:
         if: ${{ steps.prereq.outputs.should_skip == 'true' }}
         run: |
           echo "Skipping image build because required secrets are not configured."
-          echo "Expected secrets: AZURE_CREDENTIALS, ACR_NAME, ACR_LOGIN_SERVER"
+          echo "Expected secrets: AZURE_CLIENT_ID, AZURE_TENANT_ID, AZURE_SUBSCRIPTION_ID, AZURE_REGISTRY_URL"
 
       - name: Azure login
         if: ${{ steps.prereq.outputs.should_skip != 'true' }}
         uses: azure/login@v2
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
       - name: Setup Docker Buildx
         if: ${{ steps.prereq.outputs.should_skip != 'true' }}
@@ -66,16 +73,24 @@ jobs:
 
       - name: ACR login
         if: ${{ steps.prereq.outputs.should_skip != 'true' }}
-        run: az acr login --name "${{ secrets.ACR_NAME }}"
+        shell: bash
+        env:
+          AZURE_REGISTRY_URL: ${{ secrets.AZURE_REGISTRY_URL }}
+        run: |
+          set -euo pipefail
+          REGISTRY_NAME="${AZURE_REGISTRY_URL%%.*}"
+          az acr login --name "${REGISTRY_NAME}"
 
       - name: Resolve image metadata
         if: ${{ steps.prereq.outputs.should_skip != 'true' }}
         id: meta
         shell: bash
+        env:
+          AZURE_REGISTRY_URL: ${{ secrets.AZURE_REGISTRY_URL }}
         run: |
           set -euo pipefail
           SHA_TAG="sha-${GITHUB_SHA::12}"
-          IMAGE_REPO="${{ secrets.ACR_LOGIN_SERVER }}/wave9-backend-api"
+          IMAGE_REPO="${AZURE_REGISTRY_URL}/wave9-backend-api"
           if [[ "${GITHUB_REF}" == refs/tags/v* ]]; then
             SEMVER_TAG="${GITHUB_REF_NAME}"
           else

@@ -45,8 +45,9 @@ jobs:
         shell: bash
         run: |
           test -f .github/workflows/ci-backend.yml
-          test -f .github/workflows/deploy-aca.yml
-          test -f .github/workflows/deploy-frontend.yml
+          test -f .github/workflows/frontend-deploy.yml
+          test -f .github/workflows/backend-deploy.yml
+          test -f .github/workflows/promote.yml
 
       - name: Strict mode gate passed
         run: echo "strict-mode-gate passed"

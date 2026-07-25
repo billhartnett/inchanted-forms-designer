@@ -1,4 +1,4 @@
-name: Frontend Build & Deploy (ACA)
+name: Backend Build & Deploy (ACA)
 
 on:
   push:
@@ -29,10 +29,12 @@ jobs:
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
 
-      - name: Build frontend
+      - name: Build backend contracts and API
         run: |
           pnpm --filter shared build
-          pnpm --filter inchanted-frontend build
+          pnpm --filter wave8 build
+          pnpm --filter wave9 build
+          pnpm --filter inchanted-api build
 
       - name: Login to Azure
         uses: azure/login@v2
@@ -41,55 +43,51 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-      - name: Validate frontend ACA targets
+      - name: Validate backend ACA targets
         shell: bash
         env:
           AZURE_RG: ${{ secrets.AZURE_RG }}
           AZURE_BACKEND_APP: ${{ secrets.AZURE_BACKEND_APP }}
-          AZURE_FRONTEND_APP: ${{ secrets.AZURE_FRONTEND_APP }}
           AZURE_REGISTRY_URL: ${{ secrets.AZURE_REGISTRY_URL }}
-          AZURE_FRONTEND_IMAGE: ${{ secrets.AZURE_FRONTEND_IMAGE }}
+          AZURE_BACKEND_IMAGE: ${{ secrets.AZURE_BACKEND_IMAGE }}
         run: |
           set -euo pipefail
-          for name in AZURE_RG AZURE_BACKEND_APP AZURE_FRONTEND_APP AZURE_REGISTRY_URL AZURE_FRONTEND_IMAGE; do
+          for name in AZURE_RG AZURE_BACKEND_APP AZURE_REGISTRY_URL AZURE_BACKEND_IMAGE; do
             if [[ -z "${!name}" ]]; then
               echo "Missing required secret: ${name}" >&2
               exit 1
             fi
           done
 
-          if [[ "${AZURE_FRONTEND_IMAGE}" != "${AZURE_REGISTRY_URL}/"* ]]; then
-            echo "Frontend image must come from the configured registry: ${AZURE_FRONTEND_IMAGE}" >&2
+          if [[ "${AZURE_BACKEND_IMAGE}" != "${AZURE_REGISTRY_URL}/"* ]]; then
+            echo "Backend image must come from the configured registry: ${AZURE_BACKEND_IMAGE}" >&2
             exit 1
           fi
 
           REGISTRY_NAME="${AZURE_REGISTRY_URL%%.*}"
-          az containerapp show --name "${AZURE_FRONTEND_APP}" --resource-group "${AZURE_RG}" --output none
           az containerapp show --name "${AZURE_BACKEND_APP}" --resource-group "${AZURE_RG}" --output none
           az acr show --name "${REGISTRY_NAME}" --output none
 
-      - name: Deploy frontend to ACA
+      - name: Deploy backend to ACA
         uses: azure/container-apps-deploy-action@v1
         with:
           resourceGroup: ${{ secrets.AZURE_RG }}
-          containerAppName: ${{ secrets.AZURE_FRONTEND_APP }}
-          imageToDeploy: ${{ secrets.AZURE_FRONTEND_IMAGE }}
+          containerAppName: ${{ secrets.AZURE_BACKEND_APP }}
+          imageToDeploy: ${{ secrets.AZURE_BACKEND_IMAGE }}
           registryUrl: ${{ secrets.AZURE_REGISTRY_URL }}
           registryUsername: ${{ secrets.AZURE_REGISTRY_USERNAME }}
           registryPassword: ${{ secrets.AZURE_REGISTRY_PASSWORD }}
 
-      - name: Verify frontend Wave 9 contract wiring
+      - name: Verify backend contract endpoints
         shell: bash
         env:
           AZURE_RG: ${{ secrets.AZURE_RG }}
-          AZURE_FRONTEND_APP: ${{ secrets.AZURE_FRONTEND_APP }}
           AZURE_BACKEND_APP: ${{ secrets.AZURE_BACKEND_APP }}
         run: |
           set -euo pipefail
-          FRONTEND_FQDN="$(az containerapp show --name "${AZURE_FRONTEND_APP}" --resource-group "${AZURE_RG}" --query properties.configuration.ingress.fqdn -o tsv)"
           BACKEND_FQDN="$(az containerapp show --name "${AZURE_BACKEND_APP}" --resource-group "${AZURE_RG}" --query properties.configuration.ingress.fqdn -o tsv)"
-          FRONTEND_BASE_URL="https://${FRONTEND_FQDN}"
-          BACKEND_CONTRACT_URL="https://${BACKEND_FQDN}/api/wave9/contracts"
+          BASE_URL="https://${BACKEND_FQDN}"
 
-          curl -fsS "${FRONTEND_BASE_URL}/env.js" | grep -F "${BACKEND_CONTRACT_URL}" >/dev/null
-          curl -fsS "${FRONTEND_BASE_URL}/" >/dev/null
+          curl -fsS "${BASE_URL}/api/ping" >/dev/null
+          curl -fsS "${BASE_URL}/api/version" >/dev/null
+          curl -fsS "${BASE_URL}/api/wave9/contracts" >/dev/null
