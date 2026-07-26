@@ -91,12 +91,44 @@ jobs:
           set -euo pipefail
           echo "Proceeding to deploy; deploy step will enforce required inputs."
 
-      - name: Deploy backend to ACA
+      - name: Resolve backend deploy targets
+        id: backend_targets
         shell: bash
         env:
           AZURE_RG: ${{ secrets.AZURE_RG }}
           AZURE_BACKEND_APP: ${{ secrets.AZURE_BACKEND_APP }}
           AZURE_BACKEND_IMAGE: ${{ secrets.AZURE_BACKEND_IMAGE }}
+        run: |
+          set -euo pipefail
+
+          RG="${AZURE_RG:-inchanted-aca-rg}"
+          APP="${AZURE_BACKEND_APP:-inchanted-api-staging}"
+          IMAGE="${AZURE_BACKEND_IMAGE:-}"
+
+          if ! az containerapp show --name "${APP}" --resource-group "${RG}" --output none >/dev/null 2>&1; then
+            echo "::error::Unable to find backend container app '${APP}' in resource group '${RG}'."
+            exit 1
+          fi
+
+          if [[ -z "${IMAGE}" ]]; then
+            IMAGE="$(az containerapp show --name "${APP}" --resource-group "${RG}" --query properties.template.containers[0].image -o tsv)"
+          fi
+
+          if [[ -z "${IMAGE}" ]]; then
+            echo "::error::Unable to resolve backend image. Set AZURE_BACKEND_IMAGE or ensure the app has an existing image."
+            exit 1
+          fi
+
+          echo "resource_group=${RG}" >> "$GITHUB_OUTPUT"
+          echo "container_app=${APP}" >> "$GITHUB_OUTPUT"
+          echo "image=${IMAGE}" >> "$GITHUB_OUTPUT"
+
+      - name: Deploy backend to ACA
+        shell: bash
+        env:
+          AZURE_RG: ${{ steps.backend_targets.outputs.resource_group }}
+          AZURE_BACKEND_APP: ${{ steps.backend_targets.outputs.container_app }}
+          AZURE_BACKEND_IMAGE: ${{ steps.backend_targets.outputs.image }}
         run: |
           set -euo pipefail
           for name in AZURE_RG AZURE_BACKEND_APP AZURE_BACKEND_IMAGE; do
@@ -115,8 +147,8 @@ jobs:
       - name: Verify backend contract endpoints
         shell: bash
         env:
-          AZURE_RG: ${{ secrets.AZURE_RG }}
-          AZURE_BACKEND_APP: ${{ secrets.AZURE_BACKEND_APP }}
+          AZURE_RG: ${{ steps.backend_targets.outputs.resource_group }}
+          AZURE_BACKEND_APP: ${{ steps.backend_targets.outputs.container_app }}
         run: |
           set -euo pipefail
           BACKEND_FQDN="$(az containerapp show --name "${AZURE_BACKEND_APP}" --resource-group "${AZURE_RG}" --query properties.configuration.ingress.fqdn -o tsv)"

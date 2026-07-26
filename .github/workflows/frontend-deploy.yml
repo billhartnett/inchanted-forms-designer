@@ -89,12 +89,61 @@ jobs:
           set -euo pipefail
           echo "Proceeding to deploy; deploy step will enforce required inputs."
 
-      - name: Deploy frontend to ACA
+      - name: Resolve frontend deploy targets
+        id: frontend_targets
         shell: bash
         env:
           AZURE_RG: ${{ secrets.AZURE_RG }}
           AZURE_FRONTEND_APP: ${{ secrets.AZURE_FRONTEND_APP }}
           AZURE_FRONTEND_IMAGE: ${{ secrets.AZURE_FRONTEND_IMAGE }}
+          AZURE_BACKEND_APP: ${{ secrets.AZURE_BACKEND_APP }}
+        run: |
+          set -euo pipefail
+
+          RG="${AZURE_RG:-inchanted-aca-rg}"
+          FRONTEND_APP="${AZURE_FRONTEND_APP:-}"
+          FRONTEND_IMAGE="${AZURE_FRONTEND_IMAGE:-}"
+          BACKEND_APP="${AZURE_BACKEND_APP:-inchanted-api-staging}"
+
+          if [[ -z "${FRONTEND_APP}" ]]; then
+            FRONTEND_APP="$(az containerapp list --resource-group "${RG}" --query "[?contains(name, 'front') || contains(name, 'web') || contains(name, 'ui')].name | [0]" -o tsv)"
+          fi
+
+          if [[ -z "${FRONTEND_APP}" ]]; then
+            echo "::error::Unable to resolve frontend app. Set AZURE_FRONTEND_APP or ensure a frontend-style app name exists in '${RG}'."
+            exit 1
+          fi
+
+          if ! az containerapp show --name "${FRONTEND_APP}" --resource-group "${RG}" --output none >/dev/null 2>&1; then
+            echo "::error::Unable to find frontend container app '${FRONTEND_APP}' in resource group '${RG}'."
+            exit 1
+          fi
+
+          if [[ -z "${FRONTEND_IMAGE}" ]]; then
+            FRONTEND_IMAGE="$(az containerapp show --name "${FRONTEND_APP}" --resource-group "${RG}" --query properties.template.containers[0].image -o tsv)"
+          fi
+
+          if [[ -z "${FRONTEND_IMAGE}" ]]; then
+            echo "::error::Unable to resolve frontend image. Set AZURE_FRONTEND_IMAGE or ensure the app has an existing image."
+            exit 1
+          fi
+
+          if ! az containerapp show --name "${BACKEND_APP}" --resource-group "${RG}" --output none >/dev/null 2>&1; then
+            echo "::error::Unable to find backend app '${BACKEND_APP}' in resource group '${RG}' for Wave9 contract verification."
+            exit 1
+          fi
+
+          echo "resource_group=${RG}" >> "$GITHUB_OUTPUT"
+          echo "frontend_app=${FRONTEND_APP}" >> "$GITHUB_OUTPUT"
+          echo "frontend_image=${FRONTEND_IMAGE}" >> "$GITHUB_OUTPUT"
+          echo "backend_app=${BACKEND_APP}" >> "$GITHUB_OUTPUT"
+
+      - name: Deploy frontend to ACA
+        shell: bash
+        env:
+          AZURE_RG: ${{ steps.frontend_targets.outputs.resource_group }}
+          AZURE_FRONTEND_APP: ${{ steps.frontend_targets.outputs.frontend_app }}
+          AZURE_FRONTEND_IMAGE: ${{ steps.frontend_targets.outputs.frontend_image }}
         run: |
           set -euo pipefail
           for name in AZURE_RG AZURE_FRONTEND_APP AZURE_FRONTEND_IMAGE; do
@@ -113,9 +162,9 @@ jobs:
       - name: Verify frontend Wave 9 contract wiring
         shell: bash
         env:
-          AZURE_RG: ${{ secrets.AZURE_RG }}
-          AZURE_FRONTEND_APP: ${{ secrets.AZURE_FRONTEND_APP }}
-          AZURE_BACKEND_APP: ${{ secrets.AZURE_BACKEND_APP }}
+          AZURE_RG: ${{ steps.frontend_targets.outputs.resource_group }}
+          AZURE_FRONTEND_APP: ${{ steps.frontend_targets.outputs.frontend_app }}
+          AZURE_BACKEND_APP: ${{ steps.frontend_targets.outputs.backend_app }}
         run: |
           set -euo pipefail
           FRONTEND_FQDN="$(az containerapp show --name "${AZURE_FRONTEND_APP}" --resource-group "${AZURE_RG}" --query properties.configuration.ingress.fqdn -o tsv)"
