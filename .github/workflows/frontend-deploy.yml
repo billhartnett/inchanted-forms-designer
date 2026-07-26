@@ -83,19 +83,16 @@ jobs:
         shell: bash
         env:
           AZURE_RG: ${{ secrets.AZURE_RG }}
-          AZURE_BACKEND_APP: ${{ secrets.AZURE_BACKEND_APP }}
           AZURE_FRONTEND_APP: ${{ secrets.AZURE_FRONTEND_APP }}
           AZURE_FRONTEND_IMAGE: ${{ secrets.AZURE_FRONTEND_IMAGE }}
         run: |
           set -euo pipefail
-          for name in AZURE_RG AZURE_BACKEND_APP AZURE_FRONTEND_APP AZURE_FRONTEND_IMAGE; do
+          for name in AZURE_RG AZURE_FRONTEND_APP AZURE_FRONTEND_IMAGE; do
             if [[ -z "${!name}" ]]; then
               echo "Missing required secret: ${name}" >&2
               exit 1
             fi
           done
-          az containerapp show --name "${AZURE_FRONTEND_APP}" --resource-group "${AZURE_RG}" --output none
-          az containerapp show --name "${AZURE_BACKEND_APP}" --resource-group "${AZURE_RG}" --output none
 
       - name: Deploy frontend to ACA
         uses: azure/container-apps-deploy-action@v1

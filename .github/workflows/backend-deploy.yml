@@ -95,7 +95,6 @@ jobs:
               exit 1
             fi
           done
-          az containerapp show --name "${AZURE_BACKEND_APP}" --resource-group "${AZURE_RG}" --output none
 
       - name: Deploy backend to ACA
         uses: azure/container-apps-deploy-action@v1
