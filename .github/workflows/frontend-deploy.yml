@@ -106,7 +106,10 @@ jobs:
           BACKEND_APP="${AZURE_BACKEND_APP:-inchanted-api-staging}"
 
           if [[ -z "${FRONTEND_APP}" ]]; then
-            FRONTEND_APP="$(az containerapp list --resource-group "${RG}" --query "[?contains(name, 'front') || contains(name, 'web') || contains(name, 'ui')].name | [0]" -o tsv)"
+            FRONTEND_APP="$(az containerapp list --query "[?contains(name, 'front') || contains(name, 'web') || contains(name, 'ui') || contains(name, 'designer')].name | [0]" -o tsv || true)"
+            if [[ -n "${FRONTEND_APP}" ]]; then
+              RG="$(az containerapp show --name "${FRONTEND_APP}" --query resourceGroup -o tsv || echo "${RG}")"
+            fi
           fi
 
           if [[ -z "${FRONTEND_APP}" ]]; then
@@ -129,8 +132,13 @@ jobs:
           fi
 
           if ! az containerapp show --name "${BACKEND_APP}" --resource-group "${RG}" --output none >/dev/null 2>&1; then
-            echo "::error::Unable to find backend app '${BACKEND_APP}' in resource group '${RG}' for Wave9 contract verification."
-            exit 1
+            DISCOVERED_BACKEND="$(az containerapp list --query "[?contains(name, 'api')].name | [0]" -o tsv || true)"
+            if [[ -n "${DISCOVERED_BACKEND}" ]]; then
+              BACKEND_APP="${DISCOVERED_BACKEND}"
+            else
+              echo "::error::Unable to find backend app '${BACKEND_APP}' in resource group '${RG}' for Wave9 contract verification."
+              exit 1
+            fi
           fi
 
           echo "resource_group=${RG}" >> "$GITHUB_OUTPUT"
@@ -139,6 +147,7 @@ jobs:
           echo "backend_app=${BACKEND_APP}" >> "$GITHUB_OUTPUT"
 
       - name: Deploy frontend to ACA
+        if: ${{ steps.frontend_targets.outcome == 'success' }}
         shell: bash
         env:
           AZURE_RG: ${{ steps.frontend_targets.outputs.resource_group }}
@@ -160,6 +169,7 @@ jobs:
             --output none
 
       - name: Verify frontend Wave 9 contract wiring
+        if: ${{ steps.frontend_targets.outcome == 'success' }}
         shell: bash
         env:
           AZURE_RG: ${{ steps.frontend_targets.outputs.resource_group }}

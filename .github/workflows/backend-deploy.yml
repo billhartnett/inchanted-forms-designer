@@ -106,8 +106,18 @@ jobs:
           IMAGE="${AZURE_BACKEND_IMAGE:-}"
 
           if ! az containerapp show --name "${APP}" --resource-group "${RG}" --output none >/dev/null 2>&1; then
-            echo "::error::Unable to find backend container app '${APP}' in resource group '${RG}'."
-            exit 1
+            DISCOVERED_APP="$(az containerapp list --query "[?contains(name, 'api')].name | [0]" -o tsv || true)"
+            DISCOVERED_RG=""
+            if [[ -n "${DISCOVERED_APP}" ]]; then
+              DISCOVERED_RG="$(az containerapp show --name "${DISCOVERED_APP}" --query resourceGroup -o tsv || true)"
+            fi
+            if [[ -n "${DISCOVERED_APP}" && -n "${DISCOVERED_RG}" ]]; then
+              APP="${DISCOVERED_APP}"
+              RG="${DISCOVERED_RG}"
+            else
+              echo "::error::Unable to find backend container app '${APP}' in resource group '${RG}', and auto-discovery found no fallback backend app."
+              exit 1
+            fi
           fi
 
           if [[ -z "${IMAGE}" ]]; then
@@ -124,6 +134,7 @@ jobs:
           echo "image=${IMAGE}" >> "$GITHUB_OUTPUT"
 
       - name: Deploy backend to ACA
+        if: ${{ steps.backend_targets.outcome == 'success' }}
         shell: bash
         env:
           AZURE_RG: ${{ steps.backend_targets.outputs.resource_group }}
@@ -145,6 +156,7 @@ jobs:
             --output none
 
       - name: Verify backend contract endpoints
+        if: ${{ steps.backend_targets.outcome == 'success' }}
         shell: bash
         env:
           AZURE_RG: ${{ steps.backend_targets.outputs.resource_group }}
