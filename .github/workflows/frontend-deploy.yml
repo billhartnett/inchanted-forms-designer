@@ -106,7 +106,16 @@ jobs:
           BACKEND_APP="${AZURE_BACKEND_APP:-inchanted-api-staging}"
 
           if [[ -z "${FRONTEND_APP}" ]]; then
-            FRONTEND_APP="$(az containerapp list --query "[?contains(name, 'front') || contains(name, 'web') || contains(name, 'ui') || contains(name, 'designer')].name | [0]" -o tsv || true)"
+            FRONTEND_APP="$(az containerapp list --resource-group "${RG}" --query "[?contains(name, 'front') || contains(name, 'web') || contains(name, 'ui') || contains(name, 'designer')].name | [0]" -o tsv || true)"
+            if [[ -z "${FRONTEND_APP}" ]]; then
+              FRONTEND_APP="$(az containerapp list --resource-group "${RG}" --query "[?!contains(name, 'api')].name | [0]" -o tsv || true)"
+            fi
+            if [[ -z "${FRONTEND_APP}" ]]; then
+              FRONTEND_APP="$(az containerapp list --query "[?contains(name, 'front') || contains(name, 'web') || contains(name, 'ui') || contains(name, 'designer')].name | [0]" -o tsv || true)"
+            fi
+            if [[ -z "${FRONTEND_APP}" ]]; then
+              FRONTEND_APP="$(az containerapp list --query "[?!contains(name, 'api')].name | [0]" -o tsv || true)"
+            fi
             if [[ -n "${FRONTEND_APP}" ]]; then
               RG="$(az containerapp show --name "${FRONTEND_APP}" --query resourceGroup -o tsv || echo "${RG}")"
             fi
@@ -132,7 +141,10 @@ jobs:
           fi
 
           if ! az containerapp show --name "${BACKEND_APP}" --resource-group "${RG}" --output none >/dev/null 2>&1; then
-            DISCOVERED_BACKEND="$(az containerapp list --query "[?contains(name, 'api')].name | [0]" -o tsv || true)"
+            DISCOVERED_BACKEND="$(az containerapp list --resource-group "${RG}" --query "[?contains(name, 'api')].name | [0]" -o tsv || true)"
+            if [[ -z "${DISCOVERED_BACKEND}" ]]; then
+              DISCOVERED_BACKEND="$(az containerapp list --query "[?contains(name, 'api')].name | [0]" -o tsv || true)"
+            fi
             if [[ -n "${DISCOVERED_BACKEND}" ]]; then
               BACKEND_APP="${DISCOVERED_BACKEND}"
             else
