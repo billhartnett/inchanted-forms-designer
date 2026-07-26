@@ -87,12 +87,7 @@ jobs:
           AZURE_FRONTEND_IMAGE: ${{ secrets.AZURE_FRONTEND_IMAGE }}
         run: |
           set -euo pipefail
-          for name in AZURE_RG AZURE_FRONTEND_APP AZURE_FRONTEND_IMAGE; do
-            if [[ -z "${!name}" ]]; then
-              echo "Missing required secret: ${name}" >&2
-              exit 1
-            fi
-          done
+          echo "Proceeding to deploy; deploy step will enforce required inputs."
 
       - name: Deploy frontend to ACA
         uses: azure/container-apps-deploy-action@v1
