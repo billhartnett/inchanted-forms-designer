@@ -75,6 +75,12 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_05C710938C214567A566D4BD60D6672C }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_F116AB14D00D49978DCE3FAC69ACCB4B }}
 
+      - name: Ensure Azure Container Apps CLI extension
+        shell: bash
+        run: |
+          set -euo pipefail
+          az extension add --name containerapp --upgrade --allow-preview true --yes
+
       - name: Validate backend ACA targets
         shell: bash
         env:
