@@ -106,16 +106,29 @@ jobs:
           IMAGE="${AZURE_BACKEND_IMAGE:-}"
 
           if ! az containerapp show --name "${APP}" --resource-group "${RG}" --output none >/dev/null 2>&1; then
-            DISCOVERED_APP="$(az containerapp list --query "[?contains(name, 'api')].name | [0]" -o tsv || true)"
-            DISCOVERED_RG=""
-            if [[ -n "${DISCOVERED_APP}" ]]; then
-              DISCOVERED_RG="$(az containerapp show --name "${DISCOVERED_APP}" --query resourceGroup -o tsv || true)"
+            MATCHED_RG_BY_NAME="$(az containerapp list --query "[?name=='${APP}'].resourceGroup | [0]" -o tsv || true)"
+            if [[ -n "${MATCHED_RG_BY_NAME}" ]]; then
+              RG="${MATCHED_RG_BY_NAME}"
             fi
+          fi
+
+          if ! az containerapp show --name "${APP}" --resource-group "${RG}" --output none >/dev/null 2>&1; then
+            DISCOVERED_APP="$(az containerapp list --resource-group "${RG}" --query "[?(contains(name, 'api') || contains(name, 'back') || contains(properties.template.containers[0].image, 'api') || contains(properties.template.containers[0].image, 'backend')) && !(contains(name, 'front') || contains(name, 'web') || contains(name, 'ui') || contains(name, 'designer'))].name | [0]" -o tsv || true)"
+            DISCOVERED_RG="${RG}"
+
+            if [[ -z "${DISCOVERED_APP}" ]]; then
+              DISCOVERED_APP="$(az containerapp list --query "[?(contains(name, 'api') || contains(name, 'back') || contains(properties.template.containers[0].image, 'api') || contains(properties.template.containers[0].image, 'backend')) && !(contains(name, 'front') || contains(name, 'web') || contains(name, 'ui') || contains(name, 'designer'))].name | [0]" -o tsv || true)"
+              if [[ -n "${DISCOVERED_APP}" ]]; then
+                DISCOVERED_RG="$(az containerapp show --name "${DISCOVERED_APP}" --query resourceGroup -o tsv || true)"
+              fi
+            fi
+
             if [[ -n "${DISCOVERED_APP}" && -n "${DISCOVERED_RG}" ]]; then
               APP="${DISCOVERED_APP}"
               RG="${DISCOVERED_RG}"
             else
-              echo "::error::Unable to find backend container app '${APP}' in resource group '${RG}', and auto-discovery found no fallback backend app."
+              AVAILABLE_APPS="$(az containerapp list --resource-group "${RG}" --query "[].name" -o tsv | tr '\n' ',' | sed 's/,$//' || true)"
+              echo "::error::Unable to find backend container app '${APP}' in resource group '${RG}', and auto-discovery found no fallback backend app. Available apps in '${RG}': ${AVAILABLE_APPS:-none}."
               exit 1
             fi
           fi
