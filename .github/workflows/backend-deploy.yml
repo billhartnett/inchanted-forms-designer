@@ -92,14 +92,25 @@ jobs:
           echo "Proceeding to deploy; deploy step will enforce required inputs."
 
       - name: Deploy backend to ACA
-        uses: azure/container-apps-deploy-action@v1
-        with:
-          resourceGroup: ${{ secrets.AZURE_RG }}
-          containerAppName: ${{ secrets.AZURE_BACKEND_APP }}
-          imageToDeploy: ${{ secrets.AZURE_BACKEND_IMAGE }}
-          registryUrl: ${{ secrets.AZURE_REGISTRY_URL }}
-          registryUsername: ${{ secrets.AZURE_REGISTRY_USERNAME }}
-          registryPassword: ${{ secrets.AZURE_REGISTRY_PASSWORD }}
+        shell: bash
+        env:
+          AZURE_RG: ${{ secrets.AZURE_RG }}
+          AZURE_BACKEND_APP: ${{ secrets.AZURE_BACKEND_APP }}
+          AZURE_BACKEND_IMAGE: ${{ secrets.AZURE_BACKEND_IMAGE }}
+        run: |
+          set -euo pipefail
+          for name in AZURE_RG AZURE_BACKEND_APP AZURE_BACKEND_IMAGE; do
+            if [[ -z "${!name}" ]]; then
+              echo "Missing required secret for deploy: ${name}" >&2
+              exit 1
+            fi
+          done
+
+          az containerapp update \
+            --resource-group "${AZURE_RG}" \
+            --name "${AZURE_BACKEND_APP}" \
+            --image "${AZURE_BACKEND_IMAGE}" \
+            --output none
 
       - name: Verify backend contract endpoints
         shell: bash
