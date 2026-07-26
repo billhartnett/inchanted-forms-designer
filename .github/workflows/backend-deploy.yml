@@ -80,25 +80,16 @@ jobs:
         env:
           AZURE_RG: ${{ secrets.AZURE_RG }}
           AZURE_BACKEND_APP: ${{ secrets.AZURE_BACKEND_APP }}
-          AZURE_REGISTRY_URL: ${{ secrets.AZURE_REGISTRY_URL }}
           AZURE_BACKEND_IMAGE: ${{ secrets.AZURE_BACKEND_IMAGE }}
         run: |
           set -euo pipefail
-          for name in AZURE_RG AZURE_BACKEND_APP AZURE_REGISTRY_URL AZURE_BACKEND_IMAGE; do
+          for name in AZURE_RG AZURE_BACKEND_APP AZURE_BACKEND_IMAGE; do
             if [[ -z "${!name}" ]]; then
               echo "Missing required secret: ${name}" >&2
               exit 1
             fi
           done
-
-          if [[ "${AZURE_BACKEND_IMAGE}" != "${AZURE_REGISTRY_URL}/"* ]]; then
-            echo "Backend image must come from the configured registry: ${AZURE_BACKEND_IMAGE}" >&2
-            exit 1
-          fi
-
-          REGISTRY_NAME="${AZURE_REGISTRY_URL%%.*}"
           az containerapp show --name "${AZURE_BACKEND_APP}" --resource-group "${AZURE_RG}" --output none
-          az acr show --name "${REGISTRY_NAME}" --output none
 
       - name: Deploy backend to ACA
         uses: azure/container-apps-deploy-action@v1
