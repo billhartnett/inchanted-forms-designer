@@ -101,54 +101,43 @@ jobs:
         run: |
           set -euo pipefail
 
-          RG="${AZURE_RG:-inchanted-aca-rg}"
+          RG="${AZURE_RG:-}"
           APP="${AZURE_BACKEND_APP:-inchanted-api-staging}"
           IMAGE="${AZURE_BACKEND_IMAGE:-}"
 
-          if ! az containerapp show --name "${APP}" --resource-group "${RG}" --output none >/dev/null 2>&1; then
-            MATCHED_RG_BY_NAME="$(az resource list --resource-type "Microsoft.App/containerApps" --query "[?name=='${APP}'].resourceGroup | [0]" -o tsv || true)"
+          # If the configured RG is not accessible to this principal, continue with
+          # subscription-scoped discovery instead of failing early.
+          if [[ -n "${RG}" ]] && ! az group show --name "${RG}" --output none >/dev/null 2>&1; then
+            echo "::warning::Configured resource group '${RG}' is not accessible. Falling back to accessible subscription-scoped discovery."
+            RG=""
+          fi
+
+          if [[ -n "${RG}" ]] && az containerapp show --name "${APP}" --resource-group "${RG}" --output none >/dev/null 2>&1; then
+            :
+          else
+            MATCHED_RG_BY_NAME="$(az containerapp list --query "[?name=='${APP}'].resourceGroup | [0]" -o tsv 2>/dev/null || true)"
             if [[ -n "${MATCHED_RG_BY_NAME}" ]]; then
               RG="${MATCHED_RG_BY_NAME}"
             fi
           fi
 
-          if ! az containerapp show --name "${APP}" --resource-group "${RG}" --output none >/dev/null 2>&1; then
-            DISCOVERED_APP="$(az resource list --resource-group "${RG}" --resource-type "Microsoft.App/containerApps" --query "[?(contains(name, 'api') || contains(name, 'back')) && !(contains(name, 'front') || contains(name, 'web') || contains(name, 'ui') || contains(name, 'designer'))].name | [0]" -o tsv || true)"
-            DISCOVERED_RG="${RG}"
+          if [[ -z "${RG}" ]] || ! az containerapp show --name "${APP}" --resource-group "${RG}" --output none >/dev/null 2>&1; then
+            DISCOVERED="$(az containerapp list --query "[?(contains(name, 'api') || contains(name, 'back')) && !(contains(name, 'front') || contains(name, 'web') || contains(name, 'ui') || contains(name, 'designer'))].[name,resourceGroup] | [0]" -o tsv 2>/dev/null || true)"
+            DISCOVERED_APP="$(echo "${DISCOVERED}" | awk 'NR==1 {print $1}')"
+            DISCOVERED_RG="$(echo "${DISCOVERED}" | awk 'NR==1 {print $2}')"
 
             if [[ -z "${DISCOVERED_APP}" ]]; then
-              DISCOVERED_APP="$(az resource list --resource-group "${RG}" --resource-type "Microsoft.App/containerApps" --query "[?!(contains(name, 'front') || contains(name, 'web') || contains(name, 'ui') || contains(name, 'designer'))].name | [0]" -o tsv || true)"
-            fi
-
-            if [[ -z "${DISCOVERED_APP}" ]]; then
-              DISCOVERED_APP="$(az resource list --resource-type "Microsoft.App/containerApps" --query "[?(contains(name, 'api') || contains(name, 'back')) && !(contains(name, 'front') || contains(name, 'web') || contains(name, 'ui') || contains(name, 'designer'))].name | [0]" -o tsv || true)"
-              if [[ -n "${DISCOVERED_APP}" ]]; then
-                DISCOVERED_RG="$(az resource list --resource-type "Microsoft.App/containerApps" --query "[?name=='${DISCOVERED_APP}'].resourceGroup | [0]" -o tsv || true)"
-              fi
-            fi
-
-            if [[ -z "${DISCOVERED_APP}" ]]; then
-              DISCOVERED_APP="$(az resource list --resource-type "Microsoft.App/containerApps" --query "[?!(contains(name, 'front') || contains(name, 'web') || contains(name, 'ui') || contains(name, 'designer'))].name | [0]" -o tsv || true)"
-              if [[ -n "${DISCOVERED_APP}" ]]; then
-                DISCOVERED_RG="$(az resource list --resource-type "Microsoft.App/containerApps" --query "[?name=='${DISCOVERED_APP}'].resourceGroup | [0]" -o tsv || true)"
-              fi
-            fi
-
-            if [[ -z "${DISCOVERED_APP}" ]]; then
-              TOTAL_APPS="$(az resource list --resource-type "Microsoft.App/containerApps" --query "length(@)" -o tsv || echo 0)"
-              if [[ "${TOTAL_APPS}" == "1" ]]; then
-                DISCOVERED_APP="$(az resource list --resource-type "Microsoft.App/containerApps" --query "[0].name" -o tsv || true)"
-                DISCOVERED_RG="$(az resource list --resource-type "Microsoft.App/containerApps" --query "[0].resourceGroup" -o tsv || true)"
-              fi
+              DISCOVERED="$(az containerapp list --query "[?!(contains(name, 'front') || contains(name, 'web') || contains(name, 'ui') || contains(name, 'designer'))].[name,resourceGroup] | [0]" -o tsv 2>/dev/null || true)"
+              DISCOVERED_APP="$(echo "${DISCOVERED}" | awk 'NR==1 {print $1}')"
+              DISCOVERED_RG="$(echo "${DISCOVERED}" | awk 'NR==1 {print $2}')"
             fi
 
             if [[ -n "${DISCOVERED_APP}" && -n "${DISCOVERED_RG}" ]]; then
               APP="${DISCOVERED_APP}"
               RG="${DISCOVERED_RG}"
             else
-              AVAILABLE_APPS_IN_RG="$(az resource list --resource-group "${RG}" --resource-type "Microsoft.App/containerApps" --query "[].name" -o tsv | paste -sd ',' - || true)"
-              AVAILABLE_APPS_ALL="$(az resource list --resource-type "Microsoft.App/containerApps" --query "[].name" -o tsv | paste -sd ',' - || true)"
-              echo "::error::Unable to find backend container app '${APP}' in resource group '${RG}', and auto-discovery found no fallback backend app. Available apps in '${RG}': ${AVAILABLE_APPS_IN_RG:-none}. Available apps in subscription: ${AVAILABLE_APPS_ALL:-none}."
+              AVAILABLE_APPS_ALL="$(az containerapp list --query "[].name" -o tsv 2>/dev/null | paste -sd ',' - || true)"
+              echo "::error::Unable to resolve an accessible backend container app. Requested app='${APP}', configured resource group='${AZURE_RG:-unset}'. Available accessible apps in subscription: ${AVAILABLE_APPS_ALL:-none}."
               exit 1
             fi
           fi
