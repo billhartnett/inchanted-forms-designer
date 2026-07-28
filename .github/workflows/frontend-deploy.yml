@@ -34,159 +34,56 @@ jobs:
           pnpm --filter shared build
           pnpm --filter inchanted-frontend build
 
-      - name: Resolve Azure login mode
-        id: azure_login
-        shell: bash
-        env:
-          AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-          AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-          AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          LEGACY_AZURE_CLIENT_ID: ${{ secrets.AZUREAPPSERVICE_CLIENTID_986A7A2873804FA28E16B668A4EB50D0 }}
-          LEGACY_AZURE_TENANT_ID: ${{ secrets.AZUREAPPSERVICE_TENANTID_05C710938C214567A566D4BD60D6672C }}
-          LEGACY_AZURE_SUBSCRIPTION_ID: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_F116AB14D00D49978DCE3FAC69ACCB4B }}
-        run: |
-          set -euo pipefail
-          if [[ -n "${AZURE_CLIENT_ID}" && -n "${AZURE_TENANT_ID}" && -n "${AZURE_SUBSCRIPTION_ID}" ]]; then
-            echo "auth_mode=new" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-          if [[ -n "${LEGACY_AZURE_CLIENT_ID}" && -n "${LEGACY_AZURE_TENANT_ID}" && -n "${LEGACY_AZURE_SUBSCRIPTION_ID}" ]]; then
-            echo "auth_mode=legacy" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-          echo "Missing Azure login secrets: provide AZURE_CLIENT_ID/AZURE_TENANT_ID/AZURE_SUBSCRIPTION_ID or the legacy AZUREAPPSERVICE_* trio" >&2
-          exit 1
-
       - name: Login to Azure
-        if: ${{ steps.azure_login.outputs.auth_mode == 'new' }}
         uses: azure/login@v2
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-      - name: Login to Azure (legacy service principal)
-        if: ${{ steps.azure_login.outputs.auth_mode == 'legacy' }}
-        uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_986A7A2873804FA28E16B668A4EB50D0 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_05C710938C214567A566D4BD60D6672C }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_F116AB14D00D49978DCE3FAC69ACCB4B }}
-
-      - name: Ensure Azure Container Apps CLI extension
-        shell: bash
-        run: |
-          set -euo pipefail
-          az extension add --name containerapp --upgrade --allow-preview true --yes
-
       - name: Validate frontend ACA targets
         shell: bash
         env:
           AZURE_RG: ${{ secrets.AZURE_RG }}
-          AZURE_FRONTEND_APP: ${{ secrets.AZURE_FRONTEND_APP }}
-          AZURE_FRONTEND_IMAGE: ${{ secrets.AZURE_FRONTEND_IMAGE }}
-        run: |
-          set -euo pipefail
-          echo "Proceeding to deploy; deploy step will enforce required inputs."
-
-      - name: Resolve frontend deploy targets
-        id: frontend_targets
-        shell: bash
-        env:
-          AZURE_RG: ${{ secrets.AZURE_RG }}
-          AZURE_FRONTEND_APP: ${{ secrets.AZURE_FRONTEND_APP }}
-          AZURE_FRONTEND_IMAGE: ${{ secrets.AZURE_FRONTEND_IMAGE }}
           AZURE_BACKEND_APP: ${{ secrets.AZURE_BACKEND_APP }}
+          AZURE_FRONTEND_APP: ${{ secrets.AZURE_FRONTEND_APP }}
+          AZURE_REGISTRY_URL: ${{ secrets.AZURE_REGISTRY_URL }}
+          AZURE_FRONTEND_IMAGE: ${{ secrets.AZURE_FRONTEND_IMAGE }}
         run: |
           set -euo pipefail
-
-          RG="${AZURE_RG:-inchanted-aca-rg}"
-          FRONTEND_APP="${AZURE_FRONTEND_APP:-}"
-          FRONTEND_IMAGE="${AZURE_FRONTEND_IMAGE:-}"
-          BACKEND_APP="${AZURE_BACKEND_APP:-inchanted-api-staging}"
-
-          if [[ -z "${FRONTEND_APP}" ]]; then
-            FRONTEND_APP="$(az containerapp list --resource-group "${RG}" --query "[?contains(name, 'front') || contains(name, 'web') || contains(name, 'ui') || contains(name, 'designer')].name | [0]" -o tsv || true)"
-            if [[ -z "${FRONTEND_APP}" ]]; then
-              FRONTEND_APP="$(az containerapp list --resource-group "${RG}" --query "[?!contains(name, 'api')].name | [0]" -o tsv || true)"
-            fi
-            if [[ -z "${FRONTEND_APP}" ]]; then
-              FRONTEND_APP="$(az containerapp list --query "[?contains(name, 'front') || contains(name, 'web') || contains(name, 'ui') || contains(name, 'designer')].name | [0]" -o tsv || true)"
-            fi
-            if [[ -z "${FRONTEND_APP}" ]]; then
-              FRONTEND_APP="$(az containerapp list --query "[?!contains(name, 'api')].name | [0]" -o tsv || true)"
-            fi
-            if [[ -n "${FRONTEND_APP}" ]]; then
-              RG="$(az containerapp show --name "${FRONTEND_APP}" --query resourceGroup -o tsv || echo "${RG}")"
-            fi
-          fi
-
-          if [[ -z "${FRONTEND_APP}" ]]; then
-            echo "::error::Unable to resolve frontend app. Set AZURE_FRONTEND_APP or ensure a frontend-style app name exists in '${RG}'."
-            exit 1
-          fi
-
-          if ! az containerapp show --name "${FRONTEND_APP}" --resource-group "${RG}" --output none >/dev/null 2>&1; then
-            echo "::error::Unable to find frontend container app '${FRONTEND_APP}' in resource group '${RG}'."
-            exit 1
-          fi
-
-          if [[ -z "${FRONTEND_IMAGE}" ]]; then
-            FRONTEND_IMAGE="$(az containerapp show --name "${FRONTEND_APP}" --resource-group "${RG}" --query properties.template.containers[0].image -o tsv)"
-          fi
-
-          if [[ -z "${FRONTEND_IMAGE}" ]]; then
-            echo "::error::Unable to resolve frontend image. Set AZURE_FRONTEND_IMAGE or ensure the app has an existing image."
-            exit 1
-          fi
-
-          if ! az containerapp show --name "${BACKEND_APP}" --resource-group "${RG}" --output none >/dev/null 2>&1; then
-            DISCOVERED_BACKEND="$(az containerapp list --resource-group "${RG}" --query "[?contains(name, 'api')].name | [0]" -o tsv || true)"
-            if [[ -z "${DISCOVERED_BACKEND}" ]]; then
-              DISCOVERED_BACKEND="$(az containerapp list --query "[?contains(name, 'api')].name | [0]" -o tsv || true)"
-            fi
-            if [[ -n "${DISCOVERED_BACKEND}" ]]; then
-              BACKEND_APP="${DISCOVERED_BACKEND}"
-            else
-              echo "::error::Unable to find backend app '${BACKEND_APP}' in resource group '${RG}' for Wave9 contract verification."
-              exit 1
-            fi
-          fi
-
-          echo "resource_group=${RG}" >> "$GITHUB_OUTPUT"
-          echo "frontend_app=${FRONTEND_APP}" >> "$GITHUB_OUTPUT"
-          echo "frontend_image=${FRONTEND_IMAGE}" >> "$GITHUB_OUTPUT"
-          echo "backend_app=${BACKEND_APP}" >> "$GITHUB_OUTPUT"
-
-      - name: Deploy frontend to ACA
-        if: ${{ steps.frontend_targets.outcome == 'success' }}
-        shell: bash
-        env:
-          AZURE_RG: ${{ steps.frontend_targets.outputs.resource_group }}
-          AZURE_FRONTEND_APP: ${{ steps.frontend_targets.outputs.frontend_app }}
-          AZURE_FRONTEND_IMAGE: ${{ steps.frontend_targets.outputs.frontend_image }}
-        run: |
-          set -euo pipefail
-          for name in AZURE_RG AZURE_FRONTEND_APP AZURE_FRONTEND_IMAGE; do
+          for name in AZURE_RG AZURE_BACKEND_APP AZURE_FRONTEND_APP AZURE_REGISTRY_URL AZURE_FRONTEND_IMAGE; do
             if [[ -z "${!name}" ]]; then
-              echo "Missing required secret for deploy: ${name}" >&2
+              echo "Missing required secret: ${name}" >&2
               exit 1
             fi
           done
 
-          az containerapp update \
-            --resource-group "${AZURE_RG}" \
-            --name "${AZURE_FRONTEND_APP}" \
-            --image "${AZURE_FRONTEND_IMAGE}" \
-            --output none
+          if [[ "${AZURE_FRONTEND_IMAGE}" != "${AZURE_REGISTRY_URL}/"* ]]; then
+            echo "Frontend image must come from the configured registry: ${AZURE_FRONTEND_IMAGE}" >&2
+            exit 1
+          fi
+
+          REGISTRY_NAME="${AZURE_REGISTRY_URL%%.*}"
+          az containerapp show --name "${AZURE_FRONTEND_APP}" --resource-group "${AZURE_RG}" --output none
+          az containerapp show --name "${AZURE_BACKEND_APP}" --resource-group "${AZURE_RG}" --output none
+          az acr show --name "${REGISTRY_NAME}" --output none
+
+      - name: Deploy frontend to ACA
+        uses: azure/container-apps-deploy-action@v1
+        with:
+          resourceGroup: ${{ secrets.AZURE_RG }}
+          containerAppName: ${{ secrets.AZURE_FRONTEND_APP }}
+          imageToDeploy: ${{ secrets.AZURE_FRONTEND_IMAGE }}
+          registryUrl: ${{ secrets.AZURE_REGISTRY_URL }}
+          registryUsername: ${{ secrets.AZURE_REGISTRY_USERNAME }}
+          registryPassword: ${{ secrets.AZURE_REGISTRY_PASSWORD }}
 
       - name: Verify frontend Wave 9 contract wiring
-        if: ${{ steps.frontend_targets.outcome == 'success' }}
         shell: bash
         env:
-          AZURE_RG: ${{ steps.frontend_targets.outputs.resource_group }}
-          AZURE_FRONTEND_APP: ${{ steps.frontend_targets.outputs.frontend_app }}
-          AZURE_BACKEND_APP: ${{ steps.frontend_targets.outputs.backend_app }}
+          AZURE_RG: ${{ secrets.AZURE_RG }}
+          AZURE_FRONTEND_APP: ${{ secrets.AZURE_FRONTEND_APP }}
+          AZURE_BACKEND_APP: ${{ secrets.AZURE_BACKEND_APP }}
         run: |
           set -euo pipefail
           FRONTEND_FQDN="$(az containerapp show --name "${AZURE_FRONTEND_APP}" --resource-group "${AZURE_RG}" --query properties.configuration.ingress.fqdn -o tsv)"

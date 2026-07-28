@@ -36,153 +36,53 @@ jobs:
           pnpm --filter wave9 build
           pnpm --filter inchanted-api build
 
-      - name: Resolve Azure login mode
-        id: azure_login
-        shell: bash
-        env:
-          AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-          AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-          AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          LEGACY_AZURE_CLIENT_ID: ${{ secrets.AZUREAPPSERVICE_CLIENTID_986A7A2873804FA28E16B668A4EB50D0 }}
-          LEGACY_AZURE_TENANT_ID: ${{ secrets.AZUREAPPSERVICE_TENANTID_05C710938C214567A566D4BD60D6672C }}
-          LEGACY_AZURE_SUBSCRIPTION_ID: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_F116AB14D00D49978DCE3FAC69ACCB4B }}
-        run: |
-          set -euo pipefail
-          if [[ -n "${AZURE_CLIENT_ID}" && -n "${AZURE_TENANT_ID}" && -n "${AZURE_SUBSCRIPTION_ID}" ]]; then
-            echo "auth_mode=new" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-          if [[ -n "${LEGACY_AZURE_CLIENT_ID}" && -n "${LEGACY_AZURE_TENANT_ID}" && -n "${LEGACY_AZURE_SUBSCRIPTION_ID}" ]]; then
-            echo "auth_mode=legacy" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-          echo "Missing Azure login secrets: provide AZURE_CLIENT_ID/AZURE_TENANT_ID/AZURE_SUBSCRIPTION_ID or the legacy AZUREAPPSERVICE_* trio" >&2
-          exit 1
-
       - name: Login to Azure
-        if: ${{ steps.azure_login.outputs.auth_mode == 'new' }}
         uses: azure/login@v2
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-      - name: Login to Azure (legacy service principal)
-        if: ${{ steps.azure_login.outputs.auth_mode == 'legacy' }}
-        uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_986A7A2873804FA28E16B668A4EB50D0 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_05C710938C214567A566D4BD60D6672C }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_F116AB14D00D49978DCE3FAC69ACCB4B }}
-
-      - name: Ensure Azure Container Apps CLI extension
-        shell: bash
-        run: |
-          set -euo pipefail
-          az extension add --name containerapp --upgrade --allow-preview true --yes
-
       - name: Validate backend ACA targets
         shell: bash
         env:
           AZURE_RG: ${{ secrets.AZURE_RG }}
           AZURE_BACKEND_APP: ${{ secrets.AZURE_BACKEND_APP }}
+          AZURE_REGISTRY_URL: ${{ secrets.AZURE_REGISTRY_URL }}
           AZURE_BACKEND_IMAGE: ${{ secrets.AZURE_BACKEND_IMAGE }}
         run: |
           set -euo pipefail
-          echo "Proceeding to deploy; deploy step will enforce required inputs."
-
-      - name: Resolve backend deploy targets
-        id: backend_targets
-        shell: bash
-        env:
-          AZURE_RG: ${{ secrets.AZURE_RG }}
-          AZURE_BACKEND_APP: ${{ secrets.AZURE_BACKEND_APP }}
-          AZURE_BACKEND_IMAGE: ${{ secrets.AZURE_BACKEND_IMAGE }}
-        run: |
-          set -euo pipefail
-
-          RG="${AZURE_RG:-}"
-          APP="${AZURE_BACKEND_APP:-inchanted-api-staging}"
-          IMAGE="${AZURE_BACKEND_IMAGE:-}"
-
-          # If the configured RG is not accessible to this principal, continue with
-          # subscription-scoped discovery instead of failing early.
-          if [[ -n "${RG}" ]] && ! az group show --name "${RG}" --output none >/dev/null 2>&1; then
-            echo "::warning::Configured resource group '${RG}' is not accessible. Falling back to accessible subscription-scoped discovery."
-            RG=""
-          fi
-
-          if [[ -n "${RG}" ]] && az containerapp show --name "${APP}" --resource-group "${RG}" --output none >/dev/null 2>&1; then
-            :
-          else
-            MATCHED_RG_BY_NAME="$(az containerapp list --query "[?name=='${APP}'].resourceGroup | [0]" -o tsv 2>/dev/null || true)"
-            if [[ -n "${MATCHED_RG_BY_NAME}" ]]; then
-              RG="${MATCHED_RG_BY_NAME}"
-            fi
-          fi
-
-          if [[ -z "${RG}" ]] || ! az containerapp show --name "${APP}" --resource-group "${RG}" --output none >/dev/null 2>&1; then
-            DISCOVERED="$(az containerapp list --query "[?(contains(name, 'api') || contains(name, 'back')) && !(contains(name, 'front') || contains(name, 'web') || contains(name, 'ui') || contains(name, 'designer'))].[name,resourceGroup] | [0]" -o tsv 2>/dev/null || true)"
-            DISCOVERED_APP="$(echo "${DISCOVERED}" | awk 'NR==1 {print $1}')"
-            DISCOVERED_RG="$(echo "${DISCOVERED}" | awk 'NR==1 {print $2}')"
-
-            if [[ -z "${DISCOVERED_APP}" ]]; then
-              DISCOVERED="$(az containerapp list --query "[?!(contains(name, 'front') || contains(name, 'web') || contains(name, 'ui') || contains(name, 'designer'))].[name,resourceGroup] | [0]" -o tsv 2>/dev/null || true)"
-              DISCOVERED_APP="$(echo "${DISCOVERED}" | awk 'NR==1 {print $1}')"
-              DISCOVERED_RG="$(echo "${DISCOVERED}" | awk 'NR==1 {print $2}')"
-            fi
-
-            if [[ -n "${DISCOVERED_APP}" && -n "${DISCOVERED_RG}" ]]; then
-              APP="${DISCOVERED_APP}"
-              RG="${DISCOVERED_RG}"
-            else
-              AVAILABLE_APPS_ALL="$(az containerapp list --query "[].name" -o tsv 2>/dev/null | paste -sd ',' - || true)"
-              echo "::error::Unable to resolve an accessible backend container app. Requested app='${APP}', configured resource group='${AZURE_RG:-unset}'. Available accessible apps in subscription: ${AVAILABLE_APPS_ALL:-none}."
-              exit 1
-            fi
-          fi
-
-          if [[ -z "${IMAGE}" ]]; then
-            IMAGE="$(az containerapp show --name "${APP}" --resource-group "${RG}" --query properties.template.containers[0].image -o tsv)"
-          fi
-
-          if [[ -z "${IMAGE}" ]]; then
-            echo "::error::Unable to resolve backend image. Set AZURE_BACKEND_IMAGE or ensure the app has an existing image."
-            exit 1
-          fi
-
-          echo "resource_group=${RG}" >> "$GITHUB_OUTPUT"
-          echo "container_app=${APP}" >> "$GITHUB_OUTPUT"
-          echo "image=${IMAGE}" >> "$GITHUB_OUTPUT"
-
-      - name: Deploy backend to ACA
-        if: ${{ steps.backend_targets.outcome == 'success' }}
-        shell: bash
-        env:
-          AZURE_RG: ${{ steps.backend_targets.outputs.resource_group }}
-          AZURE_BACKEND_APP: ${{ steps.backend_targets.outputs.container_app }}
-          AZURE_BACKEND_IMAGE: ${{ steps.backend_targets.outputs.image }}
-        run: |
-          set -euo pipefail
-          for name in AZURE_RG AZURE_BACKEND_APP AZURE_BACKEND_IMAGE; do
+          for name in AZURE_RG AZURE_BACKEND_APP AZURE_REGISTRY_URL AZURE_BACKEND_IMAGE; do
             if [[ -z "${!name}" ]]; then
-              echo "Missing required secret for deploy: ${name}" >&2
+              echo "Missing required secret: ${name}" >&2
               exit 1
             fi
           done
 
-          az containerapp update \
-            --resource-group "${AZURE_RG}" \
-            --name "${AZURE_BACKEND_APP}" \
-            --image "${AZURE_BACKEND_IMAGE}" \
-            --output none
+          if [[ "${AZURE_BACKEND_IMAGE}" != "${AZURE_REGISTRY_URL}/"* ]]; then
+            echo "Backend image must come from the configured registry: ${AZURE_BACKEND_IMAGE}" >&2
+            exit 1
+          fi
+
+          REGISTRY_NAME="${AZURE_REGISTRY_URL%%.*}"
+          az containerapp show --name "${AZURE_BACKEND_APP}" --resource-group "${AZURE_RG}" --output none
+          az acr show --name "${REGISTRY_NAME}" --output none
+
+      - name: Deploy backend to ACA
+        uses: azure/container-apps-deploy-action@v1
+        with:
+          resourceGroup: ${{ secrets.AZURE_RG }}
+          containerAppName: ${{ secrets.AZURE_BACKEND_APP }}
+          imageToDeploy: ${{ secrets.AZURE_BACKEND_IMAGE }}
+          registryUrl: ${{ secrets.AZURE_REGISTRY_URL }}
+          registryUsername: ${{ secrets.AZURE_REGISTRY_USERNAME }}
+          registryPassword: ${{ secrets.AZURE_REGISTRY_PASSWORD }}
 
       - name: Verify backend contract endpoints
-        if: ${{ steps.backend_targets.outcome == 'success' }}
         shell: bash
         env:
-          AZURE_RG: ${{ steps.backend_targets.outputs.resource_group }}
-          AZURE_BACKEND_APP: ${{ steps.backend_targets.outputs.container_app }}
+          AZURE_RG: ${{ secrets.AZURE_RG }}
+          AZURE_BACKEND_APP: ${{ secrets.AZURE_BACKEND_APP }}
         run: |
           set -euo pipefail
           BACKEND_FQDN="$(az containerapp show --name "${AZURE_BACKEND_APP}" --resource-group "${AZURE_RG}" --query properties.configuration.ingress.fqdn -o tsv)"
