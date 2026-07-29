@@ -46,7 +46,6 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID_STAGING }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID_STAGING }}
 
-
       - name: Validate backend ACA targets
         shell: bash
         env:
@@ -76,18 +75,18 @@ jobs:
       - name: Deploy backend to ACA
         uses: azure/container-apps-deploy-action@v1
         with:
-          resourceGroup: ${{ secrets.AZURE_RG }}
-          containerAppName: ${{ secrets.AZURE_BACKEND_APP }}
-          imageToDeploy: ${{ secrets.AZURE_BACKEND_IMAGE }}
-          registryUrl: ${{ secrets.AZURE_REGISTRY_URL }}
-          registryUsername: ${{ secrets.AZURE_REGISTRY_USERNAME }}
-          registryPassword: ${{ secrets.AZURE_REGISTRY_PASSWORD }}
+          resourceGroup: ${{ secrets.ACA_RESOURCE_GROUP }}
+          containerAppName: ${{ secrets.BACKEND_ACA_APP_NAME }}
+          imageToDeploy: ${{ secrets.BACKEND_IMAGE_NAME }}
+          registryUrl: ${{ secrets.ACR_LOGIN_SERVER }}
+          registryUsername: ${{ secrets.ACR_USERNAME }}
+          registryPassword: ${{ secrets.ACR_PASSWORD }}
 
       - name: Verify backend contract endpoints
         shell: bash
         env:
-          AZURE_RG: ${{ secrets.AZURE_RG }}
-          AZURE_BACKEND_APP: ${{ secrets.AZURE_BACKEND_APP }}
+          AZURE_RG: ${{ secrets.ACA_RESOURCE_GROUP }}
+          AZURE_BACKEND_APP: ${{ secrets.BACKEND_ACA_APP_NAME }}
         run: |
           set -euo pipefail
           BACKEND_FQDN="$(az containerapp show --name "${AZURE_BACKEND_APP}" --resource-group "${AZURE_RG}" --query properties.configuration.ingress.fqdn -o tsv)"
