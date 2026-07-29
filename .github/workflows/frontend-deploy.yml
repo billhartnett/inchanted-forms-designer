@@ -9,8 +9,9 @@ jobs:
   build-deploy:
     runs-on: ubuntu-latest
 
-    # REQUIRED for Azure OIDC
-    environment: staging
+    environment:
+      name: staging
+
     permissions:
       id-token: write
       contents: read
@@ -34,7 +35,7 @@ jobs:
       - name: Build frontend
         run: pnpm --filter inchanted-frontend build
 
-      - name: Login to Azure (OIDC)
+      - name: Login to Azure
         uses: azure/login@v2
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID_STAGING }}
@@ -70,21 +71,19 @@ jobs:
       - name: Deploy frontend to ACA
         uses: azure/container-apps-deploy-action@v1
         with:
-          resourceGroup: ${{ secrets.AZURE_RG }}
-          containerAppName: ${{ secrets.AZURE_FRONTEND_APP }}
-          imageToDeploy: ${{ secrets.AZURE_FRONTEND_IMAGE }}
-          registryUrl: ${{ secrets.AZURE_REGISTRY_URL }}
-          registryUsername: ${{ secrets.AZURE_REGISTRY_USERNAME }}
-          registryPassword: ${{ secrets.AZURE_REGISTRY_PASSWORD }}
+          resourceGroup: ${{ secrets.ACA_RESOURCE_GROUP }}
+          containerAppName: ${{ secrets.FRONTEND_ACA_APP_NAME }}
+          imageToDeploy: ${{ secrets.FRONTEND_IMAGE_NAME }}
+          registryUrl: ${{ secrets.ACR_LOGIN_SERVER }}
+          registryUsername: ${{ secrets.ACR_USERNAME }}
+          registryPassword: ${{ secrets.ACR_PASSWORD }}
 
-      - name: Verify frontend health
+      - name: Verify frontend is reachable
         shell: bash
         env:
-          AZURE_RG: ${{ secrets.AZURE_RG }}
-          AZURE_FRONTEND_APP: ${{ secrets.FRONTEND_ACA_APP }}
+          AZURE_RG: ${{ secrets.ACA_RESOURCE_GROUP }}
+          AZURE_FRONTEND_APP: ${{ secrets.FRONTEND_ACA_APP_NAME }}
         run: |
           set -euo pipefail
           FRONTEND_FQDN="$(az containerapp show --name "${AZURE_FRONTEND_APP}" --resource-group "${AZURE_RG}" --query properties.configuration.ingress.fqdn -o tsv)"
-          BASE_URL="https://${FRONTEND_FQDN}"
-
-          curl -fsS "${BASE_URL}" >/dev/null
+          curl -fsS "https://${FRONTEND_FQDN}" >/dev/null
