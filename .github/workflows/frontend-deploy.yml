@@ -58,16 +58,13 @@ jobs:
               exit 1
             fi
           done
-
           if [[ "${AZURE_FRONTEND_IMAGE}" != "${AZURE_REGISTRY_URL}/"* ]]; then
             echo "Frontend image must come from the configured registry: ${AZURE_FRONTEND_IMAGE}" >&2
             exit 1
           fi
-
           REGISTRY_NAME="${AZURE_REGISTRY_URL%%.*}"
           az containerapp show --name "${AZURE_FRONTEND_APP}" --resource-group "${AZURE_RG}" --output none
           az acr show --name "${REGISTRY_NAME}" --output none
-
       - name: Deploy frontend to ACA
         uses: azure/container-apps-deploy-action@v1
         with:
