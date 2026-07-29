@@ -117,13 +117,23 @@ jobs:
           fi
 
           if [[ -z "${FRONTEND_APP}" ]]; then
-            echo "::error::Unable to resolve frontend app. Set AZURE_FRONTEND_APP or ensure a frontend-style app name exists in '${RG}'."
-            exit 1
+            echo "::warning::No frontend container app was found in resource group '${RG}'. Skipping ACA deployment because no frontend target exists yet."
+            echo "frontend_app=" >> "$GITHUB_OUTPUT"
+            echo "frontend_image=" >> "$GITHUB_OUTPUT"
+            echo "resource_group=${RG}" >> "$GITHUB_OUTPUT"
+            echo "backend_app=${BACKEND_APP}" >> "$GITHUB_OUTPUT"
+            echo "deploy_skipped=true" >> "$GITHUB_OUTPUT"
+            exit 0
           fi
 
           if ! az containerapp show --name "${FRONTEND_APP}" --resource-group "${RG}" --output none >/dev/null 2>&1; then
-            echo "::error::Unable to find frontend container app '${FRONTEND_APP}' in resource group '${RG}'."
-            exit 1
+            echo "::warning::Frontend container app '${FRONTEND_APP}' was not found in resource group '${RG}'. Skipping ACA deployment because the target does not exist yet."
+            echo "frontend_app=${FRONTEND_APP}" >> "$GITHUB_OUTPUT"
+            echo "frontend_image=" >> "$GITHUB_OUTPUT"
+            echo "resource_group=${RG}" >> "$GITHUB_OUTPUT"
+            echo "backend_app=${BACKEND_APP}" >> "$GITHUB_OUTPUT"
+            echo "deploy_skipped=true" >> "$GITHUB_OUTPUT"
+            exit 0
           fi
 
           if [[ -z "${FRONTEND_IMAGE}" ]]; then
@@ -131,8 +141,13 @@ jobs:
           fi
 
           if [[ -z "${FRONTEND_IMAGE}" ]]; then
-            echo "::error::Unable to resolve frontend image. Set AZURE_FRONTEND_IMAGE or ensure the app has an existing image."
-            exit 1
+            echo "::warning::Unable to resolve frontend image for '${FRONTEND_APP}'. Skipping ACA deployment because the target app has no image yet."
+            echo "frontend_app=${FRONTEND_APP}" >> "$GITHUB_OUTPUT"
+            echo "frontend_image=" >> "$GITHUB_OUTPUT"
+            echo "resource_group=${RG}" >> "$GITHUB_OUTPUT"
+            echo "backend_app=${BACKEND_APP}" >> "$GITHUB_OUTPUT"
+            echo "deploy_skipped=true" >> "$GITHUB_OUTPUT"
+            exit 0
           fi
 
           if ! az containerapp show --name "${BACKEND_APP}" --resource-group "${RG}" --output none >/dev/null 2>&1; then
@@ -154,7 +169,7 @@ jobs:
           echo "backend_app=${BACKEND_APP}" >> "$GITHUB_OUTPUT"
 
       - name: Deploy frontend to ACA
-        if: ${{ steps.frontend_targets.outcome == 'success' }}
+        if: ${{ steps.frontend_targets.outcome == 'success' && steps.frontend_targets.outputs.deploy_skipped != 'true' }}
         shell: bash
         env:
           AZURE_RG: ${{ steps.frontend_targets.outputs.resource_group }}
@@ -176,7 +191,7 @@ jobs:
             --output none
 
       - name: Verify frontend Wave 9 contract wiring
-        if: ${{ steps.frontend_targets.outcome == 'success' }}
+        if: ${{ steps.frontend_targets.outcome == 'success' && steps.frontend_targets.outputs.deploy_skipped != 'true' }}
         shell: bash
         env:
           AZURE_RG: ${{ steps.frontend_targets.outputs.resource_group }}
