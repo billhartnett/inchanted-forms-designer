@@ -41,22 +41,32 @@ jobs:
           AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
           AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
           AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          AZURE_CLIENT_ID_STAGING: ${{ secrets.AZURE_CLIENT_ID_STAGING }}
+          AZURE_TENANT_ID_STAGING: ${{ secrets.AZURE_TENANT_ID_STAGING }}
+          AZURE_SUBSCRIPTION_ID_STAGING: ${{ secrets.AZURE_SUBSCRIPTION_ID_STAGING }}
         run: |
           set -euo pipefail
-          if [[ -n "${AZURE_CLIENT_ID}" && -n "${AZURE_TENANT_ID}" && -n "${AZURE_SUBSCRIPTION_ID}" ]]; then
+          CLIENT_ID="${AZURE_CLIENT_ID:-${AZURE_CLIENT_ID_STAGING:-}}"
+          TENANT_ID="${AZURE_TENANT_ID:-${AZURE_TENANT_ID_STAGING:-}}"
+          SUBSCRIPTION_ID="${AZURE_SUBSCRIPTION_ID:-${AZURE_SUBSCRIPTION_ID_STAGING:-}}"
+
+          if [[ -n "${CLIENT_ID}" && -n "${TENANT_ID}" && -n "${SUBSCRIPTION_ID}" ]]; then
+            echo "client_id=${CLIENT_ID}" >> "$GITHUB_OUTPUT"
+            echo "tenant_id=${TENANT_ID}" >> "$GITHUB_OUTPUT"
+            echo "subscription_id=${SUBSCRIPTION_ID}" >> "$GITHUB_OUTPUT"
             echo "auth_mode=new" >> "$GITHUB_OUTPUT"
             exit 0
           fi
-          echo "Missing Azure login secrets: provide AZURE_CLIENT_ID/AZURE_TENANT_ID/AZURE_SUBSCRIPTION_ID" >&2
+          echo "Missing Azure login secrets: provide AZURE_CLIENT_ID/AZURE_TENANT_ID/AZURE_SUBSCRIPTION_ID or the staging-specific equivalents" >&2
           exit 1
 
       - name: Login to Azure
         if: ${{ steps.azure_login.outputs.auth_mode == 'new' }}
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          client-id: ${{ steps.azure_login.outputs.client_id }}
+          tenant-id: ${{ steps.azure_login.outputs.tenant_id }}
+          subscription-id: ${{ steps.azure_login.outputs.subscription_id }}
 
       - name: Ensure Azure Container Apps CLI extension
         shell: bash
