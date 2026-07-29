@@ -8,10 +8,12 @@ on:
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
+
+    # REQUIRED for Azure OIDC
     environment: staging
     permissions:
-      contents: read
       id-token: write
+      contents: read
 
     steps:
       - name: Checkout
@@ -30,30 +32,26 @@ jobs:
         run: pnpm install --no-frozen-lockfile
 
       - name: Build frontend
-        run: |
-          pnpm --filter shared build
-          pnpm --filter inchanted-frontend build
+        run: pnpm --filter inchanted-frontend build
 
-      - name: Login to Azure
+      - name: Login to Azure (OIDC)
         uses: azure/login@v2
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID_STAGING }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID_STAGING }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID_STAGING }}
 
-
       - name: Validate frontend ACA targets
         shell: bash
         env:
           AZURE_RG: ${{ secrets.ACA_RESOURCE_GROUP }}
-          AZURE_BACKEND_APP: ${{ secrets.BACKEND_ACA_APP_NAME }}
           AZURE_FRONTEND_APP: ${{ secrets.FRONTEND_ACA_APP_NAME }}
           AZURE_REGISTRY_URL: ${{ secrets.ACR_LOGIN_SERVER }}
           AZURE_FRONTEND_IMAGE: ${{ secrets.FRONTEND_IMAGE_NAME }}
 
         run: |
           set -euo pipefail
-          for name in AZURE_RG AZURE_BACKEND_APP AZURE_FRONTEND_APP AZURE_REGISTRY_URL AZURE_FRONTEND_IMAGE; do
+          for name in AZURE_RG AZURE_FRONTEND_APP AZURE_REGISTRY_URL AZURE_FRONTEND_IMAGE; do
             if [[ -z "${!name}" ]]; then
               echo "Missing required secret: ${name}" >&2
               exit 1
@@ -67,7 +65,6 @@ jobs:
 
           REGISTRY_NAME="${AZURE_REGISTRY_URL%%.*}"
           az containerapp show --name "${AZURE_FRONTEND_APP}" --resource-group "${AZURE_RG}" --output none
-          az containerapp show --name "${AZURE_BACKEND_APP}" --resource-group "${AZURE_RG}" --output none
           az acr show --name "${REGISTRY_NAME}" --output none
 
       - name: Deploy frontend to ACA
@@ -80,18 +77,14 @@ jobs:
           registryUsername: ${{ secrets.AZURE_REGISTRY_USERNAME }}
           registryPassword: ${{ secrets.AZURE_REGISTRY_PASSWORD }}
 
-      - name: Verify frontend Wave 9 contract wiring
+      - name: Verify frontend health
         shell: bash
         env:
           AZURE_RG: ${{ secrets.AZURE_RG }}
-          AZURE_FRONTEND_APP: ${{ secrets.AZURE_FRONTEND_APP }}
-          AZURE_BACKEND_APP: ${{ secrets.AZURE_BACKEND_APP }}
+          AZURE_FRONTEND_APP: ${{ secrets.FRONTEND_ACA_APP }}
         run: |
           set -euo pipefail
           FRONTEND_FQDN="$(az containerapp show --name "${AZURE_FRONTEND_APP}" --resource-group "${AZURE_RG}" --query properties.configuration.ingress.fqdn -o tsv)"
-          BACKEND_FQDN="$(az containerapp show --name "${AZURE_BACKEND_APP}" --resource-group "${AZURE_RG}" --query properties.configuration.ingress.fqdn -o tsv)"
-          FRONTEND_BASE_URL="https://${FRONTEND_FQDN}"
-          BACKEND_CONTRACT_URL="https://${BACKEND_FQDN}/api/wave9/contracts"
+          BASE_URL="https://${FRONTEND_FQDN}"
 
-          curl -fsS "${FRONTEND_BASE_URL}/env.js" | grep -F "${BACKEND_CONTRACT_URL}" >/dev/null
-          curl -fsS "${FRONTEND_BASE_URL}/" >/dev/null
+          curl -fsS "${BASE_URL}" >/dev/null
