@@ -19,43 +19,43 @@
     },
     "./acord/ontology": {
       "types": "./dist/acord/ontology.d.ts",
-      "default": "./dist/acord/ontology.js"
+      "default": "./src/acord/ontology.ts"
     },
     "./acord/acord-builders": {
       "types": "./dist/acord/acord-builders.d.ts",
-      "default": "./dist/acord/acord-builders.js"
+      "default": "./src/acord/acord-builders.ts"
     },
     "./acord/acord-doc-profile": {
       "types": "./dist/acord/acord-doc-profile.d.ts",
-      "default": "./dist/acord/acord-doc-profile.js"
+      "default": "./src/acord/acord-doc-profile.ts"
     },
     "./acord/acord-gating": {
       "types": "./dist/acord/acord-gating.d.ts",
-      "default": "./dist/acord/acord-gating.js"
+      "default": "./src/acord/acord-gating.ts"
     },
     "./acord/acordTypes": {
       "types": "./dist/acord/acordTypes.d.ts",
-      "default": "./dist/acord/acordTypes.js"
+      "default": "./src/acord/acordTypes.ts"
     },
     "./types": {
       "types": "./dist/types/index.d.ts",
-      "default": "./dist/types/index.js"
+      "default": "./src/types/index.ts"
     },
     "./quality": {
       "types": "./dist/quality/index.d.ts",
-      "default": "./dist/quality/index.js"
+      "default": "./src/quality/index.ts"
     },
     "./extraction": {
       "types": "./dist/extraction/index.d.ts",
-      "default": "./dist/extraction/index.js"
+      "default": "./src/extraction/index.ts"
     },
     "./mapping": {
       "types": "./dist/mapping/index.d.ts",
-      "default": "./dist/mapping/index.js"
+      "default": "./src/mapping/index.ts"
     },
     "./services": {
       "types": "./dist/services/index.d.ts",
-      "default": "./dist/services/index.js"
+      "default": "./src/services/index.ts"
     }
   },
   "scripts": {
