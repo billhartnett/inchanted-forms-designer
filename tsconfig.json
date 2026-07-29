@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "ignoreDeprecations": "6.0",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["frontend/src/*"],
+      "@shared/*": ["shared/src/*"],
+      "@shared/acord/*": ["shared/src/acord/*"],
+      "@shared/acord": ["shared/src/acord/index.ts"],
+      "@shared/quality": ["shared/src/quality/index.ts"],
+      "@shared/types": ["shared/src/types/index.ts"],
+      "@shared/extraction": ["shared/src/extraction/index.ts"]
+    }
+  },
+  "include": ["frontend/src", "shared/src"]
+}

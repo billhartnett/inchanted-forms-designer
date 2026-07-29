@@ -1,17 +1,14 @@
+import path from 'path'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import path from 'path'
+import tsconfigPaths from 'vite-tsconfig-paths'
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), tsconfigPaths({ projects: ['./tsconfig.app.json'] })],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
-      '@shared': path.resolve(__dirname, '../shared/dist'),
-      '@shared/acord': path.resolve(__dirname, '../shared/dist/acord'),
-      '@shared/types': path.resolve(__dirname, '../shared/dist/types'),
-      '@shared/quality': path.resolve(__dirname, '../shared/dist/quality'),
-      '@shared/extraction': path.resolve(__dirname, '../shared/dist/extraction'),
     },
+    extensions: ['.mjs', '.ts', '.tsx', '.js', '.jsx', '.json'],
   },
 })

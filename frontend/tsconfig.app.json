@@ -4,11 +4,12 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
-      "@shared/*": ["../shared/dist/*"],
-      "@shared/acord/*": ["../shared/dist/acord/*"],
-      "@shared/acord": ["../shared/dist/acord/index.js"],
-      "@shared/quality": ["../shared/dist/quality/index.js"],
-      "@shared/types": ["../shared/dist/types/index.js"]
+      "@shared/*": ["../shared/src/*"],
+      "@shared/acord/*": ["../shared/src/acord/*"],
+      "@shared/acord": ["../shared/src/acord/index.ts"],
+      "@shared/quality": ["../shared/src/quality/index.ts"],
+      "@shared/types": ["../shared/src/types/index.ts"],
+      "@shared/extraction": ["../shared/src/extraction/index.ts"]
     },
 
     "target": "ESNext",
@@ -19,6 +20,7 @@
 
     "strict": true,
     "skipLibCheck": true,
+    "ignoreDeprecations": "6.0",
     "allowJs": false,
     "isolatedModules": true
   },
