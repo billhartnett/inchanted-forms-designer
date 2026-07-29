@@ -8,10 +8,13 @@ on:
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
-    environment: staging
+
+    environment:
+      name: staging
+
     permissions:
-      contents: read
       id-token: write
+      contents: read
 
     steps:
       - name: Checkout
