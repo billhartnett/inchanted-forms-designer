@@ -11,7 +11,8 @@ declare global {
 }
 
 function normalizeBaseUrl(value: string): string {
-  return value.replace(/\/+$/, "");
+  const normalized = value.replace(/\/+$/, "");
+  return normalized.endsWith("/api") ? normalized.slice(0, -4) : normalized;
 }
 
 function getEnvValue(key: string): string {
