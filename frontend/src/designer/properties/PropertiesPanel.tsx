@@ -604,67 +604,79 @@ export function PropertiesPanel({ selectedField, showAcordMappingSection = true,
               </label>
 
               <label>
-                X:
-                <input type="number" value={num(single.x)} readOnly />
-              </label>
-                    Default Value:
-              <label>
-                      type="text"
-                      value={defaultValue}
-                      onChange={(e) => setDefaultValue(e.target.value)}
-                      placeholder="Set initial/default value"
-
-              <label>
-                Width:
-                <input type="number" value={num(single.width, 20)} readOnly />
-                    Tooltip:
-
-                      type="text"
-                      value={metadata.tooltip || ""}
-                      onChange={(e) => updateMetadata({ tooltip: e.target.value })}
-                      placeholder="Helpful guidance shown to users"
+                Default Value:
+                <input
+                  type="text"
+                  value={defaultValue}
+                  onChange={(e) => setDefaultValue(e.target.value)}
+                  placeholder="Set initial/default value"
+                />
               </label>
 
-          Required:
-          <input
-            type="checkbox"
-            checked={Boolean(metadata.required)}
-            onChange={(e) => updateMetadata({ required: e.target.checked })}
-          />
-        </label>
+              <label>
+                Tooltip:
+                <input
+                  type="text"
+                  value={metadata.tooltip || ""}
+                  onChange={(e) => updateMetadata({ tooltip: e.target.value })}
+                  placeholder="Helpful guidance shown to users"
+                />
+              </label>
 
-        <label>
-          Default Value:
-          <input
-            type="text"
-            value={defaultValue}
-            onChange={(e) => setDefaultValue(e.target.value)}
-            placeholder="Set initial/default value"
-          />
-        </label>
+              <div style={{ fontSize: 12, color: "#475569" }}>
+                Design controls are available in the top toolbar Design menu.
+              </div>
+            </>
+          ) : (
+            <>
+              <h3 style={{ marginTop: 0 }}>Properties</h3>
 
-        <label>
-          Placeholder:
-          <input
-            type="text"
-            value={placeholderValue}
-            onChange={(e) => setPlaceholder(e.target.value)}
-            disabled={
-              single.type !== "dropdown" &&
-              single.type !== "date" &&
-              single.type !== "numeric" &&
-              single.type !== "signature"
-            }
-            placeholder={
-              single.type === "dropdown" ||
-              single.type === "date" ||
-              single.type === "numeric" ||
-              single.type === "signature"
-                ? "Displayed hint for this field"
-                : "Not applicable to this field type"
-            }
-          />
-        </label>
+              <label>
+                Field Type:
+                <input type="text" value={single.type} readOnly />
+              </label>
+
+              <label>
+                Required:
+                <input
+                  type="checkbox"
+                  checked={Boolean(metadata.required)}
+                  onChange={(e) => updateMetadata({ required: e.target.checked })}
+                />
+              </label>
+
+              <label>
+                Default Value:
+                <input
+                  type="text"
+                  value={defaultValue}
+                  onChange={(e) => setDefaultValue(e.target.value)}
+                  placeholder="Set initial/default value"
+                />
+              </label>
+
+              <label>
+                Placeholder:
+                <input
+                  type="text"
+                  value={placeholderValue}
+                  onChange={(e) => setPlaceholder(e.target.value)}
+                  disabled={
+                    single.type !== "dropdown" &&
+                    single.type !== "date" &&
+                    single.type !== "numeric" &&
+                    single.type !== "signature"
+                  }
+                  placeholder={
+                    single.type === "dropdown" ||
+                    single.type === "date" ||
+                    single.type === "numeric" ||
+                    single.type === "signature"
+                      ? "Displayed hint for this field"
+                      : "Not applicable to this field type"
+                  }
+                />
+              </label>
 
         {renderSharedSingle(single, update)}
 
