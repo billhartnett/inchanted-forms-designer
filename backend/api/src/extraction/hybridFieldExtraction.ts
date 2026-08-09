@@ -793,9 +793,11 @@ export async function buildHybridFieldExtraction(args: {
     "header",
     "footer",
   ]);
+  const fillableIds = new Set(fillable.map((entry) => entry.id));
   const retainedCatalog = catalog.filter((entry) => {
     const hasGeometry = hasValidFillableGeometry(entry);
     const paired = pairedCatalogIds.has(entry.id);
+    if (fillableRoles.has(entry.role) && !fillableIds.has(entry.id)) return false;
     if (entry.source === "di_table_cell" && !hasGeometry) return false;
     const overlapsRealField = fillable.some((candidate) =>
       candidate.page === entry.page && intersectionArea(entry.boundingBox, candidate.boundingBox) > 0

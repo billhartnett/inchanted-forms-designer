@@ -352,6 +352,12 @@ test("keeps questions as labels and promotes only fillable DI cell regions", asy
   assert.equal(result.fieldCatalog.some((entry) => entry.text === "Yes"), true);
   assert.equal(Boolean(blankOnlyCell), true);
   assert.equal(fieldIds.has(blankOnlyCell.id), true);
+  assert.equal(
+    result.fieldCatalog
+      .filter((entry) => ["input", "value-region", "checkbox", "table-cell"].includes(entry.role))
+      .every((entry) => fieldIds.has(entry.id)),
+    true,
+  );
 });
 
 test("promotes typed numeric, dollar, and percentage blanks without section text", async () => {
