@@ -2,15 +2,14 @@
  * Monitoring API Service
  * Fetches data from backend monitoring endpoints
  */
-
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:7071/api';
+import { apiUrl } from '../config/runtimeConfig';
 
 /**
  * Fetch complete monitoring data from backend
  */
 export async function fetchMonitoringData() {
   try {
-    const response = await fetch(`${API_BASE_URL}/monitoring/dashboard`, {
+    const response = await fetch(apiUrl('/api/monitoring/dashboard'), {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -34,7 +33,7 @@ export async function fetchMonitoringData() {
  */
 export async function fetchModuleData(moduleName) {
   try {
-    const response = await fetch(`${API_BASE_URL}/monitoring/${moduleName}`, {
+    const response = await fetch(apiUrl(`/api/monitoring/${moduleName}`), {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
