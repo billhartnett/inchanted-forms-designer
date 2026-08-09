@@ -969,7 +969,6 @@ export default function PdfImportModal({
   const clearMappingReview = useMappingStore((s) => s.clear);
   const [isAutoMapping, setIsAutoMapping] = useState(true);
   const [isReviewMode, setIsReviewMode] = useState(false);
-  const [maxMappedFields, setMaxMappedFields] = useState(250);
   const [isImporting, setIsImporting] = useState(false);
 
   const downloadDebugReport = () => {
@@ -1024,7 +1023,6 @@ export default function PdfImportModal({
   async function runAutoMapping(
     file: File,
     pageImages: string[],
-    limit: number,
   ): Promise<AutoMappingResult> {
     const imageSizes = await Promise.all(pageImages.map(readImageSize));
     const extractPayload = (await runHybridExtraction(file)) as ExtractDocumentResponse;
@@ -1257,7 +1255,7 @@ export default function PdfImportModal({
     const safeMappings = qualityMappings.map((item) => item.mapping);
     
     // DEBUG STEP 4: Log safe mappings before designerStore persistence
-    console.error("[safe-mappings-COUNT] Ready to persist: " + safeMappings.length + " fields (cap: " + limit + ")");
+    console.error("[safe-mappings-COUNT] Ready to persist all " + safeMappings.length + " accepted fields");
     console.log("[safe-mappings-ready]", {
       totalSafeMappings: safeMappings.length,
       fieldsCap: "all",
@@ -1554,7 +1552,7 @@ export default function PdfImportModal({
 
       if (mode === "map-only" || isAutoMapping) {
         try {
-          const autoMapping = await runAutoMapping(file, pages, maxMappedFields);
+          const autoMapping = await runAutoMapping(file, pages);
           mappedFields = autoMapping.draftMappings;
           extractionArtifacts = {
             ...autoMapping.artifacts,
@@ -1696,25 +1694,6 @@ export default function PdfImportModal({
           </div>
         </div>
       )}
-      <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-        Mapping Field Cap:
-        <input
-          type="number"
-          min={1}
-          max={500}
-          step={1}
-          value={maxMappedFields}
-          disabled={isImporting}
-          onChange={(e) => {
-            const next = Number(e.target.value);
-            setMaxMappedFields(
-              Number.isFinite(next)
-                ? Math.max(1, Math.min(500, Math.floor(next)))
-                : 250,
-            );
-          }}
-        />
-      </label>
       {mode === "map-only" && (
         <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
           <label style={{ display: "flex", alignItems: "center", gap: 8 }}>
