@@ -106,44 +106,101 @@ type MapFieldsRequest = {
 
 const PROMOTED_MAPPING_ROLES = new Set([
   "input",
-  "business",
-  "contact",
-  "producer",
-  "agency",
-  "applicant",
-  "company",
-  "underwriter",
-  "address",
-  "email",
-  "phone",
-  "website",
   "checkbox",
-  "select",
   "table-cell",
   "value-region",
 ]);
 
-function groupedFillableIds(groupedStructures: ExtractDocumentGroupedStructures | undefined): Set<string> {
-  const ids = new Set<string>();
-  for (const pair of groupedStructures?.labelInputPairs ?? []) ids.add(pair.inputBlockId);
-  for (const pair of groupedStructures?.questionAnswerPairs ?? []) ids.add(pair.answerFieldId);
-  for (const group of groupedStructures?.checkboxGroups ?? []) {
-    for (const id of group.checkboxFieldIds) ids.add(id);
-  }
-  return ids;
-}
-
 function hasFillableGeometry(entry: ExtractDocumentFieldCatalogEntry | undefined): boolean {
   const box = entry?.semanticValueRegion;
+  const narrowTypedBlank = Boolean(
+    entry &&
+    box &&
+    ["numeric", "percentage"].includes(entry.valueType) &&
+    box.width >= 12 &&
+    box.width <= 40,
+  );
   return Boolean(
     box &&
     Number.isFinite(box.x) &&
     Number.isFinite(box.y) &&
     Number.isFinite(box.width) &&
     Number.isFinite(box.height) &&
-    box.width > 0 &&
-    box.height > 0,
+    (entry?.role === "checkbox" ? box.width > 0 : narrowTypedBlank || box.width >= 20) &&
+    (narrowTypedBlank ? box.height > 0 : box.height >= 6) &&
+    (entry?.role === "value-region" || box.height <= 60),
   );
+}
+
+function intersectionArea(
+  left: ExtractDocumentFieldCatalogEntry["boundingBox"],
+  right: ExtractDocumentFieldCatalogEntry["boundingBox"],
+): number {
+  const width = Math.max(0, Math.min(left.x + left.width, right.x + right.width) - Math.max(left.x, right.x));
+  const height = Math.max(0, Math.min(left.y + left.height, right.y + right.height) - Math.max(left.y, right.y));
+  return width * height;
+}
+
+function largestRemainder(
+  box: ExtractDocumentFieldCatalogEntry["boundingBox"],
+  blocker: ExtractDocumentFieldCatalogEntry["boundingBox"],
+  role: ExtractDocumentFieldCatalogEntry["role"],
+): ExtractDocumentFieldCatalogEntry["boundingBox"] {
+  if (intersectionArea(box, blocker) === 0) return box;
+  const pieces = [
+    { x: box.x, y: box.y, width: blocker.x - box.x, height: box.height },
+    { x: blocker.x + blocker.width, y: box.y, width: box.x + box.width - blocker.x - blocker.width, height: box.height },
+    { x: box.x, y: box.y, width: box.width, height: blocker.y - box.y },
+    { x: box.x, y: blocker.y + blocker.height, width: box.width, height: box.y + box.height - blocker.y - blocker.height },
+  ].filter((piece) =>
+    piece.width >= (role === "checkbox" ? 1 : 20) &&
+    piece.height >= 6 &&
+    (role === "value-region" || piece.height <= 60)
+  );
+  return pieces.sort((left, right) => right.width * right.height - left.width * left.height)[0] || {
+    ...box,
+    width: 0,
+    height: 0,
+  };
+}
+
+function strictlyPromotedGeometry(
+  fieldCatalog: ExtractDocumentFieldCatalogEntry[],
+  groupedStructures: ExtractDocumentGroupedStructures | undefined,
+): Map<string, ExtractDocumentFieldCatalogEntry["boundingBox"]> {
+  const pairedInputIds = new Set(
+    (groupedStructures?.labelInputPairs ?? []).map((pair) => pair.inputBlockId),
+  );
+  const candidates = fieldCatalog.filter((entry) =>
+    PROMOTED_MAPPING_ROLES.has(entry.role) &&
+    hasFillableGeometry(entry) &&
+    !(/^\W+$/.test(entry.text.trim()) || /^\W+$/.test(String(entry.semanticLabel || "").trim())) &&
+    (entry.role !== "table-cell" || !entry.text.trim()),
+  );
+  const promoted: ExtractDocumentFieldCatalogEntry[] = [];
+  for (const entry of [...candidates].sort((left, right) => {
+    const pairPriority = Number(pairedInputIds.has(right.id)) - Number(pairedInputIds.has(left.id));
+    if (pairPriority !== 0) return pairPriority;
+    const leftSemantic = Number(preferredAcordCodes(left.semanticLabel || left.text).length > 0);
+    const rightSemantic = Number(preferredAcordCodes(right.semanticLabel || right.text).length > 0);
+    if (leftSemantic !== rightSemantic) return rightSemantic - leftSemantic;
+    const leftArea = left.semanticValueRegion!.width * left.semanticValueRegion!.height;
+    const rightArea = right.semanticValueRegion!.width * right.semanticValueRegion!.height;
+    return leftArea - rightArea;
+  })) {
+    let box = entry.semanticValueRegion!;
+    const blockers = promoted.filter((candidate) =>
+      candidate.page === entry.page && intersectionArea(box, candidate.semanticValueRegion!) > 0
+    );
+    if (blockers.length > 0 && !pairedInputIds.has(entry.id)) continue;
+    for (const other of blockers) {
+      box = largestRemainder(box, other.semanticValueRegion!, entry.role);
+    }
+    const adjusted = { ...entry, boundingBox: box, semanticValueRegion: box };
+    if (!hasFillableGeometry(adjusted)) continue;
+    promoted.push(adjusted);
+  }
+  return new Map(promoted.map((entry) => [entry.id, entry.semanticValueRegion!]));
 }
 
 function preferredAcordCodes(label: string): string[] {
@@ -174,8 +231,8 @@ function promotedDictionarySuggestions(
   cache?: Map<string, FieldMapping["suggestions"]>,
 ): FieldMapping["suggestions"] {
   if (mapping.suggestions.length > 0 || !entry) return mapping.suggestions;
-  const promoted = PROMOTED_MAPPING_ROLES.has(entry.role) ||
-    hasFillableGeometry(entry) ||
+  const promoted = PROMOTED_MAPPING_ROLES.has(entry.role) &&
+    hasFillableGeometry(entry) &&
     promotedByGroup;
   if (!promoted) return mapping.suggestions;
   const query = [entry.semanticLabel, entry.text, mapping.text, entry.role]
@@ -1570,15 +1627,14 @@ export async function mapFields(
 
     const fieldCatalog = Array.isArray(body.fieldCatalog) ? body.fieldCatalog : [];
     const catalogById = new Map(fieldCatalog.map((entry) => [entry.id, entry]));
-    const promotedGroupIds = groupedFillableIds(body.groupedStructures);
+    const promotedGeometry = strictlyPromotedGeometry(fieldCatalog, body.groupedStructures);
+    const promotedIds = new Set(promotedGeometry.keys());
     const blocks = body.blocks
       .map(sanitizeBlock)
       .map((block) => {
         if (block.text.trim()) return block;
         const catalogEntry = catalogById.get(block.id);
-        const promoted = PROMOTED_MAPPING_ROLES.has(String(catalogEntry?.role || "")) ||
-          hasFillableGeometry(catalogEntry) ||
-          promotedGroupIds.has(block.id);
+        const promoted = promotedIds.has(block.id);
         if (!promoted) return block;
         return {
           ...block,
@@ -1666,7 +1722,7 @@ export async function mapFields(
       const suggestions = promotedDictionarySuggestions(
         mapping,
         catalogEntry,
-        promotedGroupIds.has(mapping.blockId),
+        promotedIds.has(mapping.blockId),
         promotedSuggestionCache,
       );
       return suggestions === mapping.suggestions
@@ -1688,11 +1744,13 @@ export async function mapFields(
 
     const mappingsWithLayoutLm = ontologyCompleteMappings.map((mapping) => {
       const catalogEntry = catalogById.get(mapping.blockId);
+      const promotedBox = promotedGeometry.get(mapping.blockId);
       return {
         ...mapping,
+        boundingBox: promotedBox || mapping.boundingBox,
         semanticRole: catalogEntry?.role,
         semanticLabel: catalogEntry?.semanticLabel || catalogEntry?.text,
-        semanticValueRegion: catalogEntry?.semanticValueRegion,
+        semanticValueRegion: promotedBox || catalogEntry?.semanticValueRegion,
         groupId: catalogEntry?.groupId,
         tableId: catalogEntry?.tableId,
         rowIndex: catalogEntry?.rowIndex,
@@ -1701,10 +1759,7 @@ export async function mapFields(
       };
     });
     const mappedFields = mappingsWithLayoutLm.filter((mapping) => {
-      const catalogEntry = catalogById.get(mapping.blockId);
-      return PROMOTED_MAPPING_ROLES.has(String(catalogEntry?.role || "")) ||
-        hasFillableGeometry(catalogEntry) ||
-        promotedGroupIds.has(mapping.blockId);
+      return promotedIds.has(mapping.blockId);
     });
 
     return {

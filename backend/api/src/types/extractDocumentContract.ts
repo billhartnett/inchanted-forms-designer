@@ -21,6 +21,8 @@ export type ExtractDocumentFieldCatalogRole =
   | "column_header"
   | "question"
   | "label"
+  | "section-label"
+  | "ocr-text"
   | "header"
   | "title"
   | "footer"
