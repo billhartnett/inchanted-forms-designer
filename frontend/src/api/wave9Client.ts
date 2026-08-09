@@ -2,6 +2,7 @@ import { apiUrl, getWave9ContractUrl } from "../config/runtimeConfig";
 
 export type Wave9EndpointKey =
   | "contracts"
+  | "hybridExtraction"
   | "acordExtraction"
   | "semanticInference"
   | "semanticSummary"

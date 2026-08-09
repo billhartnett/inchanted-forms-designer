@@ -27,3 +27,13 @@ export type {
   AcordLabelCandidate,
   AcordMappingRationale,
 } from "shared/acord";
+
+export type {
+  ExtractDocumentDiagnostics,
+  ExtractDocumentBboxNormalization,
+  ExtractDocumentFieldCatalogEntry,
+  ExtractDocumentFieldCatalogRole,
+  ExtractDocumentFieldCatalogValueType,
+  ExtractDocumentGroupedStructures,
+  ExtractDocumentMultipartSuccessResponse,
+} from "./extractDocumentContract";

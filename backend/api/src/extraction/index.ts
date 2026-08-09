@@ -2,6 +2,7 @@ import type { ExtractedBlock } from "shared/types";
 import { normalizeBoundingBox } from "./bboxNormalization";
 
 export { createDocumentAnalysisClient } from "./documentIntelligence";
+export { buildHybridFieldExtraction, toPixelBox } from "./hybridFieldExtraction";
 export { buildTypedField, buildTypedFields } from "./fieldFactory";
 export { detectLabel, detectLabels } from "./labelDetection";
 export { normalizeExtractedPages, normalizeExtractedLine } from "./pageExtraction";

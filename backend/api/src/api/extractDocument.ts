@@ -2,12 +2,13 @@ import { HttpRequest, HttpResponseInit, InvocationContext } from "@azure/functio
 import {
   coerceExtractedBlock,
   extractBlocksFromPlainText,
+  buildHybridFieldExtraction,
   createDocumentAnalysisClient,
   normalizeExtractedPages,
   inferSemanticFields,
 } from "../extraction";
 import { mapBlocksWithAcord } from "../mapping";
-import type { ExtractedBlock, FieldMapping, PageExtraction } from "../types";
+import type { ExtractedBlock, FieldMapping } from "../types";
 
 type ExtractDocumentRequest = {
   documentId?: string;
@@ -15,70 +16,7 @@ type ExtractDocumentRequest = {
   blocks?: Partial<ExtractedBlock>[];
 };
 
-// Document Intelligence returns coordinates in inches (prebuilt-layout model).
-// The designer canvas renders at 96 DPI (standard screen resolution).
 const CANVAS_DPI = 96;
-
-/** Convert Document Intelligence inch-unit coordinates to canvas pixel coordinates. */
-function scaleBoundingBoxToPixels(
-  bbox: ExtractedBlock["boundingBox"],
-  unit: string | undefined,
-): ExtractedBlock["boundingBox"] {
-  if (unit !== "inch") return bbox;
-  return {
-    x: bbox.x * CANVAS_DPI,
-    y: bbox.y * CANVAS_DPI,
-    width: bbox.width * CANVAS_DPI,
-    height: bbox.height * CANVAS_DPI,
-  };
-}
-
-/**
- * Convert normalized DI PageExtraction lines to typed ExtractedBlock[].
- * Applies DPI scaling, detects checkbox/signature/kvp block types, and
- * tags each block with its source page number and a stable sequential ID.
- */
-function buildBlocksFromPages(pages: PageExtraction[]): ExtractedBlock[] {
-  const blocks: ExtractedBlock[] = [];
-  for (const page of pages) {
-    const unit = (page as any).unit as string | undefined;
-    const pageW = typeof page.width === "number" ? page.width : 8.5;
-    const pageH = typeof page.height === "number" ? page.height : 11;
-
-    (page as any).pixelWidth = unit === "inch" ? pageW * CANVAS_DPI : pageW;
-    (page as any).pixelHeight = unit === "inch" ? pageH * CANVAS_DPI : pageH;
-
-    for (let i = 0; i < page.lines.length; i++) {
-      const line = page.lines[i];
-      const text = (line.content ?? "").trim();
-      if (!text) continue;
-
-      const rawBbox = line.boundingBox ?? { x: 0, y: 0, width: 100, height: 20 };
-      const scaledBbox = scaleBoundingBoxToPixels(rawBbox, unit);
-
-      let type: ExtractedBlock["type"] = "text";
-      if (/\u2610|\u2611|\u2612|\[\s*\]|\(\s*\)/.test(text)) {
-        type = "checkbox";
-      } else if (/^selection_mark_(selected|unselected)_\d+$/i.test(text)) {
-        type = "checkbox";
-      } else if (/\bsignature\b|\bsign here\b|\bauthorized.{0,20}signature\b/i.test(text)) {
-        type = "signature";
-      } else if (/^[a-z0-9\s\-\/\.,#&'"()]{2,60}:\s*.{1,}/i.test(text)) {
-        type = "kvp";
-      }
-
-      blocks.push({
-        id: `p${page.pageNumber}-l${i + 1}`,
-        page: page.pageNumber,
-        type,
-        text,
-        boundingBox: scaledBbox,
-        confidence: typeof line.confidence === "number" ? line.confidence : 0.9,
-      });
-    }
-  }
-  return blocks;
-}
 
 /**
  * Enrich extracted blocks with Wave 8 ACORD mapping engine output.
@@ -116,6 +54,12 @@ async function enrichWithMappingEngine(
   }
 
   return { mappings, fieldTypes };
+}
+
+function inferFieldTypes(blocks: ExtractedBlock[]): Record<string, string> {
+  return Object.fromEntries(
+    inferSemanticFields(blocks).map((inference) => [inference.blockId, inference.fieldType]),
+  );
 }
 
 function buildStructuralDelta(
@@ -170,15 +114,18 @@ export async function extractDocument(
       const poller = await client.beginAnalyzeDocument("prebuilt-layout", buffer);
       const result = await poller.pollUntilDone();
       const pages = normalizeExtractedPages(result.pages ?? []);
-      const blocks = buildBlocksFromPages(pages);
+      const hybridExtraction = await buildHybridFieldExtraction({ pages, rawResult: result });
+      const blocks = hybridExtraction.blocks;
       const documentId = `doc-${Date.now()}`;
-
-      const { mappings, fieldTypes } = await enrichWithMappingEngine(blocks, documentId, context);
+      const isWave9HybridRoute = new URL(request.url).pathname.endsWith("/wave9/extraction/hybrid");
+      const { mappings, fieldTypes } = isWave9HybridRoute
+        ? { mappings: [], fieldTypes: inferFieldTypes(blocks) }
+        : await enrichWithMappingEngine(blocks, documentId, context);
 
       const pageDimensions = pages.map((p) => ({
         page: p.pageNumber,
-        width: (p as any).pixelWidth ?? p.width ?? 816,
-        height: (p as any).pixelHeight ?? p.height ?? 1056,
+        width: (p.width ?? 8.5) * ((p as any).unit === "inch" ? CANVAS_DPI : 1),
+        height: (p.height ?? 11) * ((p as any).unit === "inch" ? CANVAS_DPI : 1),
         unit: "pixel",
       }));
 
@@ -189,11 +136,22 @@ export async function extractDocument(
         status: 200,
         jsonBody: {
           documentId,
+          contractVersion: "wave9.hybrid.v1",
           fileName,
-          extractionMethod: "document-intelligence-wave8",
+          extractionMethod: "wave9-hybrid",
           extractedAt: new Date().toISOString(),
           pages,
           blocks,
+          fields: hybridExtraction.fields,
+          fieldCatalog: hybridExtraction.fieldCatalog,
+          groupedStructures: hybridExtraction.groupedStructures,
+          extractionDiagnostics: hybridExtraction.diagnostics,
+          bboxNormalization: {
+            coordinateSpace: "pixel",
+            origin: "top-left",
+            dpi: CANVAS_DPI,
+            pageDimensions,
+          },
           selectionMarks,
           mappings,
           fieldTypes,

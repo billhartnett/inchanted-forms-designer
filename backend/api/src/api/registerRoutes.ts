@@ -60,7 +60,7 @@ type AzureHandler = (
   context: InvocationContext,
 ) => Promise<HttpResponseInit> | HttpResponseInit;
 
-const WAVE8_CONTRACT_VERSION = "wave8.v1";
+const WAVE9_CONTRACT_VERSION = "wave9.hybrid.v1";
 
 type JsonRecord = Record<string, unknown>;
 
@@ -84,7 +84,7 @@ function inferErrorCode(status: number): string {
 
 function buildContractMeta(path: string, status: number, ok: boolean): JsonRecord {
   return {
-    version: WAVE8_CONTRACT_VERSION,
+    version: WAVE9_CONTRACT_VERSION,
     path,
     status,
     ok,
@@ -127,7 +127,7 @@ function normalizeJsonBodyForUi(jsonBody: unknown, status: number, path: string)
       contract,
       meta: {
         ...(asObject(base.meta) ?? {}),
-        contractVersion: WAVE8_CONTRACT_VERSION,
+        contractVersion: WAVE9_CONTRACT_VERSION,
       },
     };
   }
@@ -144,7 +144,7 @@ function normalizeJsonBodyForUi(jsonBody: unknown, status: number, path: string)
       contract,
       meta: {
         ...(asObject(base.meta) ?? {}),
-        contractVersion: WAVE8_CONTRACT_VERSION,
+        contractVersion: WAVE9_CONTRACT_VERSION,
       },
     };
   }
@@ -159,7 +159,7 @@ function normalizeJsonBodyForUi(jsonBody: unknown, status: number, path: string)
     errorEnvelope: null,
     contract,
     meta: {
-      contractVersion: WAVE8_CONTRACT_VERSION,
+      contractVersion: WAVE9_CONTRACT_VERSION,
     },
   };
 }
@@ -173,14 +173,14 @@ function buildWave9FrontendIntegrationContract() {
       error: null,
       errorEnvelope: null,
       contract: {
-        version: WAVE8_CONTRACT_VERSION,
+        version: WAVE9_CONTRACT_VERSION,
         path: "string",
         status: "number",
         ok: true,
         timestamp: "ISO-8601",
       },
       meta: {
-        contractVersion: WAVE8_CONTRACT_VERSION,
+        contractVersion: WAVE9_CONTRACT_VERSION,
       },
     },
     failure: {
@@ -194,23 +194,24 @@ function buildWave9FrontendIntegrationContract() {
         details: "object|null",
       },
       contract: {
-        version: WAVE8_CONTRACT_VERSION,
+        version: WAVE9_CONTRACT_VERSION,
         path: "string",
         status: "number",
         ok: false,
         timestamp: "ISO-8601",
       },
       meta: {
-        contractVersion: WAVE8_CONTRACT_VERSION,
+        contractVersion: WAVE9_CONTRACT_VERSION,
       },
     },
   };
 
   return {
     version: "wave9.frontend.v1",
-    contractVersion: WAVE8_CONTRACT_VERSION,
+    contractVersion: WAVE9_CONTRACT_VERSION,
     endpoints: {
       contracts: { method: "GET", path: "/api/wave9/contracts" },
+      hybridExtraction: { method: "POST", path: "/api/wave9/extraction/hybrid" },
       extraction: { method: "POST", path: "/api/wave9/acord/extraction" },
       semanticInference: { method: "POST", path: "/api/wave9/acord/semantic-inference" },
       semanticSummary: { method: "POST", path: "/api/wave9/semantic-summary" },
@@ -325,7 +326,7 @@ async function runAzureHandlerAsExpress(handler: AzureHandler, request: Request,
       if (value != null) response.setHeader(key, String(value));
     }
   }
-  response.setHeader("x-wave-contract-version", WAVE8_CONTRACT_VERSION);
+  response.setHeader("x-wave-contract-version", WAVE9_CONTRACT_VERSION);
   response.setHeader("x-wave-contract-stable", "true");
   if (typeof (result as any)?.body === "string") {
     response.status(status).send((result as any).body);
@@ -354,12 +355,22 @@ export function registerMigratedFunctionRoutes(router: Router): void {
         error: null,
         errorEnvelope: null,
         contract: buildContractMeta("/api/wave9/contracts", 200, true),
-        meta: { contractVersion: WAVE8_CONTRACT_VERSION },
+        meta: { contractVersion: WAVE9_CONTRACT_VERSION },
       });
     })
     ;
 
   router.route("/wave9/acord/extraction")
+    .post(async (request, response, next) => {
+      try {
+        await runAzureHandlerAsExpress(extractDocument, request, response);
+      } catch (error) {
+        next(error);
+      }
+    })
+    ;
+
+  router.route("/wave9/extraction/hybrid")
     .post(async (request, response, next) => {
       try {
         await runAzureHandlerAsExpress(extractDocument, request, response);

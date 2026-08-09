@@ -55,11 +55,13 @@ export function boundsFromPolygon(
 
   const xs = points.map((point) => point.x);
   const ys = points.map((point) => point.y);
+  const minX = Math.min(...xs);
+  const minY = Math.min(...ys);
 
-  return normalizeBoundingBox({
-    x: Math.min(...xs),
-    y: Math.min(...ys),
-    width: Math.max(1, Math.max(...xs) - Math.min(...xs)),
-    height: Math.max(1, Math.max(...ys) - Math.min(...ys)),
-  });
+  return {
+    x: minX,
+    y: minY,
+    width: Math.max(Number.EPSILON, Math.max(...xs) - minX),
+    height: Math.max(Number.EPSILON, Math.max(...ys) - minY),
+  };
 }

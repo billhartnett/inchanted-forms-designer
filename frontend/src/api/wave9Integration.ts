@@ -116,14 +116,19 @@ export function runExtractText(file: File) {
   });
 }
 
-export function runExtractDocument(file: File) {
+export async function runHybridExtraction(file: File) {
   const formData = new FormData();
   formData.append("file", file);
-  return fetchApiPostForm<Record<string, unknown>>("/api/extractDocument", formData, {
+  const url = await resolveWave9Endpoint(
+    "hybridExtraction",
+    "/api/wave9/extraction/hybrid",
+  );
+  return fetchEnvelopeJsonWithTimeout<Record<string, unknown>>(url, 180_000, {
+    method: "POST",
+    body: formData,
     headers: {
       "X-File-Name": file.name,
     },
-    timeoutMs: 180_000,
   });
 }
 

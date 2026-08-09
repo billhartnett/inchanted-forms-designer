@@ -4,6 +4,7 @@ import { createHash } from "node:crypto";
 import {
   getLastReducerDebugSnapshot,
   mapBlocksWithAcord,
+  searchAcordDictionary,
 } from "../mapping";
 import { getDefaultOntologyMetadata } from "shared/acord";
 import { coerceExtractedBlock } from "../extraction";
@@ -11,6 +12,9 @@ import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import type {
   CalibrationProfile,
+  ExtractDocumentFieldCatalogEntry,
+  ExtractDocumentBboxNormalization,
+  ExtractDocumentGroupedStructures,
   ExtractedBlock,
   FieldMapping,
   MappingPersistencePayload,
@@ -65,6 +69,9 @@ type LayoutLmInferResponse = {
 type MapFieldsRequest = {
   documentId?: string;
   blocks?: ExtractedBlock[];
+  fieldCatalog?: ExtractDocumentFieldCatalogEntry[];
+  groupedStructures?: ExtractDocumentGroupedStructures;
+  bboxNormalization?: ExtractDocumentBboxNormalization;
   context?: string;
   deterministic?: boolean;
   calibrationProfile?: CalibrationProfile;
@@ -95,6 +102,78 @@ type MapFieldsRequest = {
     carrierPolicyBoost?: number;
   };
 };
+
+const PROMOTED_MAPPING_ROLES = new Set([
+  "input",
+  "business",
+  "contact",
+  "producer",
+  "agency",
+  "applicant",
+  "company",
+  "underwriter",
+  "address",
+  "email",
+  "phone",
+  "website",
+  "checkbox",
+  "select",
+  "table-cell",
+  "value-region",
+]);
+
+function groupedFillableIds(groupedStructures: ExtractDocumentGroupedStructures | undefined): Set<string> {
+  const ids = new Set<string>();
+  for (const pair of groupedStructures?.labelInputPairs ?? []) ids.add(pair.inputBlockId);
+  for (const pair of groupedStructures?.questionAnswerPairs ?? []) ids.add(pair.answerFieldId);
+  for (const group of groupedStructures?.checkboxGroups ?? []) {
+    for (const id of group.checkboxFieldIds) ids.add(id);
+  }
+  return ids;
+}
+
+function hasFillableGeometry(entry: ExtractDocumentFieldCatalogEntry | undefined): boolean {
+  const box = entry?.semanticValueRegion;
+  return Boolean(
+    box &&
+    Number.isFinite(box.x) &&
+    Number.isFinite(box.y) &&
+    Number.isFinite(box.width) &&
+    Number.isFinite(box.height) &&
+    box.width > 0 &&
+    box.height > 0,
+  );
+}
+
+function promotedDictionarySuggestions(
+  mapping: FieldMapping,
+  entry: ExtractDocumentFieldCatalogEntry | undefined,
+  promotedByGroup: boolean,
+  cache?: Map<string, FieldMapping["suggestions"]>,
+): FieldMapping["suggestions"] {
+  if (mapping.suggestions.length > 0 || !entry) return mapping.suggestions;
+  const promoted = PROMOTED_MAPPING_ROLES.has(entry.role) ||
+    hasFillableGeometry(entry) ||
+    promotedByGroup;
+  if (!promoted) return mapping.suggestions;
+  const query = [entry.semanticLabel, entry.text, mapping.text, entry.role]
+    .filter(Boolean)
+    .join(" ");
+  const cached = cache?.get(query);
+  if (cached) return cached;
+  const suggestions = searchAcordDictionary(query, 3).map((result) => ({
+    acordCode: result.entry.acordCode,
+    label: result.entry.label,
+    description: result.entry.description,
+    confidenceScore: Number(Math.min(0.74, 0.35 + result.score / 500).toFixed(3)),
+    normalizedConfidenceScore: Number(Math.min(0.74, 0.35 + result.score / 500).toFixed(3)),
+    source: "dictionary" as const,
+    rationale: `Promoted ${entry.role} field matched by ACORD dictionary ranking.`,
+    dictionaryScore: result.score,
+  }));
+  cache?.set(query, suggestions);
+  return suggestions;
+}
 
 type ReducerFailureClass =
   | "emptyAccum"
@@ -1449,8 +1528,23 @@ export async function mapFields(
       };
     }
 
+    const fieldCatalog = Array.isArray(body.fieldCatalog) ? body.fieldCatalog : [];
+    const catalogById = new Map(fieldCatalog.map((entry) => [entry.id, entry]));
+    const promotedGroupIds = groupedFillableIds(body.groupedStructures);
     const blocks = body.blocks
       .map(sanitizeBlock)
+      .map((block) => {
+        if (block.text.trim()) return block;
+        const catalogEntry = catalogById.get(block.id);
+        const promoted = PROMOTED_MAPPING_ROLES.has(String(catalogEntry?.role || "")) ||
+          hasFillableGeometry(catalogEntry) ||
+          promotedGroupIds.has(block.id);
+        if (!promoted) return block;
+        return {
+          ...block,
+          text: String(catalogEntry?.semanticLabel || catalogEntry?.text || `Field ${block.id}`).trim(),
+        };
+      })
       .filter((block) => block.text.trim().length > 0);
 
     if (blocks.length === 0) {
@@ -1494,45 +1588,101 @@ export async function mapFields(
     const layoutLmEvaluation = await layoutLmByBlockPromise;
     const layoutLmByBlock = layoutLmEvaluation.byBlockId;
 
-    const mappings = await mapBlocksWithAcord(blocks, {
-      context: body.context,
-      deterministic: body.deterministic === true,
-      calibrationProfile: body.calibrationProfile,
-      familyId: body.familyId,
-      semanticMemorySnapshot: body.semanticMemorySnapshot,
-      semanticMemoryDecisions: body.semanticMemoryDecisions,
-      layoutLmByBlock,
-      layoutLmPrimaryClassifier: body.layoutLmPrimaryClassifier,
-      wave5GeometryEnabled: body.wave5GeometryEnabled,
-      wave5CategoryModeEnabled: body.wave5CategoryModeEnabled,
-      wave5ReflowEnabled: body.wave5ReflowEnabled,
-      wave5TuningProfile: body.wave5TuningProfile,
+    const mappings = fieldCatalog.length > 0
+      ? blocks.map((block): FieldMapping => ({
+          blockId: block.id,
+          page: block.page,
+          text: block.text,
+          boundingBox: block.boundingBox,
+          suggestions: [],
+        }))
+      : await mapBlocksWithAcord(blocks, {
+          context: body.context,
+          deterministic: body.deterministic === true,
+          calibrationProfile: body.calibrationProfile,
+          familyId: body.familyId,
+          semanticMemorySnapshot: body.semanticMemorySnapshot,
+          semanticMemoryDecisions: body.semanticMemoryDecisions,
+          layoutLmByBlock,
+          layoutLmPrimaryClassifier: body.layoutLmPrimaryClassifier,
+          wave5GeometryEnabled: body.wave5GeometryEnabled,
+          wave5CategoryModeEnabled: body.wave5CategoryModeEnabled,
+          wave5ReflowEnabled: body.wave5ReflowEnabled,
+          wave5TuningProfile: body.wave5TuningProfile,
+        });
+    const mappingByBlockId = new Map(mappings.map((mapping) => [mapping.blockId, mapping]));
+    const completeMappings: FieldMapping[] = blocks.map((block) =>
+      mappingByBlockId.get(block.id) ?? {
+        blockId: block.id,
+        page: block.page,
+        text: block.text,
+        boundingBox: block.boundingBox,
+        suggestions: [],
+      },
+    );
+    const promotedSuggestionCache = new Map<string, FieldMapping["suggestions"]>();
+    const ontologyCompleteMappings = completeMappings.map((mapping) => {
+      const catalogEntry = catalogById.get(mapping.blockId);
+      const suggestions = promotedDictionarySuggestions(
+        mapping,
+        catalogEntry,
+        promotedGroupIds.has(mapping.blockId),
+        promotedSuggestionCache,
+      );
+      return suggestions === mapping.suggestions
+        ? mapping
+        : { ...mapping, suggestions, topCandidate: suggestions[0] };
     });
     const reducerSnapshot = getLastReducerDebugSnapshot();
     await writeReducerArtifacts({
       documentId: body.documentId,
       totalBlocks: blocks.length,
-      mappingsCount: mappings.length,
+      mappingsCount: ontologyCompleteMappings.length,
       reducerSnapshot,
     });
     await writeUsabilityArtifacts({
       documentId: body.documentId,
       totalBlocks: blocks.length,
-      mappings,
+      mappings: ontologyCompleteMappings,
     });
 
-    const mappingsWithLayoutLm = mappings.map((mapping) => ({
-      ...mapping,
-      // Evaluation-only enrichment: no candidate scores or selected mapping are changed.
-      layoutlmEvaluation: layoutLmByBlock[mapping.blockId],
-    }));
+    const mappingsWithLayoutLm = ontologyCompleteMappings.map((mapping) => {
+      const catalogEntry = catalogById.get(mapping.blockId);
+      return {
+        ...mapping,
+        semanticRole: catalogEntry?.role,
+        semanticLabel: catalogEntry?.semanticLabel || catalogEntry?.text,
+        semanticValueRegion: catalogEntry?.semanticValueRegion,
+        groupId: catalogEntry?.groupId,
+        tableId: catalogEntry?.tableId,
+        rowIndex: catalogEntry?.rowIndex,
+        columnIndex: catalogEntry?.columnIndex,
+        layoutlmEvaluation: layoutLmByBlock[mapping.blockId],
+      };
+    });
+    const mappedFields = mappingsWithLayoutLm.filter((mapping) => {
+      const catalogEntry = catalogById.get(mapping.blockId);
+      return PROMOTED_MAPPING_ROLES.has(String(catalogEntry?.role || "")) ||
+        hasFillableGeometry(catalogEntry) ||
+        promotedGroupIds.has(mapping.blockId);
+    });
 
     return {
       status: 200,
       jsonBody: {
         documentId: body.documentId,
+        contractVersion: "wave9.hybrid.v1",
         mappings: mappingsWithLayoutLm,
-        decisionGraph: createMappingDecisionGraph(mappings, body.decisionGraph),
+        mappedFields,
+        fieldCatalog,
+        groupedStructures: body.groupedStructures ?? {
+          labelInputPairs: [],
+          tables: [],
+          questionAnswerPairs: [],
+          checkboxGroups: [],
+        },
+        bboxNormalization: body.bboxNormalization,
+        decisionGraph: createMappingDecisionGraph(ontologyCompleteMappings, body.decisionGraph),
         layoutlmDiagnostics: layoutLmEvaluation.diagnostics,
         ontologyAlignment: getDefaultOntologyMetadata(),
       },

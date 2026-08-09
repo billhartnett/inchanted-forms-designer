@@ -6,7 +6,7 @@ import { buildVersionPayload } from "./health/version";
 import { incrementMetric, logStructuredEvent, observeLatency } from "./services/observability";
 
 type RouteRegistrar = (router: Router) => void;
-const WAVE8_CONTRACT_VERSION = "wave8.v1";
+const WAVE9_CONTRACT_VERSION = "wave9.hybrid.v1";
 
 function contractEnvelope(path: string, status: number, payload: unknown) {
   const ok = status < 400;
@@ -31,7 +31,7 @@ function contractEnvelope(path: string, status: number, payload: unknown) {
           details: base.details ?? null,
         },
     contract: {
-      version: WAVE8_CONTRACT_VERSION,
+      version: WAVE9_CONTRACT_VERSION,
       path,
       status,
       ok,
@@ -39,13 +39,13 @@ function contractEnvelope(path: string, status: number, payload: unknown) {
     },
     meta: {
       ...(typeof base.meta === "object" && base.meta ? (base.meta as Record<string, unknown>) : {}),
-      contractVersion: WAVE8_CONTRACT_VERSION,
+      contractVersion: WAVE9_CONTRACT_VERSION,
     },
   };
 }
 
 function sendContractJson(response: Response, request: Request, status: number, payload: unknown): void {
-  response.setHeader("x-wave-contract-version", WAVE8_CONTRACT_VERSION);
+  response.setHeader("x-wave-contract-version", WAVE9_CONTRACT_VERSION);
   response.setHeader("x-wave-contract-stable", "true");
   response.status(status).json(contractEnvelope(request.path, status, payload));
 }

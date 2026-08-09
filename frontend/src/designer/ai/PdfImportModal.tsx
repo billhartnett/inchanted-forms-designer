@@ -1,8 +1,6 @@
 import { pdfToImages } from "../../utils/pdfToImages";
 import { useState, type ChangeEvent } from "react";
 import type { AcordLabelCandidate } from "../../../../shared/src/acord/acordTypes";
-import type { AcordDocument, ApplyGatedFieldsResult } from "../../../../shared/src/acord/acord-builders";
-import type { DocumentSemanticProfile } from "../../../../shared/src/acord/acord-doc-profile";
 import type {
   BoundingBox,
   ExtractionArtifacts,
@@ -21,7 +19,7 @@ import { ExtractionViewer } from "../../extraction";
 import { useExtractionStore } from "../../state";
 import { useMappingStore } from "../../state/mappingStore";
 import {
-  runExtractText,
+  runHybridExtraction,
   runMappingFlow,
 } from "../../api/wave9Integration";
 import { useDesignerStore } from "../state/useDesignerStore";
@@ -38,26 +36,65 @@ type PdfImportModalProps = {
   mode?: "import" | "map-only";
 };
 
-type ExtractTextResponse = Pick<ExtractionResult, "pages"> & { raw?: unknown };
+type HybridCatalogRole =
+  | "input"
+  | "business"
+  | "contact"
+  | "producer"
+  | "agency"
+  | "applicant"
+  | "company"
+  | "underwriter"
+  | "address"
+  | "email"
+  | "phone"
+  | "website"
+  | "checkbox"
+  | "select"
+  | "table-cell"
+  | "value-region"
+  | "row_label"
+  | "column_header"
+  | "question"
+  | "label"
+  | "header"
+  | "title"
+  | "footer"
+  | "description";
 
-type MapFieldsResponse = {
-  mappings?: FieldMapping[];
-  ontologyGating?: {
-    totalPredictions: number;
-    acceptedPredictions: number;
-    rejectedPredictions: number;
-    blocksWithNoAcceptedPredictions: number;
-    routedBlockCount: number;
-    routedClusters: Record<string, number>;
-  };
-  routedClusters?: Record<string, number>;
-  ontologyDocument?: AcordDocument;
-  ontologyDocumentApplyStats?: Pick<ApplyGatedFieldsResult, "appliedCount" | "skippedCount">;
-  ontologyBuilderDiagnostics?: ApplyGatedFieldsResult["builderDiagnostics"];
-  documentSemanticProfile?: DocumentSemanticProfile;
+type HybridCatalogEntry = {
+  id: string;
+  page: number;
+  role: HybridCatalogRole;
+  valueType: string;
+  text: string;
+  boundingBox: BoundingBox;
+  semanticValueRegion?: BoundingBox;
+  semanticLabel?: string;
+  groupId?: string;
+  tableId?: string;
+  rowIndex?: number;
+  columnIndex?: number;
 };
 
-type MapFieldMapping = NonNullable<MapFieldsResponse["mappings"]>[number];
+type ExtractDocumentResponse = Pick<ExtractionResult, "pages"> & {
+  documentId?: string;
+  blocks?: ExtractedBlock[];
+  fieldCatalog?: HybridCatalogEntry[];
+  groupedStructures?: Record<string, unknown>;
+  bboxNormalization?: Record<string, unknown>;
+  pageDimensions?: Array<{ page: number; width: number; height: number }>;
+};
+
+type HybridMappingResponse = {
+  mappings?: FieldMapping[];
+  mappedFields?: FieldMapping[];
+  fieldCatalog?: HybridCatalogEntry[];
+  groupedStructures?: Record<string, unknown>;
+  bboxNormalization?: Record<string, unknown>;
+};
+
+type MapFieldMapping = FieldMapping;
 
 type DraftMappedField = {
   blockId: string;
@@ -70,6 +107,7 @@ type DraftMappedField = {
   height: number;
   accepted: boolean;
   chosen?: AcordLabelCandidate;
+  semanticRole?: HybridCatalogRole;
   /** Typed field shape built from buildTypedFieldPreview. Used in applyMappedFields. */
   fieldPreview?: Field;
 };
@@ -117,7 +155,7 @@ type Wave8SuppressionMetadata = {
   nonField?: boolean;
   headerBlock?: boolean;
 };
-type Wave8FieldMetadata = {
+type HybridFieldMetadata = {
   blockId: string;
   blockGeometry: BoundingBox;
   categoryMode?: string;
@@ -141,6 +179,10 @@ type Wave8FieldMetadata = {
   };
   groupKey: string;
   groupLabel: string;
+  semanticRole?: HybridCatalogRole;
+  tableId?: string;
+  rowIndex?: number;
+  columnIndex?: number;
 };
 
 type AutoMapSummary = {
@@ -153,69 +195,6 @@ type AutoMapSummary = {
   keptMappings: number;
   filteredMappings: number;
 };
-
-function toPointArray(
-  polygon:
-    | Array<number>
-    | Array<{
-        x?: number;
-        y?: number;
-      }>
-    | undefined,
-): Array<{ x: number; y: number }> {
-  if (!Array.isArray(polygon) || polygon.length === 0) {
-    return [];
-  }
-
-  if (typeof polygon[0] === "number") {
-    const numeric = polygon as number[];
-    const points: Array<{ x: number; y: number }> = [];
-    for (let i = 0; i + 1 < numeric.length; i += 2) {
-      points.push({
-        x: Number(numeric[i]) || 0,
-        y: Number(numeric[i + 1]) || 0,
-      });
-    }
-    return points;
-  }
-
-  return (polygon as Array<{ x?: number; y?: number }>).map((point) => ({
-    x: Number(point?.x) || 0,
-    y: Number(point?.y) || 0,
-  }));
-}
-
-function boundsFromPolygon(
-  polygon:
-    | Array<number>
-    | Array<{
-        x?: number;
-        y?: number;
-      }>
-    | undefined,
-  scaleX: number,
-  scaleY: number,
-) {
-  const points = toPointArray(polygon);
-  if (points.length === 0) {
-    return { x: 32, y: 32, width: 1, height: 1 };
-  }
-
-  const xs = points.map((p) => p.x * scaleX);
-  const ys = points.map((p) => p.y * scaleY);
-
-  const minX = Math.min(...xs);
-  const maxX = Math.max(...xs);
-  const minY = Math.min(...ys);
-  const maxY = Math.max(...ys);
-
-  return {
-    x: Math.max(0, minX),
-    y: Math.max(0, minY),
-    width: Math.max(1, maxX - minX),
-    height: Math.max(1, maxY - minY),
-  };
-}
 
 function hasAlphabetic(text: string) {
   return /[a-z]/i.test(text);
@@ -359,59 +338,6 @@ function blockPriority(block: ExtractedBlock): number {
   return 10;
 }
 
-function getRejectionReason(
-  block: ExtractedBlock,
-  _pageSize?: { width: number; height: number },
-): string | null {
-  const text = block.text.trim();
-
-  // Wave-8 backend performs semantic gating. Keep OCR pre-filter minimal
-  // so we do not suppress valid labels, checkboxes, or identity blocks.
-  if (text.length < 1) return "text_too_short";
-
-  return null;
-}
-
-function isLikelyFormHeaderLine(text: string): boolean {
-  const normalized = normalizeOcrText(text);
-  if (!normalized) return false;
-
-  if (
-    /commercial insurance application|applicant information section|acord/.test(
-      normalized,
-    )
-  ) {
-    return true;
-  }
-
-  const tokens = normalized.split(" ").filter(Boolean);
-  const upperOnly = text
-    .replace(/[^A-Za-z]/g, "")
-    .split("")
-    .every((char) => char === char.toUpperCase());
-
-  return tokens.length >= 4 && upperOnly && !hasFieldCueToken(text);
-}
-
-function isWave8LikelyHeaderOrNonField(text: string): boolean {
-  const normalized = normalizeOcrText(text);
-  if (!normalized) return false;
-
-  if (
-    /commercial insurance application|supplemental application|acord|page \d+ of \d+|agent countersignature/.test(
-      normalized,
-    )
-  ) {
-    return true;
-  }
-
-  if (isLikelyHeaderLogoText(text) || isLikelySectionTitle(text)) {
-    return !hasFieldCueToken(text);
-  }
-
-  return false;
-}
-
 function hasCheckboxShapeCue(text: string): boolean {
   return /\u2610|\u2611|\u2612|\[\s?\]|\(\s?\)|\byes\s*\/\s*no\b|\bno\s*\/\s*yes\b|selection_mark_(selected|unselected)/i.test(
     text,
@@ -481,63 +407,6 @@ function toMetadataSource(source: AcordLabelCandidate["source"]) {
   }
 
   return source === "ai" ? "ai" : "ocr";
-}
-
-function shouldAcceptMapping(mapping: DraftMappedField): boolean {
-  const chosen = mapping.chosen;
-  if (!chosen) {
-    return mapping.blockType === "kvp" || mapping.blockType === "checkbox";
-  }
-
-  if (chosen.confidenceScore < 0.45) {
-    return false;
-  }
-
-  if (chosen.source === "heuristic" && chosen.confidenceScore < 0.5) {
-    return false;
-  }
-
-  return (
-    Boolean(chosen.acordCode) ||
-    mapping.blockType === "kvp" ||
-    mapping.blockType === "checkbox"
-  );
-}
-
-function shouldRenderWave8Mapping(
-  mapping: MapFieldMapping,
-  sourceBlock: ExtractedBlock,
-): boolean {
-  const wave8 = readWave8Metadata(mapping, sourceBlock);
-  const forceVisible = Boolean(
-    wave8.resolverFlags?.contractorsInsuredNameResolverApplied ||
-      (wave8.anchorPromotions || []).length > 0,
-  );
-
-  if (
-    (wave8.suppressionMetadata?.suppressed ||
-      wave8.suppressionMetadata?.nonField ||
-      wave8.suppressionMetadata?.headerBlock) &&
-    !forceVisible
-  ) {
-    return false;
-  }
-
-  const sem = Number(wave8.gatingMetadata?.semanticConsistency || 0);
-  const dict = Number(wave8.gatingMetadata?.dictionaryConsistency || 0);
-  const cat = Number(wave8.gatingMetadata?.categoryConsistency || 0);
-  const sup = Number(wave8.gatingMetadata?.supervisionBoost || 0);
-  const conf = Number(wave8.confidenceScores?.confidenceScore || 0);
-  const minConfidence =
-    Number((mapping as any)?.mappingDiagnostics?.wave8MinConfidence || 0) ||
-    Number((mapping as any)?.gatingMetadata?.minConfidence || 0) ||
-    0;
-
-  if (!forceVisible && conf < minConfidence && sem <= 0 && dict <= 0 && cat <= 0 && sup <= 0) {
-    return false;
-  }
-
-  return true;
 }
 
 function buildLabelDetections(
@@ -617,7 +486,7 @@ function toBoundingBox(value: unknown, fallback: BoundingBox): BoundingBox {
   };
 }
 
-function deriveWave8GroupLabel(semanticLabel: string, rawText: string): string {
+function deriveHybridGroupLabel(semanticLabel: string, rawText: string): string {
   const text = normalizeOcrText(`${semanticLabel} ${rawText}`);
   if (/namedinsured|insured|identity|person_name/.test(text)) return "identity";
   if (/producer|agent|agency/.test(text)) return "agent";
@@ -626,10 +495,10 @@ function deriveWave8GroupLabel(semanticLabel: string, rawText: string): string {
   return "general";
 }
 
-function readWave8Metadata(
+function readHybridMappingMetadata(
   mapping: MapFieldMapping,
   sourceBlock: ExtractedBlock,
-): Wave8FieldMetadata {
+): HybridFieldMetadata {
   const diag = ((mapping as any).mappingDiagnostics || {}) as Record<string, unknown>;
   const wave9Decision = (mapping as any).wave9Decision || undefined;
   const chosen =
@@ -822,10 +691,11 @@ function readWave8Metadata(
   const categoryMode =
     String((mapping as any).categoryMode || (chosen as any)?.categoryMode || "").trim() ||
     undefined;
-  const groupLabel = deriveWave8GroupLabel(semanticLabel, sourceBlock.text || "");
+  const groupLabel = deriveHybridGroupLabel(semanticLabel, sourceBlock.text || "");
   const groupKey =
+    String((mapping as any).groupId || "").trim() ||
     `${mapping.blockId}::${Math.round(blockGeometry.x)}:${Math.round(blockGeometry.y)}:` +
-    `${categoryMode || "none"}:${groupLabel}`;
+      `${categoryMode || "none"}:${groupLabel}`;
 
   return {
     blockId: mapping.blockId,
@@ -854,6 +724,10 @@ function readWave8Metadata(
     },
     groupKey,
     groupLabel,
+    semanticRole: (mapping as any).semanticRole,
+    tableId: (mapping as any).tableId,
+    rowIndex: (mapping as any).rowIndex,
+    columnIndex: (mapping as any).columnIndex,
   };
 }
 
@@ -864,33 +738,27 @@ function buildTypedFieldPreview(
   const wave9Decision = (mapping as any).wave9Decision || undefined;
   const chosen =
     wave9Decision || mapping.chosen || (mapping as any).topCandidate || mapping.suggestions?.[0];
-  const wave8 = readWave8Metadata(mapping, sourceBlock);
+  const hybrid = readHybridMappingMetadata(mapping, sourceBlock);
   const shouldForceCheckbox =
-    (wave8.selectionMarkAssociations?.length || 0) > 0 ||
-    (wave8.checkboxCandidates?.length || 0) > 0 ||
+    (hybrid.selectionMarkAssociations?.length || 0) > 0 ||
+    (hybrid.checkboxCandidates?.length || 0) > 0 ||
     hasCheckboxShapeCue(`${String(sourceBlock.text || "")} ${String(mapping.text || "")}`);
   const fieldType = shouldForceCheckbox
     ? "checkbox"
-    : (wave8.fieldType as SemanticFieldType | undefined) ||
+    : (hybrid.fieldType as SemanticFieldType | undefined) ||
       (wave9Decision?.fieldType as SemanticFieldType | undefined) ||
       ((mapping as any).wave9FieldType as SemanticFieldType | undefined) ||
       ((mapping as any).fieldType as SemanticFieldType | undefined) ||
       inferFieldType(sourceBlock, chosen);
-  const semanticLabel = wave8.semanticLabel || String(mapping.text || "").trim() || String(chosen?.label || "").trim();
+  const semanticLabel = hybrid.semanticLabel || String(mapping.text || "").trim() || String(chosen?.label || "").trim();
   const metadataSource: FieldMetadataSource = chosen
     ? toMetadataSource(chosen.source)
     : "ocr";
-  const geometry = wave8.blockGeometry || mapping.boundingBox;
+  const geometry = hybrid.blockGeometry || mapping.boundingBox;
   const rawX = Number(geometry.x) || 0;
   const rawY = Number(geometry.y) || 0;
   const rawW = Math.max(8, Number(geometry.width) || 80);
   const rawH = Math.max(8, Number(geometry.height) || 18);
-  const pairedGeometry = wave8.pairedLabel?.boundingBox;
-
-  // OCR boxes usually describe LABEL text, not the writable area.
-  // Anchor input controls to the right of label text and normalize size.
-  const anchorX = (pairedGeometry ? pairedGeometry.x + pairedGeometry.width : rawX) + Math.min(Math.max(12, rawW + 10), 240);
-  const anchorY = rawY - 1;
   
   // Extract ACORD candidates from suggestions
   const acordCandidates = mapping.suggestions?.map((sugg) => ({
@@ -904,13 +772,13 @@ function buildTypedFieldPreview(
   const base = {
     id: mapping.blockId,
     pageIndex: Math.max(0, mapping.page - 1),
-    x: anchorX,
-    y: anchorY,
-    width: Math.min(260, Math.max(80, rawW * 1.15)),
-    height: Math.min(30, Math.max(20, rawH * 1.15)),
+    x: rawX,
+    y: rawY,
+    width: rawW,
+    height: rawH,
     rotation: 0,
     opacity: 1,
-    groupId: wave8.groupKey || null,
+    groupId: hybrid.groupKey || null,
     metadata: {
       acordCode: chosen?.acordCode ?? "",
       acordLabel: chosen?.label ?? semanticLabel,
@@ -926,16 +794,15 @@ function buildTypedFieldPreview(
       wave9ConfidenceCalibration: (mapping as any).wave9ConfidenceCalibration,
       source: metadataSource,
       extractionBlockId: mapping.blockId,
-      // Preserve legacy top-level metadata while storing full Wave-8 contract.
       semanticLabel,
-      categoryMode: wave8.categoryMode,
+      categoryMode: hybrid.categoryMode,
       acordCandidates,
-      wave8,
+      wave9Hybrid: hybrid,
       checkboxState: sourceBlock.type === "checkbox" ? {
         isCheckbox: true,
         checked:
-          Boolean(wave8.selectionMarkAssociations?.some((item: Wave8SelectionMarkAssociation) => item.checked)) ||
-          Boolean(wave8.checkboxCandidates?.some((item: Wave8CheckboxCandidate) => item.checked)),
+          Boolean(hybrid.selectionMarkAssociations?.some((item: Wave8SelectionMarkAssociation) => item.checked)) ||
+          Boolean(hybrid.checkboxCandidates?.some((item: Wave8CheckboxCandidate) => item.checked)),
         pattern: "\\u2610|\\u2611|\\u2612|\\[\\s*\\]",
       } : undefined,
       signatureState: sourceBlock.type === "signature" ? {
@@ -955,8 +822,6 @@ function buildTypedFieldPreview(
     return {
       ...base,
       type: "numeric",
-      width: Math.min(140, Math.max(90, rawW * 0.95)),
-      height: 24,
       stroke: "#1e293b",
       strokeWidth: 1,
       fill: "#ffffff",
@@ -972,8 +837,6 @@ function buildTypedFieldPreview(
     return {
       ...base,
       type: "date",
-      width: Math.min(170, Math.max(120, rawW * 1.1)),
-      height: 24,
       stroke: "#1e293b",
       strokeWidth: 1,
       fill: "#ffffff",
@@ -984,8 +847,8 @@ function buildTypedFieldPreview(
   }
 
   if (fieldType === "checkbox") {
-    const checkboxAssoc = wave8.selectionMarkAssociations?.[0];
-    const checkboxCandidate = wave8.checkboxCandidates?.[0];
+    const checkboxAssoc = hybrid.selectionMarkAssociations?.[0];
+    const checkboxCandidate = hybrid.checkboxCandidates?.[0];
     const checkboxGeometry = checkboxAssoc?.boundingBox || checkboxCandidate?.boundingBox;
     const checkedConfidence =
       checkboxAssoc?.confidence ?? checkboxCandidate?.confidence ?? 0;
@@ -995,15 +858,15 @@ function buildTypedFieldPreview(
     return {
       ...base,
       type: "checkbox",
-      x: checkboxGeometry ? checkboxGeometry.x : rawX + Math.min(Math.max(8, rawW + 6), 120),
+      x: checkboxGeometry ? checkboxGeometry.x : rawX,
       y: checkboxGeometry ? checkboxGeometry.y : rawY,
-      width: 20,
-      height: 20,
+      width: checkboxGeometry ? checkboxGeometry.width : rawW,
+      height: checkboxGeometry ? checkboxGeometry.height : rawH,
       stroke: "#1e293b",
       strokeWidth: 1,
       fill: "#ffffff",
       checked: checkedState,
-      label: wave8.pairedLabel?.text || checkboxAssoc?.labelText || mapping.text,
+      label: hybrid.pairedLabel?.text || checkboxAssoc?.labelText || mapping.text,
       metadata: {
         ...base.metadata,
         checkboxState: {
@@ -1018,10 +881,8 @@ function buildTypedFieldPreview(
     return {
       ...base,
       type: "radio",
-      x: rawX + Math.min(Math.max(8, rawW + 6), 120),
+      x: rawX,
       y: rawY,
-      width: 20,
-      height: 20,
       stroke: "#1e293b",
       strokeWidth: 1,
       fill: "#ffffff",
@@ -1035,8 +896,6 @@ function buildTypedFieldPreview(
     return {
       ...base,
       type: "signature",
-      width: Math.min(320, Math.max(180, rawW * 1.6)),
-      height: Math.min(80, Math.max(42, rawH * 1.8)),
       stroke: "#1e293b",
       strokeWidth: 1,
       fill: "#ffffff",
@@ -1056,8 +915,6 @@ function buildTypedFieldPreview(
   return {
     ...base,
     type: "text",
-    width: Math.min(240, Math.max(110, rawW * 1.2)),
-    height: 24,
     text: mapping.text,
     fontSize: 14,
     fontFamily: "Geist Variable",
@@ -1082,117 +939,14 @@ type AutoMappingResult = {
   mappings: FieldMapping[];
 };
 
-function normalizeClassificationText(value: string): string {
-  return value.replace(/\s+/g, " ").trim().toLowerCase();
-}
-
-function classifyArtifact(field: Field): ArtifactClassification {
-  const metadataText = normalizeClassificationText(
-    [
-      field.metadata?.semanticLabel || "",
-      field.metadata?.acordLabel || "",
-      field.metadata?.acordDescription || "",
-      field.metadata?.categoryMode || "",
-    ].join(" "),
-  );
-  const rawText = normalizeClassificationText(
-    [
-      "text" in field ? field.text || "" : "",
-      "label" in field ? field.label || "" : "",
-      "placeholder" in field ? field.placeholder || "" : "",
-    ].join(" "),
-  );
-  const combined = normalizeClassificationText(`${metadataText} ${rawText}`);
-  const tokens = combined.split(" ").filter(Boolean);
-  const confidence = Number(field.metadata?.confidenceScore || 0);
-  const hasAcordSignal = Boolean(
-    field.metadata?.acordCode?.trim() ||
-      field.metadata?.acordLabel?.trim() ||
-      (field.metadata?.acordCandidates || []).length > 0 ||
-      field.metadata?.semanticLabel?.trim() ||
-      field.metadata?.categoryMode?.trim(),
-  );
-
-  const labelPatterns = [
-    /:\s*$/,
-    /\b(applicant|insured|producer|broker|agent|policy|coverage|carrier|company|address|phone|email|name|date)\b/i,
-  ];
-  const valuePatterns = [
-    /^\s*$/,
-    /^\s*[-_]{2,}\s*$/,
-    /\b\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}\b/,
-    /\b\d+(?:\.\d+)?\b/,
-  ];
-  const nonFieldPatterns = [
-    /\b(logo|copyright|all rights reserved|confidential|proprietary|disclaimer|sample|specimen)\b/i,
-    /\b(instructions?|please note|complete this section|for office use only|do not write|explain|describe|list all)\b/i,
-    /\b(section\s+\d+|schedule\s+[a-z0-9]+|page\s+\d+|page\s+title|table of contents)\b/i,
-    /\b(markel|insurance company|subcontractors|general contractor\/artisan contractor|supplemental forms?)\b/i,
-    /\b(do you\b|are you\b|have you\b|yes\s*\/\s*no|no\s*\/\s*yes)\b/i,
-  ];
-
-  const looksLikeLabel =
-    labelPatterns.some((pattern) => pattern.test(field.type === "text" ? field.text || "" : field.label || "")) ||
-    hasAcordSignal ||
-    confidence > 0.2 ||
-    Boolean(field.metadata?.artifactClassification === "field_label");
-
-  const looksLikeValue =
-    valuePatterns.some((pattern) => pattern.test(field.type === "text" ? field.text || "" : field.value?.toString() || field.placeholder || field.label || "")) ||
-    field.type === "numeric" ||
-    field.type === "date" ||
-    field.type === "checkbox" ||
-    field.type === "radio" ||
-    field.type === "dropdown" ||
-    field.type === "signature";
-
-  if (nonFieldPatterns.some((pattern) => pattern.test(combined))) {
-    return "non_field_artifact";
-  }
-
-  if (looksLikeLabel && !looksLikeValue) {
-    return "field_label";
-  }
-
-  if (looksLikeValue || confidence > 0.2 || hasAcordSignal) {
-    return "field_value";
-  }
-
-  return "non_field_artifact";
-}
-
 function classifyField(field: Field): Field {
   return {
     ...field,
     metadata: {
       ...(field.metadata || {}),
-      artifactClassification: classifyArtifact(field),
+      artifactClassification: "field_value",
     },
   };
-}
-
-function shouldPersistMappedField(field: Field): boolean {
-  const classification = field.metadata?.artifactClassification;
-  if (classification === "non_field_artifact") {
-    return false;
-  }
-
-  const rawText = normalizeClassificationText(
-    [
-      "text" in field ? field.text || "" : "",
-      "label" in field ? field.label || "" : "",
-      "placeholder" in field ? field.placeholder || "" : "",
-      field.metadata?.semanticLabel || "",
-      field.metadata?.acordLabel || "",
-      field.metadata?.categoryMode || "",
-    ].join(" "),
-  );
-
-  if (classification === "field_label" && /^(yes|no|n\/a|na|y|n)$/.test(rawText)) {
-    return false;
-  }
-
-  return true;
 }
 
 export default function PdfImportModal({
@@ -1213,9 +967,6 @@ export default function PdfImportModal({
   const initializeMappings = useMappingStore((s) => s.initializeMappings);
   const linkFieldToMapping = useMappingStore((s) => s.linkFieldToMapping);
   const clearMappingReview = useMappingStore((s) => s.clear);
-  const setOntologyContractPayload = useMappingStore((s) => s.setOntologyContractPayload);
-  const calibrationProfile = useMappingStore((s) => s.calibrationProfile);
-  const formFamily = useMappingStore((s) => s.formFamily);
   const [isAutoMapping, setIsAutoMapping] = useState(true);
   const [isReviewMode, setIsReviewMode] = useState(false);
   const [maxMappedFields, setMaxMappedFields] = useState(250);
@@ -1276,60 +1027,35 @@ export default function PdfImportModal({
     limit: number,
   ): Promise<AutoMappingResult> {
     const imageSizes = await Promise.all(pageImages.map(readImageSize));
-    const extractPayload = (await runExtractText(file)) as ExtractTextResponse;
+    const extractPayload = (await runHybridExtraction(file)) as ExtractDocumentResponse;
 
     const pages: PageExtraction[] = Array.isArray(extractPayload.pages)
       ? extractPayload.pages
       : [];
-    const pageSizeByPage = new Map<number, { width: number; height: number }>();
-    const blocks: ExtractedBlock[] = [];
-
-    for (const page of pages) {
-      const pageIndex = Math.max(0, (page.pageNumber || 1) - 1);
-      const imageSize = imageSizes[pageIndex];
-      const sourcePageWidth = Number(page.width) || imageSize?.width || 1;
-      const sourcePageHeight = Number(page.height) || imageSize?.height || 1;
-      pageSizeByPage.set(pageIndex + 1, {
-        width: imageSize?.width || sourcePageWidth,
-        height: imageSize?.height || sourcePageHeight,
+    const scaleByPage = new Map<number, { x: number; y: number }>();
+    for (const dimension of extractPayload.pageDimensions || []) {
+      const imageSize = imageSizes[Math.max(0, dimension.page - 1)];
+      const sourceWidth = Number(dimension.width) || imageSize?.width || 1;
+      const sourceHeight = Number(dimension.height) || imageSize?.height || 1;
+      scaleByPage.set(dimension.page, {
+        x: imageSize?.width ? imageSize.width / sourceWidth : 1,
+        y: imageSize?.height ? imageSize.height / sourceHeight : 1,
       });
-      const scaleX = imageSize?.width ? imageSize.width / sourcePageWidth : 1;
-      const scaleY = imageSize?.height
-        ? imageSize.height / sourcePageHeight
-        : 1;
-
-      const lines = Array.isArray(page.lines) ? page.lines : [];
-      for (let i = 0; i < lines.length; i += 1) {
-        const line = lines[i];
-        const text = (line.content || "").trim();
-        if (!text) continue;
-
-        blocks.push({
-          id: `p${pageIndex + 1}-l${i + 1}`,
-          page: pageIndex + 1,
-          type: inferBlockType(text),
-          text,
-          boundingBox:
-            line.boundingBox &&
-            Number.isFinite(line.boundingBox.x) &&
-            Number.isFinite(line.boundingBox.y) &&
-            Number.isFinite(line.boundingBox.width) &&
-            Number.isFinite(line.boundingBox.height)
-              ? {
-                  x: line.boundingBox.x * scaleX,
-                  y: line.boundingBox.y * scaleY,
-                  width: Math.max(1, line.boundingBox.width * scaleX),
-                  height: Math.max(1, line.boundingBox.height * scaleY),
-                }
-              : boundsFromPolygon(line.polygon, scaleX, scaleY),
-          confidence:
-            typeof line.confidence === "number" &&
-            Number.isFinite(line.confidence)
-              ? Math.max(0, Math.min(1, line.confidence))
-              : 0.9,
-        });
-      }
     }
+    const scaleBox = (box: BoundingBox, page: number): BoundingBox => {
+      const scale = scaleByPage.get(page) || { x: 1, y: 1 };
+      return {
+        x: box.x * scale.x,
+        y: box.y * scale.y,
+        width: Math.max(1, box.width * scale.x),
+        height: Math.max(1, box.height * scale.y),
+      };
+    };
+    const canonicalBlocks = extractPayload.blocks || [];
+    const blocks: ExtractedBlock[] = canonicalBlocks.map((block) => ({
+      ...block,
+      boundingBox: scaleBox(block.boundingBox, block.page),
+    }));
 
     if (blocks.length === 0) {
       setAutoMapSummary({
@@ -1357,14 +1083,7 @@ export default function PdfImportModal({
     }
 
     const filteredOut: Array<{ id: string; reason: string }> = [];
-    const keptBlocks = blocks.filter((block) => {
-      const reason = getRejectionReason(block, pageSizeByPage.get(block.page));
-      if (reason) {
-        filteredOut.push({ id: block.id, reason });
-        return false;
-      }
-      return true;
-    });
+    const keptBlocks = [...blocks];
 
     keptBlocks.sort((a, b) => blockPriority(b) - blockPriority(a));
 
@@ -1416,34 +1135,38 @@ export default function PdfImportModal({
       };
     }
 
-    // WAVE 8 FIX: Call /api/mapFields with extracted blocks.
-    // Now that we removed the old compatibility check, Wave 8 mappings will flow through
-    // with their full semantic metadata (acordCode, confidenceScore, source attribution).
-    const mappingInputBlocks = keptBlocks;
-
-    const wave8Payload = (await runMappingFlow({
-      documentId: file.name,
+    const mappingInputBlocks = canonicalBlocks;
+    const mappingPayload = (await runMappingFlow({
+      documentId: extractPayload.documentId || file.name,
       sourceDocumentName: file.name,
       lockSourceDocument: true,
       blocks: mappingInputBlocks,
-      context: "PDF import Wave 8 semantic mapping",
-      calibrationProfile,
-      familyId: formFamily?.familyId,
-    })) as MapFieldsResponse;
-
-    setOntologyContractPayload({
-      ontologyGating: wave8Payload.ontologyGating,
-      routedClusters:
-        wave8Payload.routedClusters || wave8Payload.ontologyGating?.routedClusters,
-      ontologyDocument: wave8Payload.ontologyDocument,
-      ontologyDocumentApplyStats: wave8Payload.ontologyDocumentApplyStats,
-      ontologyBuilderDiagnostics: wave8Payload.ontologyBuilderDiagnostics,
-      documentSemanticProfile: wave8Payload.documentSemanticProfile,
+      fieldCatalog: extractPayload.fieldCatalog || [],
+      groupedStructures: extractPayload.groupedStructures || {},
+      bboxNormalization: extractPayload.bboxNormalization || {},
+      pageDimensions: extractPayload.pageDimensions || [],
+      context: "Wave 9 hybrid PDF mapping",
+    })) as HybridMappingResponse;
+    const mappedCatalog = mappingPayload.fieldCatalog || extractPayload.fieldCatalog || [];
+    const catalogById = new Map(mappedCatalog.map((entry) => [entry.id, entry]));
+    const mappings = (mappingPayload.mappings || []).map((mapping) => {
+      const catalog = catalogById.get(mapping.blockId);
+      return {
+        ...mapping,
+        boundingBox: scaleBox(mapping.boundingBox, mapping.page),
+        blockGeometry: scaleBox(mapping.boundingBox, mapping.page),
+        semanticRole: catalog?.role,
+        semanticLabel: catalog?.semanticLabel || catalog?.text || mapping.text,
+        fieldType: catalog?.valueType,
+        groupId: catalog?.groupId,
+        tableId: catalog?.tableId,
+        rowIndex: catalog?.rowIndex,
+        columnIndex: catalog?.columnIndex,
+      } as MapFieldMapping;
     });
-
-    const mappings = Array.isArray(wave8Payload.mappings)
-      ? wave8Payload.mappings
-      : [];
+    const promotedMappingIds = new Set(
+      (mappingPayload.mappedFields || []).map((mapping) => mapping.blockId),
+    );
     
     // DEBUG STEP 1: Log mapFields response in detail
     const mapFieldsDebug = {
@@ -1472,20 +1195,8 @@ export default function PdfImportModal({
     const mappingCandidates = mappings
       .map((mapping) => {
         const sourceBlock = sourceBlockById.get(mapping.blockId);
-        const text = (mapping.text || "").trim();
-        if (!sourceBlock || !text) {
-          return null;
-        }
-
-        const wave8 = readWave8Metadata(mapping, sourceBlock);
-        const forceVisible =
-          Boolean(wave8.resolverFlags?.contractorsInsuredNameResolverApplied) ||
-          Boolean(wave8.anchorPromotions && wave8.anchorPromotions.length > 0);
-        const suppressedByWave8 =
-          Boolean(wave8.suppressionMetadata?.suppressed) ||
-          Boolean(wave8.suppressionMetadata?.nonField) ||
-          Boolean(wave8.suppressionMetadata?.headerBlock);
-        if (suppressedByWave8 && !forceVisible) {
+        const text = (mapping.text || (mapping as any).semanticLabel || "").trim();
+        if (!sourceBlock || (!text && !promotedMappingIds.has(mapping.blockId))) {
           return null;
         }
 
@@ -1504,21 +1215,10 @@ export default function PdfImportModal({
     const rejectionReasons: Record<string, number> = {};
     const topCandidatesPerBlock: Record<string, Array<{ label: string; score: number }>> = {};
     const filterBreakdown = {
-      rejectedByWave8: 0,
+      rejectedByHybridContract: 0,
       passed: 0,
     };
-    const qualityMappings = mappingCandidates.filter(({ mapping, sourceBlock }) => {
-      const accepted = shouldRenderWave8Mapping(mapping, sourceBlock);
-      if (!accepted) {
-        filterBreakdown.rejectedByWave8 += 1;
-        const reason =
-          String((mapping as any)?.gatingMetadata?.thresholdReason || "").trim() ||
-          String((mapping as any)?.suppressionMetadata?.reason || "").trim() ||
-          "wave8_gate_or_suppression";
-        rejectionReasons[reason] = (rejectionReasons[reason] || 0) + 1;
-        return false;
-      }
-
+    const qualityMappings = mappingCandidates.filter(({ mapping }) => {
       if (!topCandidatesPerBlock[mapping.blockId]) {
         topCandidatesPerBlock[mapping.blockId] = [];
       }
@@ -1535,16 +1235,16 @@ export default function PdfImportModal({
       timestamp: new Date().toISOString(),
       debugModeActive: useDiagnosticMode,
       thresholds: {
-        minConfidence: "wave8.gatingMetadata.minConfidence || 0",
-        semanticConsistency: "wave8.gatingMetadata.semanticConsistency",
-        dictionaryConsistency: "wave8.gatingMetadata.dictionaryConsistency",
-        categoryConsistency: "wave8.gatingMetadata.categoryConsistency",
-        supervisionBoost: "wave8.gatingMetadata.supervisionBoost",
+        minConfidence: "mapping.gatingMetadata.minConfidence || 0",
+        semanticConsistency: "mapping.gatingMetadata.semanticConsistency",
+        dictionaryConsistency: "mapping.gatingMetadata.dictionaryConsistency",
+        categoryConsistency: "mapping.gatingMetadata.categoryConsistency",
+        supervisionBoost: "mapping.gatingMetadata.supervisionBoost",
       },
       mappingCandidatesCount: mappingCandidates.length,
-      wave8GateApplied: true,
-      wave8GateResults: filterBreakdown,
-      resultAfterWave8Gate: qualityMappings.length,
+      semanticSuppressionApplied: false,
+      hybridContractResults: filterBreakdown,
+      resultAfterHybridContract: qualityMappings.length,
       samples: qualityMappings.slice(0, 5).map(m => ({
         text: m.mapping.text?.substring(0, 40),
         chosen: m.mapping.chosen ? { label: m.mapping.chosen.label, score: m.mapping.chosen.confidenceScore } : null,
@@ -1602,7 +1302,30 @@ export default function PdfImportModal({
       ...mappingSummary,
     });
 
-    const draftMappings = safeMappings.map((mapping) => {
+    const fillableRoles = new Set<HybridCatalogRole>([
+      "input",
+      "business",
+      "contact",
+      "producer",
+      "agency",
+      "applicant",
+      "company",
+      "underwriter",
+      "address",
+      "email",
+      "phone",
+      "website",
+      "checkbox",
+      "select",
+      "table-cell",
+      "value-region",
+    ]);
+    const draftMappings = safeMappings
+      .filter((mapping) =>
+        promotedMappingIds.has(mapping.blockId) ||
+        fillableRoles.has((mapping as any).semanticRole),
+      )
+      .map((mapping) => {
       const chosen = mapping.chosen || (mapping as any).topCandidate || mapping.suggestions?.[0];
       const sourceBlock = sourceBlockById.get(mapping.blockId);
       const blockType = sourceBlock?.type || "text";
@@ -1619,6 +1342,7 @@ export default function PdfImportModal({
         width: mapping.boundingBox.width,
         height: mapping.boundingBox.height,
         chosen,
+        semanticRole: (mapping as any).semanticRole,
         accepted: false,
         fieldPreview,
       };
@@ -1627,9 +1351,13 @@ export default function PdfImportModal({
         ...draft,
         accepted: true,
       };
-    });
+      });
 
     const fields = safeMappings
+      .filter((mapping) =>
+        promotedMappingIds.has(mapping.blockId) ||
+        fillableRoles.has((mapping as any).semanticRole),
+      )
       .map((mapping) => {
         const sourceBlock = sourceBlockById.get(mapping.blockId);
         return sourceBlock ? buildTypedFieldPreview(mapping, sourceBlock) : null;
@@ -1658,92 +1386,7 @@ export default function PdfImportModal({
         ...(m.fieldPreview as Field),
         id: crypto.randomUUID(),
       }))
-      .map(classifyField)
-      .filter(shouldPersistMappedField);
-
-    // Wave-8 overlap suppression in placement phase: keep resolver/anchor-promoted
-    // fields visible, but avoid stacking by nudging lower-priority overlaps.
-    const placedByPage = new Map<number, Field[]>();
-    const intersectionOverUnion = (a: BoundingBox, b: BoundingBox) => {
-      const x1 = Math.max(a.x, b.x);
-      const y1 = Math.max(a.y, b.y);
-      const x2 = Math.min(a.x + a.width, b.x + b.width);
-      const y2 = Math.min(a.y + a.height, b.y + b.height);
-      const inter = Math.max(0, x2 - x1) * Math.max(0, y2 - y1);
-      if (inter <= 0) return 0;
-      const union = a.width * a.height + b.width * b.height - inter;
-      return union > 0 ? inter / union : 0;
-    };
-
-    for (const field of fieldObjects) {
-      const page = Math.max(0, field.pageIndex ?? 0);
-      const pageFields = placedByPage.get(page) || [];
-      const wave8 = (field.metadata as any)?.wave8;
-      const forceVisible = Boolean(
-        wave8?.resolverFlags?.contractorsInsuredNameResolverApplied ||
-          (wave8?.anchorPromotions || []).length,
-      );
-      const suppression = wave8?.suppressionMetadata;
-      const thresholdIou =
-        typeof suppression?.iou === "number"
-          ? Math.max(0.35, suppression.iou)
-          : 0.45;
-
-      let candidateBox = {
-        x: field.x,
-        y: field.y,
-        width: Math.max(1, field.width),
-        height: Math.max(1, field.height),
-      };
-
-      let overlap = pageFields.some((existing) =>
-        intersectionOverUnion(candidateBox, {
-          x: existing.x,
-          y: existing.y,
-          width: Math.max(1, existing.width),
-          height: Math.max(1, existing.height),
-        }) >= thresholdIou,
-      );
-
-      if (overlap && suppression?.suppressed && !forceVisible) {
-        continue;
-      }
-
-      let nudgeCount = 0;
-      while (overlap && nudgeCount < 10) {
-        if (nudgeCount % 2 === 0) {
-          field.y += 12;
-        } else {
-          field.x += 10;
-        }
-        candidateBox = {
-          x: field.x,
-          y: field.y,
-          width: Math.max(1, field.width),
-          height: Math.max(1, field.height),
-        };
-        overlap = pageFields.some((existing) =>
-          intersectionOverUnion(candidateBox, {
-            x: existing.x,
-            y: existing.y,
-            width: Math.max(1, existing.width),
-            height: Math.max(1, existing.height),
-          }) >= thresholdIou,
-        );
-        nudgeCount += 1;
-      }
-
-      if (overlap && !forceVisible) {
-        const maxY = pageFields.reduce(
-          (current, existing) => Math.max(current, existing.y + Math.max(1, existing.height)),
-          field.y,
-        );
-        field.y = maxY + 12;
-      }
-
-      pageFields.push(field);
-      placedByPage.set(page, pageFields);
-    }
+      .map(classifyField);
 
     // Fall back to a plain text field for any mapping without a typed preview.
     for (const m of mappings) {
@@ -1778,10 +1421,7 @@ export default function PdfImportModal({
           extractionBlockId: m.blockId,
         },
       };
-      const classifiedFallback = classifyField(fallback);
-      if (shouldPersistMappedField(classifiedFallback)) {
-        fieldObjects.push(classifiedFallback);
-      }
+      fieldObjects.push(classifyField(fallback));
     }
 
     // DEBUG STEP 5: Log field object construction
@@ -1925,8 +1565,8 @@ export default function PdfImportModal({
         } catch (mapError) {
           warning =
             mapError instanceof Error
-              ? `OCR extraction failed: ${mapError.message}. Start backend /api/extractText and retry.`
-              : "OCR extraction failed. Start backend /api/extractText and retry.";
+              ? `OCR extraction failed: ${mapError.message}. Check /api/wave9/extraction/hybrid and retry.`
+              : "OCR extraction failed. Check /api/wave9/extraction/hybrid and retry.";
         }
       }
 
