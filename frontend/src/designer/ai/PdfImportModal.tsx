@@ -818,7 +818,7 @@ function buildTypedFieldPreview(
     },
   };
 
-  if (fieldType === "numeric") {
+  if (fieldType === "numeric" || fieldType === "currency" || fieldType === "percentage") {
     return {
       ...base,
       type: "numeric",
@@ -826,10 +826,10 @@ function buildTypedFieldPreview(
       strokeWidth: 1,
       fill: "#ffffff",
       min: 0,
-      max: 100,
-      step: 1,
+      max: fieldType === "currency" ? Number.MAX_SAFE_INTEGER : 100,
+      step: fieldType === "percentage" ? 0.01 : 1,
       value: null,
-      placeholder: "0",
+      placeholder: fieldType === "currency" ? "$0" : fieldType === "percentage" ? "0%" : "0",
     };
   }
 

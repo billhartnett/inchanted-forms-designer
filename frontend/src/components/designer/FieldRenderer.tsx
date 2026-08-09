@@ -23,6 +23,8 @@ export function FieldRenderer({ field, showSemanticLabels = true }: FieldRendere
   const signatureState = metadata?.signatureState;
   const kvpData = metadata?.kvpData;
   const textField = field.type === "text" ? (field as any) : null;
+  const importedVisualHeight = Math.max(18, height);
+  const importedVisualY = (height - importedVisualHeight) / 2;
 
   // Color coding: confidence (main) + categoryMode (secondary)
   let strokeColor = "#64748b"; // default gray
@@ -56,14 +58,29 @@ export function FieldRenderer({ field, showSemanticLabels = true }: FieldRendere
       {/* Field bounding box */}
       <Rect
         x={0}
-        y={0}
+        y={isImportedField ? importedVisualY : 0}
         width={isImportedField ? Math.max(1, width) : Math.max(20, width)}
-        height={isImportedField ? Math.max(1, height) : Math.max(20, height)}
+        height={isImportedField ? importedVisualHeight : Math.max(20, height)}
         fill={fillColor}
         stroke={strokeColor}
         strokeWidth={2}
         cornerRadius={4}
       />
+
+      {isImportedField && showSemanticLabels && resolvedLabel && (
+        <Text
+          x={4}
+          y={importedVisualY + 2}
+          width={Math.max(0, width - 8)}
+          height={Math.max(0, importedVisualHeight - 4)}
+          text={resolvedLabel}
+          fontSize={10}
+          fontFamily="Geist Variable"
+          fill="#334155"
+          verticalAlign="middle"
+          ellipsis
+        />
+      )}
 
       {/* Semantic label overlay (if enabled) */}
       {!isImportedField && showSemanticLabels && semanticLabel && (

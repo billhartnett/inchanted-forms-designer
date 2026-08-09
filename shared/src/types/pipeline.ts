@@ -99,6 +99,8 @@ export type SemanticFieldType =
   | "dropdown"
   | "date"
   | "numeric"
+  | "currency"
+  | "percentage"
   | "signature";
 
 export type FieldMetadataSource = "manual" | "ai" | "ocr";
