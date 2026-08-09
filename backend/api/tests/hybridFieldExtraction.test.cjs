@@ -235,6 +235,22 @@ test("splits business labels and adjacent blank boxes into semantic labels and i
     assert.equal(response.jsonBody.mappedFields.some((entry) => entry.blockId === pair.inputBlockId), true);
     assert.equal(response.jsonBody.mappedFields.some((entry) => entry.blockId === pair.labelBlockId), false);
   }
+  const topCodeFor = (labelText) => {
+    const pair = result.groupedStructures.labelInputPairs.find((entry) => {
+      const label = result.fieldCatalog.find((candidate) => candidate.id === entry.labelBlockId);
+      return label?.text === labelText;
+    });
+    return response.jsonBody.mappedFields.find((entry) => entry.blockId === pair.inputBlockId)
+      .suggestions[0].acordCode;
+  };
+  assert.equal(topCodeFor("Producer Name:"), "Producer_FullName");
+  assert.equal(topCodeFor("Company:"), "Insurer_FullName");
+  assert.equal(topCodeFor("Underwriter:"), "Insurer_Underwriter_FullName");
+  assert.equal(topCodeFor("Applicant Name:"), "NamedInsured_FullName");
+  assert.equal(topCodeFor("Mailing Address:"), "NamedInsured_MailingAddress_LineOne");
+  assert.equal(topCodeFor("Email:"), "NamedInsured_Primary_EmailAddress");
+  assert.equal(topCodeFor("Carrier:"), "Insurer_FullName");
+  assert.equal(topCodeFor("Phone:"), "NamedInsured_Primary_PhoneNumber");
 });
 
 test("classifies real-form horizontal, vertical, and multiline blank geometry", async () => {
@@ -316,6 +332,12 @@ test("classifies real-form horizontal, vertical, and multiline blank geometry", 
   }, { warn() {}, error() {} });
   const mappedIds = new Set(response.jsonBody.mappedFields.map((entry) => entry.blockId));
   assert.equal([applicant, mailing, agent, operations].every((entry) => mappedIds.has(entry.id)), true);
+  const topCode = (entry) => response.jsonBody.mappedFields
+    .find((mapping) => mapping.blockId === entry.id)
+    .suggestions[0].acordCode;
+  assert.equal(topCode(applicant), "NamedInsured_FullName");
+  assert.equal(topCode(mailing), "NamedInsured_MailingAddress_LineOne");
+  assert.equal(topCode(agent), "Producer_FullName");
 });
 
 test("mapping flow preserves the Wave 9 hybrid contract", async () => {

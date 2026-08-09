@@ -3,6 +3,7 @@ import { createHash } from "node:crypto";
 
 import {
   getLastReducerDebugSnapshot,
+  lookupAcordByCode,
   mapBlocksWithAcord,
   searchAcordDictionary,
 } from "../mapping";
@@ -145,6 +146,27 @@ function hasFillableGeometry(entry: ExtractDocumentFieldCatalogEntry | undefined
   );
 }
 
+function preferredAcordCodes(label: string): string[] {
+  const normalized = label.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+  if (/\bunderwriter\b/.test(normalized)) return ["Insurer_Underwriter_FullName"];
+  if (/\b(carrier|company)\b/.test(normalized)) return ["Insurer_FullName"];
+  if (/\b(applicant s name|applicant name|name first named insured|name of applicant)\b/.test(normalized)) {
+    return ["NamedInsured_FullName"];
+  }
+  if (/\bmailing address\b/.test(normalized)) return ["NamedInsured_MailingAddress_LineOne"];
+  if (/\b(agency name and address|agent name|producer name|agency)\b/.test(normalized)) {
+    return ["Producer_FullName", "Producer_MailingAddress_LineOne"];
+  }
+  if (/\b(e mail|email)\b/.test(normalized)) {
+    return ["NamedInsured_Primary_EmailAddress", "Producer_ContactPerson_EmailAddress"];
+  }
+  if (/\b(phone|mobile phone|office phone)\b/.test(normalized)) {
+    return ["NamedInsured_Primary_PhoneNumber", "Producer_PhoneNumber"];
+  }
+  if (/^address\b/.test(normalized)) return ["Producer_MailingAddress_LineOne"];
+  return [];
+}
+
 function promotedDictionarySuggestions(
   mapping: FieldMapping,
   entry: ExtractDocumentFieldCatalogEntry | undefined,
@@ -161,7 +183,20 @@ function promotedDictionarySuggestions(
     .join(" ");
   const cached = cache?.get(query);
   if (cached) return cached;
-  const suggestions = searchAcordDictionary(query, 3).map((result) => ({
+  const preferred = preferredAcordCodes(entry.semanticLabel || entry.text || mapping.text)
+    .map((code) => lookupAcordByCode(code))
+    .filter((candidate): candidate is NonNullable<typeof candidate> => Boolean(candidate))
+    .map((candidate, index) => ({
+      acordCode: candidate.acordCode,
+      label: candidate.label,
+      description: candidate.description,
+      confidenceScore: Number((0.96 - index * 0.03).toFixed(3)),
+      normalizedConfidenceScore: Number((0.96 - index * 0.03).toFixed(3)),
+      source: "dictionary" as const,
+      rationale: `Promoted ${entry.role} field matched to its canonical ACORD business concept.`,
+      dictionaryScore: 1000 - index,
+    }));
+  const fallback = searchAcordDictionary(query, 3).map((result) => ({
     acordCode: result.entry.acordCode,
     label: result.entry.label,
     description: result.entry.description,
@@ -171,6 +206,11 @@ function promotedDictionarySuggestions(
     rationale: `Promoted ${entry.role} field matched by ACORD dictionary ranking.`,
     dictionaryScore: result.score,
   }));
+  const suggestions = [...preferred, ...fallback]
+    .filter((candidate, index, all) =>
+      all.findIndex((item) => item.acordCode === candidate.acordCode) === index,
+    )
+    .slice(0, 3);
   cache?.set(query, suggestions);
   return suggestions;
 }
