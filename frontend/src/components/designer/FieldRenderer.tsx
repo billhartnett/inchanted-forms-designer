@@ -8,6 +8,7 @@ export type FieldRendererProps = {
 
 export function FieldRenderer({ field, showSemanticLabels = true }: FieldRendererProps) {
   const { width, height, metadata } = field;
+  const isImportedField = Boolean(metadata?.extractionBlockId);
   const resolvedLabel =
     metadata?.acordLabel?.trim() ||
     metadata?.semanticLabel?.trim() ||
@@ -36,12 +37,12 @@ export function FieldRenderer({ field, showSemanticLabels = true }: FieldRendere
   }
 
   // Fill based on field type
-  let fillColor = "#ffffff";
-  if (checkboxState?.isCheckbox) {
+  let fillColor = isImportedField ? "rgba(255, 255, 255, 0.08)" : "#ffffff";
+  if (!isImportedField && checkboxState?.isCheckbox) {
     fillColor = checkboxState.checked ? "#e0e7ff" : "#ffffff";
-  } else if (signatureState?.isSignature) {
+  } else if (!isImportedField && signatureState?.isSignature) {
     fillColor = signatureState.signed ? "#fef3c7" : "#ffffff";
-  } else if (kvpData) {
+  } else if (!isImportedField && kvpData) {
     fillColor = "#f0f9ff"; // light blue for KVP
   }
 
@@ -56,8 +57,8 @@ export function FieldRenderer({ field, showSemanticLabels = true }: FieldRendere
       <Rect
         x={0}
         y={0}
-        width={Math.max(20, width)}
-        height={Math.max(20, height)}
+        width={isImportedField ? Math.max(1, width) : Math.max(20, width)}
+        height={isImportedField ? Math.max(1, height) : Math.max(20, height)}
         fill={fillColor}
         stroke={strokeColor}
         strokeWidth={2}
@@ -65,7 +66,7 @@ export function FieldRenderer({ field, showSemanticLabels = true }: FieldRendere
       />
 
       {/* Semantic label overlay (if enabled) */}
-      {showSemanticLabels && semanticLabel && (
+      {!isImportedField && showSemanticLabels && semanticLabel && (
         <Text
           x={4}
           y={2}
@@ -78,7 +79,7 @@ export function FieldRenderer({ field, showSemanticLabels = true }: FieldRendere
       )}
 
       {/* Checkbox rendering */}
-      {field.type === "checkbox" && (
+      {!isImportedField && field.type === "checkbox" && (
         <>
           <Rect
             x={2}
@@ -116,7 +117,7 @@ export function FieldRenderer({ field, showSemanticLabels = true }: FieldRendere
       )}
 
       {/* Signature indicator */}
-      {signatureState?.isSignature && (
+      {!isImportedField && signatureState?.isSignature && (
         <Text
           x={width - 16}
           y={6}
@@ -128,7 +129,7 @@ export function FieldRenderer({ field, showSemanticLabels = true }: FieldRendere
       )}
 
       {/* Field label or KVP content */}
-      {field.type !== "checkbox" && (
+      {!isImportedField && field.type !== "checkbox" && (
         <Text
           x={8}
           y={kvpData ? 4 : 6}
@@ -152,7 +153,7 @@ export function FieldRenderer({ field, showSemanticLabels = true }: FieldRendere
       )}
 
       {/* Category mode badge */}
-      {categoryMode && (
+      {!isImportedField && categoryMode && (
         <Text
           x={width - 40}
           y={height - 16}
@@ -166,14 +167,16 @@ export function FieldRenderer({ field, showSemanticLabels = true }: FieldRendere
       )}
 
       {/* Confidence badge */}
-      <Text
-        x={4}
-        y={height - 16}
-        text={`${(confidence * 100).toFixed(0)}%`}
-        fontSize={9}
-        fontFamily="Geist Variable"
-        fill="#64748b"
-      />
+      {!isImportedField && (
+        <Text
+          x={4}
+          y={height - 16}
+          text={`${(confidence * 100).toFixed(0)}%`}
+          fontSize={9}
+          fontFamily="Geist Variable"
+          fill="#64748b"
+        />
+      )}
     </KonvaGroup>
   );
 }

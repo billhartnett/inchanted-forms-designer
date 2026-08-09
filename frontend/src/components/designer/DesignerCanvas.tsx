@@ -4,7 +4,7 @@ import { Rect as KonvaRect, Text as KonvaText } from "react-konva";
 import { CanvasStage } from "../../canvas/CanvasStage";
 import ZoomControls from "../../designer/controls/ZoomControls";
 import PdfImportModal from "../../designer/ai/PdfImportModal";
-import { useOntologyFieldIds, useSelectedFields } from "../../state/fieldStore";
+import { useSelectedFields } from "../../state/fieldStore";
 import { useDesignerStore, type Field } from "../../state/designerStore";
 import { FieldControls } from "./FieldControls";
 import FieldRenderer from "./FieldRenderer";
@@ -96,7 +96,6 @@ export function DesignerCanvas({
   const fields = useDesignerStore((s) => s.fields);
   const textBlocks = useExtractionStore((s) => s.textBlocks);
   const routedClusters = useMappingStore((s) => s.routedClusters);
-  const ontologyFieldIds = useOntologyFieldIds();
   const pdfPages = useDesignerStore((s) => s.pdfPages);
   const currentPdfPage = useDesignerStore((s) => s.currentPdfPage);
   const fieldSearchQuery = useDesignerStore((s) => s.fieldSearchQuery);
@@ -111,7 +110,6 @@ export function DesignerCanvas({
 
   const visibleFields = fields.filter((field) => {
     if (field.metadata?.hidden) return false;
-    if (ontologyFieldIds.size > 0 && !ontologyFieldIds.has(field.id)) return false;
     if (pdfPages.length === 0) return true;
     if (field.pageIndex === null || field.pageIndex === undefined) return true;
     if (field.pageIndex !== currentPdfPage) return false;
@@ -164,6 +162,7 @@ export function DesignerCanvas({
     >();
 
     for (const field of visibleFields) {
+      if (field.metadata?.extractionBlockId) continue;
       if (!field.groupId) continue;
       const label = deriveOntologyClusterLabel(field, topRoutedCluster);
       const x = field.x;
@@ -370,31 +369,18 @@ export function DesignerCanvas({
                     y={field.y}
                     rotation={field.rotation ?? 0}
                     opacity={field.opacity ?? 1}
-                    draggable={!field.metadata?.locked && (ontologyFieldIds.size === 0 || ontologyFieldIds.has(field.id))}
+                    draggable={!field.metadata?.locked}
                     listening
-                    onMouseEnter={() => {
-                      if (ontologyFieldIds.size > 0 && !ontologyFieldIds.has(field.id)) {
-                        return;
-                      }
-                    }}
                     onClick={(event) => {
-                      if (ontologyFieldIds.size > 0 && !ontologyFieldIds.has(field.id)) {
-                        event.cancelBubble = true;
-                        return;
-                      }
                       event.cancelBubble = true;
                       selectField(field.id, Boolean(event.evt.shiftKey));
                     }}
                     onTap={(event) => {
-                      if (ontologyFieldIds.size > 0 && !ontologyFieldIds.has(field.id)) {
-                        event.cancelBubble = true;
-                        return;
-                      }
                       event.cancelBubble = true;
                       selectField(field.id, Boolean(event.evt.shiftKey));
                     }}
                     onDragEnd={(event) => {
-                      if (field.metadata?.locked || (ontologyFieldIds.size > 0 && !ontologyFieldIds.has(field.id))) {
+                      if (field.metadata?.locked) {
                         return;
                       }
                       // Update field position after drag

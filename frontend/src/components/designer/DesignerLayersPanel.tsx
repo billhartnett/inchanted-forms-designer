@@ -190,7 +190,10 @@ function isLikelyNonFieldArtifact(field: Field): boolean {
 
 function isVisibleDesignerField(field: Field): boolean {
   const classification = field.metadata?.artifactClassification;
-  return (classification === "field_label" || classification === "field_value") && !isLikelyNonFieldArtifact(field);
+  if (field.metadata?.extractionBlockId) {
+    return !field.metadata.hidden && classification !== "non_field_artifact";
+  }
+  return !field.metadata?.hidden && !isLikelyNonFieldArtifact(field);
 }
 
 function sortByConfidence(left: FieldInsight, right: FieldInsight) {
@@ -224,11 +227,7 @@ export function DesignerLayersPanel() {
 
   const fieldInsights = useMemo(() => {
     return fields
-      .filter(
-        (field) =>
-          isVisibleDesignerField(field) &&
-          (ontologyFieldIds.size === 0 || ontologyFieldIds.has(field.id)),
-      )
+      .filter(isVisibleDesignerField)
       .map((field) => {
         const ontologyCode = field.metadata?.acordCode?.trim() || "";
         const ontology = ontologyCode ? resolveOntologySemanticMetadata(ontologyCode) : null;
@@ -269,7 +268,7 @@ export function DesignerLayersPanel() {
           pageIndex: typeof field.pageIndex === "number" && Number.isFinite(field.pageIndex) ? field.pageIndex : null,
         } satisfies FieldInsight;
       });
-  }, [fields, ontologyFieldIds]);
+  }, [fields]);
 
   const selectedInsight = useMemo(() => {
     if (!selectedField) return null;

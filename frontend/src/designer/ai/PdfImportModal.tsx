@@ -1371,7 +1371,7 @@ export default function PdfImportModal({
         pages,
         labels,
         fields,
-        textBlocks: blocks,
+        textBlocks: [],
         normalizedBBoxes,
       },
       mappings: safeMappings,
