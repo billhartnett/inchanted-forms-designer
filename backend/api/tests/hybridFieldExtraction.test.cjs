@@ -362,6 +362,43 @@ test("keeps questions as labels and promotes only fillable DI cell regions", asy
   );
 });
 
+test("does not promote question text as an input when an explicit checkbox occupies the region", async () => {
+  const result = await buildHybridFieldExtraction({
+    pages: [{
+      pageNumber: 1,
+      width: 816,
+      height: 1056,
+      unit: "pixel",
+      lines: [{
+        content: "1. IS A FORMAL SAFETY PROGRAM IN OPERATION?",
+        confidence: 0.99,
+        boundingBox: { x: 20, y: 100, width: 500, height: 20 },
+      }],
+    }],
+    rawResult: {
+      pages: [{
+        pageNumber: 1,
+        unit: "pixel",
+        selectionMarks: [{
+          state: "unselected",
+          confidence: 0.99,
+          polygon: [
+            { x: 470, y: 102 }, { x: 482, y: 102 },
+            { x: 482, y: 114 }, { x: 470, y: 114 },
+          ],
+        }],
+      }],
+    },
+  });
+
+  const questionInputs = result.fields.filter((field) =>
+    field.type !== "checkbox" &&
+    /SAFETY PROGRAM IN OPERATION\?/.test(field.semanticLabel || field.text),
+  );
+  assert.equal(questionInputs.length, 0);
+  assert.equal(result.fields.filter((field) => field.type === "checkbox").length, 1);
+});
+
 test("promotes typed numeric, dollar, and percentage blanks without section text", async () => {
   const result = await buildHybridFieldExtraction({
     pages: [{

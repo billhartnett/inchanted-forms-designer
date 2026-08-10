@@ -1147,7 +1147,8 @@ export default function PdfImportModal({
     })) as HybridMappingResponse;
     const mappedCatalog = mappingPayload.fieldCatalog || extractPayload.fieldCatalog || [];
     const catalogById = new Map(mappedCatalog.map((entry) => [entry.id, entry]));
-    const mappings = (mappingPayload.mappings || []).map((mapping) => {
+    const strictMappings = mappingPayload.mappedFields || mappingPayload.mappings || [];
+    const mappings = strictMappings.map((mapping) => {
       const catalog = catalogById.get(mapping.blockId);
       return {
         ...mapping,
@@ -1162,9 +1163,7 @@ export default function PdfImportModal({
         columnIndex: catalog?.columnIndex,
       } as MapFieldMapping;
     });
-    const promotedMappingIds = new Set(
-      (mappingPayload.mappedFields || []).map((mapping) => mapping.blockId),
-    );
+    const promotedMappingIds = new Set(strictMappings.map((mapping) => mapping.blockId));
     
     // DEBUG STEP 1: Log mapFields response in detail
     const mapFieldsDebug = {

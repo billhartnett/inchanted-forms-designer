@@ -164,6 +164,40 @@ function isTypedBlank(entry: ExtractDocumentFieldCatalogEntry): boolean {
   return ["numeric", "currency", "percentage"].includes(entry.valueType);
 }
 
+function isQuestionText(value: string): boolean {
+  return /\?$/.test(normalizedText(value));
+}
+
+function duplicatesExplicitCheckbox(
+  entry: ExtractDocumentFieldCatalogEntry,
+  catalog: ExtractDocumentFieldCatalogEntry[],
+): boolean {
+  if (entry.source !== "blank_detector" || !isQuestionText(entry.semanticLabel || entry.text)) {
+    return false;
+  }
+  const valueRegion = entry.semanticValueRegion;
+  if (!valueRegion) return false;
+  return catalog.some((candidate) => {
+    if (
+      candidate.page !== entry.page ||
+      candidate.role !== "checkbox" ||
+      candidate.source !== "selection_mark"
+    ) {
+      return false;
+    }
+    const checkboxBox = candidate.semanticValueRegion || candidate.boundingBox;
+    const verticalDistance = Math.abs(
+      valueRegion.y + valueRegion.height / 2 - (checkboxBox.y + checkboxBox.height / 2),
+    );
+    const horizontalGap = Math.max(
+      0,
+      checkboxBox.x - (valueRegion.x + valueRegion.width),
+      valueRegion.x - (checkboxBox.x + checkboxBox.width),
+    );
+    return verticalDistance <= 24 && horizontalGap <= 48;
+  });
+}
+
 function hasValidFillableBox(entry: ExtractDocumentFieldCatalogEntry, box: BoundingBox): boolean {
   if (![box.x, box.y, box.width, box.height].every(Number.isFinite)) return false;
   const narrowTypedBlank = isNarrowTypedBlank(entry, box);
@@ -823,6 +857,7 @@ export async function buildHybridFieldExtraction(args: {
   const promotionCandidates = catalog.filter(
     (entry) => fillableRoles.has(entry.role) &&
       hasValidFillableGeometry(entry) &&
+      !duplicatesExplicitCheckbox(entry, catalog) &&
       (entry.role !== "table-cell" || Boolean(entry.labelBoundingBox && entry.semanticLabel !== "Table value")),
   );
   const fillable: ExtractDocumentFieldCatalogEntry[] = [];
