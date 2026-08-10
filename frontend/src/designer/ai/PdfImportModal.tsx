@@ -70,6 +70,7 @@ type HybridCatalogEntry = {
   text: string;
   boundingBox: BoundingBox;
   semanticValueRegion?: BoundingBox;
+  labelBoundingBox?: BoundingBox;
   semanticLabel?: string;
   groupId?: string;
   tableId?: string;
@@ -158,6 +159,11 @@ type Wave8SuppressionMetadata = {
 type HybridFieldMetadata = {
   blockId: string;
   blockGeometry: BoundingBox;
+  labelBoundingBox?: BoundingBox;
+  eLabelCandidates?: Array<AcordLabelCandidate & {
+    boundingBox?: BoundingBox;
+    semanticValueRegion?: BoundingBox;
+  }>;
   categoryMode?: string;
   semanticLabel: string;
   pairedLabel?: Wave8PairedLabel;
@@ -505,9 +511,15 @@ function readHybridMappingMetadata(
     wave9Decision || mapping.chosen || (mapping as any).topCandidate || mapping.suggestions?.[0];
 
   const blockGeometry = toBoundingBox(
-    (mapping as any).blockGeometry,
+    (mapping as any).semanticValueRegion || (mapping as any).blockGeometry,
     toBoundingBox(mapping.boundingBox, sourceBlock.boundingBox),
   );
+  const labelBoundingBox = isBoxLike((mapping as any).labelBoundingBox)
+    ? toBoundingBox((mapping as any).labelBoundingBox, blockGeometry)
+    : undefined;
+  const eLabelCandidates = Array.isArray((mapping as any).eLabelCandidates)
+    ? (mapping as any).eLabelCandidates
+    : undefined;
 
   const pairedLabel: Wave8PairedLabel | undefined = (() => {
     const paired = (mapping as any).pairedLabel as unknown;
@@ -700,6 +712,8 @@ function readHybridMappingMetadata(
   return {
     blockId: mapping.blockId,
     blockGeometry,
+    labelBoundingBox,
+    eLabelCandidates,
     categoryMode,
     semanticLabel,
     pairedLabel,
@@ -1150,10 +1164,29 @@ export default function PdfImportModal({
     const strictMappings = mappingPayload.mappedFields || mappingPayload.mappings || [];
     const mappings = strictMappings.map((mapping) => {
       const catalog = catalogById.get(mapping.blockId);
+      const semanticValueRegion = (mapping as any).semanticValueRegion || catalog?.semanticValueRegion;
+      const labelBoundingBox = (mapping as any).labelBoundingBox || catalog?.labelBoundingBox;
       return {
         ...mapping,
-        boundingBox: scaleBox(mapping.boundingBox, mapping.page),
-        blockGeometry: scaleBox(mapping.boundingBox, mapping.page),
+        boundingBox: scaleBox(semanticValueRegion || mapping.boundingBox, mapping.page),
+        blockGeometry: scaleBox(semanticValueRegion || mapping.boundingBox, mapping.page),
+        semanticValueRegion: semanticValueRegion
+          ? scaleBox(semanticValueRegion, mapping.page)
+          : undefined,
+        labelBoundingBox: labelBoundingBox
+          ? scaleBox(labelBoundingBox, mapping.page)
+          : undefined,
+        eLabelCandidates: Array.isArray((mapping as any).eLabelCandidates)
+          ? (mapping as any).eLabelCandidates.map((candidate: any) => ({
+              ...candidate,
+              boundingBox: candidate.boundingBox
+                ? scaleBox(candidate.boundingBox, mapping.page)
+                : undefined,
+              semanticValueRegion: candidate.semanticValueRegion
+                ? scaleBox(candidate.semanticValueRegion, mapping.page)
+                : undefined,
+            }))
+          : undefined,
         semanticRole: catalog?.role,
         semanticLabel: catalog?.semanticLabel || catalog?.text || mapping.text,
         fieldType: catalog?.valueType,

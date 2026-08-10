@@ -67,21 +67,6 @@ export function FieldRenderer({ field, showSemanticLabels = true }: FieldRendere
         cornerRadius={4}
       />
 
-      {isImportedField && showSemanticLabels && resolvedLabel && (
-        <Text
-          x={4}
-          y={importedVisualY + 2}
-          width={Math.max(0, width - 8)}
-          height={Math.max(0, importedVisualHeight - 4)}
-          text={resolvedLabel}
-          fontSize={10}
-          fontFamily="Geist Variable"
-          fill="#334155"
-          verticalAlign="middle"
-          ellipsis
-        />
-      )}
-
       {/* Semantic label overlay (if enabled) */}
       {!isImportedField && showSemanticLabels && semanticLabel && (
         <Text

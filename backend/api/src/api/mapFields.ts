@@ -69,6 +69,7 @@ type LayoutLmInferResponse = {
 
 type MapFieldsRequest = {
   documentId?: string;
+  sourceDocumentName?: string;
   blocks?: ExtractedBlock[];
   fieldCatalog?: ExtractDocumentFieldCatalogEntry[];
   groupedStructures?: ExtractDocumentGroupedStructures;
@@ -242,11 +243,52 @@ function preferredAcordCodes(label: string): string[] {
   return [];
 }
 
+function contextualPreferredAcordCodes(
+  entry: ExtractDocumentFieldCatalogEntry,
+  catalog: ExtractDocumentFieldCatalogEntry[],
+  sourceDocumentName?: string,
+): string[] {
+  const normalized = entry.semanticLabel.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+  const documentContext = String(sourceDocumentName || "").toLowerCase();
+  if (/^licensed$/.test(normalized) && /markel|contractor/.test(documentContext)) {
+    return ["ContractorsUnderwriting_LicenseNumberIdentifier"];
+  }
+
+  const addressPart = /^city$/.test(normalized)
+    ? "CityName"
+    : /^state$/.test(normalized)
+      ? "StateOrProvinceCode"
+      : /^(zip|zip code|postal code)$/.test(normalized)
+        ? "PostalCode"
+        : undefined;
+  if (!addressPart) return [];
+
+  const entryBox = entry.labelBoundingBox || entry.boundingBox;
+  const nearestOwner = catalog
+    .filter((candidate) => {
+      if (candidate.page !== entry.page || candidate.id === entry.id) return false;
+      const label = String(candidate.semanticLabel || candidate.text || "").toLowerCase();
+      if (!/agent|agency|producer|named insured|applicant/.test(label)) return false;
+      const box = candidate.labelBoundingBox || candidate.boundingBox;
+      return box.y <= entryBox.y && entryBox.y - box.y <= 360;
+    })
+    .sort((left, right) => {
+      const leftBox = left.labelBoundingBox || left.boundingBox;
+      const rightBox = right.labelBoundingBox || right.boundingBox;
+      return Math.abs(entryBox.y - leftBox.y) - Math.abs(entryBox.y - rightBox.y);
+    })[0];
+  const ownerLabel = String(nearestOwner?.semanticLabel || nearestOwner?.text || "").toLowerCase();
+  const owner = /agent|agency|producer/.test(ownerLabel) ? "Producer" : "NamedInsured";
+  return [`${owner}_MailingAddress_${addressPart}`];
+}
+
 function promotedDictionarySuggestions(
   mapping: FieldMapping,
   entry: ExtractDocumentFieldCatalogEntry | undefined,
   promotedByGroup: boolean,
   cache?: Map<string, FieldMapping["suggestions"]>,
+  catalog: ExtractDocumentFieldCatalogEntry[] = [],
+  sourceDocumentName?: string,
 ): FieldMapping["suggestions"] {
   if (mapping.suggestions.length > 0 || !entry) return mapping.suggestions;
   const promoted = PROMOTED_MAPPING_ROLES.has(entry.role) &&
@@ -256,9 +298,14 @@ function promotedDictionarySuggestions(
   const query = [entry.semanticLabel, entry.text, mapping.text, entry.role]
     .filter(Boolean)
     .join(" ");
-  const cached = cache?.get(query);
+  const preferredCodes = [
+    ...contextualPreferredAcordCodes(entry, catalog, sourceDocumentName),
+    ...preferredAcordCodes(entry.semanticLabel || entry.text || mapping.text),
+  ];
+  const cacheKey = `${query}::${preferredCodes.join("|")}`;
+  const cached = cache?.get(cacheKey);
   if (cached) return cached;
-  const preferred = preferredAcordCodes(entry.semanticLabel || entry.text || mapping.text)
+  const preferred = preferredCodes
     .map((code) => lookupAcordByCode(code))
     .filter((candidate): candidate is NonNullable<typeof candidate> => Boolean(candidate))
     .map((candidate, index) => ({
@@ -286,7 +333,7 @@ function promotedDictionarySuggestions(
       all.findIndex((item) => item.acordCode === candidate.acordCode) === index,
     )
     .slice(0, 3);
-  cache?.set(query, suggestions);
+  cache?.set(cacheKey, suggestions);
   return suggestions;
 }
 
@@ -1742,6 +1789,8 @@ export async function mapFields(
         catalogEntry,
         promotedIds.has(mapping.blockId),
         promotedSuggestionCache,
+        fieldCatalog,
+        body.sourceDocumentName,
       );
       return suggestions === mapping.suggestions
         ? mapping

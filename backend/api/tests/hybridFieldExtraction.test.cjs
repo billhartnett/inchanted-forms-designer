@@ -877,3 +877,90 @@ test("mapping flow handles an ACORD 125-scale hybrid catalog without the legacy 
   assert.equal(response.jsonBody.mappedFields.every((mapping) => mapping.suggestions.length > 0), true);
   assert.equal(Date.now() - startedAt < 5000, true);
 });
+
+test("mapping flow ranks generic address and contractor license fields using document context", async () => {
+  const fieldCatalog = [
+    {
+      id: "producer-anchor",
+      page: 1,
+      role: "label",
+      valueType: "label",
+      text: "AGENT NAME",
+      boundingBox: { x: 20, y: 20, width: 100, height: 16 },
+      source: "di_line",
+      confidence: 0.99,
+      semanticLabel: "AGENT NAME",
+    },
+    {
+      id: "producer-city",
+      page: 1,
+      role: "input",
+      valueType: "text",
+      text: "CITY",
+      boundingBox: { x: 120, y: 70, width: 120, height: 18 },
+      semanticValueRegion: { x: 120, y: 70, width: 120, height: 18 },
+      source: "blank_detector",
+      confidence: 0.95,
+      semanticLabel: "CITY",
+    },
+    {
+      id: "insured-anchor",
+      page: 1,
+      role: "label",
+      valueType: "label",
+      text: "NAME OF FIRST NAMED INSURED",
+      boundingBox: { x: 20, y: 220, width: 200, height: 16 },
+      source: "di_line",
+      confidence: 0.99,
+      semanticLabel: "NAME OF FIRST NAMED INSURED",
+    },
+    {
+      id: "insured-city",
+      page: 1,
+      role: "input",
+      valueType: "text",
+      text: "CITY",
+      boundingBox: { x: 120, y: 270, width: 120, height: 18 },
+      semanticValueRegion: { x: 120, y: 270, width: 120, height: 18 },
+      source: "blank_detector",
+      confidence: 0.95,
+      semanticLabel: "CITY",
+    },
+    {
+      id: "licensed",
+      page: 1,
+      role: "input",
+      valueType: "text",
+      text: "Licensed?",
+      boundingBox: { x: 120, y: 420, width: 80, height: 18 },
+      semanticValueRegion: { x: 120, y: 420, width: 80, height: 18 },
+      source: "blank_detector",
+      confidence: 0.95,
+      semanticLabel: "Licensed?",
+    },
+  ];
+  const blocks = fieldCatalog.filter((entry) => entry.semanticValueRegion).map((entry) => ({
+    id: entry.id,
+    page: entry.page,
+    type: "text",
+    text: entry.text,
+    boundingBox: entry.boundingBox,
+    confidence: entry.confidence,
+  }));
+  const response = await mapFields({
+    json: async () => ({
+      documentId: "contextual-ranking",
+      sourceDocumentName: "Markel-Contractors-Supp.pdf",
+      blocks,
+      fieldCatalog,
+      groupedStructures: {},
+      deterministic: true,
+    }),
+  }, { warn() {}, error() {} });
+  const topCode = (id) => response.jsonBody.mappedFields
+    .find((mapping) => mapping.blockId === id)
+    .suggestions[0].acordCode;
+  assert.equal(topCode("producer-city"), "Producer_MailingAddress_CityName");
+  assert.equal(topCode("insured-city"), "NamedInsured_MailingAddress_CityName");
+  assert.equal(topCode("licensed"), "ContractorsUnderwriting_LicenseNumberIdentifier");
+});
