@@ -56,6 +56,7 @@ export type ExtractDocumentFieldCatalogEntry = {
   pairedQuestionId?: string;
   pairedAnswerId?: string;
   semanticLabel?: string;
+  labelBoundingBox?: BoundingBox;
   categoryMode?: string;
 };
 
@@ -92,6 +93,15 @@ export type ExtractDocumentDiagnostics = {
   tableCellCount: number;
   semanticFieldCount: number;
   fillableFieldCount: number;
+  currencyBlankCount: number;
+  percentageBlankCount: number;
+  numericBlankCount: number;
+  suppressedSectionHeaderCount: number;
+  suppressedDiTextOnlyBlockCount: number;
+  suppressedOcrNoiseBlockCount: number;
+  overlappingGeometryConflictCount: number;
+  validLabelInputPairCount: number;
+  propagatedELabelCandidateCount: number;
 };
 
 export type ExtractDocumentBboxNormalization = {

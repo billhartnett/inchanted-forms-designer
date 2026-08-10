@@ -34,6 +34,7 @@ type PageGeometry = {
 
 type InlineBlank = {
   box: BoundingBox;
+  labelBox: BoundingBox;
   role: "input" | "value-region";
   valueType: ExtractDocumentFieldCatalogValueType;
   semanticLabel: string;
@@ -127,6 +128,19 @@ function inlineBlankFromText(text: string, box: BoundingBox): InlineBlank | unde
     .replace(/[_\.\-\s]+/g, " ")
     .replace(/[:$%\s]+$/g, "")
     .trim() || (isCurrency ? "Dollar amount" : isPercentage ? "Percentage" : "Numeric value");
+  const beforeWidth = box.width * (start / text.length);
+  const afterStart = start + blank[0].length;
+  const afterWidth = box.width * ((text.length - afterStart) / text.length);
+  const labelBox = before.replace(/[$\s]+$/g, "").trim()
+    ? { x: box.x, y: box.y, width: Math.max(1, beforeWidth), height: box.height }
+    : after.replace(/^[%\s]+/g, "").trim()
+      ? {
+          x: box.x + box.width * (afterStart / text.length),
+          y: box.y,
+          width: Math.max(1, afterWidth),
+          height: box.height,
+        }
+      : { ...box, width: Math.max(1, beforeWidth || afterWidth || box.width) };
   return {
     box: {
       x: box.x + box.width * (start / text.length),
@@ -134,6 +148,7 @@ function inlineBlankFromText(text: string, box: BoundingBox): InlineBlank | unde
       width: Math.max(1, box.width * (blank[0].length / text.length)),
       height: box.height,
     },
+    labelBox,
     role: isCurrency ? "value-region" : "input",
     valueType,
     semanticLabel,
@@ -141,7 +156,12 @@ function inlineBlankFromText(text: string, box: BoundingBox): InlineBlank | unde
 }
 
 function isNarrowTypedBlank(entry: ExtractDocumentFieldCatalogEntry, box: BoundingBox): boolean {
-  return ["numeric", "percentage"].includes(entry.valueType) && box.width >= 12 && box.width <= 40;
+  return ["numeric", "currency", "percentage"].includes(entry.valueType) &&
+    box.width >= 6 && box.width <= 64;
+}
+
+function isTypedBlank(entry: ExtractDocumentFieldCatalogEntry): boolean {
+  return ["numeric", "currency", "percentage"].includes(entry.valueType);
 }
 
 function hasValidFillableBox(entry: ExtractDocumentFieldCatalogEntry, box: BoundingBox): boolean {
@@ -149,8 +169,25 @@ function hasValidFillableBox(entry: ExtractDocumentFieldCatalogEntry, box: Bound
   const narrowTypedBlank = isNarrowTypedBlank(entry, box);
   if (entry.role === "checkbox") return box.width > 0 && box.height >= 6 && box.height <= 60;
   if (!narrowTypedBlank && (box.width < 20 || box.height < 6)) return false;
-  if (narrowTypedBlank && (box.width < 12 || box.height <= 0)) return false;
+  if (narrowTypedBlank && (box.width < 6 || box.height < 2)) return false;
   return entry.role === "value-region" || box.height <= 60;
+}
+
+function normalizeFillableBox(
+  entry: Pick<ExtractDocumentFieldCatalogEntry, "valueType">,
+  box: BoundingBox,
+  page: PageGeometry,
+): BoundingBox {
+  const typed = ["numeric", "currency", "percentage"].includes(entry.valueType);
+  const targetHeight = typed ? Math.max(8, box.height) : box.height;
+  const y = Math.max(0, Math.min(page.height - targetHeight, box.y - (targetHeight - box.height) / 2));
+  const x = Math.max(0, Math.min(page.width, box.x));
+  return {
+    x,
+    y,
+    width: Math.max(1, Math.min(box.width, page.width - x)),
+    height: Math.max(1, Math.min(targetHeight, page.height - y)),
+  };
 }
 
 function distance(left: BoundingBox, right: BoundingBox): number {
@@ -202,7 +239,7 @@ function isFillableLabel(text: string): boolean {
   const normalized = text.replace(/\s+/g, " ").trim();
   if (!normalized || normalized.length > 90) return false;
   return /[:?]\s*$/.test(normalized) ||
-    /\b(name|agency|producer|carrier|underwriter|applicant|insured|address|city|state|zip|postal|e-?mail|phone|website|contact|representative|code|number|date|fein|soc sec|payroll|percentage)\b/i.test(normalized);
+    /\b(name|agency|producer|carrier|underwriter|applicant|insured|address|city|state|zip|postal|e-?mail|phone|website|contact|representative|code|number|date|fein|soc sec|payroll|percentage|rate|amount|premium|deductible|limit|employees|sales|receipts|revenue)\b/i.test(normalized);
 }
 
 function preferredSemanticLabel(text: string): boolean {
@@ -210,20 +247,22 @@ function preferredSemanticLabel(text: string): boolean {
 }
 
 function largestRemainder(
-  box: BoundingBox,
+  entry: ExtractDocumentFieldCatalogEntry,
   blocker: BoundingBox,
-  role: ExtractDocumentFieldCatalogRole,
 ): BoundingBox {
+  const box = entry.semanticValueRegion || entry.boundingBox;
   if (intersectionArea(box, blocker) === 0) return box;
+  const minimumWidth = isNarrowTypedBlank(entry, box) ? 6 : entry.role === "checkbox" ? 1 : 20;
+  const minimumHeight = isNarrowTypedBlank(entry, box) ? 2 : 6;
   const pieces = [
     { x: box.x, y: box.y, width: blocker.x - box.x, height: box.height },
     { x: blocker.x + blocker.width, y: box.y, width: box.x + box.width - blocker.x - blocker.width, height: box.height },
     { x: box.x, y: box.y, width: box.width, height: blocker.y - box.y },
     { x: box.x, y: blocker.y + blocker.height, width: box.width, height: box.y + box.height - blocker.y - blocker.height },
   ].filter((piece) =>
-    piece.width >= (role === "checkbox" ? 1 : 20) &&
-    piece.height >= 6 &&
-    (role === "value-region" || piece.height <= 60)
+    piece.width >= minimumWidth &&
+    piece.height >= minimumHeight &&
+    (entry.role === "value-region" || piece.height <= 60)
   );
   return pieces.sort((left, right) => right.width * right.height - left.width * left.height)[0] || {
     ...box,
@@ -461,14 +500,16 @@ export async function buildHybridFieldExtraction(args: {
       const inlineBlank = ["title", "header", "footer", "section-label"].includes(lineRole)
         ? undefined
         : inlineBlankFromText(text, box);
-      const semanticValueRegion = inlineBlank?.box;
+      const semanticValueRegion = inlineBlank
+        ? normalizeFillableBox(inlineBlank, inlineBlank.box, geometry)
+        : undefined;
       const labelEntry: ExtractDocumentFieldCatalogEntry = {
         id: `semantic-p${page.pageNumber}-l${index + 1}`,
         page: page.pageNumber,
         role: lineRole,
         valueType: "label",
         text,
-        boundingBox: box,
+        boundingBox: inlineBlank?.labelBox || box,
         semanticValueRegion,
         source: "di_line",
         confidence: finite(line.confidence, 0.85),
@@ -492,6 +533,7 @@ export async function buildHybridFieldExtraction(args: {
           source: "blank_detector",
           confidence: finite(line.confidence, 0.85),
           semanticLabel: inlineBlank?.semanticLabel || text.replace(/[_\.\-\s]+$/g, "").trim(),
+          labelBoundingBox: labelEntry.boundingBox,
           groupId: pairId,
         });
         labelInputPairs.push({
@@ -531,6 +573,11 @@ export async function buildHybridFieldExtraction(args: {
       if (consumedCellIndexes.has(cellIndex)) continue;
       const inlineBlank = inlineBlankFromText(text, box);
       if (inlineBlank) {
+        const normalizedBlankBox = normalizeFillableBox(
+          inlineBlank,
+          inlineBlank.box,
+          pageGeometry.get(page) || { width: 816, height: 1056 },
+        );
         const inputId = `input-${tableId}-r${rowIndex + 1}-c${columnIndex + 1}`;
         catalog.push({
           id: inputId,
@@ -538,11 +585,12 @@ export async function buildHybridFieldExtraction(args: {
           role: inlineBlank.role,
           valueType: inlineBlank.valueType,
           text: inlineBlank.semanticLabel,
-          boundingBox: inlineBlank.box,
-          semanticValueRegion: inlineBlank.box,
+          boundingBox: normalizedBlankBox,
+          semanticValueRegion: normalizedBlankBox,
           source: "blank_detector",
           confidence: finite(cell?.confidence, 0.85),
           semanticLabel: inlineBlank.semanticLabel,
+          labelBoundingBox: inlineBlank.labelBox,
           tableId,
           rowIndex,
           columnIndex,
@@ -560,7 +608,7 @@ export async function buildHybridFieldExtraction(args: {
       if (groupId) rowGroups.add(groupId);
       const label = catalog
         .filter((entry) => entry.page === page && entry.source === "di_line" && !entry.groupId && !pairedLabelIds.has(entry.id))
-        .filter((entry) => isFillableLabel(entry.text) && (
+        .filter((entry) => !isSectionHeading(entry.text) && isFillableLabel(entry.text) && (
           isLabelInBox(entry.boundingBox, box) ||
           (normalizedText(entry.text) === text && intersectionArea(entry.boundingBox, box) > 0)
         ))
@@ -590,6 +638,12 @@ export async function buildHybridFieldExtraction(args: {
         const inputRowIndex = adjacentBlankCell?.rowIndex ?? rowIndex;
         const inputColumnIndex = adjacentBlankCell?.columnIndex ?? columnIndex;
         const inputId = `input-${tableId}-r${inputRowIndex + 1}-c${inputColumnIndex + 1}`;
+        const valueType = inferValueType(label.text);
+        const normalizedInputBox = normalizeFillableBox(
+          { valueType },
+          inputBox,
+          pageGeometry.get(page) || { width: 816, height: 1056 },
+        );
         if (label.role !== "question") label.role = "label";
         label.groupId = pairId;
         label.semanticValueRegion = undefined;
@@ -598,14 +652,15 @@ export async function buildHybridFieldExtraction(args: {
         catalog.push({
           id: inputId,
           page,
-          role: fillableRoleForRegion(label.text, label.boundingBox, inputBox),
-          valueType: inferValueType(label.text),
+          role: fillableRoleForRegion(label.text, label.boundingBox, normalizedInputBox),
+          valueType,
           text: label.semanticLabel || label.text,
-          boundingBox: inputBox,
-          semanticValueRegion: inputBox,
+          boundingBox: normalizedInputBox,
+          semanticValueRegion: normalizedInputBox,
           source: "blank_detector",
           confidence: Math.min(label.confidence, finite(cell?.confidence, 0.85)),
           semanticLabel: label.semanticLabel || label.text,
+          labelBoundingBox: label.boundingBox,
           groupId: pairId,
           tableId,
           rowIndex: inputRowIndex,
@@ -654,16 +709,19 @@ export async function buildHybridFieldExtraction(args: {
       if (!inputBox) continue;
       const pairId = `label-input-${labelInputPairs.length + 1}`;
       const inputId = `input-${label.id}`;
+      const valueType = inferValueType(label.text);
+      const normalizedInputBox = normalizeFillableBox({ valueType }, inputBox, geometry);
       if (label.role !== "question") label.role = "label";
       label.groupId = pairId;
       catalog.push({
         id: inputId,
         page: label.page,
-        role: fillableRoleForRegion(label.text, label.boundingBox, inputBox),
-        valueType: inferValueType(label.text),
+        role: fillableRoleForRegion(label.text, label.boundingBox, normalizedInputBox),
+        valueType,
         text: label.semanticLabel || label.text,
-        boundingBox: inputBox,
-        semanticValueRegion: inputBox,
+        boundingBox: normalizedInputBox,
+        semanticValueRegion: normalizedInputBox,
+        labelBoundingBox: label.boundingBox,
         source: "blank_detector",
         confidence: label.confidence,
         semanticLabel: label.semanticLabel || label.text,
@@ -691,10 +749,33 @@ export async function buildHybridFieldExtraction(args: {
         candidate.role === "row_label" &&
         candidate.rowIndex === entry.rowIndex,
     );
+    const typedSymbol = catalog.find((candidate) =>
+      candidate.tableId === entry.tableId &&
+      candidate.page === entry.page &&
+      candidate.rowIndex === entry.rowIndex &&
+      Math.abs(candidate.columnIndex - (entry.columnIndex ?? 0)) <= 1 &&
+      /^\s*[$%]\s*$/.test(candidate.text),
+    );
     entry.semanticLabel = [header?.text, rowLabel?.text]
       .filter(Boolean)
-      .join(" - ") || entry.text || "Table value";
-    entry.valueType = inferValueType(entry.semanticLabel);
+      .join(" - ") ||
+      (typedSymbol?.text === "$"
+        ? "Dollar amount"
+        : typedSymbol?.text === "%"
+          ? "Percentage"
+          : entry.text || "Table value");
+    entry.valueType = typedSymbol?.text === "$"
+      ? "currency"
+      : typedSymbol?.text === "%"
+        ? "percentage"
+        : inferValueType(entry.semanticLabel);
+    entry.labelBoundingBox = rowLabel?.boundingBox || header?.boundingBox || typedSymbol?.boundingBox;
+    entry.semanticValueRegion = normalizeFillableBox(
+      entry,
+      entry.semanticValueRegion || entry.boundingBox,
+      pageGeometry.get(entry.page) || { width: 816, height: 1056 },
+    );
+    entry.boundingBox = entry.semanticValueRegion;
   }
   for (const entry of catalog.filter((candidate) => candidate.role === "column_header")) {
     entry.semanticLabel = entry.text ||
@@ -740,10 +821,17 @@ export async function buildHybridFieldExtraction(args: {
     return Boolean(box && hasValidFillableBox(entry, box));
   };
   const promotionCandidates = catalog.filter(
-    (entry) => fillableRoles.has(entry.role) && hasValidFillableGeometry(entry),
+    (entry) => fillableRoles.has(entry.role) &&
+      hasValidFillableGeometry(entry) &&
+      (entry.role !== "table-cell" || Boolean(entry.labelBoundingBox && entry.semanticLabel !== "Table value")),
   );
   const fillable: ExtractDocumentFieldCatalogEntry[] = [];
+  let overlappingGeometryConflictCount = 0;
   for (const entry of [...promotionCandidates].sort((left, right) => {
+    const typedPriority = Number(isTypedBlank(right)) - Number(isTypedBlank(left));
+    if (typedPriority !== 0) return typedPriority;
+    const controlPriority = Number(right.role === "checkbox") - Number(left.role === "checkbox");
+    if (controlPriority !== 0) return controlPriority;
     const pairPriority = Number(pairedInputIds.has(right.id)) - Number(pairedInputIds.has(left.id));
     if (pairPriority !== 0) return pairPriority;
     const leftSemantic = Number(preferredSemanticLabel(left.semanticLabel || left.text));
@@ -757,9 +845,19 @@ export async function buildHybridFieldExtraction(args: {
     const blockers = fillable.filter((candidate) =>
       candidate.page === entry.page && intersectionArea(box, candidate.semanticValueRegion!) > 0
     );
+    overlappingGeometryConflictCount += blockers.length;
     if (blockers.length > 0 && !pairedInputIds.has(entry.id)) continue;
     for (const other of blockers) {
-      box = largestRemainder(box, other.semanticValueRegion!, entry.role);
+      const overlap = intersectionArea(box, other.semanticValueRegion!);
+      const smallerArea = Math.max(1, Math.min(
+        box.width * box.height,
+        other.semanticValueRegion!.width * other.semanticValueRegion!.height,
+      ));
+      if (overlap / smallerArea >= 0.65) {
+        box = { ...box, width: 0, height: 0 };
+        break;
+      }
+      box = largestRemainder({ ...entry, semanticValueRegion: box }, other.semanticValueRegion!);
     }
     if (!hasValidFillableGeometry({ ...entry, semanticValueRegion: box })) continue;
     entry.boundingBox = box;
@@ -785,40 +883,42 @@ export async function buildHybridFieldExtraction(args: {
     });
   }
 
-  const pairedCatalogIds = new Set(labelInputPairs.flatMap((pair) => [pair.labelBlockId, pair.inputBlockId]));
-  const suppressibleRoles = new Set<ExtractDocumentFieldCatalogRole>([
-    "ocr-text",
-    "label",
-    "section-label",
-    "header",
-    "footer",
-  ]);
+  const catalogById = new Map(catalog.map((entry) => [entry.id, entry]));
   const fillableIds = new Set(fillable.map((entry) => entry.id));
-  const retainedCatalog = catalog.filter((entry) => {
-    const hasGeometry = hasValidFillableGeometry(entry);
-    const paired = pairedCatalogIds.has(entry.id);
-    if (fillableRoles.has(entry.role) && !fillableIds.has(entry.id)) return false;
-    if (entry.source === "di_table_cell" && !hasGeometry) return false;
-    const overlapsRealField = fillable.some((candidate) =>
-      candidate.page === entry.page && intersectionArea(entry.boundingBox, candidate.boundingBox) > 0
+  const validLabelInputPairs = labelInputPairs.filter((pair) => {
+    const label = catalogById.get(pair.labelBlockId);
+    const input = catalogById.get(pair.inputBlockId);
+    return Boolean(
+      label &&
+      input &&
+      fillableIds.has(input.id) &&
+      label.page === input.page &&
+      ["label", "question"].includes(label.role) &&
+      !isSectionHeading(label.text) &&
+      (label.role === "question" || isFillableLabel(label.text)),
     );
-    if (entry.source === "di_line" && suppressibleRoles.has(entry.role) && overlapsRealField) return false;
-    if (!suppressibleRoles.has(entry.role) || hasGeometry || paired || entry.semanticValueRegion) return true;
-    const shortUnpunctuatedNoise = entry.text.length < 40 &&
-      !entry.text.includes(":") &&
-      !/[?¿]/.test(entry.text) &&
-      !isCheckboxMarker(entry.text) &&
-      !isAdjacentToFillableRegion(entry, fillable);
-    return !shortUnpunctuatedNoise;
+  });
+  const pairedCatalogIds = new Set(
+    validLabelInputPairs.flatMap((pair) => [pair.labelBlockId, pair.inputBlockId]),
+  );
+  const validQuestionIds = new Set(questionAnswerPairs.map((pair) => pair.questionFieldId));
+  const retainedCatalog = catalog.filter((entry) => {
+    if (fillableRoles.has(entry.role)) return fillableIds.has(entry.id);
+    if (["section-label", "header", "title", "footer"].includes(entry.role)) return false;
+    if (entry.source === "di_table_cell") return false;
+    if (entry.role === "question") return validQuestionIds.has(entry.id);
+    return pairedCatalogIds.has(entry.id);
   });
   const retainedIds = new Set(retainedCatalog.map((entry) => entry.id));
-  const retainedLabelInputPairs = labelInputPairs.filter((pair) =>
+  const retainedLabelInputPairs = validLabelInputPairs.filter((pair) =>
     retainedIds.has(pair.labelBlockId) && retainedIds.has(pair.inputBlockId)
   );
   const retainedQuestionAnswerPairs = questionAnswerPairs.filter((pair) =>
     retainedIds.has(pair.questionFieldId) && retainedIds.has(pair.answerFieldId)
   );
-  const blocks = retainedCatalog.map<ExtractedBlock>((entry) => ({
+  const blocks = retainedCatalog
+    .filter((entry) => fillableIds.has(entry.id))
+    .map<ExtractedBlock>((entry) => ({
     id: entry.id,
     page: entry.page,
     type: entry.valueType === "checkbox" ? "checkbox" : entry.valueType === "signature" ? "signature" : "text",
@@ -827,8 +927,20 @@ export async function buildHybridFieldExtraction(args: {
       ? entry.semanticValueRegion || entry.boundingBox
       : entry.boundingBox,
     confidence: entry.confidence,
-  }));
+    }));
   const fields = fillable.map(createField);
+  const retainedCatalogIds = new Set(retainedCatalog.map((entry) => entry.id));
+  const suppressedSectionHeaderCount = catalog.filter((entry) =>
+    ["section-label", "header", "title", "footer"].includes(entry.role) && !retainedCatalogIds.has(entry.id)
+  ).length;
+  const suppressedDiTextOnlyBlockCount = catalog.filter((entry) =>
+    entry.source === "di_table_cell" && entry.text.trim().length > 0 && !retainedCatalogIds.has(entry.id)
+  ).length;
+  const suppressedOcrNoiseBlockCount = catalog.filter((entry) =>
+    entry.source === "di_line" &&
+    !["section-label", "header", "title", "footer"].includes(entry.role) &&
+    !retainedCatalogIds.has(entry.id)
+  ).length;
   return {
     blocks,
     fields,
@@ -844,6 +956,15 @@ export async function buildHybridFieldExtraction(args: {
       tableCellCount: retainedCatalog.filter((entry) => entry.source === "di_table_cell").length,
       semanticFieldCount: retainedCatalog.length,
       fillableFieldCount: fields.length,
+      currencyBlankCount: fillable.filter((entry) => entry.valueType === "currency").length,
+      percentageBlankCount: fillable.filter((entry) => entry.valueType === "percentage").length,
+      numericBlankCount: fillable.filter((entry) => entry.valueType === "numeric").length,
+      suppressedSectionHeaderCount,
+      suppressedDiTextOnlyBlockCount,
+      suppressedOcrNoiseBlockCount,
+      overlappingGeometryConflictCount,
+      validLabelInputPairCount: retainedLabelInputPairs.length,
+      propagatedELabelCandidateCount: fillable.filter((entry) => Boolean(entry.labelBoundingBox)).length,
     },
   };
 }

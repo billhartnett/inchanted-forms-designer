@@ -200,8 +200,9 @@ test("splits business labels and adjacent blank boxes into semantic labels and i
     assert.equal(input.role, "input");
     assert.equal(label.groupId, pair.id);
     assert.equal(input.groupId, pair.id);
-    assert.equal(labelBlock.boundingBox.x, label.boundingBox.x);
+    assert.equal(labelBlock, undefined);
     assert.deepEqual(inputBlock.boundingBox, input.semanticValueRegion);
+    assert.deepEqual(input.labelBoundingBox, label.boundingBox);
     assert.equal(input.boundingBox.x >= label.boundingBox.x + label.boundingBox.width, true);
     assert.equal(input.text, label.semanticLabel);
   }
@@ -226,8 +227,10 @@ test("splits business labels and adjacent blank boxes into semantic labels and i
   for (const pair of result.groupedStructures.labelInputPairs) {
     const labelMapping = response.jsonBody.mappings.find((entry) => entry.blockId === pair.labelBlockId);
     const inputMapping = response.jsonBody.mappings.find((entry) => entry.blockId === pair.inputBlockId);
-    assert.equal(labelMapping.semanticRole, "label");
+    assert.equal(labelMapping, undefined);
     assert.equal(inputMapping.semanticRole, "input");
+    assert.deepEqual(inputMapping.labelBoundingBox, result.fieldCatalog
+      .find((entry) => entry.id === pair.labelBlockId).boundingBox);
     assert.equal(inputMapping.suggestions.length > 0, true);
     assert.equal(response.jsonBody.mappedFields.some((entry) => entry.blockId === pair.inputBlockId), true);
     assert.equal(response.jsonBody.mappedFields.some((entry) => entry.blockId === pair.labelBlockId), false);
@@ -349,9 +352,8 @@ test("keeps questions as labels and promotes only fillable DI cell regions", asy
     false,
   );
   assert.equal(result.fieldCatalog.some((entry) => entry.text === "orphan scan artifact"), false);
-  assert.equal(result.fieldCatalog.some((entry) => entry.text === "Yes"), true);
-  assert.equal(Boolean(blankOnlyCell), true);
-  assert.equal(fieldIds.has(blankOnlyCell.id), true);
+  assert.equal(result.fieldCatalog.some((entry) => entry.text === "Yes"), false);
+  assert.equal(blankOnlyCell, undefined);
   assert.equal(
     result.fieldCatalog
       .filter((entry) => ["input", "value-region", "checkbox", "table-cell"].includes(entry.role))
@@ -479,9 +481,10 @@ test("promotes typed numeric, dollar, and percentage blanks without section text
   }))));
   assert.equal(fein.valueType, "numeric");
   assert.equal(fein.boundingBox.width >= 12 && fein.boundingBox.width <= 40, true);
-  assert.equal(fein.boundingBox.height < 6, true);
+  assert.equal(fein.boundingBox.width >= 6 && fein.boundingBox.width <= 64, true);
+  assert.equal(fein.boundingBox.height >= 8, true);
   assert.equal(employees.valueType, "numeric");
-  assert.equal(employees.boundingBox.height < 6, true);
+  assert.equal(employees.boundingBox.height >= 8, true);
   assert.equal(agency.role, "input");
   assert.ok(blankNumericCell, JSON.stringify({
     catalog: result.fieldCatalog.filter((entry) => entry.semanticLabel === "FEIN"),
@@ -489,7 +492,7 @@ test("promotes typed numeric, dollar, and percentage blanks without section text
   }));
   assert.equal(blankNumericCell.valueType, "numeric");
   assert.equal(blankNumericCell.boundingBox.width, 30);
-  assert.equal(blankNumericCell.boundingBox.height, 4);
+  assert.equal(blankNumericCell.boundingBox.height, 8);
   assert.equal(dollarFields.length, 2);
   assert.equal(dollarFields.every((entry) => entry.role === "value-region"), true);
   assert.equal(percentageFields.length, 2);

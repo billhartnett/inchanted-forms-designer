@@ -116,9 +116,9 @@ function hasFillableGeometry(entry: ExtractDocumentFieldCatalogEntry | undefined
   const narrowTypedBlank = Boolean(
     entry &&
     box &&
-    ["numeric", "percentage"].includes(entry.valueType) &&
-    box.width >= 12 &&
-    box.width <= 40,
+    ["numeric", "currency", "percentage"].includes(entry.valueType) &&
+    box.width >= 6 &&
+    box.width <= 64,
   );
   return Boolean(
     box &&
@@ -127,7 +127,7 @@ function hasFillableGeometry(entry: ExtractDocumentFieldCatalogEntry | undefined
     Number.isFinite(box.width) &&
     Number.isFinite(box.height) &&
     (entry?.role === "checkbox" ? box.width > 0 : narrowTypedBlank || box.width >= 20) &&
-    (narrowTypedBlank ? box.height > 0 : box.height >= 6) &&
+    (narrowTypedBlank ? box.height >= 2 : box.height >= 6) &&
     (entry?.role === "value-region" || box.height <= 60),
   );
 }
@@ -142,20 +142,24 @@ function intersectionArea(
 }
 
 function largestRemainder(
-  box: ExtractDocumentFieldCatalogEntry["boundingBox"],
+  entry: ExtractDocumentFieldCatalogEntry,
   blocker: ExtractDocumentFieldCatalogEntry["boundingBox"],
-  role: ExtractDocumentFieldCatalogEntry["role"],
 ): ExtractDocumentFieldCatalogEntry["boundingBox"] {
+  const box = entry.semanticValueRegion || entry.boundingBox;
   if (intersectionArea(box, blocker) === 0) return box;
+  const narrowTypedBlank = ["numeric", "currency", "percentage"].includes(entry.valueType) &&
+    box.width >= 6 && box.width <= 64;
+  const minimumWidth = narrowTypedBlank ? 6 : entry.role === "checkbox" ? 1 : 20;
+  const minimumHeight = narrowTypedBlank ? 2 : 6;
   const pieces = [
     { x: box.x, y: box.y, width: blocker.x - box.x, height: box.height },
     { x: blocker.x + blocker.width, y: box.y, width: box.x + box.width - blocker.x - blocker.width, height: box.height },
     { x: box.x, y: box.y, width: box.width, height: blocker.y - box.y },
     { x: box.x, y: blocker.y + blocker.height, width: box.width, height: box.y + box.height - blocker.y - blocker.height },
   ].filter((piece) =>
-    piece.width >= (role === "checkbox" ? 1 : 20) &&
-    piece.height >= 6 &&
-    (role === "value-region" || piece.height <= 60)
+    piece.width >= minimumWidth &&
+    piece.height >= minimumHeight &&
+    (entry.role === "value-region" || piece.height <= 60)
   );
   return pieces.sort((left, right) => right.width * right.height - left.width * left.height)[0] || {
     ...box,
@@ -179,6 +183,11 @@ function strictlyPromotedGeometry(
   );
   const promoted: ExtractDocumentFieldCatalogEntry[] = [];
   for (const entry of [...candidates].sort((left, right) => {
+    const typedPriority = Number(["numeric", "currency", "percentage"].includes(right.valueType)) -
+      Number(["numeric", "currency", "percentage"].includes(left.valueType));
+    if (typedPriority !== 0) return typedPriority;
+    const controlPriority = Number(right.role === "checkbox") - Number(left.role === "checkbox");
+    if (controlPriority !== 0) return controlPriority;
     const pairPriority = Number(pairedInputIds.has(right.id)) - Number(pairedInputIds.has(left.id));
     if (pairPriority !== 0) return pairPriority;
     const leftSemantic = Number(preferredAcordCodes(left.semanticLabel || left.text).length > 0);
@@ -194,7 +203,16 @@ function strictlyPromotedGeometry(
     );
     if (blockers.length > 0 && !pairedInputIds.has(entry.id)) continue;
     for (const other of blockers) {
-      box = largestRemainder(box, other.semanticValueRegion!, entry.role);
+      const overlap = intersectionArea(box, other.semanticValueRegion!);
+      const smallerArea = Math.max(1, Math.min(
+        box.width * box.height,
+        other.semanticValueRegion!.width * other.semanticValueRegion!.height,
+      ));
+      if (overlap / smallerArea >= 0.65) {
+        box = { ...box, width: 0, height: 0 };
+        break;
+      }
+      box = largestRemainder({ ...entry, semanticValueRegion: box }, other.semanticValueRegion!);
     }
     const adjusted = { ...entry, boundingBox: box, semanticValueRegion: box };
     if (!hasFillableGeometry(adjusted)) continue;
@@ -1751,6 +1769,12 @@ export async function mapFields(
         semanticRole: catalogEntry?.role,
         semanticLabel: catalogEntry?.semanticLabel || catalogEntry?.text,
         semanticValueRegion: promotedBox || catalogEntry?.semanticValueRegion,
+        labelBoundingBox: catalogEntry?.labelBoundingBox,
+        eLabelCandidates: mapping.suggestions.map((candidate) => ({
+          ...candidate,
+          boundingBox: catalogEntry?.labelBoundingBox,
+          semanticValueRegion: promotedBox || catalogEntry?.semanticValueRegion,
+        })),
         groupId: catalogEntry?.groupId,
         tableId: catalogEntry?.tableId,
         rowIndex: catalogEntry?.rowIndex,
