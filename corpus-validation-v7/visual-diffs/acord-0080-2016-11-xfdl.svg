@@ -1,0 +1,23 @@
+
+  <svg xmlns="http://www.w3.org/2000/svg" width="700" height="180" viewBox="0 0 700 180">
+    <rect width="100%" height="100%" fill="#f8fafc"/>
+    <text x="20" y="22" font-size="18" font-family="Arial" fill="#0f172a">ACORD 0080 2016-11.xfdl visual diff</text>
+    
+      <g>
+        <rect x="NaN" y="42.35040431266846" width="NaN" height="109.64959568733154" fill="#2563eb" opacity="0.8" rx="4"/>
+        <text x="NaN" y="172" font-size="9" fill="#0f172a">sema</text>
+      </g>
+      <g>
+        <rect x="NaN" y="32" width="NaN" height="120" fill="#2563eb" opacity="0.8" rx="4"/>
+        <text x="NaN" y="172" font-size="9" fill="#0f172a">supp</text>
+      </g>
+      <g>
+        <rect x="NaN" y="68.8733153638814" width="NaN" height="83.1266846361186" fill="#2563eb" opacity="0.8" rx="4"/>
+        <text x="NaN" y="172" font-size="9" fill="#0f172a">tabl</text>
+      </g>
+      <g>
+        <rect x="NaN" y="85.36927223719677" width="NaN" height="66.63072776280323" fill="#2563eb" opacity="0.8" rx="4"/>
+        <text x="NaN" y="172" font-size="9" fill="#0f172a">grou</text>
+      </g>
+  </svg>
+  

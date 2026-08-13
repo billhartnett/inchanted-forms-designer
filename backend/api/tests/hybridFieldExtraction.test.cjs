@@ -130,6 +130,30 @@ test("normalizes every DI geometry source with the same page transform", async (
   assert.equal(result.diagnostics.semanticFieldCount, result.fieldCatalog.length);
 });
 
+test("classifies phone, fax, zip, and year labels as typed blanks and keeps same-row semantic labels", async () => {
+  const lines = [
+    { content: "Phone Number: __________", confidence: 0.99, boundingBox: { x: 0.5, y: 0.5, width: 2.4, height: 0.18 } },
+    { content: "Fax Number: __________", confidence: 0.99, boundingBox: { x: 0.5, y: 0.72, width: 2.4, height: 0.18 } },
+    { content: "ZIP Code: ______", confidence: 0.99, boundingBox: { x: 0.5, y: 0.94, width: 2.2, height: 0.18 } },
+    { content: "Year Established: ____", confidence: 0.99, boundingBox: { x: 0.5, y: 1.16, width: 2.6, height: 0.18 } },
+  ];
+
+  const result = await buildHybridFieldExtraction({
+    pages: [{ pageNumber: 1, width: 8.5, height: 11, unit: "inch", lines }],
+  });
+
+  const phoneInput = result.fieldCatalog.find((entry) => entry.semanticLabel === "Phone Number" && entry.role === "input");
+  const faxInput = result.fieldCatalog.find((entry) => entry.semanticLabel === "Fax Number" && entry.role === "input");
+  const zipInput = result.fieldCatalog.find((entry) => entry.semanticLabel === "ZIP Code" && entry.role === "input");
+  const yearInput = result.fieldCatalog.find((entry) => entry.semanticLabel === "Year Established" && entry.role === "input");
+
+  assert.equal(phoneInput.valueType, "numeric");
+  assert.equal(faxInput.valueType, "numeric");
+  assert.equal(zipInput.valueType, "numeric");
+  assert.equal(yearInput.valueType, "numeric");
+  assert.equal(result.groupedStructures.labelInputPairs.length, 4);
+});
+
 test("splits business labels and adjacent blank boxes into semantic labels and inputs", async () => {
   const labels = [
     "Producer Name:",
@@ -190,6 +214,7 @@ test("splits business labels and adjacent blank boxes into semantic labels and i
   assert.equal(result.fieldCatalog.filter((entry) => entry.role === "label").length, labels.length);
   assert.equal(result.fieldCatalog.filter((entry) => entry.role === "input").length, labels.length);
   assert.equal(result.fieldCatalog.filter((entry) => entry.role === "table-cell").length, 0);
+  assert.equal(result.groupedStructures.semanticGroups.length, labels.length);
 
   for (const pair of result.groupedStructures.labelInputPairs) {
     const label = result.fieldCatalog.find((entry) => entry.id === pair.labelBlockId);
@@ -200,6 +225,7 @@ test("splits business labels and adjacent blank boxes into semantic labels and i
     assert.equal(input.role, "input");
     assert.equal(label.groupId, pair.id);
     assert.equal(input.groupId, pair.id);
+    assert.deepEqual(input.semanticGroupIds, [`table-1-row-${input.rowIndex + 1}`]);
     assert.equal(labelBlock, undefined);
     assert.deepEqual(inputBlock.boundingBox, input.semanticValueRegion);
     assert.deepEqual(input.labelBoundingBox, label.boundingBox);
@@ -251,6 +277,93 @@ test("splits business labels and adjacent blank boxes into semantic labels and i
   assert.equal(topCodeFor("Email:"), "NamedInsured_Primary_EmailAddress");
   assert.equal(topCodeFor("Carrier:"), "Insurer_FullName");
   assert.equal(topCodeFor("Phone:"), "NamedInsured_Primary_PhoneNumber");
+});
+
+test("classifies typed blanks and preserves directional Yes/No choice groups", async () => {
+  const result = await buildHybridFieldExtraction({
+    pages: [{
+      pageNumber: 1,
+      width: 816,
+      height: 1056,
+      unit: "pixel",
+      lines: [
+        { content: "Phone: __________", confidence: 0.99, boundingBox: { x: 40, y: 80, width: 220, height: 18 } },
+        { content: "Effective Date: __________", confidence: 0.99, boundingBox: { x: 40, y: 120, width: 260, height: 18 } },
+        { content: "Premium: $__________", confidence: 0.99, boundingBox: { x: 40, y: 160, width: 240, height: 18 } },
+        { content: "Ownership: __________%", confidence: 0.99, boundingBox: { x: 40, y: 200, width: 240, height: 18 } },
+        { content: "YES", confidence: 0.99, boundingBox: { x: 130, y: 400, width: 35, height: 18 } },
+        { content: "NO", confidence: 0.99, boundingBox: { x: 230, y: 400, width: 28, height: 18 } },
+      ],
+    }],
+    rawResult: {
+      pages: [{
+        pageNumber: 1,
+        unit: "pixel",
+        selectionMarks: [
+          { state: "unselected", confidence: 0.99, polygon: [
+            { x: 105, y: 400 }, { x: 121, y: 400 }, { x: 121, y: 416 }, { x: 105, y: 416 },
+          ] },
+          { state: "selected", confidence: 0.99, polygon: [
+            { x: 205, y: 400 }, { x: 221, y: 400 }, { x: 221, y: 416 }, { x: 205, y: 416 },
+          ] },
+        ],
+      }],
+    },
+  });
+
+  const typed = Object.fromEntries(
+    result.fieldCatalog
+      .filter((entry) => entry.source === "blank_detector")
+      .map((entry) => [entry.semanticLabel, entry.valueType]),
+  );
+  assert.equal(typed.Phone, "numeric");
+  assert.equal(typed["Effective Date"], "date");
+  assert.equal(typed.Premium, "currency");
+  assert.equal(typed.Ownership, "percentage");
+
+  const checkboxGroup = result.groupedStructures.checkboxGroups.find((group) =>
+    group.checkboxFieldIds.length === 2
+  );
+  assert.deepEqual(checkboxGroup.labels, ["YES", "NO"]);
+  const semanticGroup = result.groupedStructures.semanticGroups.find((group) =>
+    group.id === checkboxGroup.id
+  );
+  assert.equal(semanticGroup.kind, "yes-no");
+  assert.deepEqual(semanticGroup.fieldIds, checkboxGroup.checkboxFieldIds);
+  for (const fieldId of checkboxGroup.checkboxFieldIds) {
+    const entry = result.fieldCatalog.find((candidate) => candidate.id === fieldId);
+    assert.equal(entry.semanticGroupIds.includes(checkboxGroup.id), true);
+  }
+});
+
+test("groups adjacent address fields without replacing label/value pair identity", async () => {
+  const result = await buildHybridFieldExtraction({
+    pages: [{
+      pageNumber: 1,
+      width: 816,
+      height: 1056,
+      unit: "pixel",
+      lines: [
+        { content: "Mailing Address: __________", confidence: 0.99, boundingBox: { x: 40, y: 80, width: 320, height: 18 } },
+        { content: "City: __________", confidence: 0.99, boundingBox: { x: 40, y: 112, width: 200, height: 18 } },
+        { content: "State: __________", confidence: 0.99, boundingBox: { x: 260, y: 112, width: 160, height: 18 } },
+        { content: "ZIP: __________", confidence: 0.99, boundingBox: { x: 440, y: 112, width: 150, height: 18 } },
+      ],
+    }],
+  });
+
+  const addressGroup = result.groupedStructures.semanticGroups.find((group) =>
+    group.kind === "address-block"
+  );
+  assert.equal(addressGroup.fieldIds.length, 4);
+  for (const fieldId of addressGroup.fieldIds) {
+    const entry = result.fieldCatalog.find((candidate) => candidate.id === fieldId);
+    const pair = result.groupedStructures.labelInputPairs.find((candidate) =>
+      candidate.inputBlockId === fieldId
+    );
+    assert.equal(entry.semanticGroupIds.includes(addressGroup.id), true);
+    assert.equal(entry.groupId, pair.id);
+  }
 });
 
 test("keeps questions as labels and promotes only fillable DI cell regions", async () => {

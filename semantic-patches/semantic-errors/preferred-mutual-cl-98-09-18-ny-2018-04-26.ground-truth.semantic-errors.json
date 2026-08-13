@@ -1,0 +1,4774 @@
+{
+  "schemaVersion": "semantic-errors.v1",
+  "generatedAt": "2026-08-12T14:53:16.294Z",
+  "form": {
+    "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+    "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+    "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+    "pairStatus": "matched",
+    "pairConfidence": "high"
+  },
+  "counts": {
+    "truthFields": 67,
+    "predictedFillableFields": 63,
+    "matchedFields": 44,
+    "promotedFields": 63,
+    "errors": 159
+  },
+  "categoryCounts": {
+    "semantic_label_mismatch": 44,
+    "candidate_ranking_error": 7,
+    "field_type_misclassification": 6,
+    "table_detection_error": 22,
+    "checkbox_yes_no_pairing_error": 0,
+    "suppression_error": 23,
+    "grouping_error": 34,
+    "label_value_pairing_error": 0,
+    "unmapped_fillable_field": 23
+  },
+  "errors": [
+    {
+      "id": "semantic_label_mismatch:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:NamedInsured_FullName_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_FullName_A",
+        "predictionId": "input-table-1-r1-c1",
+        "page": 1,
+        "geometryDistance": 0.060716539717582035
+      },
+      "expected": {
+        "label": "Enter text: The named insured(s) as it / they will appear on the policy declarations page.",
+        "helpLabel": "Enter text: The named insured(s) as it / they will appear on the policy declarations page."
+      },
+      "actual": {
+        "label": "Name of Applicant (Legal EntityName)"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:NamedInsured_MailingAddress_LineOne_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_MailingAddress_LineOne_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "NamedInsured_MailingAddress_LineOne_A",
+        "type": "text",
+        "label": "Enter text: The named insured's mailing address line one."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:NamedInsured_MailingAddress_LineOne_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_MailingAddress_LineOne_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:NamedInsured_MailingAddress_CityName_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_MailingAddress_CityName_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "NamedInsured_MailingAddress_CityName_A",
+        "type": "text",
+        "label": "Enter text: The named insured's mailing address city name."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:NamedInsured_MailingAddress_CityName_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_MailingAddress_CityName_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:NamedInsured_MailingAddress_StateOrProvinceCode_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_MailingAddress_StateOrProvinceCode_A",
+        "predictionId": "input-table-1-r4-c2",
+        "page": 1,
+        "geometryDistance": 0.04313922874320225
+      },
+      "expected": {
+        "label": "Enter code: The named insured's mailing address state or province code.",
+        "helpLabel": "Enter code: The named insured's mailing address state or province code."
+      },
+      "actual": {
+        "label": "State"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0.1818
+      }
+    },
+    {
+      "id": "table_detection_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:NamedInsured_MailingAddress_StateOrProvinceCode_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_MailingAddress_StateOrProvinceCode_A",
+        "predictionId": "input-table-1-r4-c2",
+        "page": 1,
+        "geometryDistance": 0.04313922874320225
+      },
+      "expected": {
+        "tableId": "page-1-table-1",
+        "rowIndex": 0,
+        "columnIndex": 2,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": "table-1",
+        "rowIndex": 3,
+        "columnIndex": 1,
+        "valueType": "text"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:NamedInsured_MailingAddress_PostalCode_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_MailingAddress_PostalCode_A",
+        "predictionId": "input-table-1-r4-c3",
+        "page": 1,
+        "geometryDistance": 0.06498049422270712
+      },
+      "expected": {
+        "label": "Enter code: The named insured's mailing address postal code.",
+        "helpLabel": "Enter code: The named insured's mailing address postal code."
+      },
+      "actual": {
+        "label": "Zip Code"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0.2
+      }
+    },
+    {
+      "id": "field_type_misclassification:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:NamedInsured_MailingAddress_PostalCode_A",
+      "category": "field_type_misclassification",
+      "description": "The predicted fillable type differs from the XFDL control/format type.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_MailingAddress_PostalCode_A",
+        "predictionId": "input-table-1-r4-c3",
+        "page": 1,
+        "geometryDistance": 0.06498049422270712
+      },
+      "expected": {
+        "type": "text",
+        "sourceType": "text",
+        "format": {
+          "dataType": "string",
+          "requirement": null,
+          "presentation": "",
+          "rawValues": [
+            "string",
+            "",
+            "Optional",
+            ""
+          ],
+          "provenance": "explicit"
+        }
+      },
+      "actual": {
+        "type": "numeric",
+        "sourceType": "numeric"
+      },
+      "rationale": "XFDL control/format typing and backend typed-blank classification disagree.",
+      "evidence": {}
+    },
+    {
+      "id": "table_detection_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:NamedInsured_MailingAddress_PostalCode_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_MailingAddress_PostalCode_A",
+        "predictionId": "input-table-1-r4-c3",
+        "page": 1,
+        "geometryDistance": 0.06498049422270712
+      },
+      "expected": {
+        "tableId": "page-1-table-1",
+        "rowIndex": 0,
+        "columnIndex": 3,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": "table-1",
+        "rowIndex": 3,
+        "columnIndex": 2,
+        "valueType": "numeric"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:NamedInsured_Contact_FullName_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_Contact_FullName_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "NamedInsured_Contact_FullName_A",
+        "type": "text",
+        "label": "Enter text: The full name of the contact."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:NamedInsured_Contact_FullName_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_Contact_FullName_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:NamedInsured_Primary_PhoneNumber_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_Primary_PhoneNumber_A",
+        "predictionId": "input-table-1-r5-c2",
+        "page": 1,
+        "geometryDistance": 0.03762446480374135
+      },
+      "expected": {
+        "label": "Enter number: The named insured's primary phone number.",
+        "helpLabel": "Enter number: The named insured's primary phone number."
+      },
+      "actual": {
+        "label": "Telephone"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "field_type_misclassification:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:NamedInsured_Primary_PhoneNumber_A",
+      "category": "field_type_misclassification",
+      "description": "The predicted fillable type differs from the XFDL control/format type.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_Primary_PhoneNumber_A",
+        "predictionId": "input-table-1-r5-c2",
+        "page": 1,
+        "geometryDistance": 0.03762446480374135
+      },
+      "expected": {
+        "type": "numeric",
+        "sourceType": "numeric",
+        "format": {
+          "dataType": "int",
+          "requirement": null,
+          "presentation": "",
+          "rawValues": [
+            "int",
+            "",
+            "Optional",
+            ""
+          ],
+          "provenance": "explicit"
+        }
+      },
+      "actual": {
+        "type": "text",
+        "sourceType": "text"
+      },
+      "rationale": "XFDL control/format typing and backend typed-blank classification disagree.",
+      "evidence": {}
+    },
+    {
+      "id": "candidate_ranking_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:NamedInsured_Primary_PhoneNumber_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_Primary_PhoneNumber_A",
+        "predictionId": "input-table-1-r5-c2",
+        "page": 1,
+        "geometryDistance": 0.03762446480374135
+      },
+      "expected": {
+        "topAcordCode": "NamedInsured_Primary_PhoneNumber"
+      },
+      "actual": {
+        "topAcordCode": "Client_ContactPerson_Extension",
+        "rankedCodes": [
+          "Client_ContactPerson_Extension",
+          "CrimeLineOfBusiness_Question_KAHCode",
+          "CyberCoverage_ThirdPartyBusinessTransactions_BusinessToConsumerRevenueAmount"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "table_detection_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:NamedInsured_Primary_PhoneNumber_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_Primary_PhoneNumber_A",
+        "predictionId": "input-table-1-r5-c2",
+        "page": 1,
+        "geometryDistance": 0.03762446480374135
+      },
+      "expected": {
+        "tableId": "page-1-table-1",
+        "rowIndex": 1,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": "table-1",
+        "rowIndex": 4,
+        "columnIndex": 1,
+        "valueType": "text"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:NamedInsured_Primary_FaxNumber_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_Primary_FaxNumber_A",
+        "predictionId": "input-semantic-p1-l47",
+        "page": 1,
+        "geometryDistance": 0.07814608812850043
+      },
+      "expected": {
+        "label": "Enter number: The named insured's fax number.",
+        "helpLabel": "Enter number: The named insured's fax number."
+      },
+      "actual": {
+        "label": "Website"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "field_type_misclassification:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:NamedInsured_Primary_FaxNumber_A",
+      "category": "field_type_misclassification",
+      "description": "The predicted fillable type differs from the XFDL control/format type.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_Primary_FaxNumber_A",
+        "predictionId": "input-semantic-p1-l47",
+        "page": 1,
+        "geometryDistance": 0.07814608812850043
+      },
+      "expected": {
+        "type": "numeric",
+        "sourceType": "numeric",
+        "format": {
+          "dataType": "int",
+          "requirement": null,
+          "presentation": "",
+          "rawValues": [
+            "int",
+            "",
+            "Optional",
+            ""
+          ],
+          "provenance": "explicit"
+        }
+      },
+      "actual": {
+        "type": "text",
+        "sourceType": "text"
+      },
+      "rationale": "XFDL control/format typing and backend typed-blank classification disagree.",
+      "evidence": {}
+    },
+    {
+      "id": "candidate_ranking_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:NamedInsured_Primary_FaxNumber_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_Primary_FaxNumber_A",
+        "predictionId": "input-semantic-p1-l47",
+        "page": 1,
+        "geometryDistance": 0.07814608812850043
+      },
+      "expected": {
+        "topAcordCode": "NamedInsured_Primary_FaxNumber"
+      },
+      "actual": {
+        "topAcordCode": "Client_WebsiteAddress",
+        "rankedCodes": [
+          "Client_WebsiteAddress",
+          "Insurer_AgencyInterface_WebsiteIndicator",
+          "InsurerOrVendor_Questionnaire_InsurerWebsiteAddDependentsEmployeeAccessIndicator"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "table_detection_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:NamedInsured_Primary_FaxNumber_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_Primary_FaxNumber_A",
+        "predictionId": "input-semantic-p1-l47",
+        "page": 1,
+        "geometryDistance": 0.07814608812850043
+      },
+      "expected": {
+        "tableId": "page-1-table-1",
+        "rowIndex": 1,
+        "columnIndex": 3,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "text"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:NamedInsured_Primary_EmailAddress_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_Primary_EmailAddress_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "NamedInsured_Primary_EmailAddress_A",
+        "type": "text",
+        "label": "Enter text: The named insured's primary e-mail address."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:NamedInsured_Primary_EmailAddress_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_Primary_EmailAddress_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:NamedInsured_Primary_WebsiteAddress_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_Primary_WebsiteAddress_A",
+        "predictionId": "input-table-1-r6-c3",
+        "page": 1,
+        "geometryDistance": 0.0514022291502062
+      },
+      "expected": {
+        "label": "Enter text: The primary website address for the named insured.",
+        "helpLabel": "Enter text: The primary website address for the named insured."
+      },
+      "actual": {
+        "label": "Facsimile"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "candidate_ranking_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:NamedInsured_Primary_WebsiteAddress_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_Primary_WebsiteAddress_A",
+        "predictionId": "input-table-1-r6-c3",
+        "page": 1,
+        "geometryDistance": 0.0514022291502062
+      },
+      "expected": {
+        "topAcordCode": "NamedInsured_Primary_WebsiteAddress"
+      },
+      "actual": {
+        "topAcordCode": "NamedInsured_InputTaxCreditPercent",
+        "rankedCodes": [
+          "NamedInsured_InputTaxCreditPercent"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Policy_EffectiveDate_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Policy_EffectiveDate_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Policy_EffectiveDate_A",
+        "type": "date",
+        "label": "Enter date: The effective date of the policy. The date that the terms and conditions of the policy commence. (MM/DD/YYYY)"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Policy_EffectiveDate_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Policy_EffectiveDate_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_LhjUlLJx_B",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_LhjUlLJx_B",
+        "predictionId": "checkbox-p2-1",
+        "page": 2,
+        "geometryDistance": 0.0017049260865080853
+      },
+      "expected": {
+        "label": "Unmapped_LhjUlLJx_B",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "YES"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "grouping_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_LhjUlLJx_B",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_LhjUlLJx_B",
+        "predictionId": "checkbox-p2-1",
+        "page": 2,
+        "geometryDistance": 0.0017049260865080853
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-2"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_hXPkffrs_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_hXPkffrs_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_hXPkffrs_A",
+        "type": "text",
+        "label": "Unmapped_hXPkffrs_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_hXPkffrs_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_hXPkffrs_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:NamedInsured_BusinessStartDate_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_BusinessStartDate_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "NamedInsured_BusinessStartDate_A",
+        "type": "date",
+        "label": "Enter date: The date the applicant began in business. This is important because it helps the underwriter determine the expertise and business success of the applicant."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:NamedInsured_BusinessStartDate_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_BusinessStartDate_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:CommercialPolicy_OperationsDescription_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CommercialPolicy_OperationsDescription_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "CommercialPolicy_OperationsDescription_A",
+        "type": "text",
+        "label": "Enter text: The description of the operations of this risk or insured."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:CommercialPolicy_OperationsDescription_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CommercialPolicy_OperationsDescription_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:FinancialStatement_CurrentYear_TotalRevenueAmount_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "FinancialStatement_CurrentYear_TotalRevenueAmount_A",
+        "predictionId": "input-semantic-p2-l18",
+        "page": 2,
+        "geometryDistance": 0.025939896841579296
+      },
+      "expected": {
+        "label": "Enter amount: The total revenue for the organization for the current year.",
+        "helpLabel": "Enter amount: The total revenue for the organization for the current year."
+      },
+      "actual": {
+        "label": "Current Year Projection"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0.3333
+      }
+    },
+    {
+      "id": "field_type_misclassification:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:FinancialStatement_CurrentYear_TotalRevenueAmount_A",
+      "category": "field_type_misclassification",
+      "description": "The predicted fillable type differs from the XFDL control/format type.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "FinancialStatement_CurrentYear_TotalRevenueAmount_A",
+        "predictionId": "input-semantic-p2-l18",
+        "page": 2,
+        "geometryDistance": 0.025939896841579296
+      },
+      "expected": {
+        "type": "numeric",
+        "sourceType": "numeric",
+        "format": {
+          "dataType": "int",
+          "requirement": null,
+          "presentation": "",
+          "rawValues": [
+            "int",
+            "",
+            "Optional",
+            ""
+          ],
+          "provenance": "explicit"
+        }
+      },
+      "actual": {
+        "type": "text",
+        "sourceType": "text"
+      },
+      "rationale": "XFDL control/format typing and backend typed-blank classification disagree.",
+      "evidence": {}
+    },
+    {
+      "id": "candidate_ranking_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:FinancialStatement_CurrentYear_TotalRevenueAmount_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "FinancialStatement_CurrentYear_TotalRevenueAmount_A",
+        "predictionId": "input-semantic-p2-l18",
+        "page": 2,
+        "geometryDistance": 0.025939896841579296
+      },
+      "expected": {
+        "topAcordCode": "FinancialStatement_CurrentYear_TotalRevenueAmount"
+      },
+      "actual": {
+        "topAcordCode": "AccountantsLiability_AttestAssuranceServices_CurrentYearPercent",
+        "rankedCodes": [
+          "AccountantsLiability_AttestAssuranceServices_CurrentYearPercent",
+          "AccountantsLiability_AuditOther_CurrentYearPercent",
+          "AccountantsLiability_AuditPublicCompany_CurrentYearPercent"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:FinancialStatement_PriorYear_TotalRevenueAmount_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "FinancialStatement_PriorYear_TotalRevenueAmount_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "FinancialStatement_PriorYear_TotalRevenueAmount_A",
+        "type": "numeric",
+        "label": "Enter amount: The total revenue for the organization for the prior year."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:FinancialStatement_PriorYear_TotalRevenueAmount_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "FinancialStatement_PriorYear_TotalRevenueAmount_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_euvbyfgZ_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_euvbyfgZ_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_euvbyfgZ_A",
+        "type": "text",
+        "label": "Unmapped_euvbyfgZ_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_euvbyfgZ_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_euvbyfgZ_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_Ypojaxlj_B",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_Ypojaxlj_B",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_Ypojaxlj_B",
+        "type": "text",
+        "label": "Unmapped_Ypojaxlj_B"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_Ypojaxlj_B",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_Ypojaxlj_B",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_eAOrglrE_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_eAOrglrE_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_eAOrglrE_A",
+        "type": "text",
+        "label": "Unmapped_eAOrglrE_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_eAOrglrE_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_eAOrglrE_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_ILAfuKCm_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_ILAfuKCm_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_ILAfuKCm_A",
+        "type": "text",
+        "label": "Unmapped_ILAfuKCm_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_ILAfuKCm_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_ILAfuKCm_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_anIMhVGB_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_anIMhVGB_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_anIMhVGB_A",
+        "type": "text",
+        "label": "Unmapped_anIMhVGB_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_anIMhVGB_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_anIMhVGB_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_ItSrifOy_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_ItSrifOy_A",
+        "predictionId": "checkbox-p2-3",
+        "page": 2,
+        "geometryDistance": 0.001389680656461644
+      },
+      "expected": {
+        "label": "Unmapped_ItSrifOy_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "YES"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "grouping_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_ItSrifOy_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_ItSrifOy_A",
+        "predictionId": "checkbox-p2-3",
+        "page": 2,
+        "geometryDistance": 0.001389680656461644
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-2"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_QMRoCZOd_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_QMRoCZOd_A",
+        "predictionId": "checkbox-p2-5",
+        "page": 2,
+        "geometryDistance": 0.0016731173699614937
+      },
+      "expected": {
+        "label": "Unmapped_QMRoCZOd_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "NO"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "grouping_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_QMRoCZOd_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_QMRoCZOd_A",
+        "predictionId": "checkbox-p2-5",
+        "page": 2,
+        "geometryDistance": 0.0016731173699614937
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-2"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_dREGBqET_B",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_dREGBqET_B",
+        "predictionId": "checkbox-p2-7",
+        "page": 2,
+        "geometryDistance": 0.0011691291961592129
+      },
+      "expected": {
+        "label": "Unmapped_dREGBqET_B",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "YES"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "grouping_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_dREGBqET_B",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_dREGBqET_B",
+        "predictionId": "checkbox-p2-7",
+        "page": 2,
+        "geometryDistance": 0.0011691291961592129
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-2"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_DICBgaBl_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_DICBgaBl_A",
+        "predictionId": "checkbox-p2-9",
+        "page": 2,
+        "geometryDistance": 0.0011676953083357125
+      },
+      "expected": {
+        "label": "Unmapped_DICBgaBl_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "YES"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_DICBgaBl_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_DICBgaBl_A",
+        "predictionId": "checkbox-p2-9",
+        "page": 2,
+        "geometryDistance": 0.0011676953083357125
+      },
+      "expected": {
+        "tableId": "page-2-table-1",
+        "rowIndex": 0,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_DICBgaBl_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_DICBgaBl_A",
+        "predictionId": "checkbox-p2-9",
+        "page": 2,
+        "geometryDistance": 0.0011676953083357125
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-2"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_adHZMqAv_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_adHZMqAv_A",
+        "predictionId": "checkbox-p2-11",
+        "page": 2,
+        "geometryDistance": 0.0013037166960796621
+      },
+      "expected": {
+        "label": "Unmapped_adHZMqAv_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "NO"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_adHZMqAv_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_adHZMqAv_A",
+        "predictionId": "checkbox-p2-11",
+        "page": 2,
+        "geometryDistance": 0.0013037166960796621
+      },
+      "expected": {
+        "tableId": "page-2-table-1",
+        "rowIndex": 1,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_adHZMqAv_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_adHZMqAv_A",
+        "predictionId": "checkbox-p2-11",
+        "page": 2,
+        "geometryDistance": 0.0013037166960796621
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-2"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_ZKvUDRzl_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_ZKvUDRzl_A",
+        "predictionId": "checkbox-p2-13",
+        "page": 2,
+        "geometryDistance": 0.0014177132606147062
+      },
+      "expected": {
+        "label": "Unmapped_ZKvUDRzl_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "YES"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_ZKvUDRzl_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_ZKvUDRzl_A",
+        "predictionId": "checkbox-p2-13",
+        "page": 2,
+        "geometryDistance": 0.0014177132606147062
+      },
+      "expected": {
+        "tableId": "page-2-table-2",
+        "rowIndex": 0,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_ZKvUDRzl_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_ZKvUDRzl_A",
+        "predictionId": "checkbox-p2-13",
+        "page": 2,
+        "geometryDistance": 0.0014177132606147062
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-2"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_TFqUHDvR_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_TFqUHDvR_A",
+        "predictionId": "checkbox-p2-15",
+        "page": 2,
+        "geometryDistance": 0.00176859715133768
+      },
+      "expected": {
+        "label": "Unmapped_TFqUHDvR_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "YES"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_TFqUHDvR_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_TFqUHDvR_A",
+        "predictionId": "checkbox-p2-15",
+        "page": 2,
+        "geometryDistance": 0.00176859715133768
+      },
+      "expected": {
+        "tableId": "page-2-table-2",
+        "rowIndex": 1,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_TFqUHDvR_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_TFqUHDvR_A",
+        "predictionId": "checkbox-p2-15",
+        "page": 2,
+        "geometryDistance": 0.00176859715133768
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-2"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_yAfkuHmu_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_yAfkuHmu_A",
+        "predictionId": "checkbox-p2-2",
+        "page": 2,
+        "geometryDistance": 0.0014135039410047032
+      },
+      "expected": {
+        "label": "Unmapped_yAfkuHmu_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "NO"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "grouping_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_yAfkuHmu_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_yAfkuHmu_A",
+        "predictionId": "checkbox-p2-2",
+        "page": 2,
+        "geometryDistance": 0.0014135039410047032
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-2"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_ZhaqTyxw_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_ZhaqTyxw_A",
+        "predictionId": "checkbox-p2-4",
+        "page": 2,
+        "geometryDistance": 0.0012734221753637309
+      },
+      "expected": {
+        "label": "Unmapped_ZhaqTyxw_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "YES"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "grouping_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_ZhaqTyxw_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_ZhaqTyxw_A",
+        "predictionId": "checkbox-p2-4",
+        "page": 2,
+        "geometryDistance": 0.0012734221753637309
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-2"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_jnjygrgH_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_jnjygrgH_A",
+        "predictionId": "checkbox-p2-6",
+        "page": 2,
+        "geometryDistance": 0.0015706550153061754
+      },
+      "expected": {
+        "label": "Unmapped_jnjygrgH_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "İYES"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "grouping_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_jnjygrgH_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_jnjygrgH_A",
+        "predictionId": "checkbox-p2-6",
+        "page": 2,
+        "geometryDistance": 0.0015706550153061754
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-2"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_Ypojaxlj_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_Ypojaxlj_A",
+        "predictionId": "checkbox-p2-8",
+        "page": 2,
+        "geometryDistance": 0.0017629930118323884
+      },
+      "expected": {
+        "label": "Unmapped_Ypojaxlj_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "YES"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "grouping_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_Ypojaxlj_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_Ypojaxlj_A",
+        "predictionId": "checkbox-p2-8",
+        "page": 2,
+        "geometryDistance": 0.0017629930118323884
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-2"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_HKfGBssx_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_HKfGBssx_A",
+        "predictionId": "checkbox-p2-10",
+        "page": 2,
+        "geometryDistance": 0.0011910240366430494
+      },
+      "expected": {
+        "label": "Unmapped_HKfGBssx_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "YES"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_HKfGBssx_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_HKfGBssx_A",
+        "predictionId": "checkbox-p2-10",
+        "page": 2,
+        "geometryDistance": 0.0011910240366430494
+      },
+      "expected": {
+        "tableId": "page-2-table-1",
+        "rowIndex": 0,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_HKfGBssx_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_HKfGBssx_A",
+        "predictionId": "checkbox-p2-10",
+        "page": 2,
+        "geometryDistance": 0.0011910240366430494
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-2"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_oKJNjPum_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_oKJNjPum_A",
+        "predictionId": "checkbox-p2-12",
+        "page": 2,
+        "geometryDistance": 0.0017912995797943147
+      },
+      "expected": {
+        "label": "Unmapped_oKJNjPum_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "YES"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_oKJNjPum_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_oKJNjPum_A",
+        "predictionId": "checkbox-p2-12",
+        "page": 2,
+        "geometryDistance": 0.0017912995797943147
+      },
+      "expected": {
+        "tableId": "page-2-table-1",
+        "rowIndex": 1,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_oKJNjPum_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_oKJNjPum_A",
+        "predictionId": "checkbox-p2-12",
+        "page": 2,
+        "geometryDistance": 0.0017912995797943147
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-2"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_LhjUlLJx_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_LhjUlLJx_A",
+        "predictionId": "checkbox-p2-14",
+        "page": 2,
+        "geometryDistance": 0.0017490131263098669
+      },
+      "expected": {
+        "label": "Unmapped_LhjUlLJx_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "NO"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_LhjUlLJx_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_LhjUlLJx_A",
+        "predictionId": "checkbox-p2-14",
+        "page": 2,
+        "geometryDistance": 0.0017490131263098669
+      },
+      "expected": {
+        "tableId": "page-2-table-2",
+        "rowIndex": 0,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_LhjUlLJx_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_LhjUlLJx_A",
+        "predictionId": "checkbox-p2-14",
+        "page": 2,
+        "geometryDistance": 0.0017490131263098669
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-2"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_dREGBqET_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_dREGBqET_A",
+        "predictionId": "checkbox-p2-16",
+        "page": 2,
+        "geometryDistance": 0.001321870338317684
+      },
+      "expected": {
+        "label": "Unmapped_dREGBqET_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "YES"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_dREGBqET_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_dREGBqET_A",
+        "predictionId": "checkbox-p2-16",
+        "page": 2,
+        "geometryDistance": 0.001321870338317684
+      },
+      "expected": {
+        "tableId": "page-2-table-2",
+        "rowIndex": 1,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_dREGBqET_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_dREGBqET_A",
+        "predictionId": "checkbox-p2-16",
+        "page": 2,
+        "geometryDistance": 0.001321870338317684
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-2"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_SiPaEXBT_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_SiPaEXBT_A",
+        "predictionId": "checkbox-p3-1",
+        "page": 3,
+        "geometryDistance": 0.0015403086654521044
+      },
+      "expected": {
+        "label": "Unmapped_SiPaEXBT_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "YES"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "grouping_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_SiPaEXBT_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_SiPaEXBT_A",
+        "predictionId": "checkbox-p3-1",
+        "page": 3,
+        "geometryDistance": 0.0015403086654521044
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-4"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_LfOYSpQn_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_LfOYSpQn_A",
+        "predictionId": null,
+        "page": 3,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_LfOYSpQn_A",
+        "type": "text",
+        "label": "Unmapped_LfOYSpQn_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_LfOYSpQn_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_LfOYSpQn_A",
+        "predictionId": null,
+        "page": 3,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_hplNCaSM_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_hplNCaSM_A",
+        "predictionId": null,
+        "page": 3,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_hplNCaSM_A",
+        "type": "text",
+        "label": "Unmapped_hplNCaSM_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_hplNCaSM_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_hplNCaSM_A",
+        "predictionId": null,
+        "page": 3,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_jBRMeqFe_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_jBRMeqFe_A",
+        "predictionId": null,
+        "page": 3,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_jBRMeqFe_A",
+        "type": "text",
+        "label": "Unmapped_jBRMeqFe_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_jBRMeqFe_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_jBRMeqFe_A",
+        "predictionId": null,
+        "page": 3,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_wElhdhBd_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_wElhdhBd_A",
+        "predictionId": null,
+        "page": 3,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_wElhdhBd_A",
+        "type": "text",
+        "label": "Unmapped_wElhdhBd_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_wElhdhBd_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_wElhdhBd_A",
+        "predictionId": null,
+        "page": 3,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_RhdAJFiC_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_RhdAJFiC_A",
+        "predictionId": null,
+        "page": 3,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_RhdAJFiC_A",
+        "type": "text",
+        "label": "Unmapped_RhdAJFiC_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_RhdAJFiC_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_RhdAJFiC_A",
+        "predictionId": null,
+        "page": 3,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_RNFAGjbs_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_RNFAGjbs_A",
+        "predictionId": null,
+        "page": 3,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_RNFAGjbs_A",
+        "type": "text",
+        "label": "Unmapped_RNFAGjbs_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_RNFAGjbs_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_RNFAGjbs_A",
+        "predictionId": null,
+        "page": 3,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_pNKWYkgl_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_pNKWYkgl_A",
+        "predictionId": "checkbox-p3-3",
+        "page": 3,
+        "geometryDistance": 0.0015669856965259176
+      },
+      "expected": {
+        "label": "Unmapped_pNKWYkgl_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "NO"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_pNKWYkgl_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_pNKWYkgl_A",
+        "predictionId": "checkbox-p3-3",
+        "page": 3,
+        "geometryDistance": 0.0015669856965259176
+      },
+      "expected": {
+        "tableId": "page-3-table-1",
+        "rowIndex": 0,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_pNKWYkgl_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_pNKWYkgl_A",
+        "predictionId": "checkbox-p3-3",
+        "page": 3,
+        "geometryDistance": 0.0015669856965259176
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-4"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_mvmyUWyF_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_mvmyUWyF_A",
+        "predictionId": "checkbox-p3-5",
+        "page": 3,
+        "geometryDistance": 0.0016412627644870237
+      },
+      "expected": {
+        "label": "Unmapped_mvmyUWyF_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "YES"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_mvmyUWyF_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_mvmyUWyF_A",
+        "predictionId": "checkbox-p3-5",
+        "page": 3,
+        "geometryDistance": 0.0016412627644870237
+      },
+      "expected": {
+        "tableId": "page-3-table-1",
+        "rowIndex": 1,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_mvmyUWyF_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_mvmyUWyF_A",
+        "predictionId": "checkbox-p3-5",
+        "page": 3,
+        "geometryDistance": 0.0016412627644870237
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-4"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_dzPPbAWi_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_dzPPbAWi_A",
+        "predictionId": "checkbox-p3-7",
+        "page": 3,
+        "geometryDistance": 0.0018291655046984313
+      },
+      "expected": {
+        "label": "Unmapped_dzPPbAWi_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "YES"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_dzPPbAWi_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_dzPPbAWi_A",
+        "predictionId": "checkbox-p3-7",
+        "page": 3,
+        "geometryDistance": 0.0018291655046984313
+      },
+      "expected": {
+        "tableId": "page-3-table-2",
+        "rowIndex": 0,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_dzPPbAWi_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_dzPPbAWi_A",
+        "predictionId": "checkbox-p3-7",
+        "page": 3,
+        "geometryDistance": 0.0018291655046984313
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-4"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_GliapHxd_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_GliapHxd_A",
+        "predictionId": "checkbox-p3-9",
+        "page": 3,
+        "geometryDistance": 0.0016090757831037294
+      },
+      "expected": {
+        "label": "Unmapped_GliapHxd_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "YES"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_GliapHxd_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_GliapHxd_A",
+        "predictionId": "checkbox-p3-9",
+        "page": 3,
+        "geometryDistance": 0.0016090757831037294
+      },
+      "expected": {
+        "tableId": "page-3-table-2",
+        "rowIndex": 1,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_GliapHxd_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_GliapHxd_A",
+        "predictionId": "checkbox-p3-9",
+        "page": 3,
+        "geometryDistance": 0.0016090757831037294
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-4"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_cDXWgDNh_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_cDXWgDNh_A",
+        "predictionId": "checkbox-p3-11",
+        "page": 3,
+        "geometryDistance": 0.001462525133926225
+      },
+      "expected": {
+        "label": "Unmapped_cDXWgDNh_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "YES"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "grouping_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_cDXWgDNh_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_cDXWgDNh_A",
+        "predictionId": "checkbox-p3-11",
+        "page": 3,
+        "geometryDistance": 0.001462525133926225
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-4"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_gUOKwcXw_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_gUOKwcXw_A",
+        "predictionId": "checkbox-p3-13",
+        "page": 3,
+        "geometryDistance": 0.0011136971781314899
+      },
+      "expected": {
+        "label": "Unmapped_gUOKwcXw_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "YES"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "grouping_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_gUOKwcXw_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_gUOKwcXw_A",
+        "predictionId": "checkbox-p3-13",
+        "page": 3,
+        "geometryDistance": 0.0011136971781314899
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-4"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_hpWLfgrD_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_hpWLfgrD_A",
+        "predictionId": "checkbox-p3-2",
+        "page": 3,
+        "geometryDistance": 0.0015778716470155238
+      },
+      "expected": {
+        "label": "Unmapped_hpWLfgrD_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "NO"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "grouping_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_hpWLfgrD_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_hpWLfgrD_A",
+        "predictionId": "checkbox-p3-2",
+        "page": 3,
+        "geometryDistance": 0.0015778716470155238
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-4"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_vXnvMpCx_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_vXnvMpCx_A",
+        "predictionId": "checkbox-p3-4",
+        "page": 3,
+        "geometryDistance": 0.0013522869548800215
+      },
+      "expected": {
+        "label": "Unmapped_vXnvMpCx_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "YES"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_vXnvMpCx_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_vXnvMpCx_A",
+        "predictionId": "checkbox-p3-4",
+        "page": 3,
+        "geometryDistance": 0.0013522869548800215
+      },
+      "expected": {
+        "tableId": "page-3-table-1",
+        "rowIndex": 0,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_vXnvMpCx_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_vXnvMpCx_A",
+        "predictionId": "checkbox-p3-4",
+        "page": 3,
+        "geometryDistance": 0.0013522869548800215
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-4"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_vqUkhtJq_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_vqUkhtJq_A",
+        "predictionId": "checkbox-p3-6",
+        "page": 3,
+        "geometryDistance": 0.001523087559090659
+      },
+      "expected": {
+        "label": "Unmapped_vqUkhtJq_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "YES"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_vqUkhtJq_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_vqUkhtJq_A",
+        "predictionId": "checkbox-p3-6",
+        "page": 3,
+        "geometryDistance": 0.001523087559090659
+      },
+      "expected": {
+        "tableId": "page-3-table-1",
+        "rowIndex": 1,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_vqUkhtJq_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_vqUkhtJq_A",
+        "predictionId": "checkbox-p3-6",
+        "page": 3,
+        "geometryDistance": 0.001523087559090659
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-4"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_cvSzzrtK_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_cvSzzrtK_A",
+        "predictionId": "checkbox-p3-8",
+        "page": 3,
+        "geometryDistance": 0.0013810184531148914
+      },
+      "expected": {
+        "label": "Unmapped_cvSzzrtK_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "YES"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_cvSzzrtK_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_cvSzzrtK_A",
+        "predictionId": "checkbox-p3-8",
+        "page": 3,
+        "geometryDistance": 0.0013810184531148914
+      },
+      "expected": {
+        "tableId": "page-3-table-2",
+        "rowIndex": 0,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_cvSzzrtK_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_cvSzzrtK_A",
+        "predictionId": "checkbox-p3-8",
+        "page": 3,
+        "geometryDistance": 0.0013810184531148914
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-4"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_CxklOFZR_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_CxklOFZR_A",
+        "predictionId": "checkbox-p3-10",
+        "page": 3,
+        "geometryDistance": 0.0014965242247798412
+      },
+      "expected": {
+        "label": "Unmapped_CxklOFZR_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "YES"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_CxklOFZR_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_CxklOFZR_A",
+        "predictionId": "checkbox-p3-10",
+        "page": 3,
+        "geometryDistance": 0.0014965242247798412
+      },
+      "expected": {
+        "tableId": "page-3-table-2",
+        "rowIndex": 1,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_CxklOFZR_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_CxklOFZR_A",
+        "predictionId": "checkbox-p3-10",
+        "page": 3,
+        "geometryDistance": 0.0014965242247798412
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-4"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_PSLVyoaO_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_PSLVyoaO_A",
+        "predictionId": "checkbox-p3-12",
+        "page": 3,
+        "geometryDistance": 0.0012007099624447089
+      },
+      "expected": {
+        "label": "Unmapped_PSLVyoaO_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "YES"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "grouping_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_PSLVyoaO_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_PSLVyoaO_A",
+        "predictionId": "checkbox-p3-12",
+        "page": 3,
+        "geometryDistance": 0.0012007099624447089
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-4"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_yQzYxiei_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_yQzYxiei_A",
+        "predictionId": "checkbox-p3-14",
+        "page": 3,
+        "geometryDistance": 0.0014821820635924873
+      },
+      "expected": {
+        "label": "Unmapped_yQzYxiei_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "NO"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "grouping_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_yQzYxiei_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_yQzYxiei_A",
+        "predictionId": "checkbox-p3-14",
+        "page": 3,
+        "geometryDistance": 0.0014821820635924873
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-4"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_qlZPQQTG_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_qlZPQQTG_A",
+        "predictionId": "checkbox-p4-1",
+        "page": 4,
+        "geometryDistance": 0.0016745214753214632
+      },
+      "expected": {
+        "label": "Unmapped_qlZPQQTG_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "YES"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "grouping_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_qlZPQQTG_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_qlZPQQTG_A",
+        "predictionId": "checkbox-p4-1",
+        "page": 4,
+        "geometryDistance": 0.0016745214753214632
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-5"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_qcPnBGvf_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_qcPnBGvf_A",
+        "predictionId": null,
+        "page": 4,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_qcPnBGvf_A",
+        "type": "text",
+        "label": "Unmapped_qcPnBGvf_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_qcPnBGvf_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_qcPnBGvf_A",
+        "predictionId": null,
+        "page": 4,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_liiHmMld_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_liiHmMld_A",
+        "predictionId": null,
+        "page": 4,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_liiHmMld_A",
+        "type": "text",
+        "label": "Unmapped_liiHmMld_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_liiHmMld_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_liiHmMld_A",
+        "predictionId": null,
+        "page": 4,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:NamedInsured_Signature_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_Signature_A",
+        "predictionId": "input-table-2-r1-c1",
+        "page": 4,
+        "geometryDistance": 0.012038744112019804
+      },
+      "expected": {
+        "label": "Sign here: Accommodates the signature of the applicant or named insured.",
+        "helpLabel": "Sign here: Accommodates the signature of the applicant or named insured."
+      },
+      "actual": {
+        "label": "Signed"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "field_type_misclassification:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:NamedInsured_Signature_A",
+      "category": "field_type_misclassification",
+      "description": "The predicted fillable type differs from the XFDL control/format type.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_Signature_A",
+        "predictionId": "input-table-2-r1-c1",
+        "page": 4,
+        "geometryDistance": 0.012038744112019804
+      },
+      "expected": {
+        "type": "signature",
+        "sourceType": "signature",
+        "format": {
+          "dataType": "string",
+          "requirement": null,
+          "presentation": "",
+          "rawValues": [
+            "string",
+            "",
+            "Optional",
+            ""
+          ],
+          "provenance": "explicit"
+        }
+      },
+      "actual": {
+        "type": "text",
+        "sourceType": "text"
+      },
+      "rationale": "XFDL control/format typing and backend typed-blank classification disagree.",
+      "evidence": {}
+    },
+    {
+      "id": "candidate_ranking_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:NamedInsured_Signature_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_Signature_A",
+        "predictionId": "input-table-2-r1-c1",
+        "page": 4,
+        "geometryDistance": 0.012038744112019804
+      },
+      "expected": {
+        "topAcordCode": "NamedInsured_Signature"
+      },
+      "actual": {
+        "topAcordCode": "AssignedRiskPolicy_InsuredByAssociationPropertyOwnersIndicator",
+        "rankedCodes": [
+          "AssignedRiskPolicy_InsuredByAssociationPropertyOwnersIndicator",
+          "AssignedRiskPolicy_PolicyAssignmentIndicator",
+          "AssignedRiskPolicy_Question_KAANoIndicator"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:NamedInsured_SignatureDate_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_SignatureDate_A",
+        "predictionId": "input-semantic-p4-l47",
+        "page": 4,
+        "geometryDistance": 0.0761994672181712
+      },
+      "expected": {
+        "label": "Enter date: The date the form was signed by the applicant or named insured. (MM/DD/YYYY)",
+        "helpLabel": "Enter date: The date the form was signed by the applicant or named insured. (MM/DD/YYYY)"
+      },
+      "actual": {
+        "label": "Title"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "field_type_misclassification:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:NamedInsured_SignatureDate_A",
+      "category": "field_type_misclassification",
+      "description": "The predicted fillable type differs from the XFDL control/format type.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_SignatureDate_A",
+        "predictionId": "input-semantic-p4-l47",
+        "page": 4,
+        "geometryDistance": 0.0761994672181712
+      },
+      "expected": {
+        "type": "signature",
+        "sourceType": "signature",
+        "format": {
+          "dataType": "date",
+          "requirement": "Optional",
+          "presentation": "MM/DD/YYYY",
+          "rawValues": [
+            "date",
+            "Optional",
+            ""
+          ],
+          "provenance": "explicit"
+        }
+      },
+      "actual": {
+        "type": "text",
+        "sourceType": "text"
+      },
+      "rationale": "XFDL control/format typing and backend typed-blank classification disagree.",
+      "evidence": {}
+    },
+    {
+      "id": "candidate_ranking_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:NamedInsured_SignatureDate_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_SignatureDate_A",
+        "predictionId": "input-semantic-p4-l47",
+        "page": 4,
+        "geometryDistance": 0.0761994672181712
+      },
+      "expected": {
+        "topAcordCode": "NamedInsured_SignatureDate"
+      },
+      "actual": {
+        "topAcordCode": "AccountantsLiability_BusinessInterestAnyClient_EmployeeTitle",
+        "rankedCodes": [
+          "AccountantsLiability_BusinessInterestAnyClient_EmployeeTitle",
+          "AdditionalInterest_AuthorizedRepresentativeTitle",
+          "BusinessInformation_DirectorOrOfficer_Title"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "table_detection_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:NamedInsured_SignatureDate_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_SignatureDate_A",
+        "predictionId": "input-semantic-p4-l47",
+        "page": 4,
+        "geometryDistance": 0.0761994672181712
+      },
+      "expected": {
+        "tableId": "page-4-table-1",
+        "rowIndex": 0,
+        "columnIndex": 2,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "text"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:NamedInsured_FullName_B",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_FullName_B",
+        "predictionId": "input-table-2-r3-c1",
+        "page": 4,
+        "geometryDistance": 0.013897976437750337
+      },
+      "expected": {
+        "label": "Enter text: The named insured(s) as it / they will appear on the policy declarations page.",
+        "helpLabel": "Enter text: The named insured(s) as it / they will appear on the policy declarations page."
+      },
+      "actual": {
+        "label": "Print Name"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "candidate_ranking_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:NamedInsured_FullName_B",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_FullName_B",
+        "predictionId": "input-table-2-r3-c1",
+        "page": 4,
+        "geometryDistance": 0.013897976437750337
+      },
+      "expected": {
+        "topAcordCode": "NamedInsured_FullName"
+      },
+      "actual": {
+        "topAcordCode": "NamedInsured_InputTaxCreditPercent",
+        "rankedCodes": [
+          "NamedInsured_InputTaxCreditPercent",
+          "AccidentConviction_PlaceOfIncidentCityName",
+          "AccountantInformation_PredecessorFirm_FullName"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "table_detection_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:NamedInsured_FullName_B",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_FullName_B",
+        "predictionId": "input-table-2-r3-c1",
+        "page": 4,
+        "geometryDistance": 0.013897976437750337
+      },
+      "expected": {
+        "tableId": "page-4-table-1",
+        "rowIndex": 1,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": "table-2",
+        "rowIndex": 2,
+        "columnIndex": 0,
+        "valueType": "text"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:NamedInsured_Title_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_Title_A",
+        "predictionId": null,
+        "page": 4,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "NamedInsured_Title_A",
+        "type": "text",
+        "label": "Enter text: The title of the individual in the organization or his relationship to the organization."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:NamedInsured_Title_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_Title_A",
+        "predictionId": null,
+        "page": 4,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_oeGRvUlL_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_oeGRvUlL_A",
+        "predictionId": "checkbox-p4-3",
+        "page": 4,
+        "geometryDistance": 0.0016648823727172892
+      },
+      "expected": {
+        "label": "Unmapped_oeGRvUlL_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "NO"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "grouping_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_oeGRvUlL_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_oeGRvUlL_A",
+        "predictionId": "checkbox-p4-3",
+        "page": 4,
+        "geometryDistance": 0.0016648823727172892
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-5"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_UEmtOWlU_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_UEmtOWlU_A",
+        "predictionId": "checkbox-p4-2",
+        "page": 4,
+        "geometryDistance": 0.00140010473961568
+      },
+      "expected": {
+        "label": "Unmapped_UEmtOWlU_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "NO"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "grouping_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_UEmtOWlU_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_UEmtOWlU_A",
+        "predictionId": "checkbox-p4-2",
+        "page": 4,
+        "geometryDistance": 0.00140010473961568
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-5"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_xWeyORxI_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_xWeyORxI_A",
+        "predictionId": "checkbox-p4-4",
+        "page": 4,
+        "geometryDistance": 0.0016344156615862554
+      },
+      "expected": {
+        "label": "Unmapped_xWeyORxI_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "YES"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "grouping_error:preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth:Unmapped_xWeyORxI_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+        "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_xWeyORxI_A",
+        "predictionId": "checkbox-p4-4",
+        "page": 4,
+        "geometryDistance": 0.0016344156615862554
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-5"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    }
+  ]
+}

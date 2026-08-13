@@ -1,0 +1,9 @@
+{
+  "timestamp": "2026-08-13T03:16:08.421Z",
+  "documentId": "contextual-ranking",
+  "totalBlocks": 3,
+  "mappingsCount": 3,
+  "confidenceOnlyFallbackCount": 0,
+  "syntheticFallbackCount": 0,
+  "fallbackSamples": []
+}

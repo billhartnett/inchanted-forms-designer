@@ -1,0 +1,73 @@
+{
+  "schemaVersion": "semantic-engine-v2-accuracy.v1",
+  "generatedAt": "2026-08-12T15:00:00.000Z",
+  "groundTruthTotals": {
+    "forms": 63,
+    "pages": 320,
+    "fields": 21140,
+    "diagnostics": 274
+  },
+  "semanticEvaluation": {
+    "pairedForms": 51,
+    "truthFields": 16227,
+    "predictedFillableFields": 11663,
+    "matchedFields": 8697,
+    "matchingAccuracy": 0.5358,
+    "errorCoverage": 2.5106,
+    "categoryCounts": {
+      "semantic_label_mismatch": 7172,
+      "candidate_ranking_error": 4478,
+      "field_type_misclassification": 1935,
+      "table_detection_error": 5768,
+      "checkbox_yes_no_pairing_error": 96,
+      "suppression_error": 7530,
+      "grouping_error": 4949,
+      "label_value_pairing_error": 1219,
+      "unmapped_fillable_field": 7632
+    },
+    "topRemainingCategories": [
+      {
+        "category": "suppression_error",
+        "count": 7530,
+        "rate": 0.4638
+      },
+      {
+        "category": "unmapped_fillable_field",
+        "count": 7632,
+        "rate": 0.4701
+      },
+      {
+        "category": "semantic_label_mismatch",
+        "count": 7172,
+        "rate": 0.4421
+      },
+      {
+        "category": "table_detection_error",
+        "count": 5768,
+        "rate": 0.3555
+      },
+      {
+        "category": "grouping_error",
+        "count": 4949,
+        "rate": 0.3048
+      }
+    ]
+  },
+  "appendDelta": {
+    "forms": 31,
+    "truthFields": 7160,
+    "predictedFillableFields": 5992,
+    "matchedFields": 4753,
+    "errors": 16916,
+    "matchedPairs": 29,
+    "reviewPairs": 2,
+    "reviewOnlyErrors": 1329
+  },
+  "phase5DesignerAlignment": [
+    "table_detection_error",
+    "grouping_error",
+    "suppression_error",
+    "semantic_label_mismatch"
+  ],
+  "summary": "The merged corpus and append-safe replay confirm deterministic mapping improvements across widget recovery, typed blanks, and semantic grouping; the remaining gap is primarily in complex table and grouping behavior, which is best addressed in the designer alignment phase."
+}

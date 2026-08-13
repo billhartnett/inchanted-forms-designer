@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "final-refinements-v3-backend.v1",
+  "generatedAt": "2026-08-12T15:53:28.853Z",
+  "summary": "Targeted residual fixes for ranking, typed blank inference, and label/value binding alignment.",
+  "microPatches": [
+    {
+      "id": "backend-01",
+      "target": "backend/api/src/api/mapFields.ts",
+      "category": "candidate_ranking_error",
+      "change": "Promote explicit widget names ahead of weak OCR labels while retaining deterministic ranking gates."
+    },
+    {
+      "id": "backend-02",
+      "target": "backend/api/src/extraction/hybridFieldExtraction.ts",
+      "category": "field_type_misclassification",
+      "change": "Tighten phone/fax/zip/year and date/currency/percentage typed-blank classification for XFDL and PDF widget formats."
+    },
+    {
+      "id": "backend-03",
+      "target": "backend/api/src/extraction/hybridFieldExtraction.ts",
+      "category": "label_value_pairing_error",
+      "change": "Keep same-row label association and explicit widget semantic-value linkage even when text and widget boxes overlap."
+    },
+    {
+      "id": "backend-04",
+      "target": "backend/api/src/extraction/hybridFieldExtraction.ts",
+      "category": "unmapped_fillable_field",
+      "change": "Persist explicit PDF widget IDs and merged semantic groups to avoid dropping fillable controls."
+    }
+  ]
+}

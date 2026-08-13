@@ -1,0 +1,23 @@
+
+  <svg xmlns="http://www.w3.org/2000/svg" width="700" height="180" viewBox="0 0 700 180">
+    <rect width="100%" height="100%" fill="#f8fafc"/>
+    <text x="20" y="22" font-size="18" font-family="Arial" fill="#0f172a">USLI Pro+ect_ _10-18.Xfdl visual diff</text>
+    
+      <g>
+        <rect x="NaN" y="32" width="NaN" height="120" fill="#2563eb" opacity="0.8" rx="4"/>
+        <text x="NaN" y="172" font-size="9" fill="#0f172a">sema</text>
+      </g>
+      <g>
+        <rect x="NaN" y="110.2089552238806" width="NaN" height="41.791044776119406" fill="#2563eb" opacity="0.8" rx="4"/>
+        <text x="NaN" y="172" font-size="9" fill="#0f172a">supp</text>
+      </g>
+      <g>
+        <rect x="NaN" y="48.11940298507463" width="NaN" height="103.88059701492537" fill="#2563eb" opacity="0.8" rx="4"/>
+        <text x="NaN" y="172" font-size="9" fill="#0f172a">tabl</text>
+      </g>
+      <g>
+        <rect x="NaN" y="62.44776119402985" width="NaN" height="89.55223880597015" fill="#2563eb" opacity="0.8" rx="4"/>
+        <text x="NaN" y="172" font-size="9" fill="#0f172a">grou</text>
+      </g>
+  </svg>
+  

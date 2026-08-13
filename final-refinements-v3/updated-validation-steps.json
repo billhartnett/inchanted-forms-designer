@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "final-refinements-v3-validation.v1",
+  "generatedAt": "2026-08-12T15:53:28.853Z",
+  "steps": [
+    "Run backend regression tests for hybrid extraction and typed-blank classification.",
+    "Run frontend build to compile the renderer and PDF import path.",
+    "Execute the corpus validation script across the merged XFDL/PDF truth set.",
+    "Review visual diff snapshots and semantic diff snapshots for each form.",
+    "Verify no imported suppressed text or question text is painted on the canvas.",
+    "Confirm table row/column boundaries, grouping, and widget label reconciliation remain aligned with XFDL truth."
+  ]
+}

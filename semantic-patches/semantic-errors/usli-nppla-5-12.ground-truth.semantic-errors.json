@@ -1,0 +1,5642 @@
+{
+  "schemaVersion": "semantic-errors.v1",
+  "generatedAt": "2026-08-12T14:57:14.243Z",
+  "form": {
+    "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+    "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+    "pdfFile": "USLI NPPLA 5-12.pdf",
+    "pairStatus": "matched",
+    "pairConfidence": "high"
+  },
+  "counts": {
+    "truthFields": 76,
+    "predictedFillableFields": 77,
+    "matchedFields": 61,
+    "promotedFields": 77,
+    "errors": 187
+  },
+  "categoryCounts": {
+    "semantic_label_mismatch": 57,
+    "candidate_ranking_error": 10,
+    "field_type_misclassification": 7,
+    "table_detection_error": 43,
+    "checkbox_yes_no_pairing_error": 1,
+    "suppression_error": 15,
+    "grouping_error": 39,
+    "label_value_pairing_error": 0,
+    "unmapped_fillable_field": 15
+  },
+  "errors": [
+    {
+      "id": "semantic_label_mismatch:usli-nppla-5-12.ground-truth:Insurer_FullName_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Insurer_FullName_A",
+        "predictionId": "input-semantic-p1-l2",
+        "page": 1,
+        "geometryDistance": 0.07226499336668889
+      },
+      "expected": {
+        "label": "Enter text: The insurer's full legal company name(s) as found in the file copy of the policy. Use the actual name of the company within the group to which the policy has been issued. This is not the insurer's group name or trade name.",
+        "helpLabel": "Enter text: The insurer's full legal company name(s) as found in the file copy of the policy. Use the actual name of the company within the group to which the policy has been issued. This is not the insurer's group name or trade name."
+      },
+      "actual": {
+        "label": "CARRIER"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "unmapped_fillable_field:usli-nppla-5-12.ground-truth:NamedInsured_FullName_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_FullName_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "NamedInsured_FullName_A",
+        "type": "text",
+        "label": "Enter text: The named insured(s) as it / they will appear on the policy declarations page."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:usli-nppla-5-12.ground-truth:NamedInsured_FullName_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_FullName_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:usli-nppla-5-12.ground-truth:CommercialStructure_PhysicalAddress_LineOne_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CommercialStructure_PhysicalAddress_LineOne_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "CommercialStructure_PhysicalAddress_LineOne_A",
+        "type": "text",
+        "label": "Enter text: The first address line of the commercial structure."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:usli-nppla-5-12.ground-truth:CommercialStructure_PhysicalAddress_LineOne_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CommercialStructure_PhysicalAddress_LineOne_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:usli-nppla-5-12.ground-truth:CommercialStructure_PhysicalAddress_CityName_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CommercialStructure_PhysicalAddress_CityName_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "CommercialStructure_PhysicalAddress_CityName_A",
+        "type": "text",
+        "label": "Enter text: The city of the commercial structure."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:usli-nppla-5-12.ground-truth:CommercialStructure_PhysicalAddress_CityName_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CommercialStructure_PhysicalAddress_CityName_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:usli-nppla-5-12.ground-truth:CommercialStructure_PhysicalAddress_StateOrProvinceCode_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CommercialStructure_PhysicalAddress_StateOrProvinceCode_A",
+        "predictionId": "input-semantic-p1-l19",
+        "page": 1,
+        "geometryDistance": 0.02686941111431685
+      },
+      "expected": {
+        "label": "Enter code: The state or province code of the commercial structure.",
+        "helpLabel": "Enter code: The state or province code of the commercial structure."
+      },
+      "actual": {
+        "label": "State"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0.2
+      }
+    },
+    {
+      "id": "candidate_ranking_error:usli-nppla-5-12.ground-truth:CommercialStructure_PhysicalAddress_StateOrProvinceCode_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CommercialStructure_PhysicalAddress_StateOrProvinceCode_A",
+        "predictionId": "input-semantic-p1-l19",
+        "page": 1,
+        "geometryDistance": 0.02686941111431685
+      },
+      "expected": {
+        "topAcordCode": "CommercialStructure_PhysicalAddress_StateOrProvinceCode"
+      },
+      "actual": {
+        "topAcordCode": "NamedInsured_MailingAddress_StateOrProvinceCode",
+        "rankedCodes": [
+          "NamedInsured_MailingAddress_StateOrProvinceCode",
+          "AccidentConviction_PlaceOfIncidentStateOrProvinceCode",
+          "AccountantsLiability_BranchOffice_StateOrProvenceCode"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:usli-nppla-5-12.ground-truth:CommercialStructure_PhysicalAddress_PostalCode_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CommercialStructure_PhysicalAddress_PostalCode_A",
+        "predictionId": "input-table-1-r5-c2",
+        "page": 1,
+        "geometryDistance": 0.01826989503669158
+      },
+      "expected": {
+        "label": "Enter code: The postal code of the commercial structure.",
+        "helpLabel": "Enter code: The postal code of the commercial structure."
+      },
+      "actual": {
+        "label": "Zip code"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0.2222
+      }
+    },
+    {
+      "id": "field_type_misclassification:usli-nppla-5-12.ground-truth:CommercialStructure_PhysicalAddress_PostalCode_A",
+      "category": "field_type_misclassification",
+      "description": "The predicted fillable type differs from the XFDL control/format type.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CommercialStructure_PhysicalAddress_PostalCode_A",
+        "predictionId": "input-table-1-r5-c2",
+        "page": 1,
+        "geometryDistance": 0.01826989503669158
+      },
+      "expected": {
+        "type": "text",
+        "sourceType": "text",
+        "format": {
+          "dataType": null,
+          "requirement": null,
+          "presentation": "",
+          "rawValues": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "provenance": "explicit"
+        }
+      },
+      "actual": {
+        "type": "numeric",
+        "sourceType": "numeric"
+      },
+      "rationale": "XFDL control/format typing and backend typed-blank classification disagree.",
+      "evidence": {}
+    },
+    {
+      "id": "candidate_ranking_error:usli-nppla-5-12.ground-truth:CommercialStructure_PhysicalAddress_PostalCode_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CommercialStructure_PhysicalAddress_PostalCode_A",
+        "predictionId": "input-table-1-r5-c2",
+        "page": 1,
+        "geometryDistance": 0.01826989503669158
+      },
+      "expected": {
+        "topAcordCode": "CommercialStructure_PhysicalAddress_PostalCode"
+      },
+      "actual": {
+        "topAcordCode": "NamedInsured_MailingAddress_PostalCode",
+        "rankedCodes": [
+          "NamedInsured_MailingAddress_PostalCode",
+          "AccidentConviction_AccidentViolationCode",
+          "AccidentConviction_BodilyInjuryOrDeathCode"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:usli-nppla-5-12.ground-truth:NamedInsured_Primary_WebsiteAddress_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_Primary_WebsiteAddress_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "NamedInsured_Primary_WebsiteAddress_A",
+        "type": "text",
+        "label": "Enter text: The primary website address for the named insured."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:usli-nppla-5-12.ground-truth:NamedInsured_Primary_WebsiteAddress_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_Primary_WebsiteAddress_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:usli-nppla-5-12.ground-truth:NamedInsured_Contact_PrimaryEmailAddress_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_Contact_PrimaryEmailAddress_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "NamedInsured_Contact_PrimaryEmailAddress_A",
+        "type": "text",
+        "label": "Enter text: The contact's primary e-mail address."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:usli-nppla-5-12.ground-truth:NamedInsured_Contact_PrimaryEmailAddress_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_Contact_PrimaryEmailAddress_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:usli-nppla-5-12.ground-truth:CommercialStructure_AnnualRevenue_CurrentYearAmount_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CommercialStructure_AnnualRevenue_CurrentYearAmount_A",
+        "predictionId": "input-semantic-p1-l23",
+        "page": 1,
+        "geometryDistance": 0.007895383397993805
+      },
+      "expected": {
+        "label": "CommercialStructure_AnnualRevenue_CurrentYearAmount_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Total annual revenue: $"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "field_type_misclassification:usli-nppla-5-12.ground-truth:CommercialStructure_AnnualRevenue_CurrentYearAmount_A",
+      "category": "field_type_misclassification",
+      "description": "The predicted fillable type differs from the XFDL control/format type.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CommercialStructure_AnnualRevenue_CurrentYearAmount_A",
+        "predictionId": "input-semantic-p1-l23",
+        "page": 1,
+        "geometryDistance": 0.007895383397993805
+      },
+      "expected": {
+        "type": "numeric",
+        "sourceType": "numeric",
+        "format": {
+          "dataType": null,
+          "requirement": null,
+          "presentation": "",
+          "rawValues": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "provenance": "explicit"
+        }
+      },
+      "actual": {
+        "type": "currency",
+        "sourceType": "currency"
+      },
+      "rationale": "XFDL control/format typing and backend typed-blank classification disagree.",
+      "evidence": {}
+    },
+    {
+      "id": "candidate_ranking_error:usli-nppla-5-12.ground-truth:CommercialStructure_AnnualRevenue_CurrentYearAmount_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CommercialStructure_AnnualRevenue_CurrentYearAmount_A",
+        "predictionId": "input-semantic-p1-l23",
+        "page": 1,
+        "geometryDistance": 0.007895383397993805
+      },
+      "expected": {
+        "topAcordCode": "CommercialStructure_AnnualRevenue_CurrentYearAmount"
+      },
+      "actual": {
+        "topAcordCode": "FinancialStatement_CurrentYear_TotalRevenueAmount",
+        "rankedCodes": [
+          "FinancialStatement_CurrentYear_TotalRevenueAmount",
+          "FinancialStatement_PriorYear_TotalRevenueAmount",
+          "WorkersCompensationLineOfBusiness_TotalEstimatedAnnualPremiumAllStatesAmount"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:usli-nppla-5-12.ground-truth:CommercialStructure_AnnualRevenue_CurrentYearAmount_B",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CommercialStructure_AnnualRevenue_CurrentYearAmount_B",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "CommercialStructure_AnnualRevenue_CurrentYearAmount_B",
+        "type": "numeric",
+        "label": "CommercialStructure_AnnualRevenue_CurrentYearAmount_B"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:usli-nppla-5-12.ground-truth:CommercialStructure_AnnualRevenue_CurrentYearAmount_B",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CommercialStructure_AnnualRevenue_CurrentYearAmount_B",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:usli-nppla-5-12.ground-truth:Unmapped_uXirrjzG_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_uXirrjzG_A",
+        "predictionId": "input-semantic-p1-l30",
+        "page": 1,
+        "geometryDistance": 0.05333760766753062
+      },
+      "expected": {
+        "label": "Unmapped_uXirrjzG_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Temporary/Seasonal"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:usli-nppla-5-12.ground-truth:Unmapped_uXirrjzG_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_uXirrjzG_A",
+        "predictionId": "input-semantic-p1-l30",
+        "page": 1,
+        "geometryDistance": 0.05333760766753062
+      },
+      "expected": {
+        "tableId": "page-1-table-1",
+        "rowIndex": 0,
+        "columnIndex": 3,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "text"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:usli-nppla-5-12.ground-truth:Unmapped_BulEcPVc_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_BulEcPVc_A",
+        "predictionId": "input-semantic-p1-l31",
+        "page": 1,
+        "geometryDistance": 0.0611730420364783
+      },
+      "expected": {
+        "label": "Unmapped_BulEcPVc_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Volunteers"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:usli-nppla-5-12.ground-truth:Unmapped_BulEcPVc_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_BulEcPVc_A",
+        "predictionId": "input-semantic-p1-l31",
+        "page": 1,
+        "geometryDistance": 0.0611730420364783
+      },
+      "expected": {
+        "tableId": "page-1-table-1",
+        "rowIndex": 0,
+        "columnIndex": 4,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "text"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:usli-nppla-5-12.ground-truth:Unmapped_cPZjaokA_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_cPZjaokA_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_cPZjaokA_A",
+        "type": "text",
+        "label": "Unmapped_cPZjaokA_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:usli-nppla-5-12.ground-truth:Unmapped_cPZjaokA_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_cPZjaokA_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "field_type_misclassification:usli-nppla-5-12.ground-truth:BusinessInformation_FullTimeEmployeeCount_A",
+      "category": "field_type_misclassification",
+      "description": "The predicted fillable type differs from the XFDL control/format type.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "BusinessInformation_FullTimeEmployeeCount_A",
+        "predictionId": "input-semantic-p1-l29",
+        "page": 1,
+        "geometryDistance": 0.01005794709124705
+      },
+      "expected": {
+        "type": "text",
+        "sourceType": "text",
+        "format": {
+          "dataType": null,
+          "requirement": null,
+          "presentation": "",
+          "rawValues": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "provenance": "explicit"
+        }
+      },
+      "actual": {
+        "type": "numeric",
+        "sourceType": "numeric"
+      },
+      "rationale": "XFDL control/format typing and backend typed-blank classification disagree.",
+      "evidence": {}
+    },
+    {
+      "id": "candidate_ranking_error:usli-nppla-5-12.ground-truth:BusinessInformation_FullTimeEmployeeCount_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "BusinessInformation_FullTimeEmployeeCount_A",
+        "predictionId": "input-semantic-p1-l29",
+        "page": 1,
+        "geometryDistance": 0.01005794709124705
+      },
+      "expected": {
+        "topAcordCode": "BusinessInformation_FullTimeEmployeeCount"
+      },
+      "actual": {
+        "topAcordCode": "EmployeeSchedule_PartTime_FullTimeEmployeesDoingSameWorkCount",
+        "rankedCodes": [
+          "EmployeeSchedule_PartTime_FullTimeEmployeesDoingSameWorkCount",
+          "Airport_ControlTower_EmployeeScheduleFullTimeIndicator",
+          "AirportManagement_EmployeeStatus_FullTimeIndicator"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "table_detection_error:usli-nppla-5-12.ground-truth:BusinessInformation_FullTimeEmployeeCount_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "BusinessInformation_FullTimeEmployeeCount_A",
+        "predictionId": "input-semantic-p1-l29",
+        "page": 1,
+        "geometryDistance": 0.01005794709124705
+      },
+      "expected": {
+        "tableId": "page-1-table-1",
+        "rowIndex": 1,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "numeric"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "candidate_ranking_error:usli-nppla-5-12.ground-truth:BusinessInformation_PartTimeEmployeeCount_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "BusinessInformation_PartTimeEmployeeCount_A",
+        "predictionId": "input-semantic-p1-l32",
+        "page": 1,
+        "geometryDistance": 0.008290162317969078
+      },
+      "expected": {
+        "topAcordCode": "BusinessInformation_PartTimeEmployeeCount"
+      },
+      "actual": {
+        "topAcordCode": "Airport_ControlTower_EmployeeSchedulePartTimeIndicator",
+        "rankedCodes": [
+          "Airport_ControlTower_EmployeeSchedulePartTimeIndicator",
+          "AirportManagement_EmployeeStatus_PartTimeIndicator",
+          "BusinessInformation_PartTimeEmployeeCount"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is present but ranked below another candidate.",
+      "evidence": {}
+    },
+    {
+      "id": "table_detection_error:usli-nppla-5-12.ground-truth:BusinessInformation_PartTimeEmployeeCount_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "BusinessInformation_PartTimeEmployeeCount_A",
+        "predictionId": "input-semantic-p1-l32",
+        "page": 1,
+        "geometryDistance": 0.008290162317969078
+      },
+      "expected": {
+        "tableId": "page-1-table-1",
+        "rowIndex": 1,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "text"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:usli-nppla-5-12.ground-truth:Unmapped_sZvYQanS_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_sZvYQanS_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_sZvYQanS_A",
+        "type": "text",
+        "label": "Unmapped_sZvYQanS_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:usli-nppla-5-12.ground-truth:Unmapped_sZvYQanS_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_sZvYQanS_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:usli-nppla-5-12.ground-truth:Unmapped_NjMELWQF_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_NjMELWQF_A",
+        "predictionId": "input-semantic-p1-l34",
+        "page": 1,
+        "geometryDistance": 0.05897651078390934
+      },
+      "expected": {
+        "label": "Unmapped_NjMELWQF_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "In existence since"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:usli-nppla-5-12.ground-truth:Unmapped_NjMELWQF_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_NjMELWQF_A",
+        "predictionId": "input-semantic-p1-l34",
+        "page": 1,
+        "geometryDistance": 0.05897651078390934
+      },
+      "expected": {
+        "tableId": "page-1-table-1",
+        "rowIndex": 1,
+        "columnIndex": 4,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "text"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:usli-nppla-5-12.ground-truth:Unmapped_nhFqfnZJ_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_nhFqfnZJ_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_nhFqfnZJ_A",
+        "type": "text",
+        "label": "Unmapped_nhFqfnZJ_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:usli-nppla-5-12.ground-truth:Unmapped_nhFqfnZJ_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_nhFqfnZJ_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:usli-nppla-5-12.ground-truth:NamedInsured_BusinessStartDate_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_BusinessStartDate_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "NamedInsured_BusinessStartDate_A",
+        "type": "date",
+        "label": "Enter date: The date the applicant began in business. This is important because it helps the underwriter determine the expertise and business success of the applicant."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:usli-nppla-5-12.ground-truth:NamedInsured_BusinessStartDate_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_BusinessStartDate_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:usli-nppla-5-12.ground-truth:Unmapped_UlrAtMjL_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_UlrAtMjL_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_UlrAtMjL_A",
+        "type": "text",
+        "label": "Unmapped_UlrAtMjL_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:usli-nppla-5-12.ground-truth:Unmapped_UlrAtMjL_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_UlrAtMjL_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:usli-nppla-5-12.ground-truth:Unmapped_NmywggGx_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_NmywggGx_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_NmywggGx_A",
+        "type": "text",
+        "label": "Unmapped_NmywggGx_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:usli-nppla-5-12.ground-truth:Unmapped_NmywggGx_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_NmywggGx_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:usli-nppla-5-12.ground-truth:Unmapped_CAMwkEIE_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_CAMwkEIE_A",
+        "predictionId": "input-semantic-p1-l51",
+        "page": 1,
+        "geometryDistance": 0.0071180381452262895
+      },
+      "expected": {
+        "label": "Unmapped_CAMwkEIE_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "4 Expiring D&O information: Carrier"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "unmapped_fillable_field:usli-nppla-5-12.ground-truth:CommercialPolicy_OperationsDescription_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CommercialPolicy_OperationsDescription_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "CommercialPolicy_OperationsDescription_A",
+        "type": "text",
+        "label": "Enter text: The description of the operations of this risk or insured."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:usli-nppla-5-12.ground-truth:CommercialPolicy_OperationsDescription_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CommercialPolicy_OperationsDescription_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:usli-nppla-5-12.ground-truth:Unmapped_GYirGARL_B",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_GYirGARL_B",
+        "predictionId": "checkbox-p1-7",
+        "page": 1,
+        "geometryDistance": 0.05361721651106871
+      },
+      "expected": {
+        "label": "Unmapped_GYirGARL_B",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "No"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "field_type_misclassification:usli-nppla-5-12.ground-truth:Unmapped_GYirGARL_B",
+      "category": "field_type_misclassification",
+      "description": "The predicted fillable type differs from the XFDL control/format type.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_GYirGARL_B",
+        "predictionId": "checkbox-p1-7",
+        "page": 1,
+        "geometryDistance": 0.05361721651106871
+      },
+      "expected": {
+        "type": "text",
+        "sourceType": "text",
+        "format": {
+          "dataType": null,
+          "requirement": null,
+          "presentation": "",
+          "rawValues": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "provenance": "explicit"
+        }
+      },
+      "actual": {
+        "type": "checkbox",
+        "sourceType": "checkbox"
+      },
+      "rationale": "XFDL control/format typing and backend typed-blank classification disagree.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:usli-nppla-5-12.ground-truth:Unmapped_GYirGARL_B",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_GYirGARL_B",
+        "predictionId": "checkbox-p1-7",
+        "page": 1,
+        "geometryDistance": 0.05361721651106871
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-3"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:usli-nppla-5-12.ground-truth:Unmapped_xuctpdcd_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_xuctpdcd_A",
+        "predictionId": "checkbox-p1-1",
+        "page": 1,
+        "geometryDistance": 0.0036868125884671615
+      },
+      "expected": {
+        "label": "Unmapped_xuctpdcd_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Same as mailing address"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "grouping_error:usli-nppla-5-12.ground-truth:Unmapped_xuctpdcd_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_xuctpdcd_A",
+        "predictionId": "checkbox-p1-1",
+        "page": 1,
+        "geometryDistance": 0.0036868125884671615
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-3"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:usli-nppla-5-12.ground-truth:Unmapped_NmFJJBCP_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_NmFJJBCP_A",
+        "predictionId": "checkbox-p1-3",
+        "page": 1,
+        "geometryDistance": 0.0011515180276432736
+      },
+      "expected": {
+        "label": "Unmapped_NmFJJBCP_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Yes"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:usli-nppla-5-12.ground-truth:Unmapped_NmFJJBCP_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_NmFJJBCP_A",
+        "predictionId": "checkbox-p1-3",
+        "page": 1,
+        "geometryDistance": 0.0011515180276432736
+      },
+      "expected": {
+        "tableId": "page-1-table-2",
+        "rowIndex": 0,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:usli-nppla-5-12.ground-truth:Unmapped_NmFJJBCP_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_NmFJJBCP_A",
+        "predictionId": "checkbox-p1-3",
+        "page": 1,
+        "geometryDistance": 0.0011515180276432736
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-3"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:usli-nppla-5-12.ground-truth:Unmapped_cmAHymUj_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_cmAHymUj_A",
+        "predictionId": "checkbox-p1-4",
+        "page": 1,
+        "geometryDistance": 0.0018226507571806926
+      },
+      "expected": {
+        "label": "Unmapped_cmAHymUj_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Yes"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:usli-nppla-5-12.ground-truth:Unmapped_cmAHymUj_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_cmAHymUj_A",
+        "predictionId": "checkbox-p1-4",
+        "page": 1,
+        "geometryDistance": 0.0018226507571806926
+      },
+      "expected": {
+        "tableId": "page-1-table-2",
+        "rowIndex": 1,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:usli-nppla-5-12.ground-truth:Unmapped_cmAHymUj_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_cmAHymUj_A",
+        "predictionId": "checkbox-p1-4",
+        "page": 1,
+        "geometryDistance": 0.0018226507571806926
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-3"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:usli-nppla-5-12.ground-truth:Unmapped_dHLGwgSm_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_dHLGwgSm_A",
+        "predictionId": "checkbox-p1-6",
+        "page": 1,
+        "geometryDistance": 0.0015177825871468757
+      },
+      "expected": {
+        "label": "Unmapped_dHLGwgSm_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Yes"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:usli-nppla-5-12.ground-truth:Unmapped_dHLGwgSm_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_dHLGwgSm_A",
+        "predictionId": "checkbox-p1-6",
+        "page": 1,
+        "geometryDistance": 0.0015177825871468757
+      },
+      "expected": {
+        "tableId": "page-1-table-2",
+        "rowIndex": 2,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:usli-nppla-5-12.ground-truth:Unmapped_dHLGwgSm_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_dHLGwgSm_A",
+        "predictionId": "checkbox-p1-6",
+        "page": 1,
+        "geometryDistance": 0.0015177825871468757
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-3"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:usli-nppla-5-12.ground-truth:Unmapped_okypbPPW_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_okypbPPW_A",
+        "predictionId": "checkbox-p1-17",
+        "page": 1,
+        "geometryDistance": 0.00200922911626134
+      },
+      "expected": {
+        "label": "Unmapped_okypbPPW_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Yes"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:usli-nppla-5-12.ground-truth:Unmapped_okypbPPW_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_okypbPPW_A",
+        "predictionId": "checkbox-p1-17",
+        "page": 1,
+        "geometryDistance": 0.00200922911626134
+      },
+      "expected": {
+        "tableId": "page-1-table-3",
+        "rowIndex": 0,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:usli-nppla-5-12.ground-truth:Unmapped_okypbPPW_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_okypbPPW_A",
+        "predictionId": "checkbox-p1-17",
+        "page": 1,
+        "geometryDistance": 0.00200922911626134
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-3"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:usli-nppla-5-12.ground-truth:Unmapped_JkjEYzhk_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_JkjEYzhk_A",
+        "predictionId": "checkbox-p1-9",
+        "page": 1,
+        "geometryDistance": 0.0016814676931406643
+      },
+      "expected": {
+        "label": "Unmapped_JkjEYzhk_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Yes"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:usli-nppla-5-12.ground-truth:Unmapped_JkjEYzhk_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_JkjEYzhk_A",
+        "predictionId": "checkbox-p1-9",
+        "page": 1,
+        "geometryDistance": 0.0016814676931406643
+      },
+      "expected": {
+        "tableId": "page-1-table-3",
+        "rowIndex": 1,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:usli-nppla-5-12.ground-truth:Unmapped_JkjEYzhk_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_JkjEYzhk_A",
+        "predictionId": "checkbox-p1-9",
+        "page": 1,
+        "geometryDistance": 0.0016814676931406643
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-3"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:usli-nppla-5-12.ground-truth:Unmapped_WUwsPEdL_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_WUwsPEdL_A",
+        "predictionId": "checkbox-p1-10",
+        "page": 1,
+        "geometryDistance": 0.0013503323136568731
+      },
+      "expected": {
+        "label": "Unmapped_WUwsPEdL_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Yes"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:usli-nppla-5-12.ground-truth:Unmapped_WUwsPEdL_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_WUwsPEdL_A",
+        "predictionId": "checkbox-p1-10",
+        "page": 1,
+        "geometryDistance": 0.0013503323136568731
+      },
+      "expected": {
+        "tableId": "page-1-table-3",
+        "rowIndex": 2,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:usli-nppla-5-12.ground-truth:Unmapped_WUwsPEdL_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_WUwsPEdL_A",
+        "predictionId": "checkbox-p1-10",
+        "page": 1,
+        "geometryDistance": 0.0013503323136568731
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-3"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:usli-nppla-5-12.ground-truth:Unmapped_atPhSVhg_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_atPhSVhg_A",
+        "predictionId": "checkbox-p1-20",
+        "page": 1,
+        "geometryDistance": 0.0011245161989964115
+      },
+      "expected": {
+        "label": "Unmapped_atPhSVhg_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "No"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:usli-nppla-5-12.ground-truth:Unmapped_atPhSVhg_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_atPhSVhg_A",
+        "predictionId": "checkbox-p1-20",
+        "page": 1,
+        "geometryDistance": 0.0011245161989964115
+      },
+      "expected": {
+        "tableId": "page-1-table-3",
+        "rowIndex": 3,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:usli-nppla-5-12.ground-truth:Unmapped_atPhSVhg_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_atPhSVhg_A",
+        "predictionId": "checkbox-p1-20",
+        "page": 1,
+        "geometryDistance": 0.0011245161989964115
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-3"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:usli-nppla-5-12.ground-truth:Unmapped_TTUZCMoN_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_TTUZCMoN_A",
+        "predictionId": "checkbox-p1-12",
+        "page": 1,
+        "geometryDistance": 0.0013461931901093264
+      },
+      "expected": {
+        "label": "Unmapped_TTUZCMoN_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Yes"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:usli-nppla-5-12.ground-truth:Unmapped_TTUZCMoN_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_TTUZCMoN_A",
+        "predictionId": "checkbox-p1-12",
+        "page": 1,
+        "geometryDistance": 0.0013461931901093264
+      },
+      "expected": {
+        "tableId": "page-1-table-3",
+        "rowIndex": 4,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:usli-nppla-5-12.ground-truth:Unmapped_TTUZCMoN_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_TTUZCMoN_A",
+        "predictionId": "checkbox-p1-12",
+        "page": 1,
+        "geometryDistance": 0.0013461931901093264
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-3"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:usli-nppla-5-12.ground-truth:Unmapped_XdyNDQLd_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_XdyNDQLd_A",
+        "predictionId": "checkbox-p1-13",
+        "page": 1,
+        "geometryDistance": 0.001939164250121373
+      },
+      "expected": {
+        "label": "Unmapped_XdyNDQLd_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Yes"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:usli-nppla-5-12.ground-truth:Unmapped_XdyNDQLd_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_XdyNDQLd_A",
+        "predictionId": "checkbox-p1-13",
+        "page": 1,
+        "geometryDistance": 0.001939164250121373
+      },
+      "expected": {
+        "tableId": "page-1-table-3",
+        "rowIndex": 5,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:usli-nppla-5-12.ground-truth:Unmapped_XdyNDQLd_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_XdyNDQLd_A",
+        "predictionId": "checkbox-p1-13",
+        "page": 1,
+        "geometryDistance": 0.001939164250121373
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-3"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:usli-nppla-5-12.ground-truth:Unmapped_ZajckaXk_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_ZajckaXk_A",
+        "predictionId": "checkbox-p1-14",
+        "page": 1,
+        "geometryDistance": 0.002022209996148548
+      },
+      "expected": {
+        "label": "Unmapped_ZajckaXk_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Yes"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:usli-nppla-5-12.ground-truth:Unmapped_ZajckaXk_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_ZajckaXk_A",
+        "predictionId": "checkbox-p1-14",
+        "page": 1,
+        "geometryDistance": 0.002022209996148548
+      },
+      "expected": {
+        "tableId": "page-1-table-3",
+        "rowIndex": 6,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:usli-nppla-5-12.ground-truth:Unmapped_ZajckaXk_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_ZajckaXk_A",
+        "predictionId": "checkbox-p1-14",
+        "page": 1,
+        "geometryDistance": 0.002022209996148548
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-3"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:usli-nppla-5-12.ground-truth:Unmapped_HnPhzhEn_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_HnPhzhEn_A",
+        "predictionId": "checkbox-p1-15",
+        "page": 1,
+        "geometryDistance": 0.0017600278593745756
+      },
+      "expected": {
+        "label": "Unmapped_HnPhzhEn_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Yes"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:usli-nppla-5-12.ground-truth:Unmapped_HnPhzhEn_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_HnPhzhEn_A",
+        "predictionId": "checkbox-p1-15",
+        "page": 1,
+        "geometryDistance": 0.0017600278593745756
+      },
+      "expected": {
+        "tableId": "page-1-table-3",
+        "rowIndex": 7,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:usli-nppla-5-12.ground-truth:Unmapped_HnPhzhEn_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_HnPhzhEn_A",
+        "predictionId": "checkbox-p1-15",
+        "page": 1,
+        "geometryDistance": 0.0017600278593745756
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-3"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:usli-nppla-5-12.ground-truth:Unmapped_DCkFeIiK_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_DCkFeIiK_A",
+        "predictionId": "checkbox-p1-16",
+        "page": 1,
+        "geometryDistance": 0.0016270297283869607
+      },
+      "expected": {
+        "label": "Unmapped_DCkFeIiK_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Yes"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:usli-nppla-5-12.ground-truth:Unmapped_DCkFeIiK_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_DCkFeIiK_A",
+        "predictionId": "checkbox-p1-16",
+        "page": 1,
+        "geometryDistance": 0.0016270297283869607
+      },
+      "expected": {
+        "tableId": "page-1-table-3",
+        "rowIndex": 8,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:usli-nppla-5-12.ground-truth:Unmapped_DCkFeIiK_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_DCkFeIiK_A",
+        "predictionId": "checkbox-p1-16",
+        "page": 1,
+        "geometryDistance": 0.0016270297283869607
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-3"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:usli-nppla-5-12.ground-truth:Unmapped_AmNwqeIr_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_AmNwqeIr_A",
+        "predictionId": "checkbox-p1-2",
+        "page": 1,
+        "geometryDistance": 0.002532158253657065
+      },
+      "expected": {
+        "label": "Unmapped_AmNwqeIr_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Yes"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:usli-nppla-5-12.ground-truth:Unmapped_AmNwqeIr_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_AmNwqeIr_A",
+        "predictionId": "checkbox-p1-2",
+        "page": 1,
+        "geometryDistance": 0.002532158253657065
+      },
+      "expected": {
+        "tableId": "page-1-table-2",
+        "rowIndex": 0,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:usli-nppla-5-12.ground-truth:Unmapped_AmNwqeIr_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_AmNwqeIr_A",
+        "predictionId": "checkbox-p1-2",
+        "page": 1,
+        "geometryDistance": 0.002532158253657065
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-3"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:usli-nppla-5-12.ground-truth:Unmapped_atPhSVhg_B",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_atPhSVhg_B",
+        "predictionId": "checkbox-p1-5",
+        "page": 1,
+        "geometryDistance": 0.0015895286028325115
+      },
+      "expected": {
+        "label": "Unmapped_atPhSVhg_B",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Yes"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:usli-nppla-5-12.ground-truth:Unmapped_atPhSVhg_B",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_atPhSVhg_B",
+        "predictionId": "checkbox-p1-5",
+        "page": 1,
+        "geometryDistance": 0.0015895286028325115
+      },
+      "expected": {
+        "tableId": "page-1-table-2",
+        "rowIndex": 1,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:usli-nppla-5-12.ground-truth:Unmapped_atPhSVhg_B",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_atPhSVhg_B",
+        "predictionId": "checkbox-p1-5",
+        "page": 1,
+        "geometryDistance": 0.0015895286028325115
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-3"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:usli-nppla-5-12.ground-truth:Unmapped_HnPhzhEn_B",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_HnPhzhEn_B",
+        "predictionId": "input-semantic-p1-l54",
+        "page": 1,
+        "geometryDistance": 0.06059757380112348
+      },
+      "expected": {
+        "label": "Unmapped_HnPhzhEn_B",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Premium: $"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "field_type_misclassification:usli-nppla-5-12.ground-truth:Unmapped_HnPhzhEn_B",
+      "category": "field_type_misclassification",
+      "description": "The predicted fillable type differs from the XFDL control/format type.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_HnPhzhEn_B",
+        "predictionId": "input-semantic-p1-l54",
+        "page": 1,
+        "geometryDistance": 0.06059757380112348
+      },
+      "expected": {
+        "type": "checkbox",
+        "sourceType": "checkbox",
+        "format": null
+      },
+      "actual": {
+        "type": "currency",
+        "sourceType": "currency"
+      },
+      "rationale": "XFDL control/format typing and backend typed-blank classification disagree.",
+      "evidence": {}
+    },
+    {
+      "id": "table_detection_error:usli-nppla-5-12.ground-truth:Unmapped_HnPhzhEn_B",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_HnPhzhEn_B",
+        "predictionId": "input-semantic-p1-l54",
+        "page": 1,
+        "geometryDistance": 0.06059757380112348
+      },
+      "expected": {
+        "tableId": "page-1-table-2",
+        "rowIndex": 2,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "currency"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "checkbox_yes_no_pairing_error:usli-nppla-5-12.ground-truth:Unmapped_HnPhzhEn_B",
+      "category": "checkbox_yes_no_pairing_error",
+      "description": "A checkbox or Yes/No control is missing its expected pairing/group evidence.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_HnPhzhEn_B",
+        "predictionId": "input-semantic-p1-l54",
+        "page": 1,
+        "geometryDistance": 0.06059757380112348
+      },
+      "expected": {
+        "grouped": true,
+        "label": "Unmapped_HnPhzhEn_B"
+      },
+      "actual": {
+        "grouped": false,
+        "semanticLabel": "Premium: $"
+      },
+      "rationale": "The XFDL checkbox is fillable but is absent from backend checkbox groups.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:usli-nppla-5-12.ground-truth:Unmapped_GIOWwuJn_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_GIOWwuJn_A",
+        "predictionId": "checkbox-p1-8",
+        "page": 1,
+        "geometryDistance": 0.0010482783110047308
+      },
+      "expected": {
+        "label": "Unmapped_GIOWwuJn_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Yes"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:usli-nppla-5-12.ground-truth:Unmapped_GIOWwuJn_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_GIOWwuJn_A",
+        "predictionId": "checkbox-p1-8",
+        "page": 1,
+        "geometryDistance": 0.0010482783110047308
+      },
+      "expected": {
+        "tableId": "page-1-table-3",
+        "rowIndex": 0,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:usli-nppla-5-12.ground-truth:Unmapped_GIOWwuJn_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_GIOWwuJn_A",
+        "predictionId": "checkbox-p1-8",
+        "page": 1,
+        "geometryDistance": 0.0010482783110047308
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-3"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:usli-nppla-5-12.ground-truth:Unmapped_XIzjflpv_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_XIzjflpv_A",
+        "predictionId": "checkbox-p1-18",
+        "page": 1,
+        "geometryDistance": 0.001948087609891336
+      },
+      "expected": {
+        "label": "Unmapped_XIzjflpv_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Yes"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:usli-nppla-5-12.ground-truth:Unmapped_XIzjflpv_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_XIzjflpv_A",
+        "predictionId": "checkbox-p1-18",
+        "page": 1,
+        "geometryDistance": 0.001948087609891336
+      },
+      "expected": {
+        "tableId": "page-1-table-3",
+        "rowIndex": 1,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:usli-nppla-5-12.ground-truth:Unmapped_XIzjflpv_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_XIzjflpv_A",
+        "predictionId": "checkbox-p1-18",
+        "page": 1,
+        "geometryDistance": 0.001948087609891336
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-3"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:usli-nppla-5-12.ground-truth:Unmapped_ohNHJtfD_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_ohNHJtfD_A",
+        "predictionId": "checkbox-p1-19",
+        "page": 1,
+        "geometryDistance": 0.0018373985936665747
+      },
+      "expected": {
+        "label": "Unmapped_ohNHJtfD_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "No"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:usli-nppla-5-12.ground-truth:Unmapped_ohNHJtfD_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_ohNHJtfD_A",
+        "predictionId": "checkbox-p1-19",
+        "page": 1,
+        "geometryDistance": 0.0018373985936665747
+      },
+      "expected": {
+        "tableId": "page-1-table-3",
+        "rowIndex": 2,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:usli-nppla-5-12.ground-truth:Unmapped_ohNHJtfD_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_ohNHJtfD_A",
+        "predictionId": "checkbox-p1-19",
+        "page": 1,
+        "geometryDistance": 0.0018373985936665747
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-3"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:usli-nppla-5-12.ground-truth:Unmapped_ZZNbrbxp_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_ZZNbrbxp_A",
+        "predictionId": "checkbox-p1-11",
+        "page": 1,
+        "geometryDistance": 0.002103060290902295
+      },
+      "expected": {
+        "label": "Unmapped_ZZNbrbxp_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Yes"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:usli-nppla-5-12.ground-truth:Unmapped_ZZNbrbxp_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_ZZNbrbxp_A",
+        "predictionId": "checkbox-p1-11",
+        "page": 1,
+        "geometryDistance": 0.002103060290902295
+      },
+      "expected": {
+        "tableId": "page-1-table-3",
+        "rowIndex": 3,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:usli-nppla-5-12.ground-truth:Unmapped_ZZNbrbxp_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_ZZNbrbxp_A",
+        "predictionId": "checkbox-p1-11",
+        "page": 1,
+        "geometryDistance": 0.002103060290902295
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-3"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:usli-nppla-5-12.ground-truth:Unmapped_WpsaIMiC_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_WpsaIMiC_A",
+        "predictionId": "checkbox-p1-21",
+        "page": 1,
+        "geometryDistance": 0.0014272327740724223
+      },
+      "expected": {
+        "label": "Unmapped_WpsaIMiC_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Yes"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:usli-nppla-5-12.ground-truth:Unmapped_WpsaIMiC_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_WpsaIMiC_A",
+        "predictionId": "checkbox-p1-21",
+        "page": 1,
+        "geometryDistance": 0.0014272327740724223
+      },
+      "expected": {
+        "tableId": "page-1-table-3",
+        "rowIndex": 4,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:usli-nppla-5-12.ground-truth:Unmapped_WpsaIMiC_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_WpsaIMiC_A",
+        "predictionId": "checkbox-p1-21",
+        "page": 1,
+        "geometryDistance": 0.0014272327740724223
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-3"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:usli-nppla-5-12.ground-truth:Unmapped_mtaAuLHY_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_mtaAuLHY_A",
+        "predictionId": "checkbox-p1-22",
+        "page": 1,
+        "geometryDistance": 0.0013723425698615246
+      },
+      "expected": {
+        "label": "Unmapped_mtaAuLHY_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "No"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:usli-nppla-5-12.ground-truth:Unmapped_mtaAuLHY_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_mtaAuLHY_A",
+        "predictionId": "checkbox-p1-22",
+        "page": 1,
+        "geometryDistance": 0.0013723425698615246
+      },
+      "expected": {
+        "tableId": "page-1-table-3",
+        "rowIndex": 5,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:usli-nppla-5-12.ground-truth:Unmapped_mtaAuLHY_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_mtaAuLHY_A",
+        "predictionId": "checkbox-p1-22",
+        "page": 1,
+        "geometryDistance": 0.0013723425698615246
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-3"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:usli-nppla-5-12.ground-truth:Unmapped_ewXlAgij_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_ewXlAgij_A",
+        "predictionId": "checkbox-p1-23",
+        "page": 1,
+        "geometryDistance": 0.001638716671928839
+      },
+      "expected": {
+        "label": "Unmapped_ewXlAgij_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "No"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:usli-nppla-5-12.ground-truth:Unmapped_ewXlAgij_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_ewXlAgij_A",
+        "predictionId": "checkbox-p1-23",
+        "page": 1,
+        "geometryDistance": 0.001638716671928839
+      },
+      "expected": {
+        "tableId": "page-1-table-3",
+        "rowIndex": 6,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:usli-nppla-5-12.ground-truth:Unmapped_ewXlAgij_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_ewXlAgij_A",
+        "predictionId": "checkbox-p1-23",
+        "page": 1,
+        "geometryDistance": 0.001638716671928839
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-3"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:usli-nppla-5-12.ground-truth:Unmapped_JpgonMMN_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_JpgonMMN_A",
+        "predictionId": "checkbox-p1-24",
+        "page": 1,
+        "geometryDistance": 0.0014690614195238421
+      },
+      "expected": {
+        "label": "Unmapped_JpgonMMN_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Yes"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:usli-nppla-5-12.ground-truth:Unmapped_JpgonMMN_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_JpgonMMN_A",
+        "predictionId": "checkbox-p1-24",
+        "page": 1,
+        "geometryDistance": 0.0014690614195238421
+      },
+      "expected": {
+        "tableId": "page-1-table-3",
+        "rowIndex": 7,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:usli-nppla-5-12.ground-truth:Unmapped_JpgonMMN_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_JpgonMMN_A",
+        "predictionId": "checkbox-p1-24",
+        "page": 1,
+        "geometryDistance": 0.0014690614195238421
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-3"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:usli-nppla-5-12.ground-truth:Unmapped_edDAacju_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_edDAacju_A",
+        "predictionId": "checkbox-p1-25",
+        "page": 1,
+        "geometryDistance": 0.0016968516006064212
+      },
+      "expected": {
+        "label": "Unmapped_edDAacju_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "No"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:usli-nppla-5-12.ground-truth:Unmapped_edDAacju_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_edDAacju_A",
+        "predictionId": "checkbox-p1-25",
+        "page": 1,
+        "geometryDistance": 0.0016968516006064212
+      },
+      "expected": {
+        "tableId": "page-1-table-3",
+        "rowIndex": 8,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:usli-nppla-5-12.ground-truth:Unmapped_edDAacju_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_edDAacju_A",
+        "predictionId": "checkbox-p1-25",
+        "page": 1,
+        "geometryDistance": 0.0016968516006064212
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-3"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:usli-nppla-5-12.ground-truth:Unmapped_ZwUFtnSj_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_ZwUFtnSj_A",
+        "predictionId": "checkbox-p2-1",
+        "page": 2,
+        "geometryDistance": 0.0015697097550512514
+      },
+      "expected": {
+        "label": "Unmapped_ZwUFtnSj_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Yes"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:usli-nppla-5-12.ground-truth:Unmapped_ZwUFtnSj_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_ZwUFtnSj_A",
+        "predictionId": "checkbox-p2-1",
+        "page": 2,
+        "geometryDistance": 0.0015697097550512514
+      },
+      "expected": {
+        "tableId": "page-2-table-1",
+        "rowIndex": 0,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:usli-nppla-5-12.ground-truth:Unmapped_ZwUFtnSj_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_ZwUFtnSj_A",
+        "predictionId": "checkbox-p2-1",
+        "page": 2,
+        "geometryDistance": 0.0015697097550512514
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-5"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:usli-nppla-5-12.ground-truth:Unmapped_fjUlGPHJ_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_fjUlGPHJ_A",
+        "predictionId": "input-semantic-p2-l44",
+        "page": 2,
+        "geometryDistance": 0.03153162622888413
+      },
+      "expected": {
+        "label": "Unmapped_fjUlGPHJ_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Applicant's mailing address"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "semantic_label_mismatch:usli-nppla-5-12.ground-truth:Unmapped_imHrlEwt_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_imHrlEwt_A",
+        "predictionId": "input-semantic-p2-l46",
+        "page": 2,
+        "geometryDistance": 0.027938203801513087
+      },
+      "expected": {
+        "label": "Unmapped_imHrlEwt_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "City"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "semantic_label_mismatch:usli-nppla-5-12.ground-truth:Unmapped_wkROxGNq_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_wkROxGNq_A",
+        "predictionId": "input-semantic-p2-l47",
+        "page": 2,
+        "geometryDistance": 0.02544940992292078
+      },
+      "expected": {
+        "label": "Unmapped_wkROxGNq_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "State"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "semantic_label_mismatch:usli-nppla-5-12.ground-truth:Unmapped_YKKAfFyR_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_YKKAfFyR_A",
+        "predictionId": "input-semantic-p2-l45",
+        "page": 2,
+        "geometryDistance": 0.031535232821364716
+      },
+      "expected": {
+        "label": "Unmapped_YKKAfFyR_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Zip"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "field_type_misclassification:usli-nppla-5-12.ground-truth:Unmapped_YKKAfFyR_A",
+      "category": "field_type_misclassification",
+      "description": "The predicted fillable type differs from the XFDL control/format type.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_YKKAfFyR_A",
+        "predictionId": "input-semantic-p2-l45",
+        "page": 2,
+        "geometryDistance": 0.031535232821364716
+      },
+      "expected": {
+        "type": "text",
+        "sourceType": "text",
+        "format": {
+          "dataType": null,
+          "requirement": null,
+          "presentation": "",
+          "rawValues": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "provenance": "explicit"
+        }
+      },
+      "actual": {
+        "type": "numeric",
+        "sourceType": "numeric"
+      },
+      "rationale": "XFDL control/format typing and backend typed-blank classification disagree.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:usli-nppla-5-12.ground-truth:Unmapped_sZxAFlds_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_sZxAFlds_A",
+        "predictionId": "checkbox-p2-8",
+        "page": 2,
+        "geometryDistance": 0.001221685513554153
+      },
+      "expected": {
+        "label": "Unmapped_sZxAFlds_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Yes"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:usli-nppla-5-12.ground-truth:Unmapped_sZxAFlds_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_sZxAFlds_A",
+        "predictionId": "checkbox-p2-8",
+        "page": 2,
+        "geometryDistance": 0.001221685513554153
+      },
+      "expected": {
+        "tableId": "page-2-table-1",
+        "rowIndex": 0,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:usli-nppla-5-12.ground-truth:Unmapped_sZxAFlds_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_sZxAFlds_A",
+        "predictionId": "checkbox-p2-8",
+        "page": 2,
+        "geometryDistance": 0.001221685513554153
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-5"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:usli-nppla-5-12.ground-truth:Unmapped_fFzNZNBy_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_fFzNZNBy_A",
+        "predictionId": "checkbox-p2-9",
+        "page": 2,
+        "geometryDistance": 0.0011419261743969083
+      },
+      "expected": {
+        "label": "Unmapped_fFzNZNBy_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "No"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:usli-nppla-5-12.ground-truth:Unmapped_fFzNZNBy_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_fFzNZNBy_A",
+        "predictionId": "checkbox-p2-9",
+        "page": 2,
+        "geometryDistance": 0.0011419261743969083
+      },
+      "expected": {
+        "tableId": "page-2-table-1",
+        "rowIndex": 1,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:usli-nppla-5-12.ground-truth:Unmapped_fFzNZNBy_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_fFzNZNBy_A",
+        "predictionId": "checkbox-p2-9",
+        "page": 2,
+        "geometryDistance": 0.0011419261743969083
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-5"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:usli-nppla-5-12.ground-truth:Unmapped_GqJurTMY_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_GqJurTMY_A",
+        "predictionId": "checkbox-p2-10",
+        "page": 2,
+        "geometryDistance": 0.0021544457631421368
+      },
+      "expected": {
+        "label": "Unmapped_GqJurTMY_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "No"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:usli-nppla-5-12.ground-truth:Unmapped_GqJurTMY_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_GqJurTMY_A",
+        "predictionId": "checkbox-p2-10",
+        "page": 2,
+        "geometryDistance": 0.0021544457631421368
+      },
+      "expected": {
+        "tableId": "page-2-table-1",
+        "rowIndex": 2,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:usli-nppla-5-12.ground-truth:Unmapped_GqJurTMY_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_GqJurTMY_A",
+        "predictionId": "checkbox-p2-10",
+        "page": 2,
+        "geometryDistance": 0.0021544457631421368
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-5"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:usli-nppla-5-12.ground-truth:Unmapped_WeNvEHdc_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_WeNvEHdc_A",
+        "predictionId": "checkbox-p2-11",
+        "page": 2,
+        "geometryDistance": 0.0012587772169614059
+      },
+      "expected": {
+        "label": "Unmapped_WeNvEHdc_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Yes"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:usli-nppla-5-12.ground-truth:Unmapped_WeNvEHdc_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_WeNvEHdc_A",
+        "predictionId": "checkbox-p2-11",
+        "page": 2,
+        "geometryDistance": 0.0012587772169614059
+      },
+      "expected": {
+        "tableId": "page-2-table-1",
+        "rowIndex": 3,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:usli-nppla-5-12.ground-truth:Unmapped_WeNvEHdc_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_WeNvEHdc_A",
+        "predictionId": "checkbox-p2-11",
+        "page": 2,
+        "geometryDistance": 0.0012587772169614059
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-5"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:usli-nppla-5-12.ground-truth:Unmapped_nqzMHvoK_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_nqzMHvoK_A",
+        "predictionId": "checkbox-p2-12",
+        "page": 2,
+        "geometryDistance": 0.0014908588548153431
+      },
+      "expected": {
+        "label": "Unmapped_nqzMHvoK_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Yes"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:usli-nppla-5-12.ground-truth:Unmapped_nqzMHvoK_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_nqzMHvoK_A",
+        "predictionId": "checkbox-p2-12",
+        "page": 2,
+        "geometryDistance": 0.0014908588548153431
+      },
+      "expected": {
+        "tableId": "page-2-table-1",
+        "rowIndex": 4,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:usli-nppla-5-12.ground-truth:Unmapped_nqzMHvoK_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_nqzMHvoK_A",
+        "predictionId": "checkbox-p2-12",
+        "page": 2,
+        "geometryDistance": 0.0014908588548153431
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-5"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:usli-nppla-5-12.ground-truth:Unmapped_GYirGARL_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_GYirGARL_A",
+        "predictionId": "checkbox-p2-13",
+        "page": 2,
+        "geometryDistance": 0.0014118448544663976
+      },
+      "expected": {
+        "label": "Unmapped_GYirGARL_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "No"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:usli-nppla-5-12.ground-truth:Unmapped_GYirGARL_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_GYirGARL_A",
+        "predictionId": "checkbox-p2-13",
+        "page": 2,
+        "geometryDistance": 0.0014118448544663976
+      },
+      "expected": {
+        "tableId": "page-2-table-1",
+        "rowIndex": 5,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:usli-nppla-5-12.ground-truth:Unmapped_GYirGARL_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_GYirGARL_A",
+        "predictionId": "checkbox-p2-13",
+        "page": 2,
+        "geometryDistance": 0.0014118448544663976
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-5"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:usli-nppla-5-12.ground-truth:Unmapped_JLtpwEaY_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_JLtpwEaY_A",
+        "predictionId": "checkbox-p2-14",
+        "page": 2,
+        "geometryDistance": 0.0012243015871126286
+      },
+      "expected": {
+        "label": "Unmapped_JLtpwEaY_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Yes"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:usli-nppla-5-12.ground-truth:Unmapped_JLtpwEaY_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_JLtpwEaY_A",
+        "predictionId": "checkbox-p2-14",
+        "page": 2,
+        "geometryDistance": 0.0012243015871126286
+      },
+      "expected": {
+        "tableId": "page-2-table-1",
+        "rowIndex": 6,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:usli-nppla-5-12.ground-truth:Unmapped_JLtpwEaY_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_JLtpwEaY_A",
+        "predictionId": "checkbox-p2-14",
+        "page": 2,
+        "geometryDistance": 0.0012243015871126286
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-5"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:usli-nppla-5-12.ground-truth:Unmapped_qSKHbQSz_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_qSKHbQSz_A",
+        "predictionId": "checkbox-p2-2",
+        "page": 2,
+        "geometryDistance": 0.0021137969841483082
+      },
+      "expected": {
+        "label": "Unmapped_qSKHbQSz_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Yes"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:usli-nppla-5-12.ground-truth:Unmapped_qSKHbQSz_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_qSKHbQSz_A",
+        "predictionId": "checkbox-p2-2",
+        "page": 2,
+        "geometryDistance": 0.0021137969841483082
+      },
+      "expected": {
+        "tableId": "page-2-table-1",
+        "rowIndex": 1,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:usli-nppla-5-12.ground-truth:Unmapped_qSKHbQSz_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_qSKHbQSz_A",
+        "predictionId": "checkbox-p2-2",
+        "page": 2,
+        "geometryDistance": 0.0021137969841483082
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-5"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:usli-nppla-5-12.ground-truth:Unmapped_PZzjMBfO_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_PZzjMBfO_A",
+        "predictionId": "checkbox-p2-3",
+        "page": 2,
+        "geometryDistance": 0.0018191747189716069
+      },
+      "expected": {
+        "label": "Unmapped_PZzjMBfO_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Yes"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:usli-nppla-5-12.ground-truth:Unmapped_PZzjMBfO_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_PZzjMBfO_A",
+        "predictionId": "checkbox-p2-3",
+        "page": 2,
+        "geometryDistance": 0.0018191747189716069
+      },
+      "expected": {
+        "tableId": "page-2-table-1",
+        "rowIndex": 2,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:usli-nppla-5-12.ground-truth:Unmapped_PZzjMBfO_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_PZzjMBfO_A",
+        "predictionId": "checkbox-p2-3",
+        "page": 2,
+        "geometryDistance": 0.0018191747189716069
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-5"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:usli-nppla-5-12.ground-truth:Unmapped_neUkxYCW_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_neUkxYCW_A",
+        "predictionId": "checkbox-p2-4",
+        "page": 2,
+        "geometryDistance": 0.0016847974854799312
+      },
+      "expected": {
+        "label": "Unmapped_neUkxYCW_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Yes"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:usli-nppla-5-12.ground-truth:Unmapped_neUkxYCW_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_neUkxYCW_A",
+        "predictionId": "checkbox-p2-4",
+        "page": 2,
+        "geometryDistance": 0.0016847974854799312
+      },
+      "expected": {
+        "tableId": "page-2-table-1",
+        "rowIndex": 3,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:usli-nppla-5-12.ground-truth:Unmapped_neUkxYCW_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_neUkxYCW_A",
+        "predictionId": "checkbox-p2-4",
+        "page": 2,
+        "geometryDistance": 0.0016847974854799312
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-5"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:usli-nppla-5-12.ground-truth:Unmapped_XdOxXESQ_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_XdOxXESQ_A",
+        "predictionId": "checkbox-p2-5",
+        "page": 2,
+        "geometryDistance": 0.0026338823668202362
+      },
+      "expected": {
+        "label": "Unmapped_XdOxXESQ_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Yes"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:usli-nppla-5-12.ground-truth:Unmapped_XdOxXESQ_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_XdOxXESQ_A",
+        "predictionId": "checkbox-p2-5",
+        "page": 2,
+        "geometryDistance": 0.0026338823668202362
+      },
+      "expected": {
+        "tableId": "page-2-table-1",
+        "rowIndex": 4,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:usli-nppla-5-12.ground-truth:Unmapped_XdOxXESQ_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_XdOxXESQ_A",
+        "predictionId": "checkbox-p2-5",
+        "page": 2,
+        "geometryDistance": 0.0026338823668202362
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-5"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:usli-nppla-5-12.ground-truth:Unmapped_gxOPDHrT_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_gxOPDHrT_A",
+        "predictionId": "checkbox-p2-6",
+        "page": 2,
+        "geometryDistance": 0.0018870746359369165
+      },
+      "expected": {
+        "label": "Unmapped_gxOPDHrT_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Yes"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:usli-nppla-5-12.ground-truth:Unmapped_gxOPDHrT_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_gxOPDHrT_A",
+        "predictionId": "checkbox-p2-6",
+        "page": 2,
+        "geometryDistance": 0.0018870746359369165
+      },
+      "expected": {
+        "tableId": "page-2-table-1",
+        "rowIndex": 5,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:usli-nppla-5-12.ground-truth:Unmapped_gxOPDHrT_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_gxOPDHrT_A",
+        "predictionId": "checkbox-p2-6",
+        "page": 2,
+        "geometryDistance": 0.0018870746359369165
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-5"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:usli-nppla-5-12.ground-truth:Unmapped_mrXyWJrp_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_mrXyWJrp_A",
+        "predictionId": "checkbox-p2-7",
+        "page": 2,
+        "geometryDistance": 0.0023221573557478574
+      },
+      "expected": {
+        "label": "Unmapped_mrXyWJrp_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Yes"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:usli-nppla-5-12.ground-truth:Unmapped_mrXyWJrp_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_mrXyWJrp_A",
+        "predictionId": "checkbox-p2-7",
+        "page": 2,
+        "geometryDistance": 0.0023221573557478574
+      },
+      "expected": {
+        "tableId": "page-2-table-1",
+        "rowIndex": 6,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:usli-nppla-5-12.ground-truth:Unmapped_mrXyWJrp_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_mrXyWJrp_A",
+        "predictionId": "checkbox-p2-7",
+        "page": 2,
+        "geometryDistance": 0.0023221573557478574
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-5"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:usli-nppla-5-12.ground-truth:Producer_FullName_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Producer_FullName_A",
+        "predictionId": "input-semantic-p3-l49",
+        "page": 3,
+        "geometryDistance": 0.05100364692396534
+      },
+      "expected": {
+        "label": "Enter text: The full name of the producer / agency.",
+        "helpLabel": "Enter text: The full name of the producer / agency."
+      },
+      "actual": {
+        "label": "Retail agency name: First Look"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0.3077
+      }
+    },
+    {
+      "id": "semantic_label_mismatch:usli-nppla-5-12.ground-truth:Unmapped_bXZiOprK_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_bXZiOprK_A",
+        "predictionId": "input-semantic-p3-l50",
+        "page": 3,
+        "geometryDistance": 0.02675638518818923
+      },
+      "expected": {
+        "label": "Unmapped_bXZiOprK_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "License #"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "candidate_ranking_error:usli-nppla-5-12.ground-truth:Producer_PhoneNumber_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Producer_PhoneNumber_A",
+        "predictionId": "input-semantic-p3-l52",
+        "page": 3,
+        "geometryDistance": 0.02582849114156716
+      },
+      "expected": {
+        "topAcordCode": "Producer_PhoneNumber"
+      },
+      "actual": {
+        "topAcordCode": "Producer_FullName",
+        "rankedCodes": [
+          "Producer_FullName",
+          "Producer_MailingAddress_LineOne",
+          "Producer_CreditBureau_PhoneNumber"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:usli-nppla-5-12.ground-truth:Producer_MailingAddress_LineOne_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Producer_MailingAddress_LineOne_A",
+        "predictionId": null,
+        "page": 3,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Producer_MailingAddress_LineOne_A",
+        "type": "text",
+        "label": "Enter text: The mailing address line one of the producer / agency."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:usli-nppla-5-12.ground-truth:Producer_MailingAddress_LineOne_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Producer_MailingAddress_LineOne_A",
+        "predictionId": null,
+        "page": 3,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:usli-nppla-5-12.ground-truth:Producer_MailingAddress_CityName_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Producer_MailingAddress_CityName_A",
+        "predictionId": "input-semantic-p3-l55",
+        "page": 3,
+        "geometryDistance": 0.04470816069521827
+      },
+      "expected": {
+        "label": "Enter text: The mailing address city name of the producer / agency.",
+        "helpLabel": "Enter text: The mailing address city name of the producer / agency."
+      },
+      "actual": {
+        "label": "City: Newport"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0.1667
+      }
+    },
+    {
+      "id": "candidate_ranking_error:usli-nppla-5-12.ground-truth:Producer_MailingAddress_CityName_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Producer_MailingAddress_CityName_A",
+        "predictionId": "input-semantic-p3-l55",
+        "page": 3,
+        "geometryDistance": 0.04470816069521827
+      },
+      "expected": {
+        "topAcordCode": "Producer_MailingAddress_CityName"
+      },
+      "actual": {
+        "topAcordCode": "Aircraft_SeatingCapacityCount",
+        "rankedCodes": [
+          "Aircraft_SeatingCapacityCount",
+          "BuildingFeatures_SeatingCapacityCount",
+          "GeneralLiabilityLineOfBusiness_RefrigerationSystemUtilizedAnySpareCapacityExplanation"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:usli-nppla-5-12.ground-truth:Producer_MailingAddress_StateOrProvinceCode_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Producer_MailingAddress_StateOrProvinceCode_A",
+        "predictionId": "input-semantic-p3-l56",
+        "page": 3,
+        "geometryDistance": 0.015171213632368242
+      },
+      "expected": {
+        "label": "Enter code: The mailing address state or province code of the producer / agency.",
+        "helpLabel": "Enter code: The mailing address state or province code of the producer / agency."
+      },
+      "actual": {
+        "label": "State: RI"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0.1538
+      }
+    },
+    {
+      "id": "candidate_ranking_error:usli-nppla-5-12.ground-truth:Producer_MailingAddress_StateOrProvinceCode_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Producer_MailingAddress_StateOrProvinceCode_A",
+        "predictionId": "input-semantic-p3-l56",
+        "page": 3,
+        "geometryDistance": 0.015171213632368242
+      },
+      "expected": {
+        "topAcordCode": "Producer_MailingAddress_StateOrProvinceCode"
+      },
+      "actual": {
+        "topAcordCode": "AccountantsLiability_EstateTax_PracticeAreaDescription",
+        "rankedCodes": [
+          "AccountantsLiability_EstateTax_PracticeAreaDescription",
+          "AccountantsLiability_EstateTax_PriorYearPercent",
+          "AgriculturalAviation_HomeStateOrProvinceCode"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:usli-nppla-5-12.ground-truth:Producer_MailingAddress_PostalCode_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Producer_MailingAddress_PostalCode_A",
+        "predictionId": "input-semantic-p3-l57",
+        "page": 3,
+        "geometryDistance": 0.0404031453891852
+      },
+      "expected": {
+        "label": "Enter code: The mailing address postal code of the producer / agency.",
+        "helpLabel": "Enter code: The mailing address postal code of the producer / agency."
+      },
+      "actual": {
+        "label": "Zip: 02840"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "field_type_misclassification:usli-nppla-5-12.ground-truth:Producer_MailingAddress_PostalCode_A",
+      "category": "field_type_misclassification",
+      "description": "The predicted fillable type differs from the XFDL control/format type.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Producer_MailingAddress_PostalCode_A",
+        "predictionId": "input-semantic-p3-l57",
+        "page": 3,
+        "geometryDistance": 0.0404031453891852
+      },
+      "expected": {
+        "type": "text",
+        "sourceType": "text",
+        "format": {
+          "dataType": null,
+          "requirement": null,
+          "presentation": "",
+          "rawValues": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "provenance": "explicit"
+        }
+      },
+      "actual": {
+        "type": "numeric",
+        "sourceType": "numeric"
+      },
+      "rationale": "XFDL control/format typing and backend typed-blank classification disagree.",
+      "evidence": {}
+    },
+    {
+      "id": "candidate_ranking_error:usli-nppla-5-12.ground-truth:Producer_MailingAddress_PostalCode_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Producer_MailingAddress_PostalCode_A",
+        "predictionId": "input-semantic-p3-l57",
+        "page": 3,
+        "geometryDistance": 0.0404031453891852
+      },
+      "expected": {
+        "topAcordCode": "Producer_MailingAddress_PostalCode"
+      },
+      "actual": {
+        "topAcordCode": "NamedInsured_InputTaxCreditPercent",
+        "rankedCodes": [
+          "NamedInsured_InputTaxCreditPercent"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "candidate_ranking_error:usli-nppla-5-12.ground-truth:Producer_Employee_Title_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Producer_Employee_Title_A",
+        "predictionId": "input-semantic-p3-l71",
+        "page": 3,
+        "geometryDistance": 0.011847204310424717
+      },
+      "expected": {
+        "topAcordCode": "Producer_Employee_Title"
+      },
+      "actual": {
+        "topAcordCode": "AccountantsLiability_BusinessInterestAnyClient_EmployeeTitle",
+        "rankedCodes": [
+          "AccountantsLiability_BusinessInterestAnyClient_EmployeeTitle",
+          "AdditionalInterest_AuthorizedRepresentativeTitle",
+          "BusinessInformation_DirectorOrOfficer_Title"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:usli-nppla-5-12.ground-truth:DATE_SIGNED_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "DATE_SIGNED_A",
+        "predictionId": null,
+        "page": 3,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "DATE_SIGNED_A",
+        "type": "date",
+        "label": "DATE_SIGNED_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:usli-nppla-5-12.ground-truth:DATE_SIGNED_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+        "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+        "pdfFile": "USLI NPPLA 5-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "DATE_SIGNED_A",
+        "predictionId": null,
+        "page": 3,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    }
+  ]
+}

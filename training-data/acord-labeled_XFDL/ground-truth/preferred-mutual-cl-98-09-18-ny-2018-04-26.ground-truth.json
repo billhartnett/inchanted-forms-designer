@@ -1,0 +1,6708 @@
+{
+  "schemaVersion": "xfdl-ground-truth.v1",
+  "generatedAt": "2026-08-12T14:35:53.336Z",
+  "source": {
+    "fileName": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+    "relativePath": "training-data/Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+    "bytes": 1132598,
+    "sha256": "bf3968fa4922f20a3082dcff9bc30423ccd2d9e3464770cd636d1df493874c70",
+    "encoding": "ISO-8859-1",
+    "containerEncoding": "plain-xml",
+    "decodedBytes": 1132598
+  },
+  "form": {
+    "title": "Avyst",
+    "serialNumber": null,
+    "version": null,
+    "publisher": null,
+    "distributor": "Preferred Mutual",
+    "identifier": "CL-98 09 18",
+    "edition": "2018/04",
+    "formName": "Cyber Insurance Application",
+    "sourceKind": "carrier"
+  },
+  "pages": [
+    {
+      "sid": "Page1",
+      "index": 0,
+      "number": 1,
+      "width": 1020,
+      "height": 1320,
+      "pageSize": "letter",
+      "dpi": 120,
+      "printSize": [
+        8.5,
+        11
+      ]
+    },
+    {
+      "sid": "Page2",
+      "index": 1,
+      "number": 2,
+      "width": 1020,
+      "height": 1320,
+      "pageSize": "letter",
+      "dpi": 120,
+      "printSize": [
+        8.5,
+        11
+      ]
+    },
+    {
+      "sid": "Page3",
+      "index": 2,
+      "number": 3,
+      "width": 1020,
+      "height": 1320,
+      "pageSize": "letter",
+      "dpi": 120,
+      "printSize": [
+        8.5,
+        11
+      ]
+    },
+    {
+      "sid": "Page4",
+      "index": 3,
+      "number": 4,
+      "width": 1020,
+      "height": 1320,
+      "pageSize": "letter",
+      "dpi": 120,
+      "printSize": [
+        8.5,
+        11
+      ]
+    }
+  ],
+  "fields": [
+    {
+      "sid": "NamedInsured_FullName_A",
+      "tag": "field",
+      "role": "fillable-field",
+      "pageIndex": 0,
+      "pageNumber": 1,
+      "pageSid": "Page1",
+      "geometry": {
+        "x": 379,
+        "y": 866,
+        "width": 588,
+        "height": 23,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              379,
+              866
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              588,
+              23
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": null,
+      "imageRef": null,
+      "helpSid": "HelpNamedInsured_FullName_A",
+      "helpText": "Enter text: The named insured(s) as it / they will appear on the policy declarations page.",
+      "nextSid": "NamedInsured_MailingAddress_LineOne_A",
+      "fieldType": "text",
+      "sourceFieldType": "TextBox",
+      "format": {
+        "dataType": "string",
+        "requirement": null,
+        "presentation": "",
+        "rawValues": [
+          "string",
+          "",
+          "Optional",
+          ""
+        ],
+        "provenance": "explicit"
+      },
+      "semantic": {
+        "semanticPath": "NamedInsured_FullName",
+        "repeatKey": "A",
+        "family": "NamedInsured",
+        "mapped": true
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 358649,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": "Enter text: The named insured(s) as it / they will appear on the policy declarations page.",
+        "confidence": 0,
+        "provenance": "help-text-only"
+      }
+    },
+    {
+      "sid": "NamedInsured_MailingAddress_LineOne_A",
+      "tag": "field",
+      "role": "fillable-field",
+      "pageIndex": 0,
+      "pageNumber": 1,
+      "pageSid": "Page1",
+      "geometry": {
+        "x": 256,
+        "y": 904,
+        "width": 711,
+        "height": 22,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              256,
+              904
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              711,
+              22
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": null,
+      "imageRef": null,
+      "helpSid": "HelpNamedInsured_MailingAddress_LineOne_A",
+      "helpText": "Enter text: The named insured's mailing address line one.",
+      "nextSid": "NamedInsured_MailingAddress_CityName_A",
+      "fieldType": "text",
+      "sourceFieldType": "TextBox",
+      "format": {
+        "dataType": "string",
+        "requirement": null,
+        "presentation": "",
+        "rawValues": [
+          "string",
+          "",
+          "Optional",
+          ""
+        ],
+        "provenance": "explicit"
+      },
+      "semantic": {
+        "semanticPath": "NamedInsured_MailingAddress_LineOne",
+        "repeatKey": "A",
+        "family": "NamedInsured",
+        "mapped": true
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 359419,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": "Enter text: The named insured's mailing address line one.",
+        "confidence": 0,
+        "provenance": "help-text-only"
+      }
+    },
+    {
+      "sid": "NamedInsured_MailingAddress_CityName_A",
+      "tag": "field",
+      "role": "fillable-field",
+      "pageIndex": 0,
+      "pageNumber": 1,
+      "pageSid": "Page1",
+      "geometry": {
+        "x": 166,
+        "y": 941,
+        "width": 350,
+        "height": 23,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              166,
+              941
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              350,
+              23
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": null,
+      "imageRef": null,
+      "helpSid": "HelpNamedInsured_MailingAddress_CityName_A",
+      "helpText": "Enter text: The named insured's mailing address city name.",
+      "nextSid": "NamedInsured_MailingAddress_StateOrProvinceCode_A",
+      "fieldType": "text",
+      "sourceFieldType": "TextBox",
+      "format": {
+        "dataType": "string",
+        "requirement": null,
+        "presentation": "",
+        "rawValues": [
+          "string",
+          "",
+          "Optional",
+          ""
+        ],
+        "provenance": "explicit"
+      },
+      "semantic": {
+        "semanticPath": "NamedInsured_MailingAddress_CityName",
+        "repeatKey": "A",
+        "family": "NamedInsured",
+        "mapped": true
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 360199,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": "Enter text: The named insured's mailing address city name.",
+        "confidence": 0,
+        "provenance": "help-text-only"
+      },
+      "tableCell": {
+        "tableId": "page-1-table-1",
+        "rowIndex": 0,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      }
+    },
+    {
+      "sid": "NamedInsured_MailingAddress_StateOrProvinceCode_A",
+      "tag": "field",
+      "role": "fillable-field",
+      "pageIndex": 0,
+      "pageNumber": 1,
+      "pageSid": "Page1",
+      "geometry": {
+        "x": 609,
+        "y": 941,
+        "width": 114,
+        "height": 23,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              609,
+              941
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              114,
+              23
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": null,
+      "imageRef": null,
+      "helpSid": "HelpNamedInsured_MailingAddress_StateOrProvinceCode_A",
+      "helpText": "Enter code: The named insured's mailing address state or province code.",
+      "nextSid": "NamedInsured_MailingAddress_PostalCode_A",
+      "fieldType": "text",
+      "sourceFieldType": "TextBox",
+      "format": {
+        "dataType": "string",
+        "requirement": null,
+        "presentation": "",
+        "rawValues": [
+          "string",
+          "",
+          "Optional",
+          ""
+        ],
+        "provenance": "explicit"
+      },
+      "semantic": {
+        "semanticPath": "NamedInsured_MailingAddress_StateOrProvinceCode",
+        "repeatKey": "A",
+        "family": "NamedInsured",
+        "mapped": true
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 360994,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": "Enter code: The named insured's mailing address state or province code.",
+        "confidence": 0,
+        "provenance": "help-text-only"
+      },
+      "tableCell": {
+        "tableId": "page-1-table-1",
+        "rowIndex": 0,
+        "columnIndex": 2,
+        "provenance": "spatial-inference"
+      }
+    },
+    {
+      "sid": "NamedInsured_MailingAddress_PostalCode_A",
+      "tag": "field",
+      "role": "fillable-field",
+      "pageIndex": 0,
+      "pageNumber": 1,
+      "pageSid": "Page1",
+      "geometry": {
+        "x": 821,
+        "y": 941,
+        "width": 143,
+        "height": 23,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              821,
+              941
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              143,
+              23
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": null,
+      "imageRef": null,
+      "helpSid": "HelpNamedInsured_MailingAddress_PostalCode_A",
+      "helpText": "Enter code: The named insured's mailing address postal code.",
+      "nextSid": "NamedInsured_Contact_FullName_A",
+      "fieldType": "text",
+      "sourceFieldType": "TextBox",
+      "format": {
+        "dataType": "string",
+        "requirement": null,
+        "presentation": "",
+        "rawValues": [
+          "string",
+          "",
+          "Optional",
+          ""
+        ],
+        "provenance": "explicit"
+      },
+      "semantic": {
+        "semanticPath": "NamedInsured_MailingAddress_PostalCode",
+        "repeatKey": "A",
+        "family": "NamedInsured",
+        "mapped": true
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 361826,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": "Enter code: The named insured's mailing address postal code.",
+        "confidence": 0,
+        "provenance": "help-text-only"
+      },
+      "tableCell": {
+        "tableId": "page-1-table-1",
+        "rowIndex": 0,
+        "columnIndex": 3,
+        "provenance": "spatial-inference"
+      }
+    },
+    {
+      "sid": "NamedInsured_Contact_FullName_A",
+      "tag": "field",
+      "role": "fillable-field",
+      "pageIndex": 0,
+      "pageNumber": 1,
+      "pageSid": "Page1",
+      "geometry": {
+        "x": 178,
+        "y": 981,
+        "width": 296,
+        "height": 23,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              178,
+              981
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              296,
+              23
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": null,
+      "imageRef": null,
+      "helpSid": "HelpNamedInsured_Contact_FullName_A",
+      "helpText": "Enter text: The full name of the contact.",
+      "nextSid": "NamedInsured_Primary_PhoneNumber_A",
+      "fieldType": "text",
+      "sourceFieldType": "TextBox",
+      "format": {
+        "dataType": "string",
+        "requirement": null,
+        "presentation": "",
+        "rawValues": [
+          "string",
+          "",
+          "Optional",
+          ""
+        ],
+        "provenance": "explicit"
+      },
+      "semantic": {
+        "semanticPath": "NamedInsured_Contact_FullName",
+        "repeatKey": "A",
+        "family": "NamedInsured",
+        "mapped": true
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 362611,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": "Enter text: The full name of the contact.",
+        "confidence": 0,
+        "provenance": "help-text-only"
+      },
+      "tableCell": {
+        "tableId": "page-1-table-1",
+        "rowIndex": 1,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      }
+    },
+    {
+      "sid": "NamedInsured_Primary_PhoneNumber_A",
+      "tag": "field",
+      "role": "fillable-field",
+      "pageIndex": 0,
+      "pageNumber": 1,
+      "pageSid": "Page1",
+      "geometry": {
+        "x": 566,
+        "y": 979,
+        "width": 153,
+        "height": 23,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              566,
+              979
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              153,
+              23
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": null,
+      "imageRef": null,
+      "helpSid": "HelpNamedInsured_Primary_PhoneNumber_A",
+      "helpText": "Enter number: The named insured's primary phone number.",
+      "nextSid": "NamedInsured_Primary_FaxNumber_A",
+      "fieldType": "numeric",
+      "sourceFieldType": "TextBox",
+      "format": {
+        "dataType": "int",
+        "requirement": null,
+        "presentation": "",
+        "rawValues": [
+          "int",
+          "",
+          "Optional",
+          ""
+        ],
+        "provenance": "explicit"
+      },
+      "semantic": {
+        "semanticPath": "NamedInsured_Primary_PhoneNumber",
+        "repeatKey": "A",
+        "family": "NamedInsured",
+        "mapped": true
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 363353,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": "Enter number: The named insured's primary phone number.",
+        "confidence": 0,
+        "provenance": "help-text-only"
+      },
+      "tableCell": {
+        "tableId": "page-1-table-1",
+        "rowIndex": 1,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      }
+    },
+    {
+      "sid": "NamedInsured_Primary_FaxNumber_A",
+      "tag": "field",
+      "role": "fillable-field",
+      "pageIndex": 0,
+      "pageNumber": 1,
+      "pageSid": "Page1",
+      "geometry": {
+        "x": 810,
+        "y": 979,
+        "width": 156,
+        "height": 23,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              810,
+              979
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              156,
+              23
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": null,
+      "imageRef": null,
+      "helpSid": "HelpNamedInsured_Primary_FaxNumber_A",
+      "helpText": "Enter number: The named insured's fax number.",
+      "nextSid": "NamedInsured_Primary_EmailAddress_A",
+      "fieldType": "numeric",
+      "sourceFieldType": "TextBox",
+      "format": {
+        "dataType": "int",
+        "requirement": null,
+        "presentation": "",
+        "rawValues": [
+          "int",
+          "",
+          "Optional",
+          ""
+        ],
+        "provenance": "explicit"
+      },
+      "semantic": {
+        "semanticPath": "NamedInsured_Primary_FaxNumber",
+        "repeatKey": "A",
+        "family": "NamedInsured",
+        "mapped": true
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 364113,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": "Enter number: The named insured's fax number.",
+        "confidence": 0,
+        "provenance": "help-text-only"
+      },
+      "tableCell": {
+        "tableId": "page-1-table-1",
+        "rowIndex": 1,
+        "columnIndex": 3,
+        "provenance": "spatial-inference"
+      }
+    },
+    {
+      "sid": "NamedInsured_Primary_EmailAddress_A",
+      "tag": "field",
+      "role": "fillable-field",
+      "pageIndex": 0,
+      "pageNumber": 1,
+      "pageSid": "Page1",
+      "geometry": {
+        "x": 217,
+        "y": 1019,
+        "width": 327,
+        "height": 23,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              217,
+              1019
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              327,
+              23
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": null,
+      "imageRef": null,
+      "helpSid": "HelpNamedInsured_Primary_EmailAddress_A",
+      "helpText": "Enter text: The named insured's primary e-mail address.",
+      "nextSid": "NamedInsured_Primary_WebsiteAddress_A",
+      "fieldType": "text",
+      "sourceFieldType": "TextBox",
+      "format": {
+        "dataType": "string",
+        "requirement": null,
+        "presentation": "",
+        "rawValues": [
+          "string",
+          "",
+          "Optional",
+          ""
+        ],
+        "provenance": "explicit"
+      },
+      "semantic": {
+        "semanticPath": "NamedInsured_Primary_EmailAddress",
+        "repeatKey": "A",
+        "family": "NamedInsured",
+        "mapped": true
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 364860,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": "Enter text: The named insured's primary e-mail address.",
+        "confidence": 0,
+        "provenance": "help-text-only"
+      }
+    },
+    {
+      "sid": "NamedInsured_Primary_WebsiteAddress_A",
+      "tag": "field",
+      "role": "fillable-field",
+      "pageIndex": 0,
+      "pageNumber": 1,
+      "pageSid": "Page1",
+      "geometry": {
+        "x": 626,
+        "y": 1019,
+        "width": 341,
+        "height": 23,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              626,
+              1019
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              341,
+              23
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": null,
+      "imageRef": null,
+      "helpSid": "HelpNamedInsured_Primary_WebsiteAddress_A",
+      "helpText": "Enter text: The primary website address for the named insured.",
+      "nextSid": "Policy_EffectiveDate_A",
+      "fieldType": "text",
+      "sourceFieldType": "TextBox",
+      "format": {
+        "dataType": "string",
+        "requirement": null,
+        "presentation": "",
+        "rawValues": [
+          "string",
+          "",
+          "Optional",
+          ""
+        ],
+        "provenance": "explicit"
+      },
+      "semantic": {
+        "semanticPath": "NamedInsured_Primary_WebsiteAddress",
+        "repeatKey": "A",
+        "family": "NamedInsured",
+        "mapped": true
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 365632,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": "Enter text: The primary website address for the named insured.",
+        "confidence": 0,
+        "provenance": "help-text-only"
+      }
+    },
+    {
+      "sid": "Policy_EffectiveDate_A",
+      "tag": "field",
+      "role": "fillable-field",
+      "pageIndex": 0,
+      "pageNumber": 1,
+      "pageSid": "Page1",
+      "geometry": {
+        "x": 523,
+        "y": 1055,
+        "width": 339,
+        "height": 23,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              523,
+              1055
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              339,
+              23
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": null,
+      "imageRef": null,
+      "helpSid": "HelpPolicy_EffectiveDate_A",
+      "helpText": "Enter date: The effective date of the policy. The date that the terms and conditions of the policy commence. (MM/DD/YYYY)",
+      "nextSid": null,
+      "fieldType": "date",
+      "sourceFieldType": "TextBox",
+      "format": {
+        "dataType": "date",
+        "requirement": "Optional",
+        "presentation": "MM/DD/YYYY",
+        "rawValues": [
+          "date",
+          "Optional",
+          ""
+        ],
+        "provenance": "explicit"
+      },
+      "semantic": {
+        "semanticPath": "Policy_EffectiveDate",
+        "repeatKey": "A",
+        "family": "Policy",
+        "mapped": true
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 366402,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": "Enter date: The effective date of the policy. The date that the terms and conditions of the policy commence. (MM/DD/YYYY)",
+        "confidence": 0,
+        "provenance": "help-text-only"
+      }
+    },
+    {
+      "sid": "Unmapped_LhjUlLJx_B",
+      "tag": "check",
+      "role": "fillable-field",
+      "pageIndex": 1,
+      "pageNumber": 2,
+      "pageSid": "Page2",
+      "geometry": {
+        "x": 870,
+        "y": 153,
+        "width": 16,
+        "height": 16,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              870,
+              153
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              16,
+              16
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": "False",
+      "imageRef": null,
+      "helpSid": null,
+      "helpText": null,
+      "nextSid": "Unmapped_yAfkuHmu_A",
+      "fieldType": "checkbox",
+      "sourceFieldType": "check",
+      "format": null,
+      "semantic": {
+        "semanticPath": "Unmapped_LhjUlLJx",
+        "repeatKey": "B",
+        "family": "Unmapped",
+        "mapped": false
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 579964,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": null,
+        "confidence": 0,
+        "provenance": "unresolved"
+      }
+    },
+    {
+      "sid": "Unmapped_hXPkffrs_A",
+      "tag": "field",
+      "role": "fillable-field",
+      "pageIndex": 1,
+      "pageNumber": 2,
+      "pageSid": "Page2",
+      "geometry": {
+        "x": 418,
+        "y": 197,
+        "width": 424,
+        "height": 23,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              418,
+              197
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              424,
+              23
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": null,
+      "imageRef": null,
+      "helpSid": null,
+      "helpText": null,
+      "nextSid": "NamedInsured_BusinessStartDate_A",
+      "fieldType": "text",
+      "sourceFieldType": "TextBox",
+      "format": {
+        "dataType": null,
+        "requirement": null,
+        "presentation": "",
+        "rawValues": [
+          "",
+          "",
+          "",
+          ""
+        ],
+        "provenance": "explicit"
+      },
+      "semantic": {
+        "semanticPath": "Unmapped_hXPkffrs",
+        "repeatKey": "A",
+        "family": "Unmapped",
+        "mapped": false
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 580338,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": null,
+        "confidence": 0,
+        "provenance": "unresolved"
+      }
+    },
+    {
+      "sid": "NamedInsured_BusinessStartDate_A",
+      "tag": "field",
+      "role": "fillable-field",
+      "pageIndex": 1,
+      "pageNumber": 2,
+      "pageSid": "Page2",
+      "geometry": {
+        "x": 473,
+        "y": 235,
+        "width": 370,
+        "height": 23,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              473,
+              235
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              370,
+              23
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": null,
+      "imageRef": null,
+      "helpSid": "HelpNamedInsured_BusinessStartDate_A",
+      "helpText": "Enter date: The date the applicant began in business. This is important because it helps the underwriter determine the expertise and business success of the applicant.",
+      "nextSid": "CommercialPolicy_OperationsDescription_A",
+      "fieldType": "date",
+      "sourceFieldType": "TextBox",
+      "format": {
+        "dataType": "date",
+        "requirement": "Optional",
+        "presentation": "MM/DD/YYYY",
+        "rawValues": [
+          "date",
+          "Optional",
+          ""
+        ],
+        "provenance": "explicit"
+      },
+      "semantic": {
+        "semanticPath": "NamedInsured_BusinessStartDate",
+        "repeatKey": "A",
+        "family": "NamedInsured",
+        "mapped": true
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 580885,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": "Enter date: The date the applicant began in business. This is important because it helps the underwriter determine the expertise and business success of the applicant.",
+        "confidence": 0,
+        "provenance": "help-text-only"
+      }
+    },
+    {
+      "sid": "CommercialPolicy_OperationsDescription_A",
+      "tag": "field",
+      "role": "fillable-field",
+      "pageIndex": 1,
+      "pageNumber": 2,
+      "pageSid": "Page2",
+      "geometry": {
+        "x": 284,
+        "y": 273,
+        "width": 558,
+        "height": 23,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              284,
+              273
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              558,
+              23
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": null,
+      "imageRef": null,
+      "helpSid": "HelpCommercialPolicy_OperationsDescription_A",
+      "helpText": "Enter text: The description of the operations of this risk or insured.",
+      "nextSid": "FinancialStatement_CurrentYear_TotalRevenueAmount_A",
+      "fieldType": "text",
+      "sourceFieldType": "TextBox",
+      "format": {
+        "dataType": "string",
+        "requirement": null,
+        "presentation": "",
+        "rawValues": [
+          "string",
+          "",
+          "Optional",
+          ""
+        ],
+        "provenance": "explicit"
+      },
+      "semantic": {
+        "semanticPath": "CommercialPolicy_OperationsDescription",
+        "repeatKey": "A",
+        "family": "CommercialPolicy",
+        "mapped": true
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 581781,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": "Enter text: The description of the operations of this risk or insured.",
+        "confidence": 0,
+        "provenance": "help-text-only"
+      }
+    },
+    {
+      "sid": "FinancialStatement_CurrentYear_TotalRevenueAmount_A",
+      "tag": "field",
+      "role": "fillable-field",
+      "pageIndex": 1,
+      "pageNumber": 2,
+      "pageSid": "Page2",
+      "geometry": {
+        "x": 469,
+        "y": 311,
+        "width": 125,
+        "height": 23,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              469,
+              311
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              125,
+              23
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": null,
+      "imageRef": null,
+      "helpSid": "HelpFinancialStatement_CurrentYear_TotalRevenueAmount_A",
+      "helpText": "Enter amount: The total revenue for the organization for the current year.",
+      "nextSid": "FinancialStatement_PriorYear_TotalRevenueAmount_A",
+      "fieldType": "numeric",
+      "sourceFieldType": "TextBox",
+      "format": {
+        "dataType": "int",
+        "requirement": null,
+        "presentation": "",
+        "rawValues": [
+          "int",
+          "",
+          "Optional",
+          ""
+        ],
+        "provenance": "explicit"
+      },
+      "semantic": {
+        "semanticPath": "FinancialStatement_CurrentYear_TotalRevenueAmount",
+        "repeatKey": "A",
+        "family": "FinancialStatement",
+        "mapped": true
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 582596,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": "Enter amount: The total revenue for the organization for the current year.",
+        "confidence": 0,
+        "provenance": "help-text-only"
+      }
+    },
+    {
+      "sid": "FinancialStatement_PriorYear_TotalRevenueAmount_A",
+      "tag": "field",
+      "role": "fillable-field",
+      "pageIndex": 1,
+      "pageNumber": 2,
+      "pageSid": "Page2",
+      "geometry": {
+        "x": 706,
+        "y": 311,
+        "width": 135,
+        "height": 23,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              706,
+              311
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              135,
+              23
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": null,
+      "imageRef": null,
+      "helpSid": "HelpFinancialStatement_PriorYear_TotalRevenueAmount_A",
+      "helpText": "Enter amount: The total revenue for the organization for the prior year.",
+      "nextSid": "Unmapped_ItSrifOy_A",
+      "fieldType": "numeric",
+      "sourceFieldType": "TextBox",
+      "format": {
+        "dataType": "int",
+        "requirement": null,
+        "presentation": "",
+        "rawValues": [
+          "int",
+          "",
+          "Optional",
+          ""
+        ],
+        "provenance": "explicit"
+      },
+      "semantic": {
+        "semanticPath": "FinancialStatement_PriorYear_TotalRevenueAmount",
+        "repeatKey": "A",
+        "family": "FinancialStatement",
+        "mapped": true
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 583443,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": "Enter amount: The total revenue for the organization for the prior year.",
+        "confidence": 0,
+        "provenance": "help-text-only"
+      }
+    },
+    {
+      "sid": "Unmapped_euvbyfgZ_A",
+      "tag": "field",
+      "role": "fillable-field",
+      "pageIndex": 1,
+      "pageNumber": 2,
+      "pageSid": "Page2",
+      "geometry": {
+        "x": 163,
+        "y": 438,
+        "width": 682,
+        "height": 49,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              163,
+              438
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              682,
+              49
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": null,
+      "imageRef": null,
+      "helpSid": null,
+      "helpText": null,
+      "nextSid": "Unmapped_QMRoCZOd_A",
+      "fieldType": "text",
+      "sourceFieldType": "TextBox",
+      "format": {
+        "dataType": null,
+        "requirement": null,
+        "presentation": "",
+        "rawValues": [
+          "",
+          "",
+          "",
+          ""
+        ],
+        "provenance": "explicit"
+      },
+      "semantic": {
+        "semanticPath": "Unmapped_euvbyfgZ",
+        "repeatKey": "A",
+        "family": "Unmapped",
+        "mapped": false
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 584252,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": null,
+        "confidence": 0,
+        "provenance": "unresolved"
+      }
+    },
+    {
+      "sid": "Unmapped_Ypojaxlj_B",
+      "tag": "field",
+      "role": "fillable-field",
+      "pageIndex": 1,
+      "pageNumber": 2,
+      "pageSid": "Page2",
+      "geometry": {
+        "x": 164,
+        "y": 585,
+        "width": 679,
+        "height": 66,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              164,
+              585
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              679,
+              66
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": null,
+      "imageRef": null,
+      "helpSid": null,
+      "helpText": null,
+      "nextSid": "Unmapped_dREGBqET_B",
+      "fieldType": "text",
+      "sourceFieldType": "TextBox",
+      "format": {
+        "dataType": null,
+        "requirement": null,
+        "presentation": "",
+        "rawValues": [
+          "",
+          "",
+          "",
+          ""
+        ],
+        "provenance": "explicit"
+      },
+      "semantic": {
+        "semanticPath": "Unmapped_Ypojaxlj",
+        "repeatKey": "B",
+        "family": "Unmapped",
+        "mapped": false
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 584786,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": null,
+        "confidence": 0,
+        "provenance": "unresolved"
+      }
+    },
+    {
+      "sid": "Unmapped_eAOrglrE_A",
+      "tag": "field",
+      "role": "fillable-field",
+      "pageIndex": 1,
+      "pageNumber": 2,
+      "pageSid": "Page2",
+      "geometry": {
+        "x": 205,
+        "y": 755,
+        "width": 639,
+        "height": 58,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              205,
+              755
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              639,
+              58
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": null,
+      "imageRef": null,
+      "helpSid": null,
+      "helpText": null,
+      "nextSid": "Unmapped_DICBgaBl_A",
+      "fieldType": "text",
+      "sourceFieldType": "TextBox",
+      "format": {
+        "dataType": null,
+        "requirement": null,
+        "presentation": "",
+        "rawValues": [
+          "",
+          "",
+          "",
+          ""
+        ],
+        "provenance": "explicit"
+      },
+      "semantic": {
+        "semanticPath": "Unmapped_eAOrglrE",
+        "repeatKey": "A",
+        "family": "Unmapped",
+        "mapped": false
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 585320,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": null,
+        "confidence": 0,
+        "provenance": "unresolved"
+      }
+    },
+    {
+      "sid": "Unmapped_ILAfuKCm_A",
+      "tag": "field",
+      "role": "fillable-field",
+      "pageIndex": 1,
+      "pageNumber": 2,
+      "pageSid": "Page2",
+      "geometry": {
+        "x": 163,
+        "y": 947,
+        "width": 678,
+        "height": 49,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              163,
+              947
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              678,
+              49
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": null,
+      "imageRef": null,
+      "helpSid": null,
+      "helpText": null,
+      "nextSid": "Unmapped_ZKvUDRzl_A",
+      "fieldType": "text",
+      "sourceFieldType": "TextBox",
+      "format": {
+        "dataType": null,
+        "requirement": null,
+        "presentation": "",
+        "rawValues": [
+          "",
+          "",
+          "",
+          ""
+        ],
+        "provenance": "explicit"
+      },
+      "semantic": {
+        "semanticPath": "Unmapped_ILAfuKCm",
+        "repeatKey": "A",
+        "family": "Unmapped",
+        "mapped": false
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 585854,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": null,
+        "confidence": 0,
+        "provenance": "unresolved"
+      }
+    },
+    {
+      "sid": "Unmapped_anIMhVGB_A",
+      "tag": "field",
+      "role": "fillable-field",
+      "pageIndex": 1,
+      "pageNumber": 2,
+      "pageSid": "Page2",
+      "geometry": {
+        "x": 172,
+        "y": 1114,
+        "width": 670,
+        "height": 57,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              172,
+              1114
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              670,
+              57
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": null,
+      "imageRef": null,
+      "helpSid": null,
+      "helpText": null,
+      "nextSid": null,
+      "fieldType": "text",
+      "sourceFieldType": "TextBox",
+      "format": {
+        "dataType": null,
+        "requirement": null,
+        "presentation": "",
+        "rawValues": [
+          "",
+          "",
+          "",
+          ""
+        ],
+        "provenance": "explicit"
+      },
+      "semantic": {
+        "semanticPath": "Unmapped_anIMhVGB",
+        "repeatKey": "A",
+        "family": "Unmapped",
+        "mapped": false
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 586388,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": null,
+        "confidence": 0,
+        "provenance": "unresolved"
+      }
+    },
+    {
+      "sid": "Unmapped_ItSrifOy_A",
+      "tag": "check",
+      "role": "fillable-field",
+      "pageIndex": 1,
+      "pageNumber": 2,
+      "pageSid": "Page2",
+      "geometry": {
+        "x": 870,
+        "y": 354,
+        "width": 16,
+        "height": 16,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              870,
+              354
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              16,
+              16
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": "False",
+      "imageRef": null,
+      "helpSid": null,
+      "helpText": null,
+      "nextSid": "Unmapped_ZhaqTyxw_A",
+      "fieldType": "checkbox",
+      "sourceFieldType": "check",
+      "format": {
+        "dataType": "bool",
+        "requirement": null,
+        "presentation": "",
+        "rawValues": [
+          "bool"
+        ],
+        "provenance": "explicit"
+      },
+      "semantic": {
+        "semanticPath": "Unmapped_ItSrifOy",
+        "repeatKey": "A",
+        "family": "Unmapped",
+        "mapped": false
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 586914,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": null,
+        "confidence": 0,
+        "provenance": "unresolved"
+      }
+    },
+    {
+      "sid": "Unmapped_QMRoCZOd_A",
+      "tag": "check",
+      "role": "fillable-field",
+      "pageIndex": 1,
+      "pageNumber": 2,
+      "pageSid": "Page2",
+      "geometry": {
+        "x": 870,
+        "y": 510,
+        "width": 16,
+        "height": 16,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              870,
+              510
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              16,
+              16
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": "False",
+      "imageRef": null,
+      "helpSid": null,
+      "helpText": null,
+      "nextSid": "Unmapped_jnjygrgH_A",
+      "fieldType": "checkbox",
+      "sourceFieldType": "check",
+      "format": null,
+      "semantic": {
+        "semanticPath": "Unmapped_QMRoCZOd",
+        "repeatKey": "A",
+        "family": "Unmapped",
+        "mapped": false
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 587360,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": null,
+        "confidence": 0,
+        "provenance": "unresolved"
+      }
+    },
+    {
+      "sid": "Unmapped_dREGBqET_B",
+      "tag": "check",
+      "role": "fillable-field",
+      "pageIndex": 1,
+      "pageNumber": 2,
+      "pageSid": "Page2",
+      "geometry": {
+        "x": 870,
+        "y": 663,
+        "width": 16,
+        "height": 16,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              870,
+              663
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              16,
+              16
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": "False",
+      "imageRef": null,
+      "helpSid": null,
+      "helpText": null,
+      "nextSid": "Unmapped_Ypojaxlj_A",
+      "fieldType": "checkbox",
+      "sourceFieldType": "check",
+      "format": null,
+      "semantic": {
+        "semanticPath": "Unmapped_dREGBqET",
+        "repeatKey": "B",
+        "family": "Unmapped",
+        "mapped": false
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 587734,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": null,
+        "confidence": 0,
+        "provenance": "unresolved"
+      }
+    },
+    {
+      "sid": "Unmapped_DICBgaBl_A",
+      "tag": "check",
+      "role": "fillable-field",
+      "pageIndex": 1,
+      "pageNumber": 2,
+      "pageSid": "Page2",
+      "geometry": {
+        "x": 870,
+        "y": 837,
+        "width": 16,
+        "height": 16,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              870,
+              837
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              16,
+              16
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": "False",
+      "imageRef": null,
+      "helpSid": null,
+      "helpText": null,
+      "nextSid": "Unmapped_HKfGBssx_A",
+      "fieldType": "checkbox",
+      "sourceFieldType": "check",
+      "format": null,
+      "semantic": {
+        "semanticPath": "Unmapped_DICBgaBl",
+        "repeatKey": "A",
+        "family": "Unmapped",
+        "mapped": false
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 588108,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": null,
+        "confidence": 0,
+        "provenance": "unresolved"
+      },
+      "tableCell": {
+        "tableId": "page-2-table-1",
+        "rowIndex": 0,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      }
+    },
+    {
+      "sid": "Unmapped_adHZMqAv_A",
+      "tag": "check",
+      "role": "fillable-field",
+      "pageIndex": 1,
+      "pageNumber": 2,
+      "pageSid": "Page2",
+      "geometry": {
+        "x": 870,
+        "y": 875,
+        "width": 16,
+        "height": 16,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              870,
+              875
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              16,
+              16
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": "False",
+      "imageRef": null,
+      "helpSid": null,
+      "helpText": null,
+      "nextSid": "Unmapped_oKJNjPum_A",
+      "fieldType": "checkbox",
+      "sourceFieldType": "check",
+      "format": null,
+      "semantic": {
+        "semanticPath": "Unmapped_adHZMqAv",
+        "repeatKey": "A",
+        "family": "Unmapped",
+        "mapped": false
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 588482,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": null,
+        "confidence": 0,
+        "provenance": "unresolved"
+      },
+      "tableCell": {
+        "tableId": "page-2-table-1",
+        "rowIndex": 1,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      }
+    },
+    {
+      "sid": "Unmapped_ZKvUDRzl_A",
+      "tag": "check",
+      "role": "fillable-field",
+      "pageIndex": 1,
+      "pageNumber": 2,
+      "pageSid": "Page2",
+      "geometry": {
+        "x": 870,
+        "y": 1009,
+        "width": 16,
+        "height": 16,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              870,
+              1009
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              16,
+              16
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": "False",
+      "imageRef": null,
+      "helpSid": null,
+      "helpText": null,
+      "nextSid": "Unmapped_LhjUlLJx_A",
+      "fieldType": "checkbox",
+      "sourceFieldType": "check",
+      "format": null,
+      "semantic": {
+        "semanticPath": "Unmapped_ZKvUDRzl",
+        "repeatKey": "A",
+        "family": "Unmapped",
+        "mapped": false
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 588856,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": null,
+        "confidence": 0,
+        "provenance": "unresolved"
+      },
+      "tableCell": {
+        "tableId": "page-2-table-2",
+        "rowIndex": 0,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      }
+    },
+    {
+      "sid": "Unmapped_TFqUHDvR_A",
+      "tag": "check",
+      "role": "fillable-field",
+      "pageIndex": 1,
+      "pageNumber": 2,
+      "pageSid": "Page2",
+      "geometry": {
+        "x": 870,
+        "y": 1044,
+        "width": 16,
+        "height": 16,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              870,
+              1044
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              16,
+              16
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": "False",
+      "imageRef": null,
+      "helpSid": null,
+      "helpText": null,
+      "nextSid": "Unmapped_dREGBqET_A",
+      "fieldType": "checkbox",
+      "sourceFieldType": "check",
+      "format": null,
+      "semantic": {
+        "semanticPath": "Unmapped_TFqUHDvR",
+        "repeatKey": "A",
+        "family": "Unmapped",
+        "mapped": false
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 589231,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": null,
+        "confidence": 0,
+        "provenance": "unresolved"
+      },
+      "tableCell": {
+        "tableId": "page-2-table-2",
+        "rowIndex": 1,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      }
+    },
+    {
+      "sid": "Unmapped_yAfkuHmu_A",
+      "tag": "check",
+      "role": "fillable-field",
+      "pageIndex": 1,
+      "pageNumber": 2,
+      "pageSid": "Page2",
+      "geometry": {
+        "x": 929,
+        "y": 154,
+        "width": 16,
+        "height": 16,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              929,
+              154
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              16,
+              16
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": "False",
+      "imageRef": null,
+      "helpSid": null,
+      "helpText": null,
+      "nextSid": "Unmapped_hXPkffrs_A",
+      "fieldType": "checkbox",
+      "sourceFieldType": "check",
+      "format": {
+        "dataType": "bool",
+        "requirement": null,
+        "presentation": "",
+        "rawValues": [
+          "bool"
+        ],
+        "provenance": "explicit"
+      },
+      "semantic": {
+        "semanticPath": "Unmapped_yAfkuHmu",
+        "repeatKey": "A",
+        "family": "Unmapped",
+        "mapped": false
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 589606,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": null,
+        "confidence": 0,
+        "provenance": "unresolved"
+      }
+    },
+    {
+      "sid": "Unmapped_ZhaqTyxw_A",
+      "tag": "check",
+      "role": "fillable-field",
+      "pageIndex": 1,
+      "pageNumber": 2,
+      "pageSid": "Page2",
+      "geometry": {
+        "x": 929,
+        "y": 354,
+        "width": 16,
+        "height": 16,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              929,
+              354
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              16,
+              16
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": "False",
+      "imageRef": null,
+      "helpSid": null,
+      "helpText": null,
+      "nextSid": "Unmapped_euvbyfgZ_A",
+      "fieldType": "checkbox",
+      "sourceFieldType": "check",
+      "format": null,
+      "semantic": {
+        "semanticPath": "Unmapped_ZhaqTyxw",
+        "repeatKey": "A",
+        "family": "Unmapped",
+        "mapped": false
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 590052,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": null,
+        "confidence": 0,
+        "provenance": "unresolved"
+      }
+    },
+    {
+      "sid": "Unmapped_jnjygrgH_A",
+      "tag": "check",
+      "role": "fillable-field",
+      "pageIndex": 1,
+      "pageNumber": 2,
+      "pageSid": "Page2",
+      "geometry": {
+        "x": 929,
+        "y": 510,
+        "width": 16,
+        "height": 16,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              929,
+              510
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              16,
+              16
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": "False",
+      "imageRef": null,
+      "helpSid": null,
+      "helpText": null,
+      "nextSid": "Unmapped_Ypojaxlj_B",
+      "fieldType": "checkbox",
+      "sourceFieldType": "check",
+      "format": null,
+      "semantic": {
+        "semanticPath": "Unmapped_jnjygrgH",
+        "repeatKey": "A",
+        "family": "Unmapped",
+        "mapped": false
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 590426,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": null,
+        "confidence": 0,
+        "provenance": "unresolved"
+      }
+    },
+    {
+      "sid": "Unmapped_Ypojaxlj_A",
+      "tag": "check",
+      "role": "fillable-field",
+      "pageIndex": 1,
+      "pageNumber": 2,
+      "pageSid": "Page2",
+      "geometry": {
+        "x": 929,
+        "y": 664,
+        "width": 16,
+        "height": 16,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              929,
+              664
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              16,
+              16
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": "False",
+      "imageRef": null,
+      "helpSid": null,
+      "helpText": null,
+      "nextSid": "Unmapped_eAOrglrE_A",
+      "fieldType": "checkbox",
+      "sourceFieldType": "check",
+      "format": null,
+      "semantic": {
+        "semanticPath": "Unmapped_Ypojaxlj",
+        "repeatKey": "A",
+        "family": "Unmapped",
+        "mapped": false
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 590800,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": null,
+        "confidence": 0,
+        "provenance": "unresolved"
+      }
+    },
+    {
+      "sid": "Unmapped_HKfGBssx_A",
+      "tag": "check",
+      "role": "fillable-field",
+      "pageIndex": 1,
+      "pageNumber": 2,
+      "pageSid": "Page2",
+      "geometry": {
+        "x": 929,
+        "y": 837,
+        "width": 16,
+        "height": 16,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              929,
+              837
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              16,
+              16
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": "False",
+      "imageRef": null,
+      "helpSid": null,
+      "helpText": null,
+      "nextSid": "Unmapped_adHZMqAv_A",
+      "fieldType": "checkbox",
+      "sourceFieldType": "check",
+      "format": null,
+      "semantic": {
+        "semanticPath": "Unmapped_HKfGBssx",
+        "repeatKey": "A",
+        "family": "Unmapped",
+        "mapped": false
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 591174,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": null,
+        "confidence": 0,
+        "provenance": "unresolved"
+      },
+      "tableCell": {
+        "tableId": "page-2-table-1",
+        "rowIndex": 0,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      }
+    },
+    {
+      "sid": "Unmapped_oKJNjPum_A",
+      "tag": "check",
+      "role": "fillable-field",
+      "pageIndex": 1,
+      "pageNumber": 2,
+      "pageSid": "Page2",
+      "geometry": {
+        "x": 929,
+        "y": 875,
+        "width": 16,
+        "height": 16,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              929,
+              875
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              16,
+              16
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": "False",
+      "imageRef": null,
+      "helpSid": null,
+      "helpText": null,
+      "nextSid": "Unmapped_ILAfuKCm_A",
+      "fieldType": "checkbox",
+      "sourceFieldType": "check",
+      "format": null,
+      "semantic": {
+        "semanticPath": "Unmapped_oKJNjPum",
+        "repeatKey": "A",
+        "family": "Unmapped",
+        "mapped": false
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 591548,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": null,
+        "confidence": 0,
+        "provenance": "unresolved"
+      },
+      "tableCell": {
+        "tableId": "page-2-table-1",
+        "rowIndex": 1,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      }
+    },
+    {
+      "sid": "Unmapped_LhjUlLJx_A",
+      "tag": "check",
+      "role": "fillable-field",
+      "pageIndex": 1,
+      "pageNumber": 2,
+      "pageSid": "Page2",
+      "geometry": {
+        "x": 929,
+        "y": 1010,
+        "width": 16,
+        "height": 16,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              929,
+              1010
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              16,
+              16
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": "False",
+      "imageRef": null,
+      "helpSid": null,
+      "helpText": null,
+      "nextSid": "Unmapped_TFqUHDvR_A",
+      "fieldType": "checkbox",
+      "sourceFieldType": "check",
+      "format": null,
+      "semantic": {
+        "semanticPath": "Unmapped_LhjUlLJx",
+        "repeatKey": "A",
+        "family": "Unmapped",
+        "mapped": false
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 591922,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": null,
+        "confidence": 0,
+        "provenance": "unresolved"
+      },
+      "tableCell": {
+        "tableId": "page-2-table-2",
+        "rowIndex": 0,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      }
+    },
+    {
+      "sid": "Unmapped_dREGBqET_A",
+      "tag": "check",
+      "role": "fillable-field",
+      "pageIndex": 1,
+      "pageNumber": 2,
+      "pageSid": "Page2",
+      "geometry": {
+        "x": 929,
+        "y": 1043,
+        "width": 16,
+        "height": 16,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              929,
+              1043
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              16,
+              16
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": "False",
+      "imageRef": null,
+      "helpSid": null,
+      "helpText": null,
+      "nextSid": "Unmapped_anIMhVGB_A",
+      "fieldType": "checkbox",
+      "sourceFieldType": "check",
+      "format": null,
+      "semantic": {
+        "semanticPath": "Unmapped_dREGBqET",
+        "repeatKey": "A",
+        "family": "Unmapped",
+        "mapped": false
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 592297,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": null,
+        "confidence": 0,
+        "provenance": "unresolved"
+      },
+      "tableCell": {
+        "tableId": "page-2-table-2",
+        "rowIndex": 1,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      }
+    },
+    {
+      "sid": "Unmapped_SiPaEXBT_A",
+      "tag": "check",
+      "role": "fillable-field",
+      "pageIndex": 2,
+      "pageNumber": 3,
+      "pageSid": "Page3",
+      "geometry": {
+        "x": 870,
+        "y": 210,
+        "width": 16,
+        "height": 16,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              870,
+              210
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              16,
+              16
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": "False",
+      "imageRef": null,
+      "helpSid": null,
+      "helpText": null,
+      "nextSid": "Unmapped_hpWLfgrD_A",
+      "fieldType": "checkbox",
+      "sourceFieldType": "check",
+      "format": null,
+      "semantic": {
+        "semanticPath": "Unmapped_SiPaEXBT",
+        "repeatKey": "A",
+        "family": "Unmapped",
+        "mapped": false
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 840534,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": null,
+        "confidence": 0,
+        "provenance": "unresolved"
+      }
+    },
+    {
+      "sid": "Unmapped_LfOYSpQn_A",
+      "tag": "field",
+      "role": "fillable-field",
+      "pageIndex": 2,
+      "pageNumber": 3,
+      "pageSid": "Page3",
+      "geometry": {
+        "x": 163,
+        "y": 282,
+        "width": 679,
+        "height": 49,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              163,
+              282
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              679,
+              49
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": null,
+      "imageRef": null,
+      "helpSid": null,
+      "helpText": null,
+      "nextSid": "Unmapped_pNKWYkgl_A",
+      "fieldType": "text",
+      "sourceFieldType": "TextBox",
+      "format": {
+        "dataType": null,
+        "requirement": null,
+        "presentation": "",
+        "rawValues": [
+          "",
+          "",
+          "",
+          ""
+        ],
+        "provenance": "explicit"
+      },
+      "semantic": {
+        "semanticPath": "Unmapped_LfOYSpQn",
+        "repeatKey": "A",
+        "family": "Unmapped",
+        "mapped": false
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 840908,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": null,
+        "confidence": 0,
+        "provenance": "unresolved"
+      }
+    },
+    {
+      "sid": "Unmapped_hplNCaSM_A",
+      "tag": "field",
+      "role": "fillable-field",
+      "pageIndex": 2,
+      "pageNumber": 3,
+      "pageSid": "Page3",
+      "geometry": {
+        "x": 164,
+        "y": 474,
+        "width": 679,
+        "height": 56,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              164,
+              474
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              679,
+              56
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": null,
+      "imageRef": null,
+      "helpSid": null,
+      "helpText": null,
+      "nextSid": "Unmapped_dzPPbAWi_A",
+      "fieldType": "text",
+      "sourceFieldType": "TextBox",
+      "format": {
+        "dataType": null,
+        "requirement": null,
+        "presentation": "",
+        "rawValues": [
+          "",
+          "",
+          "",
+          ""
+        ],
+        "provenance": "explicit"
+      },
+      "semantic": {
+        "semanticPath": "Unmapped_hplNCaSM",
+        "repeatKey": "A",
+        "family": "Unmapped",
+        "mapped": false
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 841442,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": null,
+        "confidence": 0,
+        "provenance": "unresolved"
+      }
+    },
+    {
+      "sid": "Unmapped_jBRMeqFe_A",
+      "tag": "field",
+      "role": "fillable-field",
+      "pageIndex": 2,
+      "pageNumber": 3,
+      "pageSid": "Page3",
+      "geometry": {
+        "x": 161,
+        "y": 656,
+        "width": 680,
+        "height": 57,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              161,
+              656
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              680,
+              57
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": null,
+      "imageRef": null,
+      "helpSid": null,
+      "helpText": null,
+      "nextSid": "Unmapped_cDXWgDNh_A",
+      "fieldType": "text",
+      "sourceFieldType": "TextBox",
+      "format": {
+        "dataType": null,
+        "requirement": null,
+        "presentation": "",
+        "rawValues": [
+          "",
+          "",
+          "",
+          ""
+        ],
+        "provenance": "explicit"
+      },
+      "semantic": {
+        "semanticPath": "Unmapped_jBRMeqFe",
+        "repeatKey": "A",
+        "family": "Unmapped",
+        "mapped": false
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 841976,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": null,
+        "confidence": 0,
+        "provenance": "unresolved"
+      }
+    },
+    {
+      "sid": "Unmapped_wElhdhBd_A",
+      "tag": "field",
+      "role": "fillable-field",
+      "pageIndex": 2,
+      "pageNumber": 3,
+      "pageSid": "Page3",
+      "geometry": {
+        "x": 660,
+        "y": 743,
+        "width": 183,
+        "height": 23,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              660,
+              743
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              183,
+              23
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": null,
+      "imageRef": null,
+      "helpSid": null,
+      "helpText": null,
+      "nextSid": "Unmapped_RhdAJFiC_A",
+      "fieldType": "text",
+      "sourceFieldType": "TextBox",
+      "format": {
+        "dataType": null,
+        "requirement": null,
+        "presentation": "",
+        "rawValues": [
+          "",
+          "",
+          "",
+          ""
+        ],
+        "provenance": "explicit"
+      },
+      "semantic": {
+        "semanticPath": "Unmapped_wElhdhBd",
+        "repeatKey": "A",
+        "family": "Unmapped",
+        "mapped": false
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 842510,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": null,
+        "confidence": 0,
+        "provenance": "unresolved"
+      }
+    },
+    {
+      "sid": "Unmapped_RhdAJFiC_A",
+      "tag": "field",
+      "role": "fillable-field",
+      "pageIndex": 2,
+      "pageNumber": 3,
+      "pageSid": "Page3",
+      "geometry": {
+        "x": 161,
+        "y": 803,
+        "width": 682,
+        "height": 65,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              161,
+              803
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              682,
+              65
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": null,
+      "imageRef": null,
+      "helpSid": null,
+      "helpText": null,
+      "nextSid": "Unmapped_gUOKwcXw_A",
+      "fieldType": "text",
+      "sourceFieldType": "TextBox",
+      "format": {
+        "dataType": null,
+        "requirement": null,
+        "presentation": "",
+        "rawValues": [
+          "",
+          "",
+          "",
+          ""
+        ],
+        "provenance": "explicit"
+      },
+      "semantic": {
+        "semanticPath": "Unmapped_RhdAJFiC",
+        "repeatKey": "A",
+        "family": "Unmapped",
+        "mapped": false
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 843044,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": null,
+        "confidence": 0,
+        "provenance": "unresolved"
+      }
+    },
+    {
+      "sid": "Unmapped_RNFAGjbs_A",
+      "tag": "field",
+      "role": "fillable-field",
+      "pageIndex": 2,
+      "pageNumber": 3,
+      "pageSid": "Page3",
+      "geometry": {
+        "x": 166,
+        "y": 1049,
+        "width": 675,
+        "height": 68,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              166,
+              1049
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              675,
+              68
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": null,
+      "imageRef": null,
+      "helpSid": null,
+      "helpText": null,
+      "nextSid": null,
+      "fieldType": "text",
+      "sourceFieldType": "TextBox",
+      "format": {
+        "dataType": null,
+        "requirement": null,
+        "presentation": "",
+        "rawValues": [
+          "",
+          "",
+          "",
+          ""
+        ],
+        "provenance": "explicit"
+      },
+      "semantic": {
+        "semanticPath": "Unmapped_RNFAGjbs",
+        "repeatKey": "A",
+        "family": "Unmapped",
+        "mapped": false
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 843578,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": null,
+        "confidence": 0,
+        "provenance": "unresolved"
+      }
+    },
+    {
+      "sid": "Unmapped_pNKWYkgl_A",
+      "tag": "check",
+      "role": "fillable-field",
+      "pageIndex": 2,
+      "pageNumber": 3,
+      "pageSid": "Page3",
+      "geometry": {
+        "x": 870,
+        "y": 363,
+        "width": 16,
+        "height": 16,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              870,
+              363
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              16,
+              16
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": "False",
+      "imageRef": null,
+      "helpSid": null,
+      "helpText": null,
+      "nextSid": "Unmapped_vXnvMpCx_A",
+      "fieldType": "checkbox",
+      "sourceFieldType": "check",
+      "format": null,
+      "semantic": {
+        "semanticPath": "Unmapped_pNKWYkgl",
+        "repeatKey": "A",
+        "family": "Unmapped",
+        "mapped": false
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 844104,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": null,
+        "confidence": 0,
+        "provenance": "unresolved"
+      },
+      "tableCell": {
+        "tableId": "page-3-table-1",
+        "rowIndex": 0,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      }
+    },
+    {
+      "sid": "Unmapped_mvmyUWyF_A",
+      "tag": "check",
+      "role": "fillable-field",
+      "pageIndex": 2,
+      "pageNumber": 3,
+      "pageSid": "Page3",
+      "geometry": {
+        "x": 870,
+        "y": 400,
+        "width": 16,
+        "height": 16,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              870,
+              400
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              16,
+              16
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": "False",
+      "imageRef": null,
+      "helpSid": null,
+      "helpText": null,
+      "nextSid": "Unmapped_vqUkhtJq_A",
+      "fieldType": "checkbox",
+      "sourceFieldType": "check",
+      "format": null,
+      "semantic": {
+        "semanticPath": "Unmapped_mvmyUWyF",
+        "repeatKey": "A",
+        "family": "Unmapped",
+        "mapped": false
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 844478,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": null,
+        "confidence": 0,
+        "provenance": "unresolved"
+      },
+      "tableCell": {
+        "tableId": "page-3-table-1",
+        "rowIndex": 1,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      }
+    },
+    {
+      "sid": "Unmapped_dzPPbAWi_A",
+      "tag": "check",
+      "role": "fillable-field",
+      "pageIndex": 2,
+      "pageNumber": 3,
+      "pageSid": "Page3",
+      "geometry": {
+        "x": 870,
+        "y": 535,
+        "width": 16,
+        "height": 16,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              870,
+              535
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              16,
+              16
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": "False",
+      "imageRef": null,
+      "helpSid": null,
+      "helpText": null,
+      "nextSid": "Unmapped_cvSzzrtK_A",
+      "fieldType": "checkbox",
+      "sourceFieldType": "check",
+      "format": null,
+      "semantic": {
+        "semanticPath": "Unmapped_dzPPbAWi",
+        "repeatKey": "A",
+        "family": "Unmapped",
+        "mapped": false
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 844852,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": null,
+        "confidence": 0,
+        "provenance": "unresolved"
+      },
+      "tableCell": {
+        "tableId": "page-3-table-2",
+        "rowIndex": 0,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      }
+    },
+    {
+      "sid": "Unmapped_GliapHxd_A",
+      "tag": "check",
+      "role": "fillable-field",
+      "pageIndex": 2,
+      "pageNumber": 3,
+      "pageSid": "Page3",
+      "geometry": {
+        "x": 870,
+        "y": 584,
+        "width": 16,
+        "height": 16,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              870,
+              584
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              16,
+              16
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": "False",
+      "imageRef": null,
+      "helpSid": null,
+      "helpText": null,
+      "nextSid": "Unmapped_CxklOFZR_A",
+      "fieldType": "checkbox",
+      "sourceFieldType": "check",
+      "format": null,
+      "semantic": {
+        "semanticPath": "Unmapped_GliapHxd",
+        "repeatKey": "A",
+        "family": "Unmapped",
+        "mapped": false
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 845226,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": null,
+        "confidence": 0,
+        "provenance": "unresolved"
+      },
+      "tableCell": {
+        "tableId": "page-3-table-2",
+        "rowIndex": 1,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      }
+    },
+    {
+      "sid": "Unmapped_cDXWgDNh_A",
+      "tag": "check",
+      "role": "fillable-field",
+      "pageIndex": 2,
+      "pageNumber": 3,
+      "pageSid": "Page3",
+      "geometry": {
+        "x": 870,
+        "y": 718,
+        "width": 16,
+        "height": 16,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              870,
+              718
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              16,
+              16
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": "False",
+      "imageRef": null,
+      "helpSid": null,
+      "helpText": null,
+      "nextSid": "Unmapped_PSLVyoaO_A",
+      "fieldType": "checkbox",
+      "sourceFieldType": "check",
+      "format": null,
+      "semantic": {
+        "semanticPath": "Unmapped_cDXWgDNh",
+        "repeatKey": "A",
+        "family": "Unmapped",
+        "mapped": false
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 845600,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": null,
+        "confidence": 0,
+        "provenance": "unresolved"
+      }
+    },
+    {
+      "sid": "Unmapped_gUOKwcXw_A",
+      "tag": "check",
+      "role": "fillable-field",
+      "pageIndex": 2,
+      "pageNumber": 3,
+      "pageSid": "Page3",
+      "geometry": {
+        "x": 870,
+        "y": 939,
+        "width": 16,
+        "height": 16,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              870,
+              939
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              16,
+              16
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": "False",
+      "imageRef": null,
+      "helpSid": null,
+      "helpText": null,
+      "nextSid": "Unmapped_yQzYxiei_A",
+      "fieldType": "checkbox",
+      "sourceFieldType": "check",
+      "format": null,
+      "semantic": {
+        "semanticPath": "Unmapped_gUOKwcXw",
+        "repeatKey": "A",
+        "family": "Unmapped",
+        "mapped": false
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 845974,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": null,
+        "confidence": 0,
+        "provenance": "unresolved"
+      }
+    },
+    {
+      "sid": "Unmapped_hpWLfgrD_A",
+      "tag": "check",
+      "role": "fillable-field",
+      "pageIndex": 2,
+      "pageNumber": 3,
+      "pageSid": "Page3",
+      "geometry": {
+        "x": 929,
+        "y": 211,
+        "width": 16,
+        "height": 16,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              929,
+              211
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              16,
+              16
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": "False",
+      "imageRef": null,
+      "helpSid": null,
+      "helpText": null,
+      "nextSid": "Unmapped_LfOYSpQn_A",
+      "fieldType": "checkbox",
+      "sourceFieldType": "check",
+      "format": null,
+      "semantic": {
+        "semanticPath": "Unmapped_hpWLfgrD",
+        "repeatKey": "A",
+        "family": "Unmapped",
+        "mapped": false
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 846348,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": null,
+        "confidence": 0,
+        "provenance": "unresolved"
+      }
+    },
+    {
+      "sid": "Unmapped_vXnvMpCx_A",
+      "tag": "check",
+      "role": "fillable-field",
+      "pageIndex": 2,
+      "pageNumber": 3,
+      "pageSid": "Page3",
+      "geometry": {
+        "x": 929,
+        "y": 362,
+        "width": 16,
+        "height": 16,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              929,
+              362
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              16,
+              16
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": "False",
+      "imageRef": null,
+      "helpSid": null,
+      "helpText": null,
+      "nextSid": "Unmapped_mvmyUWyF_A",
+      "fieldType": "checkbox",
+      "sourceFieldType": "check",
+      "format": null,
+      "semantic": {
+        "semanticPath": "Unmapped_vXnvMpCx",
+        "repeatKey": "A",
+        "family": "Unmapped",
+        "mapped": false
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 846722,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": null,
+        "confidence": 0,
+        "provenance": "unresolved"
+      },
+      "tableCell": {
+        "tableId": "page-3-table-1",
+        "rowIndex": 0,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      }
+    },
+    {
+      "sid": "Unmapped_vqUkhtJq_A",
+      "tag": "check",
+      "role": "fillable-field",
+      "pageIndex": 2,
+      "pageNumber": 3,
+      "pageSid": "Page3",
+      "geometry": {
+        "x": 929,
+        "y": 399,
+        "width": 16,
+        "height": 16,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              929,
+              399
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              16,
+              16
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": "False",
+      "imageRef": null,
+      "helpSid": null,
+      "helpText": null,
+      "nextSid": "Unmapped_hplNCaSM_A",
+      "fieldType": "checkbox",
+      "sourceFieldType": "check",
+      "format": null,
+      "semantic": {
+        "semanticPath": "Unmapped_vqUkhtJq",
+        "repeatKey": "A",
+        "family": "Unmapped",
+        "mapped": false
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 847096,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": null,
+        "confidence": 0,
+        "provenance": "unresolved"
+      },
+      "tableCell": {
+        "tableId": "page-3-table-1",
+        "rowIndex": 1,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      }
+    },
+    {
+      "sid": "Unmapped_cvSzzrtK_A",
+      "tag": "check",
+      "role": "fillable-field",
+      "pageIndex": 2,
+      "pageNumber": 3,
+      "pageSid": "Page3",
+      "geometry": {
+        "x": 929,
+        "y": 534,
+        "width": 16,
+        "height": 16,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              929,
+              534
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              16,
+              16
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": "False",
+      "imageRef": null,
+      "helpSid": null,
+      "helpText": null,
+      "nextSid": "Unmapped_GliapHxd_A",
+      "fieldType": "checkbox",
+      "sourceFieldType": "check",
+      "format": null,
+      "semantic": {
+        "semanticPath": "Unmapped_cvSzzrtK",
+        "repeatKey": "A",
+        "family": "Unmapped",
+        "mapped": false
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 847470,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": null,
+        "confidence": 0,
+        "provenance": "unresolved"
+      },
+      "tableCell": {
+        "tableId": "page-3-table-2",
+        "rowIndex": 0,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      }
+    },
+    {
+      "sid": "Unmapped_CxklOFZR_A",
+      "tag": "check",
+      "role": "fillable-field",
+      "pageIndex": 2,
+      "pageNumber": 3,
+      "pageSid": "Page3",
+      "geometry": {
+        "x": 929,
+        "y": 585,
+        "width": 16,
+        "height": 16,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              929,
+              585
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              16,
+              16
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": "False",
+      "imageRef": null,
+      "helpSid": null,
+      "helpText": null,
+      "nextSid": "Unmapped_jBRMeqFe_A",
+      "fieldType": "checkbox",
+      "sourceFieldType": "check",
+      "format": null,
+      "semantic": {
+        "semanticPath": "Unmapped_CxklOFZR",
+        "repeatKey": "A",
+        "family": "Unmapped",
+        "mapped": false
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 847844,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": null,
+        "confidence": 0,
+        "provenance": "unresolved"
+      },
+      "tableCell": {
+        "tableId": "page-3-table-2",
+        "rowIndex": 1,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      }
+    },
+    {
+      "sid": "Unmapped_PSLVyoaO_A",
+      "tag": "check",
+      "role": "fillable-field",
+      "pageIndex": 2,
+      "pageNumber": 3,
+      "pageSid": "Page3",
+      "geometry": {
+        "x": 929,
+        "y": 719,
+        "width": 16,
+        "height": 16,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              929,
+              719
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              16,
+              16
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": "False",
+      "imageRef": null,
+      "helpSid": null,
+      "helpText": null,
+      "nextSid": "Unmapped_wElhdhBd_A",
+      "fieldType": "checkbox",
+      "sourceFieldType": "check",
+      "format": null,
+      "semantic": {
+        "semanticPath": "Unmapped_PSLVyoaO",
+        "repeatKey": "A",
+        "family": "Unmapped",
+        "mapped": false
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 848218,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": null,
+        "confidence": 0,
+        "provenance": "unresolved"
+      }
+    },
+    {
+      "sid": "Unmapped_yQzYxiei_A",
+      "tag": "check",
+      "role": "fillable-field",
+      "pageIndex": 2,
+      "pageNumber": 3,
+      "pageSid": "Page3",
+      "geometry": {
+        "x": 929,
+        "y": 939,
+        "width": 16,
+        "height": 16,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              929,
+              939
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              16,
+              16
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": "False",
+      "imageRef": null,
+      "helpSid": null,
+      "helpText": null,
+      "nextSid": "Unmapped_RNFAGjbs_A",
+      "fieldType": "checkbox",
+      "sourceFieldType": "check",
+      "format": null,
+      "semantic": {
+        "semanticPath": "Unmapped_yQzYxiei",
+        "repeatKey": "A",
+        "family": "Unmapped",
+        "mapped": false
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 848592,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": null,
+        "confidence": 0,
+        "provenance": "unresolved"
+      }
+    },
+    {
+      "sid": "Unmapped_qlZPQQTG_A",
+      "tag": "check",
+      "role": "fillable-field",
+      "pageIndex": 3,
+      "pageNumber": 4,
+      "pageSid": "Page4",
+      "geometry": {
+        "x": 871,
+        "y": 191,
+        "width": 16,
+        "height": 16,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              871,
+              191
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              16,
+              16
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": "False",
+      "imageRef": null,
+      "helpSid": null,
+      "helpText": null,
+      "nextSid": "Unmapped_UEmtOWlU_A",
+      "fieldType": "checkbox",
+      "sourceFieldType": "check",
+      "format": null,
+      "semantic": {
+        "semanticPath": "Unmapped_qlZPQQTG",
+        "repeatKey": "A",
+        "family": "Unmapped",
+        "mapped": false
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 1126980,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": null,
+        "confidence": 0,
+        "provenance": "unresolved"
+      }
+    },
+    {
+      "sid": "Unmapped_qcPnBGvf_A",
+      "tag": "field",
+      "role": "fillable-field",
+      "pageIndex": 3,
+      "pageNumber": 4,
+      "pageSid": "Page4",
+      "geometry": {
+        "x": 166,
+        "y": 301,
+        "width": 681,
+        "height": 49,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              166,
+              301
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              681,
+              49
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": null,
+      "imageRef": null,
+      "helpSid": null,
+      "helpText": null,
+      "nextSid": "Unmapped_oeGRvUlL_A",
+      "fieldType": "text",
+      "sourceFieldType": "TextBox",
+      "format": {
+        "dataType": null,
+        "requirement": null,
+        "presentation": "",
+        "rawValues": [
+          "",
+          "",
+          "",
+          ""
+        ],
+        "provenance": "explicit"
+      },
+      "semantic": {
+        "semanticPath": "Unmapped_qcPnBGvf",
+        "repeatKey": "A",
+        "family": "Unmapped",
+        "mapped": false
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 1127354,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": null,
+        "confidence": 0,
+        "provenance": "unresolved"
+      }
+    },
+    {
+      "sid": "Unmapped_liiHmMld_A",
+      "tag": "field",
+      "role": "fillable-field",
+      "pageIndex": 3,
+      "pageNumber": 4,
+      "pageSid": "Page4",
+      "geometry": {
+        "x": 164,
+        "y": 473,
+        "width": 679,
+        "height": 70,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              164,
+              473
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              679,
+              70
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": null,
+      "imageRef": null,
+      "helpSid": null,
+      "helpText": null,
+      "nextSid": "NamedInsured_Signature_A",
+      "fieldType": "text",
+      "sourceFieldType": "TextBox",
+      "format": {
+        "dataType": null,
+        "requirement": null,
+        "presentation": "",
+        "rawValues": [
+          "",
+          "",
+          "",
+          ""
+        ],
+        "provenance": "explicit"
+      },
+      "semantic": {
+        "semanticPath": "Unmapped_liiHmMld",
+        "repeatKey": "A",
+        "family": "Unmapped",
+        "mapped": false
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 1127888,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": null,
+        "confidence": 0,
+        "provenance": "unresolved"
+      }
+    },
+    {
+      "sid": "NamedInsured_Signature_A",
+      "tag": "field",
+      "role": "fillable-field",
+      "pageIndex": 3,
+      "pageNumber": 4,
+      "pageSid": "Page4",
+      "geometry": {
+        "x": 126,
+        "y": 1002,
+        "width": 463,
+        "height": 23,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              126,
+              1002
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              463,
+              23
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": null,
+      "imageRef": null,
+      "helpSid": "HelpNamedInsured_Signature_A",
+      "helpText": "Sign here: Accommodates the signature of the applicant or named insured.",
+      "nextSid": "NamedInsured_SignatureDate_A",
+      "fieldType": "signature",
+      "sourceFieldType": "TextBox",
+      "format": {
+        "dataType": "string",
+        "requirement": null,
+        "presentation": "",
+        "rawValues": [
+          "string",
+          "",
+          "Optional",
+          ""
+        ],
+        "provenance": "explicit"
+      },
+      "semantic": {
+        "semanticPath": "NamedInsured_Signature",
+        "repeatKey": "A",
+        "family": "NamedInsured",
+        "mapped": true
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 1128427,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": "Sign here: Accommodates the signature of the applicant or named insured.",
+        "confidence": 0,
+        "provenance": "help-text-only"
+      },
+      "tableCell": {
+        "tableId": "page-4-table-1",
+        "rowIndex": 0,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      }
+    },
+    {
+      "sid": "NamedInsured_SignatureDate_A",
+      "tag": "field",
+      "role": "fillable-field",
+      "pageIndex": 3,
+      "pageNumber": 4,
+      "pageSid": "Page4",
+      "geometry": {
+        "x": 681,
+        "y": 1002,
+        "width": 277,
+        "height": 23,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              681,
+              1002
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              277,
+              23
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": null,
+      "imageRef": null,
+      "helpSid": "HelpNamedInsured_SignatureDate_A",
+      "helpText": "Enter date: The date the form was signed by the applicant or named insured. (MM/DD/YYYY)",
+      "nextSid": "NamedInsured_FullName_B",
+      "fieldType": "signature",
+      "sourceFieldType": "TextBox",
+      "format": {
+        "dataType": "date",
+        "requirement": "Optional",
+        "presentation": "MM/DD/YYYY",
+        "rawValues": [
+          "date",
+          "Optional",
+          ""
+        ],
+        "provenance": "explicit"
+      },
+      "semantic": {
+        "semanticPath": "NamedInsured_SignatureDate",
+        "repeatKey": "A",
+        "family": "NamedInsured",
+        "mapped": true
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 1129174,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": "Enter date: The date the form was signed by the applicant or named insured. (MM/DD/YYYY)",
+        "confidence": 0,
+        "provenance": "help-text-only"
+      },
+      "tableCell": {
+        "tableId": "page-4-table-1",
+        "rowIndex": 0,
+        "columnIndex": 2,
+        "provenance": "spatial-inference"
+      }
+    },
+    {
+      "sid": "NamedInsured_FullName_B",
+      "tag": "field",
+      "role": "fillable-field",
+      "pageIndex": 3,
+      "pageNumber": 4,
+      "pageSid": "Page4",
+      "geometry": {
+        "x": 154,
+        "y": 1080,
+        "width": 436,
+        "height": 23,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              154,
+              1080
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              436,
+              23
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": null,
+      "imageRef": null,
+      "helpSid": "HelpNamedInsured_FullName_B",
+      "helpText": "Enter text: The named insured(s) as it / they will appear on the policy declarations page.",
+      "nextSid": "NamedInsured_Title_A",
+      "fieldType": "text",
+      "sourceFieldType": "TextBox",
+      "format": {
+        "dataType": "string",
+        "requirement": null,
+        "presentation": "",
+        "rawValues": [
+          "string",
+          "",
+          "Optional",
+          ""
+        ],
+        "provenance": "explicit"
+      },
+      "semantic": {
+        "semanticPath": "NamedInsured_FullName",
+        "repeatKey": "B",
+        "family": "NamedInsured",
+        "mapped": true
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 1129963,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": "Enter text: The named insured(s) as it / they will appear on the policy declarations page.",
+        "confidence": 0,
+        "provenance": "help-text-only"
+      },
+      "tableCell": {
+        "tableId": "page-4-table-1",
+        "rowIndex": 1,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      }
+    },
+    {
+      "sid": "NamedInsured_Title_A",
+      "tag": "field",
+      "role": "fillable-field",
+      "pageIndex": 3,
+      "pageNumber": 4,
+      "pageSid": "Page4",
+      "geometry": {
+        "x": 680,
+        "y": 1081,
+        "width": 280,
+        "height": 23,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              680,
+              1081
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              280,
+              23
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": null,
+      "imageRef": null,
+      "helpSid": "HelpNamedInsured_Title_A",
+      "helpText": "Enter text: The title of the individual in the organization or his relationship to the organization.",
+      "nextSid": null,
+      "fieldType": "text",
+      "sourceFieldType": "TextBox",
+      "format": {
+        "dataType": "string",
+        "requirement": null,
+        "presentation": "",
+        "rawValues": [
+          "string",
+          "",
+          "Optional",
+          ""
+        ],
+        "provenance": "explicit"
+      },
+      "semantic": {
+        "semanticPath": "NamedInsured_Title",
+        "repeatKey": "A",
+        "family": "NamedInsured",
+        "mapped": true
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 1130717,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": "Enter text: The title of the individual in the organization or his relationship to the organization.",
+        "confidence": 0,
+        "provenance": "help-text-only"
+      },
+      "tableCell": {
+        "tableId": "page-4-table-1",
+        "rowIndex": 1,
+        "columnIndex": 2,
+        "provenance": "spatial-inference"
+      }
+    },
+    {
+      "sid": "Unmapped_oeGRvUlL_A",
+      "tag": "check",
+      "role": "fillable-field",
+      "pageIndex": 3,
+      "pageNumber": 4,
+      "pageSid": "Page4",
+      "geometry": {
+        "x": 870,
+        "y": 373,
+        "width": 16,
+        "height": 16,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              870,
+              373
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              16,
+              16
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": "False",
+      "imageRef": null,
+      "helpSid": null,
+      "helpText": null,
+      "nextSid": "Unmapped_xWeyORxI_A",
+      "fieldType": "checkbox",
+      "sourceFieldType": "check",
+      "format": null,
+      "semantic": {
+        "semanticPath": "Unmapped_oeGRvUlL",
+        "repeatKey": "A",
+        "family": "Unmapped",
+        "mapped": false
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 1131462,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": null,
+        "confidence": 0,
+        "provenance": "unresolved"
+      }
+    },
+    {
+      "sid": "Unmapped_UEmtOWlU_A",
+      "tag": "check",
+      "role": "fillable-field",
+      "pageIndex": 3,
+      "pageNumber": 4,
+      "pageSid": "Page4",
+      "geometry": {
+        "x": 929,
+        "y": 191,
+        "width": 16,
+        "height": 16,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              929,
+              191
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              16,
+              16
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": "False",
+      "imageRef": null,
+      "helpSid": null,
+      "helpText": null,
+      "nextSid": "Unmapped_qcPnBGvf_A",
+      "fieldType": "checkbox",
+      "sourceFieldType": "check",
+      "format": null,
+      "semantic": {
+        "semanticPath": "Unmapped_UEmtOWlU",
+        "repeatKey": "A",
+        "family": "Unmapped",
+        "mapped": false
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 1131836,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": null,
+        "confidence": 0,
+        "provenance": "unresolved"
+      }
+    },
+    {
+      "sid": "Unmapped_xWeyORxI_A",
+      "tag": "check",
+      "role": "fillable-field",
+      "pageIndex": 3,
+      "pageNumber": 4,
+      "pageSid": "Page4",
+      "geometry": {
+        "x": 929,
+        "y": 373,
+        "width": 16,
+        "height": 16,
+        "page": null,
+        "within": null,
+        "operations": [
+          {
+            "operation": "absolute",
+            "args": [
+              929,
+              373
+            ]
+          },
+          {
+            "operation": "extent",
+            "args": [
+              16,
+              16
+            ]
+          }
+        ],
+        "coordinateSystem": "xfdl-layout-units",
+        "provenance": "explicit"
+      },
+      "value": "False",
+      "imageRef": null,
+      "helpSid": null,
+      "helpText": null,
+      "nextSid": "Unmapped_liiHmMld_A",
+      "fieldType": "checkbox",
+      "sourceFieldType": "check",
+      "format": null,
+      "semantic": {
+        "semanticPath": "Unmapped_xWeyORxI",
+        "repeatKey": "A",
+        "family": "Unmapped",
+        "mapped": false
+      },
+      "binding": null,
+      "behavior": {
+        "visible": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        },
+        "readonly": {
+          "initial": "off",
+          "expression": null,
+          "explicit": false
+        },
+        "active": {
+          "initial": "on",
+          "expression": null,
+          "explicit": false
+        }
+      },
+      "suppression": {
+        "excludedFromFillableGroundTruth": false,
+        "suppressedByDefault": false,
+        "conditional": false,
+        "reasons": [],
+        "provenance": "none"
+      },
+      "sourceOffset": 1132210,
+      "label": {
+        "visualLabelSid": null,
+        "visualLabel": null,
+        "visualLabelGeometry": null,
+        "helpLabel": null,
+        "confidence": 0,
+        "provenance": "unresolved"
+      }
+    }
+  ],
+  "labels": [],
+  "tables": [
+    {
+      "id": "page-1-table-1",
+      "pageIndex": 0,
+      "rowCount": 2,
+      "columnCount": 4,
+      "rows": [
+        {
+          "index": 0,
+          "y": 952.5,
+          "fieldSids": [
+            "NamedInsured_MailingAddress_CityName_A",
+            "NamedInsured_MailingAddress_StateOrProvinceCode_A",
+            "NamedInsured_MailingAddress_PostalCode_A"
+          ]
+        },
+        {
+          "index": 1,
+          "y": 991.167,
+          "fieldSids": [
+            "NamedInsured_Contact_FullName_A",
+            "NamedInsured_Primary_PhoneNumber_A",
+            "NamedInsured_Primary_FaxNumber_A"
+          ]
+        }
+      ],
+      "columns": [
+        {
+          "index": 0,
+          "x": 172
+        },
+        {
+          "index": 1,
+          "x": 566
+        },
+        {
+          "index": 2,
+          "x": 609
+        },
+        {
+          "index": 3,
+          "x": 815.5
+        }
+      ],
+      "cells": [
+        {
+          "fieldSid": "NamedInsured_MailingAddress_CityName_A",
+          "rowIndex": 0,
+          "columnIndex": 0
+        },
+        {
+          "fieldSid": "NamedInsured_MailingAddress_StateOrProvinceCode_A",
+          "rowIndex": 0,
+          "columnIndex": 2
+        },
+        {
+          "fieldSid": "NamedInsured_MailingAddress_PostalCode_A",
+          "rowIndex": 0,
+          "columnIndex": 3
+        },
+        {
+          "fieldSid": "NamedInsured_Contact_FullName_A",
+          "rowIndex": 1,
+          "columnIndex": 0
+        },
+        {
+          "fieldSid": "NamedInsured_Primary_PhoneNumber_A",
+          "rowIndex": 1,
+          "columnIndex": 1
+        },
+        {
+          "fieldSid": "NamedInsured_Primary_FaxNumber_A",
+          "rowIndex": 1,
+          "columnIndex": 3
+        }
+      ],
+      "confidence": 0.63,
+      "provenance": "spatial-inference"
+    },
+    {
+      "id": "page-2-table-1",
+      "pageIndex": 1,
+      "rowCount": 2,
+      "columnCount": 2,
+      "rows": [
+        {
+          "index": 0,
+          "y": 845,
+          "fieldSids": [
+            "Unmapped_DICBgaBl_A",
+            "Unmapped_HKfGBssx_A"
+          ]
+        },
+        {
+          "index": 1,
+          "y": 883,
+          "fieldSids": [
+            "Unmapped_adHZMqAv_A",
+            "Unmapped_oKJNjPum_A"
+          ]
+        }
+      ],
+      "columns": [
+        {
+          "index": 0,
+          "x": 870
+        },
+        {
+          "index": 1,
+          "x": 929
+        }
+      ],
+      "cells": [
+        {
+          "fieldSid": "Unmapped_DICBgaBl_A",
+          "rowIndex": 0,
+          "columnIndex": 0
+        },
+        {
+          "fieldSid": "Unmapped_HKfGBssx_A",
+          "rowIndex": 0,
+          "columnIndex": 1
+        },
+        {
+          "fieldSid": "Unmapped_adHZMqAv_A",
+          "rowIndex": 1,
+          "columnIndex": 0
+        },
+        {
+          "fieldSid": "Unmapped_oKJNjPum_A",
+          "rowIndex": 1,
+          "columnIndex": 1
+        }
+      ],
+      "confidence": 0.63,
+      "provenance": "spatial-inference"
+    },
+    {
+      "id": "page-2-table-2",
+      "pageIndex": 1,
+      "rowCount": 2,
+      "columnCount": 2,
+      "rows": [
+        {
+          "index": 0,
+          "y": 1017.5,
+          "fieldSids": [
+            "Unmapped_ZKvUDRzl_A",
+            "Unmapped_LhjUlLJx_A"
+          ]
+        },
+        {
+          "index": 1,
+          "y": 1051.5,
+          "fieldSids": [
+            "Unmapped_TFqUHDvR_A",
+            "Unmapped_dREGBqET_A"
+          ]
+        }
+      ],
+      "columns": [
+        {
+          "index": 0,
+          "x": 870
+        },
+        {
+          "index": 1,
+          "x": 929
+        }
+      ],
+      "cells": [
+        {
+          "fieldSid": "Unmapped_ZKvUDRzl_A",
+          "rowIndex": 0,
+          "columnIndex": 0
+        },
+        {
+          "fieldSid": "Unmapped_LhjUlLJx_A",
+          "rowIndex": 0,
+          "columnIndex": 1
+        },
+        {
+          "fieldSid": "Unmapped_TFqUHDvR_A",
+          "rowIndex": 1,
+          "columnIndex": 0
+        },
+        {
+          "fieldSid": "Unmapped_dREGBqET_A",
+          "rowIndex": 1,
+          "columnIndex": 1
+        }
+      ],
+      "confidence": 0.63,
+      "provenance": "spatial-inference"
+    },
+    {
+      "id": "page-3-table-1",
+      "pageIndex": 2,
+      "rowCount": 2,
+      "columnCount": 2,
+      "rows": [
+        {
+          "index": 0,
+          "y": 370.5,
+          "fieldSids": [
+            "Unmapped_pNKWYkgl_A",
+            "Unmapped_vXnvMpCx_A"
+          ]
+        },
+        {
+          "index": 1,
+          "y": 407.5,
+          "fieldSids": [
+            "Unmapped_mvmyUWyF_A",
+            "Unmapped_vqUkhtJq_A"
+          ]
+        }
+      ],
+      "columns": [
+        {
+          "index": 0,
+          "x": 870
+        },
+        {
+          "index": 1,
+          "x": 929
+        }
+      ],
+      "cells": [
+        {
+          "fieldSid": "Unmapped_pNKWYkgl_A",
+          "rowIndex": 0,
+          "columnIndex": 0
+        },
+        {
+          "fieldSid": "Unmapped_vXnvMpCx_A",
+          "rowIndex": 0,
+          "columnIndex": 1
+        },
+        {
+          "fieldSid": "Unmapped_mvmyUWyF_A",
+          "rowIndex": 1,
+          "columnIndex": 0
+        },
+        {
+          "fieldSid": "Unmapped_vqUkhtJq_A",
+          "rowIndex": 1,
+          "columnIndex": 1
+        }
+      ],
+      "confidence": 0.63,
+      "provenance": "spatial-inference"
+    },
+    {
+      "id": "page-3-table-2",
+      "pageIndex": 2,
+      "rowCount": 2,
+      "columnCount": 2,
+      "rows": [
+        {
+          "index": 0,
+          "y": 542.5,
+          "fieldSids": [
+            "Unmapped_dzPPbAWi_A",
+            "Unmapped_cvSzzrtK_A"
+          ]
+        },
+        {
+          "index": 1,
+          "y": 592.5,
+          "fieldSids": [
+            "Unmapped_GliapHxd_A",
+            "Unmapped_CxklOFZR_A"
+          ]
+        }
+      ],
+      "columns": [
+        {
+          "index": 0,
+          "x": 870
+        },
+        {
+          "index": 1,
+          "x": 929
+        }
+      ],
+      "cells": [
+        {
+          "fieldSid": "Unmapped_dzPPbAWi_A",
+          "rowIndex": 0,
+          "columnIndex": 0
+        },
+        {
+          "fieldSid": "Unmapped_cvSzzrtK_A",
+          "rowIndex": 0,
+          "columnIndex": 1
+        },
+        {
+          "fieldSid": "Unmapped_GliapHxd_A",
+          "rowIndex": 1,
+          "columnIndex": 0
+        },
+        {
+          "fieldSid": "Unmapped_CxklOFZR_A",
+          "rowIndex": 1,
+          "columnIndex": 1
+        }
+      ],
+      "confidence": 0.63,
+      "provenance": "spatial-inference"
+    },
+    {
+      "id": "page-4-table-1",
+      "pageIndex": 3,
+      "rowCount": 2,
+      "columnCount": 3,
+      "rows": [
+        {
+          "index": 0,
+          "y": 1013.5,
+          "fieldSids": [
+            "NamedInsured_Signature_A",
+            "NamedInsured_SignatureDate_A"
+          ]
+        },
+        {
+          "index": 1,
+          "y": 1092,
+          "fieldSids": [
+            "NamedInsured_FullName_B",
+            "NamedInsured_Title_A"
+          ]
+        }
+      ],
+      "columns": [
+        {
+          "index": 0,
+          "x": 126
+        },
+        {
+          "index": 1,
+          "x": 154
+        },
+        {
+          "index": 2,
+          "x": 680.5
+        }
+      ],
+      "cells": [
+        {
+          "fieldSid": "NamedInsured_Signature_A",
+          "rowIndex": 0,
+          "columnIndex": 0
+        },
+        {
+          "fieldSid": "NamedInsured_SignatureDate_A",
+          "rowIndex": 0,
+          "columnIndex": 2
+        },
+        {
+          "fieldSid": "NamedInsured_FullName_B",
+          "rowIndex": 1,
+          "columnIndex": 1
+        },
+        {
+          "fieldSid": "NamedInsured_Title_A",
+          "rowIndex": 1,
+          "columnIndex": 2
+        }
+      ],
+      "confidence": 0.63,
+      "provenance": "spatial-inference"
+    }
+  ],
+  "groups": [
+    {
+      "id": "semantic-group-1",
+      "type": "semantic-family",
+      "pageIndex": 0,
+      "family": "NamedInsured",
+      "fieldSids": [
+        "NamedInsured_FullName_A",
+        "NamedInsured_MailingAddress_LineOne_A",
+        "NamedInsured_MailingAddress_CityName_A",
+        "NamedInsured_MailingAddress_StateOrProvinceCode_A",
+        "NamedInsured_MailingAddress_PostalCode_A",
+        "NamedInsured_Contact_FullName_A",
+        "NamedInsured_Primary_PhoneNumber_A",
+        "NamedInsured_Primary_FaxNumber_A",
+        "NamedInsured_Primary_EmailAddress_A",
+        "NamedInsured_Primary_WebsiteAddress_A"
+      ],
+      "confidence": 0.9,
+      "provenance": "semantic-sid-inference"
+    },
+    {
+      "id": "semantic-group-2",
+      "type": "semantic-family",
+      "pageIndex": 1,
+      "family": "Unmapped",
+      "fieldSids": [
+        "Unmapped_LhjUlLJx_B",
+        "Unmapped_hXPkffrs_A",
+        "Unmapped_euvbyfgZ_A",
+        "Unmapped_Ypojaxlj_B",
+        "Unmapped_eAOrglrE_A",
+        "Unmapped_ILAfuKCm_A",
+        "Unmapped_anIMhVGB_A",
+        "Unmapped_ItSrifOy_A",
+        "Unmapped_QMRoCZOd_A",
+        "Unmapped_dREGBqET_B",
+        "Unmapped_DICBgaBl_A",
+        "Unmapped_adHZMqAv_A",
+        "Unmapped_ZKvUDRzl_A",
+        "Unmapped_TFqUHDvR_A",
+        "Unmapped_yAfkuHmu_A",
+        "Unmapped_ZhaqTyxw_A",
+        "Unmapped_jnjygrgH_A",
+        "Unmapped_Ypojaxlj_A",
+        "Unmapped_HKfGBssx_A",
+        "Unmapped_oKJNjPum_A",
+        "Unmapped_LhjUlLJx_A",
+        "Unmapped_dREGBqET_A"
+      ],
+      "confidence": 0.4,
+      "provenance": "semantic-sid-inference"
+    },
+    {
+      "id": "semantic-group-3",
+      "type": "semantic-family",
+      "pageIndex": 1,
+      "family": "FinancialStatement",
+      "fieldSids": [
+        "FinancialStatement_CurrentYear_TotalRevenueAmount_A",
+        "FinancialStatement_PriorYear_TotalRevenueAmount_A"
+      ],
+      "confidence": 0.9,
+      "provenance": "semantic-sid-inference"
+    },
+    {
+      "id": "semantic-group-4",
+      "type": "semantic-family",
+      "pageIndex": 2,
+      "family": "Unmapped",
+      "fieldSids": [
+        "Unmapped_SiPaEXBT_A",
+        "Unmapped_LfOYSpQn_A",
+        "Unmapped_hplNCaSM_A",
+        "Unmapped_jBRMeqFe_A",
+        "Unmapped_wElhdhBd_A",
+        "Unmapped_RhdAJFiC_A",
+        "Unmapped_RNFAGjbs_A",
+        "Unmapped_pNKWYkgl_A",
+        "Unmapped_mvmyUWyF_A",
+        "Unmapped_dzPPbAWi_A",
+        "Unmapped_GliapHxd_A",
+        "Unmapped_cDXWgDNh_A",
+        "Unmapped_gUOKwcXw_A",
+        "Unmapped_hpWLfgrD_A",
+        "Unmapped_vXnvMpCx_A",
+        "Unmapped_vqUkhtJq_A",
+        "Unmapped_cvSzzrtK_A",
+        "Unmapped_CxklOFZR_A",
+        "Unmapped_PSLVyoaO_A",
+        "Unmapped_yQzYxiei_A"
+      ],
+      "confidence": 0.4,
+      "provenance": "semantic-sid-inference"
+    },
+    {
+      "id": "semantic-group-5",
+      "type": "semantic-family",
+      "pageIndex": 3,
+      "family": "Unmapped",
+      "fieldSids": [
+        "Unmapped_qlZPQQTG_A",
+        "Unmapped_qcPnBGvf_A",
+        "Unmapped_liiHmMld_A",
+        "Unmapped_oeGRvUlL_A",
+        "Unmapped_UEmtOWlU_A",
+        "Unmapped_xWeyORxI_A"
+      ],
+      "confidence": 0.4,
+      "provenance": "semantic-sid-inference"
+    },
+    {
+      "id": "semantic-group-6",
+      "type": "semantic-family",
+      "pageIndex": 3,
+      "family": "NamedInsured",
+      "fieldSids": [
+        "NamedInsured_Signature_A",
+        "NamedInsured_SignatureDate_A",
+        "NamedInsured_FullName_B",
+        "NamedInsured_Title_A"
+      ],
+      "confidence": 0.9,
+      "provenance": "semantic-sid-inference"
+    }
+  ],
+  "dataModel": {
+    "bindings": []
+  },
+  "suppression": {
+    "policy": "Only XFDL field/check controls are fillable. Labels remain semantic anchors and are never canvas overlays.",
+    "suppressedElements": [],
+    "conditionallySuppressedFieldSids": [],
+    "unmappedButFillableFieldSids": [
+      "Unmapped_LhjUlLJx_B",
+      "Unmapped_hXPkffrs_A",
+      "Unmapped_euvbyfgZ_A",
+      "Unmapped_Ypojaxlj_B",
+      "Unmapped_eAOrglrE_A",
+      "Unmapped_ILAfuKCm_A",
+      "Unmapped_anIMhVGB_A",
+      "Unmapped_ItSrifOy_A",
+      "Unmapped_QMRoCZOd_A",
+      "Unmapped_dREGBqET_B",
+      "Unmapped_DICBgaBl_A",
+      "Unmapped_adHZMqAv_A",
+      "Unmapped_ZKvUDRzl_A",
+      "Unmapped_TFqUHDvR_A",
+      "Unmapped_yAfkuHmu_A",
+      "Unmapped_ZhaqTyxw_A",
+      "Unmapped_jnjygrgH_A",
+      "Unmapped_Ypojaxlj_A",
+      "Unmapped_HKfGBssx_A",
+      "Unmapped_oKJNjPum_A",
+      "Unmapped_LhjUlLJx_A",
+      "Unmapped_dREGBqET_A",
+      "Unmapped_SiPaEXBT_A",
+      "Unmapped_LfOYSpQn_A",
+      "Unmapped_hplNCaSM_A",
+      "Unmapped_jBRMeqFe_A",
+      "Unmapped_wElhdhBd_A",
+      "Unmapped_RhdAJFiC_A",
+      "Unmapped_RNFAGjbs_A",
+      "Unmapped_pNKWYkgl_A",
+      "Unmapped_mvmyUWyF_A",
+      "Unmapped_dzPPbAWi_A",
+      "Unmapped_GliapHxd_A",
+      "Unmapped_cDXWgDNh_A",
+      "Unmapped_gUOKwcXw_A",
+      "Unmapped_hpWLfgrD_A",
+      "Unmapped_vXnvMpCx_A",
+      "Unmapped_vqUkhtJq_A",
+      "Unmapped_cvSzzrtK_A",
+      "Unmapped_CxklOFZR_A",
+      "Unmapped_PSLVyoaO_A",
+      "Unmapped_yQzYxiei_A",
+      "Unmapped_qlZPQQTG_A",
+      "Unmapped_qcPnBGvf_A",
+      "Unmapped_liiHmMld_A",
+      "Unmapped_oeGRvUlL_A",
+      "Unmapped_UEmtOWlU_A",
+      "Unmapped_xWeyORxI_A"
+    ]
+  },
+  "statistics": {
+    "pageCount": 4,
+    "fieldCount": 67,
+    "fieldTypeCounts": {
+      "checkbox": 34,
+      "date": 2,
+      "numeric": 4,
+      "signature": 2,
+      "text": 25
+    },
+    "labelCount": 0,
+    "bindingCount": 0,
+    "boundFieldCount": 0,
+    "tableCount": 6,
+    "groupCount": 6,
+    "suppressedElementCount": 0,
+    "conditionalSuppressionCount": 0,
+    "unmappedFillableCount": 48,
+    "fieldsWithGeometry": 67,
+    "fieldsWithResolvedLabels": 19
+  },
+  "provenance": {
+    "explicit": [
+      "pages",
+      "fields.sid",
+      "fields.geometry",
+      "fields.format",
+      "fields.binding",
+      "fields.behavior",
+      "fields.helpText",
+      "labels",
+      "dataModel.bindings"
+    ],
+    "inferred": [
+      "fields.fieldType",
+      "fields.semantic",
+      "fields.label.visualLabel",
+      "tables",
+      "groups"
+    ],
+    "note": "Inferred records include confidence and provenance. XFDL compute expressions are preserved, not executed."
+  },
+  "diagnostics": []
+}

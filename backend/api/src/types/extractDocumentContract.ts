@@ -47,9 +47,10 @@ export type ExtractDocumentFieldCatalogEntry = {
   text: string;
   boundingBox: BoundingBox;
   semanticValueRegion?: BoundingBox;
-  source: "di_line" | "di_table_cell" | "selection_mark" | "blank_detector";
+  source: "di_line" | "di_table_cell" | "selection_mark" | "blank_detector" | "pdf_widget";
   confidence: number;
   groupId?: string;
+  semanticGroupIds?: string[];
   tableId?: string;
   rowIndex?: number;
   columnIndex?: number;
@@ -85,6 +86,13 @@ export type ExtractDocumentGroupedStructures = {
     page: number;
     checkboxFieldIds: string[];
     labels: string[];
+  }>;
+  semanticGroups: Array<{
+    id: string;
+    page: number;
+    kind: "table-row" | "choice-set" | "yes-no" | "address-block" | "semantic";
+    fieldIds: string[];
+    label?: string;
   }>;
 };
 

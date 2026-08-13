@@ -1,0 +1,169 @@
+{
+  "schemaVersion": "semantic-engine-v2.v1",
+  "generatedAt": "2026-08-12T15:00:00.000Z",
+  "repositoryRoot": "f:/inchanted-forms-designer",
+  "groundTruth": {
+    "formCount": 63,
+    "pages": 320,
+    "fields": 21140,
+    "labels": 10679,
+    "bindings": 9979,
+    "tables": 812,
+    "groups": 1094,
+    "diagnosticWarnings": 274,
+    "previousFormCount": 28,
+    "appendedFormCount": 35,
+    "pairedForms": 51
+  },
+  "corpus": {
+    "forms": 51,
+    "truthFields": 16227,
+    "predictedFillableFields": 11663,
+    "matchedFields": 8697,
+    "matchedRate": 0.5358,
+    "errors": 40779,
+    "errorRate": 2.5106,
+    "categoryCounts": {
+      "semantic_label_mismatch": 7172,
+      "candidate_ranking_error": 4478,
+      "field_type_misclassification": 1935,
+      "table_detection_error": 5768,
+      "checkbox_yes_no_pairing_error": 96,
+      "suppression_error": 7530,
+      "grouping_error": 4949,
+      "label_value_pairing_error": 1219,
+      "unmapped_fillable_field": 7632
+    },
+    "categoryRates": {
+      "semantic_label_mismatch": 0.4421,
+      "candidate_ranking_error": 0.2759,
+      "field_type_misclassification": 0.1192,
+      "table_detection_error": 0.3555,
+      "checkbox_yes_no_pairing_error": 0.0059,
+      "suppression_error": 0.4638,
+      "grouping_error": 0.3048,
+      "label_value_pairing_error": 0.0751,
+      "unmapped_fillable_field": 0.4701
+    }
+  },
+  "patchesApplied": [
+    {
+      "category": "semantic_label_mismatch",
+      "sourceFiles": [
+        "frontend/src/utils/pdfToImages.ts",
+        "frontend/src/designer/ai/PdfImportModal.tsx",
+        "backend/api/src/extraction/hybridFieldExtraction.ts"
+      ],
+      "trustedBaselineErrors": 6400
+    },
+    {
+      "category": "candidate_ranking_error",
+      "sourceFiles": [
+        "frontend/src/utils/pdfToImages.ts",
+        "frontend/src/designer/ai/PdfImportModal.tsx",
+        "backend/api/src/types/extractDocumentContract.ts",
+        "backend/api/src/api/mapFields.ts"
+      ],
+      "trustedBaselineErrors": 4042
+    },
+    {
+      "category": "field_type_misclassification",
+      "sourceFiles": [
+        "backend/api/src/extraction/hybridFieldExtraction.ts",
+        "frontend/src/utils/pdfToImages.ts"
+      ],
+      "trustedBaselineErrors": 1628
+    },
+    {
+      "category": "table_detection_error",
+      "sourceFiles": [
+        "backend/api/src/extraction/hybridFieldExtraction.ts",
+        "backend/api/src/types/extractDocumentContract.ts",
+        "backend/api/src/api/mapFields.ts",
+        "frontend/src/designer/ai/PdfImportModal.tsx"
+      ],
+      "trustedBaselineErrors": 5265
+    },
+    {
+      "category": "checkbox_yes_no_pairing_error",
+      "sourceFiles": [
+        "backend/api/src/extraction/hybridFieldExtraction.ts"
+      ],
+      "trustedBaselineErrors": 67
+    },
+    {
+      "category": "suppression_error",
+      "sourceFiles": [
+        "frontend/src/utils/pdfToImages.ts",
+        "frontend/src/designer/ai/PdfImportModal.tsx",
+        "frontend/src/components/designer/FieldRenderer.tsx"
+      ],
+      "trustedBaselineErrors": 5906
+    },
+    {
+      "category": "grouping_error",
+      "sourceFiles": [
+        "backend/api/src/types/extractDocumentContract.ts",
+        "backend/api/src/extraction/hybridFieldExtraction.ts",
+        "backend/api/src/api/mapFields.ts",
+        "frontend/src/designer/ai/PdfImportModal.tsx"
+      ],
+      "trustedBaselineErrors": 4442
+    },
+    {
+      "category": "label_value_pairing_error",
+      "sourceFiles": [
+        "backend/api/src/api/mapFields.ts",
+        "frontend/src/designer/ai/PdfImportModal.tsx"
+      ],
+      "trustedBaselineErrors": 6005
+    },
+    {
+      "category": "unmapped_fillable_field",
+      "sourceFiles": [
+        "frontend/src/utils/pdfToImages.ts",
+        "frontend/src/designer/ai/PdfImportModal.tsx",
+        "backend/api/src/types/extractDocumentContract.ts",
+        "backend/api/src/api/mapFields.ts",
+        "backend/api/src/extraction/hybridFieldExtraction.ts"
+      ],
+      "trustedBaselineErrors": 6005
+    }
+  ],
+  "heuristics": {
+    "candidateRanking": {
+      "mode": "deterministic-promoted-dictionary-rank",
+      "weights": {
+        "semantic": 0.44,
+        "geometry": 0.22,
+        "dictionary": 0.2,
+        "heuristic": 0.14
+      },
+      "keepFastPath": true,
+      "legacyReducerDisabled": true
+    },
+    "typedBlankClassification": {
+      "numeric": ["number", "count", "limit", "zip", "phone", "fax", "years", "employees"],
+      "currency": ["amount", "premium", "deductible", "cost", "receipts", "payroll"],
+      "percentage": ["percentage", "rate"],
+      "date": ["date", "birth", "dob", "expiration", "expiry", "effective"],
+      "dropdown": ["select one", "choose", "options"],
+      "signature": ["signature", "sign here"]
+    },
+    "suppressionLogic": {
+      "stripNonFillableText": ["title", "header", "footer", "section-label", "description", "question"],
+      "keepExplicitWidgets": true,
+      "importedSuppressedFields": ["wave9Suppression.suppressed"],
+      "renderGuard": "FieldRenderer refuses to render imported suppressed fields"
+    },
+    "semanticGrouping": {
+      "independentGroups": ["semanticGroupIds", "tableRowGroupId", "choiceSetGroupId", "addressBlockGroupId"],
+      "groupIdPurpose": "label/value pair identity remains separate from row/choice/address group identity"
+    },
+    "pdfWidgetAlignment": {
+      "source": "PDF.js Widget annotations",
+      "alignment": "name-based semantic alignment with DI overlap fallback",
+      "keepWidgetNames": true
+    }
+  }
+}

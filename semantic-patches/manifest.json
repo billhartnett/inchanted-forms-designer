@@ -1,0 +1,124 @@
+{
+  "schemaVersion": "semantic-patches.v1",
+  "generatedAt": "2026-08-12",
+  "corpus": {
+    "index": "semantic-patches/semantic-errors/index.json",
+    "forms": 51,
+    "truthFields": 16227,
+    "predictedFillableFields": 11663,
+    "matchedFields": 8697,
+    "baselineErrors": 40779,
+    "acceptedPairs": 46,
+    "reviewPairs": 5,
+    "append": {
+      "groundTruthForms": 35,
+      "pdfs": 32,
+      "semanticForms": 31,
+      "acceptedPairs": 29,
+      "reviewPairs": 2,
+      "truthFields": 7160,
+      "predictedFillableFields": 5992,
+      "matchedFields": 4753,
+      "errors": 16916
+    }
+  },
+  "documentation": {
+    "patchCatalog": "semantic-patches/PATCH-CATALOG.md",
+    "summaryReport": "semantic-patches/SUMMARY-REPORT.md",
+    "generationGuide": "semantic-patches/README.md"
+  },
+  "patches": [
+    {
+      "category": "semantic_label_mismatch",
+      "trustedBaselineErrors": 6400,
+      "sourceFiles": [
+        "frontend/src/utils/pdfToImages.ts",
+        "frontend/src/designer/ai/PdfImportModal.tsx",
+        "backend/api/src/extraction/hybridFieldExtraction.ts"
+      ]
+    },
+    {
+      "category": "candidate_ranking_error",
+      "trustedBaselineErrors": 4042,
+      "sourceFiles": [
+        "frontend/src/utils/pdfToImages.ts",
+        "frontend/src/designer/ai/PdfImportModal.tsx",
+        "backend/api/src/types/extractDocumentContract.ts",
+        "backend/api/src/api/mapFields.ts"
+      ]
+    },
+    {
+      "category": "field_type_misclassification",
+      "trustedBaselineErrors": 1628,
+      "sourceFiles": [
+        "backend/api/src/extraction/hybridFieldExtraction.ts",
+        "frontend/src/utils/pdfToImages.ts"
+      ]
+    },
+    {
+      "category": "table_detection_error",
+      "trustedBaselineErrors": 5265,
+      "sourceFiles": [
+        "backend/api/src/extraction/hybridFieldExtraction.ts",
+        "backend/api/src/types/extractDocumentContract.ts",
+        "backend/api/src/api/mapFields.ts",
+        "frontend/src/designer/ai/PdfImportModal.tsx"
+      ]
+    },
+    {
+      "category": "checkbox_yes_no_pairing_error",
+      "trustedBaselineErrors": 67,
+      "sourceFiles": [
+        "backend/api/src/extraction/hybridFieldExtraction.ts"
+      ]
+    },
+    {
+      "category": "suppression_error",
+      "trustedBaselineErrors": 5906,
+      "sourceFiles": [
+        "frontend/src/utils/pdfToImages.ts",
+        "frontend/src/designer/ai/PdfImportModal.tsx",
+        "frontend/src/components/designer/FieldRenderer.tsx"
+      ]
+    },
+    {
+      "category": "grouping_error",
+      "trustedBaselineErrors": 4442,
+      "sourceFiles": [
+        "backend/api/src/types/extractDocumentContract.ts",
+        "backend/api/src/extraction/hybridFieldExtraction.ts",
+        "backend/api/src/api/mapFields.ts",
+        "frontend/src/designer/ai/PdfImportModal.tsx"
+      ]
+    },
+    {
+      "category": "label_value_pairing_error",
+      "trustedBaselineErrors": 1065,
+      "sourceFiles": [
+        "backend/api/src/api/mapFields.ts",
+        "frontend/src/designer/ai/PdfImportModal.tsx"
+      ]
+    },
+    {
+      "category": "unmapped_fillable_field",
+      "trustedBaselineErrors": 6005,
+      "sourceFiles": [
+        "frontend/src/utils/pdfToImages.ts",
+        "frontend/src/designer/ai/PdfImportModal.tsx",
+        "backend/api/src/types/extractDocumentContract.ts",
+        "backend/api/src/api/mapFields.ts",
+        "backend/api/src/extraction/hybridFieldExtraction.ts"
+      ]
+    }
+  ],
+  "regressionTests": [
+    "backend/api/tests/hybridFieldExtraction.test.cjs"
+  ],
+  "validation": {
+    "focusedTests": "12/12 passed",
+    "frontendBuild": "passed",
+    "corpusJsonFiles": 52,
+    "corpusJsonFailures": 0,
+    "diagnostics": "clean"
+  }
+}

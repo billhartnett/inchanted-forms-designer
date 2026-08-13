@@ -1,0 +1,23 @@
+
+  <svg xmlns="http://www.w3.org/2000/svg" width="700" height="180" viewBox="0 0 700 180">
+    <rect width="100%" height="100%" fill="#f8fafc"/>
+    <text x="20" y="22" font-size="18" font-family="Arial" fill="#0f172a">Hartford LP_00_HO54_03 2017-06.Xfdl visual diff</text>
+    
+      <g>
+        <rect x="NaN" y="32" width="NaN" height="120" fill="#2563eb" opacity="0.8" rx="4"/>
+        <text x="NaN" y="172" font-size="9" fill="#0f172a">sema</text>
+      </g>
+      <g>
+        <rect x="NaN" y="94.4" width="NaN" height="57.599999999999994" fill="#2563eb" opacity="0.8" rx="4"/>
+        <text x="NaN" y="172" font-size="9" fill="#0f172a">supp</text>
+      </g>
+      <g>
+        <rect x="NaN" y="66.56" width="NaN" height="85.44" fill="#2563eb" opacity="0.8" rx="4"/>
+        <text x="NaN" y="172" font-size="9" fill="#0f172a">tabl</text>
+      </g>
+      <g>
+        <rect x="NaN" y="76.16" width="NaN" height="75.84" fill="#2563eb" opacity="0.8" rx="4"/>
+        <text x="NaN" y="172" font-size="9" fill="#0f172a">grou</text>
+      </g>
+  </svg>
+  

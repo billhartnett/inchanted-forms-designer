@@ -1,0 +1,23 @@
+
+  <svg xmlns="http://www.w3.org/2000/svg" width="700" height="180" viewBox="0 0 700 180">
+    <rect width="100%" height="100%" fill="#f8fafc"/>
+    <text x="20" y="22" font-size="18" font-family="Arial" fill="#0f172a">Philadelphia Salon_and_Day_Spa_App 2016-12.Xfdl visual diff</text>
+    
+      <g>
+        <rect x="NaN" y="32" width="NaN" height="120" fill="#2563eb" opacity="0.8" rx="4"/>
+        <text x="NaN" y="172" font-size="9" fill="#0f172a">sema</text>
+      </g>
+      <g>
+        <rect x="NaN" y="107.0561797752809" width="NaN" height="44.943820224719104" fill="#2563eb" opacity="0.8" rx="4"/>
+        <text x="NaN" y="172" font-size="9" fill="#0f172a">supp</text>
+      </g>
+      <g>
+        <rect x="NaN" y="58.96629213483146" width="NaN" height="93.03370786516854" fill="#2563eb" opacity="0.8" rx="4"/>
+        <text x="NaN" y="172" font-size="9" fill="#0f172a">tabl</text>
+      </g>
+      <g>
+        <rect x="NaN" y="63.91011235955057" width="NaN" height="88.08988764044943" fill="#2563eb" opacity="0.8" rx="4"/>
+        <text x="NaN" y="172" font-size="9" fill="#0f172a">grou</text>
+      </g>
+  </svg>
+  

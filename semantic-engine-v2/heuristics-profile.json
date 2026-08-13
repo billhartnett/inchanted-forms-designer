@@ -1,0 +1,40 @@
+{
+  "schemaVersion": "semantic-engine-v2-heuristics.v1",
+  "generatedAt": "2026-08-12T15:00:00.000Z",
+  "candidateRankingThresholds": {
+    "dictionaryPromotionThreshold": 0.74,
+    "semanticBoostThreshold": 0.6,
+    "geometryFusionThreshold": 0.65,
+    "lowConfidenceFallbackThreshold": 0.12
+  },
+  "tableDetection": {
+    "minRowCells": 2,
+    "rowGroupingEnabled": true,
+    "semanticRowIdRequired": true,
+    "tableCellValueTypes": ["numeric", "currency", "percentage", "date", "text", "dropdown"]
+  },
+  "checkboxYesNo": {
+    "directionalLabelScoring": "same-row-right-hand-label preferred",
+    "choiceSetGrouping": true,
+    "checkboxPairsRequired": true
+  },
+  "suppression": {
+    "prohibitOCRTextPromotion": true,
+    "skipHeadersAndFooters": true,
+    "skipQuestionText": true,
+    "skipDecorativeText": true,
+    "allowExplicitPdfWidgets": true
+  },
+  "labelValuePairing": {
+    "preserveExplicitWidgetNames": true,
+    "semanticLabelAlignment": "name and overlap before fuzzy OCR fallback",
+    "reviewOnlyWhenOutliers": true
+  },
+  "semanticGrouping": {
+    "addressBlocks": true,
+    "choiceSets": true,
+    "tableRows": true,
+    "rowGroups": true,
+    "identitySeparation": ["groupId", "semanticGroupIds"]
+  }
+}

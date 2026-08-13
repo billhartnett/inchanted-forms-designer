@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "final-refinements-v3-layout.v1",
+  "generatedAt": "2026-08-12T15:53:28.853Z",
+  "summary": "Edge-case corrections for complex row/column boundaries and grouped address/table layouts.",
+  "corrections": [
+    {
+      "id": "layout-01",
+      "category": "table_detection_error",
+      "target": "table layout",
+      "pattern": "Address or row-group tables with merged cells have a low margin around left label columns; enforce row and column context before grouping."
+    },
+    {
+      "id": "layout-02",
+      "category": "grouping_error",
+      "target": "address blocks",
+      "pattern": "Keep address blocks independent from label/value pair identity and preserve row group membership in semanticGroups."
+    },
+    {
+      "id": "layout-03",
+      "category": "suppression_error",
+      "target": "question text",
+      "pattern": "Suppress question text and DI presentation text even when they overlap with fillable widgets at the page edge."
+    },
+    {
+      "id": "layout-04",
+      "category": "semantic_label_mismatch",
+      "target": "widget name reconciliation",
+      "pattern": "Use the same-row and same-column semantic label resolution for PDF widgets where adjacent label text is ambiguous."
+    }
+  ]
+}

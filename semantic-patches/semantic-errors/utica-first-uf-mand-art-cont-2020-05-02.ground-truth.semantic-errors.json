@@ -1,0 +1,4505 @@
+{
+  "schemaVersion": "semantic-errors.v1",
+  "generatedAt": "2026-08-12T14:58:24.251Z",
+  "form": {
+    "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+    "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+    "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+    "pairStatus": "matched",
+    "pairConfidence": "high"
+  },
+  "counts": {
+    "truthFields": 48,
+    "predictedFillableFields": 53,
+    "matchedFields": 24,
+    "promotedFields": 53,
+    "errors": 143
+  },
+  "categoryCounts": {
+    "semantic_label_mismatch": 22,
+    "candidate_ranking_error": 24,
+    "field_type_misclassification": 21,
+    "table_detection_error": 13,
+    "checkbox_yes_no_pairing_error": 0,
+    "suppression_error": 24,
+    "grouping_error": 15,
+    "label_value_pairing_error": 0,
+    "unmapped_fillable_field": 24
+  },
+  "errors": [
+    {
+      "id": "unmapped_fillable_field:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:NamedInsured_FullName_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_FullName_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "NamedInsured_FullName_A",
+        "type": "text",
+        "label": "Enter text: The named insured(s) as it / they will appear on the policy declarations page."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:NamedInsured_FullName_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_FullName_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_ExteriorSprayPercent_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_ExteriorSprayPercent_A",
+        "predictionId": "checkbox-p1-1",
+        "page": 1,
+        "geometryDistance": 0.007059042226241347
+      },
+      "expected": {
+        "label": "Enter percentage: The percentage of painting work that is exterior spray painting.",
+        "helpLabel": "Enter percentage: The percentage of painting work that is exterior spray painting."
+      },
+      "actual": {
+        "label": "Drywall :unselected: :unselected:"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "field_type_misclassification:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_ExteriorSprayPercent_A",
+      "category": "field_type_misclassification",
+      "description": "The predicted fillable type differs from the XFDL control/format type.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_ExteriorSprayPercent_A",
+        "predictionId": "checkbox-p1-1",
+        "page": 1,
+        "geometryDistance": 0.007059042226241347
+      },
+      "expected": {
+        "type": "numeric",
+        "sourceType": "numeric",
+        "format": {
+          "dataType": "int",
+          "requirement": null,
+          "presentation": "",
+          "rawValues": [
+            "int",
+            "",
+            "Optional",
+            ""
+          ],
+          "provenance": "explicit"
+        }
+      },
+      "actual": {
+        "type": "checkbox",
+        "sourceType": "checkbox"
+      },
+      "rationale": "XFDL control/format typing and backend typed-blank classification disagree.",
+      "evidence": {}
+    },
+    {
+      "id": "candidate_ranking_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_ExteriorSprayPercent_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_ExteriorSprayPercent_A",
+        "predictionId": "checkbox-p1-1",
+        "page": 1,
+        "geometryDistance": 0.007059042226241347
+      },
+      "expected": {
+        "topAcordCode": "ContractorsUnderwriting_ExteriorSprayPercent"
+      },
+      "actual": {
+        "topAcordCode": "Dealers_RemarkText",
+        "rankedCodes": [
+          "Dealers_RemarkText",
+          "Client_MarketingObjective",
+          "ErrorsAndOmissions_Marketing_SalesTrainingDescription"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "table_detection_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_ExteriorSprayPercent_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_ExteriorSprayPercent_A",
+        "predictionId": "checkbox-p1-1",
+        "page": 1,
+        "geometryDistance": 0.007059042226241347
+      },
+      "expected": {
+        "tableId": "page-1-table-1",
+        "rowIndex": 0,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_ExteriorSprayPercent_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_ExteriorSprayPercent_A",
+        "predictionId": "checkbox-p1-1",
+        "page": 1,
+        "geometryDistance": 0.007059042226241347
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-2"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_DrywallPercent_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_DrywallPercent_A",
+        "predictionId": "checkbox-p1-2",
+        "page": 1,
+        "geometryDistance": 0.005949529467428442
+      },
+      "expected": {
+        "label": "Enter percentage: The percentage of work that is drywall work.",
+        "helpLabel": "Enter percentage: The percentage of work that is drywall work."
+      },
+      "actual": {
+        "label": "Exterior Painting :unselected:"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "field_type_misclassification:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_DrywallPercent_A",
+      "category": "field_type_misclassification",
+      "description": "The predicted fillable type differs from the XFDL control/format type.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_DrywallPercent_A",
+        "predictionId": "checkbox-p1-2",
+        "page": 1,
+        "geometryDistance": 0.005949529467428442
+      },
+      "expected": {
+        "type": "numeric",
+        "sourceType": "numeric",
+        "format": {
+          "dataType": "int",
+          "requirement": null,
+          "presentation": "",
+          "rawValues": [
+            "int",
+            "",
+            "Optional",
+            ""
+          ],
+          "provenance": "explicit"
+        }
+      },
+      "actual": {
+        "type": "checkbox",
+        "sourceType": "checkbox"
+      },
+      "rationale": "XFDL control/format typing and backend typed-blank classification disagree.",
+      "evidence": {}
+    },
+    {
+      "id": "candidate_ranking_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_DrywallPercent_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_DrywallPercent_A",
+        "predictionId": "checkbox-p1-2",
+        "page": 1,
+        "geometryDistance": 0.005949529467428442
+      },
+      "expected": {
+        "topAcordCode": "ContractorsUnderwriting_DrywallPercent"
+      },
+      "actual": {
+        "topAcordCode": "Dealers_RemarkText",
+        "rankedCodes": [
+          "Dealers_RemarkText",
+          "Client_MarketingObjective",
+          "ErrorsAndOmissions_Marketing_SalesTrainingDescription"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "table_detection_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_DrywallPercent_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_DrywallPercent_A",
+        "predictionId": "checkbox-p1-2",
+        "page": 1,
+        "geometryDistance": 0.005949529467428442
+      },
+      "expected": {
+        "tableId": "page-1-table-1",
+        "rowIndex": 0,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_DrywallPercent_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_DrywallPercent_A",
+        "predictionId": "checkbox-p1-2",
+        "page": 1,
+        "geometryDistance": 0.005949529467428442
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-2"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_PaintingInsidePercent_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_PaintingInsidePercent_A",
+        "predictionId": "checkbox-p1-3",
+        "page": 1,
+        "geometryDistance": 0.006353010612201287
+      },
+      "expected": {
+        "label": "Enter percentage: The percentage of painting work that is inside.",
+        "helpLabel": "Enter percentage: The percentage of painting work that is inside."
+      },
+      "actual": {
+        "label": "Drywall :unselected: :unselected:"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "field_type_misclassification:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_PaintingInsidePercent_A",
+      "category": "field_type_misclassification",
+      "description": "The predicted fillable type differs from the XFDL control/format type.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_PaintingInsidePercent_A",
+        "predictionId": "checkbox-p1-3",
+        "page": 1,
+        "geometryDistance": 0.006353010612201287
+      },
+      "expected": {
+        "type": "numeric",
+        "sourceType": "numeric",
+        "format": {
+          "dataType": "int",
+          "requirement": null,
+          "presentation": "",
+          "rawValues": [
+            "int",
+            "",
+            "Optional",
+            ""
+          ],
+          "provenance": "explicit"
+        }
+      },
+      "actual": {
+        "type": "checkbox",
+        "sourceType": "checkbox"
+      },
+      "rationale": "XFDL control/format typing and backend typed-blank classification disagree.",
+      "evidence": {}
+    },
+    {
+      "id": "candidate_ranking_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_PaintingInsidePercent_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_PaintingInsidePercent_A",
+        "predictionId": "checkbox-p1-3",
+        "page": 1,
+        "geometryDistance": 0.006353010612201287
+      },
+      "expected": {
+        "topAcordCode": "ContractorsUnderwriting_PaintingInsidePercent"
+      },
+      "actual": {
+        "topAcordCode": "Dealers_RemarkText",
+        "rankedCodes": [
+          "Dealers_RemarkText",
+          "Client_MarketingObjective",
+          "ErrorsAndOmissions_Marketing_SalesTrainingDescription"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "table_detection_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_PaintingInsidePercent_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_PaintingInsidePercent_A",
+        "predictionId": "checkbox-p1-3",
+        "page": 1,
+        "geometryDistance": 0.006353010612201287
+      },
+      "expected": {
+        "tableId": "page-1-table-1",
+        "rowIndex": 0,
+        "columnIndex": 2,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_PaintingInsidePercent_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_PaintingInsidePercent_A",
+        "predictionId": "checkbox-p1-3",
+        "page": 1,
+        "geometryDistance": 0.006353010612201287
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-2"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_ElectricalPercent_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_ElectricalPercent_A",
+        "predictionId": "checkbox-p1-4",
+        "page": 1,
+        "geometryDistance": 0.006268398091276819
+      },
+      "expected": {
+        "label": "Enter percentage: The percentage of work that is electrical work.",
+        "helpLabel": "Enter percentage: The percentage of work that is electrical work."
+      },
+      "actual": {
+        "label": ":unselected:"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "field_type_misclassification:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_ElectricalPercent_A",
+      "category": "field_type_misclassification",
+      "description": "The predicted fillable type differs from the XFDL control/format type.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_ElectricalPercent_A",
+        "predictionId": "checkbox-p1-4",
+        "page": 1,
+        "geometryDistance": 0.006268398091276819
+      },
+      "expected": {
+        "type": "numeric",
+        "sourceType": "numeric",
+        "format": {
+          "dataType": "int",
+          "requirement": null,
+          "presentation": "",
+          "rawValues": [
+            "int",
+            "",
+            "Optional",
+            ""
+          ],
+          "provenance": "explicit"
+        }
+      },
+      "actual": {
+        "type": "checkbox",
+        "sourceType": "checkbox"
+      },
+      "rationale": "XFDL control/format typing and backend typed-blank classification disagree.",
+      "evidence": {}
+    },
+    {
+      "id": "candidate_ranking_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_ElectricalPercent_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_ElectricalPercent_A",
+        "predictionId": "checkbox-p1-4",
+        "page": 1,
+        "geometryDistance": 0.006268398091276819
+      },
+      "expected": {
+        "topAcordCode": "ContractorsUnderwriting_ElectricalPercent"
+      },
+      "actual": {
+        "topAcordCode": "Dealers_RemarkText",
+        "rankedCodes": [
+          "Dealers_RemarkText",
+          "Client_MarketingObjective",
+          "ErrorsAndOmissions_Marketing_SalesTrainingDescription"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "table_detection_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_ElectricalPercent_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_ElectricalPercent_A",
+        "predictionId": "checkbox-p1-4",
+        "page": 1,
+        "geometryDistance": 0.006268398091276819
+      },
+      "expected": {
+        "tableId": "page-1-table-1",
+        "rowIndex": 0,
+        "columnIndex": 3,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_ElectricalPercent_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_ElectricalPercent_A",
+        "predictionId": "checkbox-p1-4",
+        "page": 1,
+        "geometryDistance": 0.006268398091276819
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-2"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_CarpentryPercent_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_CarpentryPercent_A",
+        "predictionId": "checkbox-p1-5",
+        "page": 1,
+        "geometryDistance": 0.0066126165112510675
+      },
+      "expected": {
+        "label": "Enter percentage: The percentage of work that is carpentry work.",
+        "helpLabel": "Enter percentage: The percentage of work that is carpentry work."
+      },
+      "actual": {
+        "label": "Carpentry"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0.1667
+      }
+    },
+    {
+      "id": "field_type_misclassification:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_CarpentryPercent_A",
+      "category": "field_type_misclassification",
+      "description": "The predicted fillable type differs from the XFDL control/format type.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_CarpentryPercent_A",
+        "predictionId": "checkbox-p1-5",
+        "page": 1,
+        "geometryDistance": 0.0066126165112510675
+      },
+      "expected": {
+        "type": "numeric",
+        "sourceType": "numeric",
+        "format": {
+          "dataType": "int",
+          "requirement": null,
+          "presentation": "",
+          "rawValues": [
+            "int",
+            "",
+            "Optional",
+            ""
+          ],
+          "provenance": "explicit"
+        }
+      },
+      "actual": {
+        "type": "checkbox",
+        "sourceType": "checkbox"
+      },
+      "rationale": "XFDL control/format typing and backend typed-blank classification disagree.",
+      "evidence": {}
+    },
+    {
+      "id": "candidate_ranking_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_CarpentryPercent_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_CarpentryPercent_A",
+        "predictionId": "checkbox-p1-5",
+        "page": 1,
+        "geometryDistance": 0.0066126165112510675
+      },
+      "expected": {
+        "topAcordCode": "ContractorsUnderwriting_CarpentryPercent"
+      },
+      "actual": {
+        "topAcordCode": "Dealers_RemarkText",
+        "rankedCodes": [
+          "Dealers_RemarkText",
+          "Client_MarketingObjective",
+          "ErrorsAndOmissions_Marketing_SalesTrainingDescription"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "table_detection_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_CarpentryPercent_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_CarpentryPercent_A",
+        "predictionId": "checkbox-p1-5",
+        "page": 1,
+        "geometryDistance": 0.0066126165112510675
+      },
+      "expected": {
+        "tableId": "page-1-table-1",
+        "rowIndex": 1,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_CarpentryPercent_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_CarpentryPercent_A",
+        "predictionId": "checkbox-p1-5",
+        "page": 1,
+        "geometryDistance": 0.0066126165112510675
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-2"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_PlumbingPercent_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_PlumbingPercent_A",
+        "predictionId": "checkbox-p1-6",
+        "page": 1,
+        "geometryDistance": 0.006283951333936991
+      },
+      "expected": {
+        "label": "Enter percentage: The percentage of work that is plumbing work.",
+        "helpLabel": "Enter percentage: The percentage of work that is plumbing work."
+      },
+      "actual": {
+        "label": "Carpentry Cabinetry :unselected: :unselected:"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "field_type_misclassification:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_PlumbingPercent_A",
+      "category": "field_type_misclassification",
+      "description": "The predicted fillable type differs from the XFDL control/format type.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_PlumbingPercent_A",
+        "predictionId": "checkbox-p1-6",
+        "page": 1,
+        "geometryDistance": 0.006283951333936991
+      },
+      "expected": {
+        "type": "numeric",
+        "sourceType": "numeric",
+        "format": {
+          "dataType": "int",
+          "requirement": null,
+          "presentation": "",
+          "rawValues": [
+            "int",
+            "",
+            "Optional",
+            ""
+          ],
+          "provenance": "explicit"
+        }
+      },
+      "actual": {
+        "type": "checkbox",
+        "sourceType": "checkbox"
+      },
+      "rationale": "XFDL control/format typing and backend typed-blank classification disagree.",
+      "evidence": {}
+    },
+    {
+      "id": "candidate_ranking_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_PlumbingPercent_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_PlumbingPercent_A",
+        "predictionId": "checkbox-p1-6",
+        "page": 1,
+        "geometryDistance": 0.006283951333936991
+      },
+      "expected": {
+        "topAcordCode": "ContractorsUnderwriting_PlumbingPercent"
+      },
+      "actual": {
+        "topAcordCode": "Dealers_RemarkText",
+        "rankedCodes": [
+          "Dealers_RemarkText",
+          "Client_MarketingObjective",
+          "ErrorsAndOmissions_Marketing_SalesTrainingDescription"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "table_detection_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_PlumbingPercent_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_PlumbingPercent_A",
+        "predictionId": "checkbox-p1-6",
+        "page": 1,
+        "geometryDistance": 0.006283951333936991
+      },
+      "expected": {
+        "tableId": "page-1-table-1",
+        "rowIndex": 1,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_PlumbingPercent_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_PlumbingPercent_A",
+        "predictionId": "checkbox-p1-6",
+        "page": 1,
+        "geometryDistance": 0.006283951333936991
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-2"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_DoorsAndWindowsPercent_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_DoorsAndWindowsPercent_A",
+        "predictionId": "checkbox-p1-7",
+        "page": 1,
+        "geometryDistance": 0.006208970111139274
+      },
+      "expected": {
+        "label": "Enter percentage: The percentage of work that is doors and window work.",
+        "helpLabel": "Enter percentage: The percentage of work that is doors and window work."
+      },
+      "actual": {
+        "label": "Plumbing :unselected: :unselected:"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "field_type_misclassification:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_DoorsAndWindowsPercent_A",
+      "category": "field_type_misclassification",
+      "description": "The predicted fillable type differs from the XFDL control/format type.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_DoorsAndWindowsPercent_A",
+        "predictionId": "checkbox-p1-7",
+        "page": 1,
+        "geometryDistance": 0.006208970111139274
+      },
+      "expected": {
+        "type": "numeric",
+        "sourceType": "numeric",
+        "format": {
+          "dataType": "int",
+          "requirement": null,
+          "presentation": "",
+          "rawValues": [
+            "int",
+            "",
+            "Optional",
+            ""
+          ],
+          "provenance": "explicit"
+        }
+      },
+      "actual": {
+        "type": "checkbox",
+        "sourceType": "checkbox"
+      },
+      "rationale": "XFDL control/format typing and backend typed-blank classification disagree.",
+      "evidence": {}
+    },
+    {
+      "id": "candidate_ranking_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_DoorsAndWindowsPercent_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_DoorsAndWindowsPercent_A",
+        "predictionId": "checkbox-p1-7",
+        "page": 1,
+        "geometryDistance": 0.006208970111139274
+      },
+      "expected": {
+        "topAcordCode": "ContractorsUnderwriting_DoorsAndWindowsPercent"
+      },
+      "actual": {
+        "topAcordCode": "Dealers_RemarkText",
+        "rankedCodes": [
+          "Dealers_RemarkText",
+          "Client_MarketingObjective",
+          "ErrorsAndOmissions_Marketing_SalesTrainingDescription"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "table_detection_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_DoorsAndWindowsPercent_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_DoorsAndWindowsPercent_A",
+        "predictionId": "checkbox-p1-7",
+        "page": 1,
+        "geometryDistance": 0.006208970111139274
+      },
+      "expected": {
+        "tableId": "page-1-table-1",
+        "rowIndex": 1,
+        "columnIndex": 2,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_DoorsAndWindowsPercent_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_DoorsAndWindowsPercent_A",
+        "predictionId": "checkbox-p1-7",
+        "page": 1,
+        "geometryDistance": 0.006208970111139274
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-2"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_LandscapingPercent_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_LandscapingPercent_A",
+        "predictionId": "checkbox-p1-8",
+        "page": 1,
+        "geometryDistance": 0.006919249449069088
+      },
+      "expected": {
+        "label": "Enter percentage: The percentage of work that is landscaping work.",
+        "helpLabel": "Enter percentage: The percentage of work that is landscaping work."
+      },
+      "actual": {
+        "label": "Doors & Windows :unselected:"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "field_type_misclassification:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_LandscapingPercent_A",
+      "category": "field_type_misclassification",
+      "description": "The predicted fillable type differs from the XFDL control/format type.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_LandscapingPercent_A",
+        "predictionId": "checkbox-p1-8",
+        "page": 1,
+        "geometryDistance": 0.006919249449069088
+      },
+      "expected": {
+        "type": "numeric",
+        "sourceType": "numeric",
+        "format": {
+          "dataType": "int",
+          "requirement": null,
+          "presentation": "",
+          "rawValues": [
+            "int",
+            "",
+            "Optional",
+            ""
+          ],
+          "provenance": "explicit"
+        }
+      },
+      "actual": {
+        "type": "checkbox",
+        "sourceType": "checkbox"
+      },
+      "rationale": "XFDL control/format typing and backend typed-blank classification disagree.",
+      "evidence": {}
+    },
+    {
+      "id": "candidate_ranking_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_LandscapingPercent_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_LandscapingPercent_A",
+        "predictionId": "checkbox-p1-8",
+        "page": 1,
+        "geometryDistance": 0.006919249449069088
+      },
+      "expected": {
+        "topAcordCode": "ContractorsUnderwriting_LandscapingPercent"
+      },
+      "actual": {
+        "topAcordCode": "Dealers_RemarkText",
+        "rankedCodes": [
+          "Dealers_RemarkText",
+          "Client_MarketingObjective",
+          "ErrorsAndOmissions_Marketing_SalesTrainingDescription"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "table_detection_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_LandscapingPercent_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_LandscapingPercent_A",
+        "predictionId": "checkbox-p1-8",
+        "page": 1,
+        "geometryDistance": 0.006919249449069088
+      },
+      "expected": {
+        "tableId": "page-1-table-1",
+        "rowIndex": 1,
+        "columnIndex": 3,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_LandscapingPercent_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_LandscapingPercent_A",
+        "predictionId": "checkbox-p1-8",
+        "page": 1,
+        "geometryDistance": 0.006919249449069088
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-2"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_CabinetryPercent_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_CabinetryPercent_A",
+        "predictionId": "checkbox-p1-9",
+        "page": 1,
+        "geometryDistance": 0.0067396631195906
+      },
+      "expected": {
+        "label": "Enter percentage: The percentage of work that is cabinetry work.",
+        "helpLabel": "Enter percentage: The percentage of work that is cabinetry work."
+      },
+      "actual": {
+        "label": "Cabinetry"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0.1667
+      }
+    },
+    {
+      "id": "field_type_misclassification:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_CabinetryPercent_A",
+      "category": "field_type_misclassification",
+      "description": "The predicted fillable type differs from the XFDL control/format type.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_CabinetryPercent_A",
+        "predictionId": "checkbox-p1-9",
+        "page": 1,
+        "geometryDistance": 0.0067396631195906
+      },
+      "expected": {
+        "type": "numeric",
+        "sourceType": "numeric",
+        "format": {
+          "dataType": "int",
+          "requirement": null,
+          "presentation": "",
+          "rawValues": [
+            "int",
+            "",
+            "Optional",
+            ""
+          ],
+          "provenance": "explicit"
+        }
+      },
+      "actual": {
+        "type": "checkbox",
+        "sourceType": "checkbox"
+      },
+      "rationale": "XFDL control/format typing and backend typed-blank classification disagree.",
+      "evidence": {}
+    },
+    {
+      "id": "candidate_ranking_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_CabinetryPercent_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_CabinetryPercent_A",
+        "predictionId": "checkbox-p1-9",
+        "page": 1,
+        "geometryDistance": 0.0067396631195906
+      },
+      "expected": {
+        "topAcordCode": "ContractorsUnderwriting_CabinetryPercent"
+      },
+      "actual": {
+        "topAcordCode": "Dealers_RemarkText",
+        "rankedCodes": [
+          "Dealers_RemarkText",
+          "Client_MarketingObjective",
+          "ErrorsAndOmissions_Marketing_SalesTrainingDescription"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "table_detection_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_CabinetryPercent_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_CabinetryPercent_A",
+        "predictionId": "checkbox-p1-9",
+        "page": 1,
+        "geometryDistance": 0.0067396631195906
+      },
+      "expected": {
+        "tableId": "page-1-table-1",
+        "rowIndex": 2,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_CabinetryPercent_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_CabinetryPercent_A",
+        "predictionId": "checkbox-p1-9",
+        "page": 1,
+        "geometryDistance": 0.0067396631195906
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-2"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_FlooringPercent_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_FlooringPercent_A",
+        "predictionId": "checkbox-p1-10",
+        "page": 1,
+        "geometryDistance": 0.006332138793709803
+      },
+      "expected": {
+        "label": "Enter percentage: The percentage of work that is flooring work.",
+        "helpLabel": "Enter percentage: The percentage of work that is flooring work."
+      },
+      "actual": {
+        "label": "Describe work"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0.1429
+      }
+    },
+    {
+      "id": "field_type_misclassification:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_FlooringPercent_A",
+      "category": "field_type_misclassification",
+      "description": "The predicted fillable type differs from the XFDL control/format type.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_FlooringPercent_A",
+        "predictionId": "checkbox-p1-10",
+        "page": 1,
+        "geometryDistance": 0.006332138793709803
+      },
+      "expected": {
+        "type": "numeric",
+        "sourceType": "numeric",
+        "format": {
+          "dataType": "int",
+          "requirement": null,
+          "presentation": "",
+          "rawValues": [
+            "int",
+            "",
+            "Optional",
+            ""
+          ],
+          "provenance": "explicit"
+        }
+      },
+      "actual": {
+        "type": "checkbox",
+        "sourceType": "checkbox"
+      },
+      "rationale": "XFDL control/format typing and backend typed-blank classification disagree.",
+      "evidence": {}
+    },
+    {
+      "id": "candidate_ranking_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_FlooringPercent_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_FlooringPercent_A",
+        "predictionId": "checkbox-p1-10",
+        "page": 1,
+        "geometryDistance": 0.006332138793709803
+      },
+      "expected": {
+        "topAcordCode": "ContractorsUnderwriting_FlooringPercent"
+      },
+      "actual": {
+        "topAcordCode": "Client_MarketingObjective",
+        "rankedCodes": [
+          "Client_MarketingObjective",
+          "ErrorsAndOmissions_Marketing_SalesTrainingDescription",
+          "Vehicle_AftermarketOptionsDescription"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "table_detection_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_FlooringPercent_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_FlooringPercent_A",
+        "predictionId": "checkbox-p1-10",
+        "page": 1,
+        "geometryDistance": 0.006332138793709803
+      },
+      "expected": {
+        "tableId": "page-1-table-1",
+        "rowIndex": 2,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_FlooringPercent_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_FlooringPercent_A",
+        "predictionId": "checkbox-p1-10",
+        "page": 1,
+        "geometryDistance": 0.006332138793709803
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-2"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_MasonFlatWorkPercent_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_MasonFlatWorkPercent_A",
+        "predictionId": "checkbox-p1-11",
+        "page": 1,
+        "geometryDistance": 0.007016525553062088
+      },
+      "expected": {
+        "label": "Enter percentage: The percentage of work that is mason flat work.",
+        "helpLabel": "Enter percentage: The percentage of work that is mason flat work."
+      },
+      "actual": {
+        "label": "Flooring :unselected: :unselected:"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "field_type_misclassification:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_MasonFlatWorkPercent_A",
+      "category": "field_type_misclassification",
+      "description": "The predicted fillable type differs from the XFDL control/format type.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_MasonFlatWorkPercent_A",
+        "predictionId": "checkbox-p1-11",
+        "page": 1,
+        "geometryDistance": 0.007016525553062088
+      },
+      "expected": {
+        "type": "numeric",
+        "sourceType": "numeric",
+        "format": {
+          "dataType": "int",
+          "requirement": null,
+          "presentation": "",
+          "rawValues": [
+            "int",
+            "",
+            "Optional",
+            ""
+          ],
+          "provenance": "explicit"
+        }
+      },
+      "actual": {
+        "type": "checkbox",
+        "sourceType": "checkbox"
+      },
+      "rationale": "XFDL control/format typing and backend typed-blank classification disagree.",
+      "evidence": {}
+    },
+    {
+      "id": "candidate_ranking_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_MasonFlatWorkPercent_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_MasonFlatWorkPercent_A",
+        "predictionId": "checkbox-p1-11",
+        "page": 1,
+        "geometryDistance": 0.007016525553062088
+      },
+      "expected": {
+        "topAcordCode": "ContractorsUnderwriting_MasonFlatWorkPercent"
+      },
+      "actual": {
+        "topAcordCode": "Dealers_RemarkText",
+        "rankedCodes": [
+          "Dealers_RemarkText",
+          "Client_MarketingObjective",
+          "ErrorsAndOmissions_Marketing_SalesTrainingDescription"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "table_detection_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_MasonFlatWorkPercent_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_MasonFlatWorkPercent_A",
+        "predictionId": "checkbox-p1-11",
+        "page": 1,
+        "geometryDistance": 0.007016525553062088
+      },
+      "expected": {
+        "tableId": "page-1-table-1",
+        "rowIndex": 2,
+        "columnIndex": 2,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_MasonFlatWorkPercent_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_MasonFlatWorkPercent_A",
+        "predictionId": "checkbox-p1-11",
+        "page": 1,
+        "geometryDistance": 0.007016525553062088
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-2"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_MasonBrickBlockWorkPercent_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_MasonBrickBlockWorkPercent_A",
+        "predictionId": "checkbox-p1-12",
+        "page": 1,
+        "geometryDistance": 0.006306023877756316
+      },
+      "expected": {
+        "label": "Enter percentage: The percentage of work that is mason brick/block work.",
+        "helpLabel": "Enter percentage: The percentage of work that is mason brick/block work."
+      },
+      "actual": {
+        "label": "Mason:Flat Work :unselected:"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0.2353
+      }
+    },
+    {
+      "id": "field_type_misclassification:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_MasonBrickBlockWorkPercent_A",
+      "category": "field_type_misclassification",
+      "description": "The predicted fillable type differs from the XFDL control/format type.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_MasonBrickBlockWorkPercent_A",
+        "predictionId": "checkbox-p1-12",
+        "page": 1,
+        "geometryDistance": 0.006306023877756316
+      },
+      "expected": {
+        "type": "numeric",
+        "sourceType": "numeric",
+        "format": {
+          "dataType": "int",
+          "requirement": null,
+          "presentation": "",
+          "rawValues": [
+            "int",
+            "",
+            "Optional",
+            ""
+          ],
+          "provenance": "explicit"
+        }
+      },
+      "actual": {
+        "type": "checkbox",
+        "sourceType": "checkbox"
+      },
+      "rationale": "XFDL control/format typing and backend typed-blank classification disagree.",
+      "evidence": {}
+    },
+    {
+      "id": "candidate_ranking_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_MasonBrickBlockWorkPercent_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_MasonBrickBlockWorkPercent_A",
+        "predictionId": "checkbox-p1-12",
+        "page": 1,
+        "geometryDistance": 0.006306023877756316
+      },
+      "expected": {
+        "topAcordCode": "ContractorsUnderwriting_MasonBrickBlockWorkPercent"
+      },
+      "actual": {
+        "topAcordCode": "WorkersCompensation_RateInformation_RemarkText",
+        "rankedCodes": [
+          "WorkersCompensation_RateInformation_RemarkText",
+          "WorkersCompensation_RateState_RemarkText",
+          "WorkersCompensationFirstReport_ACORDForm_RemarkText"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "table_detection_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_MasonBrickBlockWorkPercent_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_MasonBrickBlockWorkPercent_A",
+        "predictionId": "checkbox-p1-12",
+        "page": 1,
+        "geometryDistance": 0.006306023877756316
+      },
+      "expected": {
+        "tableId": "page-1-table-1",
+        "rowIndex": 2,
+        "columnIndex": 3,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_MasonBrickBlockWorkPercent_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_MasonBrickBlockWorkPercent_A",
+        "predictionId": "checkbox-p1-12",
+        "page": 1,
+        "geometryDistance": 0.006306023877756316
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-2"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_OtherWorkPercent_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_OtherWorkPercent_A",
+        "predictionId": "checkbox-p1-13",
+        "page": 1,
+        "geometryDistance": 0.007174265206404134
+      },
+      "expected": {
+        "label": "Enter percentage: The percentage of work that is \"other\" work.",
+        "helpLabel": "Enter percentage: The percentage of work that is \"other\" work."
+      },
+      "actual": {
+        "label": "Describe work"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0.1429
+      }
+    },
+    {
+      "id": "field_type_misclassification:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_OtherWorkPercent_A",
+      "category": "field_type_misclassification",
+      "description": "The predicted fillable type differs from the XFDL control/format type.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_OtherWorkPercent_A",
+        "predictionId": "checkbox-p1-13",
+        "page": 1,
+        "geometryDistance": 0.007174265206404134
+      },
+      "expected": {
+        "type": "numeric",
+        "sourceType": "numeric",
+        "format": {
+          "dataType": "int",
+          "requirement": null,
+          "presentation": "",
+          "rawValues": [
+            "int",
+            "",
+            "Optional",
+            ""
+          ],
+          "provenance": "explicit"
+        }
+      },
+      "actual": {
+        "type": "checkbox",
+        "sourceType": "checkbox"
+      },
+      "rationale": "XFDL control/format typing and backend typed-blank classification disagree.",
+      "evidence": {}
+    },
+    {
+      "id": "candidate_ranking_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_OtherWorkPercent_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_OtherWorkPercent_A",
+        "predictionId": "checkbox-p1-13",
+        "page": 1,
+        "geometryDistance": 0.007174265206404134
+      },
+      "expected": {
+        "topAcordCode": "ContractorsUnderwriting_OtherWorkPercent"
+      },
+      "actual": {
+        "topAcordCode": "WorkersCompensation_RateInformation_RemarkText",
+        "rankedCodes": [
+          "WorkersCompensation_RateInformation_RemarkText",
+          "WorkersCompensation_RateState_RemarkText",
+          "WorkersCompensationFirstReport_ACORDForm_RemarkText"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_OtherWorkPercent_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_OtherWorkPercent_A",
+        "predictionId": "checkbox-p1-13",
+        "page": 1,
+        "geometryDistance": 0.007174265206404134
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-2"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_OtherWorkDescription_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_OtherWorkDescription_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "ContractorsUnderwriting_OtherWorkDescription_A",
+        "type": "text",
+        "label": "Enter text: Enter the description of the \"Other\" work."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_OtherWorkDescription_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_OtherWorkDescription_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:CommercialPolicy_OperationsDescription_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CommercialPolicy_OperationsDescription_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "CommercialPolicy_OperationsDescription_A",
+        "type": "text",
+        "label": "Enter text: The description of the operations of this risk or insured."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:CommercialPolicy_OperationsDescription_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CommercialPolicy_OperationsDescription_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_ResidentialSnowplowingAccountsCount_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_ResidentialSnowplowingAccountsCount_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "ContractorsUnderwriting_ResidentialSnowplowingAccountsCount_A",
+        "type": "text",
+        "label": "Enter number of residential snowplowing accounts."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_ResidentialSnowplowingAccountsCount_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_ResidentialSnowplowingAccountsCount_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_CommercialSnowplowingAccountsCount_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_CommercialSnowplowingAccountsCount_A",
+        "predictionId": "table-1-r7-c8",
+        "page": 1,
+        "geometryDistance": 0.07625042059905543
+      },
+      "expected": {
+        "label": "Enter number: Indicate the number of commercial snowplowing accounts.",
+        "helpLabel": "Enter number: Indicate the number of commercial snowplowing accounts."
+      },
+      "actual": {
+        "label": "Electrical - D."
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "candidate_ranking_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_CommercialSnowplowingAccountsCount_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_CommercialSnowplowingAccountsCount_A",
+        "predictionId": "table-1-r7-c8",
+        "page": 1,
+        "geometryDistance": 0.07625042059905543
+      },
+      "expected": {
+        "topAcordCode": "ContractorsUnderwriting_CommercialSnowplowingAccountsCount"
+      },
+      "actual": {
+        "topAcordCode": "BoilerAndMachineryCoverage_MechanicalAndElectricalEquipment_DeductibleAmount",
+        "rankedCodes": [
+          "BoilerAndMachineryCoverage_MechanicalAndElectricalEquipment_DeductibleAmount",
+          "BoilerAndMachineryCoverage_MechanicalAndElectricalEquipment_PropertyDamageLimitAmount",
+          "BuildingFireProtection_ElectricalSafetySwitchFittedCode"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_Excavation_OperationsDescription_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_Excavation_OperationsDescription_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "ContractorsUnderwriting_Excavation_OperationsDescription_A",
+        "type": "text",
+        "label": "Enter text: Provide details regarding the nature of the excavation work and the percentage done by the applicant."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_Excavation_OperationsDescription_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_Excavation_OperationsDescription_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_Excavation_MachineryDescription_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_Excavation_MachineryDescription_A",
+        "predictionId": "input-semantic-p1-l38",
+        "page": 1,
+        "geometryDistance": 0.04737461873894393
+      },
+      "expected": {
+        "label": "Enter text: Provide details of the machinery used in excavation work.",
+        "helpLabel": "Enter text: Provide details of the machinery used in excavation work."
+      },
+      "actual": {
+        "label": "List machinery used"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0.2857
+      }
+    },
+    {
+      "id": "candidate_ranking_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_Excavation_MachineryDescription_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_Excavation_MachineryDescription_A",
+        "predictionId": "input-semantic-p1-l38",
+        "page": 1,
+        "geometryDistance": 0.04737461873894393
+      },
+      "expected": {
+        "topAcordCode": "ContractorsUnderwriting_Excavation_MachineryDescription"
+      },
+      "actual": {
+        "topAcordCode": "BoilerAndMachineryLineOfBusiness_ChlorofluorocarbonRefrigerantsUsedInMachineryToCoolPremisesOrProcessExplanation",
+        "rankedCodes": [
+          "BoilerAndMachineryLineOfBusiness_ChlorofluorocarbonRefrigerantsUsedInMachineryToCoolPremisesOrProcessExplanation",
+          "FarmLineOfBusiness_ApplicantBuildRepairDesignMachineryEquipmentAtAChargeExplanation",
+          "FarmLineOfBusiness_MachineryOwnedOrOperatedNotConformToSafetyRegulationsExplanation"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_Painting_ResidentialInteriorPercent_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_Painting_ResidentialInteriorPercent_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "ContractorsUnderwriting_Painting_ResidentialInteriorPercent_A",
+        "type": "numeric",
+        "label": "Enter percentage of painting work that is residential interior work."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_Painting_ResidentialInteriorPercent_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_Painting_ResidentialInteriorPercent_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_Painting_ResidentialExteriorPercent_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_Painting_ResidentialExteriorPercent_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "ContractorsUnderwriting_Painting_ResidentialExteriorPercent_A",
+        "type": "numeric",
+        "label": "Enter percentage of painting work that is residential exterior work."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_Painting_ResidentialExteriorPercent_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_Painting_ResidentialExteriorPercent_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_Painting_CommercialInteriorPercent_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_Painting_CommercialInteriorPercent_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "ContractorsUnderwriting_Painting_CommercialInteriorPercent_A",
+        "type": "numeric",
+        "label": "Enter percentage of painting work that is commercial interior work."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_Painting_CommercialInteriorPercent_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_Painting_CommercialInteriorPercent_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_Painting_CommercialExteriorPercent_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_Painting_CommercialExteriorPercent_A",
+        "predictionId": "checkbox-p1-14",
+        "page": 1,
+        "geometryDistance": 0.07465921364369293
+      },
+      "expected": {
+        "label": "Enter percentage of painting work that is commercial exterior work.",
+        "helpLabel": "Enter percentage of painting work that is commercial exterior work."
+      },
+      "actual": {
+        "label": "% of new roofs"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0.125
+      }
+    },
+    {
+      "id": "field_type_misclassification:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_Painting_CommercialExteriorPercent_A",
+      "category": "field_type_misclassification",
+      "description": "The predicted fillable type differs from the XFDL control/format type.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_Painting_CommercialExteriorPercent_A",
+        "predictionId": "checkbox-p1-14",
+        "page": 1,
+        "geometryDistance": 0.07465921364369293
+      },
+      "expected": {
+        "type": "numeric",
+        "sourceType": "numeric",
+        "format": {
+          "dataType": "int",
+          "requirement": null,
+          "presentation": "",
+          "rawValues": [
+            "int",
+            "",
+            "Optional",
+            ""
+          ],
+          "provenance": "explicit"
+        }
+      },
+      "actual": {
+        "type": "checkbox",
+        "sourceType": "checkbox"
+      },
+      "rationale": "XFDL control/format typing and backend typed-blank classification disagree.",
+      "evidence": {}
+    },
+    {
+      "id": "candidate_ranking_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_Painting_CommercialExteriorPercent_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_Painting_CommercialExteriorPercent_A",
+        "predictionId": "checkbox-p1-14",
+        "page": 1,
+        "geometryDistance": 0.07465921364369293
+      },
+      "expected": {
+        "topAcordCode": "ContractorsUnderwriting_Painting_CommercialExteriorPercent"
+      },
+      "actual": {
+        "topAcordCode": "CancelNonRenew_RemarkText",
+        "rankedCodes": [
+          "CancelNonRenew_RemarkText",
+          "TransferOfFunds_MoneyMarketAccountIndicator",
+          "Dealers_RemarkText"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "table_detection_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_Painting_CommercialExteriorPercent_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_Painting_CommercialExteriorPercent_A",
+        "predictionId": "checkbox-p1-14",
+        "page": 1,
+        "geometryDistance": 0.07465921364369293
+      },
+      "expected": {
+        "tableId": "page-1-table-2",
+        "rowIndex": 1,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_Painting_CommercialExteriorPercent_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_Painting_CommercialExteriorPercent_A",
+        "predictionId": "checkbox-p1-14",
+        "page": 1,
+        "geometryDistance": 0.07465921364369293
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-2"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_Roofing_NewRoofsPercent_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_Roofing_NewRoofsPercent_A",
+        "predictionId": "input-table-1-r13-c2",
+        "page": 1,
+        "geometryDistance": 0.061884310615877486
+      },
+      "expected": {
+        "label": "Enter percentage of roofing operations that are new roofs.",
+        "helpLabel": "Enter percentage of roofing operations that are new roofs."
+      },
+      "actual": {
+        "label": "I. Maximum Height exposure in stories or feet?"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "field_type_misclassification:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_Roofing_NewRoofsPercent_A",
+      "category": "field_type_misclassification",
+      "description": "The predicted fillable type differs from the XFDL control/format type.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_Roofing_NewRoofsPercent_A",
+        "predictionId": "input-table-1-r13-c2",
+        "page": 1,
+        "geometryDistance": 0.061884310615877486
+      },
+      "expected": {
+        "type": "numeric",
+        "sourceType": "numeric",
+        "format": {
+          "dataType": "int",
+          "requirement": null,
+          "presentation": "",
+          "rawValues": [
+            "int",
+            "",
+            "Optional",
+            ""
+          ],
+          "provenance": "explicit"
+        }
+      },
+      "actual": {
+        "type": "text",
+        "sourceType": "text"
+      },
+      "rationale": "XFDL control/format typing and backend typed-blank classification disagree.",
+      "evidence": {}
+    },
+    {
+      "id": "candidate_ranking_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_Roofing_NewRoofsPercent_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_Roofing_NewRoofsPercent_A",
+        "predictionId": "input-table-1-r13-c2",
+        "page": 1,
+        "geometryDistance": 0.061884310615877486
+      },
+      "expected": {
+        "topAcordCode": "ContractorsUnderwriting_Roofing_NewRoofsPercent"
+      },
+      "actual": {
+        "topAcordCode": "BuildingExposure_WithinSpecifiedLocation_FeetIndicator",
+        "rankedCodes": [
+          "BuildingExposure_WithinSpecifiedLocation_FeetIndicator",
+          "CommercialVehicleLineOfBusiness_MaximumExposureAllVehiclesAmount",
+          "SwimmingPool_MaximumDivingBoardHeight"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_Roofing_TearOffsReRoofsPercent_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_Roofing_TearOffsReRoofsPercent_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "ContractorsUnderwriting_Roofing_TearOffsReRoofsPercent_A",
+        "type": "numeric",
+        "label": "Enter percentage of roofing operations that are tear-offs and re-roofs."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_Roofing_TearOffsReRoofsPercent_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_Roofing_TearOffsReRoofsPercent_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_Roofing_RepairsPercent_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_Roofing_RepairsPercent_A",
+        "predictionId": "checkbox-p1-15",
+        "page": 1,
+        "geometryDistance": 0.006897842576374578
+      },
+      "expected": {
+        "label": "Enter percentage of roofing operations that are repairs.",
+        "helpLabel": "Enter percentage of roofing operations that are repairs."
+      },
+      "actual": {
+        "label": "% tear-off and re-roofs"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "field_type_misclassification:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_Roofing_RepairsPercent_A",
+      "category": "field_type_misclassification",
+      "description": "The predicted fillable type differs from the XFDL control/format type.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_Roofing_RepairsPercent_A",
+        "predictionId": "checkbox-p1-15",
+        "page": 1,
+        "geometryDistance": 0.006897842576374578
+      },
+      "expected": {
+        "type": "numeric",
+        "sourceType": "numeric",
+        "format": {
+          "dataType": "int",
+          "requirement": null,
+          "presentation": "",
+          "rawValues": [
+            "int",
+            "",
+            "Optional",
+            ""
+          ],
+          "provenance": "explicit"
+        }
+      },
+      "actual": {
+        "type": "checkbox",
+        "sourceType": "checkbox"
+      },
+      "rationale": "XFDL control/format typing and backend typed-blank classification disagree.",
+      "evidence": {}
+    },
+    {
+      "id": "candidate_ranking_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_Roofing_RepairsPercent_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_Roofing_RepairsPercent_A",
+        "predictionId": "checkbox-p1-15",
+        "page": 1,
+        "geometryDistance": 0.006897842576374578
+      },
+      "expected": {
+        "topAcordCode": "ContractorsUnderwriting_Roofing_RepairsPercent"
+      },
+      "actual": {
+        "topAcordCode": "DirectorsAndOfficersLineOfBusiness_RemarkText",
+        "rankedCodes": [
+          "DirectorsAndOfficersLineOfBusiness_RemarkText",
+          "ResidentialStructure_LandMarketValueAmount",
+          "Vehicle_Comprehensive_OneThousandTwoThousandRangeCoverageSelectionIndicator"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_Roofing_RepairsPercent_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_Roofing_RepairsPercent_A",
+        "predictionId": "checkbox-p1-15",
+        "page": 1,
+        "geometryDistance": 0.006897842576374578
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-2"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_HardwoodFloors_RefinishingPercent_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_HardwoodFloors_RefinishingPercent_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "ContractorsUnderwriting_HardwoodFloors_RefinishingPercent_A",
+        "type": "numeric",
+        "label": "Enter percentage of hardwood floor refinishing operations conducted by the applicant."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_HardwoodFloors_RefinishingPercent_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_HardwoodFloors_RefinishingPercent_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_ScaffoldingMaximumHeight_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_ScaffoldingMaximumHeight_A",
+        "predictionId": "input-table-1-r15-c2",
+        "page": 1,
+        "geometryDistance": 0.04912969840680032
+      },
+      "expected": {
+        "label": "Enter text: The maximum number of stories or feet where applicant operates.",
+        "helpLabel": "Enter text: The maximum number of stories or feet where applicant operates."
+      },
+      "actual": {
+        "label": "K. Percentage of work sub-contracted to others?"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0.1053
+      }
+    },
+    {
+      "id": "field_type_misclassification:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_ScaffoldingMaximumHeight_A",
+      "category": "field_type_misclassification",
+      "description": "The predicted fillable type differs from the XFDL control/format type.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_ScaffoldingMaximumHeight_A",
+        "predictionId": "input-table-1-r15-c2",
+        "page": 1,
+        "geometryDistance": 0.04912969840680032
+      },
+      "expected": {
+        "type": "text",
+        "sourceType": "text",
+        "format": {
+          "dataType": "int",
+          "requirement": null,
+          "presentation": "",
+          "rawValues": [
+            "int",
+            "",
+            "Optional",
+            ""
+          ],
+          "provenance": "explicit"
+        }
+      },
+      "actual": {
+        "type": "percent",
+        "sourceType": "percentage"
+      },
+      "rationale": "XFDL control/format typing and backend typed-blank classification disagree.",
+      "evidence": {}
+    },
+    {
+      "id": "candidate_ranking_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_ScaffoldingMaximumHeight_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_ScaffoldingMaximumHeight_A",
+        "predictionId": "input-table-1-r15-c2",
+        "page": 1,
+        "geometryDistance": 0.04912969840680032
+      },
+      "expected": {
+        "topAcordCode": "ContractorsUnderwriting_ScaffoldingMaximumHeight"
+      },
+      "actual": {
+        "topAcordCode": "Contractors_WorkSubcontractedPercent",
+        "rankedCodes": [
+          "Contractors_WorkSubcontractedPercent",
+          "ErrorsAndOmissions_ApplicantSubcontractWorkToOthersExplanation",
+          "GeneralLiabilityLineOfBusiness_SubcontractorsWorksWithoutCertificatesOfInsuranceExplanation"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:BusinessInformation_FullTimeEmployeeCount_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "BusinessInformation_FullTimeEmployeeCount_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "BusinessInformation_FullTimeEmployeeCount_A",
+        "type": "text",
+        "label": "Enter number: The number of full time employees."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:BusinessInformation_FullTimeEmployeeCount_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "BusinessInformation_FullTimeEmployeeCount_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:BusinessInformation_PartTimeEmployeeCount_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "BusinessInformation_PartTimeEmployeeCount_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "BusinessInformation_PartTimeEmployeeCount_A",
+        "type": "text",
+        "label": "Enter number: The number of part time employees."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:BusinessInformation_PartTimeEmployeeCount_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "BusinessInformation_PartTimeEmployeeCount_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_SubcontractedWorkCostAmount_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_SubcontractedWorkCostAmount_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "ContractorsUnderwriting_SubcontractedWorkCostAmount_A",
+        "type": "numeric",
+        "label": "Enter amount: The total cost of subcontracted work for the past 12 months."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:ContractorsUnderwriting_SubcontractedWorkCostAmount_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_SubcontractedWorkCostAmount_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:Contractors_OutOfStateWorkDescription_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Contractors_OutOfStateWorkDescription_A",
+        "predictionId": "input-semantic-p1-l66",
+        "page": 1,
+        "geometryDistance": 0.06228359080808644
+      },
+      "expected": {
+        "label": "Enter text: Provide a list of the states that the applicant works and a percentage for each individual state.",
+        "helpLabel": "Enter text: Provide a list of the states that the applicant works and a percentage for each individual state."
+      },
+      "actual": {
+        "label": "N. Number of years in business under the current business name?"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0.16
+      }
+    },
+    {
+      "id": "field_type_misclassification:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:Contractors_OutOfStateWorkDescription_A",
+      "category": "field_type_misclassification",
+      "description": "The predicted fillable type differs from the XFDL control/format type.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Contractors_OutOfStateWorkDescription_A",
+        "predictionId": "input-semantic-p1-l66",
+        "page": 1,
+        "geometryDistance": 0.06228359080808644
+      },
+      "expected": {
+        "type": "text",
+        "sourceType": "text",
+        "format": {
+          "dataType": "string",
+          "requirement": null,
+          "presentation": "",
+          "rawValues": [
+            "string",
+            "",
+            "Optional",
+            ""
+          ],
+          "provenance": "explicit"
+        }
+      },
+      "actual": {
+        "type": "numeric",
+        "sourceType": "numeric"
+      },
+      "rationale": "XFDL control/format typing and backend typed-blank classification disagree.",
+      "evidence": {}
+    },
+    {
+      "id": "candidate_ranking_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:Contractors_OutOfStateWorkDescription_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Contractors_OutOfStateWorkDescription_A",
+        "predictionId": "input-semantic-p1-l66",
+        "page": 1,
+        "geometryDistance": 0.06228359080808644
+      },
+      "expected": {
+        "topAcordCode": "Contractors_OutOfStateWorkDescription"
+      },
+      "actual": {
+        "topAcordCode": "DirectorsAndOfficersLineOfBusiness_AppllicantCompletedMergerAcquisitionWithAnotherEntityLastMandatedNumberOfYearsExplanation",
+        "rankedCodes": [
+          "DirectorsAndOfficersLineOfBusiness_AppllicantCompletedMergerAcquisitionWithAnotherEntityLastMandatedNumberOfYearsExplanation",
+          "DirectorsAndOfficersLineOfBusiness_ApplicantOrDirectorOfficersInvolvedAnyClaimsLawsuitsLastMandatedNumberYearsExplanation",
+          "FiduciaryLineOfBusiness_AnyPlanOrPortionOfPlanBeenSoldTransferredOrTerminatedInLastMandatedNumberOfYearsExplanation"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "field_type_misclassification:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:BusinessInformation_AnnualGrossReceiptsAmount_A",
+      "category": "field_type_misclassification",
+      "description": "The predicted fillable type differs from the XFDL control/format type.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "BusinessInformation_AnnualGrossReceiptsAmount_A",
+        "predictionId": "input-semantic-p1-l64",
+        "page": 1,
+        "geometryDistance": 0.07486919459286069
+      },
+      "expected": {
+        "type": "numeric",
+        "sourceType": "numeric",
+        "format": {
+          "dataType": "int",
+          "requirement": null,
+          "presentation": "",
+          "rawValues": [
+            "int",
+            "",
+            "Optional",
+            ""
+          ],
+          "provenance": "explicit"
+        }
+      },
+      "actual": {
+        "type": "currency",
+        "sourceType": "currency"
+      },
+      "rationale": "XFDL control/format typing and backend typed-blank classification disagree.",
+      "evidence": {}
+    },
+    {
+      "id": "candidate_ranking_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:BusinessInformation_AnnualGrossReceiptsAmount_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "BusinessInformation_AnnualGrossReceiptsAmount_A",
+        "predictionId": "input-semantic-p1-l64",
+        "page": 1,
+        "geometryDistance": 0.07486919459286069
+      },
+      "expected": {
+        "topAcordCode": "BusinessInformation_AnnualGrossReceiptsAmount"
+      },
+      "actual": {
+        "topAcordCode": "GrossReceipts_GrandTotal_AnnualAmount",
+        "rankedCodes": [
+          "GrossReceipts_GrandTotal_AnnualAmount",
+          "GrossReceipts_Liquor_TotalSalesPercent",
+          "OpenCargoInformation_AnnualGrossSalesAmount"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "field_type_misclassification:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:BusinessInformation_TotalPayrollAmount_A",
+      "category": "field_type_misclassification",
+      "description": "The predicted fillable type differs from the XFDL control/format type.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "BusinessInformation_TotalPayrollAmount_A",
+        "predictionId": "input-table-1-r17-c6",
+        "page": 1,
+        "geometryDistance": 0.027622673938546675
+      },
+      "expected": {
+        "type": "numeric",
+        "sourceType": "numeric",
+        "format": {
+          "dataType": "int",
+          "requirement": null,
+          "presentation": "",
+          "rawValues": [
+            "int",
+            "",
+            "Optional",
+            ""
+          ],
+          "provenance": "explicit"
+        }
+      },
+      "actual": {
+        "type": "currency",
+        "sourceType": "currency"
+      },
+      "rationale": "XFDL control/format typing and backend typed-blank classification disagree.",
+      "evidence": {}
+    },
+    {
+      "id": "candidate_ranking_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:BusinessInformation_TotalPayrollAmount_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "BusinessInformation_TotalPayrollAmount_A",
+        "predictionId": "input-table-1-r17-c6",
+        "page": 1,
+        "geometryDistance": 0.027622673938546675
+      },
+      "expected": {
+        "topAcordCode": "BusinessInformation_TotalPayrollAmount"
+      },
+      "actual": {
+        "topAcordCode": "ResidentialStructure_EmployeeInformation_TotalAnnualPayrollAmount",
+        "rankedCodes": [
+          "ResidentialStructure_EmployeeInformation_TotalAnnualPayrollAmount",
+          "BusinessInformation_TotalPayrollAmount",
+          "FarmLiabilityCoverage_EmployersLiability_TotalPayrollAmount"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is present but ranked below another candidate.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:BusinessInformation_OwnerManagement_OperatingUnderSameNameCount_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "BusinessInformation_OwnerManagement_OperatingUnderSameNameCount_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "BusinessInformation_OwnerManagement_OperatingUnderSameNameCount_A",
+        "type": "text",
+        "label": "Enter number: The number of years that the business has been operating under the current business name."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:BusinessInformation_OwnerManagement_OperatingUnderSameNameCount_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "BusinessInformation_OwnerManagement_OperatingUnderSameNameCount_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:PriorCoverage_InsurerFullName_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "PriorCoverage_InsurerFullName_A",
+        "predictionId": "input-semantic-p1-l68",
+        "page": 1,
+        "geometryDistance": 0.04057031420288999
+      },
+      "expected": {
+        "label": "Enter text: The name of the previous insurer.",
+        "helpLabel": "Enter text: The name of the previous insurer."
+      },
+      "actual": {
+        "label": "O. Prior insurance carrier name for the current business?"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0.2667
+      }
+    },
+    {
+      "id": "candidate_ranking_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:PriorCoverage_InsurerFullName_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "PriorCoverage_InsurerFullName_A",
+        "predictionId": "input-semantic-p1-l68",
+        "page": 1,
+        "geometryDistance": 0.04057031420288999
+      },
+      "expected": {
+        "topAcordCode": "PriorCoverage_InsurerFullName"
+      },
+      "actual": {
+        "topAcordCode": "Insurer_FullName",
+        "rankedCodes": [
+          "Insurer_FullName",
+          "BusinessInformation_OtherEntity_FullName",
+          "FiduciaryLineOfBusiness_AnyPersonOrEntityProposedForInsuranceAwareAnyFactCircumstanceActErrorOmissionGiveRiseToClaimExplanation"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:CommercialPolicy_PolicyOrCoverageDeclinedCancelledExplanation_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CommercialPolicy_PolicyOrCoverageDeclinedCancelledExplanation_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "CommercialPolicy_PolicyOrCoverageDeclinedCancelledExplanation_A",
+        "type": "text",
+        "label": "Enter text: An explanation as to whether the applicant has any policy or coverage declined, cancelled or non-renewed."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:CommercialPolicy_PolicyOrCoverageDeclinedCancelledExplanation_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CommercialPolicy_PolicyOrCoverageDeclinedCancelledExplanation_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:CommercialPolicy_Question_AACCode_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CommercialPolicy_Question_AACCode_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "CommercialPolicy_Question_AACCode_A",
+        "type": "text",
+        "label": "Enter Y for a \"Yes\" response. Input N for \"No\" response. Indicates the response to the question, \"Any policy or coverage declined, cancelled or non-renewed during the mandated number of years?\"."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:CommercialPolicy_Question_AACCode_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CommercialPolicy_Question_AACCode_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:LossHistory_OccurrenceDescription_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "LossHistory_OccurrenceDescription_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "LossHistory_OccurrenceDescription_A",
+        "type": "text",
+        "label": "Enter text: A brief description of the loss."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:LossHistory_OccurrenceDescription_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "LossHistory_OccurrenceDescription_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:CommercialPolicy_Question_AAECode_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CommercialPolicy_Question_AAECode_A",
+        "predictionId": "input-table-1-r22-c1",
+        "page": 1,
+        "geometryDistance": 0.026020314731866914
+      },
+      "expected": {
+        "label": "Enter Y for a \"Yes\" response. Input N for \"No\" response. Indicates if the applicant has operated under other names than the one showing under the policy.",
+        "helpLabel": "Enter Y for a \"Yes\" response. Input N for \"No\" response. Indicates if the applicant has operated under other names than the one showing under the policy."
+      },
+      "actual": {
+        "label": "years?"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "field_type_misclassification:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:CommercialPolicy_Question_AAECode_A",
+      "category": "field_type_misclassification",
+      "description": "The predicted fillable type differs from the XFDL control/format type.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CommercialPolicy_Question_AAECode_A",
+        "predictionId": "input-table-1-r22-c1",
+        "page": 1,
+        "geometryDistance": 0.026020314731866914
+      },
+      "expected": {
+        "type": "text",
+        "sourceType": "text",
+        "format": {
+          "dataType": "string",
+          "requirement": null,
+          "presentation": "",
+          "rawValues": [
+            "string",
+            "",
+            "Optional",
+            ""
+          ],
+          "provenance": "explicit"
+        }
+      },
+      "actual": {
+        "type": "numeric",
+        "sourceType": "numeric"
+      },
+      "rationale": "XFDL control/format typing and backend typed-blank classification disagree.",
+      "evidence": {}
+    },
+    {
+      "id": "candidate_ranking_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:CommercialPolicy_Question_AAECode_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CommercialPolicy_Question_AAECode_A",
+        "predictionId": "input-table-1-r22-c1",
+        "page": 1,
+        "geometryDistance": 0.026020314731866914
+      },
+      "expected": {
+        "topAcordCode": "CommercialPolicy_Question_AAECode"
+      },
+      "actual": {
+        "topAcordCode": "EPLILineOfBusiness_ApplicantActualOrAttemptedMergerAcquisitionDivestmentPastMandatedNumberYearsExplanation",
+        "rankedCodes": [
+          "EPLILineOfBusiness_ApplicantActualOrAttemptedMergerAcquisitionDivestmentPastMandatedNumberYearsExplanation",
+          "Partner_Previous_YearsPracticingCount",
+          "AustraliaCommercialLineofBusiness_PartnersDirectorsConvictedCriminalOffensePastFiveYearsExplanation"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:NamedInsured_Primary_PhoneNumber_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_Primary_PhoneNumber_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "NamedInsured_Primary_PhoneNumber_A",
+        "type": "numeric",
+        "label": "Enter number: The named insured's primary phone number."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:NamedInsured_Primary_PhoneNumber_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_Primary_PhoneNumber_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:NamedInsured_CellPhoneNumber_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_CellPhoneNumber_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "NamedInsured_CellPhoneNumber_A",
+        "type": "numeric",
+        "label": "Enter number: The named insured's cell phone number."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:NamedInsured_CellPhoneNumber_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_CellPhoneNumber_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:NamedInsured_Signature_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_Signature_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "NamedInsured_Signature_A",
+        "type": "signature",
+        "label": "Sign here: Accommodates the signature of the applicant or named insured."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:NamedInsured_Signature_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_Signature_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:NamedInsured_SignatureDate_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_SignatureDate_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "NamedInsured_SignatureDate_A",
+        "type": "signature",
+        "label": "Enter date: The date the form was signed by the applicant or named insured. (MM/DD/YYYY)"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:NamedInsured_SignatureDate_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_SignatureDate_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:CommercialPolicy_PriorBusinessInformationExplanation_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CommercialPolicy_PriorBusinessInformationExplanation_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "CommercialPolicy_PriorBusinessInformationExplanation_A",
+        "type": "text",
+        "label": "Enter text: Provide name of business the applicant has operated in the last designated number of years, prior carrier, and whether or not the business is still active."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:CommercialPolicy_PriorBusinessInformationExplanation_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CommercialPolicy_PriorBusinessInformationExplanation_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:Contractors_Question_AASIndicator_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Contractors_Question_AASIndicator_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Contractors_Question_AASIndicator_A",
+        "type": "checkbox",
+        "label": "Check the box (if applicable): Indicates that subcontractors are required to provide proof of their own insurance."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:Contractors_Question_AASIndicator_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Contractors_Question_AASIndicator_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:Contractors_Question_AASNoIndicator_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Contractors_Question_AASNoIndicator_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Contractors_Question_AASNoIndicator_A",
+        "type": "checkbox",
+        "label": "Check the box (if applicable): Indicates that subcontractors are not required to provide proof of their own insurance."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:utica-first-uf-mand-art-cont-2020-05-02.ground-truth:Contractors_Question_AASNoIndicator_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+        "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+        "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Contractors_Question_AASNoIndicator_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    }
+  ]
+}

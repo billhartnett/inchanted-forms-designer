@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "final-refinements-v3-tests.v1",
+  "generatedAt": "2026-08-12T15:53:28.853Z",
+  "summary": "Regression checks for backend ranking, table alignment, grouping, suppression, and label-value reconciliation.",
+  "tests": [
+    "node --test tests\\hybridFieldExtraction.test.cjs",
+    "npm run build --prefix frontend",
+    "node corpus-validation-v3/run-corpus-validation-v3.js",
+    "Validate that all form results remain under the same form/field counts and no duplicate PDF assignments are introduced.",
+    "Confirm table row/column group membership matches XFDL truth for edge-case layouts."
+  ]
+}

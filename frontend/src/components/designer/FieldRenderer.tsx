@@ -9,6 +9,40 @@ export type FieldRendererProps = {
 export function FieldRenderer({ field, showSemanticLabels = true }: FieldRendererProps) {
   const { width, height, metadata } = field;
   const isImportedField = Boolean(metadata?.extractionBlockId);
+  const hasArtifactNoiseSignature = Boolean(
+    metadata?.artifactClassification && [
+      "non_field_artifact",
+      "question_text",
+      "decorative_text",
+      "section_label",
+      "table_header_noise",
+      "di_text",
+      "di_header",
+      "di_question_text",
+      "header_noise",
+    ].includes(metadata.artifactClassification as any) ||
+      /^(fragmented|orphan|scan|instruction|question|note|warning|table header|header noise|di text|decorative|choice set|business identity)/i.test(
+        String(metadata?.semanticLabel || metadata?.acordLabel || field.type || ""),
+      ) ||
+      /(?:_di_|di_|table_header|header_noise|question_text|decorative_text|non_field_artifact)/i.test(
+        String(metadata?.artifactClassification || ""),
+      ) ||
+      (field.width < 18 && field.height < 12 && !metadata?.semanticLabel && !metadata?.acordLabel)
+  );
+  const isSuppressedImportedArtifact = isImportedField && (
+    (
+      metadata?.wave9Suppression?.suppressed ||
+      metadata?.artifactClassification === "non_field_artifact" ||
+      metadata?.artifactClassification === "question_text" ||
+      metadata?.artifactClassification === "decorative_text" ||
+      metadata?.artifactClassification === "table_header_noise" ||
+      metadata?.artifactClassification === "di_text" ||
+      metadata?.artifactClassification === "di_header" ||
+      metadata?.artifactClassification === "di_question_text" ||
+      hasArtifactNoiseSignature
+    ) &&
+    !(metadata?.artifactClassification === "field_value" || metadata?.semanticLabel || metadata?.acordLabel)
+  );
   const resolvedLabel =
     metadata?.acordLabel?.trim() ||
     metadata?.semanticLabel?.trim() ||
@@ -25,6 +59,10 @@ export function FieldRenderer({ field, showSemanticLabels = true }: FieldRendere
   const textField = field.type === "text" ? (field as any) : null;
   const importedVisualHeight = Math.max(18, height);
   const importedVisualY = (height - importedVisualHeight) / 2;
+
+  if (isSuppressedImportedArtifact) {
+    return null;
+  }
 
   // Color coding: confidence (main) + categoryMode (secondary)
   let strokeColor = "#64748b"; // default gray

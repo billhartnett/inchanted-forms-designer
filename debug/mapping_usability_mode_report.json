@@ -1,0 +1,27 @@
+{
+  "timestamp": "2026-08-13T03:16:08.421Z",
+  "documentId": "contextual-ranking",
+  "totalBlocks": 3,
+  "mappingsCount": 3,
+  "blockCoverageCount": 3,
+  "checks": {
+    "mappingsMatchBlocks": true,
+    "blockCoverageMatch": true,
+    "allHaveFieldType": false,
+    "allHaveSemanticLabel": false,
+    "allHaveTopCandidate": true
+  },
+  "missing": {
+    "fieldTypeBlockIds": [
+      "producer-city",
+      "insured-city",
+      "licensed"
+    ],
+    "semanticLabelBlockIds": [
+      "producer-city",
+      "insured-city",
+      "licensed"
+    ],
+    "topCandidateBlockIds": []
+  }
+}

@@ -1,0 +1,4869 @@
+{
+  "schemaVersion": "semantic-errors.v1",
+  "generatedAt": "2026-08-12T14:53:25.456Z",
+  "form": {
+    "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+    "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+    "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+    "pairStatus": "matched",
+    "pairConfidence": "high"
+  },
+  "counts": {
+    "truthFields": 82,
+    "predictedFillableFields": 16,
+    "matchedFields": 0,
+    "promotedFields": 16,
+    "errors": 164
+  },
+  "categoryCounts": {
+    "semantic_label_mismatch": 0,
+    "candidate_ranking_error": 0,
+    "field_type_misclassification": 0,
+    "table_detection_error": 0,
+    "checkbox_yes_no_pairing_error": 0,
+    "suppression_error": 82,
+    "grouping_error": 0,
+    "label_value_pairing_error": 0,
+    "unmapped_fillable_field": 82
+  },
+  "errors": [
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Driver_GivenName_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Driver_GivenName_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Driver_GivenName_A",
+        "type": "text",
+        "label": "Enter text: The driver's first name (given name)."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Driver_GivenName_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Driver_GivenName_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Policy_PolicyNumberIdentifier_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Policy_PolicyNumberIdentifier_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Policy_PolicyNumberIdentifier_A",
+        "type": "numeric",
+        "label": "Enter identifier: The identifier assigned by the insurer to the policy, or submission, being referenced exactly as it appears on the policy, including prefix and suffix symbols. If required for self-insurance, the self-insured license or contract number."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Policy_PolicyNumberIdentifier_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Policy_PolicyNumberIdentifier_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:NamedInsured_Signature_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_Signature_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "NamedInsured_Signature_A",
+        "type": "signature",
+        "label": "Sign here: Accommodates the signature of the applicant or named insured."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:NamedInsured_Signature_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_Signature_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:MedicalTreatment_Physician_LastVisitDate_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "MedicalTreatment_Physician_LastVisitDate_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "MedicalTreatment_Physician_LastVisitDate_A",
+        "type": "date",
+        "label": "Enter date: The date of the last visit to a physician."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:MedicalTreatment_Physician_LastVisitDate_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "MedicalTreatment_Physician_LastVisitDate_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:MedicalTreatment_CompletePhysicalExamination_LastTreatmentDate_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "MedicalTreatment_CompletePhysicalExamination_LastTreatmentDate_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "MedicalTreatment_CompletePhysicalExamination_LastTreatmentDate_A",
+        "type": "date",
+        "label": "Enter date: The date of the last complete physical examination."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:MedicalTreatment_CompletePhysicalExamination_LastTreatmentDate_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "MedicalTreatment_CompletePhysicalExamination_LastTreatmentDate_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_XZKkFSpe_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_XZKkFSpe_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_XZKkFSpe_A",
+        "type": "text",
+        "label": "Unmapped_XZKkFSpe_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_XZKkFSpe_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_XZKkFSpe_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_mwSTGkfS_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_mwSTGkfS_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_mwSTGkfS_A",
+        "type": "text",
+        "label": "Unmapped_mwSTGkfS_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_mwSTGkfS_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_mwSTGkfS_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Driver_OtherGivenNameInitial_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Driver_OtherGivenNameInitial_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Driver_OtherGivenNameInitial_A",
+        "type": "text",
+        "label": "Enter text: The driver's middle name or initial (other given name)."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Driver_OtherGivenNameInitial_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Driver_OtherGivenNameInitial_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Driver_Surname_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Driver_Surname_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Driver_Surname_A",
+        "type": "text",
+        "label": "Enter text: The driver's last name (surname)."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Driver_Surname_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Driver_Surname_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_srWDIeeX_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_srWDIeeX_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_srWDIeeX_A",
+        "type": "text",
+        "label": "Unmapped_srWDIeeX_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_srWDIeeX_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_srWDIeeX_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_MwVHIsaD_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_MwVHIsaD_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_MwVHIsaD_A",
+        "type": "text",
+        "label": "Unmapped_MwVHIsaD_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_MwVHIsaD_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_MwVHIsaD_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_BvVhEInl_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_BvVhEInl_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_BvVhEInl_A",
+        "type": "text",
+        "label": "Unmapped_BvVhEInl_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_BvVhEInl_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_BvVhEInl_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_BDVJGHll_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_BDVJGHll_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_BDVJGHll_A",
+        "type": "text",
+        "label": "Unmapped_BDVJGHll_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_BDVJGHll_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_BDVJGHll_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_gpnWDzMz_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_gpnWDzMz_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_gpnWDzMz_A",
+        "type": "text",
+        "label": "Unmapped_gpnWDzMz_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_gpnWDzMz_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_gpnWDzMz_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_tNQkHBck_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_tNQkHBck_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_tNQkHBck_A",
+        "type": "text",
+        "label": "Unmapped_tNQkHBck_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_tNQkHBck_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_tNQkHBck_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_bjGYTjcY_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_bjGYTjcY_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_bjGYTjcY_A",
+        "type": "text",
+        "label": "Unmapped_bjGYTjcY_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_bjGYTjcY_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_bjGYTjcY_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_RBWzLObh_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_RBWzLObh_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_RBWzLObh_A",
+        "type": "text",
+        "label": "Unmapped_RBWzLObh_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_RBWzLObh_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_RBWzLObh_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_aNDSQuuy_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_aNDSQuuy_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_aNDSQuuy_A",
+        "type": "text",
+        "label": "Unmapped_aNDSQuuy_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_aNDSQuuy_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_aNDSQuuy_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_ejHSMcNG_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_ejHSMcNG_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_ejHSMcNG_A",
+        "type": "text",
+        "label": "Unmapped_ejHSMcNG_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_ejHSMcNG_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_ejHSMcNG_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_uzdBClGX_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_uzdBClGX_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_uzdBClGX_A",
+        "type": "text",
+        "label": "Unmapped_uzdBClGX_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_uzdBClGX_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_uzdBClGX_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_yCNNtiNx_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_yCNNtiNx_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_yCNNtiNx_A",
+        "type": "text",
+        "label": "Unmapped_yCNNtiNx_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_yCNNtiNx_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_yCNNtiNx_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_SMKLFskq_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_SMKLFskq_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_SMKLFskq_A",
+        "type": "text",
+        "label": "Unmapped_SMKLFskq_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_SMKLFskq_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_SMKLFskq_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_nSERgZWD_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_nSERgZWD_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_nSERgZWD_A",
+        "type": "text",
+        "label": "Unmapped_nSERgZWD_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_nSERgZWD_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_nSERgZWD_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_jrvubEUQ_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_jrvubEUQ_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_jrvubEUQ_A",
+        "type": "text",
+        "label": "Unmapped_jrvubEUQ_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_jrvubEUQ_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_jrvubEUQ_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_ZcWecyxm_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_ZcWecyxm_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_ZcWecyxm_A",
+        "type": "text",
+        "label": "Unmapped_ZcWecyxm_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_ZcWecyxm_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_ZcWecyxm_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_HSuWOKNq_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_HSuWOKNq_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_HSuWOKNq_A",
+        "type": "text",
+        "label": "Unmapped_HSuWOKNq_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_HSuWOKNq_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_HSuWOKNq_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_yEVJencu_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_yEVJencu_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_yEVJencu_A",
+        "type": "text",
+        "label": "Unmapped_yEVJencu_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_yEVJencu_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_yEVJencu_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_oMdHgTcF_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_oMdHgTcF_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_oMdHgTcF_A",
+        "type": "text",
+        "label": "Unmapped_oMdHgTcF_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_oMdHgTcF_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_oMdHgTcF_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_amQTPTAN_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_amQTPTAN_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_amQTPTAN_A",
+        "type": "text",
+        "label": "Unmapped_amQTPTAN_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_amQTPTAN_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_amQTPTAN_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_IeVKXTOX_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_IeVKXTOX_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_IeVKXTOX_A",
+        "type": "text",
+        "label": "Unmapped_IeVKXTOX_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_IeVKXTOX_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_IeVKXTOX_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_yRseXBER_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_yRseXBER_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_yRseXBER_A",
+        "type": "text",
+        "label": "Unmapped_yRseXBER_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_yRseXBER_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_yRseXBER_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_mcRdVjIX_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_mcRdVjIX_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_mcRdVjIX_A",
+        "type": "text",
+        "label": "Unmapped_mcRdVjIX_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_mcRdVjIX_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_mcRdVjIX_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_KqfvqQUW_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_KqfvqQUW_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_KqfvqQUW_A",
+        "type": "checkbox",
+        "label": "Unmapped_KqfvqQUW_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_KqfvqQUW_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_KqfvqQUW_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_AlZKohaH_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_AlZKohaH_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_AlZKohaH_A",
+        "type": "checkbox",
+        "label": "Unmapped_AlZKohaH_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_AlZKohaH_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_AlZKohaH_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_AZCiOTKj_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_AZCiOTKj_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_AZCiOTKj_A",
+        "type": "checkbox",
+        "label": "Unmapped_AZCiOTKj_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_AZCiOTKj_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_AZCiOTKj_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_EPSirGTn_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_EPSirGTn_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_EPSirGTn_A",
+        "type": "checkbox",
+        "label": "Unmapped_EPSirGTn_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_EPSirGTn_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_EPSirGTn_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_tsZOmtob_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_tsZOmtob_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_tsZOmtob_A",
+        "type": "checkbox",
+        "label": "Unmapped_tsZOmtob_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_tsZOmtob_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_tsZOmtob_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_WACWETjE_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_WACWETjE_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_WACWETjE_A",
+        "type": "checkbox",
+        "label": "Unmapped_WACWETjE_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_WACWETjE_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_WACWETjE_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_WKThhwDr_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_WKThhwDr_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_WKThhwDr_A",
+        "type": "checkbox",
+        "label": "Unmapped_WKThhwDr_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_WKThhwDr_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_WKThhwDr_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_gvraymeu_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_gvraymeu_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_gvraymeu_A",
+        "type": "checkbox",
+        "label": "Unmapped_gvraymeu_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_gvraymeu_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_gvraymeu_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_RmQvHLVG_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_RmQvHLVG_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_RmQvHLVG_A",
+        "type": "checkbox",
+        "label": "Unmapped_RmQvHLVG_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_RmQvHLVG_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_RmQvHLVG_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_kbMNQnek_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_kbMNQnek_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_kbMNQnek_A",
+        "type": "checkbox",
+        "label": "Unmapped_kbMNQnek_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_kbMNQnek_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_kbMNQnek_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_gNMgnmFx_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_gNMgnmFx_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_gNMgnmFx_A",
+        "type": "checkbox",
+        "label": "Unmapped_gNMgnmFx_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_gNMgnmFx_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_gNMgnmFx_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_oihqCNdk_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_oihqCNdk_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_oihqCNdk_A",
+        "type": "checkbox",
+        "label": "Unmapped_oihqCNdk_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_oihqCNdk_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_oihqCNdk_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_WIESCnxK_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_WIESCnxK_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_WIESCnxK_A",
+        "type": "checkbox",
+        "label": "Unmapped_WIESCnxK_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_WIESCnxK_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_WIESCnxK_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_pMwGkqas_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_pMwGkqas_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_pMwGkqas_A",
+        "type": "checkbox",
+        "label": "Unmapped_pMwGkqas_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_pMwGkqas_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_pMwGkqas_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_RGtkaxGf_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_RGtkaxGf_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_RGtkaxGf_A",
+        "type": "checkbox",
+        "label": "Unmapped_RGtkaxGf_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_RGtkaxGf_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_RGtkaxGf_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_gTGZdeDW_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_gTGZdeDW_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_gTGZdeDW_A",
+        "type": "checkbox",
+        "label": "Unmapped_gTGZdeDW_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_gTGZdeDW_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_gTGZdeDW_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_ybrIiMhs_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_ybrIiMhs_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_ybrIiMhs_A",
+        "type": "checkbox",
+        "label": "Unmapped_ybrIiMhs_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_ybrIiMhs_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_ybrIiMhs_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_QBrbpzNy_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_QBrbpzNy_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_QBrbpzNy_A",
+        "type": "checkbox",
+        "label": "Unmapped_QBrbpzNy_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_QBrbpzNy_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_QBrbpzNy_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_HpZvUsKY_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_HpZvUsKY_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_HpZvUsKY_A",
+        "type": "checkbox",
+        "label": "Unmapped_HpZvUsKY_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_HpZvUsKY_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_HpZvUsKY_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_BZljhYgK_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_BZljhYgK_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_BZljhYgK_A",
+        "type": "checkbox",
+        "label": "Unmapped_BZljhYgK_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_BZljhYgK_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_BZljhYgK_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_IZIIzSJF_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_IZIIzSJF_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_IZIIzSJF_A",
+        "type": "checkbox",
+        "label": "Unmapped_IZIIzSJF_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_IZIIzSJF_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_IZIIzSJF_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_ZAUYFfph_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_ZAUYFfph_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_ZAUYFfph_A",
+        "type": "checkbox",
+        "label": "Unmapped_ZAUYFfph_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_ZAUYFfph_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_ZAUYFfph_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_FIRoFICF_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_FIRoFICF_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_FIRoFICF_A",
+        "type": "checkbox",
+        "label": "Unmapped_FIRoFICF_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_FIRoFICF_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_FIRoFICF_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_RSGJaxLs_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_RSGJaxLs_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_RSGJaxLs_A",
+        "type": "checkbox",
+        "label": "Unmapped_RSGJaxLs_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_RSGJaxLs_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_RSGJaxLs_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_UgSQrFyp_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_UgSQrFyp_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_UgSQrFyp_A",
+        "type": "checkbox",
+        "label": "Unmapped_UgSQrFyp_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_UgSQrFyp_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_UgSQrFyp_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_fUWTYlSW_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_fUWTYlSW_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_fUWTYlSW_A",
+        "type": "checkbox",
+        "label": "Unmapped_fUWTYlSW_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_fUWTYlSW_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_fUWTYlSW_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_jEdYGsFA_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_jEdYGsFA_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_jEdYGsFA_A",
+        "type": "checkbox",
+        "label": "Unmapped_jEdYGsFA_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_jEdYGsFA_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_jEdYGsFA_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_WCqhLAeb_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_WCqhLAeb_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_WCqhLAeb_A",
+        "type": "checkbox",
+        "label": "Unmapped_WCqhLAeb_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_WCqhLAeb_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_WCqhLAeb_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_pcDZMZpA_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_pcDZMZpA_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_pcDZMZpA_A",
+        "type": "checkbox",
+        "label": "Unmapped_pcDZMZpA_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_pcDZMZpA_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_pcDZMZpA_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_JbJlljhg_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_JbJlljhg_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_JbJlljhg_A",
+        "type": "checkbox",
+        "label": "Unmapped_JbJlljhg_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_JbJlljhg_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_JbJlljhg_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_zjaWTnlc_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_zjaWTnlc_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_zjaWTnlc_A",
+        "type": "checkbox",
+        "label": "Unmapped_zjaWTnlc_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_zjaWTnlc_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_zjaWTnlc_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_bStoORdf_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_bStoORdf_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_bStoORdf_A",
+        "type": "checkbox",
+        "label": "Unmapped_bStoORdf_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_bStoORdf_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_bStoORdf_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_quevhtJJ_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_quevhtJJ_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_quevhtJJ_A",
+        "type": "checkbox",
+        "label": "Unmapped_quevhtJJ_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_quevhtJJ_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_quevhtJJ_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_OcOfjUOn_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_OcOfjUOn_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_OcOfjUOn_A",
+        "type": "checkbox",
+        "label": "Unmapped_OcOfjUOn_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_OcOfjUOn_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_OcOfjUOn_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_VKhbaHHC_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_VKhbaHHC_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_VKhbaHHC_A",
+        "type": "checkbox",
+        "label": "Unmapped_VKhbaHHC_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_VKhbaHHC_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_VKhbaHHC_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_rbxugAms_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_rbxugAms_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_rbxugAms_A",
+        "type": "checkbox",
+        "label": "Unmapped_rbxugAms_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_rbxugAms_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_rbxugAms_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_xdvrFlyG_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_xdvrFlyG_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_xdvrFlyG_A",
+        "type": "checkbox",
+        "label": "Unmapped_xdvrFlyG_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_xdvrFlyG_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_xdvrFlyG_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_aQHqYFtG_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_aQHqYFtG_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_aQHqYFtG_A",
+        "type": "checkbox",
+        "label": "Unmapped_aQHqYFtG_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_aQHqYFtG_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_aQHqYFtG_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_DFTEjCFi_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_DFTEjCFi_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_DFTEjCFi_A",
+        "type": "checkbox",
+        "label": "Unmapped_DFTEjCFi_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_DFTEjCFi_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_DFTEjCFi_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_mbEGvPdO_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_mbEGvPdO_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_mbEGvPdO_A",
+        "type": "checkbox",
+        "label": "Unmapped_mbEGvPdO_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_mbEGvPdO_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_mbEGvPdO_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_qWhFZXhj_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_qWhFZXhj_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_qWhFZXhj_A",
+        "type": "checkbox",
+        "label": "Unmapped_qWhFZXhj_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_qWhFZXhj_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_qWhFZXhj_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_LbBJzQdl_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_LbBJzQdl_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_LbBJzQdl_A",
+        "type": "checkbox",
+        "label": "Unmapped_LbBJzQdl_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_LbBJzQdl_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_LbBJzQdl_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_hrqaghIv_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_hrqaghIv_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_hrqaghIv_A",
+        "type": "checkbox",
+        "label": "Unmapped_hrqaghIv_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_hrqaghIv_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_hrqaghIv_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_YMEdgrKK_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_YMEdgrKK_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_YMEdgrKK_A",
+        "type": "checkbox",
+        "label": "Unmapped_YMEdgrKK_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_YMEdgrKK_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_YMEdgrKK_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_mtABYohg_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_mtABYohg_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_mtABYohg_A",
+        "type": "checkbox",
+        "label": "Unmapped_mtABYohg_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_mtABYohg_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_mtABYohg_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_YksIAviV_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_YksIAviV_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_YksIAviV_A",
+        "type": "checkbox",
+        "label": "Unmapped_YksIAviV_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_YksIAviV_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_YksIAviV_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_yTZEZChI_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_yTZEZChI_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_yTZEZChI_A",
+        "type": "checkbox",
+        "label": "Unmapped_yTZEZChI_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_yTZEZChI_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_yTZEZChI_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_NlhMTECU_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_NlhMTECU_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_NlhMTECU_A",
+        "type": "checkbox",
+        "label": "Unmapped_NlhMTECU_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_NlhMTECU_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_NlhMTECU_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_RrWGQcMt_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_RrWGQcMt_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_RrWGQcMt_A",
+        "type": "checkbox",
+        "label": "Unmapped_RrWGQcMt_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_RrWGQcMt_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_RrWGQcMt_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_JKCwpAvc_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_JKCwpAvc_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_JKCwpAvc_A",
+        "type": "checkbox",
+        "label": "Unmapped_JKCwpAvc_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:preferred-mutual-ps-01-09-14.ground-truth:Unmapped_JKCwpAvc_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+        "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+        "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_JKCwpAvc_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    }
+  ]
+}

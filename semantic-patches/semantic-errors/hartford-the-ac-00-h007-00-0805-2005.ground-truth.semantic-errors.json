@@ -1,0 +1,3492 @@
+{
+  "schemaVersion": "semantic-errors.v1",
+  "generatedAt": "2026-08-12T14:46:12.439Z",
+  "form": {
+    "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+    "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+    "pdfFile": "Hartford AC_00_H007.pdf",
+    "pairStatus": "matched",
+    "pairConfidence": "medium"
+  },
+  "counts": {
+    "truthFields": 47,
+    "predictedFillableFields": 41,
+    "matchedFields": 27,
+    "promotedFields": 41,
+    "errors": 117
+  },
+  "categoryCounts": {
+    "semantic_label_mismatch": 26,
+    "candidate_ranking_error": 1,
+    "field_type_misclassification": 0,
+    "table_detection_error": 24,
+    "checkbox_yes_no_pairing_error": 0,
+    "suppression_error": 20,
+    "grouping_error": 26,
+    "label_value_pairing_error": 0,
+    "unmapped_fillable_field": 20
+  },
+  "errors": [
+    {
+      "id": "unmapped_fillable_field:hartford-the-ac-00-h007-00-0805-2005.ground-truth:NamedInsured_FullName_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "NamedInsured_FullName_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "NamedInsured_FullName_A",
+        "type": "text",
+        "label": "Enter text: The named insured(s) as it / they will appear on the policy declarations page."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:NamedInsured_FullName_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "NamedInsured_FullName_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_VgRCSdwG_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_VgRCSdwG_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_VgRCSdwG_A",
+        "type": "text",
+        "label": "Unmapped_VgRCSdwG_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_VgRCSdwG_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_VgRCSdwG_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_ufbyztFZ_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_ufbyztFZ_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_ufbyztFZ_A",
+        "type": "text",
+        "label": "Unmapped_ufbyztFZ_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_ufbyztFZ_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_ufbyztFZ_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_dEINEXEA_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_dEINEXEA_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_dEINEXEA_A",
+        "type": "text",
+        "label": "Unmapped_dEINEXEA_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_dEINEXEA_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_dEINEXEA_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_XHXiEbyN_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_XHXiEbyN_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_XHXiEbyN_A",
+        "type": "text",
+        "label": "Unmapped_XHXiEbyN_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_XHXiEbyN_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_XHXiEbyN_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_gCuWLOPD_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_gCuWLOPD_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_gCuWLOPD_A",
+        "type": "text",
+        "label": "Unmapped_gCuWLOPD_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_gCuWLOPD_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_gCuWLOPD_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_FXGAmxNB_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_FXGAmxNB_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_FXGAmxNB_A",
+        "type": "text",
+        "label": "Unmapped_FXGAmxNB_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_FXGAmxNB_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_FXGAmxNB_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_TbvbgLhy_B",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_TbvbgLhy_B",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_TbvbgLhy_B",
+        "type": "text",
+        "label": "Unmapped_TbvbgLhy_B"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_TbvbgLhy_B",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_TbvbgLhy_B",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_cQfKGOCT_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_cQfKGOCT_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_cQfKGOCT_A",
+        "type": "text",
+        "label": "Unmapped_cQfKGOCT_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_cQfKGOCT_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_cQfKGOCT_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_hOSxzjNO_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_hOSxzjNO_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_hOSxzjNO_A",
+        "type": "text",
+        "label": "Unmapped_hOSxzjNO_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_hOSxzjNO_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_hOSxzjNO_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_pFIhQDNZ_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_pFIhQDNZ_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_pFIhQDNZ_A",
+        "type": "text",
+        "label": "Unmapped_pFIhQDNZ_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_pFIhQDNZ_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_pFIhQDNZ_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_tVOcfWhV_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_tVOcfWhV_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_tVOcfWhV_A",
+        "type": "text",
+        "label": "Unmapped_tVOcfWhV_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_tVOcfWhV_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_tVOcfWhV_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_VvuviEwr_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_VvuviEwr_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_VvuviEwr_A",
+        "type": "text",
+        "label": "Unmapped_VvuviEwr_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_VvuviEwr_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_VvuviEwr_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_UnTYeQBk_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_UnTYeQBk_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_UnTYeQBk_A",
+        "type": "text",
+        "label": "Unmapped_UnTYeQBk_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_UnTYeQBk_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_UnTYeQBk_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_NgmbDziZ_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_NgmbDziZ_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_NgmbDziZ_A",
+        "type": "text",
+        "label": "Unmapped_NgmbDziZ_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_NgmbDziZ_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_NgmbDziZ_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_CFQkzZnK_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_CFQkzZnK_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_CFQkzZnK_A",
+        "type": "text",
+        "label": "Unmapped_CFQkzZnK_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_CFQkzZnK_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_CFQkzZnK_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_hxbEoSfk_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_hxbEoSfk_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_hxbEoSfk_A",
+        "type": "text",
+        "label": "Unmapped_hxbEoSfk_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_hxbEoSfk_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_hxbEoSfk_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_IQMcjoud_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_IQMcjoud_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_IQMcjoud_A",
+        "type": "text",
+        "label": "Unmapped_IQMcjoud_A"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_IQMcjoud_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_IQMcjoud_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-the-ac-00-h007-00-0805-2005.ground-truth:NamedInsured_Title_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "NamedInsured_Title_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "NamedInsured_Title_A",
+        "type": "text",
+        "label": "Enter text: The title of the individual in the organization or his relationship to the organization."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:NamedInsured_Title_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "NamedInsured_Title_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-the-ac-00-h007-00-0805-2005.ground-truth:NamedInsured_SignatureDate_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "NamedInsured_SignatureDate_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "NamedInsured_SignatureDate_A",
+        "type": "signature",
+        "label": "Enter date: The date the form was signed by the applicant or named insured. (MM/DD/YYYY)"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:NamedInsured_SignatureDate_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "NamedInsured_SignatureDate_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "candidate_ranking_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:NamedInsured_Signature_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "NamedInsured_Signature_A",
+        "predictionId": "table-2-r2-c1",
+        "page": 1,
+        "geometryDistance": 0.011155022298945431
+      },
+      "expected": {
+        "topAcordCode": "NamedInsured_Signature"
+      },
+      "actual": {
+        "topAcordCode": "OwnerOrOfficer_Signature",
+        "rankedCodes": [
+          "OwnerOrOfficer_Signature",
+          "OwnerOrOfficer_SignatureDate",
+          "BusinessInformation_DirectorOrOfficer_BusinessOwnershipPercent"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_AJrhoxvv_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_AJrhoxvv_A",
+        "predictionId": "checkbox-p1-1",
+        "page": 1,
+        "geometryDistance": 0.0046851442266464035
+      },
+      "expected": {
+        "label": "Unmapped_AJrhoxvv_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Yes"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_AJrhoxvv_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_AJrhoxvv_A",
+        "predictionId": "checkbox-p1-1",
+        "page": 1,
+        "geometryDistance": 0.0046851442266464035
+      },
+      "expected": {
+        "tableId": "page-1-table-1",
+        "rowIndex": 0,
+        "columnIndex": 3,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_AJrhoxvv_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_AJrhoxvv_A",
+        "predictionId": "checkbox-p1-1",
+        "page": 1,
+        "geometryDistance": 0.0046851442266464035
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-2"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_BBTmnFpO_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_BBTmnFpO_A",
+        "predictionId": "checkbox-p1-2",
+        "page": 1,
+        "geometryDistance": 0.004339751217090054
+      },
+      "expected": {
+        "label": "Unmapped_BBTmnFpO_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "No"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_BBTmnFpO_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_BBTmnFpO_A",
+        "predictionId": "checkbox-p1-2",
+        "page": 1,
+        "geometryDistance": 0.004339751217090054
+      },
+      "expected": {
+        "tableId": "page-1-table-1",
+        "rowIndex": 0,
+        "columnIndex": 4,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_BBTmnFpO_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_BBTmnFpO_A",
+        "predictionId": "checkbox-p1-2",
+        "page": 1,
+        "geometryDistance": 0.004339751217090054
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-2"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_KnQWKoZb_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_KnQWKoZb_A",
+        "predictionId": "checkbox-p1-3",
+        "page": 1,
+        "geometryDistance": 0.004454799845133273
+      },
+      "expected": {
+        "label": "Unmapped_KnQWKoZb_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Yes"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_KnQWKoZb_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_KnQWKoZb_A",
+        "predictionId": "checkbox-p1-3",
+        "page": 1,
+        "geometryDistance": 0.004454799845133273
+      },
+      "expected": {
+        "tableId": "page-1-table-1",
+        "rowIndex": 0,
+        "columnIndex": 5,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_KnQWKoZb_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_KnQWKoZb_A",
+        "predictionId": "checkbox-p1-3",
+        "page": 1,
+        "geometryDistance": 0.004454799845133273
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-2"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_fGqTaCwv_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_fGqTaCwv_A",
+        "predictionId": "checkbox-p1-4",
+        "page": 1,
+        "geometryDistance": 0.004434601255356863
+      },
+      "expected": {
+        "label": "Unmapped_fGqTaCwv_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "No"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_fGqTaCwv_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_fGqTaCwv_A",
+        "predictionId": "checkbox-p1-4",
+        "page": 1,
+        "geometryDistance": 0.004434601255356863
+      },
+      "expected": {
+        "tableId": "page-1-table-1",
+        "rowIndex": 0,
+        "columnIndex": 6,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_fGqTaCwv_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_fGqTaCwv_A",
+        "predictionId": "checkbox-p1-4",
+        "page": 1,
+        "geometryDistance": 0.004434601255356863
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-2"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_YRcaxNoW_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_YRcaxNoW_A",
+        "predictionId": "checkbox-p1-5",
+        "page": 1,
+        "geometryDistance": 0.0037665368140619966
+      },
+      "expected": {
+        "label": "Unmapped_YRcaxNoW_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Yes"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_YRcaxNoW_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_YRcaxNoW_A",
+        "predictionId": "checkbox-p1-5",
+        "page": 1,
+        "geometryDistance": 0.0037665368140619966
+      },
+      "expected": {
+        "tableId": "page-1-table-1",
+        "rowIndex": 1,
+        "columnIndex": 3,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_YRcaxNoW_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_YRcaxNoW_A",
+        "predictionId": "checkbox-p1-5",
+        "page": 1,
+        "geometryDistance": 0.0037665368140619966
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-2"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_hTxjleiH_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_hTxjleiH_A",
+        "predictionId": "checkbox-p1-6",
+        "page": 1,
+        "geometryDistance": 0.0034827942936266733
+      },
+      "expected": {
+        "label": "Unmapped_hTxjleiH_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "No"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_hTxjleiH_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_hTxjleiH_A",
+        "predictionId": "checkbox-p1-6",
+        "page": 1,
+        "geometryDistance": 0.0034827942936266733
+      },
+      "expected": {
+        "tableId": "page-1-table-1",
+        "rowIndex": 1,
+        "columnIndex": 4,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_hTxjleiH_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_hTxjleiH_A",
+        "predictionId": "checkbox-p1-6",
+        "page": 1,
+        "geometryDistance": 0.0034827942936266733
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-2"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_fdSAvVkM_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_fdSAvVkM_A",
+        "predictionId": "checkbox-p1-7",
+        "page": 1,
+        "geometryDistance": 0.00391971182651732
+      },
+      "expected": {
+        "label": "Unmapped_fdSAvVkM_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Yes"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_fdSAvVkM_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_fdSAvVkM_A",
+        "predictionId": "checkbox-p1-7",
+        "page": 1,
+        "geometryDistance": 0.00391971182651732
+      },
+      "expected": {
+        "tableId": "page-1-table-1",
+        "rowIndex": 1,
+        "columnIndex": 5,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_fdSAvVkM_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_fdSAvVkM_A",
+        "predictionId": "checkbox-p1-7",
+        "page": 1,
+        "geometryDistance": 0.00391971182651732
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-2"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_jQBiGcUz_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_jQBiGcUz_A",
+        "predictionId": "checkbox-p1-8",
+        "page": 1,
+        "geometryDistance": 0.0038280545343616365
+      },
+      "expected": {
+        "label": "Unmapped_jQBiGcUz_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "No"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_jQBiGcUz_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_jQBiGcUz_A",
+        "predictionId": "checkbox-p1-8",
+        "page": 1,
+        "geometryDistance": 0.0038280545343616365
+      },
+      "expected": {
+        "tableId": "page-1-table-1",
+        "rowIndex": 1,
+        "columnIndex": 6,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_jQBiGcUz_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_jQBiGcUz_A",
+        "predictionId": "checkbox-p1-8",
+        "page": 1,
+        "geometryDistance": 0.0038280545343616365
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-2"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_EXOVdPRx_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_EXOVdPRx_A",
+        "predictionId": "checkbox-p1-9",
+        "page": 1,
+        "geometryDistance": 0.004048296696647136
+      },
+      "expected": {
+        "label": "Unmapped_EXOVdPRx_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Yes"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_EXOVdPRx_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_EXOVdPRx_A",
+        "predictionId": "checkbox-p1-9",
+        "page": 1,
+        "geometryDistance": 0.004048296696647136
+      },
+      "expected": {
+        "tableId": "page-1-table-1",
+        "rowIndex": 2,
+        "columnIndex": 3,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_EXOVdPRx_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_EXOVdPRx_A",
+        "predictionId": "checkbox-p1-9",
+        "page": 1,
+        "geometryDistance": 0.004048296696647136
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-2"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_ytorqqpA_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_ytorqqpA_A",
+        "predictionId": "checkbox-p1-10",
+        "page": 1,
+        "geometryDistance": 0.0037177350405111125
+      },
+      "expected": {
+        "label": "Unmapped_ytorqqpA_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "No"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_ytorqqpA_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_ytorqqpA_A",
+        "predictionId": "checkbox-p1-10",
+        "page": 1,
+        "geometryDistance": 0.0037177350405111125
+      },
+      "expected": {
+        "tableId": "page-1-table-1",
+        "rowIndex": 2,
+        "columnIndex": 4,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_ytorqqpA_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_ytorqqpA_A",
+        "predictionId": "checkbox-p1-10",
+        "page": 1,
+        "geometryDistance": 0.0037177350405111125
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-2"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_XjowkwAD_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_XjowkwAD_A",
+        "predictionId": "checkbox-p1-11",
+        "page": 1,
+        "geometryDistance": 0.0036674168357583798
+      },
+      "expected": {
+        "label": "Unmapped_XjowkwAD_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "No"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_XjowkwAD_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_XjowkwAD_A",
+        "predictionId": "checkbox-p1-11",
+        "page": 1,
+        "geometryDistance": 0.0036674168357583798
+      },
+      "expected": {
+        "tableId": "page-1-table-1",
+        "rowIndex": 2,
+        "columnIndex": 5,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_XjowkwAD_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_XjowkwAD_A",
+        "predictionId": "checkbox-p1-11",
+        "page": 1,
+        "geometryDistance": 0.0036674168357583798
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-2"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_gQrgLGQF_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_gQrgLGQF_A",
+        "predictionId": "checkbox-p1-12",
+        "page": 1,
+        "geometryDistance": 0.005329704600531072
+      },
+      "expected": {
+        "label": "Unmapped_gQrgLGQF_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "No"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_gQrgLGQF_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_gQrgLGQF_A",
+        "predictionId": "checkbox-p1-12",
+        "page": 1,
+        "geometryDistance": 0.005329704600531072
+      },
+      "expected": {
+        "tableId": "page-1-table-1",
+        "rowIndex": 2,
+        "columnIndex": 6,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_gQrgLGQF_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_gQrgLGQF_A",
+        "predictionId": "checkbox-p1-12",
+        "page": 1,
+        "geometryDistance": 0.005329704600531072
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-2"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_yyeOQMeQ_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_yyeOQMeQ_A",
+        "predictionId": "checkbox-p1-13",
+        "page": 1,
+        "geometryDistance": 0.004238103643537236
+      },
+      "expected": {
+        "label": "Unmapped_yyeOQMeQ_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Yes"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_yyeOQMeQ_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_yyeOQMeQ_A",
+        "predictionId": "checkbox-p1-13",
+        "page": 1,
+        "geometryDistance": 0.004238103643537236
+      },
+      "expected": {
+        "tableId": "page-1-table-1",
+        "rowIndex": 3,
+        "columnIndex": 3,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_yyeOQMeQ_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_yyeOQMeQ_A",
+        "predictionId": "checkbox-p1-13",
+        "page": 1,
+        "geometryDistance": 0.004238103643537236
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-2"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_MUBChsVs_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_MUBChsVs_A",
+        "predictionId": "checkbox-p1-14",
+        "page": 1,
+        "geometryDistance": 0.004189763799888102
+      },
+      "expected": {
+        "label": "Unmapped_MUBChsVs_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "No"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_MUBChsVs_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_MUBChsVs_A",
+        "predictionId": "checkbox-p1-14",
+        "page": 1,
+        "geometryDistance": 0.004189763799888102
+      },
+      "expected": {
+        "tableId": "page-1-table-1",
+        "rowIndex": 3,
+        "columnIndex": 4,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_MUBChsVs_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_MUBChsVs_A",
+        "predictionId": "checkbox-p1-14",
+        "page": 1,
+        "geometryDistance": 0.004189763799888102
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-2"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_aAKXoYPI_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_aAKXoYPI_A",
+        "predictionId": "checkbox-p1-15",
+        "page": 1,
+        "geometryDistance": 0.0040604281915152295
+      },
+      "expected": {
+        "label": "Unmapped_aAKXoYPI_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "No"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_aAKXoYPI_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_aAKXoYPI_A",
+        "predictionId": "checkbox-p1-15",
+        "page": 1,
+        "geometryDistance": 0.0040604281915152295
+      },
+      "expected": {
+        "tableId": "page-1-table-1",
+        "rowIndex": 3,
+        "columnIndex": 5,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_aAKXoYPI_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_aAKXoYPI_A",
+        "predictionId": "checkbox-p1-15",
+        "page": 1,
+        "geometryDistance": 0.0040604281915152295
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-2"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_XKoNYkls_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_XKoNYkls_A",
+        "predictionId": "checkbox-p1-16",
+        "page": 1,
+        "geometryDistance": 0.003840608274119139
+      },
+      "expected": {
+        "label": "Unmapped_XKoNYkls_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "No"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_XKoNYkls_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_XKoNYkls_A",
+        "predictionId": "checkbox-p1-16",
+        "page": 1,
+        "geometryDistance": 0.003840608274119139
+      },
+      "expected": {
+        "tableId": "page-1-table-1",
+        "rowIndex": 3,
+        "columnIndex": 6,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_XKoNYkls_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_XKoNYkls_A",
+        "predictionId": "checkbox-p1-16",
+        "page": 1,
+        "geometryDistance": 0.003840608274119139
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-2"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_djssMbkL_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_djssMbkL_A",
+        "predictionId": "checkbox-p1-17",
+        "page": 1,
+        "geometryDistance": 0.004022265113918291
+      },
+      "expected": {
+        "label": "Unmapped_djssMbkL_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Yes"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_djssMbkL_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_djssMbkL_A",
+        "predictionId": "checkbox-p1-17",
+        "page": 1,
+        "geometryDistance": 0.004022265113918291
+      },
+      "expected": {
+        "tableId": "page-1-table-1",
+        "rowIndex": 4,
+        "columnIndex": 3,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_djssMbkL_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_djssMbkL_A",
+        "predictionId": "checkbox-p1-17",
+        "page": 1,
+        "geometryDistance": 0.004022265113918291
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-2"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_EXjPvyWo_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_EXjPvyWo_A",
+        "predictionId": "checkbox-p1-18",
+        "page": 1,
+        "geometryDistance": 0.003911240155693041
+      },
+      "expected": {
+        "label": "Unmapped_EXjPvyWo_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "No"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_EXjPvyWo_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_EXjPvyWo_A",
+        "predictionId": "checkbox-p1-18",
+        "page": 1,
+        "geometryDistance": 0.003911240155693041
+      },
+      "expected": {
+        "tableId": "page-1-table-1",
+        "rowIndex": 4,
+        "columnIndex": 4,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_EXjPvyWo_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_EXjPvyWo_A",
+        "predictionId": "checkbox-p1-18",
+        "page": 1,
+        "geometryDistance": 0.003911240155693041
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-2"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_vyGLvtRa_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_vyGLvtRa_A",
+        "predictionId": "checkbox-p1-19",
+        "page": 1,
+        "geometryDistance": 0.0037940108198861668
+      },
+      "expected": {
+        "label": "Unmapped_vyGLvtRa_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": ":unselected: Yes :unselected: No"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_vyGLvtRa_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_vyGLvtRa_A",
+        "predictionId": "checkbox-p1-19",
+        "page": 1,
+        "geometryDistance": 0.0037940108198861668
+      },
+      "expected": {
+        "tableId": "page-1-table-1",
+        "rowIndex": 4,
+        "columnIndex": 5,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_vyGLvtRa_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_vyGLvtRa_A",
+        "predictionId": "checkbox-p1-19",
+        "page": 1,
+        "geometryDistance": 0.0037940108198861668
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-2"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_jWqGXRsc_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_jWqGXRsc_A",
+        "predictionId": "checkbox-p1-21",
+        "page": 1,
+        "geometryDistance": 0.0012424098314867808
+      },
+      "expected": {
+        "label": "Unmapped_jWqGXRsc_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Yes"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_jWqGXRsc_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_jWqGXRsc_A",
+        "predictionId": "checkbox-p1-21",
+        "page": 1,
+        "geometryDistance": 0.0012424098314867808
+      },
+      "expected": {
+        "tableId": "page-1-table-2",
+        "rowIndex": 0,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_jWqGXRsc_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_jWqGXRsc_A",
+        "predictionId": "checkbox-p1-21",
+        "page": 1,
+        "geometryDistance": 0.0012424098314867808
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-2"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_jIYxzcgy_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_jIYxzcgy_A",
+        "predictionId": "checkbox-p1-23",
+        "page": 1,
+        "geometryDistance": 0.001307551717439608
+      },
+      "expected": {
+        "label": "Unmapped_jIYxzcgy_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "No"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_jIYxzcgy_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_jIYxzcgy_A",
+        "predictionId": "checkbox-p1-23",
+        "page": 1,
+        "geometryDistance": 0.001307551717439608
+      },
+      "expected": {
+        "tableId": "page-1-table-2",
+        "rowIndex": 0,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_jIYxzcgy_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_jIYxzcgy_A",
+        "predictionId": "checkbox-p1-23",
+        "page": 1,
+        "geometryDistance": 0.001307551717439608
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-2"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_QzSQozMZ_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_QzSQozMZ_A",
+        "predictionId": "checkbox-p1-24",
+        "page": 1,
+        "geometryDistance": 0.0015578225390898868
+      },
+      "expected": {
+        "label": "Unmapped_QzSQozMZ_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "No"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_QzSQozMZ_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_QzSQozMZ_A",
+        "predictionId": "checkbox-p1-24",
+        "page": 1,
+        "geometryDistance": 0.0015578225390898868
+      },
+      "expected": {
+        "tableId": "page-1-table-2",
+        "rowIndex": 1,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_QzSQozMZ_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_QzSQozMZ_A",
+        "predictionId": "checkbox-p1-24",
+        "page": 1,
+        "geometryDistance": 0.0015578225390898868
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-2"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_oARZdawk_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_oARZdawk_A",
+        "predictionId": "checkbox-p1-22",
+        "page": 1,
+        "geometryDistance": 0.0011396070603140024
+      },
+      "expected": {
+        "label": "Unmapped_oARZdawk_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Yes"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_oARZdawk_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_oARZdawk_A",
+        "predictionId": "checkbox-p1-22",
+        "page": 1,
+        "geometryDistance": 0.0011396070603140024
+      },
+      "expected": {
+        "tableId": "page-1-table-2",
+        "rowIndex": 1,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_oARZdawk_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_oARZdawk_A",
+        "predictionId": "checkbox-p1-22",
+        "page": 1,
+        "geometryDistance": 0.0011396070603140024
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-2"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_SSJplenn_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_SSJplenn_A",
+        "predictionId": "checkbox-p1-25",
+        "page": 1,
+        "geometryDistance": 0.001014874001465876
+      },
+      "expected": {
+        "label": "Unmapped_SSJplenn_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Yes"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "grouping_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_SSJplenn_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_SSJplenn_A",
+        "predictionId": "checkbox-p1-25",
+        "page": 1,
+        "geometryDistance": 0.001014874001465876
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-2"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_fGfmZYoS_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_fGfmZYoS_A",
+        "predictionId": "checkbox-p1-26",
+        "page": 1,
+        "geometryDistance": 0.001559951775795187
+      },
+      "expected": {
+        "label": "Unmapped_fGfmZYoS_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "No"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "grouping_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_fGfmZYoS_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_fGfmZYoS_A",
+        "predictionId": "checkbox-p1-26",
+        "page": 1,
+        "geometryDistance": 0.001559951775795187
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-2"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_TbvbgLhy_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_TbvbgLhy_A",
+        "predictionId": "checkbox-p1-20",
+        "page": 1,
+        "geometryDistance": 0.0037640553340312385
+      },
+      "expected": {
+        "label": "Unmapped_TbvbgLhy_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "No"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_TbvbgLhy_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_TbvbgLhy_A",
+        "predictionId": "checkbox-p1-20",
+        "page": 1,
+        "geometryDistance": 0.0037640553340312385
+      },
+      "expected": {
+        "tableId": "page-1-table-1",
+        "rowIndex": 4,
+        "columnIndex": 6,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:hartford-the-ac-00-h007-00-0805-2005.ground-truth:Unmapped_TbvbgLhy_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+        "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+        "pdfFile": "Hartford AC_00_H007.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_TbvbgLhy_A",
+        "predictionId": "checkbox-p1-20",
+        "page": 1,
+        "geometryDistance": 0.0037640553340312385
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-2"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    }
+  ]
+}

@@ -1,0 +1,3515 @@
+{
+  "schemaVersion": "semantic-errors.v1",
+  "generatedAt": "2026-08-12T14:45:57.854Z",
+  "form": {
+    "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+    "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+    "pdfFile": "Hartford SS_25_50_06_16.pdf",
+    "pairStatus": "matched",
+    "pairConfidence": "high"
+  },
+  "counts": {
+    "truthFields": 61,
+    "predictedFillableFields": 58,
+    "matchedFields": 20,
+    "promotedFields": 58,
+    "errors": 117
+  },
+  "categoryCounts": {
+    "semantic_label_mismatch": 17,
+    "candidate_ranking_error": 10,
+    "field_type_misclassification": 2,
+    "table_detection_error": 4,
+    "checkbox_yes_no_pairing_error": 0,
+    "suppression_error": 41,
+    "grouping_error": 2,
+    "label_value_pairing_error": 0,
+    "unmapped_fillable_field": 41
+  },
+  "errors": [
+    {
+      "id": "semantic_label_mismatch:hartford-ss-25-50-06-16.ground-truth:NamedInsured_FullName_B",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_FullName_B",
+        "predictionId": "input-semantic-p1-l14",
+        "page": 1,
+        "geometryDistance": 0.07745701495784542
+      },
+      "expected": {
+        "label": "Enter text: The named insured(s) as it / they will appear on the policy declarations page.",
+        "helpLabel": "Enter text: The named insured(s) as it / they will appear on the policy declarations page."
+      },
+      "actual": {
+        "label": "Applicant or Insured Business Name"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0.1053
+      }
+    },
+    {
+      "id": "candidate_ranking_error:hartford-ss-25-50-06-16.ground-truth:NamedInsured_FullName_B",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_FullName_B",
+        "predictionId": "input-semantic-p1-l14",
+        "page": 1,
+        "geometryDistance": 0.07745701495784542
+      },
+      "expected": {
+        "topAcordCode": "NamedInsured_FullName"
+      },
+      "actual": {
+        "topAcordCode": "NamedInsured_BusinessAddress_StateOrProvenceCode",
+        "rankedCodes": [
+          "NamedInsured_BusinessAddress_StateOrProvenceCode",
+          "NamedInsured_Contact_PrimaryBusinessPhoneIndicator",
+          "NamedInsured_Contact_SecondaryBusinessPhoneIndicator"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:hartford-ss-25-50-06-16.ground-truth:NamedInsured_Primary_WebsiteAddress_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_Primary_WebsiteAddress_A",
+        "predictionId": "input-semantic-p1-l15",
+        "page": 1,
+        "geometryDistance": 0.07660687826220884
+      },
+      "expected": {
+        "label": "Enter text: The primary website address for the named insured.",
+        "helpLabel": "Enter text: The primary website address for the named insured."
+      },
+      "actual": {
+        "label": "Website"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0.2
+      }
+    },
+    {
+      "id": "candidate_ranking_error:hartford-ss-25-50-06-16.ground-truth:NamedInsured_Primary_WebsiteAddress_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_Primary_WebsiteAddress_A",
+        "predictionId": "input-semantic-p1-l15",
+        "page": 1,
+        "geometryDistance": 0.07660687826220884
+      },
+      "expected": {
+        "topAcordCode": "NamedInsured_Primary_WebsiteAddress"
+      },
+      "actual": {
+        "topAcordCode": "Client_WebsiteAddress",
+        "rankedCodes": [
+          "Client_WebsiteAddress",
+          "Insurer_AgencyInterface_WebsiteIndicator",
+          "InsurerOrVendor_Questionnaire_InsurerWebsiteAddDependentsEmployeeAccessIndicator"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "candidate_ranking_error:hartford-ss-25-50-06-16.ground-truth:Policy_PolicyNumberIdentifier_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Policy_PolicyNumberIdentifier_A",
+        "predictionId": "input-semantic-p1-l16",
+        "page": 1,
+        "geometryDistance": 0.07699358290397662
+      },
+      "expected": {
+        "topAcordCode": "Policy_PolicyNumberIdentifier"
+      },
+      "actual": {
+        "topAcordCode": "Binder_ExpiringPolicyNumberIdentifier",
+        "rankedCodes": [
+          "Binder_ExpiringPolicyNumberIdentifier",
+          "ExcessFlood_PolicyNumberIdentifier",
+          "LossHistory_PolicyNumberIdentifier"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:hartford-ss-25-50-06-16.ground-truth:Policy_EffectiveDate_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Policy_EffectiveDate_A",
+        "predictionId": "input-semantic-p1-l17",
+        "page": 1,
+        "geometryDistance": 0.07675507854618438
+      },
+      "expected": {
+        "label": "Enter date: The effective date of the policy. The date that the terms and conditions of the policy commence. (MM/DD/YYYY)",
+        "helpLabel": "Enter date: The effective date of the policy. The date that the terms and conditions of the policy commence. (MM/DD/YYYY)"
+      },
+      "actual": {
+        "label": "Proposed Coverage Effective Date"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0.2222
+      }
+    },
+    {
+      "id": "candidate_ranking_error:hartford-ss-25-50-06-16.ground-truth:Policy_EffectiveDate_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Policy_EffectiveDate_A",
+        "predictionId": "input-semantic-p1-l17",
+        "page": 1,
+        "geometryDistance": 0.07675507854618438
+      },
+      "expected": {
+        "topAcordCode": "Policy_EffectiveDate"
+      },
+      "actual": {
+        "topAcordCode": "CommercialInlandMarineCoverage_PeakSeason_EffectiveDate",
+        "rankedCodes": [
+          "CommercialInlandMarineCoverage_PeakSeason_EffectiveDate",
+          "EmployeeBenefits_RateInformation_CoverageEffectiveDate",
+          "PriorCoverage_Automobile_EffectiveDate"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:hartford-ss-25-50-06-16.ground-truth:WorkersCompensation_RateClass_ClassificationCode_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "WorkersCompensation_RateClass_ClassificationCode_A",
+        "predictionId": "input-semantic-p1-l18",
+        "page": 1,
+        "geometryDistance": 0.07728506013684171
+      },
+      "expected": {
+        "label": "Enter code: The Rating Classification Code is a six-digit alpha-numeric code obtained from the National Counsel on Compensation Insurance (NCCI) Workers Compensation and Employers' Liability Insurance Manual. Only suffixes specifically shown on rate pages may be used.",
+        "helpLabel": "Enter code: The Rating Classification Code is a six-digit alpha-numeric code obtained from the National Counsel on Compensation Insurance (NCCI) Workers Compensation and Employers' Liability Insurance Manual. Only suffixes specifically shown on rate pages may be used."
+      },
+      "actual": {
+        "label": "Class code"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0.0588
+      }
+    },
+    {
+      "id": "candidate_ranking_error:hartford-ss-25-50-06-16.ground-truth:WorkersCompensation_RateClass_ClassificationCode_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "WorkersCompensation_RateClass_ClassificationCode_A",
+        "predictionId": "input-semantic-p1-l18",
+        "page": 1,
+        "geometryDistance": 0.07728506013684171
+      },
+      "expected": {
+        "topAcordCode": "WorkersCompensation_RateClass_ClassificationCode"
+      },
+      "actual": {
+        "topAcordCode": "AdditionalInterest_Item_ScheduledItemClassCode",
+        "rankedCodes": [
+          "AdditionalInterest_Item_ScheduledItemClassCode",
+          "BuildingFireProtection_ProtectionClassCode",
+          "CommercialInlandMarineProperty_PropertyClassCode"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:hartford-ss-25-50-06-16.ground-truth:WorkersCompensation_RateClass_DescriptionCode_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "WorkersCompensation_RateClass_DescriptionCode_A",
+        "predictionId": "input-semantic-p1-l19",
+        "page": 1,
+        "geometryDistance": 0.07707072063041459
+      },
+      "expected": {
+        "label": "Enter code: The company description code for this type of risk (if applicable).",
+        "helpLabel": "Enter code: The company description code for this type of risk (if applicable)."
+      },
+      "actual": {
+        "label": "Class description"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0.1429
+      }
+    },
+    {
+      "id": "candidate_ranking_error:hartford-ss-25-50-06-16.ground-truth:WorkersCompensation_RateClass_DescriptionCode_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "WorkersCompensation_RateClass_DescriptionCode_A",
+        "predictionId": "input-semantic-p1-l19",
+        "page": 1,
+        "geometryDistance": 0.07707072063041459
+      },
+      "expected": {
+        "topAcordCode": "WorkersCompensation_RateClass_DescriptionCode"
+      },
+      "actual": {
+        "topAcordCode": "CommercialStructure_WindClass_OtherDescription",
+        "rankedCodes": [
+          "CommercialStructure_WindClass_OtherDescription",
+          "EligibleEmployeeClass_DomesticPartnerDescription",
+          "EligibleEmployeeClass_OtherChildrenDescription"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-ss-25-50-06-16.ground-truth:Unmapped_kiKUUtPt_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_kiKUUtPt_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_kiKUUtPt_A",
+        "type": "text",
+        "label": "Professional Liability Coverage information: Each Claim Limit"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-ss-25-50-06-16.ground-truth:Unmapped_kiKUUtPt_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_kiKUUtPt_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-ss-25-50-06-16.ground-truth:Unmapped_BCkHWupU_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_BCkHWupU_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_BCkHWupU_A",
+        "type": "text",
+        "label": "Professional Liability Coverage information: Aggregate Limit"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-ss-25-50-06-16.ground-truth:Unmapped_BCkHWupU_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_BCkHWupU_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-ss-25-50-06-16.ground-truth:Unmapped_RLKlfrnH_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_RLKlfrnH_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_RLKlfrnH_A",
+        "type": "text",
+        "label": "Professional Liability Coverage information: Deductible"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-ss-25-50-06-16.ground-truth:Unmapped_RLKlfrnH_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_RLKlfrnH_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-ss-25-50-06-16.ground-truth:Unmapped_FvsnmtIb_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_FvsnmtIb_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_FvsnmtIb_A",
+        "type": "text",
+        "label": "Professional Liability Coverage information: Defense Coverage Type"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-ss-25-50-06-16.ground-truth:Unmapped_FvsnmtIb_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_FvsnmtIb_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-ss-25-50-06-16.ground-truth:Unmapped_adboUoUQ_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_adboUoUQ_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_adboUoUQ_A",
+        "type": "text",
+        "label": "Based on the applicant's annual sales for the most recent 12 months, indicate the percentage of sales derived from the types of consultative advice that best describe the applicant's business or management consultant services*. The total must equal 100%. If new in business, select based on best estimate: Human Resources"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-ss-25-50-06-16.ground-truth:Unmapped_adboUoUQ_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_adboUoUQ_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-ss-25-50-06-16.ground-truth:ProfessionalIndemnity_ClaimsMade_RetroactiveDate_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ProfessionalIndemnity_ClaimsMade_RetroactiveDate_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "ProfessionalIndemnity_ClaimsMade_RetroactiveDate_A",
+        "type": "date",
+        "label": "Enter date: The retroactive date if the policy was issued on a Claims Made basis and there was a retroactive date."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-ss-25-50-06-16.ground-truth:ProfessionalIndemnity_ClaimsMade_RetroactiveDate_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "ProfessionalIndemnity_ClaimsMade_RetroactiveDate_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-ss-25-50-06-16.ground-truth:Unmapped_QASlZLaQ_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_QASlZLaQ_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_QASlZLaQ_A",
+        "type": "text",
+        "label": "Based on the applicant's annual sales for the most recent 12 months, indicate the percentage of sales derived from the types of consultative advice that best describe the applicant's business or management consultant services*. The total must equal 100%. If new in business, select based on best estimate: Business Development"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-ss-25-50-06-16.ground-truth:Unmapped_QASlZLaQ_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_QASlZLaQ_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-ss-25-50-06-16.ground-truth:CommercialStructure_PhysicalAddress_LineOne_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CommercialStructure_PhysicalAddress_LineOne_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "CommercialStructure_PhysicalAddress_LineOne_A",
+        "type": "text",
+        "label": "Enter text: The first address line of the commercial structure."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-ss-25-50-06-16.ground-truth:CommercialStructure_PhysicalAddress_LineOne_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CommercialStructure_PhysicalAddress_LineOne_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-ss-25-50-06-16.ground-truth:CommercialStructure_PhysicalAddress_LineOne_B",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CommercialStructure_PhysicalAddress_LineOne_B",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "CommercialStructure_PhysicalAddress_LineOne_B",
+        "type": "text",
+        "label": "Enter text: The first address line of the commercial structure."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-ss-25-50-06-16.ground-truth:CommercialStructure_PhysicalAddress_LineOne_B",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CommercialStructure_PhysicalAddress_LineOne_B",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-ss-25-50-06-16.ground-truth:CommercialStructure_PhysicalAddress_CityName_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CommercialStructure_PhysicalAddress_CityName_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "CommercialStructure_PhysicalAddress_CityName_A",
+        "type": "text",
+        "label": "Enter text: The city of the commercial structure."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-ss-25-50-06-16.ground-truth:CommercialStructure_PhysicalAddress_CityName_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CommercialStructure_PhysicalAddress_CityName_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-ss-25-50-06-16.ground-truth:CommercialStructure_PhysicalAddress_StateOrProvinceCode_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CommercialStructure_PhysicalAddress_StateOrProvinceCode_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "CommercialStructure_PhysicalAddress_StateOrProvinceCode_A",
+        "type": "text",
+        "label": "Enter code: The state or province code of the commercial structure."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-ss-25-50-06-16.ground-truth:CommercialStructure_PhysicalAddress_StateOrProvinceCode_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CommercialStructure_PhysicalAddress_StateOrProvinceCode_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-ss-25-50-06-16.ground-truth:CommercialStructure_PhysicalAddress_PostalCode_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CommercialStructure_PhysicalAddress_PostalCode_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "CommercialStructure_PhysicalAddress_PostalCode_A",
+        "type": "text",
+        "label": "Enter code: The postal code of the commercial structure."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-ss-25-50-06-16.ground-truth:CommercialStructure_PhysicalAddress_PostalCode_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CommercialStructure_PhysicalAddress_PostalCode_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-ss-25-50-06-16.ground-truth:Unmapped_MSybtPAM_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_MSybtPAM_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_MSybtPAM_A",
+        "type": "text",
+        "label": "Enter text: The named insured's mailing address line two."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-ss-25-50-06-16.ground-truth:Unmapped_MSybtPAM_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_MSybtPAM_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-ss-25-50-06-16.ground-truth:CommercialStructure_PhysicalAddress_LineOne_E",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CommercialStructure_PhysicalAddress_LineOne_E",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "CommercialStructure_PhysicalAddress_LineOne_E",
+        "type": "text",
+        "label": "Enter text: The first address line of the commercial structure."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-ss-25-50-06-16.ground-truth:CommercialStructure_PhysicalAddress_LineOne_E",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CommercialStructure_PhysicalAddress_LineOne_E",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-ss-25-50-06-16.ground-truth:CommercialStructure_PhysicalAddress_LineOne_D",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CommercialStructure_PhysicalAddress_LineOne_D",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "CommercialStructure_PhysicalAddress_LineOne_D",
+        "type": "text",
+        "label": "Enter text: The first address line of the commercial structure."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-ss-25-50-06-16.ground-truth:CommercialStructure_PhysicalAddress_LineOne_D",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CommercialStructure_PhysicalAddress_LineOne_D",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-ss-25-50-06-16.ground-truth:CommercialStructure_PhysicalAddress_CityName_B",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CommercialStructure_PhysicalAddress_CityName_B",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "CommercialStructure_PhysicalAddress_CityName_B",
+        "type": "text",
+        "label": "Enter text: The city of the commercial structure."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-ss-25-50-06-16.ground-truth:CommercialStructure_PhysicalAddress_CityName_B",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CommercialStructure_PhysicalAddress_CityName_B",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-ss-25-50-06-16.ground-truth:CommercialStructure_PhysicalAddress_StateOrProvinceCode_B",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CommercialStructure_PhysicalAddress_StateOrProvinceCode_B",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "CommercialStructure_PhysicalAddress_StateOrProvinceCode_B",
+        "type": "text",
+        "label": "Enter code: The state or province code of the commercial structure."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-ss-25-50-06-16.ground-truth:CommercialStructure_PhysicalAddress_StateOrProvinceCode_B",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CommercialStructure_PhysicalAddress_StateOrProvinceCode_B",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-ss-25-50-06-16.ground-truth:CommercialStructure_PhysicalAddress_PostalCode_B",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CommercialStructure_PhysicalAddress_PostalCode_B",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "CommercialStructure_PhysicalAddress_PostalCode_B",
+        "type": "text",
+        "label": "Enter code: The postal code of the commercial structure."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-ss-25-50-06-16.ground-truth:CommercialStructure_PhysicalAddress_PostalCode_B",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CommercialStructure_PhysicalAddress_PostalCode_B",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-ss-25-50-06-16.ground-truth:NamedInsured_PhysicalAddress_CityName_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_PhysicalAddress_CityName_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "NamedInsured_PhysicalAddress_CityName_A",
+        "type": "text",
+        "label": "Enter text: The named insured's physical address city name."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-ss-25-50-06-16.ground-truth:NamedInsured_PhysicalAddress_CityName_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_PhysicalAddress_CityName_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-ss-25-50-06-16.ground-truth:NamedInsured_PhysicalAddress_StateOrProvinceCode_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_PhysicalAddress_StateOrProvinceCode_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "NamedInsured_PhysicalAddress_StateOrProvinceCode_A",
+        "type": "text",
+        "label": "Enter code: The named insured's physical address state or province code."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-ss-25-50-06-16.ground-truth:NamedInsured_PhysicalAddress_StateOrProvinceCode_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_PhysicalAddress_StateOrProvinceCode_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-ss-25-50-06-16.ground-truth:CommercialStructure_PhysicalAddress_PostalCode_C",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CommercialStructure_PhysicalAddress_PostalCode_C",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "CommercialStructure_PhysicalAddress_PostalCode_C",
+        "type": "text",
+        "label": "Enter code: The postal code of the commercial structure."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-ss-25-50-06-16.ground-truth:CommercialStructure_PhysicalAddress_PostalCode_C",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CommercialStructure_PhysicalAddress_PostalCode_C",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-ss-25-50-06-16.ground-truth:CommercialStructure_PhysicalAddress_CityName_C",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CommercialStructure_PhysicalAddress_CityName_C",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "CommercialStructure_PhysicalAddress_CityName_C",
+        "type": "text",
+        "label": "Enter text: The city of the commercial structure."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-ss-25-50-06-16.ground-truth:CommercialStructure_PhysicalAddress_CityName_C",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CommercialStructure_PhysicalAddress_CityName_C",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-ss-25-50-06-16.ground-truth:CommercialStructure_PhysicalAddress_StateOrProvinceCode_C",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CommercialStructure_PhysicalAddress_StateOrProvinceCode_C",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "CommercialStructure_PhysicalAddress_StateOrProvinceCode_C",
+        "type": "text",
+        "label": "Enter code: The state or province code of the commercial structure."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-ss-25-50-06-16.ground-truth:CommercialStructure_PhysicalAddress_StateOrProvinceCode_C",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CommercialStructure_PhysicalAddress_StateOrProvinceCode_C",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-ss-25-50-06-16.ground-truth:CommercialStructure_PhysicalAddress_PostalCode_D",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CommercialStructure_PhysicalAddress_PostalCode_D",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "CommercialStructure_PhysicalAddress_PostalCode_D",
+        "type": "text",
+        "label": "Enter code: The postal code of the commercial structure."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-ss-25-50-06-16.ground-truth:CommercialStructure_PhysicalAddress_PostalCode_D",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CommercialStructure_PhysicalAddress_PostalCode_D",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:hartford-ss-25-50-06-16.ground-truth:Unmapped_wCySfPYm_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_wCySfPYm_A",
+        "predictionId": "table-1-r2-c2",
+        "page": 3,
+        "geometryDistance": 0.019802300059744635
+      },
+      "expected": {
+        "label": "Based on the applicant's annual sales for the most recent 12 months, indicate the percentage of sales derived from the types of consultative advice that best describe the applicant's business or management consultant services*. The total must equal 100%. If new in business, select based on best estimate: General Business Operations",
+        "helpLabel": "Based on the applicant's annual sales for the most recent 12 months, indicate the percentage of sales derived from the types of consultative advice that best describe the applicant's business or management consultant services*. The total must equal 100%. If new in business, select based on best estimate: General Business Operations"
+      },
+      "actual": {
+        "label": "Human Resources"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "semantic_label_mismatch:hartford-ss-25-50-06-16.ground-truth:Unmapped_adboUoUQ_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_adboUoUQ_A",
+        "predictionId": "table-1-r5-c2",
+        "page": 3,
+        "geometryDistance": 0.05523420299437118
+      },
+      "expected": {
+        "label": "Based on the applicant's annual sales for the most recent 12 months, indicate the percentage of sales derived from the types of consultative advice that best describe the applicant's business or management consultant services*. The total must equal 100%. If new in business, select based on best estimate: Human Resources",
+        "helpLabel": "Based on the applicant's annual sales for the most recent 12 months, indicate the percentage of sales derived from the types of consultative advice that best describe the applicant's business or management consultant services*. The total must equal 100%. If new in business, select based on best estimate: Human Resources"
+      },
+      "actual": {
+        "label": "Marketing Processes"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "semantic_label_mismatch:hartford-ss-25-50-06-16.ground-truth:Unmapped_KgtxFnFB_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_KgtxFnFB_A",
+        "predictionId": "table-1-r6-c2",
+        "page": 3,
+        "geometryDistance": 0.054831590258111004
+      },
+      "expected": {
+        "label": "Based on the applicant's annual sales for the most recent 12 months, indicate the percentage of sales derived from the types of consultative advice that best describe the applicant's business or management consultant services*. The total must equal 100%. If new in business, select based on best estimate: Management Practices",
+        "helpLabel": "Based on the applicant's annual sales for the most recent 12 months, indicate the percentage of sales derived from the types of consultative advice that best describe the applicant's business or management consultant services*. The total must equal 100%. If new in business, select based on best estimate: Management Practices"
+      },
+      "actual": {
+        "label": "Strategic Planning/Direction"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "semantic_label_mismatch:hartford-ss-25-50-06-16.ground-truth:Unmapped_QASlZLaQ_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_QASlZLaQ_A",
+        "predictionId": "table-1-r8-c2",
+        "page": 3,
+        "geometryDistance": 0.07361114740691038
+      },
+      "expected": {
+        "label": "Based on the applicant's annual sales for the most recent 12 months, indicate the percentage of sales derived from the types of consultative advice that best describe the applicant's business or management consultant services*. The total must equal 100%. If new in business, select based on best estimate: Business Development",
+        "helpLabel": "Based on the applicant's annual sales for the most recent 12 months, indicate the percentage of sales derived from the types of consultative advice that best describe the applicant's business or management consultant services*. The total must equal 100%. If new in business, select based on best estimate: Business Development"
+      },
+      "actual": {
+        "label": "Operational Processes"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "semantic_label_mismatch:hartford-ss-25-50-06-16.ground-truth:Unmapped_DyKcJulT_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_DyKcJulT_A",
+        "predictionId": "table-1-r9-c2",
+        "page": 3,
+        "geometryDistance": 0.07347151817251005
+      },
+      "expected": {
+        "label": "Based on the applicant's annual sales for the most recent 12 months, indicate the percentage of sales derived from the types of consultative advice that best describe the applicant's business or management consultant services*. The total must equal 100%. If new in business, select based on best estimate: Marketing Processes",
+        "helpLabel": "Based on the applicant's annual sales for the most recent 12 months, indicate the percentage of sales derived from the types of consultative advice that best describe the applicant's business or management consultant services*. The total must equal 100%. If new in business, select based on best estimate: Marketing Processes"
+      },
+      "actual": {
+        "label": "Mergers & Acquisitions"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "semantic_label_mismatch:hartford-ss-25-50-06-16.ground-truth:Unmapped_BGNEvyGG_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_BGNEvyGG_A",
+        "predictionId": "table-1-r10-c2",
+        "page": 3,
+        "geometryDistance": 0.07408506317790055
+      },
+      "expected": {
+        "label": "Based on the applicant's annual sales for the most recent 12 months, indicate the percentage of sales derived from the types of consultative advice that best describe the applicant's business or management consultant services*. The total must equal 100%. If new in business, select based on best estimate: Strategic Planning/Direction",
+        "helpLabel": "Based on the applicant's annual sales for the most recent 12 months, indicate the percentage of sales derived from the types of consultative advice that best describe the applicant's business or management consultant services*. The total must equal 100%. If new in business, select based on best estimate: Strategic Planning/Direction"
+      },
+      "actual": {
+        "label": "Business Turnaround"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0.0488
+      }
+    },
+    {
+      "id": "semantic_label_mismatch:hartford-ss-25-50-06-16.ground-truth:Unmapped_qxhvxnAB_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_qxhvxnAB_A",
+        "predictionId": "table-1-r11-c2",
+        "page": 3,
+        "geometryDistance": 0.07318789615196583
+      },
+      "expected": {
+        "label": "Based on the applicant's annual sales for the most recent 12 months, indicate the percentage of sales derived from the types of consultative advice that best describe the applicant's business or management consultant services*. The total must equal 100%. If new in business, select based on best estimate: Organizational Structure",
+        "helpLabel": "Based on the applicant's annual sales for the most recent 12 months, indicate the percentage of sales derived from the types of consultative advice that best describe the applicant's business or management consultant services*. The total must equal 100%. If new in business, select based on best estimate: Organizational Structure"
+      },
+      "actual": {
+        "label": "Business Financing"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0.05
+      }
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-ss-25-50-06-16.ground-truth:Unmapped_VDaFayvO_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_VDaFayvO_A",
+        "predictionId": null,
+        "page": 3,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_VDaFayvO_A",
+        "type": "text",
+        "label": "Based on the applicant's annual sales for the most recent 12 months, indicate the percentage of sales derived from the types of consultative advice that best describe the applicant's business or management consultant services*. The total must equal 100%. If new in business, select based on best estimate: Operational Processes"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-ss-25-50-06-16.ground-truth:Unmapped_VDaFayvO_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_VDaFayvO_A",
+        "predictionId": null,
+        "page": 3,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:hartford-ss-25-50-06-16.ground-truth:Unmapped_CKlVesHP_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_CKlVesHP_A",
+        "predictionId": "table-1-r13-c2",
+        "page": 3,
+        "geometryDistance": 0.07290427424536862
+      },
+      "expected": {
+        "label": "Based on the applicant's annual sales for the most recent 12 months, indicate the percentage of sales derived from the types of consultative advice that best describe the applicant's business or management consultant services*. The total must equal 100%. If new in business, select based on best estimate: Mergers & Acquisitions",
+        "helpLabel": "Based on the applicant's annual sales for the most recent 12 months, indicate the percentage of sales derived from the types of consultative advice that best describe the applicant's business or management consultant services*. The total must equal 100%. If new in business, select based on best estimate: Mergers & Acquisitions"
+      },
+      "actual": {
+        "label": "Other Services"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0.05
+      }
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-ss-25-50-06-16.ground-truth:Unmapped_uZvzZAFR_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_uZvzZAFR_A",
+        "predictionId": null,
+        "page": 3,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_uZvzZAFR_A",
+        "type": "text",
+        "label": "Based on the applicant's annual sales for the most recent 12 months, indicate the percentage of sales derived from the types of consultative advice that best describe the applicant's business or management consultant services*. The total must equal 100%. If new in business, select based on best estimate: Business Turnaround"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-ss-25-50-06-16.ground-truth:Unmapped_uZvzZAFR_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_uZvzZAFR_A",
+        "predictionId": null,
+        "page": 3,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-ss-25-50-06-16.ground-truth:Unmapped_tLucefTQ_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_tLucefTQ_A",
+        "predictionId": null,
+        "page": 3,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_tLucefTQ_A",
+        "type": "text",
+        "label": "Based on the applicant's annual sales for the most recent 12 months, indicate the percentage of sales derived from the types of consultative advice that best describe the applicant's business or management consultant services*. The total must equal 100%. If new in business, select based on best estimate: Business Financing"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-ss-25-50-06-16.ground-truth:Unmapped_tLucefTQ_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_tLucefTQ_A",
+        "predictionId": null,
+        "page": 3,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-ss-25-50-06-16.ground-truth:Unmapped_yIGFUfsC_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_yIGFUfsC_A",
+        "predictionId": null,
+        "page": 3,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_yIGFUfsC_A",
+        "type": "text",
+        "label": "Based on the applicant's annual sales for the most recent 12 months, indicate the percentage of sales derived from the types of consultative advice that best describe the applicant's business or management consultant services*. The total must equal 100%. If new in business, select based on best estimate: Business Valuations"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-ss-25-50-06-16.ground-truth:Unmapped_yIGFUfsC_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_yIGFUfsC_A",
+        "predictionId": null,
+        "page": 3,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-ss-25-50-06-16.ground-truth:Unmapped_KzBkNkcy_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_KzBkNkcy_A",
+        "predictionId": null,
+        "page": 3,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_KzBkNkcy_A",
+        "type": "text",
+        "label": "Based on the applicant's annual sales for the most recent 12 months, indicate the percentage of sales derived from the types of consultative advice that best describe the applicant's business or management consultant services*. The total must equal 100%. If new in business, select based on best estimate: Other Services"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-ss-25-50-06-16.ground-truth:Unmapped_KzBkNkcy_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_KzBkNkcy_A",
+        "predictionId": null,
+        "page": 3,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-ss-25-50-06-16.ground-truth:Unmapped_xojnIlRm_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_xojnIlRm_A",
+        "predictionId": null,
+        "page": 4,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_xojnIlRm_A",
+        "type": "checkbox",
+        "label": "How frequently does the applicant use standardized written contracts, engagement letters or service agreements with their clients?: Never (0%)"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-ss-25-50-06-16.ground-truth:Unmapped_xojnIlRm_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_xojnIlRm_A",
+        "predictionId": null,
+        "page": 4,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-ss-25-50-06-16.ground-truth:Unmapped_vNGtXHkf_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_vNGtXHkf_A",
+        "predictionId": null,
+        "page": 4,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_vNGtXHkf_A",
+        "type": "text",
+        "label": "Provide the phone number for the Producer contact"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-ss-25-50-06-16.ground-truth:Unmapped_vNGtXHkf_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_vNGtXHkf_A",
+        "predictionId": null,
+        "page": 4,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:hartford-ss-25-50-06-16.ground-truth:Unmapped_TOMNpQKj_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_TOMNpQKj_A",
+        "predictionId": "checkbox-p4-1",
+        "page": 4,
+        "geometryDistance": 0.07657677542196624
+      },
+      "expected": {
+        "label": "How frequently does the applicant use standardized written contracts, engagement letters or service agreements with their clients?: Sometimes (Between 1 and 74%)",
+        "helpLabel": "How frequently does the applicant use standardized written contracts, engagement letters or service agreements with their clients?: Sometimes (Between 1 and 74%)"
+      },
+      "actual": {
+        "label": "contain the following"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0.0741
+      }
+    },
+    {
+      "id": "grouping_error:hartford-ss-25-50-06-16.ground-truth:Unmapped_TOMNpQKj_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_TOMNpQKj_A",
+        "predictionId": "checkbox-p4-1",
+        "page": 4,
+        "geometryDistance": 0.07657677542196624
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-9"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-ss-25-50-06-16.ground-truth:Unmapped_csEaMkdv_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_csEaMkdv_A",
+        "predictionId": null,
+        "page": 4,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_csEaMkdv_A",
+        "type": "checkbox",
+        "label": "How frequently does the applicant use standardized written contracts, engagement letters or service agreements with their clients?: Most of the Time (Between 75 and 99%)"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-ss-25-50-06-16.ground-truth:Unmapped_csEaMkdv_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_csEaMkdv_A",
+        "predictionId": null,
+        "page": 4,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:hartford-ss-25-50-06-16.ground-truth:Unmapped_YmpWKCTz_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_YmpWKCTz_A",
+        "predictionId": "checkbox-p4-2",
+        "page": 4,
+        "geometryDistance": 0.07709606799132496
+      },
+      "expected": {
+        "label": "How frequently does the applicant use standardized written contracts, engagement letters or service agreements with their clients?: In all Cases (100%)",
+        "helpLabel": "How frequently does the applicant use standardized written contracts, engagement letters or service agreements with their clients?: In all Cases (100%)"
+      },
+      "actual": {
+        "label": "contain the following"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0.0741
+      }
+    },
+    {
+      "id": "grouping_error:hartford-ss-25-50-06-16.ground-truth:Unmapped_YmpWKCTz_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_YmpWKCTz_A",
+        "predictionId": "checkbox-p4-2",
+        "page": 4,
+        "geometryDistance": 0.07709606799132496
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-9"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-ss-25-50-06-16.ground-truth:Unmapped_GwsCzwDX_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_GwsCzwDX_A",
+        "predictionId": null,
+        "page": 4,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_GwsCzwDX_A",
+        "type": "checkbox",
+        "label": "How frequently does the applicant subcontract work to others?: Never"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-ss-25-50-06-16.ground-truth:Unmapped_GwsCzwDX_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_GwsCzwDX_A",
+        "predictionId": null,
+        "page": 4,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-ss-25-50-06-16.ground-truth:Unmapped_mumfISAP_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_mumfISAP_A",
+        "predictionId": null,
+        "page": 4,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_mumfISAP_A",
+        "type": "checkbox",
+        "label": "How frequently does the applicant subcontract work to others?: < 25%"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-ss-25-50-06-16.ground-truth:Unmapped_mumfISAP_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_mumfISAP_A",
+        "predictionId": null,
+        "page": 4,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-ss-25-50-06-16.ground-truth:Unmapped_rsCwSUZN_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_rsCwSUZN_A",
+        "predictionId": null,
+        "page": 4,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_rsCwSUZN_A",
+        "type": "checkbox",
+        "label": "How frequently does the applicant subcontract work to others?: 25-50%"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-ss-25-50-06-16.ground-truth:Unmapped_rsCwSUZN_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_rsCwSUZN_A",
+        "predictionId": null,
+        "page": 4,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-ss-25-50-06-16.ground-truth:Unmapped_KoOWwvcR_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_KoOWwvcR_A",
+        "predictionId": null,
+        "page": 4,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_KoOWwvcR_A",
+        "type": "checkbox",
+        "label": "How frequently does the applicant subcontract work to others?: Greater than 50%"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-ss-25-50-06-16.ground-truth:Unmapped_KoOWwvcR_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_KoOWwvcR_A",
+        "predictionId": null,
+        "page": 4,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-ss-25-50-06-16.ground-truth:NamedInsured_Signature_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_Signature_A",
+        "predictionId": null,
+        "page": 10,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "NamedInsured_Signature_A",
+        "type": "signature",
+        "label": "Sign here: Accommodates the signature of the applicant or named insured."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-ss-25-50-06-16.ground-truth:NamedInsured_Signature_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_Signature_A",
+        "predictionId": null,
+        "page": 10,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "candidate_ranking_error:hartford-ss-25-50-06-16.ground-truth:NamedInsured_Title_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_Title_A",
+        "predictionId": "input-table-2-r1-c2",
+        "page": 10,
+        "geometryDistance": 0.06114926753252013
+      },
+      "expected": {
+        "topAcordCode": "NamedInsured_Title"
+      },
+      "actual": {
+        "topAcordCode": "AccountantsLiability_BusinessInterestAnyClient_EmployeeTitle",
+        "rankedCodes": [
+          "AccountantsLiability_BusinessInterestAnyClient_EmployeeTitle",
+          "AdditionalInterest_AuthorizedRepresentativeTitle",
+          "BusinessInformation_DirectorOrOfficer_Title"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "table_detection_error:hartford-ss-25-50-06-16.ground-truth:NamedInsured_Title_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_Title_A",
+        "predictionId": "input-table-2-r1-c2",
+        "page": 10,
+        "geometryDistance": 0.06114926753252013
+      },
+      "expected": {
+        "tableId": "page-10-table-1",
+        "rowIndex": 0,
+        "columnIndex": 2,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": "table-2",
+        "rowIndex": 0,
+        "columnIndex": 1,
+        "valueType": "text"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-ss-25-50-06-16.ground-truth:NamedInsured_FullName_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_FullName_A",
+        "predictionId": null,
+        "page": 10,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "NamedInsured_FullName_A",
+        "type": "text",
+        "label": "Enter text: The named insured(s) as it / they will appear on the policy declarations page."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-ss-25-50-06-16.ground-truth:NamedInsured_FullName_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_FullName_A",
+        "predictionId": null,
+        "page": 10,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-ss-25-50-06-16.ground-truth:Producer_AuthorizedRepresentative_Signature_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Producer_AuthorizedRepresentative_Signature_A",
+        "predictionId": null,
+        "page": 10,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Producer_AuthorizedRepresentative_Signature_A",
+        "type": "signature",
+        "label": "Sign here: Accommodates the signature of the authorized representative (e.g., producer, agent, broker, etc.) of the company(ies) listed on the document. This is required in most states."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-ss-25-50-06-16.ground-truth:Producer_AuthorizedRepresentative_Signature_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Producer_AuthorizedRepresentative_Signature_A",
+        "predictionId": null,
+        "page": 10,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-ss-25-50-06-16.ground-truth:Producer_AuthorizedRepresentative_FullName_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Producer_AuthorizedRepresentative_FullName_A",
+        "predictionId": null,
+        "page": 10,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Producer_AuthorizedRepresentative_FullName_A",
+        "type": "text",
+        "label": "Enter text: The name of the authorized representative of the producer, agency and/or broker that signed the form."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-ss-25-50-06-16.ground-truth:Producer_AuthorizedRepresentative_FullName_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Producer_AuthorizedRepresentative_FullName_A",
+        "predictionId": null,
+        "page": 10,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:hartford-ss-25-50-06-16.ground-truth:NamedInsured_SignatureDate_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_SignatureDate_A",
+        "predictionId": "input-table-2-r2-c2",
+        "page": 10,
+        "geometryDistance": 0.060372314893581525
+      },
+      "expected": {
+        "label": "Enter date: The date the form was signed by the applicant or named insured. (MM/DD/YYYY)",
+        "helpLabel": "Enter date: The date the form was signed by the applicant or named insured. (MM/DD/YYYY)"
+      },
+      "actual": {
+        "label": "Date"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0.1333
+      }
+    },
+    {
+      "id": "field_type_misclassification:hartford-ss-25-50-06-16.ground-truth:NamedInsured_SignatureDate_A",
+      "category": "field_type_misclassification",
+      "description": "The predicted fillable type differs from the XFDL control/format type.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_SignatureDate_A",
+        "predictionId": "input-table-2-r2-c2",
+        "page": 10,
+        "geometryDistance": 0.060372314893581525
+      },
+      "expected": {
+        "type": "signature",
+        "sourceType": "signature",
+        "format": {
+          "dataType": "date",
+          "requirement": "Optional",
+          "presentation": "MM/DD/YYYY",
+          "rawValues": [
+            "date",
+            "Optional",
+            ""
+          ],
+          "provenance": "explicit"
+        }
+      },
+      "actual": {
+        "type": "date",
+        "sourceType": "date"
+      },
+      "rationale": "XFDL control/format typing and backend typed-blank classification disagree.",
+      "evidence": {}
+    },
+    {
+      "id": "candidate_ranking_error:hartford-ss-25-50-06-16.ground-truth:NamedInsured_SignatureDate_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_SignatureDate_A",
+        "predictionId": "input-table-2-r2-c2",
+        "page": 10,
+        "geometryDistance": 0.060372314893581525
+      },
+      "expected": {
+        "topAcordCode": "NamedInsured_SignatureDate"
+      },
+      "actual": {
+        "topAcordCode": "AccidentConviction_AccidentDate",
+        "rankedCodes": [
+          "AccidentConviction_AccidentDate",
+          "AccidentConviction_ArrestDate",
+          "AccidentConviction_IncidentDate"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "table_detection_error:hartford-ss-25-50-06-16.ground-truth:NamedInsured_SignatureDate_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_SignatureDate_A",
+        "predictionId": "input-table-2-r2-c2",
+        "page": 10,
+        "geometryDistance": 0.060372314893581525
+      },
+      "expected": {
+        "tableId": "page-10-table-1",
+        "rowIndex": 1,
+        "columnIndex": 2,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": "table-2",
+        "rowIndex": 1,
+        "columnIndex": 1,
+        "valueType": "date"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "candidate_ranking_error:hartford-ss-25-50-06-16.ground-truth:Producer_AuthorizedRepresentative_Title_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Producer_AuthorizedRepresentative_Title_A",
+        "predictionId": "input-table-2-r3-c2",
+        "page": 10,
+        "geometryDistance": 0.06082783295312223
+      },
+      "expected": {
+        "topAcordCode": "Producer_AuthorizedRepresentative_Title"
+      },
+      "actual": {
+        "topAcordCode": "AccountantsLiability_BusinessInterestAnyClient_EmployeeTitle",
+        "rankedCodes": [
+          "AccountantsLiability_BusinessInterestAnyClient_EmployeeTitle",
+          "AdditionalInterest_AuthorizedRepresentativeTitle",
+          "BusinessInformation_DirectorOrOfficer_Title"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "table_detection_error:hartford-ss-25-50-06-16.ground-truth:Producer_AuthorizedRepresentative_Title_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Producer_AuthorizedRepresentative_Title_A",
+        "predictionId": "input-table-2-r3-c2",
+        "page": 10,
+        "geometryDistance": 0.06082783295312223
+      },
+      "expected": {
+        "tableId": "page-10-table-1",
+        "rowIndex": 2,
+        "columnIndex": 2,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": "table-2",
+        "rowIndex": 2,
+        "columnIndex": 1,
+        "valueType": "text"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:hartford-ss-25-50-06-16.ground-truth:Producer_AuthorizedRepresentative_SignatureDate_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Producer_AuthorizedRepresentative_SignatureDate_A",
+        "predictionId": "input-table-2-r4-c2",
+        "page": 10,
+        "geometryDistance": 0.05983974534207567
+      },
+      "expected": {
+        "label": "Enter date: The date the producer signed the form.",
+        "helpLabel": "Enter date: The date the producer signed the form."
+      },
+      "actual": {
+        "label": "Date"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0.2857
+      }
+    },
+    {
+      "id": "field_type_misclassification:hartford-ss-25-50-06-16.ground-truth:Producer_AuthorizedRepresentative_SignatureDate_A",
+      "category": "field_type_misclassification",
+      "description": "The predicted fillable type differs from the XFDL control/format type.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Producer_AuthorizedRepresentative_SignatureDate_A",
+        "predictionId": "input-table-2-r4-c2",
+        "page": 10,
+        "geometryDistance": 0.05983974534207567
+      },
+      "expected": {
+        "type": "signature",
+        "sourceType": "signature",
+        "format": {
+          "dataType": "date",
+          "requirement": "Optional",
+          "presentation": "MM/DD/YYYY",
+          "rawValues": [
+            "date",
+            "Optional",
+            ""
+          ],
+          "provenance": "explicit"
+        }
+      },
+      "actual": {
+        "type": "date",
+        "sourceType": "date"
+      },
+      "rationale": "XFDL control/format typing and backend typed-blank classification disagree.",
+      "evidence": {}
+    },
+    {
+      "id": "candidate_ranking_error:hartford-ss-25-50-06-16.ground-truth:Producer_AuthorizedRepresentative_SignatureDate_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Producer_AuthorizedRepresentative_SignatureDate_A",
+        "predictionId": "input-table-2-r4-c2",
+        "page": 10,
+        "geometryDistance": 0.05983974534207567
+      },
+      "expected": {
+        "topAcordCode": "Producer_AuthorizedRepresentative_SignatureDate"
+      },
+      "actual": {
+        "topAcordCode": "AccidentConviction_AccidentDate",
+        "rankedCodes": [
+          "AccidentConviction_AccidentDate",
+          "AccidentConviction_ArrestDate",
+          "AccidentConviction_IncidentDate"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "table_detection_error:hartford-ss-25-50-06-16.ground-truth:Producer_AuthorizedRepresentative_SignatureDate_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Producer_AuthorizedRepresentative_SignatureDate_A",
+        "predictionId": "input-table-2-r4-c2",
+        "page": 10,
+        "geometryDistance": 0.05983974534207567
+      },
+      "expected": {
+        "tableId": "page-10-table-1",
+        "rowIndex": 3,
+        "columnIndex": 2,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": "table-2",
+        "rowIndex": 3,
+        "columnIndex": 1,
+        "valueType": "date"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:hartford-ss-25-50-06-16.ground-truth:Producer_NationalIdentifier_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Producer_NationalIdentifier_A",
+        "predictionId": null,
+        "page": 10,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Producer_NationalIdentifier_A",
+        "type": "text",
+        "label": "Enter identifier: The National Producer Number (NPN) as defined in the National Insurance Producer Registry (NIPR). Note: The NPN is not the same as the producer state license number."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:hartford-ss-25-50-06-16.ground-truth:Producer_NationalIdentifier_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+        "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+        "pdfFile": "Hartford SS_25_50_06_16.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Producer_NationalIdentifier_A",
+        "predictionId": null,
+        "page": 10,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    }
+  ]
+}

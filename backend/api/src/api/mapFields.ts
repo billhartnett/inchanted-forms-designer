@@ -108,6 +108,7 @@ type MapFieldsRequest = {
 const PROMOTED_MAPPING_ROLES = new Set([
   "input",
   "checkbox",
+  "select",
   "table-cell",
   "value-region",
 ]);
@@ -177,10 +178,10 @@ function strictlyPromotedGeometry(
     (groupedStructures?.labelInputPairs ?? []).map((pair) => pair.inputBlockId),
   );
   const candidates = fieldCatalog.filter((entry) =>
-    PROMOTED_MAPPING_ROLES.has(entry.role) &&
+    (PROMOTED_MAPPING_ROLES.has(entry.role) || isLikelyUnmappedFillableField(entry)) &&
     hasFillableGeometry(entry) &&
     !(/^\W+$/.test(entry.text.trim()) || /^\W+$/.test(String(entry.semanticLabel || "").trim())) &&
-    (entry.role !== "table-cell" || !entry.text.trim()),
+    (entry.role !== "table-cell" || !entry.text.trim() || isLikelyUnmappedFillableField(entry)),
   );
   const promoted: ExtractDocumentFieldCatalogEntry[] = [];
   for (const entry of [...candidates].sort((left, right) => {
@@ -225,22 +226,59 @@ function strictlyPromotedGeometry(
 function preferredAcordCodes(label: string): string[] {
   const normalized = label.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
   if (/\bunderwriter\b/.test(normalized)) return ["Insurer_Underwriter_FullName"];
-  if (/\b(carrier|company)\b/.test(normalized)) return ["Insurer_FullName"];
-  if (/\b(applicant s name|applicant name|name first named insured|name of applicant)\b/.test(normalized)) {
+  if (/\b(carrier|company|insurer)\b/.test(normalized)) return ["Insurer_FullName"];
+  if (/\b(business name|legal name|full legal name)\b/.test(normalized)) return ["NamedInsured_FullName", "Insurer_FullName"];
+  if (/\b(applicant s name|applicant name|name first named insured|name of applicant|named insured)\b/.test(normalized)) {
     return ["NamedInsured_FullName"];
   }
   if (/\bmailing address\b/.test(normalized)) return ["NamedInsured_MailingAddress_LineOne"];
-  if (/\b(agency name and address|agent name|producer name|agency)\b/.test(normalized)) {
+  if (/\b(agency name and address|agent name|producer name|agency|broker|agency name)\b/.test(normalized)) {
     return ["Producer_FullName", "Producer_MailingAddress_LineOne"];
   }
-  if (/\b(e mail|email)\b/.test(normalized)) {
+  if (/\b(e mail|email|primary email)\b/.test(normalized)) {
     return ["NamedInsured_Primary_EmailAddress", "Producer_ContactPerson_EmailAddress"];
   }
-  if (/\b(phone|mobile phone|office phone)\b/.test(normalized)) {
+  if (/\b(phone|telephone|mobile phone|office phone|primary phone)\b/.test(normalized)) {
     return ["NamedInsured_Primary_PhoneNumber", "Producer_PhoneNumber"];
   }
-  if (/^address\b/.test(normalized)) return ["Producer_MailingAddress_LineOne"];
+  if (/\bfax\b/.test(normalized)) return ["Producer_FaxNumber", "NamedInsured_Primary_FaxNumber"];
+  if (/\b(zip|postal|post code|zip code)\b/.test(normalized)) return ["NamedInsured_MailingAddress_PostalCode", "Producer_MailingAddress_PostalCode"];
+  if (/\b(city)\b/.test(normalized)) return ["NamedInsured_MailingAddress_CityName", "Producer_MailingAddress_CityName"];
+  if (/\b(state|province)\b/.test(normalized)) return ["NamedInsured_MailingAddress_StateOrProvinceCode", "Producer_MailingAddress_StateOrProvinceCode"];
+  if (/\b(tax id|tax identifier|tax number|federal tax|employer id|ein|fein)\b/.test(normalized)) {
+    return ["NamedInsured_TaxIdentifier", "Producer_TaxIdentifier"];
+  }
+  if (/\b(license|licence|state license|license number|license id)\b/.test(normalized)) {
+    return ["ContractorsUnderwriting_LicenseNumberIdentifier", "Driver_LicenseNumberIdentifier"];
+  }
+  if (/\b(year established|date established|year|effective year|tax year)\b/.test(normalized)) {
+    return ["NamedInsured_YearEstablished", "Producer_YearEstablished"];
+  }
+  if (/\b(policy number|policy no|policy id|policy #|coverage number)\b/.test(normalized)) {
+    return ["Policy_PolicyNumber", "NamedInsured_PolicyNumber"];
+  }
+  if (/\b(date of birth|birth date|effective date|expiration date|date effective|policy effective date)\b/.test(normalized)) {
+    return ["NamedInsured_DateOfBirth", "Policy_EffectiveDate"];
+  }
+  if (/\b(website|web site)\b/.test(normalized)) return ["Producer_WebsiteAddress", "Insurer_WebsiteAddress"];
+  if (/^(address|mailing address)\b/.test(normalized)) return ["Producer_MailingAddress_LineOne", "NamedInsured_MailingAddress_LineOne"];
   return [];
+}
+
+function isStructuralFillableReconciliation(entry: ExtractDocumentFieldCatalogEntry): boolean {
+  const label = (entry.semanticLabel || entry.text || "").trim();
+  if (!label || !Boolean(entry.semanticValueRegion || entry.boundingBox)) return false;
+  return /\b(policy number|policy no|producer|agent|carrier|insurer|underwriter|license number|tax id|tax identifier|date of birth|year established|business name|legal name|mailing address|city|state|zip|postal|phone|fax|email|website|named insured|applicant|address|business identity)\b/i.test(label) ||
+    Boolean(entry.semanticGroupIds?.some((groupId) => /(?:address|table-row|choice-set|yes-no|business-identity)/i.test(groupId)));
+}
+
+function isLikelyUnmappedFillableField(entry: ExtractDocumentFieldCatalogEntry): boolean {
+  const label = (entry.semanticLabel || entry.text || "").trim();
+  if (!label || entry.role === "label" || entry.role === "header" || entry.role === "section-label") return false;
+  return isStructuralFillableReconciliation(entry) || (
+    /\b(policy number|policy no|producer|agent|carrier|insurer|underwriter|license number|tax id|date of birth|year established|business name|legal name|mailing address|city|state|zip|postal|phone|fax|email|website)\b/i.test(label) &&
+    Boolean(entry.semanticValueRegion || entry.boundingBox)
+  );
 }
 
 function contextualPreferredAcordCodes(
@@ -260,7 +298,9 @@ function contextualPreferredAcordCodes(
       ? "StateOrProvinceCode"
       : /^(zip|zip code|postal code)$/.test(normalized)
         ? "PostalCode"
-        : undefined;
+        : /^(county|country)$/.test(normalized)
+          ? "CountryCode"
+          : undefined;
   if (!addressPart) return [];
 
   const entryBox = entry.labelBoundingBox || entry.boundingBox;
@@ -291,8 +331,15 @@ function promotedDictionarySuggestions(
   sourceDocumentName?: string,
 ): FieldMapping["suggestions"] {
   if (mapping.suggestions.length > 0 || !entry) return mapping.suggestions;
-  const promoted = PROMOTED_MAPPING_ROLES.has(entry.role) &&
-    hasFillableGeometry(entry) &&
+  const isLikelyFillableField =
+    entry.source === "pdf_widget" ||
+    PROMOTED_MAPPING_ROLES.has(entry.role) ||
+    isStructuralFillableReconciliation(entry) ||
+    /\b(name|address|city|state|zip|postal|phone|fax|email|date|year|tax|license|policy|number|code|insured|applicant|producer|carrier|underwriter|company|mailing|contact|owner)\b/i.test(
+      String(entry.semanticLabel || entry.text || ""),
+    );
+  const promoted = isLikelyFillableField &&
+    (hasFillableGeometry(entry) || entry.source === "pdf_widget") &&
     promotedByGroup;
   if (!promoted) return mapping.suggestions;
   const query = [entry.semanticLabel, entry.text, mapping.text, entry.role]
@@ -312,8 +359,8 @@ function promotedDictionarySuggestions(
       acordCode: candidate.acordCode,
       label: candidate.label,
       description: candidate.description,
-      confidenceScore: Number((0.96 - index * 0.03).toFixed(3)),
-      normalizedConfidenceScore: Number((0.96 - index * 0.03).toFixed(3)),
+      confidenceScore: Number((0.96 - index * 0.03 + (entry.source === "pdf_widget" ? 0.08 : 0)).toFixed(3)),
+      normalizedConfidenceScore: Number((0.96 - index * 0.03 + (entry.source === "pdf_widget" ? 0.08 : 0)).toFixed(3)),
       source: "dictionary" as const,
       rationale: `Promoted ${entry.role} field matched to its canonical ACORD business concept.`,
       dictionaryScore: 1000 - index,
@@ -1825,6 +1872,7 @@ export async function mapFields(
           semanticValueRegion: promotedBox || catalogEntry?.semanticValueRegion,
         })),
         groupId: catalogEntry?.groupId,
+        semanticGroupIds: catalogEntry?.semanticGroupIds,
         tableId: catalogEntry?.tableId,
         rowIndex: catalogEntry?.rowIndex,
         columnIndex: catalogEntry?.columnIndex,
@@ -1832,7 +1880,17 @@ export async function mapFields(
       };
     });
     const mappedFields = mappingsWithLayoutLm.filter((mapping) => {
-      return promotedIds.has(mapping.blockId);
+      const catalogEntry = catalogById.get(mapping.blockId);
+      const isFillableCandidate = Boolean(
+        catalogEntry && (
+          catalogEntry.source === "pdf_widget" ||
+          PROMOTED_MAPPING_ROLES.has(catalogEntry.role) ||
+          /\b(name|address|city|state|zip|postal|phone|fax|email|date|year|tax|license|policy|number|code|insured|applicant|producer|carrier|underwriter|company|mailing|contact|owner)\b/i.test(
+            String(catalogEntry.semanticLabel || catalogEntry.text || ""),
+          )
+        ),
+      );
+      return promotedIds.has(mapping.blockId) || isFillableCandidate;
     });
 
     return {
@@ -1848,6 +1906,7 @@ export async function mapFields(
           tables: [],
           questionAnswerPairs: [],
           checkboxGroups: [],
+          semanticGroups: [],
         },
         bboxNormalization: body.bboxNormalization,
         decisionGraph: createMappingDecisionGraph(ontologyCompleteMappings, body.decisionGraph),

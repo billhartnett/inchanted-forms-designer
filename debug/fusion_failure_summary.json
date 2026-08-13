@@ -1,11 +1,11 @@
 {
-  "timestamp": "2026-07-02T18:01:34.281Z",
-  "documentId": "sample-Acord-125.pdf",
-  "totalBlocks": 714,
-  "sampledBlocks": 20,
-  "accumCount": 215,
-  "suggestionsCount": 72,
-  "sampledCandidateCount": 72,
+  "timestamp": "2026-08-13T03:16:08.407Z",
+  "documentId": "contextual-ranking",
+  "totalBlocks": 3,
+  "sampledBlocks": 0,
+  "accumCount": 0,
+  "suggestionsCount": 0,
+  "sampledCandidateCount": 0,
   "checks": {
     "allFusionBelowThreshold": false,
     "categoryModeRemovesAll": false,

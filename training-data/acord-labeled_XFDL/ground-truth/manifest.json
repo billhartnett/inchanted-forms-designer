@@ -1,0 +1,1903 @@
+{
+  "schemaVersion": "xfdl-ground-truth.v1",
+  "generatedAt": "2026-08-12T14:35:53.963Z",
+  "sourceDirectory": "training-data",
+  "outputDirectory": "training-data/acord-labeled_XFDL/ground-truth",
+  "formCount": 63,
+  "totals": {
+    "pages": 320,
+    "fields": 21140,
+    "labels": 10679,
+    "bindings": 9979,
+    "tables": 812,
+    "groups": 1094,
+    "diagnostics": 274
+  },
+  "forms": [
+    {
+      "sourceFile": "ACORD 0003 2019-09.xfdl",
+      "datasetFile": "acord-0003-2019-09.ground-truth.json",
+      "sha256": "ce269d9b652051d9e36d0e10b757572a9b117fec0f5d9e7dd84982e6cf052158",
+      "statistics": {
+        "pageCount": 4,
+        "fieldCount": 204,
+        "fieldTypeCounts": {
+          "checkbox": 63,
+          "date": 3,
+          "numeric": 22,
+          "text": 116
+        },
+        "labelCount": 327,
+        "bindingCount": 204,
+        "boundFieldCount": 204,
+        "tableCount": 9,
+        "groupCount": 18,
+        "suppressedElementCount": 925,
+        "conditionalSuppressionCount": 1,
+        "unmappedFillableCount": 0,
+        "fieldsWithGeometry": 204,
+        "fieldsWithResolvedLabels": 204
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    {
+      "sourceFile": "ACORD 0080 2016-11.xfdl",
+      "datasetFile": "acord-0080-2016-11.ground-truth.json",
+      "sha256": "749c0bcf762c5d4cfb69a6053f87e9e18cd8e94650fcaddd820f2798a14913b1",
+      "statistics": {
+        "pageCount": 6,
+        "fieldCount": 821,
+        "fieldTypeCounts": {
+          "checkbox": 228,
+          "date": 22,
+          "numeric": 176,
+          "signature": 3,
+          "text": 392
+        },
+        "labelCount": 1077,
+        "bindingCount": 821,
+        "boundFieldCount": 821,
+        "tableCount": 29,
+        "groupCount": 42,
+        "suppressedElementCount": 2666,
+        "conditionalSuppressionCount": 1,
+        "unmappedFillableCount": 0,
+        "fieldsWithGeometry": 821,
+        "fieldsWithResolvedLabels": 821
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    {
+      "sourceFile": "ACORD 0081 2016-03r1.xfdl",
+      "datasetFile": "acord-0081-2016-03r1.ground-truth.json",
+      "sha256": "bbc92db6b0caf6a0594a3ad17fb95e341afaaa8e704c3758e6559be1d3210152",
+      "statistics": {
+        "pageCount": 4,
+        "fieldCount": 651,
+        "fieldTypeCounts": {
+          "checkbox": 59,
+          "date": 33,
+          "numeric": 101,
+          "signature": 3,
+          "text": 455
+        },
+        "labelCount": 510,
+        "bindingCount": 651,
+        "boundFieldCount": 651,
+        "tableCount": 10,
+        "groupCount": 27,
+        "suppressedElementCount": 1171,
+        "conditionalSuppressionCount": 1,
+        "unmappedFillableCount": 0,
+        "fieldsWithGeometry": 651,
+        "fieldsWithResolvedLabels": 651
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    {
+      "sourceFile": "ACORD 0082 2020-03.xfdl",
+      "datasetFile": "acord-0082-2020-03.ground-truth.json",
+      "sha256": "fac950ff85d3184d1c8717673e2ab96ea8d28b49f94cd2050c83df6b22aa9e9c",
+      "statistics": {
+        "pageCount": 5,
+        "fieldCount": 724,
+        "fieldTypeCounts": {
+          "checkbox": 114,
+          "date": 55,
+          "numeric": 116,
+          "signature": 3,
+          "text": 436
+        },
+        "labelCount": 714,
+        "bindingCount": 724,
+        "boundFieldCount": 724,
+        "tableCount": 18,
+        "groupCount": 28,
+        "suppressedElementCount": 1754,
+        "conditionalSuppressionCount": 1,
+        "unmappedFillableCount": 0,
+        "fieldsWithGeometry": 724,
+        "fieldsWithResolvedLabels": 724
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    {
+      "sourceFile": "ACORD 0083 2016-04r1.xfdl",
+      "datasetFile": "acord-0083-2016-04r1.ground-truth.json",
+      "sha256": "18091de82f3fefb9b1a82abbe98a3ea9a22d1f268dcb5f45df6f9afcccebc107",
+      "statistics": {
+        "pageCount": 6,
+        "fieldCount": 618,
+        "fieldTypeCounts": {
+          "checkbox": 88,
+          "date": 41,
+          "numeric": 76,
+          "signature": 5,
+          "text": 408
+        },
+        "labelCount": 618,
+        "bindingCount": 618,
+        "boundFieldCount": 618,
+        "tableCount": 18,
+        "groupCount": 38,
+        "suppressedElementCount": 1480,
+        "conditionalSuppressionCount": 1,
+        "unmappedFillableCount": 0,
+        "fieldsWithGeometry": 618,
+        "fieldsWithResolvedLabels": 618
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    {
+      "sourceFile": "ACORD 0084 2016-11.xfdl",
+      "datasetFile": "acord-0084-2016-11.ground-truth.json",
+      "sha256": "514bb7180766ff71c9e3e20c42eed5ee9b959618ea00b113c9a880cf79d090ae",
+      "statistics": {
+        "pageCount": 5,
+        "fieldCount": 688,
+        "fieldTypeCounts": {
+          "checkbox": 199,
+          "date": 23,
+          "numeric": 136,
+          "signature": 3,
+          "text": 327
+        },
+        "labelCount": 836,
+        "bindingCount": 688,
+        "boundFieldCount": 688,
+        "tableCount": 24,
+        "groupCount": 37,
+        "suppressedElementCount": 2185,
+        "conditionalSuppressionCount": 1,
+        "unmappedFillableCount": 0,
+        "fieldsWithGeometry": 688,
+        "fieldsWithResolvedLabels": 688
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    {
+      "sourceFile": "ACORD 0085 2016-11.xfdl",
+      "datasetFile": "acord-0085-2016-11.ground-truth.json",
+      "sha256": "3916ef07e246997ef1607b573fbd30a7de449c9264158b6d3ec3eac91ba657a8",
+      "statistics": {
+        "pageCount": 6,
+        "fieldCount": 628,
+        "fieldTypeCounts": {
+          "checkbox": 181,
+          "date": 18,
+          "numeric": 120,
+          "signature": 5,
+          "text": 304
+        },
+        "labelCount": 936,
+        "bindingCount": 628,
+        "boundFieldCount": 628,
+        "tableCount": 21,
+        "groupCount": 40,
+        "suppressedElementCount": 2267,
+        "conditionalSuppressionCount": 1,
+        "unmappedFillableCount": 0,
+        "fieldsWithGeometry": 628,
+        "fieldsWithResolvedLabels": 628
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    {
+      "sourceFile": "ACORD 0088 2015-12r1.xfdl",
+      "datasetFile": "acord-0088-2015-12r1.ground-truth.json",
+      "sha256": "4b3f90161312f0c6fb0ce69f3f877fedf1d9872ead656ce8146c7c407a5f596e",
+      "statistics": {
+        "pageCount": 4,
+        "fieldCount": 399,
+        "fieldTypeCounts": {
+          "checkbox": 85,
+          "date": 22,
+          "numeric": 24,
+          "signature": 3,
+          "text": 265
+        },
+        "labelCount": 368,
+        "bindingCount": 399,
+        "boundFieldCount": 399,
+        "tableCount": 15,
+        "groupCount": 19,
+        "suppressedElementCount": 1095,
+        "conditionalSuppressionCount": 1,
+        "unmappedFillableCount": 0,
+        "fieldsWithGeometry": 399,
+        "fieldsWithResolvedLabels": 399
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    {
+      "sourceFile": "ACORD 0089 2016-11.xfdl",
+      "datasetFile": "acord-0089-2016-11.ground-truth.json",
+      "sha256": "17a6b676a29123e38b9ff5278301349a75f237f54324df922c1c87906b513c5c",
+      "statistics": {
+        "pageCount": 4,
+        "fieldCount": 567,
+        "fieldTypeCounts": {
+          "checkbox": 160,
+          "date": 10,
+          "numeric": 169,
+          "signature": 3,
+          "text": 225
+        },
+        "labelCount": 861,
+        "bindingCount": 567,
+        "boundFieldCount": 567,
+        "tableCount": 19,
+        "groupCount": 28,
+        "suppressedElementCount": 1963,
+        "conditionalSuppressionCount": 1,
+        "unmappedFillableCount": 0,
+        "fieldsWithGeometry": 567,
+        "fieldsWithResolvedLabels": 567
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    {
+      "sourceFile": "ACORD 0090 FL 2015-12r1.xfdl",
+      "datasetFile": "acord-0090-fl-2015-12r1.ground-truth.json",
+      "sha256": "9619444713e969ab8e383d6624e07d285d5a4628908d28323abba3b3b26d5795",
+      "statistics": {
+        "pageCount": 4,
+        "fieldCount": 678,
+        "fieldTypeCounts": {
+          "checkbox": 34,
+          "date": 41,
+          "dropdown": 1,
+          "numeric": 155,
+          "signature": 3,
+          "text": 444
+        },
+        "labelCount": 564,
+        "bindingCount": 678,
+        "boundFieldCount": 678,
+        "tableCount": 16,
+        "groupCount": 28,
+        "suppressedElementCount": 1438,
+        "conditionalSuppressionCount": 1,
+        "unmappedFillableCount": 0,
+        "fieldsWithGeometry": 678,
+        "fieldsWithResolvedLabels": 678
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    {
+      "sourceFile": "ACORD 0090 NY 2015-12.xfdl",
+      "datasetFile": "acord-0090-ny-2015-12.ground-truth.json",
+      "sha256": "bb9541113ab0941797ac7dcb5a9b246c17df1ef62abfacaf35fb899818aa2f2c",
+      "statistics": {
+        "pageCount": 4,
+        "fieldCount": 712,
+        "fieldTypeCounts": {
+          "checkbox": 52,
+          "date": 41,
+          "numeric": 166,
+          "signature": 3,
+          "text": 450
+        },
+        "labelCount": 607,
+        "bindingCount": 712,
+        "boundFieldCount": 712,
+        "tableCount": 18,
+        "groupCount": 28,
+        "suppressedElementCount": 1601,
+        "conditionalSuppressionCount": 1,
+        "unmappedFillableCount": 0,
+        "fieldsWithGeometry": 712,
+        "fieldsWithResolvedLabels": 712
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    {
+      "sourceFile": "ACORD 0125 2016-03r1.xfdl",
+      "datasetFile": "acord-0125-2016-03r1.ground-truth.json",
+      "sha256": "3fd6ccd7fcc8e477cb7242cc1c077afbb98a166ea01f80f47331bbc82a4e8a5f",
+      "statistics": {
+        "pageCount": 4,
+        "fieldCount": 552,
+        "fieldTypeCounts": {
+          "checkbox": 164,
+          "date": 48,
+          "numeric": 81,
+          "signature": 3,
+          "text": 256
+        },
+        "labelCount": 581,
+        "bindingCount": 552,
+        "boundFieldCount": 552,
+        "tableCount": 18,
+        "groupCount": 23,
+        "suppressedElementCount": 1619,
+        "conditionalSuppressionCount": 1,
+        "unmappedFillableCount": 0,
+        "fieldsWithGeometry": 552,
+        "fieldsWithResolvedLabels": 552
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    {
+      "sourceFile": "ACORD 0126 2016-09.xfdl",
+      "datasetFile": "acord-0126-2016-09.ground-truth.json",
+      "sha256": "f78df006ebe7f1ba818b78e36f00b67316d7364bcdeb3c5dfa1b6e5534439129",
+      "statistics": {
+        "pageCount": 4,
+        "fieldCount": 258,
+        "fieldTypeCounts": {
+          "checkbox": 44,
+          "date": 5,
+          "dropdown": 1,
+          "numeric": 29,
+          "signature": 3,
+          "text": 176
+        },
+        "labelCount": 343,
+        "bindingCount": 258,
+        "boundFieldCount": 258,
+        "tableCount": 9,
+        "groupCount": 21,
+        "suppressedElementCount": 881,
+        "conditionalSuppressionCount": 1,
+        "unmappedFillableCount": 0,
+        "fieldsWithGeometry": 258,
+        "fieldsWithResolvedLabels": 258
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    {
+      "sourceFile": "ACORD 0127 2015-12r2.xfdl",
+      "datasetFile": "acord-0127-2015-12r2.ground-truth.json",
+      "sha256": "f5cfb21580ed01b4d7a1efcc6cbd01c229ccb4424babe7e701b065e67a714f0a",
+      "statistics": {
+        "pageCount": 4,
+        "fieldCount": 637,
+        "fieldTypeCounts": {
+          "checkbox": 164,
+          "date": 29,
+          "numeric": 53,
+          "signature": 3,
+          "text": 388
+        },
+        "labelCount": 580,
+        "bindingCount": 637,
+        "boundFieldCount": 637,
+        "tableCount": 9,
+        "groupCount": 16,
+        "suppressedElementCount": 1638,
+        "conditionalSuppressionCount": 1,
+        "unmappedFillableCount": 0,
+        "fieldsWithGeometry": 637,
+        "fieldsWithResolvedLabels": 637
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    {
+      "sourceFile": "ACORD 0128 2015-12r1.xfdl",
+      "datasetFile": "acord-0128-2015-12r1.ground-truth.json",
+      "sha256": "3222a9b9080e298e05e7ac89988037d4d614d44ee8ed7a40e1262add9489efb9",
+      "statistics": {
+        "pageCount": 4,
+        "fieldCount": 370,
+        "fieldTypeCounts": {
+          "checkbox": 59,
+          "date": 18,
+          "numeric": 43,
+          "signature": 3,
+          "text": 247
+        },
+        "labelCount": 316,
+        "bindingCount": 370,
+        "boundFieldCount": 370,
+        "tableCount": 10,
+        "groupCount": 17,
+        "suppressedElementCount": 854,
+        "conditionalSuppressionCount": 1,
+        "unmappedFillableCount": 0,
+        "fieldsWithGeometry": 370,
+        "fieldsWithResolvedLabels": 370
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    {
+      "sourceFile": "ACORD 0130 2017-05.xfdl",
+      "datasetFile": "acord-0130-2017-05.ground-truth.json",
+      "sha256": "8b1c40114682a07936c863c9b56441f2d3800649a81bceda0eddb4b3abaa50a7",
+      "statistics": {
+        "pageCount": 4,
+        "fieldCount": 482,
+        "fieldTypeCounts": {
+          "checkbox": 37,
+          "date": 10,
+          "numeric": 96,
+          "signature": 3,
+          "text": 336
+        },
+        "labelCount": 382,
+        "bindingCount": 482,
+        "boundFieldCount": 482,
+        "tableCount": 13,
+        "groupCount": 18,
+        "suppressedElementCount": 1040,
+        "conditionalSuppressionCount": 1,
+        "unmappedFillableCount": 0,
+        "fieldsWithGeometry": 482,
+        "fieldsWithResolvedLabels": 482
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    {
+      "sourceFile": "ACORD 0131 2017-11.xfdl",
+      "datasetFile": "acord-0131-2017-11.ground-truth.json",
+      "sha256": "112ae06f80b8df9347627aa478117d87fa62b1c6e9f92c7ea219a8e56dd2ba2f",
+      "statistics": {
+        "pageCount": 6,
+        "fieldCount": 398,
+        "fieldTypeCounts": {
+          "checkbox": 64,
+          "date": 25,
+          "numeric": 76,
+          "signature": 3,
+          "text": 230
+        },
+        "labelCount": 436,
+        "bindingCount": 398,
+        "boundFieldCount": 398,
+        "tableCount": 9,
+        "groupCount": 30,
+        "suppressedElementCount": 1112,
+        "conditionalSuppressionCount": 1,
+        "unmappedFillableCount": 0,
+        "fieldsWithGeometry": 398,
+        "fieldsWithResolvedLabels": 398
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    {
+      "sourceFile": "ACORD 0132 2015-12r1.xfdl",
+      "datasetFile": "acord-0132-2015-12r1.ground-truth.json",
+      "sha256": "892d7693e39e9c04a1a6864ab0988376b3cfef2f2e1bfc483881d1315b893fc9",
+      "statistics": {
+        "pageCount": 4,
+        "fieldCount": 443,
+        "fieldTypeCounts": {
+          "checkbox": 23,
+          "date": 15,
+          "dropdown": 1,
+          "numeric": 27,
+          "signature": 3,
+          "text": 374
+        },
+        "labelCount": 267,
+        "bindingCount": 443,
+        "boundFieldCount": 443,
+        "tableCount": 8,
+        "groupCount": 23,
+        "suppressedElementCount": 860,
+        "conditionalSuppressionCount": 1,
+        "unmappedFillableCount": 0,
+        "fieldsWithGeometry": 443,
+        "fieldsWithResolvedLabels": 443
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    {
+      "sourceFile": "ACORD 0133 2016-03.xfdl",
+      "datasetFile": "acord-0133-2016-03.ground-truth.json",
+      "sha256": "fb2c271d7ffe001aca9d1c5d5df1d738d47ba9ff50bf8fbde4f9a0323dcadce6",
+      "statistics": {
+        "pageCount": 4,
+        "fieldCount": 149,
+        "fieldTypeCounts": {
+          "checkbox": 54,
+          "date": 8,
+          "numeric": 7,
+          "signature": 4,
+          "text": 76
+        },
+        "labelCount": 356,
+        "bindingCount": 149,
+        "boundFieldCount": 149,
+        "tableCount": 9,
+        "groupCount": 14,
+        "suppressedElementCount": 887,
+        "conditionalSuppressionCount": 1,
+        "unmappedFillableCount": 0,
+        "fieldsWithGeometry": 149,
+        "fieldsWithResolvedLabels": 149
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    {
+      "sourceFile": "AIG Comm_Fleet_App_ 2019-09-12.Xfdl",
+      "datasetFile": "aig-comm-fleet-app-2019-09-12.ground-truth.json",
+      "sha256": "72af0068ba826e121137ca71a60af9e105e9d0230aed09352a8e2185ed92db6c",
+      "statistics": {
+        "pageCount": 12,
+        "fieldCount": 1006,
+        "fieldTypeCounts": {
+          "checkbox": 287,
+          "date": 56,
+          "numeric": 196,
+          "signature": 1,
+          "text": 466
+        },
+        "labelCount": 0,
+        "bindingCount": 0,
+        "boundFieldCount": 0,
+        "tableCount": 21,
+        "groupCount": 53,
+        "suppressedElementCount": 0,
+        "conditionalSuppressionCount": 0,
+        "unmappedFillableCount": 177,
+        "fieldsWithGeometry": 1006,
+        "fieldsWithResolvedLabels": 826
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 2
+      }
+    },
+    {
+      "sourceFile": "AmTrust 30-0912 2011-06.Xfdl",
+      "datasetFile": "amtrust-30-0912-2011-06.ground-truth.json",
+      "sha256": "89d2eded012f1c53d4081d1d6096d0bedb2ffd9a6a8850fc5a92890565b6f2dc",
+      "statistics": {
+        "pageCount": 7,
+        "fieldCount": 472,
+        "fieldTypeCounts": {
+          "checkbox": 208,
+          "date": 3,
+          "numeric": 92,
+          "signature": 3,
+          "text": 166
+        },
+        "labelCount": 0,
+        "bindingCount": 0,
+        "boundFieldCount": 0,
+        "tableCount": 24,
+        "groupCount": 49,
+        "suppressedElementCount": 0,
+        "conditionalSuppressionCount": 0,
+        "unmappedFillableCount": 5,
+        "fieldsWithGeometry": 472,
+        "fieldsWithResolvedLabels": 464
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 3
+      }
+    },
+    {
+      "sourceFile": "AmTrust WIC-AH-DBL-APP NY NY_0114.Xfdl",
+      "datasetFile": "amtrust-wic-ah-dbl-app-ny-ny-0114.ground-truth.json",
+      "sha256": "848cf0159878b6611ba58fff2afa5c87e81349ace2e4b2cd0b5ee3a20c017f20",
+      "statistics": {
+        "pageCount": 2,
+        "fieldCount": 109,
+        "fieldTypeCounts": {
+          "checkbox": 38,
+          "date": 1,
+          "numeric": 2,
+          "signature": 4,
+          "text": 64
+        },
+        "labelCount": 0,
+        "bindingCount": 0,
+        "boundFieldCount": 0,
+        "tableCount": 4,
+        "groupCount": 7,
+        "suppressedElementCount": 0,
+        "conditionalSuppressionCount": 0,
+        "unmappedFillableCount": 64,
+        "fieldsWithGeometry": 109,
+        "fieldsWithResolvedLabels": 91
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 8
+      }
+    },
+    {
+      "sourceFile": "ARGO AC-SUP090 2018-07.Xfdl",
+      "datasetFile": "argo-ac-sup090-2018-07.ground-truth.json",
+      "sha256": "cf787de0a2699d4db30084def376676c269e949931a5c4a88f83986abc2d68ba",
+      "statistics": {
+        "pageCount": 2,
+        "fieldCount": 114,
+        "fieldTypeCounts": {
+          "checkbox": 50,
+          "numeric": 13,
+          "signature": 4,
+          "text": 47
+        },
+        "labelCount": 0,
+        "bindingCount": 0,
+        "boundFieldCount": 0,
+        "tableCount": 5,
+        "groupCount": 7,
+        "suppressedElementCount": 0,
+        "conditionalSuppressionCount": 0,
+        "unmappedFillableCount": 77,
+        "fieldsWithGeometry": 114,
+        "fieldsWithResolvedLabels": 37
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    {
+      "sourceFile": "ARGO G1000 0114.Xfdl",
+      "datasetFile": "argo-g1000-0114.ground-truth.json",
+      "sha256": "dcba19b658df317e0a7d93581eb97b8ff24832e746381836742fc92e812a9360",
+      "statistics": {
+        "pageCount": 6,
+        "fieldCount": 591,
+        "fieldTypeCounts": {
+          "checkbox": 264,
+          "date": 14,
+          "numeric": 9,
+          "signature": 4,
+          "text": 300
+        },
+        "labelCount": 0,
+        "bindingCount": 0,
+        "boundFieldCount": 0,
+        "tableCount": 31,
+        "groupCount": 12,
+        "suppressedElementCount": 0,
+        "conditionalSuppressionCount": 0,
+        "unmappedFillableCount": 505,
+        "fieldsWithGeometry": 591,
+        "fieldsWithResolvedLabels": 587
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 3
+      }
+    },
+    {
+      "sourceFile": "Argo GAR-SUP_135-0117 2020-01-30.Xfdl",
+      "datasetFile": "argo-gar-sup-135-0117-2020-01-30.ground-truth.json",
+      "sha256": "d72d17654fe2ed225746acbea2463cd7b40d9fe715ca6731b5a7d2ec11a09d1b",
+      "statistics": {
+        "pageCount": 2,
+        "fieldCount": 81,
+        "fieldTypeCounts": {
+          "checkbox": 52,
+          "signature": 4,
+          "text": 25
+        },
+        "labelCount": 0,
+        "bindingCount": 0,
+        "boundFieldCount": 0,
+        "tableCount": 5,
+        "groupCount": 4,
+        "suppressedElementCount": 0,
+        "conditionalSuppressionCount": 0,
+        "unmappedFillableCount": 72,
+        "fieldsWithGeometry": 81,
+        "fieldsWithResolvedLabels": 9
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    {
+      "sourceFile": "Chubb AV003 2017-07.Xfdl",
+      "datasetFile": "chubb-av003-2017-07.ground-truth.json",
+      "sha256": "29550dd88551a1f73873b43ffb0d2f4ab9fc1136569ebacbf86520fc3081c49d",
+      "statistics": {
+        "pageCount": 5,
+        "fieldCount": 302,
+        "fieldTypeCounts": {
+          "checkbox": 130,
+          "date": 11,
+          "numeric": 1,
+          "signature": 2,
+          "text": 158
+        },
+        "labelCount": 0,
+        "bindingCount": 0,
+        "boundFieldCount": 0,
+        "tableCount": 20,
+        "groupCount": 7,
+        "suppressedElementCount": 0,
+        "conditionalSuppressionCount": 0,
+        "unmappedFillableCount": 285,
+        "fieldsWithGeometry": 302,
+        "fieldsWithResolvedLabels": 299
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 3
+      }
+    },
+    {
+      "sourceFile": "Chubb PF-48163 2017-08.Xfdl",
+      "datasetFile": "chubb-pf-48163-2017-08.ground-truth.json",
+      "sha256": "09b102eafa9b578fc24c9d9854ce3f78515a36606dd94d2d84cff8ec2b6e3e22",
+      "statistics": {
+        "pageCount": 6,
+        "fieldCount": 91,
+        "fieldTypeCounts": {
+          "checkbox": 48,
+          "date": 4,
+          "numeric": 7,
+          "signature": 4,
+          "text": 28
+        },
+        "labelCount": 0,
+        "bindingCount": 0,
+        "boundFieldCount": 0,
+        "tableCount": 3,
+        "groupCount": 12,
+        "suppressedElementCount": 0,
+        "conditionalSuppressionCount": 0,
+        "unmappedFillableCount": 1,
+        "fieldsWithGeometry": 91,
+        "fieldsWithResolvedLabels": 90
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    {
+      "sourceFile": "Great_American F-27647 12-08.Xfdl",
+      "datasetFile": "great-american-f-27647-12-08.ground-truth.json",
+      "sha256": "864de0b14abcb551a5a4ddf17f8c7f4f2b256b1427feea23e22fd95c301109df",
+      "statistics": {
+        "pageCount": 5,
+        "fieldCount": 258,
+        "fieldTypeCounts": {
+          "checkbox": 138,
+          "date": 2,
+          "numeric": 7,
+          "signature": 2,
+          "text": 109
+        },
+        "labelCount": 0,
+        "bindingCount": 0,
+        "boundFieldCount": 0,
+        "tableCount": 12,
+        "groupCount": 12,
+        "suppressedElementCount": 0,
+        "conditionalSuppressionCount": 0,
+        "unmappedFillableCount": 215,
+        "fieldsWithGeometry": 258,
+        "fieldsWithResolvedLabels": 45
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    {
+      "sourceFile": "Hartford CB_00_H001_00 2017-10.Xfdl",
+      "datasetFile": "hartford-cb-00-h001-00-2017-10.ground-truth.json",
+      "sha256": "31caaab36191ae82d758297c2ed8438332bca49ce87b34860e9c7e1c16447b6b",
+      "statistics": {
+        "pageCount": 8,
+        "fieldCount": 171,
+        "fieldTypeCounts": {
+          "checkbox": 111,
+          "date": 3,
+          "numeric": 11,
+          "signature": 4,
+          "text": 42
+        },
+        "labelCount": 0,
+        "bindingCount": 0,
+        "boundFieldCount": 0,
+        "tableCount": 7,
+        "groupCount": 12,
+        "suppressedElementCount": 0,
+        "conditionalSuppressionCount": 0,
+        "unmappedFillableCount": 122,
+        "fieldsWithGeometry": 171,
+        "fieldsWithResolvedLabels": 49
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    {
+      "sourceFile": "Hartford LP_00_HO54_03 2017-06.Xfdl",
+      "datasetFile": "hartford-lp-00-ho54-03-2017-06.ground-truth.json",
+      "sha256": "d1ab8da2584ba2fb08a9488d211a5ab65865f38e203b5bfcf14299faf4ec0f54",
+      "statistics": {
+        "pageCount": 8,
+        "fieldCount": 372,
+        "fieldTypeCounts": {
+          "checkbox": 125,
+          "date": 1,
+          "dropdown": 1,
+          "numeric": 3,
+          "signature": 5,
+          "text": 237
+        },
+        "labelCount": 0,
+        "bindingCount": 0,
+        "boundFieldCount": 0,
+        "tableCount": 18,
+        "groupCount": 11,
+        "suppressedElementCount": 0,
+        "conditionalSuppressionCount": 0,
+        "unmappedFillableCount": 342,
+        "fieldsWithGeometry": 372,
+        "fieldsWithResolvedLabels": 24
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 6
+      }
+    },
+    {
+      "sourceFile": "Hartford SS_25_50_06_16.Xfdl",
+      "datasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+      "sha256": "320ff9b82d1586c4e7400bc8ee321d3e973bf7745c6a36bc2c1ba3f1230c7040",
+      "statistics": {
+        "pageCount": 10,
+        "fieldCount": 61,
+        "fieldTypeCounts": {
+          "checkbox": 8,
+          "date": 2,
+          "numeric": 1,
+          "signature": 4,
+          "text": 46
+        },
+        "labelCount": 0,
+        "bindingCount": 0,
+        "boundFieldCount": 0,
+        "tableCount": 2,
+        "groupCount": 11,
+        "suppressedElementCount": 0,
+        "conditionalSuppressionCount": 0,
+        "unmappedFillableCount": 29,
+        "fieldsWithGeometry": 61,
+        "fieldsWithResolvedLabels": 61
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    {
+      "sourceFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+      "datasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+      "sha256": "1be85959cdcefcaa5f85d50d0130a57a3bad2d2c6c41a7cf314d0ed8ba654e02",
+      "statistics": {
+        "pageCount": 3,
+        "fieldCount": 47,
+        "fieldTypeCounts": {
+          "checkbox": 26,
+          "signature": 2,
+          "text": 19
+        },
+        "labelCount": 0,
+        "bindingCount": 0,
+        "boundFieldCount": 0,
+        "tableCount": 2,
+        "groupCount": 2,
+        "suppressedElementCount": 0,
+        "conditionalSuppressionCount": 0,
+        "unmappedFillableCount": 43,
+        "fieldsWithGeometry": 47,
+        "fieldsWithResolvedLabels": 4
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    {
+      "sourceFile": "Lancer R-LMC_AP001 (01-20).Xfdl",
+      "datasetFile": "lancer-r-lmc-ap001-01-20.ground-truth.json",
+      "sha256": "a1df7595df8463a2741226cfc93858a2081bdfc37591ad3a0200f97440b90f32",
+      "statistics": {
+        "pageCount": 10,
+        "fieldCount": 512,
+        "fieldTypeCounts": {
+          "checkbox": 252,
+          "date": 13,
+          "numeric": 75,
+          "signature": 4,
+          "text": 168
+        },
+        "labelCount": 0,
+        "bindingCount": 0,
+        "boundFieldCount": 0,
+        "tableCount": 23,
+        "groupCount": 47,
+        "suppressedElementCount": 0,
+        "conditionalSuppressionCount": 0,
+        "unmappedFillableCount": 33,
+        "fieldsWithGeometry": 512,
+        "fieldsWithResolvedLabels": 474
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 5
+      }
+    },
+    {
+      "sourceFile": "Markel MAIL 021 09_15.Xfdl",
+      "datasetFile": "markel-mail-021-09-15.ground-truth.json",
+      "sha256": "3d0df89f9197801134d8219a11adefa9d9c3df3f7658df42e497af2a5033354b",
+      "statistics": {
+        "pageCount": 8,
+        "fieldCount": 359,
+        "fieldTypeCounts": {
+          "checkbox": 202,
+          "date": 10,
+          "numeric": 4,
+          "signature": 4,
+          "text": 139
+        },
+        "labelCount": 0,
+        "bindingCount": 0,
+        "boundFieldCount": 0,
+        "tableCount": 13,
+        "groupCount": 14,
+        "suppressedElementCount": 0,
+        "conditionalSuppressionCount": 0,
+        "unmappedFillableCount": 311,
+        "fieldsWithGeometry": 359,
+        "fieldsWithResolvedLabels": 350
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 9
+      }
+    },
+    {
+      "sourceFile": "Merchants MG_71_01_ 03_19.Xfdl",
+      "datasetFile": "merchants-mg-71-01-03-19.ground-truth.json",
+      "sha256": "bdb7b9e8d6e72e3f913cc991dc1d8e3c50103f7d274632d2503c971453e5d48b",
+      "statistics": {
+        "pageCount": 10,
+        "fieldCount": 451,
+        "fieldTypeCounts": {
+          "checkbox": 208,
+          "numeric": 16,
+          "signature": 2,
+          "text": 225
+        },
+        "labelCount": 0,
+        "bindingCount": 0,
+        "boundFieldCount": 0,
+        "tableCount": 24,
+        "groupCount": 16,
+        "suppressedElementCount": 0,
+        "conditionalSuppressionCount": 0,
+        "unmappedFillableCount": 406,
+        "fieldsWithGeometry": 451,
+        "fieldsWithResolvedLabels": 41
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 4
+      }
+    },
+    {
+      "sourceFile": "Mount Hawley UWSR_207MTH 2013-03.Xfdl",
+      "datasetFile": "mount-hawley-uwsr-207mth-2013-03.ground-truth.json",
+      "sha256": "24fee93d50002f8dd12c4de2c10673de2034337daa2f012cfdc7fc5418b39f11",
+      "statistics": {
+        "pageCount": 5,
+        "fieldCount": 286,
+        "fieldTypeCounts": {
+          "checkbox": 80,
+          "numeric": 8,
+          "signature": 2,
+          "text": 196
+        },
+        "labelCount": 0,
+        "bindingCount": 0,
+        "boundFieldCount": 0,
+        "tableCount": 12,
+        "groupCount": 11,
+        "suppressedElementCount": 0,
+        "conditionalSuppressionCount": 0,
+        "unmappedFillableCount": 264,
+        "fieldsWithGeometry": 286,
+        "fieldsWithResolvedLabels": 21
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 1
+      }
+    },
+    {
+      "sourceFile": "Nationwide GLS-APP-74s (6-17).Xfdl",
+      "datasetFile": "nationwide-gls-app-74s-6-17.ground-truth.json",
+      "sha256": "45577119772b7e31343e7bb51e0290081f40b8dccd896e7f3218ce601bd34523",
+      "statistics": {
+        "pageCount": 6,
+        "fieldCount": 253,
+        "fieldTypeCounts": {
+          "checkbox": 150,
+          "date": 4,
+          "numeric": 4,
+          "signature": 6,
+          "text": 89
+        },
+        "labelCount": 0,
+        "bindingCount": 0,
+        "boundFieldCount": 0,
+        "tableCount": 11,
+        "groupCount": 20,
+        "suppressedElementCount": 0,
+        "conditionalSuppressionCount": 0,
+        "unmappedFillableCount": 84,
+        "fieldsWithGeometry": 253,
+        "fieldsWithResolvedLabels": 169
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    {
+      "sourceFile": "NFIP FEMA_Form_086-0-1 F-050_(FEB_2015).Xfdl",
+      "datasetFile": "nfip-fema-form-086-0-1-f-050-feb-2015.ground-truth.json",
+      "sha256": "028233ffeb0268ee8de3b5a0e96b3751d6a88ff3f5316989189975e2ecac59b5",
+      "statistics": {
+        "pageCount": 3,
+        "fieldCount": 354,
+        "fieldTypeCounts": {
+          "checkbox": 218,
+          "date": 10,
+          "numeric": 39,
+          "signature": 4,
+          "text": 83
+        },
+        "labelCount": 0,
+        "bindingCount": 0,
+        "boundFieldCount": 0,
+        "tableCount": 17,
+        "groupCount": 25,
+        "suppressedElementCount": 0,
+        "conditionalSuppressionCount": 0,
+        "unmappedFillableCount": 92,
+        "fieldsWithGeometry": 354,
+        "fieldsWithResolvedLabels": 73
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 189
+      }
+    },
+    {
+      "sourceFile": "Philadelphia Builders_Risk_Ground_Up_Construction 2013-01.Xfdl",
+      "datasetFile": "philadelphia-builders-risk-ground-up-construction-2013-01.ground-truth.json",
+      "sha256": "fb026ac032d577542bd12d55f91059d4b09578480885be486419237fd9512dda",
+      "statistics": {
+        "pageCount": 4,
+        "fieldCount": 126,
+        "fieldTypeCounts": {
+          "checkbox": 50,
+          "date": 3,
+          "numeric": 6,
+          "signature": 2,
+          "text": 65
+        },
+        "labelCount": 0,
+        "bindingCount": 0,
+        "boundFieldCount": 0,
+        "tableCount": 9,
+        "groupCount": 8,
+        "suppressedElementCount": 0,
+        "conditionalSuppressionCount": 0,
+        "unmappedFillableCount": 88,
+        "fieldsWithGeometry": 126,
+        "fieldsWithResolvedLabels": 121
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 4
+      }
+    },
+    {
+      "sourceFile": "Philadelphia Builders_Risk_Renovation_and_Rehabilitation 2013-01.Xfdl",
+      "datasetFile": "philadelphia-builders-risk-renovation-and-rehabilitation-2013-01.ground-truth.json",
+      "sha256": "e01bf322c6af5c2aac90f7c77ff9c2dfcbe00f5e28375cbbdbba408171d98bd5",
+      "statistics": {
+        "pageCount": 6,
+        "fieldCount": 172,
+        "fieldTypeCounts": {
+          "checkbox": 77,
+          "date": 3,
+          "numeric": 1,
+          "signature": 2,
+          "text": 89
+        },
+        "labelCount": 0,
+        "bindingCount": 0,
+        "boundFieldCount": 0,
+        "tableCount": 9,
+        "groupCount": 9,
+        "suppressedElementCount": 0,
+        "conditionalSuppressionCount": 0,
+        "unmappedFillableCount": 140,
+        "fieldsWithGeometry": 172,
+        "fieldsWithResolvedLabels": 168
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 4
+      }
+    },
+    {
+      "sourceFile": "Philadelphia INTEG-TECH-APP 03-2018.Xfdl",
+      "datasetFile": "philadelphia-integ-tech-app-03-2018.ground-truth.json",
+      "sha256": "61f62da3b36d06aa241dcdf627d412404ec9be3c7707bce808c783ed4bb0bc77",
+      "statistics": {
+        "pageCount": 7,
+        "fieldCount": 421,
+        "fieldTypeCounts": {
+          "checkbox": 212,
+          "date": 2,
+          "numeric": 9,
+          "signature": 2,
+          "text": 196
+        },
+        "labelCount": 0,
+        "bindingCount": 0,
+        "boundFieldCount": 0,
+        "tableCount": 23,
+        "groupCount": 13,
+        "suppressedElementCount": 0,
+        "conditionalSuppressionCount": 0,
+        "unmappedFillableCount": 379,
+        "fieldsWithGeometry": 421,
+        "fieldsWithResolvedLabels": 39
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 3
+      }
+    },
+    {
+      "sourceFile": "Philadelphia PI-CYB-014 2017-11.Xfdl",
+      "datasetFile": "philadelphia-pi-cyb-014-2017-11.ground-truth.json",
+      "sha256": "28b9cb6c1fa4d7a05eb5cf58d2538b22ab5ebfa2d398c23f33f9706b9a71cc48",
+      "statistics": {
+        "pageCount": 7,
+        "fieldCount": 239,
+        "fieldTypeCounts": {
+          "checkbox": 171,
+          "date": 3,
+          "numeric": 25,
+          "signature": 4,
+          "text": 36
+        },
+        "labelCount": 0,
+        "bindingCount": 0,
+        "boundFieldCount": 0,
+        "tableCount": 18,
+        "groupCount": 14,
+        "suppressedElementCount": 0,
+        "conditionalSuppressionCount": 0,
+        "unmappedFillableCount": 0,
+        "fieldsWithGeometry": 239,
+        "fieldsWithResolvedLabels": 239
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    {
+      "sourceFile": "Philadelphia PI-CYB-014 NY 2017-11.Xfdl",
+      "datasetFile": "philadelphia-pi-cyb-014-ny-2017-11.ground-truth.json",
+      "sha256": "7d7a39c4d79c8ef215d3b63722634d0eed67c74e459ad5e50363d8b52e41f7dd",
+      "statistics": {
+        "pageCount": 7,
+        "fieldCount": 239,
+        "fieldTypeCounts": {
+          "checkbox": 171,
+          "date": 3,
+          "numeric": 25,
+          "signature": 4,
+          "text": 36
+        },
+        "labelCount": 0,
+        "bindingCount": 0,
+        "boundFieldCount": 0,
+        "tableCount": 18,
+        "groupCount": 14,
+        "suppressedElementCount": 0,
+        "conditionalSuppressionCount": 0,
+        "unmappedFillableCount": 0,
+        "fieldsWithGeometry": 239,
+        "fieldsWithResolvedLabels": 239
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    {
+      "sourceFile": "Philadelphia Salon_and_Day_Spa_App 2016-12.Xfdl",
+      "datasetFile": "philadelphia-salon-and-day-spa-app-2016-12.ground-truth.json",
+      "sha256": "f301b1ffe49e44079dc605cdcf9dc503020129d1db50ae74e194eafcbe59a4c0",
+      "statistics": {
+        "pageCount": 9,
+        "fieldCount": 430,
+        "fieldTypeCounts": {
+          "checkbox": 205,
+          "date": 6,
+          "numeric": 10,
+          "signature": 4,
+          "text": 205
+        },
+        "labelCount": 0,
+        "bindingCount": 0,
+        "boundFieldCount": 0,
+        "tableCount": 20,
+        "groupCount": 20,
+        "suppressedElementCount": 0,
+        "conditionalSuppressionCount": 0,
+        "unmappedFillableCount": 340,
+        "fieldsWithGeometry": 430,
+        "fieldsWithResolvedLabels": 425
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 2
+      }
+    },
+    {
+      "sourceFile": "Preferred_Mutual CL-77 08_03.Xfdl",
+      "datasetFile": "preferred-mutual-cl-77-08-03.ground-truth.json",
+      "sha256": "c3f7620bd1a9a9f190db57ca043532ee2f33df7ff6ec8be46455c3f3ddf6ef3a",
+      "statistics": {
+        "pageCount": 1,
+        "fieldCount": 55,
+        "fieldTypeCounts": {
+          "checkbox": 28,
+          "date": 1,
+          "numeric": 2,
+          "signature": 2,
+          "text": 22
+        },
+        "labelCount": 0,
+        "bindingCount": 0,
+        "boundFieldCount": 0,
+        "tableCount": 1,
+        "groupCount": 5,
+        "suppressedElementCount": 0,
+        "conditionalSuppressionCount": 0,
+        "unmappedFillableCount": 40,
+        "fieldsWithGeometry": 55,
+        "fieldsWithResolvedLabels": 15
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    {
+      "sourceFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+      "datasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+      "sha256": "bf3968fa4922f20a3082dcff9bc30423ccd2d9e3464770cd636d1df493874c70",
+      "statistics": {
+        "pageCount": 4,
+        "fieldCount": 67,
+        "fieldTypeCounts": {
+          "checkbox": 34,
+          "date": 2,
+          "numeric": 4,
+          "signature": 2,
+          "text": 25
+        },
+        "labelCount": 0,
+        "bindingCount": 0,
+        "boundFieldCount": 0,
+        "tableCount": 6,
+        "groupCount": 6,
+        "suppressedElementCount": 0,
+        "conditionalSuppressionCount": 0,
+        "unmappedFillableCount": 48,
+        "fieldsWithGeometry": 67,
+        "fieldsWithResolvedLabels": 19
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    {
+      "sourceFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+      "datasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+      "sha256": "15318793c7c3aa4d6752200183c62f9c6a58425cd799fb0f361e5fe0e1569eab",
+      "statistics": {
+        "pageCount": 1,
+        "fieldCount": 82,
+        "fieldTypeCounts": {
+          "checkbox": 50,
+          "date": 2,
+          "numeric": 1,
+          "signature": 1,
+          "text": 28
+        },
+        "labelCount": 0,
+        "bindingCount": 0,
+        "boundFieldCount": 0,
+        "tableCount": 1,
+        "groupCount": 3,
+        "suppressedElementCount": 0,
+        "conditionalSuppressionCount": 0,
+        "unmappedFillableCount": 75,
+        "fieldsWithGeometry": 82,
+        "fieldsWithResolvedLabels": 7
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    {
+      "sourceFile": "Protective_Insurance_Company Large_Fleet Updated_01-2016.Xfdl",
+      "datasetFile": "protective-insurance-company-large-fleet-updated-01-2016.ground-truth.json",
+      "sha256": "f701ae96381a6608abc4fa87d029ab90df9e4220150327c2a0b31eceb71cef30",
+      "statistics": {
+        "pageCount": 4,
+        "fieldCount": 206,
+        "fieldTypeCounts": {
+          "checkbox": 40,
+          "date": 2,
+          "numeric": 58,
+          "signature": 4,
+          "text": 102
+        },
+        "labelCount": 0,
+        "bindingCount": 0,
+        "boundFieldCount": 0,
+        "tableCount": 10,
+        "groupCount": 31,
+        "suppressedElementCount": 0,
+        "conditionalSuppressionCount": 0,
+        "unmappedFillableCount": 18,
+        "fieldsWithGeometry": 206,
+        "fieldsWithResolvedLabels": 187
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 1
+      }
+    },
+    {
+      "sourceFile": "QEO_Insurance_Group AV034 2019-05-14.Xfdl",
+      "datasetFile": "qeo-insurance-group-av034-2019-05-14.ground-truth.json",
+      "sha256": "d3ce022b41fa7e7c7ba623999cc29297aac0f37a5b0c38ea89489c293df27c17",
+      "statistics": {
+        "pageCount": 1,
+        "fieldCount": 69,
+        "fieldTypeCounts": {
+          "checkbox": 18,
+          "numeric": 22,
+          "text": 29
+        },
+        "labelCount": 0,
+        "bindingCount": 0,
+        "boundFieldCount": 0,
+        "tableCount": 3,
+        "groupCount": 7,
+        "suppressedElementCount": 0,
+        "conditionalSuppressionCount": 0,
+        "unmappedFillableCount": 0,
+        "fieldsWithGeometry": 69,
+        "fieldsWithResolvedLabels": 69
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    {
+      "sourceFile": "Quaker AV005 2018-05.Xfdl",
+      "datasetFile": "quaker-av005-2018-05.ground-truth.json",
+      "sha256": "d4cebf68ad210cd36d13d3605632d827c7e746fd0605f9da0a7ce46eb8e6d1f3",
+      "statistics": {
+        "pageCount": 3,
+        "fieldCount": 74,
+        "fieldTypeCounts": {
+          "checkbox": 8,
+          "date": 6,
+          "numeric": 4,
+          "signature": 4,
+          "text": 52
+        },
+        "labelCount": 0,
+        "bindingCount": 0,
+        "boundFieldCount": 0,
+        "tableCount": 3,
+        "groupCount": 7,
+        "suppressedElementCount": 0,
+        "conditionalSuppressionCount": 0,
+        "unmappedFillableCount": 55,
+        "fieldsWithGeometry": 74,
+        "fieldsWithResolvedLabels": 74
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    {
+      "sourceFile": "Quaker_Special_Risk 04-18_QSR_Luxury_Home_Program_Contractors_Liability_Application 04-18.Xfdl",
+      "datasetFile": "quaker-special-risk-04-18-qsr-luxury-home-program-contractors-liability-application-04-18.ground-truth.json",
+      "sha256": "6f34a068473b143298200862506e204455c3ef6b1b20c12d588fb16c2602a19a",
+      "statistics": {
+        "pageCount": 7,
+        "fieldCount": 262,
+        "fieldTypeCounts": {
+          "checkbox": 62,
+          "date": 2,
+          "numeric": 15,
+          "signature": 4,
+          "text": 179
+        },
+        "labelCount": 0,
+        "bindingCount": 0,
+        "boundFieldCount": 0,
+        "tableCount": 11,
+        "groupCount": 14,
+        "suppressedElementCount": 0,
+        "conditionalSuppressionCount": 0,
+        "unmappedFillableCount": 190,
+        "fieldsWithGeometry": 262,
+        "fieldsWithResolvedLabels": 67
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 5
+      }
+    },
+    {
+      "sourceFile": "Quaker_Special_Risk QSR-SR-Constr-MGR 2019-01.Xfdl",
+      "datasetFile": "quaker-special-risk-qsr-sr-constr-mgr-2019-01.ground-truth.json",
+      "sha256": "d23a7600fc7d312b042f9d38439b93a914370792c21aeb90ce163f058773e0f1",
+      "statistics": {
+        "pageCount": 9,
+        "fieldCount": 411,
+        "fieldTypeCounts": {
+          "checkbox": 94,
+          "date": 3,
+          "numeric": 8,
+          "signature": 2,
+          "text": 304
+        },
+        "labelCount": 0,
+        "bindingCount": 0,
+        "boundFieldCount": 0,
+        "tableCount": 18,
+        "groupCount": 15,
+        "suppressedElementCount": 0,
+        "conditionalSuppressionCount": 0,
+        "unmappedFillableCount": 349,
+        "fieldsWithGeometry": 411,
+        "fieldsWithResolvedLabels": 56
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 5
+      }
+    },
+    {
+      "sourceFile": "Travelers CP-4650 2001-05.Xfdl",
+      "datasetFile": "travelers-cp-4650-2001-05.ground-truth.json",
+      "sha256": "1f68da8bc7e02ad73e183f318ccceb458207dba594813385ff4497aac26f5d66",
+      "statistics": {
+        "pageCount": 2,
+        "fieldCount": 124,
+        "fieldTypeCounts": {
+          "checkbox": 56,
+          "numeric": 1,
+          "signature": 4,
+          "text": 63
+        },
+        "labelCount": 0,
+        "bindingCount": 0,
+        "boundFieldCount": 0,
+        "tableCount": 3,
+        "groupCount": 4,
+        "suppressedElementCount": 0,
+        "conditionalSuppressionCount": 0,
+        "unmappedFillableCount": 116,
+        "fieldsWithGeometry": 124,
+        "fieldsWithResolvedLabels": 9
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 1
+      }
+    },
+    {
+      "sourceFile": "Travelers CX-1036 02-06.Xfdl",
+      "datasetFile": "travelers-cx-1036-02-06.ground-truth.json",
+      "sha256": "182f35eef99641a4ca06025a283f0703514de0babe9acd20002c9a4df9b44812",
+      "statistics": {
+        "pageCount": 5,
+        "fieldCount": 154,
+        "fieldTypeCounts": {
+          "checkbox": 132,
+          "date": 2,
+          "numeric": 2,
+          "signature": 2,
+          "text": 16
+        },
+        "labelCount": 0,
+        "bindingCount": 0,
+        "boundFieldCount": 0,
+        "tableCount": 11,
+        "groupCount": 7,
+        "suppressedElementCount": 0,
+        "conditionalSuppressionCount": 0,
+        "unmappedFillableCount": 145,
+        "fieldsWithGeometry": 154,
+        "fieldsWithResolvedLabels": 154
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    {
+      "sourceFile": "Travelers CYB-14101 2017-12.Xfdl",
+      "datasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+      "sha256": "21108f45ad57b86a3008c6139c02630696125dee7df4e64a00d74c5e79412266",
+      "statistics": {
+        "pageCount": 2,
+        "fieldCount": 47,
+        "fieldTypeCounts": {
+          "checkbox": 28,
+          "numeric": 3,
+          "signature": 3,
+          "text": 13
+        },
+        "labelCount": 0,
+        "bindingCount": 0,
+        "boundFieldCount": 0,
+        "tableCount": 5,
+        "groupCount": 6,
+        "suppressedElementCount": 0,
+        "conditionalSuppressionCount": 0,
+        "unmappedFillableCount": 27,
+        "fieldsWithGeometry": 47,
+        "fieldsWithResolvedLabels": 20
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    {
+      "sourceFile": "Travelers MPL 1100 01-09.Xfdl",
+      "datasetFile": "travelers-mpl-1100-01-09.ground-truth.json",
+      "sha256": "31ab1ba365310ddc668762718a54a13e292fd2ae892d69dba5f00cbd7b7b9ac3",
+      "statistics": {
+        "pageCount": 5,
+        "fieldCount": 139,
+        "fieldTypeCounts": {
+          "checkbox": 38,
+          "date": 6,
+          "numeric": 8,
+          "signature": 3,
+          "text": 84
+        },
+        "labelCount": 0,
+        "bindingCount": 0,
+        "boundFieldCount": 0,
+        "tableCount": 11,
+        "groupCount": 8,
+        "suppressedElementCount": 0,
+        "conditionalSuppressionCount": 0,
+        "unmappedFillableCount": 111,
+        "fieldsWithGeometry": 139,
+        "fieldsWithResolvedLabels": 138
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 1
+      }
+    },
+    {
+      "sourceFile": "United_Specialty_ UNITEDSPEC-01 2019-09-12.Xfdl",
+      "datasetFile": "united-specialty-unitedspec-01-2019-09-12.ground-truth.json",
+      "sha256": "1f2f1b34ad09b1151e1a43fd71fdd45ee9a0e4d78178e7549b0550af9497267c",
+      "statistics": {
+        "pageCount": 3,
+        "fieldCount": 270,
+        "fieldTypeCounts": {
+          "checkbox": 64,
+          "date": 8,
+          "dropdown": 1,
+          "numeric": 39,
+          "signature": 4,
+          "text": 154
+        },
+        "labelCount": 0,
+        "bindingCount": 0,
+        "boundFieldCount": 0,
+        "tableCount": 11,
+        "groupCount": 19,
+        "suppressedElementCount": 0,
+        "conditionalSuppressionCount": 0,
+        "unmappedFillableCount": 7,
+        "fieldsWithGeometry": 270,
+        "fieldsWithResolvedLabels": 256
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 7
+      }
+    },
+    {
+      "sourceFile": "USLI NPPLA 5-12.Xfdl",
+      "datasetFile": "usli-nppla-5-12.ground-truth.json",
+      "sha256": "bc8f86da8b9dabd03600f8ff8be71bc24255bafd40f192bf60310e173550a569",
+      "statistics": {
+        "pageCount": 3,
+        "fieldCount": 76,
+        "fieldTypeCounts": {
+          "checkbox": 39,
+          "date": 2,
+          "numeric": 3,
+          "text": 32
+        },
+        "labelCount": 0,
+        "bindingCount": 0,
+        "boundFieldCount": 0,
+        "tableCount": 4,
+        "groupCount": 6,
+        "suppressedElementCount": 0,
+        "conditionalSuppressionCount": 0,
+        "unmappedFillableCount": 54,
+        "fieldsWithGeometry": 76,
+        "fieldsWithResolvedLabels": 19
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 3
+      }
+    },
+    {
+      "sourceFile": "USLI Pro+ect_ _10-18.Xfdl",
+      "datasetFile": "usli-pro-ect-10-18.ground-truth.json",
+      "sha256": "57927dcce352e583cff30bade766e173ae3307cb16bda2328c0996df5ad04bf7",
+      "statistics": {
+        "pageCount": 6,
+        "fieldCount": 273,
+        "fieldTypeCounts": {
+          "checkbox": 150,
+          "date": 3,
+          "numeric": 4,
+          "signature": 3,
+          "text": 113
+        },
+        "labelCount": 0,
+        "bindingCount": 0,
+        "boundFieldCount": 0,
+        "tableCount": 20,
+        "groupCount": 10,
+        "suppressedElementCount": 0,
+        "conditionalSuppressionCount": 0,
+        "unmappedFillableCount": 248,
+        "fieldsWithGeometry": 273,
+        "fieldsWithResolvedLabels": 25
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    {
+      "sourceFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+      "datasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+      "sha256": "f6e9177a102725fa223b6cf653f9fd052593220ac76aa2c6cbcc33c9d6cd386a",
+      "statistics": {
+        "pageCount": 1,
+        "fieldCount": 48,
+        "fieldTypeCounts": {
+          "checkbox": 2,
+          "numeric": 26,
+          "signature": 2,
+          "text": 18
+        },
+        "labelCount": 0,
+        "bindingCount": 0,
+        "boundFieldCount": 0,
+        "tableCount": 2,
+        "groupCount": 5,
+        "suppressedElementCount": 0,
+        "conditionalSuppressionCount": 0,
+        "unmappedFillableCount": 0,
+        "fieldsWithGeometry": 48,
+        "fieldsWithResolvedLabels": 48
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    {
+      "sourceFile": "Western_Heritage WHI-APP-120 8-02.Xfdl",
+      "datasetFile": "western-heritage-whi-app-120-8-02.ground-truth.json",
+      "sha256": "b78d5e7f6f6c0aec64b4e334c5f5fa7905bddac664cbe5e9d9dd162f42b84d5c",
+      "statistics": {
+        "pageCount": 4,
+        "fieldCount": 229,
+        "fieldTypeCounts": {
+          "checkbox": 62,
+          "date": 2,
+          "numeric": 3,
+          "signature": 2,
+          "text": 160
+        },
+        "labelCount": 0,
+        "bindingCount": 0,
+        "boundFieldCount": 0,
+        "tableCount": 11,
+        "groupCount": 9,
+        "suppressedElementCount": 0,
+        "conditionalSuppressionCount": 0,
+        "unmappedFillableCount": 207,
+        "fieldsWithGeometry": 229,
+        "fieldsWithResolvedLabels": 229
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    {
+      "sourceFile": "Western_Heritage WHI-APP-138 2013-11.Xfdl",
+      "datasetFile": "western-heritage-whi-app-138-2013-11.ground-truth.json",
+      "sha256": "85fd1a270b61d0fa0e119dd63187459a3a64b8b589a5e77c830e8da3532458b6",
+      "statistics": {
+        "pageCount": 8,
+        "fieldCount": 603,
+        "fieldTypeCounts": {
+          "checkbox": 146,
+          "date": 23,
+          "numeric": 2,
+          "signature": 3,
+          "text": 429
+        },
+        "labelCount": 0,
+        "bindingCount": 0,
+        "boundFieldCount": 0,
+        "tableCount": 29,
+        "groupCount": 12,
+        "suppressedElementCount": 0,
+        "conditionalSuppressionCount": 0,
+        "unmappedFillableCount": 577,
+        "fieldsWithGeometry": 603,
+        "fieldsWithResolvedLabels": 590
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 5
+      }
+    },
+    {
+      "sourceFile": "Westport WIC1107 2010-06.Xfdl",
+      "datasetFile": "westport-wic1107-2010-06.ground-truth.json",
+      "sha256": "8ccc67c27a20354025d9eb6c7b88af167f8df10a9f4fc83b2d81c4ddb829cec1",
+      "statistics": {
+        "pageCount": 7,
+        "fieldCount": 455,
+        "fieldTypeCounts": {
+          "checkbox": 218,
+          "date": 13,
+          "numeric": 23,
+          "signature": 2,
+          "text": 199
+        },
+        "labelCount": 0,
+        "bindingCount": 0,
+        "boundFieldCount": 0,
+        "tableCount": 19,
+        "groupCount": 15,
+        "suppressedElementCount": 0,
+        "conditionalSuppressionCount": 0,
+        "unmappedFillableCount": 382,
+        "fieldsWithGeometry": 455,
+        "fieldsWithResolvedLabels": 452
+      },
+      "diagnosticCounts": {
+        "errors": 0,
+        "warnings": 0
+      }
+    }
+  ],
+  "append": {
+    "previousFormCount": 28,
+    "appendedFormCount": 35
+  }
+}

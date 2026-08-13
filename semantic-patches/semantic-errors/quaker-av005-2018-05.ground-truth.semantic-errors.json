@@ -1,0 +1,4256 @@
+{
+  "schemaVersion": "semantic-errors.v1",
+  "generatedAt": "2026-08-11T16:15:54.413Z",
+  "form": {
+    "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+    "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+    "pdfFile": "Quaker AV005.pdf",
+    "pairStatus": "matched",
+    "pairConfidence": "medium"
+  },
+  "counts": {
+    "truthFields": 74,
+    "predictedFillableFields": 43,
+    "matchedFields": 16,
+    "promotedFields": 43,
+    "errors": 142
+  },
+  "categoryCounts": {
+    "semantic_label_mismatch": 8,
+    "candidate_ranking_error": 4,
+    "field_type_misclassification": 3,
+    "table_detection_error": 5,
+    "checkbox_yes_no_pairing_error": 0,
+    "suppression_error": 58,
+    "grouping_error": 6,
+    "label_value_pairing_error": 0,
+    "unmapped_fillable_field": 58
+  },
+  "errors": [
+    {
+      "id": "semantic_label_mismatch:quaker-av005-2018-05.ground-truth:NamedInsured_FullName_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "NamedInsured_FullName_A",
+        "predictionId": "input-semantic-p1-l5",
+        "page": 1,
+        "geometryDistance": 0.06672406001581802
+      },
+      "expected": {
+        "label": "Enter text: The named insured(s) as it / they will appear on the policy declarations page.",
+        "helpLabel": "Enter text: The named insured(s) as it / they will appear on the policy declarations page."
+      },
+      "actual": {
+        "label": "NAME"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "candidate_ranking_error:quaker-av005-2018-05.ground-truth:NamedInsured_FullName_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "NamedInsured_FullName_A",
+        "predictionId": "input-semantic-p1-l5",
+        "page": 1,
+        "geometryDistance": 0.06672406001581802
+      },
+      "expected": {
+        "topAcordCode": "NamedInsured_FullName"
+      },
+      "actual": {
+        "topAcordCode": "NamedInsured_InputTaxCreditPercent",
+        "rankedCodes": [
+          "NamedInsured_InputTaxCreditPercent",
+          "AccidentConviction_PlaceOfIncidentCityName",
+          "AccountantInformation_PredecessorFirm_FullName"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:NamedInsured_MailingAddress_LineOne_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "NamedInsured_MailingAddress_LineOne_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "NamedInsured_MailingAddress_LineOne_A",
+        "type": "text",
+        "label": "Enter text: The named insured's mailing address line one."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:NamedInsured_MailingAddress_LineOne_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "NamedInsured_MailingAddress_LineOne_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:NamedInsured_MailingAddress_CityName_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "NamedInsured_MailingAddress_CityName_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "NamedInsured_MailingAddress_CityName_A",
+        "type": "text",
+        "label": "Enter text: The named insured's mailing address city name."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:NamedInsured_MailingAddress_CityName_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "NamedInsured_MailingAddress_CityName_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:NamedInsured_MailingAddress_StateOrProvinceCode_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "NamedInsured_MailingAddress_StateOrProvinceCode_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "NamedInsured_MailingAddress_StateOrProvinceCode_A",
+        "type": "text",
+        "label": "Enter code: The named insured's mailing address state or province code."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:NamedInsured_MailingAddress_StateOrProvinceCode_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "NamedInsured_MailingAddress_StateOrProvinceCode_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:NamedInsured_MailingAddress_PostalCode_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "NamedInsured_MailingAddress_PostalCode_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "NamedInsured_MailingAddress_PostalCode_A",
+        "type": "text",
+        "label": "Enter code: The named insured's mailing address postal code."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:NamedInsured_MailingAddress_PostalCode_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "NamedInsured_MailingAddress_PostalCode_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:Policy_EffectiveDate_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Policy_EffectiveDate_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Policy_EffectiveDate_A",
+        "type": "date",
+        "label": "Enter date: The effective date of the policy. The date that the terms and conditions of the policy commence. (MM/DD/YYYY)"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:Policy_EffectiveDate_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Policy_EffectiveDate_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:NamedInsured_Primary_WebsiteAddress_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "NamedInsured_Primary_WebsiteAddress_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "NamedInsured_Primary_WebsiteAddress_A",
+        "type": "text",
+        "label": "Enter text: The primary website address for the named insured."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:NamedInsured_Primary_WebsiteAddress_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "NamedInsured_Primary_WebsiteAddress_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:Unmapped_fEdwYSMH_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_fEdwYSMH_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_fEdwYSMH_A",
+        "type": "text",
+        "label": "NUMBER OF ADDITION PROJECTS PER YEAR?"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:Unmapped_fEdwYSMH_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_fEdwYSMH_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:quaker-av005-2018-05.ground-truth:Policy_ExpirationDate_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Policy_ExpirationDate_A",
+        "predictionId": "input-semantic-p1-l9",
+        "page": 1,
+        "geometryDistance": 0.00782527993601927
+      },
+      "expected": {
+        "label": "Enter date: The date on which the terms and conditions of the policy will expire. (MM/DD/YYYY)",
+        "helpLabel": "Enter date: The date on which the terms and conditions of the policy will expire. (MM/DD/YYYY)"
+      },
+      "actual": {
+        "label": "TO"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "field_type_misclassification:quaker-av005-2018-05.ground-truth:Policy_ExpirationDate_A",
+      "category": "field_type_misclassification",
+      "description": "The predicted fillable type differs from the XFDL control/format type.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Policy_ExpirationDate_A",
+        "predictionId": "input-semantic-p1-l9",
+        "page": 1,
+        "geometryDistance": 0.00782527993601927
+      },
+      "expected": {
+        "type": "date",
+        "sourceType": "date",
+        "format": {
+          "dataType": "date",
+          "requirement": "Optional",
+          "presentation": "MM/DD/YYYY",
+          "rawValues": [
+            "date",
+            "Optional",
+            ""
+          ],
+          "provenance": "explicit"
+        }
+      },
+      "actual": {
+        "type": "text",
+        "sourceType": "text"
+      },
+      "rationale": "XFDL control/format typing and backend typed-blank classification disagree.",
+      "evidence": {}
+    },
+    {
+      "id": "candidate_ranking_error:quaker-av005-2018-05.ground-truth:Policy_ExpirationDate_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Policy_ExpirationDate_A",
+        "predictionId": "input-semantic-p1-l9",
+        "page": 1,
+        "geometryDistance": 0.00782527993601927
+      },
+      "expected": {
+        "topAcordCode": "Policy_ExpirationDate"
+      },
+      "actual": {
+        "topAcordCode": "AccidentConviction_BodilyInjuryOrDeathNoIndicator",
+        "rankedCodes": [
+          "AccidentConviction_BodilyInjuryOrDeathNoIndicator",
+          "AccidentConviction_BodilyInjuryOrDeathYesIndicator",
+          "AccidentConviction_ConvictionDueToAccidentNoIndicator"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:Unmapped_WPWYhkyS_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_WPWYhkyS_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_WPWYhkyS_A",
+        "type": "text",
+        "label": "IF YES, PLEASE EXPLAIN: (Changes made to the subcontractors agreement)"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:Unmapped_WPWYhkyS_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_WPWYhkyS_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:Unmapped_wwAsQKyl_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_wwAsQKyl_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_wwAsQKyl_A",
+        "type": "text",
+        "label": "LIST OF NEW HOME STARTS: STREET ADDRESS:"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:Unmapped_wwAsQKyl_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_wwAsQKyl_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:Unmapped_XDfyjNSt_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_XDfyjNSt_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_XDfyjNSt_A",
+        "type": "text",
+        "label": "LIST OF NEW HOME STARTS: CITY:"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:Unmapped_XDfyjNSt_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_XDfyjNSt_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:Unmapped_HoYqvbGn_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_HoYqvbGn_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_HoYqvbGn_A",
+        "type": "text",
+        "label": "LIST OF NEW HOME STARTS: STATE:"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:Unmapped_HoYqvbGn_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_HoYqvbGn_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:Unmapped_BJNQUMMF_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_BJNQUMMF_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_BJNQUMMF_A",
+        "type": "text",
+        "label": "LIST OF NEW HOME STARTS: ZIP:"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:Unmapped_BJNQUMMF_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_BJNQUMMF_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:Unmapped_mTPcEbEy_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_mTPcEbEy_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_mTPcEbEy_A",
+        "type": "date",
+        "label": "LIST OF NEW HOME STARTS: START DATE:"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:Unmapped_mTPcEbEy_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_mTPcEbEy_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:Unmapped_zRoOLvIz_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_zRoOLvIz_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_zRoOLvIz_A",
+        "type": "text",
+        "label": "LIST OF NEW HOME STARTS: ESTIMATED SALES PRICE:"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:Unmapped_zRoOLvIz_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_zRoOLvIz_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "field_type_misclassification:quaker-av005-2018-05.ground-truth:Unmapped_oYjoAErV_A",
+      "category": "field_type_misclassification",
+      "description": "The predicted fillable type differs from the XFDL control/format type.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_oYjoAErV_A",
+        "predictionId": "input-table-1-r12-c1",
+        "page": 1,
+        "geometryDistance": 0.061555814277635804
+      },
+      "expected": {
+        "type": "text",
+        "sourceType": "text",
+        "format": {
+          "dataType": "int",
+          "requirement": null,
+          "presentation": "",
+          "rawValues": [
+            "int",
+            "",
+            "Optional",
+            ""
+          ],
+          "provenance": "explicit"
+        }
+      },
+      "actual": {
+        "type": "numeric",
+        "sourceType": "numeric"
+      },
+      "rationale": "XFDL control/format typing and backend typed-blank classification disagree.",
+      "evidence": {}
+    },
+    {
+      "id": "table_detection_error:quaker-av005-2018-05.ground-truth:Unmapped_oYjoAErV_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_oYjoAErV_A",
+        "predictionId": "input-table-1-r12-c1",
+        "page": 1,
+        "geometryDistance": 0.061555814277635804
+      },
+      "expected": {
+        "tableId": "page-1-table-1",
+        "rowIndex": 0,
+        "columnIndex": 6,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": "table-1",
+        "rowIndex": 11,
+        "columnIndex": 0,
+        "valueType": "numeric"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:Unmapped_pNqHwhRL_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_pNqHwhRL_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_pNqHwhRL_A",
+        "type": "text",
+        "label": "LIST OF NEW HOME STARTS: STREET ADDRESS:"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:Unmapped_pNqHwhRL_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_pNqHwhRL_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:Unmapped_qaMQyqof_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_qaMQyqof_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_qaMQyqof_A",
+        "type": "text",
+        "label": "LIST OF NEW HOME STARTS: STREET ADDRESS:"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:Unmapped_qaMQyqof_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_qaMQyqof_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:Unmapped_kZrdmrcG_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_kZrdmrcG_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_kZrdmrcG_A",
+        "type": "text",
+        "label": "LIST OF NEW HOME STARTS: STREET ADDRESS:"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:Unmapped_kZrdmrcG_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_kZrdmrcG_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:Unmapped_BObvcYEh_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_BObvcYEh_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_BObvcYEh_A",
+        "type": "text",
+        "label": "LIST OF NEW HOME STARTS: CITY:"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:Unmapped_BObvcYEh_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_BObvcYEh_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:Unmapped_btmqkxCR_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_btmqkxCR_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_btmqkxCR_A",
+        "type": "text",
+        "label": "LIST OF NEW HOME STARTS: CITY:"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:Unmapped_btmqkxCR_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_btmqkxCR_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:Unmapped_AdYkjsAy_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_AdYkjsAy_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_AdYkjsAy_A",
+        "type": "text",
+        "label": "LIST OF NEW HOME STARTS: CITY:"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:Unmapped_AdYkjsAy_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_AdYkjsAy_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:Unmapped_jEEbMOiy_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_jEEbMOiy_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_jEEbMOiy_A",
+        "type": "text",
+        "label": "LIST OF NEW HOME STARTS: STATE:"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:Unmapped_jEEbMOiy_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_jEEbMOiy_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:Unmapped_lkGiGWiS_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_lkGiGWiS_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_lkGiGWiS_A",
+        "type": "text",
+        "label": "LIST OF NEW HOME STARTS: STATE:"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:Unmapped_lkGiGWiS_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_lkGiGWiS_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:Unmapped_WepFDyvm_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_WepFDyvm_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_WepFDyvm_A",
+        "type": "text",
+        "label": "LIST OF NEW HOME STARTS: STATE:"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:Unmapped_WepFDyvm_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_WepFDyvm_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:Unmapped_WadJTrWJ_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_WadJTrWJ_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_WadJTrWJ_A",
+        "type": "text",
+        "label": "LIST OF NEW HOME STARTS: ZIP:"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:Unmapped_WadJTrWJ_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_WadJTrWJ_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:Unmapped_NdMYTdUN_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_NdMYTdUN_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_NdMYTdUN_A",
+        "type": "text",
+        "label": "LIST OF NEW HOME STARTS: ZIP:"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:Unmapped_NdMYTdUN_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_NdMYTdUN_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:Unmapped_KoEzrTLd_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_KoEzrTLd_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_KoEzrTLd_A",
+        "type": "text",
+        "label": "LIST OF NEW HOME STARTS: ZIP:"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:Unmapped_KoEzrTLd_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_KoEzrTLd_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:Unmapped_uGOEDvul_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_uGOEDvul_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_uGOEDvul_A",
+        "type": "date",
+        "label": "LIST OF NEW HOME STARTS: START DATE:"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:Unmapped_uGOEDvul_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_uGOEDvul_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:Unmapped_IREmkZfu_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_IREmkZfu_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_IREmkZfu_A",
+        "type": "date",
+        "label": "LIST OF NEW HOME STARTS: START DATE:"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:Unmapped_IREmkZfu_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_IREmkZfu_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:Unmapped_OwVcKKys_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_OwVcKKys_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_OwVcKKys_A",
+        "type": "date",
+        "label": "LIST OF NEW HOME STARTS: START DATE:"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:Unmapped_OwVcKKys_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_OwVcKKys_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:Unmapped_JbuPtvvD_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_JbuPtvvD_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_JbuPtvvD_A",
+        "type": "text",
+        "label": "LIST OF NEW HOME STARTS: ESTIMATED SALES PRICE:"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:Unmapped_JbuPtvvD_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_JbuPtvvD_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:Unmapped_PzOMdRGR_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_PzOMdRGR_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_PzOMdRGR_A",
+        "type": "text",
+        "label": "LIST OF NEW HOME STARTS: ESTIMATED SALES PRICE:"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:Unmapped_PzOMdRGR_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_PzOMdRGR_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:Unmapped_iaPCYicl_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_iaPCYicl_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_iaPCYicl_A",
+        "type": "text",
+        "label": "LIST OF NEW HOME STARTS: ESTIMATED SALES PRICE:"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:Unmapped_iaPCYicl_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_iaPCYicl_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:Unmapped_JKluyiTk_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_JKluyiTk_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_JKluyiTk_A",
+        "type": "text",
+        "label": "LIST OF NEW HOME STARTS: ESTIMATED SUBCONTRACTED COSTS:"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:Unmapped_JKluyiTk_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_JKluyiTk_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:Unmapped_IVubBfrM_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_IVubBfrM_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_IVubBfrM_A",
+        "type": "text",
+        "label": "LIST OF NEW HOME STARTS: ESTIMATED SUBCONTRACTED COSTS:"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:Unmapped_IVubBfrM_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_IVubBfrM_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:Unmapped_VBWkKSQw_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_VBWkKSQw_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_VBWkKSQw_A",
+        "type": "text",
+        "label": "LIST OF NEW HOME STARTS: ESTIMATED SUBCONTRACTED COSTS:"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:Unmapped_VBWkKSQw_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_VBWkKSQw_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:Unmapped_qDtjuvUa_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_qDtjuvUa_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_qDtjuvUa_A",
+        "type": "text",
+        "label": "WHAT IS THE AVERAGE SALES PRICE PER HOME?"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:Unmapped_qDtjuvUa_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_qDtjuvUa_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:Unmapped_yIGiKBEh_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_yIGiKBEh_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_yIGiKBEh_A",
+        "type": "text",
+        "label": "NUMBER OF RENOVATION PROJECTS PER YEAR?"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:Unmapped_yIGiKBEh_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_yIGiKBEh_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:Unmapped_feEHWeQD_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_feEHWeQD_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_feEHWeQD_A",
+        "type": "text",
+        "label": "Average Contract Cost (s):"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:Unmapped_feEHWeQD_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_feEHWeQD_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:Unmapped_jCgXMrbq_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_jCgXMrbq_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_jCgXMrbq_A",
+        "type": "text",
+        "label": "Average Contract Cost (s):"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:Unmapped_jCgXMrbq_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_jCgXMrbq_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:Unmapped_toDuokqM_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_toDuokqM_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_toDuokqM_A",
+        "type": "text",
+        "label": "NUMBER OF GUT-REHABS:"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:Unmapped_toDuokqM_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_toDuokqM_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:Unmapped_BUcsYICU_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_BUcsYICU_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_BUcsYICU_A",
+        "type": "text",
+        "label": "WHAT WAS THE ANNUAL NUMBER OF NEW HOME STARTS DURING THE EXPIRING POLICY PERIOD."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:Unmapped_BUcsYICU_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_BUcsYICU_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:quaker-av005-2018-05.ground-truth:Unmapped_uxLVHYfu_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_uxLVHYfu_A",
+        "predictionId": "checkbox-p1-1",
+        "page": 1,
+        "geometryDistance": 0.0077094869570109555
+      },
+      "expected": {
+        "label": "HAS THER BEEN ANY CHANGE WHATSOEVER IN THE NATURE OF THE APPLICANT'S CONSTRUCTION ACTIVITY OR ANY CHANGE IN GEOGRAPHIC LOCATION OF CONSTRUCTION? YES INDICATOR",
+        "helpLabel": "HAS THER BEEN ANY CHANGE WHATSOEVER IN THE NATURE OF THE APPLICANT'S CONSTRUCTION ACTIVITY OR ANY CHANGE IN GEOGRAPHIC LOCATION OF CONSTRUCTION? YES INDICATOR"
+      },
+      "actual": {
+        "label": "YES :unselected:"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0.0909
+      }
+    },
+    {
+      "id": "grouping_error:quaker-av005-2018-05.ground-truth:Unmapped_uxLVHYfu_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_uxLVHYfu_A",
+        "predictionId": "checkbox-p1-1",
+        "page": 1,
+        "geometryDistance": 0.0077094869570109555
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-3"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:quaker-av005-2018-05.ground-truth:Unmapped_MLlbgFve_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_MLlbgFve_A",
+        "predictionId": "checkbox-p1-2",
+        "page": 1,
+        "geometryDistance": 0.008401899325083333
+      },
+      "expected": {
+        "label": "HAS THER BEEN ANY CHANGE WHATSOEVER IN THE NATURE OF THE APPLICANT'S CONSTRUCTION ACTIVITY OR ANY CHANGE IN GEOGRAPHIC LOCATION OF CONSTRUCTION? NO INDICATOR",
+        "helpLabel": "HAS THER BEEN ANY CHANGE WHATSOEVER IN THE NATURE OF THE APPLICANT'S CONSTRUCTION ACTIVITY OR ANY CHANGE IN GEOGRAPHIC LOCATION OF CONSTRUCTION? NO INDICATOR"
+      },
+      "actual": {
+        "label": "NO"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0.0909
+      }
+    },
+    {
+      "id": "grouping_error:quaker-av005-2018-05.ground-truth:Unmapped_MLlbgFve_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_MLlbgFve_A",
+        "predictionId": "checkbox-p1-2",
+        "page": 1,
+        "geometryDistance": 0.008401899325083333
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-3"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:quaker-av005-2018-05.ground-truth:Unmapped_tNlydsaw_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_tNlydsaw_A",
+        "predictionId": "checkbox-p1-3",
+        "page": 1,
+        "geometryDistance": 0.007878253288362095
+      },
+      "expected": {
+        "label": "HAS ANY CHANGE BEEN MADE TO THE SUBCONTRACTORS AGREEMENT THAT YOU SUBMITTED LAST YEAR? YES INDICATOR",
+        "helpLabel": "HAS ANY CHANGE BEEN MADE TO THE SUBCONTRACTORS AGREEMENT THAT YOU SUBMITTED LAST YEAR? YES INDICATOR"
+      },
+      "actual": {
+        "label": "YES :unselected:"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0.1
+      }
+    },
+    {
+      "id": "grouping_error:quaker-av005-2018-05.ground-truth:Unmapped_tNlydsaw_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_tNlydsaw_A",
+        "predictionId": "checkbox-p1-3",
+        "page": 1,
+        "geometryDistance": 0.007878253288362095
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-3"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:quaker-av005-2018-05.ground-truth:Unmapped_ziruwuPX_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_ziruwuPX_A",
+        "predictionId": "checkbox-p1-4",
+        "page": 1,
+        "geometryDistance": 0.00861789178994703
+      },
+      "expected": {
+        "label": "HAS ANY CHANGE BEEN MADE TO THE SUBCONTRACTORS AGREEMENT THAT YOU SUBMITTED LAST YEAR? NO INDICATOR",
+        "helpLabel": "HAS ANY CHANGE BEEN MADE TO THE SUBCONTRACTORS AGREEMENT THAT YOU SUBMITTED LAST YEAR? NO INDICATOR"
+      },
+      "actual": {
+        "label": "NO"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0.1
+      }
+    },
+    {
+      "id": "grouping_error:quaker-av005-2018-05.ground-truth:Unmapped_ziruwuPX_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_ziruwuPX_A",
+        "predictionId": "checkbox-p1-4",
+        "page": 1,
+        "geometryDistance": 0.00861789178994703
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-3"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:quaker-av005-2018-05.ground-truth:Unmapped_jqviFPcf_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_jqviFPcf_A",
+        "predictionId": "checkbox-p1-5",
+        "page": 1,
+        "geometryDistance": 0.007922348688573394
+      },
+      "expected": {
+        "label": "IS THE NAMED INSURED OR ANY PROPOSED INSURED AWARE OF ANY CIRCUMSTANCE WHICH MAY RESULT IN A CLAIM BEING MADE AGAINST THEM? YES INDICATOR",
+        "helpLabel": "IS THE NAMED INSURED OR ANY PROPOSED INSURED AWARE OF ANY CIRCUMSTANCE WHICH MAY RESULT IN A CLAIM BEING MADE AGAINST THEM? YES INDICATOR"
+      },
+      "actual": {
+        "label": "YES :unselected:"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0.08
+      }
+    },
+    {
+      "id": "grouping_error:quaker-av005-2018-05.ground-truth:Unmapped_jqviFPcf_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_jqviFPcf_A",
+        "predictionId": "checkbox-p1-5",
+        "page": 1,
+        "geometryDistance": 0.007922348688573394
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-3"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:quaker-av005-2018-05.ground-truth:Unmapped_jTxJtLPd_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_jTxJtLPd_A",
+        "predictionId": "checkbox-p1-6",
+        "page": 1,
+        "geometryDistance": 0.010187277790671065
+      },
+      "expected": {
+        "label": "IS THE NAMED INSURED OR ANY PROPOSED INSURED AWARE OF ANY CIRCUMSTANCE WHICH MAY RESULT IN A CLAIM BEING MADE AGAINST THEM? NO INDICATOR",
+        "helpLabel": "IS THE NAMED INSURED OR ANY PROPOSED INSURED AWARE OF ANY CIRCUMSTANCE WHICH MAY RESULT IN A CLAIM BEING MADE AGAINST THEM? NO INDICATOR"
+      },
+      "actual": {
+        "label": "NO"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0.08
+      }
+    },
+    {
+      "id": "grouping_error:quaker-av005-2018-05.ground-truth:Unmapped_jTxJtLPd_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_jTxJtLPd_A",
+        "predictionId": "checkbox-p1-6",
+        "page": 1,
+        "geometryDistance": 0.010187277790671065
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-3"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "table_detection_error:quaker-av005-2018-05.ground-truth:Unmapped_nxFUGSHd_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_nxFUGSHd_A",
+        "predictionId": "input-table-2-r2-c1",
+        "page": 2,
+        "geometryDistance": 0.04677694262939106
+      },
+      "expected": {
+        "tableId": "page-2-table-1",
+        "rowIndex": 0,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": "table-2",
+        "rowIndex": 1,
+        "columnIndex": 0,
+        "valueType": "text"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:Contractors_SubcontractorsPaidAmount_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Contractors_SubcontractorsPaidAmount_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Contractors_SubcontractorsPaidAmount_A",
+        "type": "numeric",
+        "label": "Enter amount: The total dollar amount for work that the contractor pays to subcontractors."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:Contractors_SubcontractorsPaidAmount_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Contractors_SubcontractorsPaidAmount_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:ContractorsUnderwriting_CommercialWorkPercent_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_CommercialWorkPercent_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "ContractorsUnderwriting_CommercialWorkPercent_A",
+        "type": "numeric",
+        "label": "Enter percentage: The percentage of work that is commercial."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:ContractorsUnderwriting_CommercialWorkPercent_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_CommercialWorkPercent_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:ContractorsUnderwriting_ResidentialWorkPercent_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_ResidentialWorkPercent_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "ContractorsUnderwriting_ResidentialWorkPercent_A",
+        "type": "numeric",
+        "label": "Enter percentage: The percentage of work that is residential."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:ContractorsUnderwriting_ResidentialWorkPercent_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "ContractorsUnderwriting_ResidentialWorkPercent_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:Unmapped_dkgVcefW_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_dkgVcefW_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_dkgVcefW_A",
+        "type": "text",
+        "label": "ANNUAL ESTIMATED REVENUES FROM CONSTRUCTION WORK IN NY CITY BOROUGHS?"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:Unmapped_dkgVcefW_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_dkgVcefW_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "candidate_ranking_error:quaker-av005-2018-05.ground-truth:NamedInsured_Signature_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "NamedInsured_Signature_A",
+        "predictionId": "input-semantic-p2-l32",
+        "page": 2,
+        "geometryDistance": 0.01762720237909287
+      },
+      "expected": {
+        "topAcordCode": "NamedInsured_Signature"
+      },
+      "actual": {
+        "topAcordCode": "BusinessInformation_DirectorOfOfficer_SignatureDayOfMonth",
+        "rankedCodes": [
+          "BusinessInformation_DirectorOfOfficer_SignatureDayOfMonth",
+          "BusinessInformation_DirectorOfOfficer_SignatureMonth",
+          "BusinessInformation_DirectorOfOfficer_SignatureTime"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:NamedInsured_SignatureDate_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "NamedInsured_SignatureDate_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "NamedInsured_SignatureDate_A",
+        "type": "signature",
+        "label": "Enter date: The date the form was signed by the applicant or named insured. (MM/DD/YYYY)"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:NamedInsured_SignatureDate_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "NamedInsured_SignatureDate_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:NamedInsured_Contact_Title_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "NamedInsured_Contact_Title_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "NamedInsured_Contact_Title_A",
+        "type": "text",
+        "label": "Enter number: The title of the contact for the named insured."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:NamedInsured_Contact_Title_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "NamedInsured_Contact_Title_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:Producer_FullName_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Producer_FullName_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Producer_FullName_A",
+        "type": "text",
+        "label": "Enter text: The full name of the producer / agency."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:Producer_FullName_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Producer_FullName_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:Producer_AuthorizedRepresentative_FullName_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Producer_AuthorizedRepresentative_FullName_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Producer_AuthorizedRepresentative_FullName_A",
+        "type": "text",
+        "label": "Enter text: The name of the authorized representative of the producer, agency and/or broker that signed the form."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:Producer_AuthorizedRepresentative_FullName_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Producer_AuthorizedRepresentative_FullName_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:Producer_AuthorizedRepresentative_Signature_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Producer_AuthorizedRepresentative_Signature_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Producer_AuthorizedRepresentative_Signature_A",
+        "type": "signature",
+        "label": "Sign here: Accommodates the signature of the authorized representative (e.g., producer, agent, broker, etc.) of the company(ies) listed on the document. This is required in most states."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:Producer_AuthorizedRepresentative_Signature_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Producer_AuthorizedRepresentative_Signature_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:Producer_AuthorizedRepresentative_SignatureDate_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Producer_AuthorizedRepresentative_SignatureDate_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Producer_AuthorizedRepresentative_SignatureDate_A",
+        "type": "signature",
+        "label": "Enter date: The date the producer signed the form."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:Producer_AuthorizedRepresentative_SignatureDate_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Producer_AuthorizedRepresentative_SignatureDate_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "table_detection_error:quaker-av005-2018-05.ground-truth:Unmapped_UKvRzQNv_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_UKvRzQNv_A",
+        "predictionId": "input-table-2-r3-c1",
+        "page": 2,
+        "geometryDistance": 0.04875143380547076
+      },
+      "expected": {
+        "tableId": "page-2-table-1",
+        "rowIndex": 1,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": "table-2",
+        "rowIndex": 2,
+        "columnIndex": 0,
+        "valueType": "text"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "table_detection_error:quaker-av005-2018-05.ground-truth:Unmapped_DghsPZSd_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_DghsPZSd_A",
+        "predictionId": "input-table-2-r4-c1",
+        "page": 2,
+        "geometryDistance": 0.04874328617293733
+      },
+      "expected": {
+        "tableId": "page-2-table-1",
+        "rowIndex": 2,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": "table-2",
+        "rowIndex": 3,
+        "columnIndex": 0,
+        "valueType": "text"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "table_detection_error:quaker-av005-2018-05.ground-truth:Unmapped_TzXVbalJ_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_TzXVbalJ_A",
+        "predictionId": "input-table-2-r5-c1",
+        "page": 2,
+        "geometryDistance": 0.05214883108515403
+      },
+      "expected": {
+        "tableId": "page-2-table-1",
+        "rowIndex": 3,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": "table-2",
+        "rowIndex": 4,
+        "columnIndex": 0,
+        "valueType": "text"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:Unmapped_qwrYnqsD_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_qwrYnqsD_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_qwrYnqsD_A",
+        "type": "text",
+        "label": "Payroll:"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:Unmapped_qwrYnqsD_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_qwrYnqsD_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:Unmapped_yGkQKZwW_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_yGkQKZwW_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_yGkQKZwW_A",
+        "type": "text",
+        "label": "Payroll:"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:Unmapped_yGkQKZwW_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_yGkQKZwW_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:Unmapped_WukmKoek_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_WukmKoek_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_WukmKoek_A",
+        "type": "text",
+        "label": "Payroll:"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:Unmapped_WukmKoek_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_WukmKoek_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:Unmapped_bAYSxZtu_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_bAYSxZtu_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_bAYSxZtu_A",
+        "type": "text",
+        "label": "Payroll:"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:Unmapped_bAYSxZtu_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_bAYSxZtu_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "field_type_misclassification:quaker-av005-2018-05.ground-truth:SalesRevenueHistory_NextFiscalYear_TotalSalesAmount_A",
+      "category": "field_type_misclassification",
+      "description": "The predicted fillable type differs from the XFDL control/format type.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "SalesRevenueHistory_NextFiscalYear_TotalSalesAmount_A",
+        "predictionId": "input-table-2-r7-c1",
+        "page": 2,
+        "geometryDistance": 0.06284319005161458
+      },
+      "expected": {
+        "type": "numeric",
+        "sourceType": "numeric",
+        "format": {
+          "dataType": "int",
+          "requirement": null,
+          "presentation": "",
+          "rawValues": [
+            "int",
+            "",
+            "Optional",
+            ""
+          ],
+          "provenance": "explicit"
+        }
+      },
+      "actual": {
+        "type": "text",
+        "sourceType": "text"
+      },
+      "rationale": "XFDL control/format typing and backend typed-blank classification disagree.",
+      "evidence": {}
+    },
+    {
+      "id": "candidate_ranking_error:quaker-av005-2018-05.ground-truth:SalesRevenueHistory_NextFiscalYear_TotalSalesAmount_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "SalesRevenueHistory_NextFiscalYear_TotalSalesAmount_A",
+        "predictionId": "input-table-2-r7-c1",
+        "page": 2,
+        "geometryDistance": 0.06284319005161458
+      },
+      "expected": {
+        "topAcordCode": "SalesRevenueHistory_NextFiscalYear_TotalSalesAmount"
+      },
+      "actual": {
+        "topAcordCode": "CyberCoverage_ApplicantProvideNewEcommerceProductsServicesNextTwelveMonthsExplanation",
+        "rankedCodes": [
+          "CyberCoverage_ApplicantProvideNewEcommerceProductsServicesNextTwelveMonthsExplanation",
+          "BuildersRiskInstallation_GrossReceiptsInformation_NextYearGrossSalesAmount",
+          "TransportationInformation_GrossReceiptsInformation_NextYearGrossSalesAmount"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:Unmapped_SGxnSZGY_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_SGxnSZGY_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_SGxnSZGY_A",
+        "type": "text",
+        "label": "IF YES, HOW MANY DRIVERS?"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:Unmapped_SGxnSZGY_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_SGxnSZGY_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:Unmapped_netJpCTu_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_netJpCTu_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_netJpCTu_A",
+        "type": "checkbox",
+        "label": "IS HIRED & NON-OWNED AUTO COVERAGE DESIRED? YES INDICATOR"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:Unmapped_netJpCTu_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_netJpCTu_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:quaker-av005-2018-05.ground-truth:Unmapped_DAzgpzyB_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_DAzgpzyB_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Unmapped_DAzgpzyB_A",
+        "type": "checkbox",
+        "label": "IS HIRED & NON-OWNED AUTO COVERAGE DESIRED? NO INDICATOR"
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:quaker-av005-2018-05.ground-truth:Unmapped_DAzgpzyB_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+        "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+        "pdfFile": "Quaker AV005.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "medium"
+      },
+      "field": {
+        "truthSid": "Unmapped_DAzgpzyB_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    }
+  ]
+}

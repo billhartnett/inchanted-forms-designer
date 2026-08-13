@@ -1,0 +1,414 @@
+{
+  "schemaVersion": "corpus-validation-v4-snapshots.v1",
+  "generatedAt": "2026-08-12T20:21:46.543Z",
+  "forms": [
+    {
+      "form": "ACORD 0080 2016-11.xfdl",
+      "pairStatus": "matched",
+      "pdfFile": "Acord-80.pdf",
+      "visualDiffSnapshot": "visual-diffs/acord-0080-2016-11-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/acord-0080-2016-11-xfdl.svg",
+      "classification": "layout-driven edge case"
+    },
+    {
+      "form": "ACORD 0081 2016-03r1.xfdl",
+      "pairStatus": "matched",
+      "pdfFile": "Acord-81.pdf",
+      "visualDiffSnapshot": "visual-diffs/acord-0081-2016-03r1-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/acord-0081-2016-03r1-xfdl.svg",
+      "classification": "layout-driven edge case"
+    },
+    {
+      "form": "ACORD 0082 2020-03.xfdl",
+      "pairStatus": "matched",
+      "pdfFile": "Acord-82.pdf",
+      "visualDiffSnapshot": "visual-diffs/acord-0082-2020-03-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/acord-0082-2020-03-xfdl.svg",
+      "classification": "layout-driven edge case"
+    },
+    {
+      "form": "ACORD 0083 2016-04r1.xfdl",
+      "pairStatus": "matched",
+      "pdfFile": "Acord-83.pdf",
+      "visualDiffSnapshot": "visual-diffs/acord-0083-2016-04r1-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/acord-0083-2016-04r1-xfdl.svg",
+      "classification": "layout-driven edge case"
+    },
+    {
+      "form": "ACORD 0084 2016-11.xfdl",
+      "pairStatus": "review",
+      "pdfFile": "Acord-84.pdf",
+      "visualDiffSnapshot": "visual-diffs/acord-0084-2016-11-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/acord-0084-2016-11-xfdl.svg",
+      "classification": "layout-driven edge case"
+    },
+    {
+      "form": "ACORD 0085 2016-11.xfdl",
+      "pairStatus": "review",
+      "pdfFile": "ACORD-85.pdf",
+      "visualDiffSnapshot": "visual-diffs/acord-0085-2016-11-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/acord-0085-2016-11-xfdl.svg",
+      "classification": "layout-driven edge case"
+    },
+    {
+      "form": "ACORD 0088 2015-12r1.xfdl",
+      "pairStatus": "matched",
+      "pdfFile": "acord-88.pdf",
+      "visualDiffSnapshot": "visual-diffs/acord-0088-2015-12r1-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/acord-0088-2015-12r1-xfdl.svg",
+      "classification": "layout-driven edge case"
+    },
+    {
+      "form": "ACORD 0125 2016-03r1.xfdl",
+      "pairStatus": "review",
+      "pdfFile": "sample-Acord-125.pdf",
+      "visualDiffSnapshot": "visual-diffs/acord-0125-2016-03r1-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/acord-0125-2016-03r1-xfdl.svg",
+      "classification": "layout-driven edge case"
+    },
+    {
+      "form": "ACORD 0126 2016-09.xfdl",
+      "pairStatus": "matched",
+      "pdfFile": "ACORD_126_-_Commercial_General_Liability_Section.pdf",
+      "visualDiffSnapshot": "visual-diffs/acord-0126-2016-09-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/acord-0126-2016-09-xfdl.svg",
+      "classification": "backend residual"
+    },
+    {
+      "form": "ACORD 0127 2015-12r2.xfdl",
+      "pairStatus": "matched",
+      "pdfFile": "sample-Acord-127.pdf",
+      "visualDiffSnapshot": "visual-diffs/acord-0127-2015-12r2-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/acord-0127-2015-12r2-xfdl.svg",
+      "classification": "layout-driven edge case"
+    },
+    {
+      "form": "ACORD 0130 2017-05.xfdl",
+      "pairStatus": "matched",
+      "pdfFile": "sample-Acord-130.pdf",
+      "visualDiffSnapshot": "visual-diffs/acord-0130-2017-05-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/acord-0130-2017-05-xfdl.svg",
+      "classification": "layout-driven edge case"
+    },
+    {
+      "form": "ACORD 0131 2017-11.xfdl",
+      "pairStatus": "matched",
+      "pdfFile": "Acord-131.pdf",
+      "visualDiffSnapshot": "visual-diffs/acord-0131-2017-11-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/acord-0131-2017-11-xfdl.svg",
+      "classification": "layout-driven edge case"
+    },
+    {
+      "form": "ACORD 0132 2015-12r1.xfdl",
+      "pairStatus": "matched",
+      "pdfFile": "acord-132.pdf",
+      "visualDiffSnapshot": "visual-diffs/acord-0132-2015-12r1-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/acord-0132-2015-12r1-xfdl.svg",
+      "classification": "layout-driven edge case"
+    },
+    {
+      "form": "ACORD 0133 2016-03.xfdl",
+      "pairStatus": "matched",
+      "pdfFile": "acord-133.pdf",
+      "visualDiffSnapshot": "visual-diffs/acord-0133-2016-03-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/acord-0133-2016-03-xfdl.svg",
+      "classification": "layout-driven edge case"
+    },
+    {
+      "form": "ARGO AC-SUP090 2018-07.Xfdl",
+      "pairStatus": "matched",
+      "pdfFile": "ARGO AC-SUP090 2018-07.pdf",
+      "visualDiffSnapshot": "visual-diffs/argo-ac-sup090-2018-07-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/argo-ac-sup090-2018-07-xfdl.svg",
+      "classification": "layout-driven edge case"
+    },
+    {
+      "form": "ARGO G1000 0114.Xfdl",
+      "pairStatus": "matched",
+      "pdfFile": "ARGO G1000 0114.pdf",
+      "visualDiffSnapshot": "visual-diffs/argo-g1000-0114-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/argo-g1000-0114-xfdl.svg",
+      "classification": "layout-driven edge case"
+    },
+    {
+      "form": "Argo GAR-SUP_135-0117 2020-01-30.Xfdl",
+      "pairStatus": "matched",
+      "pdfFile": "ARGO GAR_SUP_135-0117.pdf",
+      "visualDiffSnapshot": "visual-diffs/argo-gar-sup-135-0117-2020-01-30-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/argo-gar-sup-135-0117-2020-01-30-xfdl.svg",
+      "classification": "designer residual"
+    },
+    {
+      "form": "Chubb AV003 2017-07.Xfdl",
+      "pairStatus": "matched",
+      "pdfFile": "Chubb AV003.pdf",
+      "visualDiffSnapshot": "visual-diffs/chubb-av003-2017-07-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/chubb-av003-2017-07-xfdl.svg",
+      "classification": "layout-driven edge case"
+    },
+    {
+      "form": "Chubb PF-48163 2017-08.Xfdl",
+      "pairStatus": "matched",
+      "pdfFile": "Chubb PF 48163 Cyber.pdf",
+      "visualDiffSnapshot": "visual-diffs/chubb-pf-48163-2017-08-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/chubb-pf-48163-2017-08-xfdl.svg",
+      "classification": "designer residual"
+    },
+    {
+      "form": "Hartford CB_00_H001_00 2017-10.Xfdl",
+      "pairStatus": "review",
+      "pdfFile": "Hartford CB 00H01 Cyber.pdf",
+      "visualDiffSnapshot": "visual-diffs/hartford-cb-00-h001-00-2017-10-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/hartford-cb-00-h001-00-2017-10-xfdl.svg",
+      "classification": "layout-driven edge case"
+    },
+    {
+      "form": "Hartford LP_00_HO54_03 2017-06.Xfdl",
+      "pairStatus": "review",
+      "pdfFile": "Hartford 00 HO54 Lawyers.pdf",
+      "visualDiffSnapshot": "visual-diffs/hartford-lp-00-ho54-03-2017-06-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/hartford-lp-00-ho54-03-2017-06-xfdl.svg",
+      "classification": "layout-driven edge case"
+    },
+    {
+      "form": "Hartford SS_25_50_06_16.Xfdl",
+      "pairStatus": "matched",
+      "pdfFile": "Hartford SS_25_50_06_16.pdf",
+      "visualDiffSnapshot": "visual-diffs/hartford-ss-25-50-06-16-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/hartford-ss-25-50-06-16-xfdl.svg",
+      "classification": "backend residual"
+    },
+    {
+      "form": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+      "pairStatus": "matched",
+      "pdfFile": "Hartford AC_00_H007.pdf",
+      "visualDiffSnapshot": "visual-diffs/hartford-the-ac-00-h007-00-0805-2005-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/hartford-the-ac-00-h007-00-0805-2005-xfdl.svg",
+      "classification": "backend residual"
+    },
+    {
+      "form": "Lancer R-LMC_AP001 (01-20).Xfdl",
+      "pairStatus": "matched",
+      "pdfFile": "Lancer R-LMC_AP001 (01-10).pdf",
+      "visualDiffSnapshot": "visual-diffs/lancer-r-lmc-ap001-01-20-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/lancer-r-lmc-ap001-01-20-xfdl.svg",
+      "classification": "layout-driven edge case"
+    },
+    {
+      "form": "Markel MAIL 021 09_15.Xfdl",
+      "pairStatus": "matched",
+      "pdfFile": "Markel MAIL 021 09_15.pdf",
+      "visualDiffSnapshot": "visual-diffs/markel-mail-021-09-15-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/markel-mail-021-09-15-xfdl.svg",
+      "classification": "layout-driven edge case"
+    },
+    {
+      "form": "Merchants MG_71_01_ 03_19.Xfdl",
+      "pairStatus": "matched",
+      "pdfFile": "Merchants MG_71_01_03_19.pdf",
+      "visualDiffSnapshot": "visual-diffs/merchants-mg-71-01-03-19-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/merchants-mg-71-01-03-19-xfdl.svg",
+      "classification": "layout-driven edge case"
+    },
+    {
+      "form": "Mount Hawley UWSR_207MTH 2013-03.Xfdl",
+      "pairStatus": "matched",
+      "pdfFile": "Mount Hawley UWSR_207MTH 2013-03.pdf",
+      "visualDiffSnapshot": "visual-diffs/mount-hawley-uwsr-207mth-2013-03-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/mount-hawley-uwsr-207mth-2013-03-xfdl.svg",
+      "classification": "layout-driven edge case"
+    },
+    {
+      "form": "Nationwide GLS-APP-74s (6-17).Xfdl",
+      "pairStatus": "matched",
+      "pdfFile": "Nationwide GLS-APP-74s (6-17).pdf",
+      "visualDiffSnapshot": "visual-diffs/nationwide-gls-app-74s-6-17-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/nationwide-gls-app-74s-6-17-xfdl.svg",
+      "classification": "layout-driven edge case"
+    },
+    {
+      "form": "NFIP FEMA_Form_086-0-1 F-050_(FEB_2015).Xfdl",
+      "pairStatus": "matched",
+      "pdfFile": "NFIP FEMA_Form_086-0-1 F-050_(FEB_2015).pdf",
+      "visualDiffSnapshot": "visual-diffs/nfip-fema-form-086-0-1-f-050-feb-2015-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/nfip-fema-form-086-0-1-f-050-feb-2015-xfdl.svg",
+      "classification": "layout-driven edge case"
+    },
+    {
+      "form": "Philadelphia Builders_Risk_Ground_Up_Construction 2013-01.Xfdl",
+      "pairStatus": "matched",
+      "pdfFile": "Philadelphia Builders_Risk_Ground_Up_Construction 2013-01.pdf",
+      "visualDiffSnapshot": "visual-diffs/philadelphia-builders-risk-ground-up-construction-2013-01-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/philadelphia-builders-risk-ground-up-construction-2013-01-xfdl.svg",
+      "classification": "designer residual"
+    },
+    {
+      "form": "Philadelphia Builders_Risk_Renovation_and_Rehabilitation 2013-01.Xfdl",
+      "pairStatus": "matched",
+      "pdfFile": "Philadelphia Builders_Risk_Renovation_and_Rehabilitation 2013-01.pdf",
+      "visualDiffSnapshot": "visual-diffs/philadelphia-builders-risk-renovation-and-rehabilitation-2013-01-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/philadelphia-builders-risk-renovation-and-rehabilitation-2013-01-xfdl.svg",
+      "classification": "designer residual"
+    },
+    {
+      "form": "Philadelphia INTEG-TECH-APP 03-2018.Xfdl",
+      "pairStatus": "matched",
+      "pdfFile": "Philadelphia INTEG-TECH-APP 03-2018.pdf",
+      "visualDiffSnapshot": "visual-diffs/philadelphia-integ-tech-app-03-2018-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/philadelphia-integ-tech-app-03-2018-xfdl.svg",
+      "classification": "layout-driven edge case"
+    },
+    {
+      "form": "Philadelphia PI-CYB-014 2017-11.Xfdl",
+      "pairStatus": "matched",
+      "pdfFile": "Philadelphia PI-CYB-014 2017-11.pdf",
+      "visualDiffSnapshot": "visual-diffs/philadelphia-pi-cyb-014-2017-11-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/philadelphia-pi-cyb-014-2017-11-xfdl.svg",
+      "classification": "layout-driven edge case"
+    },
+    {
+      "form": "Philadelphia Salon_and_Day_Spa_App 2016-12.Xfdl",
+      "pairStatus": "matched",
+      "pdfFile": "Philadelphia Salon_and_Day_Spa_App 2016-12.pdf",
+      "visualDiffSnapshot": "visual-diffs/philadelphia-salon-and-day-spa-app-2016-12-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/philadelphia-salon-and-day-spa-app-2016-12-xfdl.svg",
+      "classification": "layout-driven edge case"
+    },
+    {
+      "form": "Preferred_Mutual CL-77 08_03.Xfdl",
+      "pairStatus": "matched",
+      "pdfFile": "Preferred_Mutual CL-77 08_03.pdf",
+      "visualDiffSnapshot": "visual-diffs/preferred-mutual-cl-77-08-03-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/preferred-mutual-cl-77-08-03-xfdl.svg",
+      "classification": "designer residual"
+    },
+    {
+      "form": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+      "pairStatus": "matched",
+      "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+      "visualDiffSnapshot": "visual-diffs/preferred-mutual-cl-98-09-18-ny-2018-04-26-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/preferred-mutual-cl-98-09-18-ny-2018-04-26-xfdl.svg",
+      "classification": "designer residual"
+    },
+    {
+      "form": "Preferred_Mutual PS-01 (09-14).Xfdl",
+      "pairStatus": "matched",
+      "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+      "visualDiffSnapshot": "visual-diffs/preferred-mutual-ps-01-09-14-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/preferred-mutual-ps-01-09-14-xfdl.svg",
+      "classification": "backend residual"
+    },
+    {
+      "form": "Protective_Insurance_Company Large_Fleet Updated_01-2016.Xfdl",
+      "pairStatus": "matched",
+      "pdfFile": "Protective_Insurance_Company Large_Fleet.pdf",
+      "visualDiffSnapshot": "visual-diffs/protective-insurance-company-large-fleet-updated-01-2016-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/protective-insurance-company-large-fleet-updated-01-2016-xfdl.svg",
+      "classification": "layout-driven edge case"
+    },
+    {
+      "form": "Quaker AV005 2018-05.Xfdl",
+      "pairStatus": "matched",
+      "pdfFile": "Quaker AV005.pdf",
+      "visualDiffSnapshot": "visual-diffs/quaker-av005-2018-05-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/quaker-av005-2018-05-xfdl.svg",
+      "classification": "backend residual"
+    },
+    {
+      "form": "Quaker_Special_Risk 04-18_QSR_Luxury_Home_Program_Contractors_Liability_Application 04-18.Xfdl",
+      "pairStatus": "matched",
+      "pdfFile": "Quaker_Special_Risk 04-18_QSR.pdf",
+      "visualDiffSnapshot": "visual-diffs/quaker-special-risk-04-18-qsr-luxury-home-program-contractors-liability-application-04-18-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/quaker-special-risk-04-18-qsr-luxury-home-program-contractors-liability-application-04-18-xfdl.svg",
+      "classification": "layout-driven edge case"
+    },
+    {
+      "form": "Quaker_Special_Risk QSR-SR-Constr-MGR 2019-01.Xfdl",
+      "pairStatus": "matched",
+      "pdfFile": "Quaker_Special_Risk QSR-SR-Constr-MGR 2019-01.pdf",
+      "visualDiffSnapshot": "visual-diffs/quaker-special-risk-qsr-sr-constr-mgr-2019-01-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/quaker-special-risk-qsr-sr-constr-mgr-2019-01-xfdl.svg",
+      "classification": "layout-driven edge case"
+    },
+    {
+      "form": "Travelers CP-4650 2001-05.Xfdl",
+      "pairStatus": "matched",
+      "pdfFile": "Travelers CP-4650 2001-05.pdf",
+      "visualDiffSnapshot": "visual-diffs/travelers-cp-4650-2001-05-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/travelers-cp-4650-2001-05-xfdl.svg",
+      "classification": "designer residual"
+    },
+    {
+      "form": "Travelers CX-1036 02-06.Xfdl",
+      "pairStatus": "matched",
+      "pdfFile": "Travelers CX-1036 02-06.pdf",
+      "visualDiffSnapshot": "visual-diffs/travelers-cx-1036-02-06-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/travelers-cx-1036-02-06-xfdl.svg",
+      "classification": "layout-driven edge case"
+    },
+    {
+      "form": "Travelers CYB-14101 2017-12.Xfdl",
+      "pairStatus": "matched",
+      "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+      "visualDiffSnapshot": "visual-diffs/travelers-cyb-14101-2017-12-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/travelers-cyb-14101-2017-12-xfdl.svg",
+      "classification": "backend residual"
+    },
+    {
+      "form": "Travelers MPL 1100 01-09.Xfdl",
+      "pairStatus": "matched",
+      "pdfFile": "Travelers MPL 1100 01-09.pdf",
+      "visualDiffSnapshot": "visual-diffs/travelers-mpl-1100-01-09-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/travelers-mpl-1100-01-09-xfdl.svg",
+      "classification": "layout-driven edge case"
+    },
+    {
+      "form": "United_Specialty_ UNITEDSPEC-01 2019-09-12.Xfdl",
+      "pairStatus": "matched",
+      "pdfFile": "United_Specialty_ UNITEDSPEC-01 2019-09-12.pdf",
+      "visualDiffSnapshot": "visual-diffs/united-specialty-unitedspec-01-2019-09-12-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/united-specialty-unitedspec-01-2019-09-12-xfdl.svg",
+      "classification": "layout-driven edge case"
+    },
+    {
+      "form": "USLI NPPLA 5-12.Xfdl",
+      "pairStatus": "matched",
+      "pdfFile": "USLI NPPLA 5-12.pdf",
+      "visualDiffSnapshot": "visual-diffs/usli-nppla-5-12-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/usli-nppla-5-12-xfdl.svg",
+      "classification": "designer residual"
+    },
+    {
+      "form": "USLI Pro+ect_ _10-18.Xfdl",
+      "pairStatus": "matched",
+      "pdfFile": "USLI Pro+ect_ _10-18.pdf",
+      "visualDiffSnapshot": "visual-diffs/usli-pro-ect-10-18-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/usli-pro-ect-10-18-xfdl.svg",
+      "classification": "layout-driven edge case"
+    },
+    {
+      "form": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+      "pairStatus": "matched",
+      "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+      "visualDiffSnapshot": "visual-diffs/utica-first-uf-mand-art-cont-2020-05-02-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/utica-first-uf-mand-art-cont-2020-05-02-xfdl.svg",
+      "classification": "backend residual"
+    },
+    {
+      "form": "Western_Heritage WHI-APP-138 2013-11.Xfdl",
+      "pairStatus": "matched",
+      "pdfFile": "Western_Heritage WHI-APP-138 2013-11.pdf",
+      "visualDiffSnapshot": "visual-diffs/western-heritage-whi-app-138-2013-11-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/western-heritage-whi-app-138-2013-11-xfdl.svg",
+      "classification": "layout-driven edge case"
+    },
+    {
+      "form": "Westport WIC1107 2010-06.Xfdl",
+      "pairStatus": "matched",
+      "pdfFile": "Westport WIC1107 2010-06.pdf",
+      "visualDiffSnapshot": "visual-diffs/westport-wic1107-2010-06-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/westport-wic1107-2010-06-xfdl.svg",
+      "classification": "layout-driven edge case"
+    }
+  ]
+}

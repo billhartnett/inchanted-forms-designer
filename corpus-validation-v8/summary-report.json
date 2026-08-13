@@ -1,0 +1,1682 @@
+{
+  "schemaVersion": "corpus-validation-v8.v1",
+  "generatedAt": "2026-08-13T14:25:52.289Z",
+  "repositoryRoot": "F:\\inchanted-forms-designer",
+  "source": {
+    "engine": "semantic-engine-v2",
+    "patchSet": "phase8-continued-table-suppression-grouping-v8",
+    "groundTruthManifest": "training-data/acord-labeled_XFDL/ground-truth/manifest.json",
+    "discrepancyIndex": "semantic-patches/semantic-errors/index.json"
+  },
+  "overview": {
+    "pairedForms": 51,
+    "totalTruthFields": 16227,
+    "totalPredictedFillableFields": 11663,
+    "totalMatchedFields": 8697,
+    "totalErrors": 40779,
+    "averageErrorsPerForm": 799.5882352941177,
+    "matchedRate": 0.536,
+    "readiness": "not-ready-for-full-production"
+  },
+  "accuracy": {
+    "backendSemanticAccuracy": 0.536,
+    "designerVisualAccuracy": -0.5665,
+    "tableAccuracy": 0.6445,
+    "checkboxYesNoAccuracy": 0.9941,
+    "suppressionAccuracy": 0.536,
+    "groupingAccuracy": 0.695,
+    "labelValuePairingAccuracy": 0.9249,
+    "unmappedFillableAccuracy": 0.5297
+  },
+  "categoryTotals": {
+    "semantic_label_mismatch": 7172,
+    "candidate_ranking_error": 4478,
+    "field_type_misclassification": 1935,
+    "table_detection_error": 5768,
+    "checkbox_yes_no_pairing_error": 96,
+    "suppression_error": 7530,
+    "grouping_error": 4949,
+    "label_value_pairing_error": 1219,
+    "unmapped_fillable_field": 7632
+  },
+  "formResults": [
+    {
+      "form": "ACORD 0080 2016-11.xfdl",
+      "datasetFile": "acord-0080-2016-11.ground-truth.json",
+      "pdfFile": "Acord-80.pdf",
+      "pairStatus": "matched",
+      "pairConfidence": "high",
+      "counts": {
+        "truthFields": 821,
+        "predictedFillableFields": 495,
+        "matchedFields": 450,
+        "promotedFields": 491,
+        "errors": 2255
+      },
+      "categoryCounts": {
+        "semantic_label_mismatch": 339,
+        "candidate_ranking_error": 430,
+        "field_type_misclassification": 146,
+        "table_detection_error": 257,
+        "checkbox_yes_no_pairing_error": 12,
+        "suppression_error": 371,
+        "grouping_error": 206,
+        "label_value_pairing_error": 119,
+        "unmapped_fillable_field": 375
+      },
+      "classification": "layout-driven edge case",
+      "visualDiffSnapshot": "visual-diffs/acord-0080-2016-11-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/acord-0080-2016-11-xfdl.svg",
+      "rootCauseNotes": {
+        "primaryCategory": "candidate_ranking_error",
+        "residualType": "layout-driven edge case"
+      }
+    },
+    {
+      "form": "ACORD 0081 2016-03r1.xfdl",
+      "datasetFile": "acord-0081-2016-03r1.ground-truth.json",
+      "pdfFile": "Acord-81.pdf",
+      "pairStatus": "matched",
+      "pairConfidence": "high",
+      "counts": {
+        "truthFields": 651,
+        "predictedFillableFields": 492,
+        "matchedFields": 382,
+        "promotedFields": 492,
+        "errors": 1964
+      },
+      "categoryCounts": {
+        "semantic_label_mismatch": 299,
+        "candidate_ranking_error": 362,
+        "field_type_misclassification": 152,
+        "table_detection_error": 312,
+        "checkbox_yes_no_pairing_error": 8,
+        "suppression_error": 269,
+        "grouping_error": 111,
+        "label_value_pairing_error": 182,
+        "unmapped_fillable_field": 269
+      },
+      "classification": "layout-driven edge case",
+      "visualDiffSnapshot": "visual-diffs/acord-0081-2016-03r1-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/acord-0081-2016-03r1-xfdl.svg",
+      "rootCauseNotes": {
+        "primaryCategory": "candidate_ranking_error",
+        "residualType": "layout-driven edge case"
+      }
+    },
+    {
+      "form": "ACORD 0082 2020-03.xfdl",
+      "datasetFile": "acord-0082-2020-03.ground-truth.json",
+      "pdfFile": "Acord-82.pdf",
+      "pairStatus": "matched",
+      "pairConfidence": "high",
+      "counts": {
+        "truthFields": 724,
+        "predictedFillableFields": 440,
+        "matchedFields": 383,
+        "promotedFields": 437,
+        "errors": 2043
+      },
+      "categoryCounts": {
+        "semantic_label_mismatch": 243,
+        "candidate_ranking_error": 369,
+        "field_type_misclassification": 135,
+        "table_detection_error": 280,
+        "checkbox_yes_no_pairing_error": 3,
+        "suppression_error": 341,
+        "grouping_error": 141,
+        "label_value_pairing_error": 187,
+        "unmapped_fillable_field": 344
+      },
+      "classification": "layout-driven edge case",
+      "visualDiffSnapshot": "visual-diffs/acord-0082-2020-03-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/acord-0082-2020-03-xfdl.svg",
+      "rootCauseNotes": {
+        "primaryCategory": "candidate_ranking_error",
+        "residualType": "layout-driven edge case"
+      }
+    },
+    {
+      "form": "ACORD 0083 2016-04r1.xfdl",
+      "datasetFile": "acord-0083-2016-04r1.ground-truth.json",
+      "pdfFile": "Acord-83.pdf",
+      "pairStatus": "matched",
+      "pairConfidence": "high",
+      "counts": {
+        "truthFields": 618,
+        "predictedFillableFields": 358,
+        "matchedFields": 311,
+        "promotedFields": 350,
+        "errors": 1679
+      },
+      "categoryCounts": {
+        "semantic_label_mismatch": 202,
+        "candidate_ranking_error": 298,
+        "field_type_misclassification": 96,
+        "table_detection_error": 226,
+        "checkbox_yes_no_pairing_error": 4,
+        "suppression_error": 307,
+        "grouping_error": 102,
+        "label_value_pairing_error": 129,
+        "unmapped_fillable_field": 315
+      },
+      "classification": "layout-driven edge case",
+      "visualDiffSnapshot": "visual-diffs/acord-0083-2016-04r1-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/acord-0083-2016-04r1-xfdl.svg",
+      "rootCauseNotes": {
+        "primaryCategory": "unmapped_fillable_field",
+        "residualType": "layout-driven edge case"
+      }
+    },
+    {
+      "form": "ACORD 0084 2016-11.xfdl",
+      "datasetFile": "acord-0084-2016-11.ground-truth.json",
+      "pdfFile": "Acord-84.pdf",
+      "pairStatus": "review",
+      "pairConfidence": "low",
+      "counts": {
+        "truthFields": 688,
+        "predictedFillableFields": 219,
+        "matchedFields": 140,
+        "promotedFields": 219,
+        "errors": 1704
+      },
+      "categoryCounts": {
+        "semantic_label_mismatch": 137,
+        "candidate_ranking_error": 140,
+        "field_type_misclassification": 76,
+        "table_detection_error": 97,
+        "checkbox_yes_no_pairing_error": 8,
+        "suppression_error": 548,
+        "grouping_error": 99,
+        "label_value_pairing_error": 51,
+        "unmapped_fillable_field": 548
+      },
+      "classification": "layout-driven edge case",
+      "visualDiffSnapshot": "visual-diffs/acord-0084-2016-11-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/acord-0084-2016-11-xfdl.svg",
+      "rootCauseNotes": {
+        "primaryCategory": "suppression_error",
+        "residualType": "layout-driven edge case"
+      }
+    },
+    {
+      "form": "ACORD 0085 2016-11.xfdl",
+      "datasetFile": "acord-0085-2016-11.ground-truth.json",
+      "pdfFile": "ACORD-85.pdf",
+      "pairStatus": "review",
+      "pairConfidence": "low",
+      "counts": {
+        "truthFields": 628,
+        "predictedFillableFields": 204,
+        "matchedFields": 126,
+        "promotedFields": 204,
+        "errors": 1556
+      },
+      "categoryCounts": {
+        "semantic_label_mismatch": 122,
+        "candidate_ranking_error": 126,
+        "field_type_misclassification": 80,
+        "table_detection_error": 84,
+        "checkbox_yes_no_pairing_error": 5,
+        "suppression_error": 502,
+        "grouping_error": 79,
+        "label_value_pairing_error": 56,
+        "unmapped_fillable_field": 502
+      },
+      "classification": "layout-driven edge case",
+      "visualDiffSnapshot": "visual-diffs/acord-0085-2016-11-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/acord-0085-2016-11-xfdl.svg",
+      "rootCauseNotes": {
+        "primaryCategory": "suppression_error",
+        "residualType": "layout-driven edge case"
+      }
+    },
+    {
+      "form": "ACORD 0088 2015-12r1.xfdl",
+      "datasetFile": "acord-0088-2015-12r1.ground-truth.json",
+      "pdfFile": "acord-88.pdf",
+      "pairStatus": "matched",
+      "pairConfidence": "high",
+      "counts": {
+        "truthFields": 399,
+        "predictedFillableFields": 229,
+        "matchedFields": 201,
+        "promotedFields": 229,
+        "errors": 1018
+      },
+      "categoryCounts": {
+        "semantic_label_mismatch": 115,
+        "candidate_ranking_error": 189,
+        "field_type_misclassification": 42,
+        "table_detection_error": 132,
+        "checkbox_yes_no_pairing_error": 2,
+        "suppression_error": 198,
+        "grouping_error": 77,
+        "label_value_pairing_error": 65,
+        "unmapped_fillable_field": 198
+      },
+      "classification": "layout-driven edge case",
+      "visualDiffSnapshot": "visual-diffs/acord-0088-2015-12r1-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/acord-0088-2015-12r1-xfdl.svg",
+      "rootCauseNotes": {
+        "primaryCategory": "suppression_error",
+        "residualType": "layout-driven edge case"
+      }
+    },
+    {
+      "form": "ACORD 0125 2016-03r1.xfdl",
+      "datasetFile": "acord-0125-2016-03r1.ground-truth.json",
+      "pdfFile": "sample-Acord-125.pdf",
+      "pairStatus": "review",
+      "pairConfidence": "low",
+      "counts": {
+        "truthFields": 552,
+        "predictedFillableFields": 549,
+        "matchedFields": 126,
+        "promotedFields": 548,
+        "errors": 1370
+      },
+      "categoryCounts": {
+        "semantic_label_mismatch": 125,
+        "candidate_ranking_error": 125,
+        "field_type_misclassification": 70,
+        "table_detection_error": 75,
+        "checkbox_yes_no_pairing_error": 16,
+        "suppression_error": 426,
+        "grouping_error": 60,
+        "label_value_pairing_error": 47,
+        "unmapped_fillable_field": 426
+      },
+      "classification": "layout-driven edge case",
+      "visualDiffSnapshot": "visual-diffs/acord-0125-2016-03r1-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/acord-0125-2016-03r1-xfdl.svg",
+      "rootCauseNotes": {
+        "primaryCategory": "suppression_error",
+        "residualType": "layout-driven edge case"
+      }
+    },
+    {
+      "form": "ACORD 0126 2016-09.xfdl",
+      "datasetFile": "acord-0126-2016-09.ground-truth.json",
+      "pdfFile": "ACORD_126_-_Commercial_General_Liability_Section.pdf",
+      "pairStatus": "matched",
+      "pairConfidence": "high",
+      "counts": {
+        "truthFields": 258,
+        "predictedFillableFields": 190,
+        "matchedFields": 139,
+        "promotedFields": 190,
+        "errors": 625
+      },
+      "categoryCounts": {
+        "semantic_label_mismatch": 86,
+        "candidate_ranking_error": 129,
+        "field_type_misclassification": 33,
+        "table_detection_error": 47,
+        "checkbox_yes_no_pairing_error": 2,
+        "suppression_error": 119,
+        "grouping_error": 41,
+        "label_value_pairing_error": 49,
+        "unmapped_fillable_field": 119
+      },
+      "classification": "backend residual",
+      "visualDiffSnapshot": "visual-diffs/acord-0126-2016-09-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/acord-0126-2016-09-xfdl.svg",
+      "rootCauseNotes": {
+        "primaryCategory": "candidate_ranking_error",
+        "residualType": "backend residual"
+      }
+    },
+    {
+      "form": "ACORD 0127 2015-12r2.xfdl",
+      "datasetFile": "acord-0127-2015-12r2.ground-truth.json",
+      "pdfFile": "sample-Acord-127.pdf",
+      "pairStatus": "matched",
+      "pairConfidence": "high",
+      "counts": {
+        "truthFields": 637,
+        "predictedFillableFields": 329,
+        "matchedFields": 275,
+        "promotedFields": 327,
+        "errors": 1788
+      },
+      "categoryCounts": {
+        "semantic_label_mismatch": 249,
+        "candidate_ranking_error": 267,
+        "field_type_misclassification": 116,
+        "table_detection_error": 153,
+        "checkbox_yes_no_pairing_error": 5,
+        "suppression_error": 362,
+        "grouping_error": 190,
+        "label_value_pairing_error": 82,
+        "unmapped_fillable_field": 364
+      },
+      "classification": "layout-driven edge case",
+      "visualDiffSnapshot": "visual-diffs/acord-0127-2015-12r2-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/acord-0127-2015-12r2-xfdl.svg",
+      "rootCauseNotes": {
+        "primaryCategory": "unmapped_fillable_field",
+        "residualType": "layout-driven edge case"
+      }
+    },
+    {
+      "form": "ACORD 0130 2017-05.xfdl",
+      "datasetFile": "acord-0130-2017-05.ground-truth.json",
+      "pdfFile": "sample-Acord-130.pdf",
+      "pairStatus": "matched",
+      "pairConfidence": "medium",
+      "counts": {
+        "truthFields": 482,
+        "predictedFillableFields": 229,
+        "matchedFields": 191,
+        "promotedFields": 229,
+        "errors": 1273
+      },
+      "categoryCounts": {
+        "semantic_label_mismatch": 131,
+        "candidate_ranking_error": 177,
+        "field_type_misclassification": 100,
+        "table_detection_error": 150,
+        "checkbox_yes_no_pairing_error": 0,
+        "suppression_error": 291,
+        "grouping_error": 63,
+        "label_value_pairing_error": 70,
+        "unmapped_fillable_field": 291
+      },
+      "classification": "layout-driven edge case",
+      "visualDiffSnapshot": "visual-diffs/acord-0130-2017-05-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/acord-0130-2017-05-xfdl.svg",
+      "rootCauseNotes": {
+        "primaryCategory": "suppression_error",
+        "residualType": "layout-driven edge case"
+      }
+    },
+    {
+      "form": "ACORD 0131 2017-11.xfdl",
+      "datasetFile": "acord-0131-2017-11.ground-truth.json",
+      "pdfFile": "Acord-131.pdf",
+      "pairStatus": "matched",
+      "pairConfidence": "medium",
+      "counts": {
+        "truthFields": 398,
+        "predictedFillableFields": 253,
+        "matchedFields": 180,
+        "promotedFields": 250,
+        "errors": 1057
+      },
+      "categoryCounts": {
+        "semantic_label_mismatch": 138,
+        "candidate_ranking_error": 177,
+        "field_type_misclassification": 61,
+        "table_detection_error": 90,
+        "checkbox_yes_no_pairing_error": 2,
+        "suppression_error": 218,
+        "grouping_error": 81,
+        "label_value_pairing_error": 69,
+        "unmapped_fillable_field": 221
+      },
+      "classification": "layout-driven edge case",
+      "visualDiffSnapshot": "visual-diffs/acord-0131-2017-11-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/acord-0131-2017-11-xfdl.svg",
+      "rootCauseNotes": {
+        "primaryCategory": "unmapped_fillable_field",
+        "residualType": "layout-driven edge case"
+      }
+    },
+    {
+      "form": "ACORD 0132 2015-12r1.xfdl",
+      "datasetFile": "acord-0132-2015-12r1.ground-truth.json",
+      "pdfFile": "acord-132.pdf",
+      "pairStatus": "matched",
+      "pairConfidence": "high",
+      "counts": {
+        "truthFields": 443,
+        "predictedFillableFields": 204,
+        "matchedFields": 189,
+        "promotedFields": 204,
+        "errors": 1176
+      },
+      "categoryCounts": {
+        "semantic_label_mismatch": 140,
+        "candidate_ranking_error": 178,
+        "field_type_misclassification": 55,
+        "table_detection_error": 148,
+        "checkbox_yes_no_pairing_error": 2,
+        "suppression_error": 254,
+        "grouping_error": 46,
+        "label_value_pairing_error": 99,
+        "unmapped_fillable_field": 254
+      },
+      "classification": "layout-driven edge case",
+      "visualDiffSnapshot": "visual-diffs/acord-0132-2015-12r1-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/acord-0132-2015-12r1-xfdl.svg",
+      "rootCauseNotes": {
+        "primaryCategory": "suppression_error",
+        "residualType": "layout-driven edge case"
+      }
+    },
+    {
+      "form": "ACORD 0133 2016-03.xfdl",
+      "datasetFile": "acord-0133-2016-03.ground-truth.json",
+      "pdfFile": "acord-133.pdf",
+      "pairStatus": "matched",
+      "pairConfidence": "medium",
+      "counts": {
+        "truthFields": 149,
+        "predictedFillableFields": 123,
+        "matchedFields": 88,
+        "promotedFields": 123,
+        "errors": 396
+      },
+      "categoryCounts": {
+        "semantic_label_mismatch": 65,
+        "candidate_ranking_error": 84,
+        "field_type_misclassification": 4,
+        "table_detection_error": 61,
+        "checkbox_yes_no_pairing_error": 1,
+        "suppression_error": 61,
+        "grouping_error": 45,
+        "label_value_pairing_error": 14,
+        "unmapped_fillable_field": 61
+      },
+      "classification": "layout-driven edge case",
+      "visualDiffSnapshot": "visual-diffs/acord-0133-2016-03-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/acord-0133-2016-03-xfdl.svg",
+      "rootCauseNotes": {
+        "primaryCategory": "candidate_ranking_error",
+        "residualType": "layout-driven edge case"
+      }
+    },
+    {
+      "form": "ARGO AC-SUP090 2018-07.Xfdl",
+      "datasetFile": "argo-ac-sup090-2018-07.ground-truth.json",
+      "pdfFile": "ARGO AC-SUP090 2018-07.pdf",
+      "pairStatus": "matched",
+      "pairConfidence": "high",
+      "counts": {
+        "truthFields": 114,
+        "predictedFillableFields": 86,
+        "matchedFields": 73,
+        "promotedFields": 86,
+        "errors": 283
+      },
+      "categoryCounts": {
+        "semantic_label_mismatch": 66,
+        "candidate_ranking_error": 12,
+        "field_type_misclassification": 13,
+        "table_detection_error": 60,
+        "checkbox_yes_no_pairing_error": 0,
+        "suppression_error": 41,
+        "grouping_error": 50,
+        "label_value_pairing_error": 0,
+        "unmapped_fillable_field": 41
+      },
+      "classification": "layout-driven edge case",
+      "visualDiffSnapshot": "visual-diffs/argo-ac-sup090-2018-07-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/argo-ac-sup090-2018-07-xfdl.svg",
+      "rootCauseNotes": {
+        "primaryCategory": "semantic_label_mismatch",
+        "residualType": "layout-driven edge case"
+      }
+    },
+    {
+      "form": "ARGO G1000 0114.Xfdl",
+      "datasetFile": "argo-g1000-0114.ground-truth.json",
+      "pdfFile": "ARGO G1000 0114.pdf",
+      "pairStatus": "matched",
+      "pairConfidence": "high",
+      "counts": {
+        "truthFields": 591,
+        "predictedFillableFields": 422,
+        "matchedFields": 374,
+        "promotedFields": 421,
+        "errors": 1293
+      },
+      "categoryCounts": {
+        "semantic_label_mismatch": 226,
+        "candidate_ranking_error": 42,
+        "field_type_misclassification": 39,
+        "table_detection_error": 288,
+        "checkbox_yes_no_pairing_error": 1,
+        "suppression_error": 217,
+        "grouping_error": 262,
+        "label_value_pairing_error": 0,
+        "unmapped_fillable_field": 218
+      },
+      "classification": "layout-driven edge case",
+      "visualDiffSnapshot": "visual-diffs/argo-g1000-0114-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/argo-g1000-0114-xfdl.svg",
+      "rootCauseNotes": {
+        "primaryCategory": "table_detection_error",
+        "residualType": "layout-driven edge case"
+      }
+    },
+    {
+      "form": "Argo GAR-SUP_135-0117 2020-01-30.Xfdl",
+      "datasetFile": "argo-gar-sup-135-0117-2020-01-30.ground-truth.json",
+      "pdfFile": "ARGO GAR_SUP_135-0117.pdf",
+      "pairStatus": "matched",
+      "pairConfidence": "medium",
+      "counts": {
+        "truthFields": 81,
+        "predictedFillableFields": 90,
+        "matchedFields": 65,
+        "promotedFields": 90,
+        "errors": 198
+      },
+      "categoryCounts": {
+        "semantic_label_mismatch": 65,
+        "candidate_ranking_error": 3,
+        "field_type_misclassification": 11,
+        "table_detection_error": 35,
+        "checkbox_yes_no_pairing_error": 0,
+        "suppression_error": 16,
+        "grouping_error": 52,
+        "label_value_pairing_error": 0,
+        "unmapped_fillable_field": 16
+      },
+      "classification": "designer residual",
+      "visualDiffSnapshot": "visual-diffs/argo-gar-sup-135-0117-2020-01-30-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/argo-gar-sup-135-0117-2020-01-30-xfdl.svg",
+      "rootCauseNotes": {
+        "primaryCategory": "semantic_label_mismatch",
+        "residualType": "designer residual"
+      }
+    },
+    {
+      "form": "Chubb AV003 2017-07.Xfdl",
+      "datasetFile": "chubb-av003-2017-07.ground-truth.json",
+      "pdfFile": "Chubb AV003.pdf",
+      "pairStatus": "matched",
+      "pairConfidence": "medium",
+      "counts": {
+        "truthFields": 302,
+        "predictedFillableFields": 311,
+        "matchedFields": 214,
+        "promotedFields": 311,
+        "errors": 720
+      },
+      "categoryCounts": {
+        "semantic_label_mismatch": 201,
+        "candidate_ranking_error": 5,
+        "field_type_misclassification": 12,
+        "table_detection_error": 196,
+        "checkbox_yes_no_pairing_error": 1,
+        "suppression_error": 88,
+        "grouping_error": 129,
+        "label_value_pairing_error": 0,
+        "unmapped_fillable_field": 88
+      },
+      "classification": "layout-driven edge case",
+      "visualDiffSnapshot": "visual-diffs/chubb-av003-2017-07-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/chubb-av003-2017-07-xfdl.svg",
+      "rootCauseNotes": {
+        "primaryCategory": "semantic_label_mismatch",
+        "residualType": "layout-driven edge case"
+      }
+    },
+    {
+      "form": "Chubb PF-48163 2017-08.Xfdl",
+      "datasetFile": "chubb-pf-48163-2017-08.ground-truth.json",
+      "pdfFile": "Chubb PF 48163 Cyber.pdf",
+      "pairStatus": "matched",
+      "pairConfidence": "medium",
+      "counts": {
+        "truthFields": 91,
+        "predictedFillableFields": 91,
+        "matchedFields": 57,
+        "promotedFields": 91,
+        "errors": 277
+      },
+      "categoryCounts": {
+        "semantic_label_mismatch": 56,
+        "candidate_ranking_error": 56,
+        "field_type_misclassification": 4,
+        "table_detection_error": 45,
+        "checkbox_yes_no_pairing_error": 0,
+        "suppression_error": 34,
+        "grouping_error": 48,
+        "label_value_pairing_error": 0,
+        "unmapped_fillable_field": 34
+      },
+      "classification": "designer residual",
+      "visualDiffSnapshot": "visual-diffs/chubb-pf-48163-2017-08-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/chubb-pf-48163-2017-08-xfdl.svg",
+      "rootCauseNotes": {
+        "primaryCategory": "semantic_label_mismatch",
+        "residualType": "designer residual"
+      }
+    },
+    {
+      "form": "Hartford CB_00_H001_00 2017-10.Xfdl",
+      "datasetFile": "hartford-cb-00-h001-00-2017-10.ground-truth.json",
+      "pdfFile": "Hartford CB 00H01 Cyber.pdf",
+      "pairStatus": "review",
+      "pairConfidence": "low",
+      "counts": {
+        "truthFields": 171,
+        "predictedFillableFields": 170,
+        "matchedFields": 143,
+        "promotedFields": 168,
+        "errors": 419
+      },
+      "categoryCounts": {
+        "semantic_label_mismatch": 138,
+        "candidate_ranking_error": 27,
+        "field_type_misclassification": 17,
+        "table_detection_error": 69,
+        "checkbox_yes_no_pairing_error": 0,
+        "suppression_error": 28,
+        "grouping_error": 111,
+        "label_value_pairing_error": 0,
+        "unmapped_fillable_field": 29
+      },
+      "classification": "layout-driven edge case",
+      "visualDiffSnapshot": "visual-diffs/hartford-cb-00-h001-00-2017-10-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/hartford-cb-00-h001-00-2017-10-xfdl.svg",
+      "rootCauseNotes": {
+        "primaryCategory": "semantic_label_mismatch",
+        "residualType": "layout-driven edge case"
+      }
+    },
+    {
+      "form": "Hartford LP_00_HO54_03 2017-06.Xfdl",
+      "datasetFile": "hartford-lp-00-ho54-03-2017-06.ground-truth.json",
+      "pdfFile": "Hartford 00 HO54 Lawyers.pdf",
+      "pairStatus": "review",
+      "pairConfidence": "low",
+      "counts": {
+        "truthFields": 372,
+        "predictedFillableFields": 286,
+        "matchedFields": 252,
+        "promotedFields": 284,
+        "errors": 910
+      },
+      "categoryCounts": {
+        "semantic_label_mismatch": 250,
+        "candidate_ranking_error": 18,
+        "field_type_misclassification": 64,
+        "table_detection_error": 178,
+        "checkbox_yes_no_pairing_error": 0,
+        "suppression_error": 120,
+        "grouping_error": 158,
+        "label_value_pairing_error": 0,
+        "unmapped_fillable_field": 122
+      },
+      "classification": "layout-driven edge case",
+      "visualDiffSnapshot": "visual-diffs/hartford-lp-00-ho54-03-2017-06-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/hartford-lp-00-ho54-03-2017-06-xfdl.svg",
+      "rootCauseNotes": {
+        "primaryCategory": "semantic_label_mismatch",
+        "residualType": "layout-driven edge case"
+      }
+    },
+    {
+      "form": "Hartford SS_25_50_06_16.Xfdl",
+      "datasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+      "pdfFile": "Hartford SS_25_50_06_16.pdf",
+      "pairStatus": "matched",
+      "pairConfidence": "high",
+      "counts": {
+        "truthFields": 61,
+        "predictedFillableFields": 58,
+        "matchedFields": 20,
+        "promotedFields": 58,
+        "errors": 117
+      },
+      "categoryCounts": {
+        "semantic_label_mismatch": 17,
+        "candidate_ranking_error": 10,
+        "field_type_misclassification": 2,
+        "table_detection_error": 4,
+        "checkbox_yes_no_pairing_error": 0,
+        "suppression_error": 41,
+        "grouping_error": 2,
+        "label_value_pairing_error": 0,
+        "unmapped_fillable_field": 41
+      },
+      "classification": "backend residual",
+      "visualDiffSnapshot": "visual-diffs/hartford-ss-25-50-06-16-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/hartford-ss-25-50-06-16-xfdl.svg",
+      "rootCauseNotes": {
+        "primaryCategory": "suppression_error",
+        "residualType": "backend residual"
+      }
+    },
+    {
+      "form": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+      "datasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+      "pdfFile": "Hartford AC_00_H007.pdf",
+      "pairStatus": "matched",
+      "pairConfidence": "medium",
+      "counts": {
+        "truthFields": 47,
+        "predictedFillableFields": 41,
+        "matchedFields": 27,
+        "promotedFields": 41,
+        "errors": 117
+      },
+      "categoryCounts": {
+        "semantic_label_mismatch": 26,
+        "candidate_ranking_error": 1,
+        "field_type_misclassification": 0,
+        "table_detection_error": 24,
+        "checkbox_yes_no_pairing_error": 0,
+        "suppression_error": 20,
+        "grouping_error": 26,
+        "label_value_pairing_error": 0,
+        "unmapped_fillable_field": 20
+      },
+      "classification": "backend residual",
+      "visualDiffSnapshot": "visual-diffs/hartford-the-ac-00-h007-00-0805-2005-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/hartford-the-ac-00-h007-00-0805-2005-xfdl.svg",
+      "rootCauseNotes": {
+        "primaryCategory": "semantic_label_mismatch",
+        "residualType": "backend residual"
+      }
+    },
+    {
+      "form": "Lancer R-LMC_AP001 (01-20).Xfdl",
+      "datasetFile": "lancer-r-lmc-ap001-01-20.ground-truth.json",
+      "pdfFile": "Lancer R-LMC_AP001 (01-10).pdf",
+      "pairStatus": "matched",
+      "pairConfidence": "medium",
+      "counts": {
+        "truthFields": 512,
+        "predictedFillableFields": 470,
+        "matchedFields": 140,
+        "promotedFields": 469,
+        "errors": 1246
+      },
+      "categoryCounts": {
+        "semantic_label_mismatch": 139,
+        "candidate_ranking_error": 124,
+        "field_type_misclassification": 43,
+        "table_detection_error": 98,
+        "checkbox_yes_no_pairing_error": 13,
+        "suppression_error": 372,
+        "grouping_error": 84,
+        "label_value_pairing_error": 0,
+        "unmapped_fillable_field": 373
+      },
+      "classification": "layout-driven edge case",
+      "visualDiffSnapshot": "visual-diffs/lancer-r-lmc-ap001-01-20-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/lancer-r-lmc-ap001-01-20-xfdl.svg",
+      "rootCauseNotes": {
+        "primaryCategory": "unmapped_fillable_field",
+        "residualType": "layout-driven edge case"
+      }
+    },
+    {
+      "form": "Markel MAIL 021 09_15.Xfdl",
+      "datasetFile": "markel-mail-021-09-15.ground-truth.json",
+      "pdfFile": "Markel MAIL 021 09_15.pdf",
+      "pairStatus": "matched",
+      "pairConfidence": "high",
+      "counts": {
+        "truthFields": 359,
+        "predictedFillableFields": 325,
+        "matchedFields": 272,
+        "promotedFields": 325,
+        "errors": 709
+      },
+      "categoryCounts": {
+        "semantic_label_mismatch": 186,
+        "candidate_ranking_error": 21,
+        "field_type_misclassification": 25,
+        "table_detection_error": 103,
+        "checkbox_yes_no_pairing_error": 0,
+        "suppression_error": 87,
+        "grouping_error": 200,
+        "label_value_pairing_error": 0,
+        "unmapped_fillable_field": 87
+      },
+      "classification": "layout-driven edge case",
+      "visualDiffSnapshot": "visual-diffs/markel-mail-021-09-15-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/markel-mail-021-09-15-xfdl.svg",
+      "rootCauseNotes": {
+        "primaryCategory": "grouping_error",
+        "residualType": "layout-driven edge case"
+      }
+    },
+    {
+      "form": "Merchants MG_71_01_ 03_19.Xfdl",
+      "datasetFile": "merchants-mg-71-01-03-19.ground-truth.json",
+      "pdfFile": "Merchants MG_71_01_03_19.pdf",
+      "pairStatus": "matched",
+      "pairConfidence": "high",
+      "counts": {
+        "truthFields": 451,
+        "predictedFillableFields": 350,
+        "matchedFields": 244,
+        "promotedFields": 350,
+        "errors": 1048
+      },
+      "categoryCounts": {
+        "semantic_label_mismatch": 242,
+        "candidate_ranking_error": 13,
+        "field_type_misclassification": 26,
+        "table_detection_error": 147,
+        "checkbox_yes_no_pairing_error": 2,
+        "suppression_error": 207,
+        "grouping_error": 204,
+        "label_value_pairing_error": 0,
+        "unmapped_fillable_field": 207
+      },
+      "classification": "layout-driven edge case",
+      "visualDiffSnapshot": "visual-diffs/merchants-mg-71-01-03-19-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/merchants-mg-71-01-03-19-xfdl.svg",
+      "rootCauseNotes": {
+        "primaryCategory": "semantic_label_mismatch",
+        "residualType": "layout-driven edge case"
+      }
+    },
+    {
+      "form": "Mount Hawley UWSR_207MTH 2013-03.Xfdl",
+      "datasetFile": "mount-hawley-uwsr-207mth-2013-03.ground-truth.json",
+      "pdfFile": "Mount Hawley UWSR_207MTH 2013-03.pdf",
+      "pairStatus": "matched",
+      "pairConfidence": "high",
+      "counts": {
+        "truthFields": 286,
+        "predictedFillableFields": 182,
+        "matchedFields": 125,
+        "promotedFields": 182,
+        "errors": 665
+      },
+      "categoryCounts": {
+        "semantic_label_mismatch": 125,
+        "candidate_ranking_error": 3,
+        "field_type_misclassification": 32,
+        "table_detection_error": 100,
+        "checkbox_yes_no_pairing_error": 3,
+        "suppression_error": 161,
+        "grouping_error": 80,
+        "label_value_pairing_error": 0,
+        "unmapped_fillable_field": 161
+      },
+      "classification": "layout-driven edge case",
+      "visualDiffSnapshot": "visual-diffs/mount-hawley-uwsr-207mth-2013-03-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/mount-hawley-uwsr-207mth-2013-03-xfdl.svg",
+      "rootCauseNotes": {
+        "primaryCategory": "suppression_error",
+        "residualType": "layout-driven edge case"
+      }
+    },
+    {
+      "form": "Nationwide GLS-APP-74s (6-17).Xfdl",
+      "datasetFile": "nationwide-gls-app-74s-6-17.ground-truth.json",
+      "pdfFile": "Nationwide GLS-APP-74s (6-17).pdf",
+      "pairStatus": "matched",
+      "pairConfidence": "high",
+      "counts": {
+        "truthFields": 253,
+        "predictedFillableFields": 247,
+        "matchedFields": 190,
+        "promotedFields": 242,
+        "errors": 767
+      },
+      "categoryCounts": {
+        "semantic_label_mismatch": 185,
+        "candidate_ranking_error": 129,
+        "field_type_misclassification": 18,
+        "table_detection_error": 154,
+        "checkbox_yes_no_pairing_error": 0,
+        "suppression_error": 63,
+        "grouping_error": 150,
+        "label_value_pairing_error": 0,
+        "unmapped_fillable_field": 68
+      },
+      "classification": "layout-driven edge case",
+      "visualDiffSnapshot": "visual-diffs/nationwide-gls-app-74s-6-17-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/nationwide-gls-app-74s-6-17-xfdl.svg",
+      "rootCauseNotes": {
+        "primaryCategory": "semantic_label_mismatch",
+        "residualType": "layout-driven edge case"
+      }
+    },
+    {
+      "form": "NFIP FEMA_Form_086-0-1 F-050_(FEB_2015).Xfdl",
+      "datasetFile": "nfip-fema-form-086-0-1-f-050-feb-2015.ground-truth.json",
+      "pdfFile": "NFIP FEMA_Form_086-0-1 F-050_(FEB_2015).pdf",
+      "pairStatus": "matched",
+      "pairConfidence": "high",
+      "counts": {
+        "truthFields": 354,
+        "predictedFillableFields": 316,
+        "matchedFields": 281,
+        "promotedFields": 316,
+        "errors": 977
+      },
+      "categoryCounts": {
+        "semantic_label_mismatch": 278,
+        "candidate_ranking_error": 189,
+        "field_type_misclassification": 50,
+        "table_detection_error": 101,
+        "checkbox_yes_no_pairing_error": 1,
+        "suppression_error": 73,
+        "grouping_error": 212,
+        "label_value_pairing_error": 0,
+        "unmapped_fillable_field": 73
+      },
+      "classification": "layout-driven edge case",
+      "visualDiffSnapshot": "visual-diffs/nfip-fema-form-086-0-1-f-050-feb-2015-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/nfip-fema-form-086-0-1-f-050-feb-2015-xfdl.svg",
+      "rootCauseNotes": {
+        "primaryCategory": "semantic_label_mismatch",
+        "residualType": "layout-driven edge case"
+      }
+    },
+    {
+      "form": "Philadelphia Builders_Risk_Ground_Up_Construction 2013-01.Xfdl",
+      "datasetFile": "philadelphia-builders-risk-ground-up-construction-2013-01.ground-truth.json",
+      "pdfFile": "Philadelphia Builders_Risk_Ground_Up_Construction 2013-01.pdf",
+      "pairStatus": "matched",
+      "pairConfidence": "high",
+      "counts": {
+        "truthFields": 126,
+        "predictedFillableFields": 110,
+        "matchedFields": 76,
+        "promotedFields": 110,
+        "errors": 269
+      },
+      "categoryCounts": {
+        "semantic_label_mismatch": 54,
+        "candidate_ranking_error": 14,
+        "field_type_misclassification": 10,
+        "table_detection_error": 42,
+        "checkbox_yes_no_pairing_error": 1,
+        "suppression_error": 50,
+        "grouping_error": 48,
+        "label_value_pairing_error": 0,
+        "unmapped_fillable_field": 50
+      },
+      "classification": "designer residual",
+      "visualDiffSnapshot": "visual-diffs/philadelphia-builders-risk-ground-up-construction-2013-01-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/philadelphia-builders-risk-ground-up-construction-2013-01-xfdl.svg",
+      "rootCauseNotes": {
+        "primaryCategory": "semantic_label_mismatch",
+        "residualType": "designer residual"
+      }
+    },
+    {
+      "form": "Philadelphia Builders_Risk_Renovation_and_Rehabilitation 2013-01.Xfdl",
+      "datasetFile": "philadelphia-builders-risk-renovation-and-rehabilitation-2013-01.ground-truth.json",
+      "pdfFile": "Philadelphia Builders_Risk_Renovation_and_Rehabilitation 2013-01.pdf",
+      "pairStatus": "matched",
+      "pairConfidence": "high",
+      "counts": {
+        "truthFields": 172,
+        "predictedFillableFields": 158,
+        "matchedFields": 112,
+        "promotedFields": 158,
+        "errors": 389
+      },
+      "categoryCounts": {
+        "semantic_label_mismatch": 95,
+        "candidate_ranking_error": 17,
+        "field_type_misclassification": 17,
+        "table_detection_error": 59,
+        "checkbox_yes_no_pairing_error": 0,
+        "suppression_error": 60,
+        "grouping_error": 81,
+        "label_value_pairing_error": 0,
+        "unmapped_fillable_field": 60
+      },
+      "classification": "designer residual",
+      "visualDiffSnapshot": "visual-diffs/philadelphia-builders-risk-renovation-and-rehabilitation-2013-01-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/philadelphia-builders-risk-renovation-and-rehabilitation-2013-01-xfdl.svg",
+      "rootCauseNotes": {
+        "primaryCategory": "semantic_label_mismatch",
+        "residualType": "designer residual"
+      }
+    },
+    {
+      "form": "Philadelphia INTEG-TECH-APP 03-2018.Xfdl",
+      "datasetFile": "philadelphia-integ-tech-app-03-2018.ground-truth.json",
+      "pdfFile": "Philadelphia INTEG-TECH-APP 03-2018.pdf",
+      "pairStatus": "matched",
+      "pairConfidence": "high",
+      "counts": {
+        "truthFields": 421,
+        "predictedFillableFields": 309,
+        "matchedFields": 272,
+        "promotedFields": 309,
+        "errors": 1002
+      },
+      "categoryCounts": {
+        "semantic_label_mismatch": 267,
+        "candidate_ranking_error": 17,
+        "field_type_misclassification": 17,
+        "table_detection_error": 194,
+        "checkbox_yes_no_pairing_error": 0,
+        "suppression_error": 149,
+        "grouping_error": 209,
+        "label_value_pairing_error": 0,
+        "unmapped_fillable_field": 149
+      },
+      "classification": "layout-driven edge case",
+      "visualDiffSnapshot": "visual-diffs/philadelphia-integ-tech-app-03-2018-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/philadelphia-integ-tech-app-03-2018-xfdl.svg",
+      "rootCauseNotes": {
+        "primaryCategory": "semantic_label_mismatch",
+        "residualType": "layout-driven edge case"
+      }
+    },
+    {
+      "form": "Philadelphia PI-CYB-014 2017-11.Xfdl",
+      "datasetFile": "philadelphia-pi-cyb-014-2017-11.ground-truth.json",
+      "pdfFile": "Philadelphia PI-CYB-014 2017-11.pdf",
+      "pairStatus": "matched",
+      "pairConfidence": "high",
+      "counts": {
+        "truthFields": 239,
+        "predictedFillableFields": 223,
+        "matchedFields": 196,
+        "promotedFields": 223,
+        "errors": 815
+      },
+      "categoryCounts": {
+        "semantic_label_mismatch": 193,
+        "candidate_ranking_error": 191,
+        "field_type_misclassification": 7,
+        "table_detection_error": 167,
+        "checkbox_yes_no_pairing_error": 0,
+        "suppression_error": 43,
+        "grouping_error": 171,
+        "label_value_pairing_error": 0,
+        "unmapped_fillable_field": 43
+      },
+      "classification": "layout-driven edge case",
+      "visualDiffSnapshot": "visual-diffs/philadelphia-pi-cyb-014-2017-11-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/philadelphia-pi-cyb-014-2017-11-xfdl.svg",
+      "rootCauseNotes": {
+        "primaryCategory": "semantic_label_mismatch",
+        "residualType": "layout-driven edge case"
+      }
+    },
+    {
+      "form": "Philadelphia Salon_and_Day_Spa_App 2016-12.Xfdl",
+      "datasetFile": "philadelphia-salon-and-day-spa-app-2016-12.ground-truth.json",
+      "pdfFile": "Philadelphia Salon_and_Day_Spa_App 2016-12.pdf",
+      "pairStatus": "matched",
+      "pairConfidence": "high",
+      "counts": {
+        "truthFields": 430,
+        "predictedFillableFields": 411,
+        "matchedFields": 330,
+        "promotedFields": 411,
+        "errors": 957
+      },
+      "categoryCounts": {
+        "semantic_label_mismatch": 267,
+        "candidate_ranking_error": 48,
+        "field_type_misclassification": 39,
+        "table_detection_error": 207,
+        "checkbox_yes_no_pairing_error": 0,
+        "suppression_error": 100,
+        "grouping_error": 196,
+        "label_value_pairing_error": 0,
+        "unmapped_fillable_field": 100
+      },
+      "classification": "layout-driven edge case",
+      "visualDiffSnapshot": "visual-diffs/philadelphia-salon-and-day-spa-app-2016-12-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/philadelphia-salon-and-day-spa-app-2016-12-xfdl.svg",
+      "rootCauseNotes": {
+        "primaryCategory": "semantic_label_mismatch",
+        "residualType": "layout-driven edge case"
+      }
+    },
+    {
+      "form": "Preferred_Mutual CL-77 08_03.Xfdl",
+      "datasetFile": "preferred-mutual-cl-77-08-03.ground-truth.json",
+      "pdfFile": "Preferred_Mutual CL-77 08_03.pdf",
+      "pairStatus": "matched",
+      "pairConfidence": "high",
+      "counts": {
+        "truthFields": 55,
+        "predictedFillableFields": 40,
+        "matchedFields": 34,
+        "promotedFields": 40,
+        "errors": 119
+      },
+      "categoryCounts": {
+        "semantic_label_mismatch": 33,
+        "candidate_ranking_error": 6,
+        "field_type_misclassification": 6,
+        "table_detection_error": 4,
+        "checkbox_yes_no_pairing_error": 0,
+        "suppression_error": 21,
+        "grouping_error": 28,
+        "label_value_pairing_error": 0,
+        "unmapped_fillable_field": 21
+      },
+      "classification": "designer residual",
+      "visualDiffSnapshot": "visual-diffs/preferred-mutual-cl-77-08-03-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/preferred-mutual-cl-77-08-03-xfdl.svg",
+      "rootCauseNotes": {
+        "primaryCategory": "semantic_label_mismatch",
+        "residualType": "designer residual"
+      }
+    },
+    {
+      "form": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+      "datasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+      "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+      "pairStatus": "matched",
+      "pairConfidence": "high",
+      "counts": {
+        "truthFields": 67,
+        "predictedFillableFields": 63,
+        "matchedFields": 44,
+        "promotedFields": 63,
+        "errors": 159
+      },
+      "categoryCounts": {
+        "semantic_label_mismatch": 44,
+        "candidate_ranking_error": 7,
+        "field_type_misclassification": 6,
+        "table_detection_error": 22,
+        "checkbox_yes_no_pairing_error": 0,
+        "suppression_error": 23,
+        "grouping_error": 34,
+        "label_value_pairing_error": 0,
+        "unmapped_fillable_field": 23
+      },
+      "classification": "designer residual",
+      "visualDiffSnapshot": "visual-diffs/preferred-mutual-cl-98-09-18-ny-2018-04-26-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/preferred-mutual-cl-98-09-18-ny-2018-04-26-xfdl.svg",
+      "rootCauseNotes": {
+        "primaryCategory": "semantic_label_mismatch",
+        "residualType": "designer residual"
+      }
+    },
+    {
+      "form": "Preferred_Mutual PS-01 (09-14).Xfdl",
+      "datasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+      "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+      "pairStatus": "matched",
+      "pairConfidence": "high",
+      "counts": {
+        "truthFields": 82,
+        "predictedFillableFields": 16,
+        "matchedFields": 0,
+        "promotedFields": 16,
+        "errors": 164
+      },
+      "categoryCounts": {
+        "semantic_label_mismatch": 0,
+        "candidate_ranking_error": 0,
+        "field_type_misclassification": 0,
+        "table_detection_error": 0,
+        "checkbox_yes_no_pairing_error": 0,
+        "suppression_error": 82,
+        "grouping_error": 0,
+        "label_value_pairing_error": 0,
+        "unmapped_fillable_field": 82
+      },
+      "classification": "backend residual",
+      "visualDiffSnapshot": "visual-diffs/preferred-mutual-ps-01-09-14-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/preferred-mutual-ps-01-09-14-xfdl.svg",
+      "rootCauseNotes": {
+        "primaryCategory": "suppression_error",
+        "residualType": "backend residual"
+      }
+    },
+    {
+      "form": "Protective_Insurance_Company Large_Fleet Updated_01-2016.Xfdl",
+      "datasetFile": "protective-insurance-company-large-fleet-updated-01-2016.ground-truth.json",
+      "pdfFile": "Protective_Insurance_Company Large_Fleet.pdf",
+      "pairStatus": "matched",
+      "pairConfidence": "medium",
+      "counts": {
+        "truthFields": 206,
+        "predictedFillableFields": 171,
+        "matchedFields": 145,
+        "promotedFields": 165,
+        "errors": 578
+      },
+      "categoryCounts": {
+        "semantic_label_mismatch": 135,
+        "candidate_ranking_error": 139,
+        "field_type_misclassification": 48,
+        "table_detection_error": 88,
+        "checkbox_yes_no_pairing_error": 0,
+        "suppression_error": 61,
+        "grouping_error": 40,
+        "label_value_pairing_error": 0,
+        "unmapped_fillable_field": 67
+      },
+      "classification": "layout-driven edge case",
+      "visualDiffSnapshot": "visual-diffs/protective-insurance-company-large-fleet-updated-01-2016-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/protective-insurance-company-large-fleet-updated-01-2016-xfdl.svg",
+      "rootCauseNotes": {
+        "primaryCategory": "candidate_ranking_error",
+        "residualType": "layout-driven edge case"
+      }
+    },
+    {
+      "form": "Quaker AV005 2018-05.Xfdl",
+      "datasetFile": "quaker-av005-2018-05.ground-truth.json",
+      "pdfFile": "Quaker AV005.pdf",
+      "pairStatus": "matched",
+      "pairConfidence": "medium",
+      "counts": {
+        "truthFields": 74,
+        "predictedFillableFields": 43,
+        "matchedFields": 16,
+        "promotedFields": 43,
+        "errors": 142
+      },
+      "categoryCounts": {
+        "semantic_label_mismatch": 8,
+        "candidate_ranking_error": 4,
+        "field_type_misclassification": 3,
+        "table_detection_error": 5,
+        "checkbox_yes_no_pairing_error": 0,
+        "suppression_error": 58,
+        "grouping_error": 6,
+        "label_value_pairing_error": 0,
+        "unmapped_fillable_field": 58
+      },
+      "classification": "backend residual",
+      "visualDiffSnapshot": "visual-diffs/quaker-av005-2018-05-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/quaker-av005-2018-05-xfdl.svg",
+      "rootCauseNotes": {
+        "primaryCategory": "suppression_error",
+        "residualType": "backend residual"
+      }
+    },
+    {
+      "form": "Quaker_Special_Risk 04-18_QSR_Luxury_Home_Program_Contractors_Liability_Application 04-18.Xfdl",
+      "datasetFile": "quaker-special-risk-04-18-qsr-luxury-home-program-contractors-liability-application-04-18.ground-truth.json",
+      "pdfFile": "Quaker_Special_Risk 04-18_QSR.pdf",
+      "pairStatus": "matched",
+      "pairConfidence": "medium",
+      "counts": {
+        "truthFields": 262,
+        "predictedFillableFields": 237,
+        "matchedFields": 145,
+        "promotedFields": 235,
+        "errors": 662
+      },
+      "categoryCounts": {
+        "semantic_label_mismatch": 139,
+        "candidate_ranking_error": 34,
+        "field_type_misclassification": 58,
+        "table_detection_error": 115,
+        "checkbox_yes_no_pairing_error": 0,
+        "suppression_error": 117,
+        "grouping_error": 81,
+        "label_value_pairing_error": 0,
+        "unmapped_fillable_field": 118
+      },
+      "classification": "layout-driven edge case",
+      "visualDiffSnapshot": "visual-diffs/quaker-special-risk-04-18-qsr-luxury-home-program-contractors-liability-application-04-18-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/quaker-special-risk-04-18-qsr-luxury-home-program-contractors-liability-application-04-18-xfdl.svg",
+      "rootCauseNotes": {
+        "primaryCategory": "semantic_label_mismatch",
+        "residualType": "layout-driven edge case"
+      }
+    },
+    {
+      "form": "Quaker_Special_Risk QSR-SR-Constr-MGR 2019-01.Xfdl",
+      "datasetFile": "quaker-special-risk-qsr-sr-constr-mgr-2019-01.ground-truth.json",
+      "pdfFile": "Quaker_Special_Risk QSR-SR-Constr-MGR 2019-01.pdf",
+      "pairStatus": "matched",
+      "pairConfidence": "high",
+      "counts": {
+        "truthFields": 411,
+        "predictedFillableFields": 258,
+        "matchedFields": 193,
+        "promotedFields": 258,
+        "errors": 898
+      },
+      "categoryCounts": {
+        "semantic_label_mismatch": 187,
+        "candidate_ranking_error": 29,
+        "field_type_misclassification": 18,
+        "table_detection_error": 138,
+        "checkbox_yes_no_pairing_error": 0,
+        "suppression_error": 218,
+        "grouping_error": 90,
+        "label_value_pairing_error": 0,
+        "unmapped_fillable_field": 218
+      },
+      "classification": "layout-driven edge case",
+      "visualDiffSnapshot": "visual-diffs/quaker-special-risk-qsr-sr-constr-mgr-2019-01-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/quaker-special-risk-qsr-sr-constr-mgr-2019-01-xfdl.svg",
+      "rootCauseNotes": {
+        "primaryCategory": "suppression_error",
+        "residualType": "layout-driven edge case"
+      }
+    },
+    {
+      "form": "Travelers CP-4650 2001-05.Xfdl",
+      "datasetFile": "travelers-cp-4650-2001-05.ground-truth.json",
+      "pdfFile": "Travelers CP-4650 2001-05.pdf",
+      "pairStatus": "matched",
+      "pairConfidence": "high",
+      "counts": {
+        "truthFields": 124,
+        "predictedFillableFields": 118,
+        "matchedFields": 100,
+        "promotedFields": 107,
+        "errors": 259
+      },
+      "categoryCounts": {
+        "semantic_label_mismatch": 99,
+        "candidate_ranking_error": 2,
+        "field_type_misclassification": 2,
+        "table_detection_error": 41,
+        "checkbox_yes_no_pairing_error": 0,
+        "suppression_error": 24,
+        "grouping_error": 56,
+        "label_value_pairing_error": 0,
+        "unmapped_fillable_field": 35
+      },
+      "classification": "designer residual",
+      "visualDiffSnapshot": "visual-diffs/travelers-cp-4650-2001-05-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/travelers-cp-4650-2001-05-xfdl.svg",
+      "rootCauseNotes": {
+        "primaryCategory": "semantic_label_mismatch",
+        "residualType": "designer residual"
+      }
+    },
+    {
+      "form": "Travelers CX-1036 02-06.Xfdl",
+      "datasetFile": "travelers-cx-1036-02-06.ground-truth.json",
+      "pdfFile": "Travelers CX-1036 02-06.pdf",
+      "pairStatus": "matched",
+      "pairConfidence": "high",
+      "counts": {
+        "truthFields": 154,
+        "predictedFillableFields": 162,
+        "matchedFields": 147,
+        "promotedFields": 162,
+        "errors": 359
+      },
+      "categoryCounts": {
+        "semantic_label_mismatch": 120,
+        "candidate_ranking_error": 6,
+        "field_type_misclassification": 2,
+        "table_detection_error": 85,
+        "checkbox_yes_no_pairing_error": 0,
+        "suppression_error": 7,
+        "grouping_error": 132,
+        "label_value_pairing_error": 0,
+        "unmapped_fillable_field": 7
+      },
+      "classification": "layout-driven edge case",
+      "visualDiffSnapshot": "visual-diffs/travelers-cx-1036-02-06-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/travelers-cx-1036-02-06-xfdl.svg",
+      "rootCauseNotes": {
+        "primaryCategory": "grouping_error",
+        "residualType": "layout-driven edge case"
+      }
+    },
+    {
+      "form": "Travelers CYB-14101 2017-12.Xfdl",
+      "datasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+      "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+      "pairStatus": "matched",
+      "pairConfidence": "high",
+      "counts": {
+        "truthFields": 47,
+        "predictedFillableFields": 56,
+        "matchedFields": 37,
+        "promotedFields": 56,
+        "errors": 126
+      },
+      "categoryCounts": {
+        "semantic_label_mismatch": 35,
+        "candidate_ranking_error": 9,
+        "field_type_misclassification": 4,
+        "table_detection_error": 31,
+        "checkbox_yes_no_pairing_error": 0,
+        "suppression_error": 10,
+        "grouping_error": 27,
+        "label_value_pairing_error": 0,
+        "unmapped_fillable_field": 10
+      },
+      "classification": "backend residual",
+      "visualDiffSnapshot": "visual-diffs/travelers-cyb-14101-2017-12-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/travelers-cyb-14101-2017-12-xfdl.svg",
+      "rootCauseNotes": {
+        "primaryCategory": "semantic_label_mismatch",
+        "residualType": "backend residual"
+      }
+    },
+    {
+      "form": "Travelers MPL 1100 01-09.Xfdl",
+      "datasetFile": "travelers-mpl-1100-01-09.ground-truth.json",
+      "pdfFile": "Travelers MPL 1100 01-09.pdf",
+      "pairStatus": "matched",
+      "pairConfidence": "high",
+      "counts": {
+        "truthFields": 139,
+        "predictedFillableFields": 119,
+        "matchedFields": 86,
+        "promotedFields": 117,
+        "errors": 301
+      },
+      "categoryCounts": {
+        "semantic_label_mismatch": 64,
+        "candidate_ranking_error": 7,
+        "field_type_misclassification": 23,
+        "table_detection_error": 63,
+        "checkbox_yes_no_pairing_error": 0,
+        "suppression_error": 53,
+        "grouping_error": 37,
+        "label_value_pairing_error": 0,
+        "unmapped_fillable_field": 54
+      },
+      "classification": "layout-driven edge case",
+      "visualDiffSnapshot": "visual-diffs/travelers-mpl-1100-01-09-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/travelers-mpl-1100-01-09-xfdl.svg",
+      "rootCauseNotes": {
+        "primaryCategory": "semantic_label_mismatch",
+        "residualType": "layout-driven edge case"
+      }
+    },
+    {
+      "form": "United_Specialty_ UNITEDSPEC-01 2019-09-12.Xfdl",
+      "datasetFile": "united-specialty-unitedspec-01-2019-09-12.ground-truth.json",
+      "pdfFile": "United_Specialty_ UNITEDSPEC-01 2019-09-12.pdf",
+      "pairStatus": "matched",
+      "pairConfidence": "high",
+      "counts": {
+        "truthFields": 270,
+        "predictedFillableFields": 207,
+        "matchedFields": 155,
+        "promotedFields": 207,
+        "errors": 684
+      },
+      "categoryCounts": {
+        "semantic_label_mismatch": 145,
+        "candidate_ranking_error": 150,
+        "field_type_misclassification": 29,
+        "table_detection_error": 89,
+        "checkbox_yes_no_pairing_error": 0,
+        "suppression_error": 115,
+        "grouping_error": 41,
+        "label_value_pairing_error": 0,
+        "unmapped_fillable_field": 115
+      },
+      "classification": "layout-driven edge case",
+      "visualDiffSnapshot": "visual-diffs/united-specialty-unitedspec-01-2019-09-12-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/united-specialty-unitedspec-01-2019-09-12-xfdl.svg",
+      "rootCauseNotes": {
+        "primaryCategory": "candidate_ranking_error",
+        "residualType": "layout-driven edge case"
+      }
+    },
+    {
+      "form": "USLI NPPLA 5-12.Xfdl",
+      "datasetFile": "usli-nppla-5-12.ground-truth.json",
+      "pdfFile": "USLI NPPLA 5-12.pdf",
+      "pairStatus": "matched",
+      "pairConfidence": "high",
+      "counts": {
+        "truthFields": 76,
+        "predictedFillableFields": 77,
+        "matchedFields": 61,
+        "promotedFields": 77,
+        "errors": 187
+      },
+      "categoryCounts": {
+        "semantic_label_mismatch": 57,
+        "candidate_ranking_error": 10,
+        "field_type_misclassification": 7,
+        "table_detection_error": 43,
+        "checkbox_yes_no_pairing_error": 1,
+        "suppression_error": 15,
+        "grouping_error": 39,
+        "label_value_pairing_error": 0,
+        "unmapped_fillable_field": 15
+      },
+      "classification": "designer residual",
+      "visualDiffSnapshot": "visual-diffs/usli-nppla-5-12-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/usli-nppla-5-12-xfdl.svg",
+      "rootCauseNotes": {
+        "primaryCategory": "semantic_label_mismatch",
+        "residualType": "designer residual"
+      }
+    },
+    {
+      "form": "USLI Pro+ect_ _10-18.Xfdl",
+      "datasetFile": "usli-pro-ect-10-18.ground-truth.json",
+      "pdfFile": "USLI Pro+ect_ _10-18.pdf",
+      "pairStatus": "matched",
+      "pairConfidence": "high",
+      "counts": {
+        "truthFields": 273,
+        "predictedFillableFields": 272,
+        "matchedFields": 203,
+        "promotedFields": 272,
+        "errors": 690
+      },
+      "categoryCounts": {
+        "semantic_label_mismatch": 201,
+        "candidate_ranking_error": 8,
+        "field_type_misclassification": 17,
+        "table_detection_error": 174,
+        "checkbox_yes_no_pairing_error": 0,
+        "suppression_error": 70,
+        "grouping_error": 150,
+        "label_value_pairing_error": 0,
+        "unmapped_fillable_field": 70
+      },
+      "classification": "layout-driven edge case",
+      "visualDiffSnapshot": "visual-diffs/usli-pro-ect-10-18-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/usli-pro-ect-10-18-xfdl.svg",
+      "rootCauseNotes": {
+        "primaryCategory": "semantic_label_mismatch",
+        "residualType": "layout-driven edge case"
+      }
+    },
+    {
+      "form": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+      "datasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+      "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+      "pairStatus": "matched",
+      "pairConfidence": "high",
+      "counts": {
+        "truthFields": 48,
+        "predictedFillableFields": 53,
+        "matchedFields": 24,
+        "promotedFields": 53,
+        "errors": 143
+      },
+      "categoryCounts": {
+        "semantic_label_mismatch": 22,
+        "candidate_ranking_error": 24,
+        "field_type_misclassification": 21,
+        "table_detection_error": 13,
+        "checkbox_yes_no_pairing_error": 0,
+        "suppression_error": 24,
+        "grouping_error": 15,
+        "label_value_pairing_error": 0,
+        "unmapped_fillable_field": 24
+      },
+      "classification": "backend residual",
+      "visualDiffSnapshot": "visual-diffs/utica-first-uf-mand-art-cont-2020-05-02-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/utica-first-uf-mand-art-cont-2020-05-02-xfdl.svg",
+      "rootCauseNotes": {
+        "primaryCategory": "candidate_ranking_error",
+        "residualType": "backend residual"
+      }
+    },
+    {
+      "form": "Western_Heritage WHI-APP-138 2013-11.Xfdl",
+      "datasetFile": "western-heritage-whi-app-138-2013-11.ground-truth.json",
+      "pdfFile": "Western_Heritage WHI-APP-138 2013-11.pdf",
+      "pairStatus": "matched",
+      "pairConfidence": "high",
+      "counts": {
+        "truthFields": 603,
+        "predictedFillableFields": 424,
+        "matchedFields": 369,
+        "promotedFields": 416,
+        "errors": 1138
+      },
+      "categoryCounts": {
+        "semantic_label_mismatch": 184,
+        "candidate_ranking_error": 19,
+        "field_type_misclassification": 48,
+        "table_detection_error": 264,
+        "checkbox_yes_no_pairing_error": 1,
+        "suppression_error": 234,
+        "grouping_error": 146,
+        "label_value_pairing_error": 0,
+        "unmapped_fillable_field": 242
+      },
+      "classification": "layout-driven edge case",
+      "visualDiffSnapshot": "visual-diffs/western-heritage-whi-app-138-2013-11-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/western-heritage-whi-app-138-2013-11-xfdl.svg",
+      "rootCauseNotes": {
+        "primaryCategory": "table_detection_error",
+        "residualType": "layout-driven edge case"
+      }
+    },
+    {
+      "form": "Westport WIC1107 2010-06.Xfdl",
+      "datasetFile": "westport-wic1107-2010-06.ground-truth.json",
+      "pdfFile": "Westport WIC1107 2010-06.pdf",
+      "pairStatus": "matched",
+      "pairConfidence": "high",
+      "counts": {
+        "truthFields": 455,
+        "predictedFillableFields": 377,
+        "matchedFields": 294,
+        "promotedFields": 332,
+        "errors": 1088
+      },
+      "categoryCounts": {
+        "semantic_label_mismatch": 232,
+        "candidate_ranking_error": 33,
+        "field_type_misclassification": 31,
+        "table_detection_error": 210,
+        "checkbox_yes_no_pairing_error": 2,
+        "suppression_error": 161,
+        "grouping_error": 213,
+        "label_value_pairing_error": 0,
+        "unmapped_fillable_field": 206
+      },
+      "classification": "layout-driven edge case",
+      "visualDiffSnapshot": "visual-diffs/westport-wic1107-2010-06-xfdl.svg",
+      "semanticDiffSnapshot": "semantic-diffs/westport-wic1107-2010-06-xfdl.svg",
+      "rootCauseNotes": {
+        "primaryCategory": "semantic_label_mismatch",
+        "residualType": "layout-driven edge case"
+      }
+    }
+  ],
+  "residualClassificationBreakdown": {
+    "backend residual": 7,
+    "designer residual": 8,
+    "layout-driven edge case": 36,
+    "corpus anomaly": 0
+  }
+}

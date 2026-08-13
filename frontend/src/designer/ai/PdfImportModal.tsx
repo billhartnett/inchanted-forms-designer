@@ -1,4 +1,4 @@
-import { pdfToImages } from "../../utils/pdfToImages";
+import { pdfToDesignerData, type PdfWidgetField } from "../../utils/pdfToImages";
 import { useState, type ChangeEvent } from "react";
 import type { AcordLabelCandidate } from "../../../../shared/src/acord/acordTypes";
 import type {
@@ -73,9 +73,12 @@ type HybridCatalogEntry = {
   labelBoundingBox?: BoundingBox;
   semanticLabel?: string;
   groupId?: string;
+  semanticGroupIds?: string[];
   tableId?: string;
   rowIndex?: number;
   columnIndex?: number;
+  source?: "di_line" | "di_table_cell" | "selection_mark" | "blank_detector" | "pdf_widget";
+  confidence?: number;
 };
 
 type ExtractDocumentResponse = Pick<ExtractionResult, "pages"> & {
@@ -185,6 +188,7 @@ type HybridFieldMetadata = {
   };
   groupKey: string;
   groupLabel: string;
+  semanticGroupIds?: string[];
   semanticRole?: HybridCatalogRole;
   tableId?: string;
   rowIndex?: number;
@@ -704,7 +708,13 @@ function readHybridMappingMetadata(
     String((mapping as any).categoryMode || (chosen as any)?.categoryMode || "").trim() ||
     undefined;
   const groupLabel = deriveHybridGroupLabel(semanticLabel, sourceBlock.text || "");
+  const semanticGroupIds = Array.isArray((mapping as any).semanticGroupIds)
+    ? (mapping as any).semanticGroupIds.filter((id: unknown): id is string =>
+        typeof id === "string" && id.trim().length > 0,
+      )
+    : [];
   const groupKey =
+    semanticGroupIds[0] ||
     String((mapping as any).groupId || "").trim() ||
     `${mapping.blockId}::${Math.round(blockGeometry.x)}:${Math.round(blockGeometry.y)}:` +
       `${categoryMode || "none"}:${groupLabel}`;
@@ -738,6 +748,7 @@ function readHybridMappingMetadata(
     },
     groupKey,
     groupLabel,
+    semanticGroupIds,
     semanticRole: (mapping as any).semanticRole,
     tableId: (mapping as any).tableId,
     rowIndex: (mapping as any).rowIndex,
@@ -947,6 +958,108 @@ function buildNormalizedBoundingBoxes(blocks: ExtractedBlock[]): NormalizedBound
   }));
 }
 
+function overlapRatio(left: BoundingBox, right: BoundingBox): number {
+  const width = Math.max(0, Math.min(left.x + left.width, right.x + right.width) - Math.max(left.x, right.x));
+  const height = Math.max(0, Math.min(left.y + left.height, right.y + right.height) - Math.max(left.y, right.y));
+  const intersection = width * height;
+  const smallerArea = Math.max(1, Math.min(left.width * left.height, right.width * right.height));
+  return intersection / smallerArea;
+}
+
+function widgetSemanticLabel(fieldName: string): string {
+  const normalized = String(fieldName || "")
+    .replace(/[_\.]+/g, " ")
+    .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
+    .replace(/\b[A-Z0-9]$/i, "")
+    .replace(/\s+/g, " ")
+    .trim();
+  if (!normalized) return fieldName;
+  const cleaned = normalized
+    .replace(/\s*[:;]+\s*$/g, "")
+    .replace(/^field\s+/i, "")
+    .replace(/\b(?:name|number|code|date|address|city|state|zip|phone|fax)\b/gi, (match) => match)
+    .replace(/\s+/g, " ")
+    .trim();
+  return cleaned || normalized;
+}
+
+function mergePdfWidgets(
+  blocks: ExtractedBlock[],
+  catalog: HybridCatalogEntry[],
+  groupedStructures: Record<string, any>,
+  widgets: PdfWidgetField[],
+) {
+  const fillableRoles = new Set<HybridCatalogRole>(["input", "checkbox", "table-cell", "value-region", "select"]);
+  const replacedIds = new Map<string, string>();
+  const widgetEntries: HybridCatalogEntry[] = widgets.map((widget) => {
+    const overlapping = catalog
+      .filter((entry) =>
+        entry.page === widget.page &&
+        fillableRoles.has(entry.role) &&
+        overlapRatio(entry.semanticValueRegion || entry.boundingBox, widget.boundingBox) >= 0.45,
+      )
+      .sort((left, right) =>
+        overlapRatio(right.semanticValueRegion || right.boundingBox, widget.boundingBox) -
+        overlapRatio(left.semanticValueRegion || left.boundingBox, widget.boundingBox),
+      )[0];
+    if (overlapping) replacedIds.set(overlapping.id, widget.id);
+    const semanticLabel = widgetSemanticLabel(widget.fieldName);
+    return {
+      id: widget.id,
+      page: widget.page,
+      role: widget.valueType === "checkbox" ? "checkbox" : widget.valueType === "dropdown" ? "select" : "input",
+      valueType: widget.valueType,
+      text: semanticLabel,
+      semanticLabel,
+      boundingBox: widget.boundingBox,
+      semanticValueRegion: widget.boundingBox,
+      labelBoundingBox: overlapping?.labelBoundingBox,
+      groupId: overlapping?.groupId,
+      semanticGroupIds: overlapping?.semanticGroupIds,
+      tableId: overlapping?.tableId,
+      rowIndex: overlapping?.rowIndex,
+      columnIndex: overlapping?.columnIndex,
+      source: "pdf_widget",
+      confidence: 1,
+    };
+  });
+  const widgetBlocks: ExtractedBlock[] = widgetEntries.map((entry) => ({
+    id: entry.id,
+    page: entry.page,
+    type: entry.valueType === "checkbox" ? "checkbox" : entry.valueType === "signature" ? "signature" : "text",
+    text: entry.semanticLabel || entry.text,
+    boundingBox: entry.boundingBox,
+    confidence: 1,
+  }));
+  const updatedStructures = {
+    ...groupedStructures,
+    labelInputPairs: (groupedStructures.labelInputPairs || []).map((pair: any) => ({
+      ...pair,
+      inputBlockId: replacedIds.get(pair.inputBlockId) || pair.inputBlockId,
+    })),
+    questionAnswerPairs: (groupedStructures.questionAnswerPairs || []).map((pair: any) => ({
+      ...pair,
+      answerFieldId: replacedIds.get(pair.answerFieldId) || pair.answerFieldId,
+    })),
+    checkboxGroups: (groupedStructures.checkboxGroups || []).map((group: any) => ({
+      ...group,
+      checkboxFieldIds: (group.checkboxFieldIds || []).map((id: string) => replacedIds.get(id) || id),
+    })),
+    semanticGroups: (groupedStructures.semanticGroups || []).map((group: any) => ({
+      ...group,
+      fieldIds: (group.fieldIds || []).map((id: string) => replacedIds.get(id) || id),
+    })),
+  };
+  return {
+    blocks: [...blocks.filter((block) => !replacedIds.has(block.id)), ...widgetBlocks],
+    catalog: [
+      ...catalog.filter((entry) => !replacedIds.has(entry.id)),
+      ...widgetEntries,
+    ],
+    groupedStructures: updatedStructures,
+  };
+}
+
 type AutoMappingResult = {
   draftMappings: DraftMappedField[];
   artifacts: ExtractionArtifacts;
@@ -1037,6 +1150,7 @@ export default function PdfImportModal({
   async function runAutoMapping(
     file: File,
     pageImages: string[],
+    pdfWidgets: PdfWidgetField[],
   ): Promise<AutoMappingResult> {
     const imageSizes = await Promise.all(pageImages.map(readImageSize));
     const extractPayload = (await runHybridExtraction(file)) as ExtractDocumentResponse;
@@ -1063,7 +1177,13 @@ export default function PdfImportModal({
         height: Math.max(1, box.height * scale.y),
       };
     };
-    const canonicalBlocks = extractPayload.blocks || [];
+    const mergedExtraction = mergePdfWidgets(
+      extractPayload.blocks || [],
+      extractPayload.fieldCatalog || [],
+      extractPayload.groupedStructures || {},
+      pdfWidgets,
+    );
+    const canonicalBlocks = mergedExtraction.blocks;
     const blocks: ExtractedBlock[] = canonicalBlocks.map((block) => ({
       ...block,
       boundingBox: scaleBox(block.boundingBox, block.page),
@@ -1153,13 +1273,13 @@ export default function PdfImportModal({
       sourceDocumentName: file.name,
       lockSourceDocument: true,
       blocks: mappingInputBlocks,
-      fieldCatalog: extractPayload.fieldCatalog || [],
-      groupedStructures: extractPayload.groupedStructures || {},
+      fieldCatalog: mergedExtraction.catalog,
+      groupedStructures: mergedExtraction.groupedStructures,
       bboxNormalization: extractPayload.bboxNormalization || {},
       pageDimensions: extractPayload.pageDimensions || [],
       context: "Wave 9 hybrid PDF mapping",
     })) as HybridMappingResponse;
-    const mappedCatalog = mappingPayload.fieldCatalog || extractPayload.fieldCatalog || [];
+    const mappedCatalog = mappingPayload.fieldCatalog || mergedExtraction.catalog;
     const catalogById = new Map(mappedCatalog.map((entry) => [entry.id, entry]));
     const strictMappings = mappingPayload.mappedFields || mappingPayload.mappings || [];
     const mappings = strictMappings.map((mapping) => {
@@ -1191,6 +1311,7 @@ export default function PdfImportModal({
         semanticLabel: catalog?.semanticLabel || catalog?.text || mapping.text,
         fieldType: catalog?.valueType,
         groupId: catalog?.groupId,
+        semanticGroupIds: catalog?.semanticGroupIds,
         tableId: catalog?.tableId,
         rowIndex: catalog?.rowIndex,
         columnIndex: catalog?.columnIndex,
@@ -1552,16 +1673,13 @@ export default function PdfImportModal({
     try {
       clearExtractionArtifacts();
       let pages: string[] = [];
+      let pdfWidgets: PdfWidgetField[] = [];
 
-      if (mode === "import") {
-        const buffer = await file.arrayBuffer();
-        pages = await pdfToImages(buffer);
-        setPdfPages(pages);
-      } else {
-        const buffer = await file.arrayBuffer();
-        pages = await pdfToImages(buffer);
-        setPdfPages(pages);
-      }
+      const buffer = await file.arrayBuffer();
+      const pdfData = await pdfToDesignerData(buffer);
+      pages = pdfData.images;
+      pdfWidgets = pdfData.widgets;
+      setPdfPages(pages);
 
       setImportedPages(pages.length);
 
@@ -1584,7 +1702,7 @@ export default function PdfImportModal({
 
       if (mode === "map-only" || isAutoMapping) {
         try {
-          const autoMapping = await runAutoMapping(file, pages);
+          const autoMapping = await runAutoMapping(file, pages, pdfWidgets);
           mappedFields = autoMapping.draftMappings;
           extractionArtifacts = {
             ...autoMapping.artifacts,

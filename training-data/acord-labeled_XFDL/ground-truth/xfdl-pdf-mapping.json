@@ -1,0 +1,4600 @@
+{
+  "schemaVersion": "xfdl-pdf-mapping.v1",
+  "generatedAt": "2026-08-12T14:38:02.718Z",
+  "source": {
+    "xfdlManifest": "training-data/acord-labeled_XFDL/ground-truth/manifest.json",
+    "pdfDirectory": "test-fixtures/pdf",
+    "xfdlCount": 63,
+    "pdfCount": 54
+  },
+  "methodology": {
+    "signals": [
+      "filename similarity",
+      "form metadata and first-page text",
+      "page count",
+      "exact widget/SID overlap",
+      "affine-normalized field geometry"
+    ],
+    "assignment": "One PDF may be assigned to at most one XFDL. ACORD form-number and jurisdiction conflicts are hard exclusions.",
+    "confidence": "High requires strong unique evidence; medium allows edition or metadata drift; review indicates a plausible but weak pair; unmatched means no candidate passed threshold."
+  },
+  "summary": {
+    "matched": 46,
+    "review": 5,
+    "unmatchedXfdl": 12,
+    "unmatchedPdf": 3,
+    "highConfidence": 35,
+    "mediumConfidence": 11,
+    "lowConfidence": 5,
+    "appendedXfdl": 35
+  },
+  "mappings": [
+    {
+      "xfdlFile": "ACORD 0003 2019-09.xfdl",
+      "xfdlDatasetFile": "acord-0003-2019-09.ground-truth.json",
+      "xfdlSha256": "ce269d9b652051d9e36d0e10b757572a9b117fec0f5d9e7dd84982e6cf052158",
+      "pdfFile": null,
+      "pdfRelativePath": null,
+      "pdfSha256": null,
+      "status": "unmatched",
+      "confidence": "none",
+      "score": null,
+      "scoreMargin": null,
+      "evidence": null,
+      "notes": [
+        "No non-conflicting PDF candidate passed the minimum evidence threshold."
+      ],
+      "topCandidates": [
+        {
+          "pdfFile": "United_Specialty_ UNITEDSPEC-01 2019-09-12.pdf",
+          "score": 0.5408,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Travelers MPL 1100 01-09.pdf",
+          "score": 0.4042,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Mount Hawley UWSR_207MTH 2013-03.pdf",
+          "score": 0.3889,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "ACORD 0080 2016-11.xfdl",
+      "xfdlDatasetFile": "acord-0080-2016-11.ground-truth.json",
+      "xfdlSha256": "749c0bcf762c5d4cfb69a6053f87e9e18cd8e94650fcaddd820f2798a14913b1",
+      "pdfFile": "Acord-80.pdf",
+      "pdfRelativePath": "test-fixtures/pdf/Acord-80.pdf",
+      "pdfSha256": "944562c828c8a05f7029826e647d43a2f52b498fefb13dbb634383a7e192b9df",
+      "status": "matched",
+      "confidence": "high",
+      "score": 1,
+      "scoreMargin": 0.7857,
+      "evidence": {
+        "filenameSimilarity": 0.5,
+        "metadataSimilarity": 1,
+        "sameAcordNumber": true,
+        "stateConflict": false,
+        "pageCount": {
+          "xfdl": 6,
+          "pdf": 6,
+          "exact": true,
+          "score": 1
+        },
+        "fields": {
+          "xfdlFieldCount": 816,
+          "pdfWidgetNameCount": 815,
+          "sharedFieldCount": 815,
+          "xfdlCoverage": 0.9988,
+          "pdfCoverage": 1,
+          "score": 1
+        },
+        "geometry": {
+          "sharedFieldCount": 820,
+          "score": 0.7714,
+          "normalizedRmse": 0.00865,
+          "translation": {
+            "x": -0.029412,
+            "y": -0.022727
+          }
+        },
+        "layoutGeometry": {
+          "available": false,
+          "score": 0,
+          "medianDistance": null,
+          "comparedPages": 0
+        },
+        "pdfWidgetCount": 820,
+        "fieldCountScore": 0.9988
+      },
+      "notes": [],
+      "topCandidates": [
+        {
+          "pdfFile": "Acord-80.pdf",
+          "score": 1,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 815,
+          "geometryScore": 0.7714,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Quaker_Special_Risk 04-18_QSR.pdf",
+          "score": 0.2143,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Lancer R-LMC_AP001 (01-10).pdf",
+          "score": 0.1875,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "ACORD 0081 2016-03r1.xfdl",
+      "xfdlDatasetFile": "acord-0081-2016-03r1.ground-truth.json",
+      "xfdlSha256": "bbc92db6b0caf6a0594a3ad17fb95e341afaaa8e704c3758e6559be1d3210152",
+      "pdfFile": "Acord-81.pdf",
+      "pdfRelativePath": "test-fixtures/pdf/Acord-81.pdf",
+      "pdfSha256": "9cb2ec4a9fd2947a0a6391e5bc9b2ab7e71dada95f2fee261040243fd4491f29",
+      "status": "matched",
+      "confidence": "high",
+      "score": 0.8678,
+      "scoreMargin": 0.6178,
+      "evidence": {
+        "filenameSimilarity": 0.5,
+        "metadataSimilarity": 0.3333,
+        "sameAcordNumber": true,
+        "stateConflict": false,
+        "pageCount": {
+          "xfdl": 4,
+          "pdf": 4,
+          "exact": true,
+          "score": 1
+        },
+        "fields": {
+          "xfdlFieldCount": 648,
+          "pdfWidgetNameCount": 676,
+          "sharedFieldCount": 646,
+          "xfdlCoverage": 0.9969,
+          "pdfCoverage": 0.9556,
+          "score": 0.9969
+        },
+        "geometry": {
+          "sharedFieldCount": 649,
+          "score": 0.2166,
+          "normalizedRmse": 0.050991,
+          "translation": {
+            "x": -0.029412,
+            "y": -0.022727
+          }
+        },
+        "layoutGeometry": {
+          "available": false,
+          "score": 0,
+          "medianDistance": null,
+          "comparedPages": 0
+        },
+        "pdfWidgetCount": 679,
+        "fieldCountScore": 0.9588
+      },
+      "notes": [],
+      "topCandidates": [
+        {
+          "pdfFile": "Acord-81.pdf",
+          "score": 0.8678,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 646,
+          "geometryScore": 0.2166,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Protective_Insurance_Company Large_Fleet.pdf",
+          "score": 0.25,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Quaker AV005.pdf",
+          "score": 0.1875,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "ACORD 0082 2020-03.xfdl",
+      "xfdlDatasetFile": "acord-0082-2020-03.ground-truth.json",
+      "xfdlSha256": "fac950ff85d3184d1c8717673e2ab96ea8d28b49f94cd2050c83df6b22aa9e9c",
+      "pdfFile": "Acord-82.pdf",
+      "pdfRelativePath": "test-fixtures/pdf/Acord-82.pdf",
+      "pdfSha256": "66e1cc6ffd5fde4139173f64d08bc5a76f6e9418423a9e72da88f3829bd2978a",
+      "status": "matched",
+      "confidence": "high",
+      "score": 0.9812,
+      "scoreMargin": 0.7812,
+      "evidence": {
+        "filenameSimilarity": 0.5,
+        "metadataSimilarity": 0.6667,
+        "sameAcordNumber": true,
+        "stateConflict": false,
+        "pageCount": {
+          "xfdl": 5,
+          "pdf": 5,
+          "exact": true,
+          "score": 1
+        },
+        "fields": {
+          "xfdlFieldCount": 719,
+          "pdfWidgetNameCount": 718,
+          "sharedFieldCount": 718,
+          "xfdlCoverage": 0.9986,
+          "pdfCoverage": 1,
+          "score": 1
+        },
+        "geometry": {
+          "sharedFieldCount": 723,
+          "score": 0.7306,
+          "normalizedRmse": 0.010462,
+          "translation": {
+            "x": -0.029412,
+            "y": -0.022727
+          }
+        },
+        "layoutGeometry": {
+          "available": false,
+          "score": 0,
+          "medianDistance": null,
+          "comparedPages": 0
+        },
+        "pdfWidgetCount": 723,
+        "fieldCountScore": 0.9986
+      },
+      "notes": [],
+      "topCandidates": [
+        {
+          "pdfFile": "Acord-82.pdf",
+          "score": 0.9812,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 718,
+          "geometryScore": 0.7306,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Protective_Insurance_Company Large_Fleet.pdf",
+          "score": 0.2,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Quaker_Special_Risk 04-18_QSR.pdf",
+          "score": 0.1786,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "ACORD 0083 2016-04r1.xfdl",
+      "xfdlDatasetFile": "acord-0083-2016-04r1.ground-truth.json",
+      "xfdlSha256": "18091de82f3fefb9b1a82abbe98a3ea9a22d1f268dcb5f45df6f9afcccebc107",
+      "pdfFile": "Acord-83.pdf",
+      "pdfRelativePath": "test-fixtures/pdf/Acord-83.pdf",
+      "pdfSha256": "f1e759e506b07a13c159f098320d70c3d5989df7a7a00ddd9afe2beb9136b660",
+      "status": "matched",
+      "confidence": "high",
+      "score": 1,
+      "scoreMargin": 0.7857,
+      "evidence": {
+        "filenameSimilarity": 0.5,
+        "metadataSimilarity": 1,
+        "sameAcordNumber": true,
+        "stateConflict": false,
+        "pageCount": {
+          "xfdl": 6,
+          "pdf": 6,
+          "exact": true,
+          "score": 1
+        },
+        "fields": {
+          "xfdlFieldCount": 613,
+          "pdfWidgetNameCount": 603,
+          "sharedFieldCount": 594,
+          "xfdlCoverage": 0.969,
+          "pdfCoverage": 0.9851,
+          "score": 0.9851
+        },
+        "geometry": {
+          "sharedFieldCount": 599,
+          "score": 0.7295,
+          "normalizedRmse": 0.010515,
+          "translation": {
+            "x": -0.029412,
+            "y": -0.022727
+          }
+        },
+        "layoutGeometry": {
+          "available": false,
+          "score": 0,
+          "medianDistance": null,
+          "comparedPages": 0
+        },
+        "pdfWidgetCount": 617,
+        "fieldCountScore": 0.9984
+      },
+      "notes": [],
+      "topCandidates": [
+        {
+          "pdfFile": "Acord-83.pdf",
+          "score": 1,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 594,
+          "geometryScore": 0.7295,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Quaker_Special_Risk 04-18_QSR.pdf",
+          "score": 0.2143,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Lancer R-LMC_AP001 (01-10).pdf",
+          "score": 0.1875,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "ACORD 0084 2016-11.xfdl",
+      "xfdlDatasetFile": "acord-0084-2016-11.ground-truth.json",
+      "xfdlSha256": "514bb7180766ff71c9e3e20c42eed5ee9b959618ea00b113c9a880cf79d090ae",
+      "pdfFile": "Acord-84.pdf",
+      "pdfRelativePath": "test-fixtures/pdf/Acord-84.pdf",
+      "pdfSha256": "72a6ba9cb2e3ed6f4990c527298f8fcf61c86ee19937ea9b02cd5d1c47eb8a0c",
+      "status": "review",
+      "confidence": "low",
+      "score": 0.4704,
+      "scoreMargin": 0.4704,
+      "evidence": {
+        "filenameSimilarity": 0.5,
+        "metadataSimilarity": 0.3333,
+        "sameAcordNumber": true,
+        "stateConflict": false,
+        "pageCount": {
+          "xfdl": 5,
+          "pdf": 2,
+          "exact": false,
+          "score": 0.4
+        },
+        "fields": {
+          "xfdlFieldCount": 681,
+          "pdfWidgetNameCount": 290,
+          "sharedFieldCount": 0,
+          "xfdlCoverage": 0,
+          "pdfCoverage": 0,
+          "score": 0
+        },
+        "geometry": {
+          "sharedFieldCount": 0,
+          "score": 0,
+          "normalizedRmse": null,
+          "translation": null
+        },
+        "layoutGeometry": {
+          "available": true,
+          "score": 0.0198,
+          "medianDistance": 0.157701,
+          "comparedPages": 2,
+          "pageCoverage": 0.4,
+          "provenance": "page-normalized-nearest-field-layout"
+        },
+        "pdfWidgetCount": 290,
+        "fieldCountScore": 0.4215
+      },
+      "notes": [
+        "Page-count mismatch: XFDL 5, PDF 2.",
+        "ACORD form number matches, but edition/layout evidence is insufficient for exact equivalence; manual review is required.",
+        "PDF widget names do not use XFDL semantic SIDs; page-normalized field-layout geometry was used instead."
+      ],
+      "topCandidates": [
+        {
+          "pdfFile": "Acord-84.pdf",
+          "score": 0.4704,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0.0198
+        },
+        {
+          "pdfFile": "Protective_Insurance_Company Large_Fleet.pdf",
+          "score": 0.2,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Acord-80.pdf",
+          "score": 0.1867,
+          "hardConflict": true,
+          "pageCountExact": false,
+          "sharedFieldCount": 573,
+          "geometryScore": 0.0041,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "ACORD 0085 2016-11.xfdl",
+      "xfdlDatasetFile": "acord-0085-2016-11.ground-truth.json",
+      "xfdlSha256": "3916ef07e246997ef1607b573fbd30a7de449c9264158b6d3ec3eac91ba657a8",
+      "pdfFile": "ACORD-85.pdf",
+      "pdfRelativePath": "test-fixtures/pdf/ACORD-85.pdf",
+      "pdfSha256": "30704adc485d55489c0cb53b3de7f26c84d07f8c42dbfb3badebc6295649768e",
+      "status": "review",
+      "confidence": "low",
+      "score": 0.605,
+      "scoreMargin": 0.605,
+      "evidence": {
+        "filenameSimilarity": 0.5,
+        "metadataSimilarity": 0.3333,
+        "sameAcordNumber": true,
+        "stateConflict": false,
+        "pageCount": {
+          "xfdl": 6,
+          "pdf": 2,
+          "exact": false,
+          "score": 0.3333
+        },
+        "fields": {
+          "xfdlFieldCount": 618,
+          "pdfWidgetNameCount": 0,
+          "sharedFieldCount": 0,
+          "xfdlCoverage": 0,
+          "pdfCoverage": 0,
+          "score": 0
+        },
+        "geometry": {
+          "sharedFieldCount": 0,
+          "score": 0,
+          "normalizedRmse": null,
+          "translation": null
+        },
+        "layoutGeometry": {
+          "available": false,
+          "score": 0,
+          "medianDistance": null,
+          "comparedPages": 0
+        },
+        "pdfWidgetCount": 0,
+        "fieldCountScore": 0
+      },
+      "notes": [
+        "Page-count mismatch: XFDL 6, PDF 2.",
+        "ACORD form number matches, but edition/layout evidence is insufficient for exact equivalence; manual review is required.",
+        "PDF has no AcroForm widgets; field-name and widget-geometry comparison is unavailable."
+      ],
+      "topCandidates": [
+        {
+          "pdfFile": "ACORD-85.pdf",
+          "score": 0.605,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Quaker_Special_Risk 04-18_QSR.pdf",
+          "score": 0.2143,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Acord-80.pdf",
+          "score": 0.1894,
+          "hardConflict": true,
+          "pageCountExact": true,
+          "sharedFieldCount": 481,
+          "geometryScore": 0.0061,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "ACORD 0088 2015-12r1.xfdl",
+      "xfdlDatasetFile": "acord-0088-2015-12r1.ground-truth.json",
+      "xfdlSha256": "4b3f90161312f0c6fb0ce69f3f877fedf1d9872ead656ce8146c7c407a5f596e",
+      "pdfFile": "acord-88.pdf",
+      "pdfRelativePath": "test-fixtures/pdf/acord-88.pdf",
+      "pdfSha256": "83a7771a00c9863382ca07b89ab6632f3a455014db50c893c0d8a0de2661e5f3",
+      "status": "matched",
+      "confidence": "high",
+      "score": 1,
+      "scoreMargin": 0.75,
+      "evidence": {
+        "filenameSimilarity": 0.5,
+        "metadataSimilarity": 1,
+        "sameAcordNumber": true,
+        "stateConflict": false,
+        "pageCount": {
+          "xfdl": 4,
+          "pdf": 4,
+          "exact": true,
+          "score": 1
+        },
+        "fields": {
+          "xfdlFieldCount": 396,
+          "pdfWidgetNameCount": 395,
+          "sharedFieldCount": 395,
+          "xfdlCoverage": 0.9975,
+          "pdfCoverage": 1,
+          "score": 1
+        },
+        "geometry": {
+          "sharedFieldCount": 398,
+          "score": 0.6877,
+          "normalizedRmse": 0.012482,
+          "translation": {
+            "x": -0.029412,
+            "y": -0.022727
+          }
+        },
+        "layoutGeometry": {
+          "available": false,
+          "score": 0,
+          "medianDistance": null,
+          "comparedPages": 0
+        },
+        "pdfWidgetCount": 398,
+        "fieldCountScore": 0.9975
+      },
+      "notes": [],
+      "topCandidates": [
+        {
+          "pdfFile": "acord-88.pdf",
+          "score": 1,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 395,
+          "geometryScore": 0.6877,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Protective_Insurance_Company Large_Fleet.pdf",
+          "score": 0.25,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Quaker AV005.pdf",
+          "score": 0.1875,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "ACORD 0089 2016-11.xfdl",
+      "xfdlDatasetFile": "acord-0089-2016-11.ground-truth.json",
+      "xfdlSha256": "17a6b676a29123e38b9ff5278301349a75f237f54324df922c1c87906b513c5c",
+      "pdfFile": null,
+      "pdfRelativePath": null,
+      "pdfSha256": null,
+      "status": "unmatched",
+      "confidence": "none",
+      "score": null,
+      "scoreMargin": null,
+      "evidence": null,
+      "notes": [
+        "No non-conflicting PDF candidate passed the minimum evidence threshold."
+      ],
+      "topCandidates": [
+        {
+          "pdfFile": "Protective_Insurance_Company Large_Fleet.pdf",
+          "score": 0.25,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Quaker AV005.pdf",
+          "score": 0.1875,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Acord-80.pdf",
+          "score": 0.1796,
+          "hardConflict": true,
+          "pageCountExact": false,
+          "sharedFieldCount": 516,
+          "geometryScore": 0.0161,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "ACORD 0090 FL 2015-12r1.xfdl",
+      "xfdlDatasetFile": "acord-0090-fl-2015-12r1.ground-truth.json",
+      "xfdlSha256": "9619444713e969ab8e383d6624e07d285d5a4628908d28323abba3b3b26d5795",
+      "pdfFile": null,
+      "pdfRelativePath": null,
+      "pdfSha256": null,
+      "status": "unmatched",
+      "confidence": "none",
+      "score": null,
+      "scoreMargin": null,
+      "evidence": null,
+      "notes": [
+        "No non-conflicting PDF candidate passed the minimum evidence threshold."
+      ],
+      "topCandidates": [
+        {
+          "pdfFile": "Protective_Insurance_Company Large_Fleet.pdf",
+          "score": 0.25,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Quaker AV005.pdf",
+          "score": 0.1875,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Quaker_Special_Risk 04-18_QSR.pdf",
+          "score": 0.1429,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "ACORD 0090 NY 2015-12.xfdl",
+      "xfdlDatasetFile": "acord-0090-ny-2015-12.ground-truth.json",
+      "xfdlSha256": "bb9541113ab0941797ac7dcb5a9b246c17df1ef62abfacaf35fb899818aa2f2c",
+      "pdfFile": null,
+      "pdfRelativePath": null,
+      "pdfSha256": null,
+      "status": "unmatched",
+      "confidence": "none",
+      "score": null,
+      "scoreMargin": null,
+      "evidence": null,
+      "notes": [
+        "No non-conflicting PDF candidate passed the minimum evidence threshold."
+      ],
+      "topCandidates": [
+        {
+          "pdfFile": "Protective_Insurance_Company Large_Fleet.pdf",
+          "score": 0.25,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Quaker AV005.pdf",
+          "score": 0.1875,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Quaker_Special_Risk 04-18_QSR.pdf",
+          "score": 0.1429,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "ACORD 0125 2016-03r1.xfdl",
+      "xfdlDatasetFile": "acord-0125-2016-03r1.ground-truth.json",
+      "xfdlSha256": "3fd6ccd7fcc8e477cb7242cc1c077afbb98a166ea01f80f47331bbc82a4e8a5f",
+      "pdfFile": "sample-Acord-125.pdf",
+      "pdfRelativePath": "test-fixtures/pdf/sample-Acord-125.pdf",
+      "pdfSha256": "fb362dfbf6d9dd2bb06abd802603f0fea52465780a00c587c81b935550c36727",
+      "status": "review",
+      "confidence": "low",
+      "score": 0.5336,
+      "scoreMargin": 0.5336,
+      "evidence": {
+        "filenameSimilarity": 0.5,
+        "metadataSimilarity": 0.3333,
+        "sameAcordNumber": true,
+        "stateConflict": false,
+        "pageCount": {
+          "xfdl": 4,
+          "pdf": 6,
+          "exact": false,
+          "score": 0.6667
+        },
+        "fields": {
+          "xfdlFieldCount": 548,
+          "pdfWidgetNameCount": 361,
+          "sharedFieldCount": 0,
+          "xfdlCoverage": 0,
+          "pdfCoverage": 0,
+          "score": 0
+        },
+        "geometry": {
+          "sharedFieldCount": 0,
+          "score": 0,
+          "normalizedRmse": null,
+          "translation": null
+        },
+        "layoutGeometry": {
+          "available": true,
+          "score": 0.0036,
+          "medianDistance": 0.231505,
+          "comparedPages": 4,
+          "pageCoverage": 0.6667,
+          "provenance": "page-normalized-nearest-field-layout"
+        },
+        "pdfWidgetCount": 383,
+        "fieldCountScore": 0.6938
+      },
+      "notes": [
+        "Page-count mismatch: XFDL 4, PDF 6.",
+        "ACORD form number matches, but edition/layout evidence is insufficient for exact equivalence; manual review is required.",
+        "PDF widget names do not use XFDL semantic SIDs; page-normalized field-layout geometry was used instead."
+      ],
+      "topCandidates": [
+        {
+          "pdfFile": "sample-Acord-125.pdf",
+          "score": 0.5336,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0.0036
+        },
+        {
+          "pdfFile": "Protective_Insurance_Company Large_Fleet.pdf",
+          "score": 0.25,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Quaker AV005.pdf",
+          "score": 0.1875,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "ACORD 0126 2016-09.xfdl",
+      "xfdlDatasetFile": "acord-0126-2016-09.ground-truth.json",
+      "xfdlSha256": "f78df006ebe7f1ba818b78e36f00b67316d7364bcdeb3c5dfa1b6e5534439129",
+      "pdfFile": "ACORD_126_-_Commercial_General_Liability_Section.pdf",
+      "pdfRelativePath": "test-fixtures/pdf/ACORD_126_-_Commercial_General_Liability_Section.pdf",
+      "pdfSha256": "04517e92bfc4fc978908407e4347d29b8a481ca68a7aa468167973a3505dd3ea",
+      "status": "matched",
+      "confidence": "high",
+      "score": 0.9239,
+      "scoreMargin": 0.6739,
+      "evidence": {
+        "filenameSimilarity": 0.3333,
+        "metadataSimilarity": 1,
+        "sameAcordNumber": true,
+        "stateConflict": false,
+        "pageCount": {
+          "xfdl": 4,
+          "pdf": 4,
+          "exact": true,
+          "score": 1
+        },
+        "fields": {
+          "xfdlFieldCount": 255,
+          "pdfWidgetNameCount": 255,
+          "sharedFieldCount": 255,
+          "xfdlCoverage": 1,
+          "pdfCoverage": 1,
+          "score": 1
+        },
+        "geometry": {
+          "sharedFieldCount": 258,
+          "score": 0.4036,
+          "normalizedRmse": 0.030242,
+          "translation": {
+            "x": -0.029412,
+            "y": -0.022727
+          }
+        },
+        "layoutGeometry": {
+          "available": false,
+          "score": 0,
+          "medianDistance": null,
+          "comparedPages": 0
+        },
+        "pdfWidgetCount": 258,
+        "fieldCountScore": 1
+      },
+      "notes": [],
+      "topCandidates": [
+        {
+          "pdfFile": "ACORD_126_-_Commercial_General_Liability_Section.pdf",
+          "score": 0.9239,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 255,
+          "geometryScore": 0.4036,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Protective_Insurance_Company Large_Fleet.pdf",
+          "score": 0.25,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Quaker AV005.pdf",
+          "score": 0.1875,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "ACORD 0127 2015-12r2.xfdl",
+      "xfdlDatasetFile": "acord-0127-2015-12r2.ground-truth.json",
+      "xfdlSha256": "f5cfb21580ed01b4d7a1efcc6cbd01c229ccb4424babe7e701b065e67a714f0a",
+      "pdfFile": "sample-Acord-127.pdf",
+      "pdfRelativePath": "test-fixtures/pdf/sample-Acord-127.pdf",
+      "pdfSha256": "f9b7b3ff905797f662f5d3a2cde6d261fd35709619419c6d6a1e2ffea985fe2a",
+      "status": "matched",
+      "confidence": "high",
+      "score": 1,
+      "scoreMargin": 0.75,
+      "evidence": {
+        "filenameSimilarity": 0.5,
+        "metadataSimilarity": 1,
+        "sameAcordNumber": true,
+        "stateConflict": false,
+        "pageCount": {
+          "xfdl": 4,
+          "pdf": 4,
+          "exact": true,
+          "score": 1
+        },
+        "fields": {
+          "xfdlFieldCount": 634,
+          "pdfWidgetNameCount": 633,
+          "sharedFieldCount": 633,
+          "xfdlCoverage": 0.9984,
+          "pdfCoverage": 1,
+          "score": 1
+        },
+        "geometry": {
+          "sharedFieldCount": 636,
+          "score": 0.9246,
+          "normalizedRmse": 0.002613,
+          "translation": {
+            "x": -0.029412,
+            "y": -0.022727
+          }
+        },
+        "layoutGeometry": {
+          "available": false,
+          "score": 0,
+          "medianDistance": null,
+          "comparedPages": 0
+        },
+        "pdfWidgetCount": 636,
+        "fieldCountScore": 0.9984
+      },
+      "notes": [],
+      "topCandidates": [
+        {
+          "pdfFile": "sample-Acord-127.pdf",
+          "score": 1,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 633,
+          "geometryScore": 0.9246,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Protective_Insurance_Company Large_Fleet.pdf",
+          "score": 0.25,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Quaker AV005.pdf",
+          "score": 0.1875,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "ACORD 0128 2015-12r1.xfdl",
+      "xfdlDatasetFile": "acord-0128-2015-12r1.ground-truth.json",
+      "xfdlSha256": "3222a9b9080e298e05e7ac89988037d4d614d44ee8ed7a40e1262add9489efb9",
+      "pdfFile": null,
+      "pdfRelativePath": null,
+      "pdfSha256": null,
+      "status": "unmatched",
+      "confidence": "none",
+      "score": null,
+      "scoreMargin": null,
+      "evidence": null,
+      "notes": [
+        "No non-conflicting PDF candidate passed the minimum evidence threshold."
+      ],
+      "topCandidates": [
+        {
+          "pdfFile": "Protective_Insurance_Company Large_Fleet.pdf",
+          "score": 0.25,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Quaker AV005.pdf",
+          "score": 0.1875,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Quaker_Special_Risk 04-18_QSR.pdf",
+          "score": 0.1429,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "ACORD 0130 2017-05.xfdl",
+      "xfdlDatasetFile": "acord-0130-2017-05.ground-truth.json",
+      "xfdlSha256": "8b1c40114682a07936c863c9b56441f2d3800649a81bceda0eddb4b3abaa50a7",
+      "pdfFile": "sample-Acord-130.pdf",
+      "pdfRelativePath": "test-fixtures/pdf/sample-Acord-130.pdf",
+      "pdfSha256": "2139f0c4950f96f1c3858130ac4be2bcc086df491ae929996916ddf1d584ce9c",
+      "status": "matched",
+      "confidence": "medium",
+      "score": 0.773,
+      "scoreMargin": 0.523,
+      "evidence": {
+        "filenameSimilarity": 0.5,
+        "metadataSimilarity": 0.6667,
+        "sameAcordNumber": true,
+        "stateConflict": false,
+        "pageCount": {
+          "xfdl": 4,
+          "pdf": 4,
+          "exact": true,
+          "score": 1
+        },
+        "fields": {
+          "xfdlFieldCount": 479,
+          "pdfWidgetNameCount": 234,
+          "sharedFieldCount": 0,
+          "xfdlCoverage": 0,
+          "pdfCoverage": 0,
+          "score": 0
+        },
+        "geometry": {
+          "sharedFieldCount": 0,
+          "score": 0,
+          "normalizedRmse": null,
+          "translation": null
+        },
+        "layoutGeometry": {
+          "available": true,
+          "score": 0.5087,
+          "medianDistance": 0.026704,
+          "comparedPages": 4,
+          "pageCoverage": 1,
+          "provenance": "page-normalized-nearest-field-layout"
+        },
+        "pdfWidgetCount": 486,
+        "fieldCountScore": 0.9918
+      },
+      "notes": [
+        "PDF widget names do not use XFDL semantic SIDs; page-normalized field-layout geometry was used instead."
+      ],
+      "topCandidates": [
+        {
+          "pdfFile": "sample-Acord-130.pdf",
+          "score": 0.773,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0.5087
+        },
+        {
+          "pdfFile": "Protective_Insurance_Company Large_Fleet.pdf",
+          "score": 0.25,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Quaker AV005.pdf",
+          "score": 0.1875,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "ACORD 0131 2017-11.xfdl",
+      "xfdlDatasetFile": "acord-0131-2017-11.ground-truth.json",
+      "xfdlSha256": "112ae06f80b8df9347627aa478117d87fa62b1c6e9f92c7ea219a8e56dd2ba2f",
+      "pdfFile": "Acord-131.pdf",
+      "pdfRelativePath": "test-fixtures/pdf/Acord-131.pdf",
+      "pdfSha256": "7f000fb0a94590ae1f251ea92e87abe2fbe1114b6110a09d3f95fa8602b3b0c8",
+      "status": "matched",
+      "confidence": "medium",
+      "score": 0.8728,
+      "scoreMargin": 0.6585,
+      "evidence": {
+        "filenameSimilarity": 0.5,
+        "metadataSimilarity": 0.3333,
+        "sameAcordNumber": true,
+        "stateConflict": false,
+        "pageCount": {
+          "xfdl": 6,
+          "pdf": 5,
+          "exact": false,
+          "score": 0.8333
+        },
+        "fields": {
+          "xfdlFieldCount": 393,
+          "pdfWidgetNameCount": 392,
+          "sharedFieldCount": 392,
+          "xfdlCoverage": 0.9975,
+          "pdfCoverage": 1,
+          "score": 1
+        },
+        "geometry": {
+          "sharedFieldCount": 396,
+          "score": 0.398,
+          "normalizedRmse": 0.030709,
+          "translation": {
+            "x": -0.029412,
+            "y": -0.022727
+          }
+        },
+        "layoutGeometry": {
+          "available": false,
+          "score": 0,
+          "medianDistance": null,
+          "comparedPages": 0
+        },
+        "pdfWidgetCount": 396,
+        "fieldCountScore": 0.995
+      },
+      "notes": [
+        "Page-count mismatch: XFDL 6, PDF 5."
+      ],
+      "topCandidates": [
+        {
+          "pdfFile": "Acord-131.pdf",
+          "score": 0.8728,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 392,
+          "geometryScore": 0.398,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Quaker_Special_Risk 04-18_QSR.pdf",
+          "score": 0.2143,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Lancer R-LMC_AP001 (01-10).pdf",
+          "score": 0.1875,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "ACORD 0132 2015-12r1.xfdl",
+      "xfdlDatasetFile": "acord-0132-2015-12r1.ground-truth.json",
+      "xfdlSha256": "892d7693e39e9c04a1a6864ab0988376b3cfef2f2e1bfc483881d1315b893fc9",
+      "pdfFile": "acord-132.pdf",
+      "pdfRelativePath": "test-fixtures/pdf/acord-132.pdf",
+      "pdfSha256": "61821be062e6efe5002779d596fa6055cbdddaa1c196678217ff77eccc17a86d",
+      "status": "matched",
+      "confidence": "high",
+      "score": 0.9189,
+      "scoreMargin": 0.6689,
+      "evidence": {
+        "filenameSimilarity": 0.5,
+        "metadataSimilarity": 0.3333,
+        "sameAcordNumber": true,
+        "stateConflict": false,
+        "pageCount": {
+          "xfdl": 4,
+          "pdf": 3,
+          "exact": false,
+          "score": 0.75
+        },
+        "fields": {
+          "xfdlFieldCount": 440,
+          "pdfWidgetNameCount": 431,
+          "sharedFieldCount": 411,
+          "xfdlCoverage": 0.9341,
+          "pdfCoverage": 0.9536,
+          "score": 0.9536
+        },
+        "geometry": {
+          "sharedFieldCount": 413,
+          "score": 0.8874,
+          "normalizedRmse": 0.003984,
+          "translation": {
+            "x": -0.029412,
+            "y": -0.022727
+          }
+        },
+        "layoutGeometry": {
+          "available": false,
+          "score": 0,
+          "medianDistance": null,
+          "comparedPages": 0
+        },
+        "pdfWidgetCount": 433,
+        "fieldCountScore": 0.9774
+      },
+      "notes": [
+        "Page-count mismatch: XFDL 4, PDF 3."
+      ],
+      "topCandidates": [
+        {
+          "pdfFile": "acord-132.pdf",
+          "score": 0.9189,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 411,
+          "geometryScore": 0.8874,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Protective_Insurance_Company Large_Fleet.pdf",
+          "score": 0.25,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Quaker AV005.pdf",
+          "score": 0.1875,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "ACORD 0133 2016-03.xfdl",
+      "xfdlDatasetFile": "acord-0133-2016-03.ground-truth.json",
+      "xfdlSha256": "fb2c271d7ffe001aca9d1c5d5df1d738d47ba9ff50bf8fbde4f9a0323dcadce6",
+      "pdfFile": "acord-133.pdf",
+      "pdfRelativePath": "test-fixtures/pdf/acord-133.pdf",
+      "pdfSha256": "de46cfecc8f4271645174e8d78d9ddae3938527cfd84412c1af2f70fe600a836",
+      "status": "matched",
+      "confidence": "medium",
+      "score": 0.7717,
+      "scoreMargin": 0.5217,
+      "evidence": {
+        "filenameSimilarity": 0.5,
+        "metadataSimilarity": 0.3333,
+        "sameAcordNumber": true,
+        "stateConflict": false,
+        "pageCount": {
+          "xfdl": 4,
+          "pdf": 4,
+          "exact": true,
+          "score": 1
+        },
+        "fields": {
+          "xfdlFieldCount": 146,
+          "pdfWidgetNameCount": 0,
+          "sharedFieldCount": 0,
+          "xfdlCoverage": 0,
+          "pdfCoverage": 0,
+          "score": 0
+        },
+        "geometry": {
+          "sharedFieldCount": 0,
+          "score": 0,
+          "normalizedRmse": null,
+          "translation": null
+        },
+        "layoutGeometry": {
+          "available": false,
+          "score": 0,
+          "medianDistance": null,
+          "comparedPages": 0
+        },
+        "pdfWidgetCount": 0,
+        "fieldCountScore": 0
+      },
+      "notes": [
+        "PDF has no AcroForm widgets; field-name and widget-geometry comparison is unavailable."
+      ],
+      "topCandidates": [
+        {
+          "pdfFile": "acord-133.pdf",
+          "score": 0.7717,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Protective_Insurance_Company Large_Fleet.pdf",
+          "score": 0.25,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Quaker AV005.pdf",
+          "score": 0.1875,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "AIG Comm_Fleet_App_ 2019-09-12.Xfdl",
+      "xfdlDatasetFile": "aig-comm-fleet-app-2019-09-12.ground-truth.json",
+      "xfdlSha256": "72af0068ba826e121137ca71a60af9e105e9d0230aed09352a8e2185ed92db6c",
+      "pdfFile": null,
+      "pdfRelativePath": null,
+      "pdfSha256": null,
+      "status": "unmatched",
+      "confidence": "none",
+      "score": null,
+      "scoreMargin": null,
+      "evidence": null,
+      "notes": [
+        "No non-conflicting PDF candidate passed the minimum evidence threshold."
+      ],
+      "topCandidates": [
+        {
+          "pdfFile": "Protective_Insurance_Company Large_Fleet.pdf",
+          "score": 0.2183,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Merchants MG_71_01_03_19.pdf",
+          "score": 0.2083,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Lancer R-LMC_AP001 (01-10).pdf",
+          "score": 0.1667,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "AmTrust 30-0912 2011-06.Xfdl",
+      "xfdlDatasetFile": "amtrust-30-0912-2011-06.ground-truth.json",
+      "xfdlSha256": "89d2eded012f1c53d4081d1d6096d0bedb2ffd9a6a8850fc5a92890565b6f2dc",
+      "pdfFile": null,
+      "pdfRelativePath": null,
+      "pdfSha256": null,
+      "status": "unmatched",
+      "confidence": "none",
+      "score": null,
+      "scoreMargin": null,
+      "evidence": null,
+      "notes": [
+        "No non-conflicting PDF candidate passed the minimum evidence threshold."
+      ],
+      "topCandidates": [
+        {
+          "pdfFile": "Quaker_Special_Risk 04-18_QSR.pdf",
+          "score": 0.25,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Lancer R-LMC_AP001 (01-10).pdf",
+          "score": 0.2188,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "sample-Acord-125.pdf",
+          "score": 0.2097,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "AmTrust WIC-AH-DBL-APP NY NY_0114.Xfdl",
+      "xfdlDatasetFile": "amtrust-wic-ah-dbl-app-ny-ny-0114.ground-truth.json",
+      "xfdlSha256": "848cf0159878b6611ba58fff2afa5c87e81349ace2e4b2cd0b5ee3a20c017f20",
+      "pdfFile": null,
+      "pdfRelativePath": null,
+      "pdfSha256": null,
+      "status": "unmatched",
+      "confidence": "none",
+      "score": null,
+      "scoreMargin": null,
+      "evidence": null,
+      "notes": [
+        "No non-conflicting PDF candidate passed the minimum evidence threshold."
+      ],
+      "topCandidates": [
+        {
+          "pdfFile": "ACORD-85.pdf",
+          "score": 0.2735,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "ARGO AC-SUP090 2018-07.pdf",
+          "score": 0.25,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Acord-84.pdf",
+          "score": 0.1876,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "ARGO AC-SUP090 2018-07.Xfdl",
+      "xfdlDatasetFile": "argo-ac-sup090-2018-07.ground-truth.json",
+      "xfdlSha256": "cf787de0a2699d4db30084def376676c269e949931a5c4a88f83986abc2d68ba",
+      "pdfFile": "ARGO AC-SUP090 2018-07.pdf",
+      "pdfRelativePath": "test-fixtures/pdf/ARGO AC-SUP090 2018-07.pdf",
+      "pdfSha256": "28b33224b243c1db9bddc3c4083cab48a328bae6c52756ca9f8a8fe26ef7b08b",
+      "status": "matched",
+      "confidence": "high",
+      "score": 0.8909,
+      "scoreMargin": 0.6227,
+      "evidence": {
+        "filenameSimilarity": 1,
+        "metadataSimilarity": 0.4545,
+        "sameAcordNumber": false,
+        "stateConflict": false,
+        "pageCount": {
+          "xfdl": 2,
+          "pdf": 2,
+          "exact": true,
+          "score": 1
+        },
+        "fields": {
+          "xfdlFieldCount": 114,
+          "pdfWidgetNameCount": 0,
+          "sharedFieldCount": 0,
+          "xfdlCoverage": 0,
+          "pdfCoverage": 0,
+          "score": 0
+        },
+        "geometry": {
+          "sharedFieldCount": 0,
+          "score": 0,
+          "normalizedRmse": null,
+          "translation": null
+        },
+        "layoutGeometry": {
+          "available": false,
+          "score": 0,
+          "medianDistance": null,
+          "comparedPages": 0
+        },
+        "pdfWidgetCount": 0,
+        "fieldCountScore": 0
+      },
+      "notes": [
+        "PDF has no AcroForm widgets; field-name and widget-geometry comparison is unavailable."
+      ],
+      "topCandidates": [
+        {
+          "pdfFile": "ARGO AC-SUP090 2018-07.pdf",
+          "score": 0.8909,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "ACORD-85.pdf",
+          "score": 0.2682,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Acord-84.pdf",
+          "score": 0.1984,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "ARGO G1000 0114.Xfdl",
+      "xfdlDatasetFile": "argo-g1000-0114.ground-truth.json",
+      "xfdlSha256": "dcba19b658df317e0a7d93581eb97b8ff24832e746381836742fc92e812a9360",
+      "pdfFile": "ARGO G1000 0114.pdf",
+      "pdfRelativePath": "test-fixtures/pdf/ARGO G1000 0114.pdf",
+      "pdfSha256": "3e5ac37e6fe5e31b344af23c125f0e2e8213ffaa60a9476a53335924a88a3d15",
+      "status": "matched",
+      "confidence": "high",
+      "score": 0.92,
+      "scoreMargin": 0.6592,
+      "evidence": {
+        "filenameSimilarity": 1,
+        "metadataSimilarity": 0.6,
+        "sameAcordNumber": false,
+        "stateConflict": false,
+        "pageCount": {
+          "xfdl": 6,
+          "pdf": 6,
+          "exact": true,
+          "score": 1
+        },
+        "fields": {
+          "xfdlFieldCount": 591,
+          "pdfWidgetNameCount": 0,
+          "sharedFieldCount": 0,
+          "xfdlCoverage": 0,
+          "pdfCoverage": 0,
+          "score": 0
+        },
+        "geometry": {
+          "sharedFieldCount": 0,
+          "score": 0,
+          "normalizedRmse": null,
+          "translation": null
+        },
+        "layoutGeometry": {
+          "available": false,
+          "score": 0,
+          "medianDistance": null,
+          "comparedPages": 0
+        },
+        "pdfWidgetCount": 0,
+        "fieldCountScore": 0
+      },
+      "notes": [
+        "PDF has no AcroForm widgets; field-name and widget-geometry comparison is unavailable."
+      ],
+      "topCandidates": [
+        {
+          "pdfFile": "ARGO G1000 0114.pdf",
+          "score": 0.92,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "ARGO AC-SUP090 2018-07.pdf",
+          "score": 0.2608,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "ARGO GAR_SUP_135-0117.pdf",
+          "score": 0.2608,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "Argo GAR-SUP_135-0117 2020-01-30.Xfdl",
+      "xfdlDatasetFile": "argo-gar-sup-135-0117-2020-01-30.ground-truth.json",
+      "xfdlSha256": "d72d17654fe2ed225746acbea2463cd7b40d9fe715ca6731b5a7d2ec11a09d1b",
+      "pdfFile": "ARGO GAR_SUP_135-0117.pdf",
+      "pdfRelativePath": "test-fixtures/pdf/ARGO GAR_SUP_135-0117.pdf",
+      "pdfSha256": "399a495d8c3c9a66a9659c5eafcfb4b54ced628e5f1a751a0aff78ad4796b916",
+      "status": "matched",
+      "confidence": "medium",
+      "score": 0.7445,
+      "scoreMargin": 0.5778,
+      "evidence": {
+        "filenameSimilarity": 0.7692,
+        "metadataSimilarity": 0.3571,
+        "sameAcordNumber": false,
+        "stateConflict": false,
+        "pageCount": {
+          "xfdl": 2,
+          "pdf": 2,
+          "exact": true,
+          "score": 1
+        },
+        "fields": {
+          "xfdlFieldCount": 81,
+          "pdfWidgetNameCount": 0,
+          "sharedFieldCount": 0,
+          "xfdlCoverage": 0,
+          "pdfCoverage": 0,
+          "score": 0
+        },
+        "geometry": {
+          "sharedFieldCount": 0,
+          "score": 0,
+          "normalizedRmse": null,
+          "translation": null
+        },
+        "layoutGeometry": {
+          "available": false,
+          "score": 0,
+          "medianDistance": null,
+          "comparedPages": 0
+        },
+        "pdfWidgetCount": 0,
+        "fieldCountScore": 0
+      },
+      "notes": [
+        "PDF has no AcroForm widgets; field-name and widget-geometry comparison is unavailable."
+      ],
+      "topCandidates": [
+        {
+          "pdfFile": "ARGO GAR_SUP_135-0117.pdf",
+          "score": 0.7445,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "ARGO AC-SUP090 2018-07.pdf",
+          "score": 0.3489,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "ACORD-85.pdf",
+          "score": 0.2786,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "Chubb AV003 2017-07.Xfdl",
+      "xfdlDatasetFile": "chubb-av003-2017-07.ground-truth.json",
+      "xfdlSha256": "29550dd88551a1f73873b43ffb0d2f4ab9fc1136569ebacbf86520fc3081c49d",
+      "pdfFile": "Chubb AV003.pdf",
+      "pdfRelativePath": "test-fixtures/pdf/Chubb AV003.pdf",
+      "pdfSha256": "250461c31afceb059b016d5510850b6b82d5f9085d0dbccf6230d0420856c328",
+      "status": "matched",
+      "confidence": "medium",
+      "score": 0.6611,
+      "scoreMargin": 0.4611,
+      "evidence": {
+        "filenameSimilarity": 0.6667,
+        "metadataSimilarity": 0.2222,
+        "sameAcordNumber": false,
+        "stateConflict": false,
+        "pageCount": {
+          "xfdl": 5,
+          "pdf": 5,
+          "exact": true,
+          "score": 1
+        },
+        "fields": {
+          "xfdlFieldCount": 302,
+          "pdfWidgetNameCount": 0,
+          "sharedFieldCount": 0,
+          "xfdlCoverage": 0,
+          "pdfCoverage": 0,
+          "score": 0
+        },
+        "geometry": {
+          "sharedFieldCount": 0,
+          "score": 0,
+          "normalizedRmse": null,
+          "translation": null
+        },
+        "layoutGeometry": {
+          "available": false,
+          "score": 0,
+          "medianDistance": null,
+          "comparedPages": 0
+        },
+        "pdfWidgetCount": 0,
+        "fieldCountScore": 0
+      },
+      "notes": [
+        "PDF has no AcroForm widgets; field-name and widget-geometry comparison is unavailable."
+      ],
+      "topCandidates": [
+        {
+          "pdfFile": "Chubb AV003.pdf",
+          "score": 0.6611,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Chubb PF 48163 Cyber.pdf",
+          "score": 0.3681,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Philadelphia PI-CYB-014 2017-11.pdf",
+          "score": 0.3108,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "Chubb PF-48163 2017-08.Xfdl",
+      "xfdlDatasetFile": "chubb-pf-48163-2017-08.ground-truth.json",
+      "xfdlSha256": "09b102eafa9b578fc24c9d9854ce3f78515a36606dd94d2d84cff8ec2b6e3e22",
+      "pdfFile": "Chubb PF 48163 Cyber.pdf",
+      "pdfRelativePath": "test-fixtures/pdf/Chubb PF 48163 Cyber.pdf",
+      "pdfSha256": "50e70dee7cf0193b13d6df040876986cc969a3b7c30e7c48b820a4e7c4df8a79",
+      "status": "matched",
+      "confidence": "medium",
+      "score": 0.7167,
+      "scoreMargin": 0.3179,
+      "evidence": {
+        "filenameSimilarity": 0.6667,
+        "metadataSimilarity": 0.5,
+        "sameAcordNumber": false,
+        "stateConflict": false,
+        "pageCount": {
+          "xfdl": 6,
+          "pdf": 6,
+          "exact": true,
+          "score": 1
+        },
+        "fields": {
+          "xfdlFieldCount": 91,
+          "pdfWidgetNameCount": 0,
+          "sharedFieldCount": 0,
+          "xfdlCoverage": 0,
+          "pdfCoverage": 0,
+          "score": 0
+        },
+        "geometry": {
+          "sharedFieldCount": 0,
+          "score": 0,
+          "normalizedRmse": null,
+          "translation": null
+        },
+        "layoutGeometry": {
+          "available": false,
+          "score": 0,
+          "medianDistance": null,
+          "comparedPages": 0
+        },
+        "pdfWidgetCount": 0,
+        "fieldCountScore": 0
+      },
+      "notes": [
+        "PDF has no AcroForm widgets; field-name and widget-geometry comparison is unavailable."
+      ],
+      "topCandidates": [
+        {
+          "pdfFile": "Chubb PF 48163 Cyber.pdf",
+          "score": 0.7167,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Chubb AV003.pdf",
+          "score": 0.3988,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Philadelphia PI-CYB-014 2017-11.pdf",
+          "score": 0.3476,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "Great_American F-27647 12-08.Xfdl",
+      "xfdlDatasetFile": "great-american-f-27647-12-08.ground-truth.json",
+      "xfdlSha256": "864de0b14abcb551a5a4ddf17f8c7f4f2b256b1427feea23e22fd95c301109df",
+      "pdfFile": null,
+      "pdfRelativePath": null,
+      "pdfSha256": null,
+      "status": "unmatched",
+      "confidence": "none",
+      "score": null,
+      "scoreMargin": null,
+      "evidence": null,
+      "notes": [
+        "No non-conflicting PDF candidate passed the minimum evidence threshold."
+      ],
+      "topCandidates": [
+        {
+          "pdfFile": "Acord-82.pdf",
+          "score": 0.2256,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 25,
+          "geometryScore": 0.001,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Acord-131.pdf",
+          "score": 0.2152,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 5,
+          "geometryScore": 0.0016,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Protective_Insurance_Company Large_Fleet.pdf",
+          "score": 0.2,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "Hartford CB_00_H001_00 2017-10.Xfdl",
+      "xfdlDatasetFile": "hartford-cb-00-h001-00-2017-10.ground-truth.json",
+      "xfdlSha256": "31caaab36191ae82d758297c2ed8438332bca49ce87b34860e9c7e1c16447b6b",
+      "pdfFile": "Hartford CB 00H01 Cyber.pdf",
+      "pdfRelativePath": "test-fixtures/pdf/Hartford CB 00H01 Cyber.pdf",
+      "pdfSha256": "f5a0a4cfcc9965388948b90fa43b675b43b8f646cbb6c372407408c85afc5a9d",
+      "status": "review",
+      "confidence": "low",
+      "score": 0.5271,
+      "scoreMargin": 0.1385,
+      "evidence": {
+        "filenameSimilarity": 0.4,
+        "metadataSimilarity": 0.2857,
+        "sameAcordNumber": false,
+        "stateConflict": false,
+        "pageCount": {
+          "xfdl": 8,
+          "pdf": 8,
+          "exact": true,
+          "score": 1
+        },
+        "fields": {
+          "xfdlFieldCount": 171,
+          "pdfWidgetNameCount": 0,
+          "sharedFieldCount": 0,
+          "xfdlCoverage": 0,
+          "pdfCoverage": 0,
+          "score": 0
+        },
+        "geometry": {
+          "sharedFieldCount": 0,
+          "score": 0,
+          "normalizedRmse": null,
+          "translation": null
+        },
+        "layoutGeometry": {
+          "available": false,
+          "score": 0,
+          "medianDistance": null,
+          "comparedPages": 0
+        },
+        "pdfWidgetCount": 0,
+        "fieldCountScore": 0
+      },
+      "notes": [
+        "PDF has no AcroForm widgets; field-name and widget-geometry comparison is unavailable."
+      ],
+      "topCandidates": [
+        {
+          "pdfFile": "Hartford CB 00H01 Cyber.pdf",
+          "score": 0.5271,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Hartford 00 HO54 Lawyers.pdf",
+          "score": 0.3886,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Hartford AC_00_H007.pdf",
+          "score": 0.3709,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "Hartford LP_00_HO54_03 2017-06.Xfdl",
+      "xfdlDatasetFile": "hartford-lp-00-ho54-03-2017-06.ground-truth.json",
+      "xfdlSha256": "d1ab8da2584ba2fb08a9488d211a5ab65865f38e203b5bfcf14299faf4ec0f54",
+      "pdfFile": "Hartford 00 HO54 Lawyers.pdf",
+      "pdfRelativePath": "test-fixtures/pdf/Hartford 00 HO54 Lawyers.pdf",
+      "pdfSha256": "950f81a73435c754f4d94680adeee889d011d469dbb1545b1a225861bab1f758",
+      "status": "review",
+      "confidence": "low",
+      "score": 0.5115,
+      "scoreMargin": 0.3513,
+      "evidence": {
+        "filenameSimilarity": 0.3636,
+        "metadataSimilarity": 0.3077,
+        "sameAcordNumber": false,
+        "stateConflict": false,
+        "pageCount": {
+          "xfdl": 8,
+          "pdf": 8,
+          "exact": true,
+          "score": 1
+        },
+        "fields": {
+          "xfdlFieldCount": 371,
+          "pdfWidgetNameCount": 0,
+          "sharedFieldCount": 0,
+          "xfdlCoverage": 0,
+          "pdfCoverage": 0,
+          "score": 0
+        },
+        "geometry": {
+          "sharedFieldCount": 0,
+          "score": 0,
+          "normalizedRmse": null,
+          "translation": null
+        },
+        "layoutGeometry": {
+          "available": false,
+          "score": 0,
+          "medianDistance": null,
+          "comparedPages": 0
+        },
+        "pdfWidgetCount": 0,
+        "fieldCountScore": 0
+      },
+      "notes": [
+        "PDF has no AcroForm widgets; field-name and widget-geometry comparison is unavailable."
+      ],
+      "topCandidates": [
+        {
+          "pdfFile": "Hartford 00 HO54 Lawyers.pdf",
+          "score": 0.5115,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Hartford CB 00H01 Cyber.pdf",
+          "score": 0.3654,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Westport WIC1107 2010-06.pdf",
+          "score": 0.3341,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "Hartford SS_25_50_06_16.Xfdl",
+      "xfdlDatasetFile": "hartford-ss-25-50-06-16.ground-truth.json",
+      "xfdlSha256": "320ff9b82d1586c4e7400bc8ee321d3e973bf7745c6a36bc2c1ba3f1230c7040",
+      "pdfFile": "Hartford SS_25_50_06_16.pdf",
+      "pdfRelativePath": "test-fixtures/pdf/Hartford SS_25_50_06_16.pdf",
+      "pdfSha256": "9b63e16ca3dd698e8b8a32f58a3dd297d06321485a51263ae92fd3850dd8891d",
+      "status": "matched",
+      "confidence": "high",
+      "score": 0.8923,
+      "scoreMargin": 0.5669,
+      "evidence": {
+        "filenameSimilarity": 1,
+        "metadataSimilarity": 0.4615,
+        "sameAcordNumber": false,
+        "stateConflict": false,
+        "pageCount": {
+          "xfdl": 10,
+          "pdf": 10,
+          "exact": true,
+          "score": 1
+        },
+        "fields": {
+          "xfdlFieldCount": 59,
+          "pdfWidgetNameCount": 0,
+          "sharedFieldCount": 0,
+          "xfdlCoverage": 0,
+          "pdfCoverage": 0,
+          "score": 0
+        },
+        "geometry": {
+          "sharedFieldCount": 0,
+          "score": 0,
+          "normalizedRmse": null,
+          "translation": null
+        },
+        "layoutGeometry": {
+          "available": false,
+          "score": 0,
+          "medianDistance": null,
+          "comparedPages": 0
+        },
+        "pdfWidgetCount": 0,
+        "fieldCountScore": 0
+      },
+      "notes": [
+        "PDF has no AcroForm widgets; field-name and widget-geometry comparison is unavailable."
+      ],
+      "topCandidates": [
+        {
+          "pdfFile": "Hartford SS_25_50_06_16.pdf",
+          "score": 0.8923,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Hartford 00 HO54 Lawyers.pdf",
+          "score": 0.3254,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Hartford CB 00H01 Cyber.pdf",
+          "score": 0.3254,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "Hartford,The AC_00_H007_00_0805 2005.Xfdl",
+      "xfdlDatasetFile": "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+      "xfdlSha256": "1be85959cdcefcaa5f85d50d0130a57a3bad2d2c6c41a7cf314d0ed8ba654e02",
+      "pdfFile": "Hartford AC_00_H007.pdf",
+      "pdfRelativePath": "test-fixtures/pdf/Hartford AC_00_H007.pdf",
+      "pdfSha256": "e2e8e765e0485a87cd7c3738d447f483027a82f2c518e5ca53e965e3eb9bb73f",
+      "status": "matched",
+      "confidence": "medium",
+      "score": 0.7033,
+      "scoreMargin": 0.4829,
+      "evidence": {
+        "filenameSimilarity": 0.7273,
+        "metadataSimilarity": 0.2667,
+        "sameAcordNumber": false,
+        "stateConflict": false,
+        "pageCount": {
+          "xfdl": 3,
+          "pdf": 3,
+          "exact": true,
+          "score": 1
+        },
+        "fields": {
+          "xfdlFieldCount": 47,
+          "pdfWidgetNameCount": 0,
+          "sharedFieldCount": 0,
+          "xfdlCoverage": 0,
+          "pdfCoverage": 0,
+          "score": 0
+        },
+        "geometry": {
+          "sharedFieldCount": 0,
+          "score": 0,
+          "normalizedRmse": null,
+          "translation": null
+        },
+        "layoutGeometry": {
+          "available": false,
+          "score": 0,
+          "medianDistance": null,
+          "comparedPages": 0
+        },
+        "pdfWidgetCount": 0,
+        "fieldCountScore": 0
+      },
+      "notes": [
+        "PDF has no AcroForm widgets; field-name and widget-geometry comparison is unavailable."
+      ],
+      "topCandidates": [
+        {
+          "pdfFile": "Hartford AC_00_H007.pdf",
+          "score": 0.7033,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "ARGO AC-SUP090 2018-07.pdf",
+          "score": 0.2717,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "NFIP FEMA_Form_086-0-1 F-050_(FEB_2015).pdf",
+          "score": 0.2633,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "Lancer R-LMC_AP001 (01-20).Xfdl",
+      "xfdlDatasetFile": "lancer-r-lmc-ap001-01-20.ground-truth.json",
+      "xfdlSha256": "a1df7595df8463a2741226cfc93858a2081bdfc37591ad3a0200f97440b90f32",
+      "pdfFile": "Lancer R-LMC_AP001 (01-10).pdf",
+      "pdfRelativePath": "test-fixtures/pdf/Lancer R-LMC_AP001 (01-10).pdf",
+      "pdfSha256": "e823933e0fb14e469fd3b8e26a729840481e242e157f61b74738a7b71343a908",
+      "status": "matched",
+      "confidence": "medium",
+      "score": 0.7417,
+      "scoreMargin": 0.55,
+      "evidence": {
+        "filenameSimilarity": 0.8333,
+        "metadataSimilarity": 0.4167,
+        "sameAcordNumber": false,
+        "stateConflict": false,
+        "pageCount": {
+          "xfdl": 10,
+          "pdf": 8,
+          "exact": false,
+          "score": 0.8
+        },
+        "fields": {
+          "xfdlFieldCount": 512,
+          "pdfWidgetNameCount": 0,
+          "sharedFieldCount": 0,
+          "xfdlCoverage": 0,
+          "pdfCoverage": 0,
+          "score": 0
+        },
+        "geometry": {
+          "sharedFieldCount": 0,
+          "score": 0,
+          "normalizedRmse": null,
+          "translation": null
+        },
+        "layoutGeometry": {
+          "available": false,
+          "score": 0,
+          "medianDistance": null,
+          "comparedPages": 0
+        },
+        "pdfWidgetCount": 0,
+        "fieldCountScore": 0
+      },
+      "notes": [
+        "Page-count mismatch: XFDL 10, PDF 8.",
+        "PDF has no AcroForm widgets; field-name and widget-geometry comparison is unavailable."
+      ],
+      "topCandidates": [
+        {
+          "pdfFile": "Lancer R-LMC_AP001 (01-10).pdf",
+          "score": 0.7417,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Merchants MG_71_01_03_19.pdf",
+          "score": 0.25,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Quaker_Special_Risk 04-18_QSR.pdf",
+          "score": 0.1917,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "Markel MAIL 021 09_15.Xfdl",
+      "xfdlDatasetFile": "markel-mail-021-09-15.ground-truth.json",
+      "xfdlSha256": "3d0df89f9197801134d8219a11adefa9d9c3df3f7658df42e497af2a5033354b",
+      "pdfFile": "Markel MAIL 021 09_15.pdf",
+      "pdfRelativePath": "test-fixtures/pdf/Markel MAIL 021 09_15.pdf",
+      "pdfSha256": "99e5b2933d200fb476056f381fe8cc67a94a24ad4a100fec6e3f149d6389ac82",
+      "status": "matched",
+      "confidence": "high",
+      "score": 0.9111,
+      "scoreMargin": 0.6611,
+      "evidence": {
+        "filenameSimilarity": 1,
+        "metadataSimilarity": 0.5556,
+        "sameAcordNumber": false,
+        "stateConflict": false,
+        "pageCount": {
+          "xfdl": 8,
+          "pdf": 8,
+          "exact": true,
+          "score": 1
+        },
+        "fields": {
+          "xfdlFieldCount": 328,
+          "pdfWidgetNameCount": 0,
+          "sharedFieldCount": 0,
+          "xfdlCoverage": 0,
+          "pdfCoverage": 0,
+          "score": 0
+        },
+        "geometry": {
+          "sharedFieldCount": 0,
+          "score": 0,
+          "normalizedRmse": null,
+          "translation": null
+        },
+        "layoutGeometry": {
+          "available": false,
+          "score": 0,
+          "medianDistance": null,
+          "comparedPages": 0
+        },
+        "pdfWidgetCount": 0,
+        "fieldCountScore": 0
+      },
+      "notes": [
+        "PDF has no AcroForm widgets; field-name and widget-geometry comparison is unavailable."
+      ],
+      "topCandidates": [
+        {
+          "pdfFile": "Markel MAIL 021 09_15.pdf",
+          "score": 0.9111,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Hartford 00 HO54 Lawyers.pdf",
+          "score": 0.25,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Hartford CB 00H01 Cyber.pdf",
+          "score": 0.25,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "Merchants MG_71_01_ 03_19.Xfdl",
+      "xfdlDatasetFile": "merchants-mg-71-01-03-19.ground-truth.json",
+      "xfdlSha256": "bdb7b9e8d6e72e3f913cc991dc1d8e3c50103f7d274632d2503c971453e5d48b",
+      "pdfFile": "Merchants MG_71_01_03_19.pdf",
+      "pdfRelativePath": "test-fixtures/pdf/Merchants MG_71_01_03_19.pdf",
+      "pdfSha256": "6f90701811cb9a06e9a8071bb251cf37172ef0aefa6243d260575e95b52a3471",
+      "status": "matched",
+      "confidence": "high",
+      "score": 0.9,
+      "scoreMargin": 0.6833,
+      "evidence": {
+        "filenameSimilarity": 1,
+        "metadataSimilarity": 0.5,
+        "sameAcordNumber": false,
+        "stateConflict": false,
+        "pageCount": {
+          "xfdl": 10,
+          "pdf": 10,
+          "exact": true,
+          "score": 1
+        },
+        "fields": {
+          "xfdlFieldCount": 450,
+          "pdfWidgetNameCount": 0,
+          "sharedFieldCount": 0,
+          "xfdlCoverage": 0,
+          "pdfCoverage": 0,
+          "score": 0
+        },
+        "geometry": {
+          "sharedFieldCount": 0,
+          "score": 0,
+          "normalizedRmse": null,
+          "translation": null
+        },
+        "layoutGeometry": {
+          "available": false,
+          "score": 0,
+          "medianDistance": null,
+          "comparedPages": 0
+        },
+        "pdfWidgetCount": 0,
+        "fieldCountScore": 0
+      },
+      "notes": [
+        "PDF has no AcroForm widgets; field-name and widget-geometry comparison is unavailable."
+      ],
+      "topCandidates": [
+        {
+          "pdfFile": "Merchants MG_71_01_03_19.pdf",
+          "score": 0.9,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Lancer R-LMC_AP001 (01-10).pdf",
+          "score": 0.2167,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Quaker_Special_Risk 04-18_QSR.pdf",
+          "score": 0.175,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "Mount Hawley UWSR_207MTH 2013-03.Xfdl",
+      "xfdlDatasetFile": "mount-hawley-uwsr-207mth-2013-03.ground-truth.json",
+      "xfdlSha256": "24fee93d50002f8dd12c4de2c10673de2034337daa2f012cfdc7fc5418b39f11",
+      "pdfFile": "Mount Hawley UWSR_207MTH 2013-03.pdf",
+      "pdfRelativePath": "test-fixtures/pdf/Mount Hawley UWSR_207MTH 2013-03.pdf",
+      "pdfSha256": "ed2bf50fcac1752c4fec69180c2ddf9e3ebd41dee79f1aa4300d638f8a89ded6",
+      "status": "matched",
+      "confidence": "high",
+      "score": 0.92,
+      "scoreMargin": 0.67,
+      "evidence": {
+        "filenameSimilarity": 1,
+        "metadataSimilarity": 0.6,
+        "sameAcordNumber": false,
+        "stateConflict": false,
+        "pageCount": {
+          "xfdl": 5,
+          "pdf": 5,
+          "exact": true,
+          "score": 1
+        },
+        "fields": {
+          "xfdlFieldCount": 286,
+          "pdfWidgetNameCount": 0,
+          "sharedFieldCount": 0,
+          "xfdlCoverage": 0,
+          "pdfCoverage": 0,
+          "score": 0
+        },
+        "geometry": {
+          "sharedFieldCount": 0,
+          "score": 0,
+          "normalizedRmse": null,
+          "translation": null
+        },
+        "layoutGeometry": {
+          "available": false,
+          "score": 0,
+          "medianDistance": null,
+          "comparedPages": 0
+        },
+        "pdfWidgetCount": 0,
+        "fieldCountScore": 0
+      },
+      "notes": [
+        "PDF has no AcroForm widgets; field-name and widget-geometry comparison is unavailable."
+      ],
+      "topCandidates": [
+        {
+          "pdfFile": "Mount Hawley UWSR_207MTH 2013-03.pdf",
+          "score": 0.92,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Philadelphia Builders_Risk_Renovation_and_Rehabilitation 2013-01.pdf",
+          "score": 0.3069,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Philadelphia Builders_Risk_Ground_Up_Construction 2013-01.pdf",
+          "score": 0.2986,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "Nationwide GLS-APP-74s (6-17).Xfdl",
+      "xfdlDatasetFile": "nationwide-gls-app-74s-6-17.ground-truth.json",
+      "xfdlSha256": "45577119772b7e31343e7bb51e0290081f40b8dccd896e7f3218ce601bd34523",
+      "pdfFile": "Nationwide GLS-APP-74s (6-17).pdf",
+      "pdfRelativePath": "test-fixtures/pdf/Nationwide GLS-APP-74s (6-17).pdf",
+      "pdfSha256": "4238cb0c87d794d5e90fe1bde0f4ab02b79315139fffe7444d599a4124f285ef",
+      "status": "matched",
+      "confidence": "high",
+      "score": 0.9091,
+      "scoreMargin": 0.5666,
+      "evidence": {
+        "filenameSimilarity": 1,
+        "metadataSimilarity": 0.5455,
+        "sameAcordNumber": false,
+        "stateConflict": false,
+        "pageCount": {
+          "xfdl": 6,
+          "pdf": 6,
+          "exact": true,
+          "score": 1
+        },
+        "fields": {
+          "xfdlFieldCount": 253,
+          "pdfWidgetNameCount": 0,
+          "sharedFieldCount": 0,
+          "xfdlCoverage": 0,
+          "pdfCoverage": 0,
+          "score": 0
+        },
+        "geometry": {
+          "sharedFieldCount": 0,
+          "score": 0,
+          "normalizedRmse": null,
+          "translation": null
+        },
+        "layoutGeometry": {
+          "available": false,
+          "score": 0,
+          "medianDistance": null,
+          "comparedPages": 0
+        },
+        "pdfWidgetCount": 0,
+        "fieldCountScore": 0
+      },
+      "notes": [
+        "PDF has no AcroForm widgets; field-name and widget-geometry comparison is unavailable."
+      ],
+      "topCandidates": [
+        {
+          "pdfFile": "Nationwide GLS-APP-74s (6-17).pdf",
+          "score": 0.9091,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Westport WIC1107 2010-06.pdf",
+          "score": 0.3425,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Travelers CX-1036 02-06.pdf",
+          "score": 0.3265,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "NFIP FEMA_Form_086-0-1 F-050_(FEB_2015).Xfdl",
+      "xfdlDatasetFile": "nfip-fema-form-086-0-1-f-050-feb-2015.ground-truth.json",
+      "xfdlSha256": "028233ffeb0268ee8de3b5a0e96b3751d6a88ff3f5316989189975e2ecac59b5",
+      "pdfFile": "NFIP FEMA_Form_086-0-1 F-050_(FEB_2015).pdf",
+      "pdfRelativePath": "test-fixtures/pdf/NFIP FEMA_Form_086-0-1 F-050_(FEB_2015).pdf",
+      "pdfSha256": "c7b5ddb39a6549b2a8014352c55bd106f4ccbab19166d00eb4ba1872830d1db8",
+      "status": "matched",
+      "confidence": "high",
+      "score": 0.9286,
+      "scoreMargin": 0.6786,
+      "evidence": {
+        "filenameSimilarity": 1,
+        "metadataSimilarity": 0.6429,
+        "sameAcordNumber": false,
+        "stateConflict": false,
+        "pageCount": {
+          "xfdl": 3,
+          "pdf": 3,
+          "exact": true,
+          "score": 1
+        },
+        "fields": {
+          "xfdlFieldCount": 350,
+          "pdfWidgetNameCount": 0,
+          "sharedFieldCount": 0,
+          "xfdlCoverage": 0,
+          "pdfCoverage": 0,
+          "score": 0
+        },
+        "geometry": {
+          "sharedFieldCount": 0,
+          "score": 0,
+          "normalizedRmse": null,
+          "translation": null
+        },
+        "layoutGeometry": {
+          "available": false,
+          "score": 0,
+          "medianDistance": null,
+          "comparedPages": 0
+        },
+        "pdfWidgetCount": 0,
+        "fieldCountScore": 0
+      },
+      "notes": [
+        "PDF has no AcroForm widgets; field-name and widget-geometry comparison is unavailable."
+      ],
+      "topCandidates": [
+        {
+          "pdfFile": "NFIP FEMA_Form_086-0-1 F-050_(FEB_2015).pdf",
+          "score": 0.9286,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "United_Specialty_ UNITEDSPEC-01 2019-09-12.pdf",
+          "score": 0.333,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Philadelphia Builders_Risk_Ground_Up_Construction 2013-01.pdf",
+          "score": 0.2665,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "Philadelphia Builders_Risk_Ground_Up_Construction 2013-01.Xfdl",
+      "xfdlDatasetFile": "philadelphia-builders-risk-ground-up-construction-2013-01.ground-truth.json",
+      "xfdlSha256": "fb026ac032d577542bd12d55f91059d4b09578480885be486419237fd9512dda",
+      "pdfFile": "Philadelphia Builders_Risk_Ground_Up_Construction 2013-01.pdf",
+      "pdfRelativePath": "test-fixtures/pdf/Philadelphia Builders_Risk_Ground_Up_Construction 2013-01.pdf",
+      "pdfSha256": "0b35f59a70015c28172011d13823b4a5f02104725b812c1cfac7375893e8ca21",
+      "status": "matched",
+      "confidence": "high",
+      "score": 0.9333,
+      "scoreMargin": 0.632,
+      "evidence": {
+        "filenameSimilarity": 1,
+        "metadataSimilarity": 0.6667,
+        "sameAcordNumber": false,
+        "stateConflict": false,
+        "pageCount": {
+          "xfdl": 4,
+          "pdf": 4,
+          "exact": true,
+          "score": 1
+        },
+        "fields": {
+          "xfdlFieldCount": 125,
+          "pdfWidgetNameCount": 0,
+          "sharedFieldCount": 0,
+          "xfdlCoverage": 0,
+          "pdfCoverage": 0,
+          "score": 0
+        },
+        "geometry": {
+          "sharedFieldCount": 0,
+          "score": 0,
+          "normalizedRmse": null,
+          "translation": null
+        },
+        "layoutGeometry": {
+          "available": false,
+          "score": 0,
+          "medianDistance": null,
+          "comparedPages": 0
+        },
+        "pdfWidgetCount": 0,
+        "fieldCountScore": 0
+      },
+      "notes": [
+        "PDF has no AcroForm widgets; field-name and widget-geometry comparison is unavailable."
+      ],
+      "topCandidates": [
+        {
+          "pdfFile": "Philadelphia Builders_Risk_Ground_Up_Construction 2013-01.pdf",
+          "score": 0.9333,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Philadelphia Builders_Risk_Renovation_and_Rehabilitation 2013-01.pdf",
+          "score": 0.5938,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Travelers MPL 1100 01-09.pdf",
+          "score": 0.3013,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "Philadelphia Builders_Risk_Renovation_and_Rehabilitation 2013-01.Xfdl",
+      "xfdlDatasetFile": "philadelphia-builders-risk-renovation-and-rehabilitation-2013-01.ground-truth.json",
+      "xfdlSha256": "e01bf322c6af5c2aac90f7c77ff9c2dfcbe00f5e28375cbbdbba408171d98bd5",
+      "pdfFile": "Philadelphia Builders_Risk_Renovation_and_Rehabilitation 2013-01.pdf",
+      "pdfRelativePath": "test-fixtures/pdf/Philadelphia Builders_Risk_Renovation_and_Rehabilitation 2013-01.pdf",
+      "pdfSha256": "b5e975b399c3df3ceef2ef7436b8dcbe5cdb413c3bea92168968fd550138cf00",
+      "status": "matched",
+      "confidence": "high",
+      "score": 0.9455,
+      "scoreMargin": 0.3442,
+      "evidence": {
+        "filenameSimilarity": 1,
+        "metadataSimilarity": 0.7273,
+        "sameAcordNumber": false,
+        "stateConflict": false,
+        "pageCount": {
+          "xfdl": 6,
+          "pdf": 6,
+          "exact": true,
+          "score": 1
+        },
+        "fields": {
+          "xfdlFieldCount": 172,
+          "pdfWidgetNameCount": 0,
+          "sharedFieldCount": 0,
+          "xfdlCoverage": 0,
+          "pdfCoverage": 0,
+          "score": 0
+        },
+        "geometry": {
+          "sharedFieldCount": 0,
+          "score": 0,
+          "normalizedRmse": null,
+          "translation": null
+        },
+        "layoutGeometry": {
+          "available": false,
+          "score": 0,
+          "medianDistance": null,
+          "comparedPages": 0
+        },
+        "pdfWidgetCount": 0,
+        "fieldCountScore": 0
+      },
+      "notes": [
+        "PDF has no AcroForm widgets; field-name and widget-geometry comparison is unavailable."
+      ],
+      "topCandidates": [
+        {
+          "pdfFile": "Philadelphia Builders_Risk_Renovation_and_Rehabilitation 2013-01.pdf",
+          "score": 0.9455,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Philadelphia Builders_Risk_Ground_Up_Construction 2013-01.pdf",
+          "score": 0.6013,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Philadelphia Salon_and_Day_Spa_App 2016-12.pdf",
+          "score": 0.3405,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "Philadelphia INTEG-TECH-APP 03-2018.Xfdl",
+      "xfdlDatasetFile": "philadelphia-integ-tech-app-03-2018.ground-truth.json",
+      "xfdlSha256": "61f62da3b36d06aa241dcdf627d412404ec9be3c7707bce808c783ed4bb0bc77",
+      "pdfFile": "Philadelphia INTEG-TECH-APP 03-2018.pdf",
+      "pdfRelativePath": "test-fixtures/pdf/Philadelphia INTEG-TECH-APP 03-2018.pdf",
+      "pdfSha256": "20d02f4ec076fa85b3d7ea149d785eb736d8e23829d809792ac7b1b934c91e25",
+      "status": "matched",
+      "confidence": "high",
+      "score": 0.9333,
+      "scoreMargin": 0.5373,
+      "evidence": {
+        "filenameSimilarity": 1,
+        "metadataSimilarity": 0.6667,
+        "sameAcordNumber": false,
+        "stateConflict": false,
+        "pageCount": {
+          "xfdl": 7,
+          "pdf": 7,
+          "exact": true,
+          "score": 1
+        },
+        "fields": {
+          "xfdlFieldCount": 420,
+          "pdfWidgetNameCount": 0,
+          "sharedFieldCount": 0,
+          "xfdlCoverage": 0,
+          "pdfCoverage": 0,
+          "score": 0
+        },
+        "geometry": {
+          "sharedFieldCount": 0,
+          "score": 0,
+          "normalizedRmse": null,
+          "translation": null
+        },
+        "layoutGeometry": {
+          "available": false,
+          "score": 0,
+          "medianDistance": null,
+          "comparedPages": 0
+        },
+        "pdfWidgetCount": 0,
+        "fieldCountScore": 0
+      },
+      "notes": [
+        "PDF has no AcroForm widgets; field-name and widget-geometry comparison is unavailable."
+      ],
+      "topCandidates": [
+        {
+          "pdfFile": "Philadelphia INTEG-TECH-APP 03-2018.pdf",
+          "score": 0.9333,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Philadelphia Salon_and_Day_Spa_App 2016-12.pdf",
+          "score": 0.396,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Philadelphia PI-CYB-014 2017-11.pdf",
+          "score": 0.3639,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "Philadelphia PI-CYB-014 2017-11.Xfdl",
+      "xfdlDatasetFile": "philadelphia-pi-cyb-014-2017-11.ground-truth.json",
+      "xfdlSha256": "28b9cb6c1fa4d7a05eb5cf58d2538b22ab5ebfa2d398c23f33f9706b9a71cc48",
+      "pdfFile": "Philadelphia PI-CYB-014 2017-11.pdf",
+      "pdfRelativePath": "test-fixtures/pdf/Philadelphia PI-CYB-014 2017-11.pdf",
+      "pdfSha256": "a2694b19b0511a569c6f658916e91a0cfcaefd68dca9529a2bae9a4cf1510b20",
+      "status": "matched",
+      "confidence": "high",
+      "score": 0.92,
+      "scoreMargin": 0.6086,
+      "evidence": {
+        "filenameSimilarity": 1,
+        "metadataSimilarity": 0.6,
+        "sameAcordNumber": false,
+        "stateConflict": false,
+        "pageCount": {
+          "xfdl": 7,
+          "pdf": 7,
+          "exact": true,
+          "score": 1
+        },
+        "fields": {
+          "xfdlFieldCount": 239,
+          "pdfWidgetNameCount": 0,
+          "sharedFieldCount": 0,
+          "xfdlCoverage": 0,
+          "pdfCoverage": 0,
+          "score": 0
+        },
+        "geometry": {
+          "sharedFieldCount": 0,
+          "score": 0,
+          "normalizedRmse": null,
+          "translation": null
+        },
+        "layoutGeometry": {
+          "available": false,
+          "score": 0,
+          "medianDistance": null,
+          "comparedPages": 0
+        },
+        "pdfWidgetCount": 0,
+        "fieldCountScore": 0
+      },
+      "notes": [
+        "PDF has no AcroForm widgets; field-name and widget-geometry comparison is unavailable."
+      ],
+      "topCandidates": [
+        {
+          "pdfFile": "Philadelphia PI-CYB-014 2017-11.pdf",
+          "score": 0.92,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Philadelphia INTEG-TECH-APP 03-2018.pdf",
+          "score": 0.3617,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Western_Heritage WHI-APP-138 2013-11.pdf",
+          "score": 0.3234,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "Philadelphia PI-CYB-014 NY 2017-11.Xfdl",
+      "xfdlDatasetFile": "philadelphia-pi-cyb-014-ny-2017-11.ground-truth.json",
+      "xfdlSha256": "7d7a39c4d79c8ef215d3b63722634d0eed67c74e459ad5e50363d8b52e41f7dd",
+      "pdfFile": null,
+      "pdfRelativePath": null,
+      "pdfSha256": null,
+      "status": "unmatched",
+      "confidence": "none",
+      "score": null,
+      "scoreMargin": null,
+      "evidence": null,
+      "notes": [
+        "No non-conflicting PDF candidate passed the minimum evidence threshold."
+      ],
+      "topCandidates": [
+        {
+          "pdfFile": "Philadelphia PI-CYB-014 2017-11.pdf",
+          "score": 0.85,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Philadelphia INTEG-TECH-APP 03-2018.pdf",
+          "score": 0.35,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Western_Heritage WHI-APP-138 2013-11.pdf",
+          "score": 0.3127,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "Philadelphia Salon_and_Day_Spa_App 2016-12.Xfdl",
+      "xfdlDatasetFile": "philadelphia-salon-and-day-spa-app-2016-12.ground-truth.json",
+      "xfdlSha256": "f301b1ffe49e44079dc605cdcf9dc503020129d1db50ae74e194eafcbe59a4c0",
+      "pdfFile": "Philadelphia Salon_and_Day_Spa_App 2016-12.pdf",
+      "pdfRelativePath": "test-fixtures/pdf/Philadelphia Salon_and_Day_Spa_App 2016-12.pdf",
+      "pdfSha256": "76f1b448102708de5de189ebe6481b1c385327dbde3d65f83d40c8ae24ae8837",
+      "status": "matched",
+      "confidence": "high",
+      "score": 0.9231,
+      "scoreMargin": 0.6347,
+      "evidence": {
+        "filenameSimilarity": 1,
+        "metadataSimilarity": 0.6154,
+        "sameAcordNumber": false,
+        "stateConflict": false,
+        "pageCount": {
+          "xfdl": 9,
+          "pdf": 9,
+          "exact": true,
+          "score": 1
+        },
+        "fields": {
+          "xfdlFieldCount": 411,
+          "pdfWidgetNameCount": 0,
+          "sharedFieldCount": 0,
+          "xfdlCoverage": 0,
+          "pdfCoverage": 0,
+          "score": 0
+        },
+        "geometry": {
+          "sharedFieldCount": 0,
+          "score": 0,
+          "normalizedRmse": null,
+          "translation": null
+        },
+        "layoutGeometry": {
+          "available": false,
+          "score": 0,
+          "medianDistance": null,
+          "comparedPages": 0
+        },
+        "pdfWidgetCount": 0,
+        "fieldCountScore": 0
+      },
+      "notes": [
+        "PDF has no AcroForm widgets; field-name and widget-geometry comparison is unavailable."
+      ],
+      "topCandidates": [
+        {
+          "pdfFile": "Philadelphia Salon_and_Day_Spa_App 2016-12.pdf",
+          "score": 0.9231,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Philadelphia INTEG-TECH-APP 03-2018.pdf",
+          "score": 0.3823,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Philadelphia Builders_Risk_Renovation_and_Rehabilitation 2013-01.pdf",
+          "score": 0.3349,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "Preferred_Mutual CL-77 08_03.Xfdl",
+      "xfdlDatasetFile": "preferred-mutual-cl-77-08-03.ground-truth.json",
+      "xfdlSha256": "c3f7620bd1a9a9f190db57ca043532ee2f33df7ff6ec8be46455c3f3ddf6ef3a",
+      "pdfFile": "Preferred_Mutual CL-77 08_03.pdf",
+      "pdfRelativePath": "test-fixtures/pdf/Preferred_Mutual CL-77 08_03.pdf",
+      "pdfSha256": "14f3f14c45ce939c1b6617c2d8c359f7a3bc8e545a59cd96cc2328d113d62eea",
+      "status": "matched",
+      "confidence": "high",
+      "score": 0.9,
+      "scoreMargin": 0.4333,
+      "evidence": {
+        "filenameSimilarity": 1,
+        "metadataSimilarity": 0.5,
+        "sameAcordNumber": false,
+        "stateConflict": false,
+        "pageCount": {
+          "xfdl": 1,
+          "pdf": 1,
+          "exact": true,
+          "score": 1
+        },
+        "fields": {
+          "xfdlFieldCount": 55,
+          "pdfWidgetNameCount": 0,
+          "sharedFieldCount": 0,
+          "xfdlCoverage": 0,
+          "pdfCoverage": 0,
+          "score": 0
+        },
+        "geometry": {
+          "sharedFieldCount": 0,
+          "score": 0,
+          "normalizedRmse": null,
+          "translation": null
+        },
+        "layoutGeometry": {
+          "available": false,
+          "score": 0,
+          "medianDistance": null,
+          "comparedPages": 0
+        },
+        "pdfWidgetCount": 0,
+        "fieldCountScore": 0
+      },
+      "notes": [
+        "PDF has no AcroForm widgets; field-name and widget-geometry comparison is unavailable."
+      ],
+      "topCandidates": [
+        {
+          "pdfFile": "Preferred_Mutual CL-77 08_03.pdf",
+          "score": 0.9,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+          "score": 0.4667,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+          "score": 0.3188,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.Xfdl",
+      "xfdlDatasetFile": "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+      "xfdlSha256": "bf3968fa4922f20a3082dcff9bc30423ccd2d9e3464770cd636d1df493874c70",
+      "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+      "pdfRelativePath": "test-fixtures/pdf/Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+      "pdfSha256": "1a0513df314c0fc92ad5270bf73c537c6fd204ece5726afe4f085ffceaec640e",
+      "status": "matched",
+      "confidence": "high",
+      "score": 0.9429,
+      "scoreMargin": 0.6313,
+      "evidence": {
+        "filenameSimilarity": 1,
+        "metadataSimilarity": 0.7143,
+        "sameAcordNumber": false,
+        "stateConflict": false,
+        "pageCount": {
+          "xfdl": 4,
+          "pdf": 4,
+          "exact": true,
+          "score": 1
+        },
+        "fields": {
+          "xfdlFieldCount": 67,
+          "pdfWidgetNameCount": 0,
+          "sharedFieldCount": 0,
+          "xfdlCoverage": 0,
+          "pdfCoverage": 0,
+          "score": 0
+        },
+        "geometry": {
+          "sharedFieldCount": 0,
+          "score": 0,
+          "normalizedRmse": null,
+          "translation": null
+        },
+        "layoutGeometry": {
+          "available": false,
+          "score": 0,
+          "medianDistance": null,
+          "comparedPages": 0
+        },
+        "pdfWidgetCount": 0,
+        "fieldCountScore": 0
+      },
+      "notes": [
+        "PDF has no AcroForm widgets; field-name and widget-geometry comparison is unavailable."
+      ],
+      "topCandidates": [
+        {
+          "pdfFile": "Preferred_Mutual CL-98_09_18 NY 2018_04_26.pdf",
+          "score": 0.9429,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Preferred_Mutual CL-77 08_03.pdf",
+          "score": 0.3116,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "acord-133.pdf",
+          "score": 0.2643,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "Preferred_Mutual PS-01 (09-14).Xfdl",
+      "xfdlDatasetFile": "preferred-mutual-ps-01-09-14.ground-truth.json",
+      "xfdlSha256": "15318793c7c3aa4d6752200183c62f9c6a58425cd799fb0f361e5fe0e1569eab",
+      "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+      "pdfRelativePath": "test-fixtures/pdf/Preferred_Mutual PS-01 (09-14).pdf",
+      "pdfSha256": "6f0a9996fae769c137bfc7c8dd5d385cc33151e7993352b3ba6a9dfc39efa95a",
+      "status": "matched",
+      "confidence": "high",
+      "score": 0.9,
+      "scoreMargin": 0.6167,
+      "evidence": {
+        "filenameSimilarity": 1,
+        "metadataSimilarity": 0.5,
+        "sameAcordNumber": false,
+        "stateConflict": false,
+        "pageCount": {
+          "xfdl": 1,
+          "pdf": 1,
+          "exact": true,
+          "score": 1
+        },
+        "fields": {
+          "xfdlFieldCount": 82,
+          "pdfWidgetNameCount": 0,
+          "sharedFieldCount": 0,
+          "xfdlCoverage": 0,
+          "pdfCoverage": 0,
+          "score": 0
+        },
+        "geometry": {
+          "sharedFieldCount": 0,
+          "score": 0,
+          "normalizedRmse": null,
+          "translation": null
+        },
+        "layoutGeometry": {
+          "available": false,
+          "score": 0,
+          "medianDistance": null,
+          "comparedPages": 0
+        },
+        "pdfWidgetCount": 0,
+        "fieldCountScore": 0
+      },
+      "notes": [
+        "PDF has no AcroForm widgets; field-name and widget-geometry comparison is unavailable."
+      ],
+      "topCandidates": [
+        {
+          "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+          "score": 0.9,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Preferred_Mutual CL-77 08_03.pdf",
+          "score": 0.4667,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "United_Specialty_ UNITEDSPEC-01 2019-09-12.pdf",
+          "score": 0.2859,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "Protective_Insurance_Company Large_Fleet Updated_01-2016.Xfdl",
+      "xfdlDatasetFile": "protective-insurance-company-large-fleet-updated-01-2016.ground-truth.json",
+      "xfdlSha256": "f701ae96381a6608abc4fa87d029ab90df9e4220150327c2a0b31eceb71cef30",
+      "pdfFile": "Protective_Insurance_Company Large_Fleet.pdf",
+      "pdfRelativePath": "test-fixtures/pdf/Protective_Insurance_Company Large_Fleet.pdf",
+      "pdfSha256": "1e3f0b24238cd9ac2d7fde1d43abfbd3bbf65049a27fac0abb7a06e4882da6b5",
+      "status": "matched",
+      "confidence": "medium",
+      "score": 0.7375,
+      "scoreMargin": 0.5489,
+      "evidence": {
+        "filenameSimilarity": 0.75,
+        "metadataSimilarity": 0.375,
+        "sameAcordNumber": false,
+        "stateConflict": false,
+        "pageCount": {
+          "xfdl": 4,
+          "pdf": 4,
+          "exact": true,
+          "score": 1
+        },
+        "fields": {
+          "xfdlFieldCount": 205,
+          "pdfWidgetNameCount": 0,
+          "sharedFieldCount": 0,
+          "xfdlCoverage": 0,
+          "pdfCoverage": 0,
+          "score": 0
+        },
+        "geometry": {
+          "sharedFieldCount": 0,
+          "score": 0,
+          "normalizedRmse": null,
+          "translation": null
+        },
+        "layoutGeometry": {
+          "available": false,
+          "score": 0,
+          "medianDistance": null,
+          "comparedPages": 0
+        },
+        "pdfWidgetCount": 0,
+        "fieldCountScore": 0
+      },
+      "notes": [
+        "PDF has no AcroForm widgets; field-name and widget-geometry comparison is unavailable."
+      ],
+      "topCandidates": [
+        {
+          "pdfFile": "Protective_Insurance_Company Large_Fleet.pdf",
+          "score": 0.7375,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "ACORD_126_-_Commercial_General_Liability_Section.pdf",
+          "score": 0.2548,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 7,
+          "geometryScore": 0.0004,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "acord-133.pdf",
+          "score": 0.25,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "QEO_Insurance_Group AV034 2019-05-14.Xfdl",
+      "xfdlDatasetFile": "qeo-insurance-group-av034-2019-05-14.ground-truth.json",
+      "xfdlSha256": "d3ce022b41fa7e7c7ba623999cc29297aac0f37a5b0c38ea89489c293df27c17",
+      "pdfFile": null,
+      "pdfRelativePath": null,
+      "pdfSha256": null,
+      "status": "unmatched",
+      "confidence": "none",
+      "score": null,
+      "scoreMargin": null,
+      "evidence": null,
+      "notes": [
+        "No non-conflicting PDF candidate passed the minimum evidence threshold."
+      ],
+      "topCandidates": [
+        {
+          "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+          "score": 0.3639,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+          "score": 0.3456,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Preferred_Mutual CL-77 08_03.pdf",
+          "score": 0.25,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "Quaker AV005 2018-05.Xfdl",
+      "xfdlDatasetFile": "quaker-av005-2018-05.ground-truth.json",
+      "xfdlSha256": "d4cebf68ad210cd36d13d3605632d827c7e746fd0605f9da0a7ce46eb8e6d1f3",
+      "pdfFile": "Quaker AV005.pdf",
+      "pdfRelativePath": "test-fixtures/pdf/Quaker AV005.pdf",
+      "pdfSha256": "c678424c04941ef87be0b415f395438798e786f9479353490b17a0353f92b9c4",
+      "status": "matched",
+      "confidence": "medium",
+      "score": 0.6667,
+      "scoreMargin": 0.496,
+      "evidence": {
+        "filenameSimilarity": 0.6667,
+        "metadataSimilarity": 0.25,
+        "sameAcordNumber": false,
+        "stateConflict": false,
+        "pageCount": {
+          "xfdl": 3,
+          "pdf": 3,
+          "exact": true,
+          "score": 1
+        },
+        "fields": {
+          "xfdlFieldCount": 74,
+          "pdfWidgetNameCount": 0,
+          "sharedFieldCount": 0,
+          "xfdlCoverage": 0,
+          "pdfCoverage": 0,
+          "score": 0
+        },
+        "geometry": {
+          "sharedFieldCount": 0,
+          "score": 0,
+          "normalizedRmse": null,
+          "translation": null
+        },
+        "layoutGeometry": {
+          "available": false,
+          "score": 0,
+          "medianDistance": null,
+          "comparedPages": 0
+        },
+        "pdfWidgetCount": 0,
+        "fieldCountScore": 0
+      },
+      "notes": [
+        "PDF has no AcroForm widgets; field-name and widget-geometry comparison is unavailable."
+      ],
+      "topCandidates": [
+        {
+          "pdfFile": "Quaker AV005.pdf",
+          "score": 0.6667,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "ARGO AC-SUP090 2018-07.pdf",
+          "score": 0.3139,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Quaker_Special_Risk 04-18_QSR.pdf",
+          "score": 0.2421,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "Quaker_Special_Risk 04-18_QSR_Luxury_Home_Program_Contractors_Liability_Application 04-18.Xfdl",
+      "xfdlDatasetFile": "quaker-special-risk-04-18-qsr-luxury-home-program-contractors-liability-application-04-18.ground-truth.json",
+      "xfdlSha256": "6f34a068473b143298200862506e204455c3ef6b1b20c12d588fb16c2602a19a",
+      "pdfFile": "Quaker_Special_Risk 04-18_QSR.pdf",
+      "pdfRelativePath": "test-fixtures/pdf/Quaker_Special_Risk 04-18_QSR.pdf",
+      "pdfSha256": "3ede025236388442b3bb59d345640b4db8f294462194983d443b9758ba3dbce7",
+      "status": "matched",
+      "confidence": "medium",
+      "score": 0.7382,
+      "scoreMargin": 0.5246,
+      "evidence": {
+        "filenameSimilarity": 0.7059,
+        "metadataSimilarity": 0.5,
+        "sameAcordNumber": false,
+        "stateConflict": false,
+        "pageCount": {
+          "xfdl": 7,
+          "pdf": 7,
+          "exact": true,
+          "score": 1
+        },
+        "fields": {
+          "xfdlFieldCount": 262,
+          "pdfWidgetNameCount": 0,
+          "sharedFieldCount": 0,
+          "xfdlCoverage": 0,
+          "pdfCoverage": 0,
+          "score": 0
+        },
+        "geometry": {
+          "sharedFieldCount": 0,
+          "score": 0,
+          "normalizedRmse": null,
+          "translation": null
+        },
+        "layoutGeometry": {
+          "available": false,
+          "score": 0,
+          "medianDistance": null,
+          "comparedPages": 0
+        },
+        "pdfWidgetCount": 0,
+        "fieldCountScore": 0
+      },
+      "notes": [
+        "PDF has no AcroForm widgets; field-name and widget-geometry comparison is unavailable."
+      ],
+      "topCandidates": [
+        {
+          "pdfFile": "Quaker_Special_Risk 04-18_QSR.pdf",
+          "score": 0.7382,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Lancer R-LMC_AP001 (01-10).pdf",
+          "score": 0.2188,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "sample-Acord-125.pdf",
+          "score": 0.2136,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "Quaker_Special_Risk QSR-SR-Constr-MGR 2019-01.Xfdl",
+      "xfdlDatasetFile": "quaker-special-risk-qsr-sr-constr-mgr-2019-01.ground-truth.json",
+      "xfdlSha256": "d23a7600fc7d312b042f9d38439b93a914370792c21aeb90ce163f058773e0f1",
+      "pdfFile": "Quaker_Special_Risk QSR-SR-Constr-MGR 2019-01.pdf",
+      "pdfRelativePath": "test-fixtures/pdf/Quaker_Special_Risk QSR-SR-Constr-MGR 2019-01.pdf",
+      "pdfSha256": "4c2a6f9f99c519fa2044e6d342881e7794a8612a70e6fb88b22363a96b9171e5",
+      "status": "matched",
+      "confidence": "high",
+      "score": 0.9,
+      "scoreMargin": 0.6714,
+      "evidence": {
+        "filenameSimilarity": 1,
+        "metadataSimilarity": 0.5,
+        "sameAcordNumber": false,
+        "stateConflict": false,
+        "pageCount": {
+          "xfdl": 9,
+          "pdf": 9,
+          "exact": true,
+          "score": 1
+        },
+        "fields": {
+          "xfdlFieldCount": 411,
+          "pdfWidgetNameCount": 0,
+          "sharedFieldCount": 0,
+          "xfdlCoverage": 0,
+          "pdfCoverage": 0,
+          "score": 0
+        },
+        "geometry": {
+          "sharedFieldCount": 0,
+          "score": 0,
+          "normalizedRmse": null,
+          "translation": null
+        },
+        "layoutGeometry": {
+          "available": false,
+          "score": 0,
+          "medianDistance": null,
+          "comparedPages": 0
+        },
+        "pdfWidgetCount": 0,
+        "fieldCountScore": 0
+      },
+      "notes": [
+        "PDF has no AcroForm widgets; field-name and widget-geometry comparison is unavailable."
+      ],
+      "topCandidates": [
+        {
+          "pdfFile": "Quaker_Special_Risk QSR-SR-Constr-MGR 2019-01.pdf",
+          "score": 0.9,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Quaker_Special_Risk 04-18_QSR.pdf",
+          "score": 0.5322,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Philadelphia Builders_Risk_Renovation_and_Rehabilitation 2013-01.pdf",
+          "score": 0.3183,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "Travelers CP-4650 2001-05.Xfdl",
+      "xfdlDatasetFile": "travelers-cp-4650-2001-05.ground-truth.json",
+      "xfdlSha256": "1f68da8bc7e02ad73e183f318ccceb458207dba594813385ff4497aac26f5d66",
+      "pdfFile": "Travelers CP-4650 2001-05.pdf",
+      "pdfRelativePath": "test-fixtures/pdf/Travelers CP-4650 2001-05.pdf",
+      "pdfSha256": "ad0d2f140d1bc1e87b2fd25580f8084a5ec8f18e15d9c07f9fc1fa24e6fdee4d",
+      "status": "matched",
+      "confidence": "high",
+      "score": 0.8909,
+      "scoreMargin": 0.5838,
+      "evidence": {
+        "filenameSimilarity": 1,
+        "metadataSimilarity": 0.4545,
+        "sameAcordNumber": false,
+        "stateConflict": false,
+        "pageCount": {
+          "xfdl": 2,
+          "pdf": 2,
+          "exact": true,
+          "score": 1
+        },
+        "fields": {
+          "xfdlFieldCount": 124,
+          "pdfWidgetNameCount": 0,
+          "sharedFieldCount": 0,
+          "xfdlCoverage": 0,
+          "pdfCoverage": 0,
+          "score": 0
+        },
+        "geometry": {
+          "sharedFieldCount": 0,
+          "score": 0,
+          "normalizedRmse": null,
+          "translation": null
+        },
+        "layoutGeometry": {
+          "available": false,
+          "score": 0,
+          "medianDistance": null,
+          "comparedPages": 0
+        },
+        "pdfWidgetCount": 0,
+        "fieldCountScore": 0
+      },
+      "notes": [
+        "PDF has no AcroForm widgets; field-name and widget-geometry comparison is unavailable."
+      ],
+      "topCandidates": [
+        {
+          "pdfFile": "Travelers CP-4650 2001-05.pdf",
+          "score": 0.8909,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+          "score": 0.3782,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "USLI NPPLA 5-12.pdf",
+          "score": 0.3071,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "Travelers CX-1036 02-06.Xfdl",
+      "xfdlDatasetFile": "travelers-cx-1036-02-06.ground-truth.json",
+      "xfdlSha256": "182f35eef99641a4ca06025a283f0703514de0babe9acd20002c9a4df9b44812",
+      "pdfFile": "Travelers CX-1036 02-06.pdf",
+      "pdfRelativePath": "test-fixtures/pdf/Travelers CX-1036 02-06.pdf",
+      "pdfSha256": "60b877bab879548c8876391e86f12dfbc47163c0e6bba5bd832b30853507a542",
+      "status": "matched",
+      "confidence": "high",
+      "score": 0.9111,
+      "scoreMargin": 0.5289,
+      "evidence": {
+        "filenameSimilarity": 1,
+        "metadataSimilarity": 0.5556,
+        "sameAcordNumber": false,
+        "stateConflict": false,
+        "pageCount": {
+          "xfdl": 5,
+          "pdf": 5,
+          "exact": true,
+          "score": 1
+        },
+        "fields": {
+          "xfdlFieldCount": 154,
+          "pdfWidgetNameCount": 0,
+          "sharedFieldCount": 0,
+          "xfdlCoverage": 0,
+          "pdfCoverage": 0,
+          "score": 0
+        },
+        "geometry": {
+          "sharedFieldCount": 0,
+          "score": 0,
+          "normalizedRmse": null,
+          "translation": null
+        },
+        "layoutGeometry": {
+          "available": false,
+          "score": 0,
+          "medianDistance": null,
+          "comparedPages": 0
+        },
+        "pdfWidgetCount": 0,
+        "fieldCountScore": 0
+      },
+      "notes": [
+        "PDF has no AcroForm widgets; field-name and widget-geometry comparison is unavailable."
+      ],
+      "topCandidates": [
+        {
+          "pdfFile": "Travelers CX-1036 02-06.pdf",
+          "score": 0.9111,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Travelers MPL 1100 01-09.pdf",
+          "score": 0.3822,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Nationwide GLS-APP-74s (6-17).pdf",
+          "score": 0.3306,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+      "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+      "xfdlSha256": "21108f45ad57b86a3008c6139c02630696125dee7df4e64a00d74c5e79412266",
+      "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+      "pdfRelativePath": "test-fixtures/pdf/Travelers CYB-14101 2017-12.pdf",
+      "pdfSha256": "0f893d783ee76698f164ca516e4e4693aba660210e516c4f731d6baa2f08e2a6",
+      "status": "matched",
+      "confidence": "high",
+      "score": 0.9111,
+      "scoreMargin": 0.5289,
+      "evidence": {
+        "filenameSimilarity": 1,
+        "metadataSimilarity": 0.5556,
+        "sameAcordNumber": false,
+        "stateConflict": false,
+        "pageCount": {
+          "xfdl": 2,
+          "pdf": 2,
+          "exact": true,
+          "score": 1
+        },
+        "fields": {
+          "xfdlFieldCount": 47,
+          "pdfWidgetNameCount": 0,
+          "sharedFieldCount": 0,
+          "xfdlCoverage": 0,
+          "pdfCoverage": 0,
+          "score": 0
+        },
+        "geometry": {
+          "sharedFieldCount": 0,
+          "score": 0,
+          "normalizedRmse": null,
+          "translation": null
+        },
+        "layoutGeometry": {
+          "available": false,
+          "score": 0,
+          "medianDistance": null,
+          "comparedPages": 0
+        },
+        "pdfWidgetCount": 0,
+        "fieldCountScore": 0
+      },
+      "notes": [
+        "PDF has no AcroForm widgets; field-name and widget-geometry comparison is unavailable."
+      ],
+      "topCandidates": [
+        {
+          "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+          "score": 0.9111,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Travelers CP-4650 2001-05.pdf",
+          "score": 0.3822,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Philadelphia PI-CYB-014 2017-11.pdf",
+          "score": 0.3159,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "Travelers MPL 1100 01-09.Xfdl",
+      "xfdlDatasetFile": "travelers-mpl-1100-01-09.ground-truth.json",
+      "xfdlSha256": "31ab1ba365310ddc668762718a54a13e292fd2ae892d69dba5f00cbd7b7b9ac3",
+      "pdfFile": "Travelers MPL 1100 01-09.pdf",
+      "pdfRelativePath": "test-fixtures/pdf/Travelers MPL 1100 01-09.pdf",
+      "pdfSha256": "d3331021d557233f03f34da1ec7ecadc31424e8db5079173a703c0cc3e6f7f55",
+      "status": "matched",
+      "confidence": "high",
+      "score": 0.8909,
+      "scoreMargin": 0.6409,
+      "evidence": {
+        "filenameSimilarity": 1,
+        "metadataSimilarity": 0.4545,
+        "sameAcordNumber": false,
+        "stateConflict": false,
+        "pageCount": {
+          "xfdl": 5,
+          "pdf": 5,
+          "exact": true,
+          "score": 1
+        },
+        "fields": {
+          "xfdlFieldCount": 139,
+          "pdfWidgetNameCount": 0,
+          "sharedFieldCount": 0,
+          "xfdlCoverage": 0,
+          "pdfCoverage": 0,
+          "score": 0
+        },
+        "geometry": {
+          "sharedFieldCount": 0,
+          "score": 0,
+          "normalizedRmse": null,
+          "translation": null
+        },
+        "layoutGeometry": {
+          "available": false,
+          "score": 0,
+          "medianDistance": null,
+          "comparedPages": 0
+        },
+        "pdfWidgetCount": 0,
+        "fieldCountScore": 0
+      },
+      "notes": [
+        "PDF has no AcroForm widgets; field-name and widget-geometry comparison is unavailable."
+      ],
+      "topCandidates": [
+        {
+          "pdfFile": "Travelers MPL 1100 01-09.pdf",
+          "score": 0.8909,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Travelers CX-1036 02-06.pdf",
+          "score": 0.3782,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "United_Specialty_ UNITEDSPEC-01 2019-09-12.pdf",
+          "score": 0.3697,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "United_Specialty_ UNITEDSPEC-01 2019-09-12.Xfdl",
+      "xfdlDatasetFile": "united-specialty-unitedspec-01-2019-09-12.ground-truth.json",
+      "xfdlSha256": "1f2f1b34ad09b1151e1a43fd71fdd45ee9a0e4d78178e7549b0550af9497267c",
+      "pdfFile": "United_Specialty_ UNITEDSPEC-01 2019-09-12.pdf",
+      "pdfRelativePath": "test-fixtures/pdf/United_Specialty_ UNITEDSPEC-01 2019-09-12.pdf",
+      "pdfSha256": "2487830e0d54af076b452922c20d518d2b98e12bf4763bacdb4f3bb6a458b718",
+      "status": "matched",
+      "confidence": "high",
+      "score": 0.9556,
+      "scoreMargin": 0.5778,
+      "evidence": {
+        "filenameSimilarity": 1,
+        "metadataSimilarity": 0.7778,
+        "sameAcordNumber": false,
+        "stateConflict": false,
+        "pageCount": {
+          "xfdl": 3,
+          "pdf": 3,
+          "exact": true,
+          "score": 1
+        },
+        "fields": {
+          "xfdlFieldCount": 270,
+          "pdfWidgetNameCount": 0,
+          "sharedFieldCount": 0,
+          "xfdlCoverage": 0,
+          "pdfCoverage": 0,
+          "score": 0
+        },
+        "geometry": {
+          "sharedFieldCount": 0,
+          "score": 0,
+          "normalizedRmse": null,
+          "translation": null
+        },
+        "layoutGeometry": {
+          "available": false,
+          "score": 0,
+          "medianDistance": null,
+          "comparedPages": 0
+        },
+        "pdfWidgetCount": 0,
+        "fieldCountScore": 0
+      },
+      "notes": [
+        "PDF has no AcroForm widgets; field-name and widget-geometry comparison is unavailable."
+      ],
+      "topCandidates": [
+        {
+          "pdfFile": "United_Specialty_ UNITEDSPEC-01 2019-09-12.pdf",
+          "score": 0.9556,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Travelers MPL 1100 01-09.pdf",
+          "score": 0.3778,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "USLI NPPLA 5-12.pdf",
+          "score": 0.3722,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "USLI NPPLA 5-12.Xfdl",
+      "xfdlDatasetFile": "usli-nppla-5-12.ground-truth.json",
+      "xfdlSha256": "bc8f86da8b9dabd03600f8ff8be71bc24255bafd40f192bf60310e173550a569",
+      "pdfFile": "USLI NPPLA 5-12.pdf",
+      "pdfRelativePath": "test-fixtures/pdf/USLI NPPLA 5-12.pdf",
+      "pdfSha256": "976a300061f948f5b287e4334933253302f3c1771d7b2be65a14eb05d17bc4ba",
+      "status": "matched",
+      "confidence": "high",
+      "score": 0.8571,
+      "scoreMargin": 0.6071,
+      "evidence": {
+        "filenameSimilarity": 1,
+        "metadataSimilarity": 0.2857,
+        "sameAcordNumber": false,
+        "stateConflict": false,
+        "pageCount": {
+          "xfdl": 3,
+          "pdf": 3,
+          "exact": true,
+          "score": 1
+        },
+        "fields": {
+          "xfdlFieldCount": 76,
+          "pdfWidgetNameCount": 0,
+          "sharedFieldCount": 0,
+          "xfdlCoverage": 0,
+          "pdfCoverage": 0,
+          "score": 0
+        },
+        "geometry": {
+          "sharedFieldCount": 0,
+          "score": 0,
+          "normalizedRmse": null,
+          "translation": null
+        },
+        "layoutGeometry": {
+          "available": false,
+          "score": 0,
+          "medianDistance": null,
+          "comparedPages": 0
+        },
+        "pdfWidgetCount": 0,
+        "fieldCountScore": 0
+      },
+      "notes": [
+        "PDF has no AcroForm widgets; field-name and widget-geometry comparison is unavailable."
+      ],
+      "topCandidates": [
+        {
+          "pdfFile": "USLI NPPLA 5-12.pdf",
+          "score": 0.8571,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "United_Specialty_ UNITEDSPEC-01 2019-09-12.pdf",
+          "score": 0.3643,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Travelers CP-4650 2001-05.pdf",
+          "score": 0.3032,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "USLI Pro+ect_ _10-18.Xfdl",
+      "xfdlDatasetFile": "usli-pro-ect-10-18.ground-truth.json",
+      "xfdlSha256": "57927dcce352e583cff30bade766e173ae3307cb16bda2328c0996df5ad04bf7",
+      "pdfFile": "USLI Pro+ect_ _10-18.pdf",
+      "pdfRelativePath": "test-fixtures/pdf/USLI Pro+ect_ _10-18.pdf",
+      "pdfSha256": "e9726609267fb85a1e1a7f3e7086979eb45308d4e3415feea09698793b566644",
+      "status": "matched",
+      "confidence": "high",
+      "score": 0.9,
+      "scoreMargin": 0.6328,
+      "evidence": {
+        "filenameSimilarity": 1,
+        "metadataSimilarity": 0.5,
+        "sameAcordNumber": false,
+        "stateConflict": false,
+        "pageCount": {
+          "xfdl": 6,
+          "pdf": 6,
+          "exact": true,
+          "score": 1
+        },
+        "fields": {
+          "xfdlFieldCount": 273,
+          "pdfWidgetNameCount": 0,
+          "sharedFieldCount": 0,
+          "xfdlCoverage": 0,
+          "pdfCoverage": 0,
+          "score": 0
+        },
+        "geometry": {
+          "sharedFieldCount": 0,
+          "score": 0,
+          "normalizedRmse": null,
+          "translation": null
+        },
+        "layoutGeometry": {
+          "available": false,
+          "score": 0,
+          "medianDistance": null,
+          "comparedPages": 0
+        },
+        "pdfWidgetCount": 0,
+        "fieldCountScore": 0
+      },
+      "notes": [
+        "PDF has no AcroForm widgets; field-name and widget-geometry comparison is unavailable."
+      ],
+      "topCandidates": [
+        {
+          "pdfFile": "USLI Pro+ect_ _10-18.pdf",
+          "score": 0.9,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Quaker_Special_Risk 04-18_QSR.pdf",
+          "score": 0.3343,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Lancer R-LMC_AP001 (01-10).pdf",
+          "score": 0.3075,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.Xfdl",
+      "xfdlDatasetFile": "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+      "xfdlSha256": "f6e9177a102725fa223b6cf653f9fd052593220ac76aa2c6cbcc33c9d6cd386a",
+      "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+      "pdfRelativePath": "test-fixtures/pdf/Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+      "pdfSha256": "782eb809367a8f366c7bf7e8f16a3d90a6cfc3aff992fc44b142d3ea2f3d046c",
+      "status": "matched",
+      "confidence": "high",
+      "score": 0.9286,
+      "scoreMargin": 0.6643,
+      "evidence": {
+        "filenameSimilarity": 1,
+        "metadataSimilarity": 0.6429,
+        "sameAcordNumber": false,
+        "stateConflict": false,
+        "pageCount": {
+          "xfdl": 1,
+          "pdf": 1,
+          "exact": true,
+          "score": 1
+        },
+        "fields": {
+          "xfdlFieldCount": 48,
+          "pdfWidgetNameCount": 0,
+          "sharedFieldCount": 0,
+          "xfdlCoverage": 0,
+          "pdfCoverage": 0,
+          "score": 0
+        },
+        "geometry": {
+          "sharedFieldCount": 0,
+          "score": 0,
+          "normalizedRmse": null,
+          "translation": null
+        },
+        "layoutGeometry": {
+          "available": false,
+          "score": 0,
+          "medianDistance": null,
+          "comparedPages": 0
+        },
+        "pdfWidgetCount": 0,
+        "fieldCountScore": 0
+      },
+      "notes": [
+        "PDF has no AcroForm widgets; field-name and widget-geometry comparison is unavailable."
+      ],
+      "topCandidates": [
+        {
+          "pdfFile": "Utica_First UF-MAND-ART-CONT 2020-05-02.pdf",
+          "score": 0.9286,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Preferred_Mutual CL-77 08_03.pdf",
+          "score": 0.2643,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Preferred_Mutual PS-01 (09-14).pdf",
+          "score": 0.2643,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "Western_Heritage WHI-APP-120 8-02.Xfdl",
+      "xfdlDatasetFile": "western-heritage-whi-app-120-8-02.ground-truth.json",
+      "xfdlSha256": "b78d5e7f6f6c0aec64b4e334c5f5fa7905bddac664cbe5e9d9dd162f42b84d5c",
+      "pdfFile": null,
+      "pdfRelativePath": null,
+      "pdfSha256": null,
+      "status": "unmatched",
+      "confidence": "none",
+      "score": null,
+      "scoreMargin": null,
+      "evidence": null,
+      "notes": [
+        "No non-conflicting PDF candidate passed the minimum evidence threshold."
+      ],
+      "topCandidates": [
+        {
+          "pdfFile": "Western_Heritage WHI-APP-138 2013-11.pdf",
+          "score": 0.512,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Travelers CX-1036 02-06.pdf",
+          "score": 0.3098,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Nationwide GLS-APP-74s (6-17).pdf",
+          "score": 0.2695,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "Western_Heritage WHI-APP-138 2013-11.Xfdl",
+      "xfdlDatasetFile": "western-heritage-whi-app-138-2013-11.ground-truth.json",
+      "xfdlSha256": "85fd1a270b61d0fa0e119dd63187459a3a64b8b589a5e77c830e8da3532458b6",
+      "pdfFile": "Western_Heritage WHI-APP-138 2013-11.pdf",
+      "pdfRelativePath": "test-fixtures/pdf/Western_Heritage WHI-APP-138 2013-11.pdf",
+      "pdfSha256": "3d7b76665ad6af3a68e4c042618eee29fd70cb6c5a1dee4b818eda7f2c056ed8",
+      "status": "matched",
+      "confidence": "high",
+      "score": 0.9273,
+      "scoreMargin": 0.6058,
+      "evidence": {
+        "filenameSimilarity": 1,
+        "metadataSimilarity": 0.6364,
+        "sameAcordNumber": false,
+        "stateConflict": false,
+        "pageCount": {
+          "xfdl": 8,
+          "pdf": 8,
+          "exact": true,
+          "score": 1
+        },
+        "fields": {
+          "xfdlFieldCount": 603,
+          "pdfWidgetNameCount": 0,
+          "sharedFieldCount": 0,
+          "xfdlCoverage": 0,
+          "pdfCoverage": 0,
+          "score": 0
+        },
+        "geometry": {
+          "sharedFieldCount": 0,
+          "score": 0,
+          "normalizedRmse": null,
+          "translation": null
+        },
+        "layoutGeometry": {
+          "available": false,
+          "score": 0,
+          "medianDistance": null,
+          "comparedPages": 0
+        },
+        "pdfWidgetCount": 0,
+        "fieldCountScore": 0
+      },
+      "notes": [
+        "PDF has no AcroForm widgets; field-name and widget-geometry comparison is unavailable."
+      ],
+      "topCandidates": [
+        {
+          "pdfFile": "Western_Heritage WHI-APP-138 2013-11.pdf",
+          "score": 0.9273,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Philadelphia INTEG-TECH-APP 03-2018.pdf",
+          "score": 0.3215,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Philadelphia PI-CYB-014 2017-11.pdf",
+          "score": 0.3215,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    },
+    {
+      "xfdlFile": "Westport WIC1107 2010-06.Xfdl",
+      "xfdlDatasetFile": "westport-wic1107-2010-06.ground-truth.json",
+      "xfdlSha256": "8ccc67c27a20354025d9eb6c7b88af167f8df10a9f4fc83b2d81c4ddb829cec1",
+      "pdfFile": "Westport WIC1107 2010-06.pdf",
+      "pdfRelativePath": "test-fixtures/pdf/Westport WIC1107 2010-06.pdf",
+      "pdfSha256": "abff59e7af364dec0a59f298eab0fb143b81852b730828be74e6fa657d1dde4d",
+      "status": "matched",
+      "confidence": "high",
+      "score": 0.8571,
+      "scoreMargin": 0.6383,
+      "evidence": {
+        "filenameSimilarity": 1,
+        "metadataSimilarity": 0.2857,
+        "sameAcordNumber": false,
+        "stateConflict": false,
+        "pageCount": {
+          "xfdl": 7,
+          "pdf": 7,
+          "exact": true,
+          "score": 1
+        },
+        "fields": {
+          "xfdlFieldCount": 455,
+          "pdfWidgetNameCount": 0,
+          "sharedFieldCount": 0,
+          "xfdlCoverage": 0,
+          "pdfCoverage": 0,
+          "score": 0
+        },
+        "geometry": {
+          "sharedFieldCount": 0,
+          "score": 0,
+          "normalizedRmse": null,
+          "translation": null
+        },
+        "layoutGeometry": {
+          "available": false,
+          "score": 0,
+          "medianDistance": null,
+          "comparedPages": 0
+        },
+        "pdfWidgetCount": 0,
+        "fieldCountScore": 0
+      },
+      "notes": [
+        "PDF has no AcroForm widgets; field-name and widget-geometry comparison is unavailable."
+      ],
+      "topCandidates": [
+        {
+          "pdfFile": "Westport WIC1107 2010-06.pdf",
+          "score": 0.8571,
+          "hardConflict": false,
+          "pageCountExact": true,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Nationwide GLS-APP-74s (6-17).pdf",
+          "score": 0.3386,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        },
+        {
+          "pdfFile": "Travelers CX-1036 02-06.pdf",
+          "score": 0.3151,
+          "hardConflict": false,
+          "pageCountExact": false,
+          "sharedFieldCount": 0,
+          "geometryScore": 0,
+          "layoutGeometryScore": 0
+        }
+      ]
+    }
+  ],
+  "unmatchedPdfs": [
+    {
+      "pdfFile": "ACORD 90 CA 20110107.pdf",
+      "relativePath": "test-fixtures/pdf/ACORD 90 CA 20110107.pdf",
+      "sha256": "48c8e8e04f7ea76bc3e89e3157c6cc1d7a292746e73edf6cb50fbe6e1fc656cc",
+      "pageCount": 4,
+      "widgetCount": 789
+    },
+    {
+      "pdfFile": "Protective_Insurance_Company Large_Fleet Updated_01-2016.pdf",
+      "relativePath": "test-fixtures/pdf/Protective_Insurance_Company Large_Fleet Updated_01-2016.pdf",
+      "sha256": "fff0fa4c6ebd0d5eac3771c60ff9f078747c249fe98aa7ad677fd01294527dd2",
+      "pageCount": 4,
+      "widgetCount": 0
+    },
+    {
+      "pdfFile": "sample-Acord-140.pdf",
+      "relativePath": "test-fixtures/pdf/sample-Acord-140.pdf",
+      "sha256": "721572c45245afef7b33d6435e88d533686d846ce41f5980cc40482b87ab02b5",
+      "pageCount": 3,
+      "widgetCount": 358
+    }
+  ]
+}

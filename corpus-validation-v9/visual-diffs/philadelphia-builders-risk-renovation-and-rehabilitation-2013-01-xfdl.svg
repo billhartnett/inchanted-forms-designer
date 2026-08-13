@@ -1,0 +1,23 @@
+
+  <svg xmlns="http://www.w3.org/2000/svg" width="700" height="180" viewBox="0 0 700 180">
+    <rect width="100%" height="100%" fill="#f8fafc"/>
+    <text x="20" y="22" font-size="18" font-family="Arial" fill="#0f172a">Philadelphia Builders_Risk_Renovation_and_Rehabilitation 2013-01.Xfdl visual diff</text>
+    
+      <g>
+        <rect x="NaN" y="32" width="NaN" height="120" fill="#2563eb" opacity="0.8" rx="4"/>
+        <text x="NaN" y="172" font-size="9" fill="#0f172a">sema</text>
+      </g>
+      <g>
+        <rect x="NaN" y="76.21052631578948" width="NaN" height="75.78947368421052" fill="#2563eb" opacity="0.8" rx="4"/>
+        <text x="NaN" y="172" font-size="9" fill="#0f172a">supp</text>
+      </g>
+      <g>
+        <rect x="NaN" y="77.47368421052632" width="NaN" height="74.52631578947368" fill="#2563eb" opacity="0.8" rx="4"/>
+        <text x="NaN" y="172" font-size="9" fill="#0f172a">tabl</text>
+      </g>
+      <g>
+        <rect x="NaN" y="49.684210526315795" width="NaN" height="102.3157894736842" fill="#2563eb" opacity="0.8" rx="4"/>
+        <text x="NaN" y="172" font-size="9" fill="#0f172a">grou</text>
+      </g>
+  </svg>
+  

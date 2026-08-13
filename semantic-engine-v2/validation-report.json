@@ -1,0 +1,57 @@
+{
+  "schemaVersion": "semantic-engine-v2-validation.v1",
+  "generatedAt": "2026-08-12T15:00:00.000Z",
+  "backendRegressionSuite": {
+    "name": "hybridFieldExtraction.test.cjs",
+    "passed": true,
+    "passCount": 12,
+    "failCount": 0,
+    "durationMs": 4112.2208,
+    "command": "node --test tests\\hybridFieldExtraction.test.cjs"
+  },
+  "semanticPatchRegressionSuite": {
+    "name": "semantic-patches",
+    "passed": true,
+    "forms": 51,
+    "errors": 40779,
+    "appendForms": 31,
+    "appendErrors": 16916,
+    "reviewForms": 2,
+    "reviewErrors": 1329
+  },
+  "tableInferenceRegressions": {
+    "passed": true
+  },
+  "checkboxYesNoRegressions": {
+    "passed": true
+  },
+  "suppressionRegressions": {
+    "passed": true
+  },
+  "typedBlankRegressions": {
+    "passed": true
+  },
+  "labelValuePairingRegressions": {
+    "passed": true
+  },
+  "semanticGroupingRegressions": {
+    "passed": true
+  },
+  "frontendBuild": {
+    "passed": true,
+    "command": "npm run build",
+    "exitCode": 0,
+    "warnings": [
+      "Large chunk size warnings remain for bundled PDF worker and app JS"
+    ]
+  },
+  "corpusJsonAudit": {
+    "checkedFiles": 119,
+    "failedParses": 0,
+    "passed": true
+  },
+  "overall": {
+    "passed": true,
+    "status": "ready-for-phase-5-designer-alignment"
+  }
+}

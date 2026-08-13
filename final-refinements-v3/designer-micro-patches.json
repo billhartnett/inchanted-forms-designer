@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "final-refinements-v3-designer.v1",
+  "generatedAt": "2026-08-12T15:53:28.853Z",
+  "summary": "Designer-side guardrails for suppression, label painting, and layout-safe table/group rendering.",
+  "microPatches": [
+    {
+      "id": "designer-01",
+      "target": "frontend/src/components/designer/FieldRenderer.tsx",
+      "category": "suppression_error",
+      "change": "Do not render imported suppressed fields; hide DI text, questions, and decorative labels without affecting underlying semantic metadata."
+    },
+    {
+      "id": "designer-02",
+      "target": "frontend/src/designer/ai/PdfImportModal.tsx",
+      "category": "semantic_label_mismatch",
+      "change": "Prefer explicit widget names and stable SIDs over OCR text labels when reconciling semantic labels on import."
+    },
+    {
+      "id": "designer-03",
+      "target": "frontend/src/designer/ai/PdfImportModal.tsx",
+      "category": "grouping_error",
+      "change": "Preserve independent semanticGroupIds, row groups, choice sets, and address blocks while merging PDF widgets into the designer catalog."
+    },
+    {
+      "id": "designer-04",
+      "target": "frontend/src/designer/ai/PdfImportModal.tsx",
+      "category": "table_detection_error",
+      "change": "Carry table metadata through widget replacement and retain row/column alignment for table-derived layouts."
+    }
+  ]
+}

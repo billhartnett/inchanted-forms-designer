@@ -1,0 +1,27 @@
+
+  <svg xmlns="http://www.w3.org/2000/svg" width="700" height="180" viewBox="0 0 700 180">
+    <rect width="100%" height="100%" fill="#f8fafc"/>
+    <text x="20" y="22" font-size="18" font-family="Arial" fill="#0f172a">ACORD 0125 2016-03r1.xfdl semantic diff</text>
+    
+      <g>
+        <rect x="NaN" y="116.78873239436619" width="NaN" height="35.21126760563381" fill="#2563eb" opacity="0.8" rx="4"/>
+        <text x="NaN" y="172" font-size="9" fill="#0f172a">rank</text>
+      </g>
+      <g>
+        <rect x="NaN" y="132.28169014084506" width="NaN" height="19.71830985915493" fill="#2563eb" opacity="0.8" rx="4"/>
+        <text x="NaN" y="172" font-size="9" fill="#0f172a">type</text>
+      </g>
+      <g>
+        <rect x="NaN" y="142" width="NaN" height="10" fill="#2563eb" opacity="0.8" rx="4"/>
+        <text x="NaN" y="172" font-size="9" fill="#0f172a">chec</text>
+      </g>
+      <g>
+        <rect x="NaN" y="138.7605633802817" width="NaN" height="13.23943661971831" fill="#2563eb" opacity="0.8" rx="4"/>
+        <text x="NaN" y="172" font-size="9" fill="#0f172a">labe</text>
+      </g>
+      <g>
+        <rect x="NaN" y="32" width="NaN" height="120" fill="#2563eb" opacity="0.8" rx="4"/>
+        <text x="NaN" y="172" font-size="9" fill="#0f172a">unma</text>
+      </g>
+  </svg>
+  

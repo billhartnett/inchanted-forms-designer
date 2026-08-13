@@ -1,0 +1,3823 @@
+{
+  "schemaVersion": "semantic-errors.v1",
+  "generatedAt": "2026-08-12T14:56:03.709Z",
+  "form": {
+    "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+    "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+    "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+    "pairStatus": "matched",
+    "pairConfidence": "high"
+  },
+  "counts": {
+    "truthFields": 47,
+    "predictedFillableFields": 56,
+    "matchedFields": 37,
+    "promotedFields": 56,
+    "errors": 126
+  },
+  "categoryCounts": {
+    "semantic_label_mismatch": 35,
+    "candidate_ranking_error": 9,
+    "field_type_misclassification": 4,
+    "table_detection_error": 31,
+    "checkbox_yes_no_pairing_error": 0,
+    "suppression_error": 10,
+    "grouping_error": 27,
+    "label_value_pairing_error": 0,
+    "unmapped_fillable_field": 10
+  },
+  "errors": [
+    {
+      "id": "unmapped_fillable_field:travelers-cyb-14101-2017-12.ground-truth:NamedInsured_FullName_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_FullName_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "NamedInsured_FullName_A",
+        "type": "text",
+        "label": "Enter text: The named insured(s) as it / they will appear on the policy declarations page."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:travelers-cyb-14101-2017-12.ground-truth:NamedInsured_FullName_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_FullName_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:travelers-cyb-14101-2017-12.ground-truth:NamedInsured_MailingAddress_LineOne_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_MailingAddress_LineOne_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "NamedInsured_MailingAddress_LineOne_A",
+        "type": "text",
+        "label": "Enter text: The named insured's mailing address line one."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:travelers-cyb-14101-2017-12.ground-truth:NamedInsured_MailingAddress_LineOne_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_MailingAddress_LineOne_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:travelers-cyb-14101-2017-12.ground-truth:NamedInsured_MailingAddress_CityName_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_MailingAddress_CityName_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "NamedInsured_MailingAddress_CityName_A",
+        "type": "text",
+        "label": "Enter text: The named insured's mailing address city name."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:travelers-cyb-14101-2017-12.ground-truth:NamedInsured_MailingAddress_CityName_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_MailingAddress_CityName_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:travelers-cyb-14101-2017-12.ground-truth:NamedInsured_MailingAddress_PostalCode_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_MailingAddress_PostalCode_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "NamedInsured_MailingAddress_PostalCode_A",
+        "type": "text",
+        "label": "Enter code: The named insured's mailing address postal code."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:travelers-cyb-14101-2017-12.ground-truth:NamedInsured_MailingAddress_PostalCode_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_MailingAddress_PostalCode_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:travelers-cyb-14101-2017-12.ground-truth:NamedInsured_Primary_WebsiteAddress_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_Primary_WebsiteAddress_A",
+        "predictionId": "input-table-1-r5-c1",
+        "page": 1,
+        "geometryDistance": 0.07420613027899622
+      },
+      "expected": {
+        "label": "Enter text: The primary website address for the named insured.",
+        "helpLabel": "Enter text: The primary website address for the named insured."
+      },
+      "actual": {
+        "label": "Web Address"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0.1818
+      }
+    },
+    {
+      "id": "candidate_ranking_error:travelers-cyb-14101-2017-12.ground-truth:NamedInsured_Primary_WebsiteAddress_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_Primary_WebsiteAddress_A",
+        "predictionId": "input-table-1-r5-c1",
+        "page": 1,
+        "geometryDistance": 0.07420613027899622
+      },
+      "expected": {
+        "topAcordCode": "NamedInsured_Primary_WebsiteAddress"
+      },
+      "actual": {
+        "topAcordCode": "NamedInsured_ClaimDataBaseContact_WebsiteAddress",
+        "rankedCodes": [
+          "NamedInsured_ClaimDataBaseContact_WebsiteAddress",
+          "Client_WebsiteAddress",
+          "NamedInsured_Primary_WebsiteAddress"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is present but ranked below another candidate.",
+      "evidence": {}
+    },
+    {
+      "id": "table_detection_error:travelers-cyb-14101-2017-12.ground-truth:NamedInsured_Primary_WebsiteAddress_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_Primary_WebsiteAddress_A",
+        "predictionId": "input-table-1-r5-c1",
+        "page": 1,
+        "geometryDistance": 0.07420613027899622
+      },
+      "expected": {
+        "tableId": "page-1-table-1",
+        "rowIndex": 1,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": "table-1",
+        "rowIndex": 4,
+        "columnIndex": 0,
+        "valueType": "text"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:travelers-cyb-14101-2017-12.ground-truth:FinancialStatement_CurrentYear_TotalRevenueAmount_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "FinancialStatement_CurrentYear_TotalRevenueAmount_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "FinancialStatement_CurrentYear_TotalRevenueAmount_A",
+        "type": "numeric",
+        "label": "Enter amount: The total revenue for the organization for the current year."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:travelers-cyb-14101-2017-12.ground-truth:FinancialStatement_CurrentYear_TotalRevenueAmount_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "FinancialStatement_CurrentYear_TotalRevenueAmount_A",
+        "predictionId": null,
+        "page": 1,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:travelers-cyb-14101-2017-12.ground-truth:FinancialStatement_CurrentYear_TotalAssetsAmount_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "FinancialStatement_CurrentYear_TotalAssetsAmount_A",
+        "predictionId": "table-1-r4-c4",
+        "page": 1,
+        "geometryDistance": 0.05975962864112254
+      },
+      "expected": {
+        "label": "Enter amount: The total assets of the organization for the current year.",
+        "helpLabel": "Enter amount: The total assets of the organization for the current year."
+      },
+      "actual": {
+        "label": "Newport"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "field_type_misclassification:travelers-cyb-14101-2017-12.ground-truth:FinancialStatement_CurrentYear_TotalAssetsAmount_A",
+      "category": "field_type_misclassification",
+      "description": "The predicted fillable type differs from the XFDL control/format type.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "FinancialStatement_CurrentYear_TotalAssetsAmount_A",
+        "predictionId": "table-1-r4-c4",
+        "page": 1,
+        "geometryDistance": 0.05975962864112254
+      },
+      "expected": {
+        "type": "numeric",
+        "sourceType": "numeric",
+        "format": {
+          "dataType": null,
+          "requirement": null,
+          "presentation": "",
+          "rawValues": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "provenance": "explicit"
+        }
+      },
+      "actual": {
+        "type": "text",
+        "sourceType": "text"
+      },
+      "rationale": "XFDL control/format typing and backend typed-blank classification disagree.",
+      "evidence": {}
+    },
+    {
+      "id": "candidate_ranking_error:travelers-cyb-14101-2017-12.ground-truth:FinancialStatement_CurrentYear_TotalAssetsAmount_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "FinancialStatement_CurrentYear_TotalAssetsAmount_A",
+        "predictionId": "table-1-r4-c4",
+        "page": 1,
+        "geometryDistance": 0.05975962864112254
+      },
+      "expected": {
+        "topAcordCode": "FinancialStatement_CurrentYear_TotalAssetsAmount"
+      },
+      "actual": {
+        "topAcordCode": "Vehicle_Cancellation_PremiumPercent",
+        "rankedCodes": [
+          "Vehicle_Cancellation_PremiumPercent",
+          "AccountantsLiability_ApplicantFirmCancelledProfessionalLabialityInsuranceExplanation",
+          "Pilot_AnyInsuranceCompanyCancelledInsuranceExplanation"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "table_detection_error:travelers-cyb-14101-2017-12.ground-truth:FinancialStatement_CurrentYear_TotalAssetsAmount_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "FinancialStatement_CurrentYear_TotalAssetsAmount_A",
+        "predictionId": "table-1-r4-c4",
+        "page": 1,
+        "geometryDistance": 0.05975962864112254
+      },
+      "expected": {
+        "tableId": "page-1-table-1",
+        "rowIndex": 1,
+        "columnIndex": 3,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": "table-1",
+        "rowIndex": 3,
+        "columnIndex": 3,
+        "valueType": "text"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:travelers-cyb-14101-2017-12.ground-truth:BusinessInformation_EmployeeCount_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "BusinessInformation_EmployeeCount_A",
+        "predictionId": "input-table-1-r6-c5",
+        "page": 1,
+        "geometryDistance": 0.02576955765662586
+      },
+      "expected": {
+        "label": "Enter number: The number of employees.",
+        "helpLabel": "Enter number: The number of employees."
+      },
+      "actual": {
+        "label": "Employees"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0.3333
+      }
+    },
+    {
+      "id": "field_type_misclassification:travelers-cyb-14101-2017-12.ground-truth:BusinessInformation_EmployeeCount_A",
+      "category": "field_type_misclassification",
+      "description": "The predicted fillable type differs from the XFDL control/format type.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "BusinessInformation_EmployeeCount_A",
+        "predictionId": "input-table-1-r6-c5",
+        "page": 1,
+        "geometryDistance": 0.02576955765662586
+      },
+      "expected": {
+        "type": "text",
+        "sourceType": "text",
+        "format": {
+          "dataType": null,
+          "requirement": null,
+          "presentation": "",
+          "rawValues": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "provenance": "explicit"
+        }
+      },
+      "actual": {
+        "type": "numeric",
+        "sourceType": "numeric"
+      },
+      "rationale": "XFDL control/format typing and backend typed-blank classification disagree.",
+      "evidence": {}
+    },
+    {
+      "id": "candidate_ranking_error:travelers-cyb-14101-2017-12.ground-truth:BusinessInformation_EmployeeCount_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "BusinessInformation_EmployeeCount_A",
+        "predictionId": "input-table-1-r6-c5",
+        "page": 1,
+        "geometryDistance": 0.02576955765662586
+      },
+      "expected": {
+        "topAcordCode": "BusinessInformation_EmployeeCount"
+      },
+      "actual": {
+        "topAcordCode": "BuildingSecurity_AccessGivenTo_EmployeesIndicator",
+        "rankedCodes": [
+          "BuildingSecurity_AccessGivenTo_EmployeesIndicator",
+          "BuildingSecurity_GatedAccessGivenTo_EmployeesIndicator",
+          "CrimeInformation_AverageEmployeesOnDutyCount"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "table_detection_error:travelers-cyb-14101-2017-12.ground-truth:BusinessInformation_EmployeeCount_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "BusinessInformation_EmployeeCount_A",
+        "predictionId": "input-table-1-r6-c5",
+        "page": 1,
+        "geometryDistance": 0.02576955765662586
+      },
+      "expected": {
+        "tableId": "page-1-table-1",
+        "rowIndex": 1,
+        "columnIndex": 4,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": "table-1",
+        "rowIndex": 5,
+        "columnIndex": 4,
+        "valueType": "numeric"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:travelers-cyb-14101-2017-12.ground-truth:NamedInsured_MailingAddress_StateOrProvinceCode_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_MailingAddress_StateOrProvinceCode_A",
+        "predictionId": "input-table-1-r4-c3",
+        "page": 1,
+        "geometryDistance": 0.04633696986263841
+      },
+      "expected": {
+        "label": "Enter code: The named insured's mailing address state or province code.",
+        "helpLabel": "Enter code: The named insured's mailing address state or province code."
+      },
+      "actual": {
+        "label": "State"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0.1818
+      }
+    },
+    {
+      "id": "table_detection_error:travelers-cyb-14101-2017-12.ground-truth:NamedInsured_MailingAddress_StateOrProvinceCode_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_MailingAddress_StateOrProvinceCode_A",
+        "predictionId": "input-table-1-r4-c3",
+        "page": 1,
+        "geometryDistance": 0.04633696986263841
+      },
+      "expected": {
+        "tableId": "page-1-table-1",
+        "rowIndex": 0,
+        "columnIndex": 2,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": "table-1",
+        "rowIndex": 3,
+        "columnIndex": 2,
+        "valueType": "text"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:travelers-cyb-14101-2017-12.ground-truth:CyberCoverage_Question_KBHCode_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CyberCoverage_Question_KBHCode_A",
+        "predictionId": "checkbox-p1-1",
+        "page": 1,
+        "geometryDistance": 0.0021353442101383828
+      },
+      "expected": {
+        "label": "Enter Y for a \"Yes\" response. Input N for \"No\" response. Indicates the response to the question, \"Does the applicant utilize firewalls, anti-intrusion and anti-virus software / programs?",
+        "helpLabel": "Enter Y for a \"Yes\" response. Input N for \"No\" response. Indicates the response to the question, \"Does the applicant utilize firewalls, anti-intrusion and anti-virus software / programs?"
+      },
+      "actual": {
+        "label": "Up-to-date, active firewall technology"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0.069
+      }
+    },
+    {
+      "id": "candidate_ranking_error:travelers-cyb-14101-2017-12.ground-truth:CyberCoverage_Question_KBHCode_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CyberCoverage_Question_KBHCode_A",
+        "predictionId": "checkbox-p1-1",
+        "page": 1,
+        "geometryDistance": 0.0021353442101383828
+      },
+      "expected": {
+        "topAcordCode": "CyberCoverage_Question_KBHCode"
+      },
+      "actual": {
+        "topAcordCode": "AttorneyInformation_RetroactiveDate",
+        "rankedCodes": [
+          "AttorneyInformation_RetroactiveDate",
+          "ResidentialStructure_ReplacementCost_EvaluationMethodFullMarketValueIndicator",
+          "Vehicle_Coverage_OwnDamageMarketValueIndicator"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "table_detection_error:travelers-cyb-14101-2017-12.ground-truth:CyberCoverage_Question_KBHCode_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "CyberCoverage_Question_KBHCode_A",
+        "predictionId": "checkbox-p1-1",
+        "page": 1,
+        "geometryDistance": 0.0021353442101383828
+      },
+      "expected": {
+        "tableId": "page-1-table-2",
+        "rowIndex": 0,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:travelers-cyb-14101-2017-12.ground-truth:Unmapped_TDQApWLC_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_TDQApWLC_A",
+        "predictionId": "checkbox-p1-8",
+        "page": 1,
+        "geometryDistance": 0.002187798170678951
+      },
+      "expected": {
+        "label": "Unmapped_TDQApWLC_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Updated anti-virus software active on all computers and networks"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:travelers-cyb-14101-2017-12.ground-truth:Unmapped_TDQApWLC_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_TDQApWLC_A",
+        "predictionId": "checkbox-p1-8",
+        "page": 1,
+        "geometryDistance": 0.002187798170678951
+      },
+      "expected": {
+        "tableId": "page-1-table-2",
+        "rowIndex": 0,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:travelers-cyb-14101-2017-12.ground-truth:Unmapped_TDQApWLC_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_TDQApWLC_A",
+        "predictionId": "checkbox-p1-8",
+        "page": 1,
+        "geometryDistance": 0.002187798170678951
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-3"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:travelers-cyb-14101-2017-12.ground-truth:Unmapped_ZhMDTPhN_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_ZhMDTPhN_A",
+        "predictionId": "checkbox-p1-2",
+        "page": 1,
+        "geometryDistance": 0.0021980395445962263
+      },
+      "expected": {
+        "label": "Unmapped_ZhMDTPhN_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Patch management procedures"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:travelers-cyb-14101-2017-12.ground-truth:Unmapped_ZhMDTPhN_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_ZhMDTPhN_A",
+        "predictionId": "checkbox-p1-2",
+        "page": 1,
+        "geometryDistance": 0.0021980395445962263
+      },
+      "expected": {
+        "tableId": "page-1-table-2",
+        "rowIndex": 1,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:travelers-cyb-14101-2017-12.ground-truth:Unmapped_ZhMDTPhN_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_ZhMDTPhN_A",
+        "predictionId": "checkbox-p1-2",
+        "page": 1,
+        "geometryDistance": 0.0021980395445962263
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-3"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:travelers-cyb-14101-2017-12.ground-truth:Unmapped_mCFbslbp_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_mCFbslbp_A",
+        "predictionId": "checkbox-p1-9",
+        "page": 1,
+        "geometryDistance": 0.0020827202722441553
+      },
+      "expected": {
+        "label": "Unmapped_mCFbslbp_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Intrusion detection software"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:travelers-cyb-14101-2017-12.ground-truth:Unmapped_mCFbslbp_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_mCFbslbp_A",
+        "predictionId": "checkbox-p1-9",
+        "page": 1,
+        "geometryDistance": 0.0020827202722441553
+      },
+      "expected": {
+        "tableId": "page-1-table-2",
+        "rowIndex": 1,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:travelers-cyb-14101-2017-12.ground-truth:Unmapped_mCFbslbp_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_mCFbslbp_A",
+        "predictionId": "checkbox-p1-9",
+        "page": 1,
+        "geometryDistance": 0.0020827202722441553
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-3"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:travelers-cyb-14101-2017-12.ground-truth:Unmapped_EcwkQZUE_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_EcwkQZUE_A",
+        "predictionId": "checkbox-p1-3",
+        "page": 1,
+        "geometryDistance": 0.0026677802040296498
+      },
+      "expected": {
+        "label": "Unmapped_EcwkQZUE_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Multi-factor login for privileged access"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:travelers-cyb-14101-2017-12.ground-truth:Unmapped_EcwkQZUE_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_EcwkQZUE_A",
+        "predictionId": "checkbox-p1-3",
+        "page": 1,
+        "geometryDistance": 0.0026677802040296498
+      },
+      "expected": {
+        "tableId": "page-1-table-2",
+        "rowIndex": 2,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:travelers-cyb-14101-2017-12.ground-truth:Unmapped_EcwkQZUE_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_EcwkQZUE_A",
+        "predictionId": "checkbox-p1-3",
+        "page": 1,
+        "geometryDistance": 0.0026677802040296498
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-3"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:travelers-cyb-14101-2017-12.ground-truth:Unmapped_RoCcnepw_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_RoCcnepw_A",
+        "predictionId": "checkbox-p1-10",
+        "page": 1,
+        "geometryDistance": 0.002930863442640373
+      },
+      "expected": {
+        "label": "Unmapped_RoCcnepw_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Valuable/sensitive data backup procedures"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:travelers-cyb-14101-2017-12.ground-truth:Unmapped_RoCcnepw_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_RoCcnepw_A",
+        "predictionId": "checkbox-p1-10",
+        "page": 1,
+        "geometryDistance": 0.002930863442640373
+      },
+      "expected": {
+        "tableId": "page-1-table-2",
+        "rowIndex": 2,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:travelers-cyb-14101-2017-12.ground-truth:Unmapped_RoCcnepw_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_RoCcnepw_A",
+        "predictionId": "checkbox-p1-10",
+        "page": 1,
+        "geometryDistance": 0.002930863442640373
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-3"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:travelers-cyb-14101-2017-12.ground-truth:Unmapped_ftqwRDbj_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_ftqwRDbj_A",
+        "predictionId": "checkbox-p1-4",
+        "page": 1,
+        "geometryDistance": 0.0025265981243872858
+      },
+      "expected": {
+        "label": "Unmapped_ftqwRDbj_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Remote access limited to VPN"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:travelers-cyb-14101-2017-12.ground-truth:Unmapped_ftqwRDbj_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_ftqwRDbj_A",
+        "predictionId": "checkbox-p1-4",
+        "page": 1,
+        "geometryDistance": 0.0025265981243872858
+      },
+      "expected": {
+        "tableId": "page-1-table-2",
+        "rowIndex": 3,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:travelers-cyb-14101-2017-12.ground-truth:Unmapped_ftqwRDbj_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_ftqwRDbj_A",
+        "predictionId": "checkbox-p1-4",
+        "page": 1,
+        "geometryDistance": 0.0025265981243872858
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-3"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:travelers-cyb-14101-2017-12.ground-truth:Unmapped_KzTRTqah_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_KzTRTqah_A",
+        "predictionId": "checkbox-p1-11",
+        "page": 1,
+        "geometryDistance": 0.0020268972502442027
+      },
+      "expected": {
+        "label": "Unmapped_KzTRTqah_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Procedure to test or audit network security controls"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:travelers-cyb-14101-2017-12.ground-truth:Unmapped_KzTRTqah_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_KzTRTqah_A",
+        "predictionId": "checkbox-p1-11",
+        "page": 1,
+        "geometryDistance": 0.0020268972502442027
+      },
+      "expected": {
+        "tableId": "page-1-table-2",
+        "rowIndex": 3,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:travelers-cyb-14101-2017-12.ground-truth:Unmapped_KzTRTqah_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_KzTRTqah_A",
+        "predictionId": "checkbox-p1-11",
+        "page": 1,
+        "geometryDistance": 0.0020268972502442027
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-3"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:travelers-cyb-14101-2017-12.ground-truth:Unmapped_cawMaalA_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_cawMaalA_A",
+        "predictionId": "checkbox-p1-5",
+        "page": 1,
+        "geometryDistance": 0.0021013228765467944
+      },
+      "expected": {
+        "label": "Unmapped_cawMaalA_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Incident response plan"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:travelers-cyb-14101-2017-12.ground-truth:Unmapped_cawMaalA_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_cawMaalA_A",
+        "predictionId": "checkbox-p1-5",
+        "page": 1,
+        "geometryDistance": 0.0021013228765467944
+      },
+      "expected": {
+        "tableId": "page-1-table-2",
+        "rowIndex": 4,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:travelers-cyb-14101-2017-12.ground-truth:Unmapped_cawMaalA_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_cawMaalA_A",
+        "predictionId": "checkbox-p1-5",
+        "page": 1,
+        "geometryDistance": 0.0021013228765467944
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-3"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:travelers-cyb-14101-2017-12.ground-truth:Unmapped_MHmfMEaI_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_MHmfMEaI_A",
+        "predictionId": "checkbox-p1-12",
+        "page": 1,
+        "geometryDistance": 0.0023642496483329187
+      },
+      "expected": {
+        "label": "Unmapped_MHmfMEaI_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Disaster recovery plan, business continuity plan, or equivalent"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:travelers-cyb-14101-2017-12.ground-truth:Unmapped_MHmfMEaI_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_MHmfMEaI_A",
+        "predictionId": "checkbox-p1-12",
+        "page": 1,
+        "geometryDistance": 0.0023642496483329187
+      },
+      "expected": {
+        "tableId": "page-1-table-2",
+        "rowIndex": 4,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:travelers-cyb-14101-2017-12.ground-truth:Unmapped_MHmfMEaI_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_MHmfMEaI_A",
+        "predictionId": "checkbox-p1-12",
+        "page": 1,
+        "geometryDistance": 0.0023642496483329187
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-3"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:travelers-cyb-14101-2017-12.ground-truth:Unmapped_MIvzufYA_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_MIvzufYA_A",
+        "predictionId": "checkbox-p1-6",
+        "page": 1,
+        "geometryDistance": 0.002423919114590513
+      },
+      "expected": {
+        "label": "Unmapped_MIvzufYA_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Media and website content controls"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:travelers-cyb-14101-2017-12.ground-truth:Unmapped_MIvzufYA_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_MIvzufYA_A",
+        "predictionId": "checkbox-p1-6",
+        "page": 1,
+        "geometryDistance": 0.002423919114590513
+      },
+      "expected": {
+        "tableId": "page-1-table-2",
+        "rowIndex": 5,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:travelers-cyb-14101-2017-12.ground-truth:Unmapped_MIvzufYA_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_MIvzufYA_A",
+        "predictionId": "checkbox-p1-6",
+        "page": 1,
+        "geometryDistance": 0.002423919114590513
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-3"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:travelers-cyb-14101-2017-12.ground-truth:Unmapped_AMaRFDla_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_AMaRFDla_A",
+        "predictionId": "checkbox-p1-13",
+        "page": 1,
+        "geometryDistance": 0.0023593315386556193
+      },
+      "expected": {
+        "label": "Unmapped_AMaRFDla_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "A person or department responsible for information security"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:travelers-cyb-14101-2017-12.ground-truth:Unmapped_AMaRFDla_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_AMaRFDla_A",
+        "predictionId": "checkbox-p1-13",
+        "page": 1,
+        "geometryDistance": 0.0023593315386556193
+      },
+      "expected": {
+        "tableId": "page-1-table-2",
+        "rowIndex": 5,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:travelers-cyb-14101-2017-12.ground-truth:Unmapped_AMaRFDla_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_AMaRFDla_A",
+        "predictionId": "checkbox-p1-13",
+        "page": 1,
+        "geometryDistance": 0.0023593315386556193
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-3"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:travelers-cyb-14101-2017-12.ground-truth:Unmapped_OUzMhdWF_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_OUzMhdWF_A",
+        "predictionId": "checkbox-p1-7",
+        "page": 1,
+        "geometryDistance": 0.0026684067573163545
+      },
+      "expected": {
+        "label": "Unmapped_OUzMhdWF_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Require service providers to demonstrate adequate network security"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "grouping_error:travelers-cyb-14101-2017-12.ground-truth:Unmapped_OUzMhdWF_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_OUzMhdWF_A",
+        "predictionId": "checkbox-p1-7",
+        "page": 1,
+        "geometryDistance": 0.0026684067573163545
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-3"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:travelers-cyb-14101-2017-12.ground-truth:Unmapped_IqjKQwWF_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_IqjKQwWF_A",
+        "predictionId": "checkbox-p1-14",
+        "page": 1,
+        "geometryDistance": 0.003056557120446705
+      },
+      "expected": {
+        "label": "Unmapped_IqjKQwWF_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Yes"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:travelers-cyb-14101-2017-12.ground-truth:Unmapped_IqjKQwWF_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_IqjKQwWF_A",
+        "predictionId": "checkbox-p1-14",
+        "page": 1,
+        "geometryDistance": 0.003056557120446705
+      },
+      "expected": {
+        "tableId": "page-1-table-3",
+        "rowIndex": 0,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:travelers-cyb-14101-2017-12.ground-truth:Unmapped_IqjKQwWF_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_IqjKQwWF_A",
+        "predictionId": "checkbox-p1-14",
+        "page": 1,
+        "geometryDistance": 0.003056557120446705
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-3"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:travelers-cyb-14101-2017-12.ground-truth:Unmapped_ZKEKvbmx_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_ZKEKvbmx_A",
+        "predictionId": "checkbox-p1-16",
+        "page": 1,
+        "geometryDistance": 0.003037241673543698
+      },
+      "expected": {
+        "label": "Unmapped_ZKEKvbmx_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Yes"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:travelers-cyb-14101-2017-12.ground-truth:Unmapped_ZKEKvbmx_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_ZKEKvbmx_A",
+        "predictionId": "checkbox-p1-16",
+        "page": 1,
+        "geometryDistance": 0.003037241673543698
+      },
+      "expected": {
+        "tableId": "page-1-table-3",
+        "rowIndex": 1,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:travelers-cyb-14101-2017-12.ground-truth:Unmapped_ZKEKvbmx_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_ZKEKvbmx_A",
+        "predictionId": "checkbox-p1-16",
+        "page": 1,
+        "geometryDistance": 0.003037241673543698
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-3"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:travelers-cyb-14101-2017-12.ground-truth:Unmapped_CwLNATuJ_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_CwLNATuJ_A",
+        "predictionId": "checkbox-p1-18",
+        "page": 1,
+        "geometryDistance": 0.002431880228887599
+      },
+      "expected": {
+        "label": "Unmapped_CwLNATuJ_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "At Rest"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "grouping_error:travelers-cyb-14101-2017-12.ground-truth:Unmapped_CwLNATuJ_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_CwLNATuJ_A",
+        "predictionId": "checkbox-p1-18",
+        "page": 1,
+        "geometryDistance": 0.002431880228887599
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-3"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:travelers-cyb-14101-2017-12.ground-truth:Unmapped_VMRsFObi_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_VMRsFObi_A",
+        "predictionId": "checkbox-p1-19",
+        "page": 1,
+        "geometryDistance": 0.0022221896456982937
+      },
+      "expected": {
+        "label": "Unmapped_VMRsFObi_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "In Transit"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "grouping_error:travelers-cyb-14101-2017-12.ground-truth:Unmapped_VMRsFObi_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_VMRsFObi_A",
+        "predictionId": "checkbox-p1-19",
+        "page": 1,
+        "geometryDistance": 0.0022221896456982937
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-3"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:travelers-cyb-14101-2017-12.ground-truth:Unmapped_lpqEvOjE_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_lpqEvOjE_A",
+        "predictionId": "checkbox-p1-20",
+        "page": 1,
+        "geometryDistance": 0.0035347775782541505
+      },
+      "expected": {
+        "label": "Unmapped_lpqEvOjE_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "On Laptops and Mobile Devices"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "grouping_error:travelers-cyb-14101-2017-12.ground-truth:Unmapped_lpqEvOjE_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_lpqEvOjE_A",
+        "predictionId": "checkbox-p1-20",
+        "page": 1,
+        "geometryDistance": 0.0035347775782541505
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-3"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:travelers-cyb-14101-2017-12.ground-truth:Unmapped_pUsvyaem_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_pUsvyaem_A",
+        "predictionId": "checkbox-p1-23",
+        "page": 1,
+        "geometryDistance": 0.001587249348103467
+      },
+      "expected": {
+        "label": "Unmapped_pUsvyaem_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Yes"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:travelers-cyb-14101-2017-12.ground-truth:Unmapped_pUsvyaem_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_pUsvyaem_A",
+        "predictionId": "checkbox-p1-23",
+        "page": 1,
+        "geometryDistance": 0.001587249348103467
+      },
+      "expected": {
+        "tableId": "page-1-table-4",
+        "rowIndex": 0,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:travelers-cyb-14101-2017-12.ground-truth:Unmapped_pUsvyaem_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_pUsvyaem_A",
+        "predictionId": "checkbox-p1-23",
+        "page": 1,
+        "geometryDistance": 0.001587249348103467
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-3"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:travelers-cyb-14101-2017-12.ground-truth:Unmapped_hBJlSJFo_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_hBJlSJFo_A",
+        "predictionId": "checkbox-p1-25",
+        "page": 1,
+        "geometryDistance": 0.0028104722467847502
+      },
+      "expected": {
+        "label": "Unmapped_hBJlSJFo_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Yes"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:travelers-cyb-14101-2017-12.ground-truth:Unmapped_hBJlSJFo_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_hBJlSJFo_A",
+        "predictionId": "checkbox-p1-25",
+        "page": 1,
+        "geometryDistance": 0.0028104722467847502
+      },
+      "expected": {
+        "tableId": "page-1-table-4",
+        "rowIndex": 1,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:travelers-cyb-14101-2017-12.ground-truth:Unmapped_hBJlSJFo_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_hBJlSJFo_A",
+        "predictionId": "checkbox-p1-25",
+        "page": 1,
+        "geometryDistance": 0.0028104722467847502
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-3"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:travelers-cyb-14101-2017-12.ground-truth:Unmapped_LgWDeeLQ_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_LgWDeeLQ_A",
+        "predictionId": "checkbox-p1-15",
+        "page": 1,
+        "geometryDistance": 0.0021897953707025156
+      },
+      "expected": {
+        "label": "Unmapped_LgWDeeLQ_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "No"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:travelers-cyb-14101-2017-12.ground-truth:Unmapped_LgWDeeLQ_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_LgWDeeLQ_A",
+        "predictionId": "checkbox-p1-15",
+        "page": 1,
+        "geometryDistance": 0.0021897953707025156
+      },
+      "expected": {
+        "tableId": "page-1-table-3",
+        "rowIndex": 0,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:travelers-cyb-14101-2017-12.ground-truth:Unmapped_LgWDeeLQ_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_LgWDeeLQ_A",
+        "predictionId": "checkbox-p1-15",
+        "page": 1,
+        "geometryDistance": 0.0021897953707025156
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-3"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:travelers-cyb-14101-2017-12.ground-truth:Unmapped_ZtVieagZ_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_ZtVieagZ_A",
+        "predictionId": "checkbox-p1-21",
+        "page": 1,
+        "geometryDistance": 0.0010907498101716965
+      },
+      "expected": {
+        "label": "Unmapped_ZtVieagZ_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "N/ A"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:travelers-cyb-14101-2017-12.ground-truth:Unmapped_ZtVieagZ_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_ZtVieagZ_A",
+        "predictionId": "checkbox-p1-21",
+        "page": 1,
+        "geometryDistance": 0.0010907498101716965
+      },
+      "expected": {
+        "tableId": "page-1-table-3",
+        "rowIndex": 0,
+        "columnIndex": 2,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:travelers-cyb-14101-2017-12.ground-truth:Unmapped_ZtVieagZ_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_ZtVieagZ_A",
+        "predictionId": "checkbox-p1-21",
+        "page": 1,
+        "geometryDistance": 0.0010907498101716965
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-3"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:travelers-cyb-14101-2017-12.ground-truth:Unmapped_XsOHWhEI_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_XsOHWhEI_A",
+        "predictionId": "checkbox-p1-17",
+        "page": 1,
+        "geometryDistance": 0.0024905683862855394
+      },
+      "expected": {
+        "label": "Unmapped_XsOHWhEI_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "No"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:travelers-cyb-14101-2017-12.ground-truth:Unmapped_XsOHWhEI_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_XsOHWhEI_A",
+        "predictionId": "checkbox-p1-17",
+        "page": 1,
+        "geometryDistance": 0.0024905683862855394
+      },
+      "expected": {
+        "tableId": "page-1-table-3",
+        "rowIndex": 1,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:travelers-cyb-14101-2017-12.ground-truth:Unmapped_XsOHWhEI_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_XsOHWhEI_A",
+        "predictionId": "checkbox-p1-17",
+        "page": 1,
+        "geometryDistance": 0.0024905683862855394
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-3"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:travelers-cyb-14101-2017-12.ground-truth:Unmapped_zwljriir_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_zwljriir_A",
+        "predictionId": "checkbox-p1-22",
+        "page": 1,
+        "geometryDistance": 0.0021323376837596225
+      },
+      "expected": {
+        "label": "Unmapped_zwljriir_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "N/ A"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:travelers-cyb-14101-2017-12.ground-truth:Unmapped_zwljriir_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_zwljriir_A",
+        "predictionId": "checkbox-p1-22",
+        "page": 1,
+        "geometryDistance": 0.0021323376837596225
+      },
+      "expected": {
+        "tableId": "page-1-table-3",
+        "rowIndex": 1,
+        "columnIndex": 2,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:travelers-cyb-14101-2017-12.ground-truth:Unmapped_zwljriir_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_zwljriir_A",
+        "predictionId": "checkbox-p1-22",
+        "page": 1,
+        "geometryDistance": 0.0021323376837596225
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-3"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:travelers-cyb-14101-2017-12.ground-truth:Unmapped_reTnyebN_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_reTnyebN_A",
+        "predictionId": "checkbox-p1-24",
+        "page": 1,
+        "geometryDistance": 0.002011748465689198
+      },
+      "expected": {
+        "label": "Unmapped_reTnyebN_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "No"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:travelers-cyb-14101-2017-12.ground-truth:Unmapped_reTnyebN_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_reTnyebN_A",
+        "predictionId": "checkbox-p1-24",
+        "page": 1,
+        "geometryDistance": 0.002011748465689198
+      },
+      "expected": {
+        "tableId": "page-1-table-4",
+        "rowIndex": 0,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:travelers-cyb-14101-2017-12.ground-truth:Unmapped_reTnyebN_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_reTnyebN_A",
+        "predictionId": "checkbox-p1-24",
+        "page": 1,
+        "geometryDistance": 0.002011748465689198
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-3"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:travelers-cyb-14101-2017-12.ground-truth:Unmapped_HcCzEqop_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_HcCzEqop_A",
+        "predictionId": "checkbox-p1-26",
+        "page": 1,
+        "geometryDistance": 0.002800482978555278
+      },
+      "expected": {
+        "label": "Unmapped_HcCzEqop_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "No"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "table_detection_error:travelers-cyb-14101-2017-12.ground-truth:Unmapped_HcCzEqop_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_HcCzEqop_A",
+        "predictionId": "checkbox-p1-26",
+        "page": 1,
+        "geometryDistance": 0.002800482978555278
+      },
+      "expected": {
+        "tableId": "page-1-table-4",
+        "rowIndex": 1,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": null,
+        "rowIndex": null,
+        "columnIndex": null,
+        "valueType": "checkbox"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "grouping_error:travelers-cyb-14101-2017-12.ground-truth:Unmapped_HcCzEqop_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_HcCzEqop_A",
+        "predictionId": "checkbox-p1-26",
+        "page": 1,
+        "geometryDistance": 0.002800482978555278
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-3"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:travelers-cyb-14101-2017-12.ground-truth:NamedInsured_Signature_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_Signature_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "NamedInsured_Signature_A",
+        "type": "signature",
+        "label": "Sign here: Accommodates the signature of the applicant or named insured."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:travelers-cyb-14101-2017-12.ground-truth:NamedInsured_Signature_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_Signature_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:travelers-cyb-14101-2017-12.ground-truth:NamedInsured_Contact_FullName_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_Contact_FullName_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "NamedInsured_Contact_FullName_A",
+        "type": "text",
+        "label": "Enter text: The full name of the contact."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:travelers-cyb-14101-2017-12.ground-truth:NamedInsured_Contact_FullName_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_Contact_FullName_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "field_type_misclassification:travelers-cyb-14101-2017-12.ground-truth:NamedInsured_SignatureDate_A",
+      "category": "field_type_misclassification",
+      "description": "The predicted fillable type differs from the XFDL control/format type.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_SignatureDate_A",
+        "predictionId": "input-table-2-r2-c3",
+        "page": 2,
+        "geometryDistance": 0.023470226753242236
+      },
+      "expected": {
+        "type": "signature",
+        "sourceType": "signature",
+        "format": {
+          "dataType": null,
+          "requirement": null,
+          "presentation": "",
+          "rawValues": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "provenance": "explicit"
+        }
+      },
+      "actual": {
+        "type": "date",
+        "sourceType": "date"
+      },
+      "rationale": "XFDL control/format typing and backend typed-blank classification disagree.",
+      "evidence": {}
+    },
+    {
+      "id": "candidate_ranking_error:travelers-cyb-14101-2017-12.ground-truth:NamedInsured_SignatureDate_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_SignatureDate_A",
+        "predictionId": "input-table-2-r2-c3",
+        "page": 2,
+        "geometryDistance": 0.023470226753242236
+      },
+      "expected": {
+        "topAcordCode": "NamedInsured_SignatureDate"
+      },
+      "actual": {
+        "topAcordCode": "CommercialPropertyCoverage_PeakSeasonAdditional_FormDate",
+        "rankedCodes": [
+          "CommercialPropertyCoverage_PeakSeasonAdditional_FormDate",
+          "CommercialPropertyCoverage_CombinedDemolitionCostAndIncreasedConstructionCost_FormDate",
+          "ResidentialCoverage_AdditionalPremisesLiabilityExtension_FormDate"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "table_detection_error:travelers-cyb-14101-2017-12.ground-truth:NamedInsured_SignatureDate_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_SignatureDate_A",
+        "predictionId": "input-table-2-r2-c3",
+        "page": 2,
+        "geometryDistance": 0.023470226753242236
+      },
+      "expected": {
+        "tableId": "page-2-table-1",
+        "rowIndex": 0,
+        "columnIndex": 3,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": "table-2",
+        "rowIndex": 1,
+        "columnIndex": 2,
+        "valueType": "date"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:travelers-cyb-14101-2017-12.ground-truth:Producer_AuthorizedRepresentative_FullName_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Producer_AuthorizedRepresentative_FullName_A",
+        "predictionId": "input-table-3-r4-c1",
+        "page": 2,
+        "geometryDistance": 0.0399599431224568
+      },
+      "expected": {
+        "label": "Enter text: The name of the authorized representative of the producer, agency and/or broker that signed the form.",
+        "helpLabel": "Enter text: The name of the authorized representative of the producer, agency and/or broker that signed the form."
+      },
+      "actual": {
+        "label": "Agency"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0.125
+      }
+    },
+    {
+      "id": "candidate_ranking_error:travelers-cyb-14101-2017-12.ground-truth:Producer_AuthorizedRepresentative_FullName_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Producer_AuthorizedRepresentative_FullName_A",
+        "predictionId": "input-table-3-r4-c1",
+        "page": 2,
+        "geometryDistance": 0.0399599431224568
+      },
+      "expected": {
+        "topAcordCode": "Producer_AuthorizedRepresentative_FullName"
+      },
+      "actual": {
+        "topAcordCode": "Producer_FullName",
+        "rankedCodes": [
+          "Producer_FullName",
+          "Producer_MailingAddress_LineOne",
+          "AccountantsLiability_ApplicantFirmProvidedServicesForInstitutionDepositsNotInsuredByGovernmentAgencyExplanation"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "table_detection_error:travelers-cyb-14101-2017-12.ground-truth:Producer_AuthorizedRepresentative_FullName_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Producer_AuthorizedRepresentative_FullName_A",
+        "predictionId": "input-table-3-r4-c1",
+        "page": 2,
+        "geometryDistance": 0.0399599431224568
+      },
+      "expected": {
+        "tableId": "page-2-table-1",
+        "rowIndex": 1,
+        "columnIndex": 0,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": "table-3",
+        "rowIndex": 3,
+        "columnIndex": 0,
+        "valueType": "text"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "candidate_ranking_error:travelers-cyb-14101-2017-12.ground-truth:Producer_StateLicenseIdentifier_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Producer_StateLicenseIdentifier_A",
+        "predictionId": "input-table-3-r3-c2",
+        "page": 2,
+        "geometryDistance": 0.0016131989555547802
+      },
+      "expected": {
+        "topAcordCode": "Producer_StateLicenseIdentifier"
+      },
+      "actual": {
+        "topAcordCode": "Producer_NonResidentLicenseStateOrProvinceCode",
+        "rankedCodes": [
+          "Producer_NonResidentLicenseStateOrProvinceCode",
+          "Producer_Agency_LicenseStateorProvenceCode_AM",
+          "Producer_Agency_LicenseStateorProvenceCode_BD"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "table_detection_error:travelers-cyb-14101-2017-12.ground-truth:Producer_StateLicenseIdentifier_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Producer_StateLicenseIdentifier_A",
+        "predictionId": "input-table-3-r3-c2",
+        "page": 2,
+        "geometryDistance": 0.0016131989555547802
+      },
+      "expected": {
+        "tableId": "page-2-table-1",
+        "rowIndex": 1,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": "table-3",
+        "rowIndex": 2,
+        "columnIndex": 1,
+        "valueType": "text"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:travelers-cyb-14101-2017-12.ground-truth:Producer_AuthorizedRepresentative_SignatureDate_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Producer_AuthorizedRepresentative_SignatureDate_A",
+        "predictionId": "input-table-3-r3-c3",
+        "page": 2,
+        "geometryDistance": 0.008932935963179199
+      },
+      "expected": {
+        "label": "Enter date: The date the producer signed the form.",
+        "helpLabel": "Enter date: The date the producer signed the form."
+      },
+      "actual": {
+        "label": "Date (mm/dd/yyyy)"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0.2
+      }
+    },
+    {
+      "id": "field_type_misclassification:travelers-cyb-14101-2017-12.ground-truth:Producer_AuthorizedRepresentative_SignatureDate_A",
+      "category": "field_type_misclassification",
+      "description": "The predicted fillable type differs from the XFDL control/format type.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Producer_AuthorizedRepresentative_SignatureDate_A",
+        "predictionId": "input-table-3-r3-c3",
+        "page": 2,
+        "geometryDistance": 0.008932935963179199
+      },
+      "expected": {
+        "type": "signature",
+        "sourceType": "signature",
+        "format": {
+          "dataType": null,
+          "requirement": null,
+          "presentation": "",
+          "rawValues": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "provenance": "explicit"
+        }
+      },
+      "actual": {
+        "type": "date",
+        "sourceType": "date"
+      },
+      "rationale": "XFDL control/format typing and backend typed-blank classification disagree.",
+      "evidence": {}
+    },
+    {
+      "id": "candidate_ranking_error:travelers-cyb-14101-2017-12.ground-truth:Producer_AuthorizedRepresentative_SignatureDate_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Producer_AuthorizedRepresentative_SignatureDate_A",
+        "predictionId": "input-table-3-r3-c3",
+        "page": 2,
+        "geometryDistance": 0.008932935963179199
+      },
+      "expected": {
+        "topAcordCode": "Producer_AuthorizedRepresentative_SignatureDate"
+      },
+      "actual": {
+        "topAcordCode": "CommercialPropertyCoverage_PeakSeasonAdditional_FormDate",
+        "rankedCodes": [
+          "CommercialPropertyCoverage_PeakSeasonAdditional_FormDate",
+          "CommercialPropertyCoverage_CombinedDemolitionCostAndIncreasedConstructionCost_FormDate",
+          "ResidentialCoverage_AdditionalPremisesLiabilityExtension_FormDate"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "table_detection_error:travelers-cyb-14101-2017-12.ground-truth:Producer_AuthorizedRepresentative_SignatureDate_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Producer_AuthorizedRepresentative_SignatureDate_A",
+        "predictionId": "input-table-3-r3-c3",
+        "page": 2,
+        "geometryDistance": 0.008932935963179199
+      },
+      "expected": {
+        "tableId": "page-2-table-1",
+        "rowIndex": 1,
+        "columnIndex": 3,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": "table-3",
+        "rowIndex": 2,
+        "columnIndex": 2,
+        "valueType": "date"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:travelers-cyb-14101-2017-12.ground-truth:Producer_FullName_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Producer_FullName_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Producer_FullName_A",
+        "type": "text",
+        "label": "Enter text: The full name of the producer / agency."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:travelers-cyb-14101-2017-12.ground-truth:Producer_FullName_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Producer_FullName_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:travelers-cyb-14101-2017-12.ground-truth:Producer_ContactPerson_FullName_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Producer_ContactPerson_FullName_A",
+        "predictionId": "input-table-3-r5-c2",
+        "page": 2,
+        "geometryDistance": 0.0028120526136241625
+      },
+      "expected": {
+        "label": "Enter text: The name of the individual at the producer's establishment that is the primary contact.",
+        "helpLabel": "Enter text: The name of the individual at the producer's establishment that is the primary contact."
+      },
+      "actual": {
+        "label": "Agency Contact"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0.1333
+      }
+    },
+    {
+      "id": "candidate_ranking_error:travelers-cyb-14101-2017-12.ground-truth:Producer_ContactPerson_FullName_A",
+      "category": "candidate_ranking_error",
+      "description": "The expected XFDL semantic path is absent or not ranked first.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Producer_ContactPerson_FullName_A",
+        "predictionId": "input-table-3-r5-c2",
+        "page": 2,
+        "geometryDistance": 0.0028120526136241625
+      },
+      "expected": {
+        "topAcordCode": "Producer_ContactPerson_FullName"
+      },
+      "actual": {
+        "topAcordCode": "Producer_FullName",
+        "rankedCodes": [
+          "Producer_FullName",
+          "Producer_MailingAddress_LineOne",
+          "Producer_AgencyAutomation_KeyContactNames"
+        ]
+      },
+      "rationale": "The expected XFDL semantic path is absent from the ranked candidates.",
+      "evidence": {}
+    },
+    {
+      "id": "table_detection_error:travelers-cyb-14101-2017-12.ground-truth:Producer_ContactPerson_FullName_A",
+      "category": "table_detection_error",
+      "description": "A ground-truth table cell is missing table, row, column, or compatible cell-type metadata.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Producer_ContactPerson_FullName_A",
+        "predictionId": "input-table-3-r5-c2",
+        "page": 2,
+        "geometryDistance": 0.0028120526136241625
+      },
+      "expected": {
+        "tableId": "page-2-table-1",
+        "rowIndex": 2,
+        "columnIndex": 1,
+        "provenance": "spatial-inference"
+      },
+      "actual": {
+        "tableId": "table-3",
+        "rowIndex": 4,
+        "columnIndex": 1,
+        "valueType": "text"
+      },
+      "rationale": "The geometry-matched backend field does not preserve the XFDL table coordinates.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:travelers-cyb-14101-2017-12.ground-truth:Producer_ContactPerson_PhoneNumber_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Producer_ContactPerson_PhoneNumber_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "Producer_ContactPerson_PhoneNumber_A",
+        "type": "numeric",
+        "label": "Enter number: The phone number of the individual at the producer's establishment that is the primary contact. If applicable, include the area code and extension."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:travelers-cyb-14101-2017-12.ground-truth:Producer_ContactPerson_PhoneNumber_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Producer_ContactPerson_PhoneNumber_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "unmapped_fillable_field:travelers-cyb-14101-2017-12.ground-truth:NamedInsured_Contact_Title_A",
+      "category": "unmapped_fillable_field",
+      "description": "An XFDL fillable control has no matched promoted backend field or no mapping candidate.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_Contact_Title_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "fillable": true,
+        "sid": "NamedInsured_Contact_Title_A",
+        "type": "text",
+        "label": "Enter number: The title of the contact for the named insured."
+      },
+      "actual": {
+        "matchedPrediction": false
+      },
+      "rationale": "No current backend fillable field was found within the normalized geometry threshold.",
+      "evidence": {
+        "geometryThreshold": 0.08
+      }
+    },
+    {
+      "id": "suppression_error:travelers-cyb-14101-2017-12.ground-truth:NamedInsured_Contact_Title_A",
+      "category": "suppression_error",
+      "description": "Presentation text was promoted as fillable or a fillable XFDL control was suppressed.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "NamedInsured_Contact_Title_A",
+        "predictionId": null,
+        "page": 2,
+        "geometryDistance": null
+      },
+      "expected": {
+        "suppressed": false,
+        "fillable": true
+      },
+      "actual": {
+        "promoted": false,
+        "matchedPrediction": false
+      },
+      "rationale": "The XFDL explicitly identifies this control as fillable, but the backend did not promote it.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:travelers-cyb-14101-2017-12.ground-truth:Unmapped_hMLtnjuJ_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_hMLtnjuJ_A",
+        "predictionId": "checkbox-p2-1",
+        "page": 2,
+        "geometryDistance": 0.0029261297141951687
+      },
+      "expected": {
+        "label": "Unmapped_hMLtnjuJ_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Electronic Signature and Acceptance - Authorized Representative"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "grouping_error:travelers-cyb-14101-2017-12.ground-truth:Unmapped_hMLtnjuJ_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_hMLtnjuJ_A",
+        "predictionId": "checkbox-p2-1",
+        "page": 2,
+        "geometryDistance": 0.0029261297141951687
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-6"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    },
+    {
+      "id": "semantic_label_mismatch:travelers-cyb-14101-2017-12.ground-truth:Unmapped_bLDjRFqK_A",
+      "category": "semantic_label_mismatch",
+      "description": "The predicted semantic label disagrees with the XFDL visual/help label.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_bLDjRFqK_A",
+        "predictionId": "checkbox-p2-2",
+        "page": 2,
+        "geometryDistance": 0.0035761318177520082
+      },
+      "expected": {
+        "label": "Unmapped_bLDjRFqK_A",
+        "helpLabel": null
+      },
+      "actual": {
+        "label": "Electronic Signature and Acceptance - Producer"
+      },
+      "rationale": "Normalized label token similarity is below 0.35 for geometry-matched fields.",
+      "evidence": {
+        "tokenSimilarity": 0
+      }
+    },
+    {
+      "id": "grouping_error:travelers-cyb-14101-2017-12.ground-truth:Unmapped_bLDjRFqK_A",
+      "category": "grouping_error",
+      "description": "A field in an XFDL semantic/container group lacks compatible predicted grouping.",
+      "form": {
+        "xfdlFile": "Travelers CYB-14101 2017-12.Xfdl",
+        "xfdlDatasetFile": "travelers-cyb-14101-2017-12.ground-truth.json",
+        "pdfFile": "Travelers CYB-14101 2017-12.pdf",
+        "pairStatus": "matched",
+        "pairConfidence": "high"
+      },
+      "field": {
+        "truthSid": "Unmapped_bLDjRFqK_A",
+        "predictionId": "checkbox-p2-2",
+        "page": 2,
+        "geometryDistance": 0.0035761318177520082
+      },
+      "expected": {
+        "groupIds": [
+          "semantic-group-6"
+        ]
+      },
+      "actual": {
+        "groupId": null
+      },
+      "rationale": "The XFDL field belongs to an explicit or inferred semantic group, but backend grouping is absent.",
+      "evidence": {}
+    }
+  ]
+}
