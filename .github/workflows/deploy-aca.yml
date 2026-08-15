@@ -490,17 +490,25 @@ jobs:
 
           curl -fsS "${BASE_URL}/api/ping"
           curl -fsS -H "x-actor-role: viewer" -H "x-tenant-id: aca-deploy" "${BASE_URL}/api/gethealth"
-          VERSION_JSON="$(curl -fsS "${BASE_URL}/api/version")"
-          VERSION_JSON="${VERSION_JSON}" EXPECTED_COMMIT="${{ github.sha }}" node -e '
-            const response = JSON.parse(process.env.VERSION_JSON);
-            const version = response.data || response;
-            if (version.productionBaseline !== "RP-7") {
-              throw new Error(`Staging baseline mismatch: ${version.productionBaseline}`);
-            }
-            if (version.gitCommitHash !== process.env.EXPECTED_COMMIT) {
-              throw new Error(`Staging commit mismatch: ${version.gitCommitHash}`);
-            }
-          '
+          IDENTITY_VERIFIED=0
+          for attempt in {1..30}; do
+            VERSION_JSON="$(curl -fsS "${BASE_URL}/api/version")"
+            if VERSION_JSON="${VERSION_JSON}" EXPECTED_COMMIT="${{ github.sha }}" node -e '
+              const response = JSON.parse(process.env.VERSION_JSON);
+              const version = response.data || response;
+              if (version.productionBaseline !== "RP-7") process.exit(1);
+              if (version.gitCommitHash !== process.env.EXPECTED_COMMIT) process.exit(1);
+            '; then
+              IDENTITY_VERIFIED=1
+              break
+            fi
+            echo "Staging ingress has not converged to RP-7 commit yet (attempt ${attempt}/30); waiting 10s..."
+            sleep 10
+          done
+          if [[ ${IDENTITY_VERIFIED} -ne 1 ]]; then
+            echo "Staging ingress did not converge to RP-7 commit ${{ github.sha }}" >&2
+            exit 1
+          fi
 
       - name: Capture staging base URL
         id: staging_base
@@ -930,17 +938,25 @@ jobs:
 
           curl -fsS "${BASE_URL}/api/ping"
           curl -fsS -H "x-actor-role: viewer" -H "x-tenant-id: aca-deploy" "${BASE_URL}/api/gethealth"
-          VERSION_JSON="$(curl -fsS "${BASE_URL}/api/version")"
-          VERSION_JSON="${VERSION_JSON}" EXPECTED_COMMIT="${{ github.sha }}" node -e '
-            const response = JSON.parse(process.env.VERSION_JSON);
-            const version = response.data || response;
-            if (version.productionBaseline !== "RP-7") {
-              throw new Error(`Production baseline mismatch: ${version.productionBaseline}`);
-            }
-            if (version.gitCommitHash !== process.env.EXPECTED_COMMIT) {
-              throw new Error(`Production commit mismatch: ${version.gitCommitHash}`);
-            }
-          '
+          IDENTITY_VERIFIED=0
+          for attempt in {1..30}; do
+            VERSION_JSON="$(curl -fsS "${BASE_URL}/api/version")"
+            if VERSION_JSON="${VERSION_JSON}" EXPECTED_COMMIT="${{ github.sha }}" node -e '
+              const response = JSON.parse(process.env.VERSION_JSON);
+              const version = response.data || response;
+              if (version.productionBaseline !== "RP-7") process.exit(1);
+              if (version.gitCommitHash !== process.env.EXPECTED_COMMIT) process.exit(1);
+            '; then
+              IDENTITY_VERIFIED=1
+              break
+            fi
+            echo "Production ingress has not converged to RP-7 commit yet (attempt ${attempt}/30); waiting 10s..."
+            sleep 10
+          done
+          if [[ ${IDENTITY_VERIFIED} -ne 1 ]]; then
+            echo "Production ingress did not converge to RP-7 commit ${{ github.sha }}" >&2
+            exit 1
+          fi
 
       - name: Wave 8 contract stability sweep (production)
         shell: bash
