@@ -115,7 +115,10 @@ function registerCoreRoutes(router: Router): void {
       sendContractJson(response, request, 503, { error: "Routes are still initializing" });
       return;
     }
-    healthHandler(request, response);
+    sendContractJson(response, request, 200, {
+      status: "ready",
+      migratedRoutesReady: true,
+    });
   });
   router.get("/version", (request, response) => {
     sendContractJson(response, request, 200, buildVersionPayload());
