@@ -5,7 +5,7 @@ import { buildVersionPayload } from "./health/version";
 import { incrementMetric, logStructuredEvent, observeLatency } from "./services/observability";
 
 type RouteRegistrar = (router: Router) => void;
-const WAVE9_CONTRACT_VERSION = "wave9.hybrid.v1";
+const WAVE9_CONTRACT_VERSION = "wave8.v1";
 let migratedRoutesReady = false;
 
 function contractEnvelope(path: string, status: number, payload: unknown) {

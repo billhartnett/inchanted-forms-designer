@@ -60,7 +60,7 @@ type AzureHandler = (
   context: InvocationContext,
 ) => Promise<HttpResponseInit> | HttpResponseInit;
 
-const WAVE9_CONTRACT_VERSION = "wave9.hybrid.v1";
+const WAVE9_CONTRACT_VERSION = "wave8.v1";
 
 type JsonRecord = Record<string, unknown>;
 
