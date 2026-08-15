@@ -56,7 +56,9 @@ async function main() {
     rp7BaselineBoundToRuntime: acaManifest.includes('name: PRODUCTION_BASELINE') && acaManifest.includes('value: "RP-7"'),
     runtimeReportsProductionBaseline: versionSource.includes('productionBaseline: process.env.PRODUCTION_BASELINE'),
     immutableImagePlaceholder: acaManifest.includes('image: <IMAGE_REFERENCE>') && !acaManifest.includes('<TAG>'),
-    digestInjectedInBothEnvironments: count(deploymentWorkflow, /<IMAGE_REFERENCE>/g) === 2 && count(deploymentWorkflow, /needs\.resolve-image\.outputs\.image/g) >= 2,
+    digestInjectedInBothEnvironments: count(deploymentWorkflow, /<IMAGE_REFERENCE>/g) === 2
+      && count(deploymentWorkflow, /secrets\.ACR_LOGIN_SERVER/g) >= 2
+      && count(deploymentWorkflow, /needs\.resolve-image\.outputs\.digest/g) >= 2,
     noTwoStepImagePinning: !deploymentWorkflow.includes('Pin deployed image to resolved digest'),
     activeDigestVerifiedInBothEnvironments: count(deploymentWorkflow, /Verify active image digest pin/g) === 2,
     startupProbeConfigured: acaManifest.includes('type: Startup') && acaManifest.includes('path: /api/ping'),

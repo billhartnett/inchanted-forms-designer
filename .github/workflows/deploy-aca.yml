@@ -25,7 +25,6 @@ jobs:
 
     outputs:
       tag: ${{ steps.image.outputs.tag }}
-      image: ${{ steps.image.outputs.image }}
       digest: ${{ steps.image.outputs.digest }}
 
     steps:
@@ -69,7 +68,6 @@ jobs:
             fi
             if [[ -n "${DIGEST}" && -n "${IMAGE_REPO}" && "${DIGEST}" == sha256:* && "${TAG_FROM_ARTIFACT}" == "${EXPECTED_TAG}" ]]; then
               echo "tag=${TAG_FROM_ARTIFACT}" >> "$GITHUB_OUTPUT"
-              echo "image=${IMAGE_REPO}@${DIGEST}" >> "$GITHUB_OUTPUT"
               echo "digest=${DIGEST}" >> "$GITHUB_OUTPUT"
               exit 0
             fi
@@ -94,7 +92,6 @@ jobs:
           fi
 
           echo "tag=${EXPECTED_TAG}" >> "$GITHUB_OUTPUT"
-          echo "image=${LOGIN_SERVER}/${REPO}@${DIGEST}" >> "$GITHUB_OUTPUT"
           echo "digest=${DIGEST}" >> "$GITHUB_OUTPUT"
 
       - name: Guard digest output
@@ -421,7 +418,7 @@ jobs:
           sed -i "s|<RG>|${{ secrets.ACA_RESOURCE_GROUP }}|g" containerapp.effective.yaml
           sed -i "s|<ACA_ENV_NAME>|${{ secrets.ACA_ENV_NAME }}|g" containerapp.effective.yaml
           sed -i "s|<ACR_NAME>|${{ secrets.ACR_NAME }}|g" containerapp.effective.yaml
-          sed -i "s|<IMAGE_REFERENCE>|${{ needs.resolve-image.outputs.image }}|g" containerapp.effective.yaml
+          sed -i "s|<IMAGE_REFERENCE>|${{ secrets.ACR_LOGIN_SERVER }}/wave9-backend-api@${{ needs.resolve-image.outputs.digest }}|g" containerapp.effective.yaml
           sed -i "s|name: inchanted-api|name: ${{ secrets.ACA_APP_NAME }}|" containerapp.effective.yaml
           sed -i "s|<BUILD_TIMESTAMP_ISO8601>|$(date -u +%Y-%m-%dT%H:%M:%SZ)|g" containerapp.effective.yaml
           sed -i "s|<GIT_COMMIT_SHA>|${{ github.sha }}|g" containerapp.effective.yaml
@@ -861,7 +858,7 @@ jobs:
           sed -i "s|<RG>|${{ secrets.ACA_RESOURCE_GROUP }}|g" containerapp.effective.yaml
           sed -i "s|<ACA_ENV_NAME>|${{ secrets.ACA_ENV_NAME }}|g" containerapp.effective.yaml
           sed -i "s|<ACR_NAME>|${{ secrets.ACR_NAME }}|g" containerapp.effective.yaml
-          sed -i "s|<IMAGE_REFERENCE>|${{ needs.resolve-image.outputs.image }}|g" containerapp.effective.yaml
+          sed -i "s|<IMAGE_REFERENCE>|${{ secrets.ACR_LOGIN_SERVER }}/wave9-backend-api@${{ needs.resolve-image.outputs.digest }}|g" containerapp.effective.yaml
           sed -i "s|name: inchanted-api|name: ${{ secrets.ACA_APP_NAME }}|" containerapp.effective.yaml
           sed -i "s|<BUILD_TIMESTAMP_ISO8601>|$(date -u +%Y-%m-%dT%H:%M:%SZ)|g" containerapp.effective.yaml
           sed -i "s|<GIT_COMMIT_SHA>|${{ github.sha }}|g" containerapp.effective.yaml
