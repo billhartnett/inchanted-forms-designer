@@ -1,6 +1,7 @@
 name: Build Image
 
 on:
+  workflow_dispatch:
   push:
     branches: [main]
     tags:
@@ -19,7 +20,6 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Validate required image build secrets
-        id: prereq
         shell: bash
         env:
           AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
@@ -27,49 +27,31 @@ jobs:
           ACR_LOGIN_SERVER: ${{ secrets.ACR_LOGIN_SERVER }}
         run: |
           set -euo pipefail
-          MISSING=0
           if [[ -z "${AZURE_CREDENTIALS}" ]]; then
             echo "Missing required secret: AZURE_CREDENTIALS"
-            MISSING=1
+            exit 1
           fi
           if [[ -z "${ACR_NAME}" ]]; then
             echo "Missing required secret: ACR_NAME"
-            MISSING=1
+            exit 1
           fi
           if [[ -z "${ACR_LOGIN_SERVER}" ]]; then
             echo "Missing required secret: ACR_LOGIN_SERVER"
-            MISSING=1
+            exit 1
           fi
-
-          if [[ "${MISSING}" -eq 1 ]]; then
-            echo "should_skip=true" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-
-          echo "should_skip=false" >> "$GITHUB_OUTPUT"
-
-      - name: Skip build when required secrets are missing
-        if: ${{ steps.prereq.outputs.should_skip == 'true' }}
-        run: |
-          echo "Skipping image build because required secrets are not configured."
-          echo "Expected secrets: AZURE_CREDENTIALS, ACR_NAME, ACR_LOGIN_SERVER"
 
       - name: Azure login
-        if: ${{ steps.prereq.outputs.should_skip != 'true' }}
         uses: azure/login@v2
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Setup Docker Buildx
-        if: ${{ steps.prereq.outputs.should_skip != 'true' }}
         uses: docker/setup-buildx-action@v3
 
       - name: ACR login
-        if: ${{ steps.prereq.outputs.should_skip != 'true' }}
         run: az acr login --name "${{ secrets.ACR_NAME }}"
 
       - name: Resolve image metadata
-        if: ${{ steps.prereq.outputs.should_skip != 'true' }}
         id: meta
         shell: bash
         run: |
@@ -86,7 +68,6 @@ jobs:
           echo "semver_tag=${SEMVER_TAG}" >> "$GITHUB_OUTPUT"
 
       - name: Build and push backend/api Docker image
-        if: ${{ steps.prereq.outputs.should_skip != 'true' }}
         id: build
         shell: bash
         run: |
@@ -102,6 +83,8 @@ jobs:
 
           docker buildx build \
             --push \
+            --provenance=mode=max \
+            --sbom=true \
             --file backend/api/Dockerfile \
             "${TAG_ARGS[@]}" \
             --iidfile image.iid \
@@ -118,7 +101,6 @@ jobs:
             "${IMAGE_REPO}" "${SHA_TAG}" "${SEMVER_TAG}" "${DIGEST}" > image-digest.txt
 
       - name: Upload image digest artifact
-        if: ${{ steps.prereq.outputs.should_skip != 'true' }}
         uses: actions/upload-artifact@v4
         with:
           name: backend-image-digest

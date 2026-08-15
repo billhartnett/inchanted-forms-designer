@@ -53,7 +53,6 @@
     "@azure/storage-blob": "^12.31.0",
     "express": "^4.21.2",
     "multer": "^1.4.5-lts.2",
-    "inchanted-forms-designer": "file:../..",
     "openai": "^4.0.0",
     "shared": "file:../../shared"
   },

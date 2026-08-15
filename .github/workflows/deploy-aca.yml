@@ -421,7 +421,7 @@ jobs:
           sed -i "s|<RG>|${{ secrets.ACA_RESOURCE_GROUP }}|g" containerapp.effective.yaml
           sed -i "s|<ACA_ENV_NAME>|${{ secrets.ACA_ENV_NAME }}|g" containerapp.effective.yaml
           sed -i "s|<ACR_NAME>|${{ secrets.ACR_NAME }}|g" containerapp.effective.yaml
-          sed -i "s|<TAG>|${{ needs.resolve-image.outputs.tag }}|g" containerapp.effective.yaml
+          sed -i "s|<IMAGE_REFERENCE>|${{ needs.resolve-image.outputs.image }}|g" containerapp.effective.yaml
           sed -i "s|name: inchanted-api|name: ${{ secrets.ACA_APP_NAME }}|" containerapp.effective.yaml
           sed -i "s|<BUILD_TIMESTAMP_ISO8601>|$(date -u +%Y-%m-%dT%H:%M:%SZ)|g" containerapp.effective.yaml
           sed -i "s|<GIT_COMMIT_SHA>|${{ github.sha }}|g" containerapp.effective.yaml
@@ -432,16 +432,6 @@ jobs:
             --name "${{ secrets.ACA_APP_NAME }}" \
             --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" \
             --yaml containerapp.effective.yaml \
-            --output none
-
-      - name: Pin deployed image to resolved digest (staging)
-        shell: bash
-        run: |
-          set -euo pipefail
-          az containerapp update \
-            --name "${{ secrets.ACA_APP_NAME }}" \
-            --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" \
-            --image "${{ needs.resolve-image.outputs.image }}" \
             --output none
 
       - name: Verify active image digest pin (staging)
@@ -503,7 +493,17 @@ jobs:
 
           curl -fsS "${BASE_URL}/api/ping"
           curl -fsS -H "x-actor-role: viewer" -H "x-tenant-id: aca-deploy" "${BASE_URL}/api/gethealth"
-          curl -fsS "${BASE_URL}/api/version"
+          VERSION_JSON="$(curl -fsS "${BASE_URL}/api/version")"
+          VERSION_JSON="${VERSION_JSON}" EXPECTED_COMMIT="${{ github.sha }}" node -e '
+            const response = JSON.parse(process.env.VERSION_JSON);
+            const version = response.data || response;
+            if (version.productionBaseline !== "RP-7") {
+              throw new Error(`Staging baseline mismatch: ${version.productionBaseline}`);
+            }
+            if (version.gitCommitHash !== process.env.EXPECTED_COMMIT) {
+              throw new Error(`Staging commit mismatch: ${version.gitCommitHash}`);
+            }
+          '
 
       - name: Capture staging base URL
         id: staging_base
@@ -861,7 +861,7 @@ jobs:
           sed -i "s|<RG>|${{ secrets.ACA_RESOURCE_GROUP }}|g" containerapp.effective.yaml
           sed -i "s|<ACA_ENV_NAME>|${{ secrets.ACA_ENV_NAME }}|g" containerapp.effective.yaml
           sed -i "s|<ACR_NAME>|${{ secrets.ACR_NAME }}|g" containerapp.effective.yaml
-          sed -i "s|<TAG>|${{ needs.resolve-image.outputs.tag }}|g" containerapp.effective.yaml
+          sed -i "s|<IMAGE_REFERENCE>|${{ needs.resolve-image.outputs.image }}|g" containerapp.effective.yaml
           sed -i "s|name: inchanted-api|name: ${{ secrets.ACA_APP_NAME }}|" containerapp.effective.yaml
           sed -i "s|<BUILD_TIMESTAMP_ISO8601>|$(date -u +%Y-%m-%dT%H:%M:%SZ)|g" containerapp.effective.yaml
           sed -i "s|<GIT_COMMIT_SHA>|${{ github.sha }}|g" containerapp.effective.yaml
@@ -872,16 +872,6 @@ jobs:
             --name "${{ secrets.ACA_APP_NAME }}" \
             --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" \
             --yaml containerapp.effective.yaml \
-            --output none
-
-      - name: Pin deployed image to resolved digest (production)
-        shell: bash
-        run: |
-          set -euo pipefail
-          az containerapp update \
-            --name "${{ secrets.ACA_APP_NAME }}" \
-            --resource-group "${{ secrets.ACA_RESOURCE_GROUP }}" \
-            --image "${{ needs.resolve-image.outputs.image }}" \
             --output none
 
       - name: Verify active image digest pin (production)
@@ -943,7 +933,17 @@ jobs:
 
           curl -fsS "${BASE_URL}/api/ping"
           curl -fsS -H "x-actor-role: viewer" -H "x-tenant-id: aca-deploy" "${BASE_URL}/api/gethealth"
-          curl -fsS "${BASE_URL}/api/version"
+          VERSION_JSON="$(curl -fsS "${BASE_URL}/api/version")"
+          VERSION_JSON="${VERSION_JSON}" EXPECTED_COMMIT="${{ github.sha }}" node -e '
+            const response = JSON.parse(process.env.VERSION_JSON);
+            const version = response.data || response;
+            if (version.productionBaseline !== "RP-7") {
+              throw new Error(`Production baseline mismatch: ${version.productionBaseline}`);
+            }
+            if (version.gitCommitHash !== process.env.EXPECTED_COMMIT) {
+              throw new Error(`Production commit mismatch: ${version.gitCommitHash}`);
+            }
+          '
 
       - name: Wave 8 contract stability sweep (production)
         shell: bash

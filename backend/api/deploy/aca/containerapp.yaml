@@ -17,12 +17,14 @@ properties:
     revisionSuffix: <REVISION_SUFFIX>
     containers:
       - name: backend-api
-        image: <ACR_NAME>.azurecr.io/wave9-backend-api:<TAG>
+        image: <IMAGE_REFERENCE>
         env:
           - name: NODE_ENV
             value: production
           - name: PORT
             value: "8080"
+          - name: PRODUCTION_BASELINE
+            value: "RP-7"
           - name: BUILD_TIMESTAMP
             value: "<BUILD_TIMESTAMP_ISO8601>"
           - name: GIT_COMMIT_HASH
@@ -44,6 +46,26 @@ properties:
         resources:
           cpu: 1.0
           memory: 2Gi
+        probes:
+          - type: Startup
+            httpGet:
+              path: /api/ping
+              port: 8080
+            initialDelaySeconds: 2
+            periodSeconds: 5
+            failureThreshold: 24
+          - type: Readiness
+            httpGet:
+              path: /api/ops/health
+              port: 8080
+            periodSeconds: 10
+            failureThreshold: 6
+          - type: Liveness
+            httpGet:
+              path: /api/ping
+              port: 8080
+            periodSeconds: 20
+            failureThreshold: 3
     scale:
       minReplicas: 1
       maxReplicas: 4

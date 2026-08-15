@@ -2,6 +2,12 @@
   "name": "inchanted-forms-designer",
   "version": "1.0.0",
   "private": true,
+  "scripts": {
+    "diagnostics:extraction:alignment": "node scripts/run-extraction-alignment-diagnostics.cjs",
+    "diagnostics:mapping:alignment": "node scripts/run-mapping-engine-alignment-diagnostics.cjs",
+    "production:hardening": "node scripts/run-production-hardening.cjs",
+    "aca:hardening": "node scripts/run-aca-deployment-hardening.cjs"
+  },
   "dependencies": {
     "pdfjs-dist": "^6.0.227",
     "zustand": "^5.0.14"

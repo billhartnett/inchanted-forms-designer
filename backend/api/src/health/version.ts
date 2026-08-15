@@ -32,5 +32,6 @@ export function buildVersionPayload() {
     gitCommitHash: readGitCommitHash(),
     buildTimestamp: process.env.BUILD_TIMESTAMP || new Date().toISOString(),
     wave9EngineVersion: process.env.WAVE9_ENGINE_VERSION || readPackageVersion(),
+    productionBaseline: process.env.PRODUCTION_BASELINE || "unassigned",
   };
 }

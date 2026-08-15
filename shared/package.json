@@ -47,7 +47,6 @@
   },
   "dependencies": {
     "@azure/ai-form-recognizer": "^5.0.0",
-    "@azure/storage-blob": "^12.29.1",
-    "inchanted-api": "file:../backend/api"
+    "@azure/storage-blob": "^12.29.1"
   }
 }

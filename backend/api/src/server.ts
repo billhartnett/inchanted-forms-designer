@@ -1,12 +1,12 @@
 import express, { type NextFunction, type Request, type Response, type Router } from "express";
 import multer from "multer";
-import { registerMigratedFunctionRoutes } from "./api/registerRoutes";
 import { buildPingPayload, buildHealthPayload } from "./health/checks";
 import { buildVersionPayload } from "./health/version";
 import { incrementMetric, logStructuredEvent, observeLatency } from "./services/observability";
 
 type RouteRegistrar = (router: Router) => void;
 const WAVE9_CONTRACT_VERSION = "wave9.hybrid.v1";
+let migratedRoutesReady = false;
 
 function contractEnvelope(path: string, status: number, payload: unknown) {
   const ok = status < 400;
@@ -110,18 +110,20 @@ function registerCoreRoutes(router: Router): void {
   };
 
   router.get("/gethealth", healthHandler);
-  router.get("/ops/health", healthHandler);
+  router.get("/ops/health", (request, response) => {
+    if (!migratedRoutesReady) {
+      sendContractJson(response, request, 503, { error: "Routes are still initializing" });
+      return;
+    }
+    healthHandler(request, response);
+  });
   router.get("/version", (request, response) => {
     sendContractJson(response, request, 200, buildVersionPayload());
   });
 }
 
-function registerWave9Routes(_router: Router): void {
-  registerMigratedFunctionRoutes(_router);
-}
-
 function loadExistingRouteHandlers(router: Router): void {
-  const registrars: RouteRegistrar[] = [registerCoreRoutes, registerWave9Routes];
+  const registrars: RouteRegistrar[] = [registerCoreRoutes];
   for (const register of registrars) {
     register(router);
   }
@@ -151,12 +153,22 @@ function createServer() {
 
   app.use(errorHandlerMiddleware);
 
-  return app;
+  return { app, apiRouter };
 }
 
 const port = Number(process.env.PORT || 8080);
-const server = createServer();
+const { app, apiRouter } = createServer();
 
-server.listen(port, () => {
+app.listen(port, () => {
   console.log(`[express] backend/api listening on port ${port}`);
+
+  void import("./api/registerRoutes.js")
+    .then(({ registerMigratedFunctionRoutes }) => {
+      registerMigratedFunctionRoutes(apiRouter);
+      migratedRoutesReady = true;
+      console.log("[express] migrated routes ready");
+    })
+    .catch((error) => {
+      console.error("[express] migrated route initialization failed", error);
+    });
 });
