@@ -1,13 +1,16 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import { useEffect, useState } from "react";
-import Home from "./pages/Home";
-import Mapping from "./pages/Mapping";
-import { Designer } from "./designer/Designer";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { AppShell } from "./layout/AppShell";
 import DashboardLayout from "./layouts/DashboardLayout";
-import DocumentIngestionTester from "./pages/DocumentIngestionTester";
 import useMonitoringData from "./hooks/useMonitoringData";
 import "./styles/dashboard.css";
+
+const Home = lazy(() => import("./pages/Home"));
+const Mapping = lazy(() => import("./pages/Mapping"));
+const Designer = lazy(() => import("./designer/Designer").then((module) => ({
+  default: module.Designer,
+})));
+const DocumentIngestionTester = lazy(() => import("./pages/DocumentIngestionTester"));
 
 function DashboardPage() {
   const { monitoringData, loading, error, refreshing } = useMonitoringData();
@@ -35,20 +38,22 @@ function DashboardPage() {
 
 export default function App() {
   return (
-    <Routes>
-      {/* Dashboard Routes */}
-      <Route path="/" element={<DashboardPage />} />
-      <Route path="/ingestion-test" element={<DocumentIngestionTester />} />
-      
-      {/* Designer Routes */}
-      <Route element={<AppShell />}>
-        <Route path="/home" element={<Home />} />
-        <Route path="/mapping" element={<Mapping />} />
-        <Route path="/designer" element={<Designer />} />
-      </Route>
-      
-      {/* Fallback */}
-      <Route path="*" element={<Navigate to="/" replace />} />
-    </Routes>
+    <Suspense fallback={null}>
+      <Routes>
+        {/* Dashboard Routes */}
+        <Route path="/" element={<DashboardPage />} />
+        <Route path="/ingestion-test" element={<DocumentIngestionTester />} />
+
+        {/* Designer Routes */}
+        <Route element={<AppShell />}>
+          <Route path="/home" element={<Home />} />
+          <Route path="/mapping" element={<Mapping />} />
+          <Route path="/designer" element={<Designer />} />
+        </Route>
+
+        {/* Fallback */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </Suspense>
   );
 }

@@ -1,0 +1,577 @@
+{
+  "schemaVersion": "phase31-rp7-mapping-decision-diff.v1",
+  "generatedAt": "2026-08-16T02:20:29.791Z",
+  "baselineRestorePoint": "RP-7",
+  "candidatePhase": 31,
+  "targetRestorePoint": "RP-8",
+  "summary": {
+    "totalDecisions": 1176,
+    "changedDecisions": 10,
+    "touchedButUnchangedDecisions": 3,
+    "unchangedDecisions": 1111,
+    "unmappedDecisions": 52,
+    "confidenceChanges": 0,
+    "rankingChanges": 0,
+    "fixtures": 2
+  },
+  "byFixture": {
+    "sample-Acord-125.pdf": {
+      "totalDecisions": 854,
+      "changedDecisions": 9,
+      "touchedButUnchangedDecisions": 3
+    },
+    "Contractors Supp App.pdf": {
+      "totalDecisions": 322,
+      "changedDecisions": 1,
+      "touchedButUnchangedDecisions": 0
+    }
+  },
+  "decisionDiffs": [
+    {
+      "fixture": "sample-Acord-125.pdf",
+      "familyId": "acord-125",
+      "blockId": "p1-l12",
+      "page": 1,
+      "text": "CITY:",
+      "status": "canonical-code-change",
+      "rp7": {
+        "source": "wave9Decision",
+        "acordCode": "NamedInsured_MailingAddress_CityName",
+        "label": "Named Insured Mailing Address City Name Insured Name",
+        "confidence": 0.894,
+        "suppressed": false
+      },
+      "phase31": {
+        "acordCode": "GeneralInfo.MailingAddress.City",
+        "confidence": 0.894,
+        "rankingPosition": 1,
+        "activation": "evaluation-only"
+      },
+      "delta": {
+        "codeChanged": true,
+        "confidenceDelta": 0,
+        "rankingChanged": false,
+        "reason": "evidence-backed-alias",
+        "evidence": {
+          "semanticPath": "NamedInsured_MailingAddress_CityName",
+          "formCount": 39,
+          "instanceCount": 48,
+          "dominantFieldType": "text",
+          "fieldTypeOutlierCount": 0
+        },
+        "bridge": null,
+        "addressBindings": [
+          {
+            "component": "city",
+            "canonicalComponentId": "phase31.address.city",
+            "structure": "NamedInsured.mailingAddress",
+            "status": "evidence-backed",
+            "provenance": "ground-truth-corpus"
+          }
+        ]
+      }
+    },
+    {
+      "fixture": "sample-Acord-125.pdf",
+      "familyId": "acord-125",
+      "blockId": "p1-l15",
+      "page": 1,
+      "text": "STATE:",
+      "status": "canonical-code-change",
+      "rp7": {
+        "source": "wave9Decision",
+        "acordCode": "NamedInsured_MailingAddress_StateOrProvinceCode",
+        "label": "Named Insured Mailing Address State Or Province Code Insured Name",
+        "confidence": 0.895,
+        "suppressed": false
+      },
+      "phase31": {
+        "acordCode": "GeneralInfo.MailingAddress.State",
+        "confidence": 0.895,
+        "rankingPosition": 1,
+        "activation": "evaluation-only"
+      },
+      "delta": {
+        "codeChanged": true,
+        "confidenceDelta": 0,
+        "rankingChanged": false,
+        "reason": "evidence-backed-alias",
+        "evidence": {
+          "semanticPath": "NamedInsured_MailingAddress_StateOrProvinceCode",
+          "formCount": 38,
+          "instanceCount": 47,
+          "dominantFieldType": "text",
+          "fieldTypeOutlierCount": 0
+        },
+        "bridge": null,
+        "addressBindings": [
+          {
+            "component": "stateOrProvince",
+            "canonicalComponentId": "phase31.address.state-or-province",
+            "structure": "NamedInsured.mailingAddress",
+            "status": "evidence-backed",
+            "provenance": "ground-truth-corpus"
+          }
+        ]
+      }
+    },
+    {
+      "fixture": "sample-Acord-125.pdf",
+      "familyId": "acord-125",
+      "blockId": "p1-l16",
+      "page": 1,
+      "text": "ZIP CODE:",
+      "status": "canonical-code-change",
+      "rp7": {
+        "source": "wave9Decision",
+        "acordCode": "NamedInsured_MailingAddress_PostalCode",
+        "label": "Named Insured Mailing Address Postal Code Insured Name",
+        "confidence": 0.906,
+        "suppressed": false
+      },
+      "phase31": {
+        "acordCode": "GeneralInfo.MailingAddress.PostalCode",
+        "confidence": 0.906,
+        "rankingPosition": 1,
+        "activation": "evaluation-only"
+      },
+      "delta": {
+        "codeChanged": true,
+        "confidenceDelta": 0,
+        "rankingChanged": false,
+        "reason": "evidence-backed-alias",
+        "evidence": {
+          "semanticPath": "NamedInsured_MailingAddress_PostalCode",
+          "formCount": 39,
+          "instanceCount": 45,
+          "dominantFieldType": "text",
+          "fieldTypeOutlierCount": 0
+        },
+        "bridge": null,
+        "addressBindings": [
+          {
+            "component": "postalCode",
+            "canonicalComponentId": "phase31.address.postal-code",
+            "structure": "NamedInsured.mailingAddress",
+            "status": "evidence-backed",
+            "provenance": "ground-truth-corpus"
+          }
+        ]
+      }
+    },
+    {
+      "fixture": "sample-Acord-125.pdf",
+      "familyId": "acord-125",
+      "blockId": "p1-l95",
+      "page": 1,
+      "text": "City:",
+      "status": "canonical-code-change",
+      "rp7": {
+        "source": "wave9Decision",
+        "acordCode": "NamedInsured_MailingAddress_CityName",
+        "label": "Named Insured Mailing Address City Name Insured Name",
+        "confidence": 0.894,
+        "suppressed": false
+      },
+      "phase31": {
+        "acordCode": "GeneralInfo.MailingAddress.City",
+        "confidence": 0.894,
+        "rankingPosition": 1,
+        "activation": "evaluation-only"
+      },
+      "delta": {
+        "codeChanged": true,
+        "confidenceDelta": 0,
+        "rankingChanged": false,
+        "reason": "evidence-backed-alias",
+        "evidence": {
+          "semanticPath": "NamedInsured_MailingAddress_CityName",
+          "formCount": 39,
+          "instanceCount": 48,
+          "dominantFieldType": "text",
+          "fieldTypeOutlierCount": 0
+        },
+        "bridge": null,
+        "addressBindings": [
+          {
+            "component": "city",
+            "canonicalComponentId": "phase31.address.city",
+            "structure": "NamedInsured.mailingAddress",
+            "status": "evidence-backed",
+            "provenance": "ground-truth-corpus"
+          }
+        ]
+      }
+    },
+    {
+      "fixture": "sample-Acord-125.pdf",
+      "familyId": "acord-125",
+      "blockId": "p1-l96",
+      "page": 1,
+      "text": "State:",
+      "status": "canonical-code-change",
+      "rp7": {
+        "source": "wave9Decision",
+        "acordCode": "NamedInsured_MailingAddress_StateOrProvinceCode",
+        "label": "Named Insured Mailing Address State Or Province Code Insured Name",
+        "confidence": 0.895,
+        "suppressed": false
+      },
+      "phase31": {
+        "acordCode": "GeneralInfo.MailingAddress.State",
+        "confidence": 0.895,
+        "rankingPosition": 1,
+        "activation": "evaluation-only"
+      },
+      "delta": {
+        "codeChanged": true,
+        "confidenceDelta": 0,
+        "rankingChanged": false,
+        "reason": "evidence-backed-alias",
+        "evidence": {
+          "semanticPath": "NamedInsured_MailingAddress_StateOrProvinceCode",
+          "formCount": 38,
+          "instanceCount": 47,
+          "dominantFieldType": "text",
+          "fieldTypeOutlierCount": 0
+        },
+        "bridge": null,
+        "addressBindings": [
+          {
+            "component": "stateOrProvince",
+            "canonicalComponentId": "phase31.address.state-or-province",
+            "structure": "NamedInsured.mailingAddress",
+            "status": "evidence-backed",
+            "provenance": "ground-truth-corpus"
+          }
+        ]
+      }
+    },
+    {
+      "fixture": "sample-Acord-125.pdf",
+      "familyId": "acord-125",
+      "blockId": "p1-l99",
+      "page": 1,
+      "text": "Zip Code:",
+      "status": "canonical-code-change",
+      "rp7": {
+        "source": "wave9Decision",
+        "acordCode": "NamedInsured_MailingAddress_PostalCode",
+        "label": "Named Insured Mailing Address Postal Code Insured Name",
+        "confidence": 0.906,
+        "suppressed": false
+      },
+      "phase31": {
+        "acordCode": "GeneralInfo.MailingAddress.PostalCode",
+        "confidence": 0.906,
+        "rankingPosition": 1,
+        "activation": "evaluation-only"
+      },
+      "delta": {
+        "codeChanged": true,
+        "confidenceDelta": 0,
+        "rankingChanged": false,
+        "reason": "evidence-backed-alias",
+        "evidence": {
+          "semanticPath": "NamedInsured_MailingAddress_PostalCode",
+          "formCount": 39,
+          "instanceCount": 45,
+          "dominantFieldType": "text",
+          "fieldTypeOutlierCount": 0
+        },
+        "bridge": null,
+        "addressBindings": [
+          {
+            "component": "postalCode",
+            "canonicalComponentId": "phase31.address.postal-code",
+            "structure": "NamedInsured.mailingAddress",
+            "status": "evidence-backed",
+            "provenance": "ground-truth-corpus"
+          }
+        ]
+      }
+    },
+    {
+      "fixture": "sample-Acord-125.pdf",
+      "familyId": "acord-125",
+      "blockId": "p1-l143",
+      "page": 1,
+      "text": "STREET, CITY, COUNTY, STATE, ZIP+4",
+      "status": "canonical-code-change",
+      "rp7": {
+        "source": "wave9Decision",
+        "acordCode": "NamedInsured_MailingAddress_PostalCode",
+        "label": "Named Insured Mailing Address Postal Code Insured Name",
+        "confidence": 0.736,
+        "suppressed": false
+      },
+      "phase31": {
+        "acordCode": "GeneralInfo.MailingAddress.PostalCode",
+        "confidence": 0.736,
+        "rankingPosition": 1,
+        "activation": "evaluation-only"
+      },
+      "delta": {
+        "codeChanged": true,
+        "confidenceDelta": 0,
+        "rankingChanged": false,
+        "reason": "evidence-backed-alias",
+        "evidence": {
+          "semanticPath": "NamedInsured_MailingAddress_PostalCode",
+          "formCount": 39,
+          "instanceCount": 45,
+          "dominantFieldType": "text",
+          "fieldTypeOutlierCount": 0
+        },
+        "bridge": null,
+        "addressBindings": [
+          {
+            "component": "postalCode",
+            "canonicalComponentId": "phase31.address.postal-code",
+            "structure": "NamedInsured.mailingAddress",
+            "status": "evidence-backed",
+            "provenance": "ground-truth-corpus"
+          }
+        ]
+      }
+    },
+    {
+      "fixture": "sample-Acord-125.pdf",
+      "familyId": "acord-125",
+      "blockId": "p1-l144",
+      "page": 1,
+      "text": "CITY LIMITS",
+      "status": "canonical-code-change",
+      "rp7": {
+        "source": "wave9Decision",
+        "acordCode": "NamedInsured_MailingAddress_CityName",
+        "label": "Named Insured Mailing Address City Name Insured Name",
+        "confidence": 0.734,
+        "suppressed": false
+      },
+      "phase31": {
+        "acordCode": "GeneralInfo.MailingAddress.City",
+        "confidence": 0.734,
+        "rankingPosition": 1,
+        "activation": "evaluation-only"
+      },
+      "delta": {
+        "codeChanged": true,
+        "confidenceDelta": 0,
+        "rankingChanged": false,
+        "reason": "evidence-backed-alias",
+        "evidence": {
+          "semanticPath": "NamedInsured_MailingAddress_CityName",
+          "formCount": 39,
+          "instanceCount": 48,
+          "dominantFieldType": "text",
+          "fieldTypeOutlierCount": 0
+        },
+        "bridge": null,
+        "addressBindings": [
+          {
+            "component": "city",
+            "canonicalComponentId": "phase31.address.city",
+            "structure": "NamedInsured.mailingAddress",
+            "status": "evidence-backed",
+            "provenance": "ground-truth-corpus"
+          }
+        ]
+      }
+    },
+    {
+      "fixture": "sample-Acord-125.pdf",
+      "familyId": "acord-125",
+      "blockId": "p2-l164",
+      "page": 2,
+      "text": "STATE SUPPLEMENT(S) (If applicable)",
+      "status": "canonical-code-change",
+      "rp7": {
+        "source": "wave9Decision",
+        "acordCode": "NamedInsured_MailingAddress_StateOrProvinceCode",
+        "label": "Named Insured Mailing Address State Or Province Code Insured Name",
+        "confidence": 0.735,
+        "suppressed": false
+      },
+      "phase31": {
+        "acordCode": "GeneralInfo.MailingAddress.State",
+        "confidence": 0.735,
+        "rankingPosition": 1,
+        "activation": "evaluation-only"
+      },
+      "delta": {
+        "codeChanged": true,
+        "confidenceDelta": 0,
+        "rankingChanged": false,
+        "reason": "evidence-backed-alias",
+        "evidence": {
+          "semanticPath": "NamedInsured_MailingAddress_StateOrProvinceCode",
+          "formCount": 38,
+          "instanceCount": 47,
+          "dominantFieldType": "text",
+          "fieldTypeOutlierCount": 0
+        },
+        "bridge": null,
+        "addressBindings": [
+          {
+            "component": "stateOrProvince",
+            "canonicalComponentId": "phase31.address.state-or-province",
+            "structure": "NamedInsured.mailingAddress",
+            "status": "evidence-backed",
+            "provenance": "ground-truth-corpus"
+          }
+        ]
+      }
+    },
+    {
+      "fixture": "Contractors Supp App.pdf",
+      "familyId": "unknown-family",
+      "blockId": "p1-l7",
+      "page": 1,
+      "text": "Applicant:",
+      "status": "canonical-code-change",
+      "rp7": {
+        "source": "chosen",
+        "acordCode": "NamedInsured_FullName",
+        "label": "GeneralInfo.NamedInsured Insured Name",
+        "confidence": 0.68,
+        "suppressed": false
+      },
+      "phase31": {
+        "acordCode": "GeneralInfo.NamedInsured",
+        "confidence": 0.68,
+        "rankingPosition": 1,
+        "activation": "evaluation-only"
+      },
+      "delta": {
+        "codeChanged": true,
+        "confidenceDelta": 0,
+        "rankingChanged": false,
+        "reason": "evidence-backed-alias",
+        "evidence": {
+          "semanticPath": "NamedInsured_FullName",
+          "formCount": 61,
+          "instanceCount": 83,
+          "dominantFieldType": "text",
+          "fieldTypeOutlierCount": 1
+        },
+        "bridge": null,
+        "addressBindings": []
+      }
+    }
+  ],
+  "preservedAlignments": [
+    {
+      "fixture": "sample-Acord-125.pdf",
+      "familyId": "acord-125",
+      "blockId": "p1-l92",
+      "page": 1,
+      "text": "NAME (First Named Insured & Other Named Insureds)",
+      "status": "canonical-code-preserved",
+      "rp7": {
+        "source": "wave9Decision",
+        "acordCode": "GeneralInfo.NamedInsured",
+        "label": "General Info Named Insured",
+        "confidence": 0.856,
+        "suppressed": false
+      },
+      "phase31": {
+        "acordCode": "GeneralInfo.NamedInsured",
+        "confidence": 0.856,
+        "rankingPosition": 1,
+        "activation": "evaluation-only"
+      },
+      "delta": {
+        "codeChanged": false,
+        "confidenceDelta": 0,
+        "rankingChanged": false,
+        "reason": "cross-form-bridge",
+        "evidence": null,
+        "bridge": {
+          "groupId": "group-b0143d84",
+          "evidencePath": "NamedInsured_FullName",
+          "evidenceFormCount": 61
+        },
+        "addressBindings": []
+      }
+    },
+    {
+      "fixture": "sample-Acord-125.pdf",
+      "familyId": "acord-125",
+      "blockId": "p1-l100",
+      "page": 1,
+      "text": "(of First Named Insured):",
+      "status": "canonical-code-preserved",
+      "rp7": {
+        "source": "wave9Decision",
+        "acordCode": "GeneralInfo.NamedInsured",
+        "label": "General Info Named Insured",
+        "confidence": 0.856,
+        "suppressed": false
+      },
+      "phase31": {
+        "acordCode": "GeneralInfo.NamedInsured",
+        "confidence": 0.856,
+        "rankingPosition": 1,
+        "activation": "evaluation-only"
+      },
+      "delta": {
+        "codeChanged": false,
+        "confidenceDelta": 0,
+        "rankingChanged": false,
+        "reason": "cross-form-bridge",
+        "evidence": null,
+        "bridge": {
+          "groupId": "group-b0143d84",
+          "evidencePath": "NamedInsured_FullName",
+          "evidenceFormCount": 61
+        },
+        "addressBindings": []
+      }
+    },
+    {
+      "fixture": "sample-Acord-125.pdf",
+      "familyId": "acord-125",
+      "blockId": "p4-l107",
+      "page": 4,
+      "text": "10. DOES ANY NAMED INSURED SELL TO OTHER NAMED INSUREDS?",
+      "status": "canonical-code-preserved",
+      "rp7": {
+        "source": "wave9Decision",
+        "acordCode": "GeneralInfo.NamedInsured",
+        "label": "General Info Named Insured",
+        "confidence": 0.85,
+        "suppressed": false
+      },
+      "phase31": {
+        "acordCode": "GeneralInfo.NamedInsured",
+        "confidence": 0.85,
+        "rankingPosition": 1,
+        "activation": "evaluation-only"
+      },
+      "delta": {
+        "codeChanged": false,
+        "confidenceDelta": 0,
+        "rankingChanged": false,
+        "reason": "cross-form-bridge",
+        "evidence": null,
+        "bridge": {
+          "groupId": "group-b0143d84",
+          "evidencePath": "NamedInsured_FullName",
+          "evidenceFormCount": 61
+        },
+        "addressBindings": []
+      }
+    }
+  ],
+  "guardrails": {
+    "phase31Inactive": true,
+    "rp7RuntimeBaselinePreserved": true,
+    "rp7ManifestReadOnly": true,
+    "noLiveRerankingClaim": true
+  },
+  "integrity": {
+    "algorithm": "sha256",
+    "payloadSha256": "2b58843db632cba1063a07bc2c70978f68f29a0575322d30cb03953bb3fd15a8"
+  }
+}

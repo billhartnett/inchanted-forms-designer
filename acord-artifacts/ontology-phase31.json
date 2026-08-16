@@ -1,0 +1,2567 @@
+{
+  "schemaVersion": "ontology-evolution.v1",
+  "phase": 31,
+  "phaseId": "phase31-semantic-expansion-cross-form-unification",
+  "status": "candidate",
+  "generatedAt": "2026-08-16T01:54:25.075Z",
+  "lineage": {
+    "parentOntology": "phase30-semantic-truth-rewrite",
+    "productionBaseline": "RP-7",
+    "metricVersion": "collapse-aware-metric.v35",
+    "parentOntologyHash": "215fc254c8b483e784a6e3f39f003e1ce7e661909d7c3d5e105bdc938d904edb",
+    "baselineManifestSha256": "6292d71e9f618a9caf2bc2157e56310d9d4a102bea730e6d70f04081742060cf"
+  },
+  "activation": {
+    "state": "inactive",
+    "runtimeChanged": false,
+    "productionBaselineChanged": false,
+    "requiresValidationAndExplicitPromotion": true
+  },
+  "evolution": {
+    "objective": "Expand canonical semantics from recurring cross-form evidence and reconcile them with the existing unification graph.",
+    "changeSet": [
+      {
+        "type": "add-evidence-backed-alias",
+        "acordCode": "CommercialProperty.Building.LocationAddress",
+        "aliases": [
+          "Location_PhysicalAddress_LineOne"
+        ]
+      },
+      {
+        "type": "add-evidence-backed-alias",
+        "acordCode": "GeneralInfo.MailingAddress.City",
+        "aliases": [
+          "NamedInsured_MailingAddress_CityName"
+        ]
+      },
+      {
+        "type": "add-evidence-backed-alias",
+        "acordCode": "GeneralInfo.MailingAddress.Line1",
+        "aliases": [
+          "NamedInsured_MailingAddress_LineOne"
+        ]
+      },
+      {
+        "type": "add-evidence-backed-alias",
+        "acordCode": "GeneralInfo.MailingAddress.PostalCode",
+        "aliases": [
+          "NamedInsured_MailingAddress_PostalCode"
+        ]
+      },
+      {
+        "type": "add-evidence-backed-alias",
+        "acordCode": "GeneralInfo.MailingAddress.State",
+        "aliases": [
+          "NamedInsured_MailingAddress_StateOrProvinceCode"
+        ]
+      },
+      {
+        "type": "add-evidence-backed-alias",
+        "acordCode": "GeneralInfo.NamedInsured",
+        "aliases": [
+          "NamedInsured_FullName"
+        ]
+      },
+      {
+        "type": "harmonize-address-components",
+        "schemaVersion": "phase31-address-harmonization.v1",
+        "components": [
+          "phase31.address.line1",
+          "phase31.address.city",
+          "phase31.address.state-or-province",
+          "phase31.address.postal-code"
+        ],
+        "structures": [
+          "NamedInsured.mailingAddress",
+          "NamedInsured.physicalAddress",
+          "Applicant.address",
+          "Insured.address",
+          "CommercialProperty.locationAddress"
+        ],
+        "preservesStructureRole": true
+      }
+    ],
+    "nextActions": [
+      "Resolve graph-only codes against corpus-backed canonical concepts.",
+      "Validate candidate changes against extraction, mapping, and structured output contracts.",
+      "Promote only after drift review and an explicit production-baseline decision."
+    ]
+  },
+  "contracts": {
+    "stableFieldIds": true,
+    "stablePageIndices": true,
+    "preserveGrouping": true,
+    "preservePersistedDesignerState": true,
+    "labelsAreSemanticAnchors": true,
+    "noOcrTextOverlays": true
+  },
+  "source": {
+    "repository": "F:/inchanted-forms-designer",
+    "canonicalModule": "shared/src/acord/ontology.js",
+    "bundleModule": "shared/src/acord/multiOntology.js",
+    "ontologyId": "acord-canonical-ontology",
+    "ontologyVersion": "2026.06.10",
+    "ontologyHash": "c653ca94"
+  },
+  "canonicalOntology": {
+    "ontologyId": "acord-canonical-ontology",
+    "version": "2026.06.10",
+    "generatedAt": "deterministic",
+    "hash": "c653ca94",
+    "nodes": {
+      "CommercialProperty.Building.LocationAddress": {
+        "acordCode": "CommercialProperty.Building.LocationAddress",
+        "aliases": [
+          "building location",
+          "Building location address",
+          "CommercialProperty.Building.LocationAddress"
+        ],
+        "synonyms": [
+          "address",
+          "building",
+          "location",
+          "property"
+        ],
+        "parentCodes": [],
+        "childCodes": [
+          "GeneralInfo.MailingAddress.City",
+          "GeneralInfo.MailingAddress.PostalCode",
+          "GeneralInfo.MailingAddress.State"
+        ],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "contact",
+          "property"
+        ],
+        "groups": [
+          "address"
+        ]
+      },
+      "Contractors.Operations.Description": {
+        "acordCode": "Contractors.Operations.Description",
+        "aliases": [
+          "contractors operations",
+          "Contractors operations description",
+          "Contractors.Operations.Description"
+        ],
+        "synonyms": [
+          "contractor",
+          "description",
+          "operations",
+          "supplement",
+          "work"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "operations"
+        ],
+        "groups": [
+          "classification"
+        ]
+      },
+      "GeneralInfo.MailingAddress.City": {
+        "acordCode": "GeneralInfo.MailingAddress.City",
+        "aliases": [
+          "GeneralInfo.MailingAddress.City",
+          "mailing address",
+          "Mailing address city"
+        ],
+        "synonyms": [
+          "address",
+          "city",
+          "mailing"
+        ],
+        "parentCodes": [
+          "CommercialProperty.Building.LocationAddress",
+          "GeneralInfo.MailingAddress.Line1",
+          "GeneralInfo.MailingAddress.PostalCode",
+          "GeneralInfo.MailingAddress.State"
+        ],
+        "childCodes": [
+          "GeneralInfo.MailingAddress.PostalCode",
+          "GeneralInfo.MailingAddress.State"
+        ],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [
+          "GeneralInfo.MailingAddress.State"
+        ],
+        "sections": [
+          "contact",
+          "general-information"
+        ],
+        "groups": [
+          "address"
+        ]
+      },
+      "GeneralInfo.MailingAddress.Line1": {
+        "acordCode": "GeneralInfo.MailingAddress.Line1",
+        "aliases": [
+          "GeneralInfo.MailingAddress.Line1",
+          "mailing address",
+          "Mailing address line 1"
+        ],
+        "synonyms": [
+          "address",
+          "line",
+          "mailing",
+          "primary",
+          "street"
+        ],
+        "parentCodes": [],
+        "childCodes": [
+          "GeneralInfo.MailingAddress.City",
+          "GeneralInfo.MailingAddress.PostalCode",
+          "GeneralInfo.MailingAddress.State"
+        ],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "contact",
+          "general-information"
+        ],
+        "groups": [
+          "address"
+        ]
+      },
+      "GeneralInfo.MailingAddress.PostalCode": {
+        "acordCode": "GeneralInfo.MailingAddress.PostalCode",
+        "aliases": [
+          "GeneralInfo.MailingAddress.PostalCode",
+          "mailing address",
+          "Mailing address postal code"
+        ],
+        "synonyms": [
+          "address",
+          "code",
+          "mailing",
+          "postal",
+          "zip"
+        ],
+        "parentCodes": [
+          "CommercialProperty.Building.LocationAddress",
+          "GeneralInfo.MailingAddress.City",
+          "GeneralInfo.MailingAddress.Line1",
+          "GeneralInfo.MailingAddress.State"
+        ],
+        "childCodes": [
+          "GeneralInfo.MailingAddress.City",
+          "GeneralInfo.MailingAddress.State"
+        ],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [
+          "GeneralInfo.MailingAddress.State"
+        ],
+        "sections": [
+          "contact",
+          "general-information"
+        ],
+        "groups": [
+          "address",
+          "classification"
+        ]
+      },
+      "GeneralInfo.MailingAddress.State": {
+        "acordCode": "GeneralInfo.MailingAddress.State",
+        "aliases": [
+          "GeneralInfo.MailingAddress.State",
+          "mailing address",
+          "Mailing address state"
+        ],
+        "synonyms": [
+          "address",
+          "code",
+          "mailing",
+          "province",
+          "state"
+        ],
+        "parentCodes": [
+          "CommercialProperty.Building.LocationAddress",
+          "GeneralInfo.MailingAddress.City",
+          "GeneralInfo.MailingAddress.Line1",
+          "GeneralInfo.MailingAddress.PostalCode"
+        ],
+        "childCodes": [
+          "GeneralInfo.MailingAddress.City",
+          "GeneralInfo.MailingAddress.PostalCode"
+        ],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [
+          "GeneralInfo.MailingAddress.City"
+        ],
+        "sections": [
+          "contact",
+          "general-information"
+        ],
+        "groups": [
+          "address",
+          "classification"
+        ]
+      },
+      "GeneralInfo.NamedInsured": {
+        "acordCode": "GeneralInfo.NamedInsured",
+        "aliases": [
+          "GeneralInfo.NamedInsured",
+          "named insured",
+          "Named insured"
+        ],
+        "synonyms": [
+          "applicant",
+          "entity",
+          "insured",
+          "legal",
+          "name",
+          "named"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "general-information"
+        ],
+        "groups": [
+          "identity"
+        ]
+      },
+      "GeneralLiability.Exposure.HazardClass": {
+        "acordCode": "GeneralLiability.Exposure.HazardClass",
+        "aliases": [
+          "GeneralLiability.Exposure.HazardClass",
+          "hazard class",
+          "Hazard class"
+        ],
+        "synonyms": [
+          "class",
+          "general",
+          "hazard",
+          "liability"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "general-information",
+          "liability"
+        ],
+        "groups": [
+          "classification",
+          "risk"
+        ]
+      }
+    }
+  },
+  "bundles": [
+    {
+      "metadata": {
+        "bundleId": "acord-core@2026.06.10",
+        "namespace": "acord-core",
+        "version": "2026.06.10",
+        "signature": "94b03069",
+        "compatibility": [
+          "acord-core",
+          "carrier-supplemental",
+          "internal-extended"
+        ],
+        "precedence": 300,
+        "generatedAt": "deterministic"
+      },
+      "ontology": {
+        "ontologyId": "acord-canonical-ontology:acord-core",
+        "version": "2026.06.10",
+        "generatedAt": "deterministic",
+        "hash": "ba64a762",
+        "nodes": {
+          "CommercialProperty.Building.LocationAddress": {
+            "acordCode": "CommercialProperty.Building.LocationAddress",
+            "aliases": [
+              "building location",
+              "Building location address",
+              "CommercialProperty.Building.LocationAddress"
+            ],
+            "synonyms": [
+              "address",
+              "building",
+              "location",
+              "property"
+            ],
+            "parentCodes": [],
+            "childCodes": [
+              "GeneralInfo.MailingAddress.City",
+              "GeneralInfo.MailingAddress.PostalCode",
+              "GeneralInfo.MailingAddress.State"
+            ],
+            "mutuallyExclusiveCodes": [],
+            "requiredSiblingCodes": [],
+            "sections": [
+              "acord-core",
+              "contact",
+              "property"
+            ],
+            "groups": [
+              "address"
+            ]
+          },
+          "Contractors.Operations.Description": {
+            "acordCode": "Contractors.Operations.Description",
+            "aliases": [
+              "contractors operations",
+              "Contractors operations description",
+              "Contractors.Operations.Description"
+            ],
+            "synonyms": [
+              "contractor",
+              "description",
+              "operations",
+              "supplement",
+              "work"
+            ],
+            "parentCodes": [],
+            "childCodes": [],
+            "mutuallyExclusiveCodes": [],
+            "requiredSiblingCodes": [],
+            "sections": [
+              "acord-core",
+              "operations"
+            ],
+            "groups": [
+              "classification"
+            ]
+          },
+          "GeneralInfo.MailingAddress.City": {
+            "acordCode": "GeneralInfo.MailingAddress.City",
+            "aliases": [
+              "GeneralInfo.MailingAddress.City",
+              "mailing address",
+              "Mailing address city"
+            ],
+            "synonyms": [
+              "address",
+              "city",
+              "mailing"
+            ],
+            "parentCodes": [
+              "CommercialProperty.Building.LocationAddress",
+              "GeneralInfo.MailingAddress.Line1",
+              "GeneralInfo.MailingAddress.PostalCode",
+              "GeneralInfo.MailingAddress.State"
+            ],
+            "childCodes": [
+              "GeneralInfo.MailingAddress.PostalCode",
+              "GeneralInfo.MailingAddress.State"
+            ],
+            "mutuallyExclusiveCodes": [],
+            "requiredSiblingCodes": [
+              "GeneralInfo.MailingAddress.State"
+            ],
+            "sections": [
+              "acord-core",
+              "contact",
+              "general-information"
+            ],
+            "groups": [
+              "address"
+            ]
+          },
+          "GeneralInfo.MailingAddress.Line1": {
+            "acordCode": "GeneralInfo.MailingAddress.Line1",
+            "aliases": [
+              "GeneralInfo.MailingAddress.Line1",
+              "mailing address",
+              "Mailing address line 1"
+            ],
+            "synonyms": [
+              "address",
+              "line",
+              "mailing",
+              "primary",
+              "street"
+            ],
+            "parentCodes": [],
+            "childCodes": [
+              "GeneralInfo.MailingAddress.City",
+              "GeneralInfo.MailingAddress.PostalCode",
+              "GeneralInfo.MailingAddress.State"
+            ],
+            "mutuallyExclusiveCodes": [],
+            "requiredSiblingCodes": [],
+            "sections": [
+              "acord-core",
+              "contact",
+              "general-information"
+            ],
+            "groups": [
+              "address"
+            ]
+          },
+          "GeneralInfo.MailingAddress.PostalCode": {
+            "acordCode": "GeneralInfo.MailingAddress.PostalCode",
+            "aliases": [
+              "GeneralInfo.MailingAddress.PostalCode",
+              "mailing address",
+              "Mailing address postal code"
+            ],
+            "synonyms": [
+              "address",
+              "code",
+              "mailing",
+              "postal",
+              "zip"
+            ],
+            "parentCodes": [
+              "CommercialProperty.Building.LocationAddress",
+              "GeneralInfo.MailingAddress.City",
+              "GeneralInfo.MailingAddress.Line1",
+              "GeneralInfo.MailingAddress.State"
+            ],
+            "childCodes": [
+              "GeneralInfo.MailingAddress.City",
+              "GeneralInfo.MailingAddress.State"
+            ],
+            "mutuallyExclusiveCodes": [],
+            "requiredSiblingCodes": [
+              "GeneralInfo.MailingAddress.State"
+            ],
+            "sections": [
+              "acord-core",
+              "contact",
+              "general-information"
+            ],
+            "groups": [
+              "address",
+              "classification"
+            ]
+          },
+          "GeneralInfo.MailingAddress.State": {
+            "acordCode": "GeneralInfo.MailingAddress.State",
+            "aliases": [
+              "GeneralInfo.MailingAddress.State",
+              "mailing address",
+              "Mailing address state"
+            ],
+            "synonyms": [
+              "address",
+              "code",
+              "mailing",
+              "province",
+              "state"
+            ],
+            "parentCodes": [
+              "CommercialProperty.Building.LocationAddress",
+              "GeneralInfo.MailingAddress.City",
+              "GeneralInfo.MailingAddress.Line1",
+              "GeneralInfo.MailingAddress.PostalCode"
+            ],
+            "childCodes": [
+              "GeneralInfo.MailingAddress.City",
+              "GeneralInfo.MailingAddress.PostalCode"
+            ],
+            "mutuallyExclusiveCodes": [],
+            "requiredSiblingCodes": [
+              "GeneralInfo.MailingAddress.City"
+            ],
+            "sections": [
+              "acord-core",
+              "contact",
+              "general-information"
+            ],
+            "groups": [
+              "address",
+              "classification"
+            ]
+          },
+          "GeneralInfo.NamedInsured": {
+            "acordCode": "GeneralInfo.NamedInsured",
+            "aliases": [
+              "GeneralInfo.NamedInsured",
+              "named insured",
+              "Named insured"
+            ],
+            "synonyms": [
+              "applicant",
+              "entity",
+              "insured",
+              "legal",
+              "name",
+              "named"
+            ],
+            "parentCodes": [],
+            "childCodes": [],
+            "mutuallyExclusiveCodes": [],
+            "requiredSiblingCodes": [],
+            "sections": [
+              "acord-core",
+              "general-information"
+            ],
+            "groups": [
+              "identity"
+            ]
+          },
+          "GeneralLiability.Exposure.HazardClass": {
+            "acordCode": "GeneralLiability.Exposure.HazardClass",
+            "aliases": [
+              "GeneralLiability.Exposure.HazardClass",
+              "hazard class",
+              "Hazard class"
+            ],
+            "synonyms": [
+              "class",
+              "general",
+              "hazard",
+              "liability"
+            ],
+            "parentCodes": [],
+            "childCodes": [],
+            "mutuallyExclusiveCodes": [],
+            "requiredSiblingCodes": [],
+            "sections": [
+              "acord-core",
+              "general-information",
+              "liability"
+            ],
+            "groups": [
+              "classification",
+              "risk"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "metadata": {
+        "bundleId": "carrier-supplemental@2026.06.10",
+        "namespace": "carrier-supplemental",
+        "version": "2026.06.10",
+        "signature": "5fafbb76",
+        "compatibility": [
+          "acord-core",
+          "carrier-supplemental"
+        ],
+        "precedence": 200,
+        "generatedAt": "deterministic"
+      },
+      "ontology": {
+        "ontologyId": "acord-canonical-ontology:carrier-supplemental",
+        "version": "2026.06.10",
+        "generatedAt": "deterministic",
+        "hash": "874f33fa",
+        "nodes": {
+          "CommercialProperty.Building.LocationAddress": {
+            "acordCode": "CommercialProperty.Building.LocationAddress",
+            "aliases": [
+              "building location",
+              "Building location address",
+              "CommercialProperty.Building.LocationAddress"
+            ],
+            "synonyms": [
+              "address",
+              "building",
+              "location",
+              "property"
+            ],
+            "parentCodes": [],
+            "childCodes": [
+              "GeneralInfo.MailingAddress.City",
+              "GeneralInfo.MailingAddress.PostalCode",
+              "GeneralInfo.MailingAddress.State"
+            ],
+            "mutuallyExclusiveCodes": [],
+            "requiredSiblingCodes": [],
+            "sections": [
+              "carrier-supplemental",
+              "contact",
+              "property"
+            ],
+            "groups": [
+              "address"
+            ]
+          },
+          "Contractors.Operations.Description": {
+            "acordCode": "Contractors.Operations.Description",
+            "aliases": [
+              "contractors operations",
+              "Contractors operations description",
+              "Contractors.Operations.Description"
+            ],
+            "synonyms": [
+              "contractor",
+              "description",
+              "operations",
+              "supplement",
+              "work"
+            ],
+            "parentCodes": [],
+            "childCodes": [],
+            "mutuallyExclusiveCodes": [],
+            "requiredSiblingCodes": [],
+            "sections": [
+              "carrier-supplemental",
+              "operations"
+            ],
+            "groups": [
+              "classification"
+            ]
+          },
+          "GeneralInfo.MailingAddress.City": {
+            "acordCode": "GeneralInfo.MailingAddress.City",
+            "aliases": [
+              "GeneralInfo.MailingAddress.City",
+              "mailing address",
+              "Mailing address city"
+            ],
+            "synonyms": [
+              "address",
+              "city",
+              "mailing"
+            ],
+            "parentCodes": [
+              "CommercialProperty.Building.LocationAddress",
+              "GeneralInfo.MailingAddress.Line1",
+              "GeneralInfo.MailingAddress.PostalCode",
+              "GeneralInfo.MailingAddress.State"
+            ],
+            "childCodes": [
+              "GeneralInfo.MailingAddress.PostalCode",
+              "GeneralInfo.MailingAddress.State"
+            ],
+            "mutuallyExclusiveCodes": [],
+            "requiredSiblingCodes": [
+              "GeneralInfo.MailingAddress.State"
+            ],
+            "sections": [
+              "carrier-supplemental",
+              "contact",
+              "general-information"
+            ],
+            "groups": [
+              "address"
+            ]
+          },
+          "GeneralInfo.MailingAddress.Line1": {
+            "acordCode": "GeneralInfo.MailingAddress.Line1",
+            "aliases": [
+              "GeneralInfo.MailingAddress.Line1",
+              "mailing address",
+              "Mailing address line 1"
+            ],
+            "synonyms": [
+              "address",
+              "line",
+              "mailing",
+              "primary",
+              "street"
+            ],
+            "parentCodes": [],
+            "childCodes": [
+              "GeneralInfo.MailingAddress.City",
+              "GeneralInfo.MailingAddress.PostalCode",
+              "GeneralInfo.MailingAddress.State"
+            ],
+            "mutuallyExclusiveCodes": [],
+            "requiredSiblingCodes": [],
+            "sections": [
+              "carrier-supplemental",
+              "contact",
+              "general-information"
+            ],
+            "groups": [
+              "address"
+            ]
+          },
+          "GeneralInfo.MailingAddress.PostalCode": {
+            "acordCode": "GeneralInfo.MailingAddress.PostalCode",
+            "aliases": [
+              "GeneralInfo.MailingAddress.PostalCode",
+              "mailing address",
+              "Mailing address postal code"
+            ],
+            "synonyms": [
+              "address",
+              "code",
+              "mailing",
+              "postal",
+              "zip"
+            ],
+            "parentCodes": [
+              "CommercialProperty.Building.LocationAddress",
+              "GeneralInfo.MailingAddress.City",
+              "GeneralInfo.MailingAddress.Line1",
+              "GeneralInfo.MailingAddress.State"
+            ],
+            "childCodes": [
+              "GeneralInfo.MailingAddress.City",
+              "GeneralInfo.MailingAddress.State"
+            ],
+            "mutuallyExclusiveCodes": [],
+            "requiredSiblingCodes": [
+              "GeneralInfo.MailingAddress.State"
+            ],
+            "sections": [
+              "carrier-supplemental",
+              "contact",
+              "general-information"
+            ],
+            "groups": [
+              "address",
+              "classification"
+            ]
+          },
+          "GeneralInfo.MailingAddress.State": {
+            "acordCode": "GeneralInfo.MailingAddress.State",
+            "aliases": [
+              "GeneralInfo.MailingAddress.State",
+              "mailing address",
+              "Mailing address state"
+            ],
+            "synonyms": [
+              "address",
+              "code",
+              "mailing",
+              "province",
+              "state"
+            ],
+            "parentCodes": [
+              "CommercialProperty.Building.LocationAddress",
+              "GeneralInfo.MailingAddress.City",
+              "GeneralInfo.MailingAddress.Line1",
+              "GeneralInfo.MailingAddress.PostalCode"
+            ],
+            "childCodes": [
+              "GeneralInfo.MailingAddress.City",
+              "GeneralInfo.MailingAddress.PostalCode"
+            ],
+            "mutuallyExclusiveCodes": [],
+            "requiredSiblingCodes": [
+              "GeneralInfo.MailingAddress.City"
+            ],
+            "sections": [
+              "carrier-supplemental",
+              "contact",
+              "general-information"
+            ],
+            "groups": [
+              "address",
+              "classification"
+            ]
+          },
+          "GeneralInfo.NamedInsured": {
+            "acordCode": "GeneralInfo.NamedInsured",
+            "aliases": [
+              "GeneralInfo.NamedInsured",
+              "named insured",
+              "Named insured"
+            ],
+            "synonyms": [
+              "applicant",
+              "entity",
+              "insured",
+              "legal",
+              "name",
+              "named"
+            ],
+            "parentCodes": [],
+            "childCodes": [],
+            "mutuallyExclusiveCodes": [],
+            "requiredSiblingCodes": [],
+            "sections": [
+              "carrier-supplemental",
+              "general-information"
+            ],
+            "groups": [
+              "identity"
+            ]
+          },
+          "GeneralLiability.Exposure.HazardClass": {
+            "acordCode": "GeneralLiability.Exposure.HazardClass",
+            "aliases": [
+              "GeneralLiability.Exposure.HazardClass",
+              "hazard class",
+              "Hazard class"
+            ],
+            "synonyms": [
+              "class",
+              "general",
+              "hazard",
+              "liability"
+            ],
+            "parentCodes": [],
+            "childCodes": [],
+            "mutuallyExclusiveCodes": [],
+            "requiredSiblingCodes": [],
+            "sections": [
+              "carrier-supplemental",
+              "general-information",
+              "liability"
+            ],
+            "groups": [
+              "classification",
+              "risk"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "metadata": {
+        "bundleId": "internal-extended@2026.06.10",
+        "namespace": "internal-extended",
+        "version": "2026.06.10",
+        "signature": "3305fd04",
+        "compatibility": [
+          "acord-core",
+          "internal-extended"
+        ],
+        "precedence": 100,
+        "generatedAt": "deterministic"
+      },
+      "ontology": {
+        "ontologyId": "acord-canonical-ontology:internal-extended",
+        "version": "2026.06.10",
+        "generatedAt": "deterministic",
+        "hash": "39553e7c",
+        "nodes": {
+          "CommercialProperty.Building.LocationAddress": {
+            "acordCode": "CommercialProperty.Building.LocationAddress",
+            "aliases": [
+              "building location",
+              "Building location address",
+              "CommercialProperty.Building.LocationAddress"
+            ],
+            "synonyms": [
+              "address",
+              "building",
+              "location",
+              "property"
+            ],
+            "parentCodes": [],
+            "childCodes": [
+              "GeneralInfo.MailingAddress.City",
+              "GeneralInfo.MailingAddress.PostalCode",
+              "GeneralInfo.MailingAddress.State"
+            ],
+            "mutuallyExclusiveCodes": [],
+            "requiredSiblingCodes": [],
+            "sections": [
+              "contact",
+              "internal-extended",
+              "property"
+            ],
+            "groups": [
+              "address"
+            ]
+          },
+          "Contractors.Operations.Description": {
+            "acordCode": "Contractors.Operations.Description",
+            "aliases": [
+              "contractors operations",
+              "Contractors operations description",
+              "Contractors.Operations.Description"
+            ],
+            "synonyms": [
+              "contractor",
+              "description",
+              "operations",
+              "supplement",
+              "work"
+            ],
+            "parentCodes": [],
+            "childCodes": [],
+            "mutuallyExclusiveCodes": [],
+            "requiredSiblingCodes": [],
+            "sections": [
+              "internal-extended",
+              "operations"
+            ],
+            "groups": [
+              "classification"
+            ]
+          },
+          "GeneralInfo.MailingAddress.City": {
+            "acordCode": "GeneralInfo.MailingAddress.City",
+            "aliases": [
+              "GeneralInfo.MailingAddress.City",
+              "mailing address",
+              "Mailing address city"
+            ],
+            "synonyms": [
+              "address",
+              "city",
+              "mailing"
+            ],
+            "parentCodes": [
+              "CommercialProperty.Building.LocationAddress",
+              "GeneralInfo.MailingAddress.Line1",
+              "GeneralInfo.MailingAddress.PostalCode",
+              "GeneralInfo.MailingAddress.State"
+            ],
+            "childCodes": [
+              "GeneralInfo.MailingAddress.PostalCode",
+              "GeneralInfo.MailingAddress.State"
+            ],
+            "mutuallyExclusiveCodes": [],
+            "requiredSiblingCodes": [
+              "GeneralInfo.MailingAddress.State"
+            ],
+            "sections": [
+              "contact",
+              "general-information",
+              "internal-extended"
+            ],
+            "groups": [
+              "address"
+            ]
+          },
+          "GeneralInfo.MailingAddress.Line1": {
+            "acordCode": "GeneralInfo.MailingAddress.Line1",
+            "aliases": [
+              "GeneralInfo.MailingAddress.Line1",
+              "mailing address",
+              "Mailing address line 1"
+            ],
+            "synonyms": [
+              "address",
+              "line",
+              "mailing",
+              "primary",
+              "street"
+            ],
+            "parentCodes": [],
+            "childCodes": [
+              "GeneralInfo.MailingAddress.City",
+              "GeneralInfo.MailingAddress.PostalCode",
+              "GeneralInfo.MailingAddress.State"
+            ],
+            "mutuallyExclusiveCodes": [],
+            "requiredSiblingCodes": [],
+            "sections": [
+              "contact",
+              "general-information",
+              "internal-extended"
+            ],
+            "groups": [
+              "address"
+            ]
+          },
+          "GeneralInfo.MailingAddress.PostalCode": {
+            "acordCode": "GeneralInfo.MailingAddress.PostalCode",
+            "aliases": [
+              "GeneralInfo.MailingAddress.PostalCode",
+              "mailing address",
+              "Mailing address postal code"
+            ],
+            "synonyms": [
+              "address",
+              "code",
+              "mailing",
+              "postal",
+              "zip"
+            ],
+            "parentCodes": [
+              "CommercialProperty.Building.LocationAddress",
+              "GeneralInfo.MailingAddress.City",
+              "GeneralInfo.MailingAddress.Line1",
+              "GeneralInfo.MailingAddress.State"
+            ],
+            "childCodes": [
+              "GeneralInfo.MailingAddress.City",
+              "GeneralInfo.MailingAddress.State"
+            ],
+            "mutuallyExclusiveCodes": [],
+            "requiredSiblingCodes": [
+              "GeneralInfo.MailingAddress.State"
+            ],
+            "sections": [
+              "contact",
+              "general-information",
+              "internal-extended"
+            ],
+            "groups": [
+              "address",
+              "classification"
+            ]
+          },
+          "GeneralInfo.MailingAddress.State": {
+            "acordCode": "GeneralInfo.MailingAddress.State",
+            "aliases": [
+              "GeneralInfo.MailingAddress.State",
+              "mailing address",
+              "Mailing address state"
+            ],
+            "synonyms": [
+              "address",
+              "code",
+              "mailing",
+              "province",
+              "state"
+            ],
+            "parentCodes": [
+              "CommercialProperty.Building.LocationAddress",
+              "GeneralInfo.MailingAddress.City",
+              "GeneralInfo.MailingAddress.Line1",
+              "GeneralInfo.MailingAddress.PostalCode"
+            ],
+            "childCodes": [
+              "GeneralInfo.MailingAddress.City",
+              "GeneralInfo.MailingAddress.PostalCode"
+            ],
+            "mutuallyExclusiveCodes": [],
+            "requiredSiblingCodes": [
+              "GeneralInfo.MailingAddress.City"
+            ],
+            "sections": [
+              "contact",
+              "general-information",
+              "internal-extended"
+            ],
+            "groups": [
+              "address",
+              "classification"
+            ]
+          },
+          "GeneralInfo.NamedInsured": {
+            "acordCode": "GeneralInfo.NamedInsured",
+            "aliases": [
+              "GeneralInfo.NamedInsured",
+              "named insured",
+              "Named insured"
+            ],
+            "synonyms": [
+              "applicant",
+              "entity",
+              "insured",
+              "legal",
+              "name",
+              "named"
+            ],
+            "parentCodes": [],
+            "childCodes": [],
+            "mutuallyExclusiveCodes": [],
+            "requiredSiblingCodes": [],
+            "sections": [
+              "general-information",
+              "internal-extended"
+            ],
+            "groups": [
+              "identity"
+            ]
+          },
+          "GeneralLiability.Exposure.HazardClass": {
+            "acordCode": "GeneralLiability.Exposure.HazardClass",
+            "aliases": [
+              "GeneralLiability.Exposure.HazardClass",
+              "hazard class",
+              "Hazard class"
+            ],
+            "synonyms": [
+              "class",
+              "general",
+              "hazard",
+              "liability"
+            ],
+            "parentCodes": [],
+            "childCodes": [],
+            "mutuallyExclusiveCodes": [],
+            "requiredSiblingCodes": [],
+            "sections": [
+              "general-information",
+              "internal-extended",
+              "liability"
+            ],
+            "groups": [
+              "classification",
+              "risk"
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "semanticExpansion": {
+    "corpus": {
+      "schemaVersion": "xfdl-ground-truth.v1",
+      "formCount": 63,
+      "fieldCount": 21140,
+      "sha256": "fc479f3eccbca69d3665c63449aaee861759337123b34c91a9368d59a4b44fcb"
+    },
+    "policy": {
+      "minimumFormCount": 3,
+      "preserveEntityRoleContext": true,
+      "graphOnlyCodesAreNotPromoted": true
+    },
+    "concepts": [
+      {
+        "acordCode": "CommercialProperty.Building.LocationAddress",
+        "status": "candidate-alias",
+        "aliasesAdded": [
+          "Location_PhysicalAddress_LineOne"
+        ],
+        "evidence": [
+          {
+            "semanticPath": "Location_PhysicalAddress_LineOne",
+            "formCount": 20,
+            "instanceCount": 63,
+            "fieldTypes": [
+              "text"
+            ],
+            "fieldTypeCounts": {
+              "text": 63
+            },
+            "dominantFieldType": "text",
+            "fieldTypeOutlierCount": 0,
+            "forms": [
+              "acord-0080-2016-11.ground-truth.json",
+              "acord-0081-2016-03r1.ground-truth.json",
+              "acord-0082-2020-03.ground-truth.json",
+              "acord-0083-2016-04r1.ground-truth.json",
+              "acord-0084-2016-11.ground-truth.json",
+              "acord-0085-2016-11.ground-truth.json",
+              "acord-0088-2015-12r1.ground-truth.json",
+              "acord-0090-fl-2015-12r1.ground-truth.json",
+              "acord-0090-ny-2015-12.ground-truth.json",
+              "acord-0130-2017-05.ground-truth.json",
+              "acord-0132-2015-12r1.ground-truth.json",
+              "acord-0133-2016-03.ground-truth.json",
+              "aig-comm-fleet-app-2019-09-12.ground-truth.json",
+              "amtrust-30-0912-2011-06.ground-truth.json",
+              "great-american-f-27647-12-08.ground-truth.json",
+              "merchants-mg-71-01-03-19.ground-truth.json",
+              "nationwide-gls-app-74s-6-17.ground-truth.json",
+              "nfip-fema-form-086-0-1-f-050-feb-2015.ground-truth.json",
+              "philadelphia-integ-tech-app-03-2018.ground-truth.json",
+              "usli-pro-ect-10-18.ground-truth.json"
+            ]
+          }
+        ]
+      },
+      {
+        "acordCode": "GeneralInfo.MailingAddress.City",
+        "status": "candidate-alias",
+        "aliasesAdded": [
+          "NamedInsured_MailingAddress_CityName"
+        ],
+        "evidence": [
+          {
+            "semanticPath": "NamedInsured_MailingAddress_CityName",
+            "formCount": 39,
+            "instanceCount": 48,
+            "fieldTypes": [
+              "text"
+            ],
+            "fieldTypeCounts": {
+              "text": 48
+            },
+            "dominantFieldType": "text",
+            "fieldTypeOutlierCount": 0,
+            "forms": [
+              "acord-0003-2019-09.ground-truth.json",
+              "acord-0080-2016-11.ground-truth.json",
+              "acord-0081-2016-03r1.ground-truth.json",
+              "acord-0082-2020-03.ground-truth.json",
+              "acord-0083-2016-04r1.ground-truth.json",
+              "acord-0084-2016-11.ground-truth.json",
+              "acord-0085-2016-11.ground-truth.json",
+              "acord-0088-2015-12r1.ground-truth.json",
+              "acord-0090-fl-2015-12r1.ground-truth.json",
+              "acord-0090-ny-2015-12.ground-truth.json",
+              "acord-0125-2016-03r1.ground-truth.json",
+              "acord-0130-2017-05.ground-truth.json",
+              "aig-comm-fleet-app-2019-09-12.ground-truth.json",
+              "amtrust-wic-ah-dbl-app-ny-ny-0114.ground-truth.json",
+              "argo-ac-sup090-2018-07.ground-truth.json",
+              "argo-g1000-0114.ground-truth.json",
+              "chubb-av003-2017-07.ground-truth.json",
+              "chubb-pf-48163-2017-08.ground-truth.json",
+              "hartford-cb-00-h001-00-2017-10.ground-truth.json",
+              "lancer-r-lmc-ap001-01-20.ground-truth.json",
+              "markel-mail-021-09-15.ground-truth.json",
+              "merchants-mg-71-01-03-19.ground-truth.json",
+              "mount-hawley-uwsr-207mth-2013-03.ground-truth.json",
+              "philadelphia-builders-risk-ground-up-construction-2013-01.ground-truth.json",
+              "philadelphia-builders-risk-renovation-and-rehabilitation-2013-01.ground-truth.json",
+              "philadelphia-pi-cyb-014-2017-11.ground-truth.json",
+              "philadelphia-pi-cyb-014-ny-2017-11.ground-truth.json",
+              "philadelphia-salon-and-day-spa-app-2016-12.ground-truth.json",
+              "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+              "protective-insurance-company-large-fleet-updated-01-2016.ground-truth.json",
+              "quaker-av005-2018-05.ground-truth.json",
+              "quaker-special-risk-04-18-qsr-luxury-home-program-contractors-liability-application-04-18.ground-truth.json",
+              "quaker-special-risk-qsr-sr-constr-mgr-2019-01.ground-truth.json",
+              "travelers-cyb-14101-2017-12.ground-truth.json",
+              "travelers-mpl-1100-01-09.ground-truth.json",
+              "united-specialty-unitedspec-01-2019-09-12.ground-truth.json",
+              "western-heritage-whi-app-120-8-02.ground-truth.json",
+              "western-heritage-whi-app-138-2013-11.ground-truth.json",
+              "westport-wic1107-2010-06.ground-truth.json"
+            ]
+          }
+        ]
+      },
+      {
+        "acordCode": "GeneralInfo.MailingAddress.Line1",
+        "status": "candidate-alias",
+        "aliasesAdded": [
+          "NamedInsured_MailingAddress_LineOne"
+        ],
+        "evidence": [
+          {
+            "semanticPath": "NamedInsured_MailingAddress_LineOne",
+            "formCount": 41,
+            "instanceCount": 46,
+            "fieldTypes": [
+              "text"
+            ],
+            "fieldTypeCounts": {
+              "text": 46
+            },
+            "dominantFieldType": "text",
+            "fieldTypeOutlierCount": 0,
+            "forms": [
+              "acord-0003-2019-09.ground-truth.json",
+              "acord-0080-2016-11.ground-truth.json",
+              "acord-0081-2016-03r1.ground-truth.json",
+              "acord-0082-2020-03.ground-truth.json",
+              "acord-0083-2016-04r1.ground-truth.json",
+              "acord-0084-2016-11.ground-truth.json",
+              "acord-0085-2016-11.ground-truth.json",
+              "acord-0088-2015-12r1.ground-truth.json",
+              "acord-0090-fl-2015-12r1.ground-truth.json",
+              "acord-0090-ny-2015-12.ground-truth.json",
+              "acord-0125-2016-03r1.ground-truth.json",
+              "acord-0130-2017-05.ground-truth.json",
+              "aig-comm-fleet-app-2019-09-12.ground-truth.json",
+              "amtrust-wic-ah-dbl-app-ny-ny-0114.ground-truth.json",
+              "argo-ac-sup090-2018-07.ground-truth.json",
+              "argo-g1000-0114.ground-truth.json",
+              "chubb-av003-2017-07.ground-truth.json",
+              "chubb-pf-48163-2017-08.ground-truth.json",
+              "great-american-f-27647-12-08.ground-truth.json",
+              "hartford-cb-00-h001-00-2017-10.ground-truth.json",
+              "lancer-r-lmc-ap001-01-20.ground-truth.json",
+              "markel-mail-021-09-15.ground-truth.json",
+              "merchants-mg-71-01-03-19.ground-truth.json",
+              "mount-hawley-uwsr-207mth-2013-03.ground-truth.json",
+              "nfip-fema-form-086-0-1-f-050-feb-2015.ground-truth.json",
+              "philadelphia-builders-risk-ground-up-construction-2013-01.ground-truth.json",
+              "philadelphia-builders-risk-renovation-and-rehabilitation-2013-01.ground-truth.json",
+              "philadelphia-pi-cyb-014-2017-11.ground-truth.json",
+              "philadelphia-pi-cyb-014-ny-2017-11.ground-truth.json",
+              "philadelphia-salon-and-day-spa-app-2016-12.ground-truth.json",
+              "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+              "protective-insurance-company-large-fleet-updated-01-2016.ground-truth.json",
+              "quaker-av005-2018-05.ground-truth.json",
+              "quaker-special-risk-04-18-qsr-luxury-home-program-contractors-liability-application-04-18.ground-truth.json",
+              "quaker-special-risk-qsr-sr-constr-mgr-2019-01.ground-truth.json",
+              "travelers-cyb-14101-2017-12.ground-truth.json",
+              "travelers-mpl-1100-01-09.ground-truth.json",
+              "united-specialty-unitedspec-01-2019-09-12.ground-truth.json",
+              "western-heritage-whi-app-120-8-02.ground-truth.json",
+              "western-heritage-whi-app-138-2013-11.ground-truth.json",
+              "westport-wic1107-2010-06.ground-truth.json"
+            ]
+          }
+        ]
+      },
+      {
+        "acordCode": "GeneralInfo.MailingAddress.PostalCode",
+        "status": "candidate-alias",
+        "aliasesAdded": [
+          "NamedInsured_MailingAddress_PostalCode"
+        ],
+        "evidence": [
+          {
+            "semanticPath": "NamedInsured_MailingAddress_PostalCode",
+            "formCount": 39,
+            "instanceCount": 45,
+            "fieldTypes": [
+              "text"
+            ],
+            "fieldTypeCounts": {
+              "text": 45
+            },
+            "dominantFieldType": "text",
+            "fieldTypeOutlierCount": 0,
+            "forms": [
+              "acord-0003-2019-09.ground-truth.json",
+              "acord-0080-2016-11.ground-truth.json",
+              "acord-0081-2016-03r1.ground-truth.json",
+              "acord-0082-2020-03.ground-truth.json",
+              "acord-0083-2016-04r1.ground-truth.json",
+              "acord-0084-2016-11.ground-truth.json",
+              "acord-0085-2016-11.ground-truth.json",
+              "acord-0088-2015-12r1.ground-truth.json",
+              "acord-0090-fl-2015-12r1.ground-truth.json",
+              "acord-0090-ny-2015-12.ground-truth.json",
+              "acord-0125-2016-03r1.ground-truth.json",
+              "acord-0130-2017-05.ground-truth.json",
+              "aig-comm-fleet-app-2019-09-12.ground-truth.json",
+              "amtrust-wic-ah-dbl-app-ny-ny-0114.ground-truth.json",
+              "argo-ac-sup090-2018-07.ground-truth.json",
+              "argo-g1000-0114.ground-truth.json",
+              "chubb-av003-2017-07.ground-truth.json",
+              "chubb-pf-48163-2017-08.ground-truth.json",
+              "hartford-cb-00-h001-00-2017-10.ground-truth.json",
+              "lancer-r-lmc-ap001-01-20.ground-truth.json",
+              "markel-mail-021-09-15.ground-truth.json",
+              "merchants-mg-71-01-03-19.ground-truth.json",
+              "mount-hawley-uwsr-207mth-2013-03.ground-truth.json",
+              "nfip-fema-form-086-0-1-f-050-feb-2015.ground-truth.json",
+              "philadelphia-builders-risk-ground-up-construction-2013-01.ground-truth.json",
+              "philadelphia-builders-risk-renovation-and-rehabilitation-2013-01.ground-truth.json",
+              "philadelphia-pi-cyb-014-2017-11.ground-truth.json",
+              "philadelphia-pi-cyb-014-ny-2017-11.ground-truth.json",
+              "philadelphia-salon-and-day-spa-app-2016-12.ground-truth.json",
+              "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+              "protective-insurance-company-large-fleet-updated-01-2016.ground-truth.json",
+              "quaker-av005-2018-05.ground-truth.json",
+              "quaker-special-risk-04-18-qsr-luxury-home-program-contractors-liability-application-04-18.ground-truth.json",
+              "quaker-special-risk-qsr-sr-constr-mgr-2019-01.ground-truth.json",
+              "travelers-cyb-14101-2017-12.ground-truth.json",
+              "united-specialty-unitedspec-01-2019-09-12.ground-truth.json",
+              "western-heritage-whi-app-120-8-02.ground-truth.json",
+              "western-heritage-whi-app-138-2013-11.ground-truth.json",
+              "westport-wic1107-2010-06.ground-truth.json"
+            ]
+          }
+        ]
+      },
+      {
+        "acordCode": "GeneralInfo.MailingAddress.State",
+        "status": "candidate-alias",
+        "aliasesAdded": [
+          "NamedInsured_MailingAddress_StateOrProvinceCode"
+        ],
+        "evidence": [
+          {
+            "semanticPath": "NamedInsured_MailingAddress_StateOrProvinceCode",
+            "formCount": 38,
+            "instanceCount": 47,
+            "fieldTypes": [
+              "text"
+            ],
+            "fieldTypeCounts": {
+              "text": 47
+            },
+            "dominantFieldType": "text",
+            "fieldTypeOutlierCount": 0,
+            "forms": [
+              "acord-0003-2019-09.ground-truth.json",
+              "acord-0080-2016-11.ground-truth.json",
+              "acord-0081-2016-03r1.ground-truth.json",
+              "acord-0082-2020-03.ground-truth.json",
+              "acord-0083-2016-04r1.ground-truth.json",
+              "acord-0084-2016-11.ground-truth.json",
+              "acord-0085-2016-11.ground-truth.json",
+              "acord-0088-2015-12r1.ground-truth.json",
+              "acord-0090-fl-2015-12r1.ground-truth.json",
+              "acord-0090-ny-2015-12.ground-truth.json",
+              "acord-0125-2016-03r1.ground-truth.json",
+              "acord-0130-2017-05.ground-truth.json",
+              "aig-comm-fleet-app-2019-09-12.ground-truth.json",
+              "amtrust-wic-ah-dbl-app-ny-ny-0114.ground-truth.json",
+              "argo-ac-sup090-2018-07.ground-truth.json",
+              "argo-g1000-0114.ground-truth.json",
+              "chubb-av003-2017-07.ground-truth.json",
+              "chubb-pf-48163-2017-08.ground-truth.json",
+              "hartford-cb-00-h001-00-2017-10.ground-truth.json",
+              "lancer-r-lmc-ap001-01-20.ground-truth.json",
+              "markel-mail-021-09-15.ground-truth.json",
+              "merchants-mg-71-01-03-19.ground-truth.json",
+              "mount-hawley-uwsr-207mth-2013-03.ground-truth.json",
+              "nfip-fema-form-086-0-1-f-050-feb-2015.ground-truth.json",
+              "philadelphia-builders-risk-ground-up-construction-2013-01.ground-truth.json",
+              "philadelphia-builders-risk-renovation-and-rehabilitation-2013-01.ground-truth.json",
+              "philadelphia-pi-cyb-014-2017-11.ground-truth.json",
+              "philadelphia-pi-cyb-014-ny-2017-11.ground-truth.json",
+              "philadelphia-salon-and-day-spa-app-2016-12.ground-truth.json",
+              "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+              "protective-insurance-company-large-fleet-updated-01-2016.ground-truth.json",
+              "quaker-av005-2018-05.ground-truth.json",
+              "quaker-special-risk-04-18-qsr-luxury-home-program-contractors-liability-application-04-18.ground-truth.json",
+              "travelers-cyb-14101-2017-12.ground-truth.json",
+              "united-specialty-unitedspec-01-2019-09-12.ground-truth.json",
+              "western-heritage-whi-app-120-8-02.ground-truth.json",
+              "western-heritage-whi-app-138-2013-11.ground-truth.json",
+              "westport-wic1107-2010-06.ground-truth.json"
+            ]
+          }
+        ]
+      },
+      {
+        "acordCode": "GeneralInfo.NamedInsured",
+        "status": "candidate-alias",
+        "aliasesAdded": [
+          "NamedInsured_FullName"
+        ],
+        "evidence": [
+          {
+            "semanticPath": "NamedInsured_FullName",
+            "formCount": 61,
+            "instanceCount": 83,
+            "fieldTypes": [
+              "checkbox",
+              "text"
+            ],
+            "fieldTypeCounts": {
+              "checkbox": 1,
+              "text": 82
+            },
+            "dominantFieldType": "text",
+            "fieldTypeOutlierCount": 1,
+            "forms": [
+              "acord-0003-2019-09.ground-truth.json",
+              "acord-0080-2016-11.ground-truth.json",
+              "acord-0081-2016-03r1.ground-truth.json",
+              "acord-0082-2020-03.ground-truth.json",
+              "acord-0083-2016-04r1.ground-truth.json",
+              "acord-0084-2016-11.ground-truth.json",
+              "acord-0085-2016-11.ground-truth.json",
+              "acord-0088-2015-12r1.ground-truth.json",
+              "acord-0089-2016-11.ground-truth.json",
+              "acord-0090-fl-2015-12r1.ground-truth.json",
+              "acord-0090-ny-2015-12.ground-truth.json",
+              "acord-0125-2016-03r1.ground-truth.json",
+              "acord-0126-2016-09.ground-truth.json",
+              "acord-0127-2015-12r2.ground-truth.json",
+              "acord-0128-2015-12r1.ground-truth.json",
+              "acord-0130-2017-05.ground-truth.json",
+              "acord-0131-2017-11.ground-truth.json",
+              "acord-0132-2015-12r1.ground-truth.json",
+              "acord-0133-2016-03.ground-truth.json",
+              "aig-comm-fleet-app-2019-09-12.ground-truth.json",
+              "amtrust-30-0912-2011-06.ground-truth.json",
+              "amtrust-wic-ah-dbl-app-ny-ny-0114.ground-truth.json",
+              "argo-ac-sup090-2018-07.ground-truth.json",
+              "argo-g1000-0114.ground-truth.json",
+              "argo-gar-sup-135-0117-2020-01-30.ground-truth.json",
+              "chubb-av003-2017-07.ground-truth.json",
+              "chubb-pf-48163-2017-08.ground-truth.json",
+              "great-american-f-27647-12-08.ground-truth.json",
+              "hartford-cb-00-h001-00-2017-10.ground-truth.json",
+              "hartford-lp-00-ho54-03-2017-06.ground-truth.json",
+              "hartford-ss-25-50-06-16.ground-truth.json",
+              "hartford-the-ac-00-h007-00-0805-2005.ground-truth.json",
+              "lancer-r-lmc-ap001-01-20.ground-truth.json",
+              "markel-mail-021-09-15.ground-truth.json",
+              "merchants-mg-71-01-03-19.ground-truth.json",
+              "mount-hawley-uwsr-207mth-2013-03.ground-truth.json",
+              "nationwide-gls-app-74s-6-17.ground-truth.json",
+              "nfip-fema-form-086-0-1-f-050-feb-2015.ground-truth.json",
+              "philadelphia-builders-risk-ground-up-construction-2013-01.ground-truth.json",
+              "philadelphia-builders-risk-renovation-and-rehabilitation-2013-01.ground-truth.json",
+              "philadelphia-integ-tech-app-03-2018.ground-truth.json",
+              "philadelphia-pi-cyb-014-2017-11.ground-truth.json",
+              "philadelphia-pi-cyb-014-ny-2017-11.ground-truth.json",
+              "philadelphia-salon-and-day-spa-app-2016-12.ground-truth.json",
+              "preferred-mutual-cl-77-08-03.ground-truth.json",
+              "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+              "protective-insurance-company-large-fleet-updated-01-2016.ground-truth.json",
+              "qeo-insurance-group-av034-2019-05-14.ground-truth.json",
+              "quaker-av005-2018-05.ground-truth.json",
+              "quaker-special-risk-04-18-qsr-luxury-home-program-contractors-liability-application-04-18.ground-truth.json",
+              "travelers-cp-4650-2001-05.ground-truth.json",
+              "travelers-cx-1036-02-06.ground-truth.json",
+              "travelers-cyb-14101-2017-12.ground-truth.json",
+              "travelers-mpl-1100-01-09.ground-truth.json",
+              "united-specialty-unitedspec-01-2019-09-12.ground-truth.json",
+              "usli-nppla-5-12.ground-truth.json",
+              "usli-pro-ect-10-18.ground-truth.json",
+              "utica-first-uf-mand-art-cont-2020-05-02.ground-truth.json",
+              "western-heritage-whi-app-120-8-02.ground-truth.json",
+              "western-heritage-whi-app-138-2013-11.ground-truth.json",
+              "westport-wic1107-2010-06.ground-truth.json"
+            ]
+          }
+        ]
+      }
+    ],
+    "candidateOntology": {
+      "ontologyId": "acord-canonical-ontology:phase31-candidate",
+      "version": "phase31-candidate.1",
+      "generatedAt": "deterministic-from-corpus",
+      "hash": "d894291d63e6e174797c85c66fbe8328536de18ffcb4c9b7305e28781deeebca",
+      "nodes": {
+        "CommercialProperty.Building.LocationAddress": {
+          "acordCode": "CommercialProperty.Building.LocationAddress",
+          "aliases": [
+            "building location",
+            "Building location address",
+            "CommercialProperty.Building.LocationAddress",
+            "Location_PhysicalAddress_LineOne"
+          ],
+          "synonyms": [
+            "address",
+            "building",
+            "location",
+            "property"
+          ],
+          "parentCodes": [],
+          "childCodes": [
+            "GeneralInfo.MailingAddress.City",
+            "GeneralInfo.MailingAddress.PostalCode",
+            "GeneralInfo.MailingAddress.State"
+          ],
+          "mutuallyExclusiveCodes": [],
+          "requiredSiblingCodes": [],
+          "sections": [
+            "contact",
+            "property"
+          ],
+          "groups": [
+            "address"
+          ]
+        },
+        "Contractors.Operations.Description": {
+          "acordCode": "Contractors.Operations.Description",
+          "aliases": [
+            "contractors operations",
+            "Contractors operations description",
+            "Contractors.Operations.Description"
+          ],
+          "synonyms": [
+            "contractor",
+            "description",
+            "operations",
+            "supplement",
+            "work"
+          ],
+          "parentCodes": [],
+          "childCodes": [],
+          "mutuallyExclusiveCodes": [],
+          "requiredSiblingCodes": [],
+          "sections": [
+            "operations"
+          ],
+          "groups": [
+            "classification"
+          ]
+        },
+        "GeneralInfo.MailingAddress.City": {
+          "acordCode": "GeneralInfo.MailingAddress.City",
+          "aliases": [
+            "GeneralInfo.MailingAddress.City",
+            "mailing address",
+            "Mailing address city",
+            "NamedInsured_MailingAddress_CityName"
+          ],
+          "synonyms": [
+            "address",
+            "city",
+            "mailing"
+          ],
+          "parentCodes": [
+            "CommercialProperty.Building.LocationAddress",
+            "GeneralInfo.MailingAddress.Line1",
+            "GeneralInfo.MailingAddress.PostalCode",
+            "GeneralInfo.MailingAddress.State"
+          ],
+          "childCodes": [
+            "GeneralInfo.MailingAddress.PostalCode",
+            "GeneralInfo.MailingAddress.State"
+          ],
+          "mutuallyExclusiveCodes": [],
+          "requiredSiblingCodes": [
+            "GeneralInfo.MailingAddress.State"
+          ],
+          "sections": [
+            "contact",
+            "general-information"
+          ],
+          "groups": [
+            "address"
+          ]
+        },
+        "GeneralInfo.MailingAddress.Line1": {
+          "acordCode": "GeneralInfo.MailingAddress.Line1",
+          "aliases": [
+            "GeneralInfo.MailingAddress.Line1",
+            "mailing address",
+            "Mailing address line 1",
+            "NamedInsured_MailingAddress_LineOne"
+          ],
+          "synonyms": [
+            "address",
+            "line",
+            "mailing",
+            "primary",
+            "street"
+          ],
+          "parentCodes": [],
+          "childCodes": [
+            "GeneralInfo.MailingAddress.City",
+            "GeneralInfo.MailingAddress.PostalCode",
+            "GeneralInfo.MailingAddress.State"
+          ],
+          "mutuallyExclusiveCodes": [],
+          "requiredSiblingCodes": [],
+          "sections": [
+            "contact",
+            "general-information"
+          ],
+          "groups": [
+            "address"
+          ]
+        },
+        "GeneralInfo.MailingAddress.PostalCode": {
+          "acordCode": "GeneralInfo.MailingAddress.PostalCode",
+          "aliases": [
+            "GeneralInfo.MailingAddress.PostalCode",
+            "mailing address",
+            "Mailing address postal code",
+            "NamedInsured_MailingAddress_PostalCode"
+          ],
+          "synonyms": [
+            "address",
+            "code",
+            "mailing",
+            "postal",
+            "zip"
+          ],
+          "parentCodes": [
+            "CommercialProperty.Building.LocationAddress",
+            "GeneralInfo.MailingAddress.City",
+            "GeneralInfo.MailingAddress.Line1",
+            "GeneralInfo.MailingAddress.State"
+          ],
+          "childCodes": [
+            "GeneralInfo.MailingAddress.City",
+            "GeneralInfo.MailingAddress.State"
+          ],
+          "mutuallyExclusiveCodes": [],
+          "requiredSiblingCodes": [
+            "GeneralInfo.MailingAddress.State"
+          ],
+          "sections": [
+            "contact",
+            "general-information"
+          ],
+          "groups": [
+            "address",
+            "classification"
+          ]
+        },
+        "GeneralInfo.MailingAddress.State": {
+          "acordCode": "GeneralInfo.MailingAddress.State",
+          "aliases": [
+            "GeneralInfo.MailingAddress.State",
+            "mailing address",
+            "Mailing address state",
+            "NamedInsured_MailingAddress_StateOrProvinceCode"
+          ],
+          "synonyms": [
+            "address",
+            "code",
+            "mailing",
+            "province",
+            "state"
+          ],
+          "parentCodes": [
+            "CommercialProperty.Building.LocationAddress",
+            "GeneralInfo.MailingAddress.City",
+            "GeneralInfo.MailingAddress.Line1",
+            "GeneralInfo.MailingAddress.PostalCode"
+          ],
+          "childCodes": [
+            "GeneralInfo.MailingAddress.City",
+            "GeneralInfo.MailingAddress.PostalCode"
+          ],
+          "mutuallyExclusiveCodes": [],
+          "requiredSiblingCodes": [
+            "GeneralInfo.MailingAddress.City"
+          ],
+          "sections": [
+            "contact",
+            "general-information"
+          ],
+          "groups": [
+            "address",
+            "classification"
+          ]
+        },
+        "GeneralInfo.NamedInsured": {
+          "acordCode": "GeneralInfo.NamedInsured",
+          "aliases": [
+            "GeneralInfo.NamedInsured",
+            "named insured",
+            "Named insured",
+            "NamedInsured_FullName"
+          ],
+          "synonyms": [
+            "applicant",
+            "entity",
+            "insured",
+            "legal",
+            "name",
+            "named"
+          ],
+          "parentCodes": [],
+          "childCodes": [],
+          "mutuallyExclusiveCodes": [],
+          "requiredSiblingCodes": [],
+          "sections": [
+            "general-information"
+          ],
+          "groups": [
+            "identity"
+          ]
+        },
+        "GeneralLiability.Exposure.HazardClass": {
+          "acordCode": "GeneralLiability.Exposure.HazardClass",
+          "aliases": [
+            "GeneralLiability.Exposure.HazardClass",
+            "hazard class",
+            "Hazard class"
+          ],
+          "synonyms": [
+            "class",
+            "general",
+            "hazard",
+            "liability"
+          ],
+          "parentCodes": [],
+          "childCodes": [],
+          "mutuallyExclusiveCodes": [],
+          "requiredSiblingCodes": [],
+          "sections": [
+            "general-information",
+            "liability"
+          ],
+          "groups": [
+            "classification",
+            "risk"
+          ]
+        }
+      }
+    },
+    "addressHarmonization": {
+      "schemaVersion": "phase31-address-harmonization.v1",
+      "policy": {
+        "preserveStructureRole": true,
+        "mailingAndPhysicalRemainDistinct": true,
+        "graphVocabularyRequiresExplicitProvenance": true,
+        "unresolvedBindingsAreNotPromoted": true
+      },
+      "structures": [
+        "NamedInsured.mailingAddress",
+        "NamedInsured.physicalAddress",
+        "Applicant.address",
+        "Insured.address",
+        "CommercialProperty.locationAddress"
+      ],
+      "components": [
+        {
+          "component": "line1",
+          "canonicalComponentId": "phase31.address.line1",
+          "bindings": [
+            {
+              "structure": "NamedInsured.mailingAddress",
+              "semanticPath": "NamedInsured_MailingAddress_LineOne",
+              "graphCode": "GeneralInfo.MailingAddress.Street",
+              "status": "evidence-backed",
+              "provenance": "corpus-and-unification-graph",
+              "formCount": 41,
+              "instanceCount": 46,
+              "fieldTypeCounts": {
+                "text": 46
+              },
+              "forms": [
+                "acord-0003-2019-09.ground-truth.json",
+                "acord-0080-2016-11.ground-truth.json",
+                "acord-0081-2016-03r1.ground-truth.json",
+                "acord-0082-2020-03.ground-truth.json",
+                "acord-0083-2016-04r1.ground-truth.json",
+                "acord-0084-2016-11.ground-truth.json",
+                "acord-0085-2016-11.ground-truth.json",
+                "acord-0088-2015-12r1.ground-truth.json",
+                "acord-0090-fl-2015-12r1.ground-truth.json",
+                "acord-0090-ny-2015-12.ground-truth.json",
+                "acord-0125-2016-03r1.ground-truth.json",
+                "acord-0130-2017-05.ground-truth.json",
+                "aig-comm-fleet-app-2019-09-12.ground-truth.json",
+                "amtrust-wic-ah-dbl-app-ny-ny-0114.ground-truth.json",
+                "argo-ac-sup090-2018-07.ground-truth.json",
+                "argo-g1000-0114.ground-truth.json",
+                "chubb-av003-2017-07.ground-truth.json",
+                "chubb-pf-48163-2017-08.ground-truth.json",
+                "great-american-f-27647-12-08.ground-truth.json",
+                "hartford-cb-00-h001-00-2017-10.ground-truth.json",
+                "lancer-r-lmc-ap001-01-20.ground-truth.json",
+                "markel-mail-021-09-15.ground-truth.json",
+                "merchants-mg-71-01-03-19.ground-truth.json",
+                "mount-hawley-uwsr-207mth-2013-03.ground-truth.json",
+                "nfip-fema-form-086-0-1-f-050-feb-2015.ground-truth.json",
+                "philadelphia-builders-risk-ground-up-construction-2013-01.ground-truth.json",
+                "philadelphia-builders-risk-renovation-and-rehabilitation-2013-01.ground-truth.json",
+                "philadelphia-pi-cyb-014-2017-11.ground-truth.json",
+                "philadelphia-pi-cyb-014-ny-2017-11.ground-truth.json",
+                "philadelphia-salon-and-day-spa-app-2016-12.ground-truth.json",
+                "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+                "protective-insurance-company-large-fleet-updated-01-2016.ground-truth.json",
+                "quaker-av005-2018-05.ground-truth.json",
+                "quaker-special-risk-04-18-qsr-luxury-home-program-contractors-liability-application-04-18.ground-truth.json",
+                "quaker-special-risk-qsr-sr-constr-mgr-2019-01.ground-truth.json",
+                "travelers-cyb-14101-2017-12.ground-truth.json",
+                "travelers-mpl-1100-01-09.ground-truth.json",
+                "united-specialty-unitedspec-01-2019-09-12.ground-truth.json",
+                "western-heritage-whi-app-120-8-02.ground-truth.json",
+                "western-heritage-whi-app-138-2013-11.ground-truth.json",
+                "westport-wic1107-2010-06.ground-truth.json"
+              ]
+            },
+            {
+              "structure": "NamedInsured.physicalAddress",
+              "semanticPath": "NamedInsured_PhysicalAddress_LineOne",
+              "status": "evidence-backed",
+              "provenance": "ground-truth-corpus",
+              "formCount": 9,
+              "instanceCount": 9,
+              "fieldTypeCounts": {
+                "text": 9
+              },
+              "forms": [
+                "acord-0080-2016-11.ground-truth.json",
+                "acord-0088-2015-12r1.ground-truth.json",
+                "aig-comm-fleet-app-2019-09-12.ground-truth.json",
+                "amtrust-30-0912-2011-06.ground-truth.json",
+                "amtrust-wic-ah-dbl-app-ny-ny-0114.ground-truth.json",
+                "nationwide-gls-app-74s-6-17.ground-truth.json",
+                "philadelphia-salon-and-day-spa-app-2016-12.ground-truth.json",
+                "western-heritage-whi-app-120-8-02.ground-truth.json",
+                "westport-wic1107-2010-06.ground-truth.json"
+              ]
+            },
+            {
+              "structure": "Applicant.address",
+              "graphCode": "Applicant.Address.Street",
+              "status": "graph-inferred",
+              "provenance": "unification-graph"
+            },
+            {
+              "structure": "Insured.address",
+              "status": "unresolved",
+              "provenance": "missing-corpus-and-graph-evidence"
+            },
+            {
+              "structure": "CommercialProperty.locationAddress",
+              "semanticPath": "Location_PhysicalAddress_LineOne",
+              "graphCode": "Location.Address.Street",
+              "status": "evidence-backed",
+              "provenance": "corpus-and-unification-graph",
+              "formCount": 20,
+              "instanceCount": 63,
+              "fieldTypeCounts": {
+                "text": 63
+              },
+              "forms": [
+                "acord-0080-2016-11.ground-truth.json",
+                "acord-0081-2016-03r1.ground-truth.json",
+                "acord-0082-2020-03.ground-truth.json",
+                "acord-0083-2016-04r1.ground-truth.json",
+                "acord-0084-2016-11.ground-truth.json",
+                "acord-0085-2016-11.ground-truth.json",
+                "acord-0088-2015-12r1.ground-truth.json",
+                "acord-0090-fl-2015-12r1.ground-truth.json",
+                "acord-0090-ny-2015-12.ground-truth.json",
+                "acord-0130-2017-05.ground-truth.json",
+                "acord-0132-2015-12r1.ground-truth.json",
+                "acord-0133-2016-03.ground-truth.json",
+                "aig-comm-fleet-app-2019-09-12.ground-truth.json",
+                "amtrust-30-0912-2011-06.ground-truth.json",
+                "great-american-f-27647-12-08.ground-truth.json",
+                "merchants-mg-71-01-03-19.ground-truth.json",
+                "nationwide-gls-app-74s-6-17.ground-truth.json",
+                "nfip-fema-form-086-0-1-f-050-feb-2015.ground-truth.json",
+                "philadelphia-integ-tech-app-03-2018.ground-truth.json",
+                "usli-pro-ect-10-18.ground-truth.json"
+              ]
+            }
+          ]
+        },
+        {
+          "component": "city",
+          "canonicalComponentId": "phase31.address.city",
+          "bindings": [
+            {
+              "structure": "NamedInsured.mailingAddress",
+              "semanticPath": "NamedInsured_MailingAddress_CityName",
+              "status": "evidence-backed",
+              "provenance": "ground-truth-corpus",
+              "formCount": 39,
+              "instanceCount": 48,
+              "fieldTypeCounts": {
+                "text": 48
+              },
+              "forms": [
+                "acord-0003-2019-09.ground-truth.json",
+                "acord-0080-2016-11.ground-truth.json",
+                "acord-0081-2016-03r1.ground-truth.json",
+                "acord-0082-2020-03.ground-truth.json",
+                "acord-0083-2016-04r1.ground-truth.json",
+                "acord-0084-2016-11.ground-truth.json",
+                "acord-0085-2016-11.ground-truth.json",
+                "acord-0088-2015-12r1.ground-truth.json",
+                "acord-0090-fl-2015-12r1.ground-truth.json",
+                "acord-0090-ny-2015-12.ground-truth.json",
+                "acord-0125-2016-03r1.ground-truth.json",
+                "acord-0130-2017-05.ground-truth.json",
+                "aig-comm-fleet-app-2019-09-12.ground-truth.json",
+                "amtrust-wic-ah-dbl-app-ny-ny-0114.ground-truth.json",
+                "argo-ac-sup090-2018-07.ground-truth.json",
+                "argo-g1000-0114.ground-truth.json",
+                "chubb-av003-2017-07.ground-truth.json",
+                "chubb-pf-48163-2017-08.ground-truth.json",
+                "hartford-cb-00-h001-00-2017-10.ground-truth.json",
+                "lancer-r-lmc-ap001-01-20.ground-truth.json",
+                "markel-mail-021-09-15.ground-truth.json",
+                "merchants-mg-71-01-03-19.ground-truth.json",
+                "mount-hawley-uwsr-207mth-2013-03.ground-truth.json",
+                "philadelphia-builders-risk-ground-up-construction-2013-01.ground-truth.json",
+                "philadelphia-builders-risk-renovation-and-rehabilitation-2013-01.ground-truth.json",
+                "philadelphia-pi-cyb-014-2017-11.ground-truth.json",
+                "philadelphia-pi-cyb-014-ny-2017-11.ground-truth.json",
+                "philadelphia-salon-and-day-spa-app-2016-12.ground-truth.json",
+                "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+                "protective-insurance-company-large-fleet-updated-01-2016.ground-truth.json",
+                "quaker-av005-2018-05.ground-truth.json",
+                "quaker-special-risk-04-18-qsr-luxury-home-program-contractors-liability-application-04-18.ground-truth.json",
+                "quaker-special-risk-qsr-sr-constr-mgr-2019-01.ground-truth.json",
+                "travelers-cyb-14101-2017-12.ground-truth.json",
+                "travelers-mpl-1100-01-09.ground-truth.json",
+                "united-specialty-unitedspec-01-2019-09-12.ground-truth.json",
+                "western-heritage-whi-app-120-8-02.ground-truth.json",
+                "western-heritage-whi-app-138-2013-11.ground-truth.json",
+                "westport-wic1107-2010-06.ground-truth.json"
+              ]
+            },
+            {
+              "structure": "NamedInsured.physicalAddress",
+              "semanticPath": "NamedInsured_PhysicalAddress_CityName",
+              "status": "evidence-backed",
+              "provenance": "ground-truth-corpus",
+              "formCount": 10,
+              "instanceCount": 10,
+              "fieldTypeCounts": {
+                "text": 10
+              },
+              "forms": [
+                "acord-0080-2016-11.ground-truth.json",
+                "acord-0088-2015-12r1.ground-truth.json",
+                "aig-comm-fleet-app-2019-09-12.ground-truth.json",
+                "amtrust-30-0912-2011-06.ground-truth.json",
+                "amtrust-wic-ah-dbl-app-ny-ny-0114.ground-truth.json",
+                "hartford-ss-25-50-06-16.ground-truth.json",
+                "nationwide-gls-app-74s-6-17.ground-truth.json",
+                "philadelphia-salon-and-day-spa-app-2016-12.ground-truth.json",
+                "western-heritage-whi-app-120-8-02.ground-truth.json",
+                "westport-wic1107-2010-06.ground-truth.json"
+              ]
+            },
+            {
+              "structure": "Applicant.address",
+              "graphCode": "Applicant.Address.City",
+              "status": "graph-inferred",
+              "provenance": "unification-graph"
+            },
+            {
+              "structure": "Insured.address",
+              "graphCode": "Insured.Address.City",
+              "status": "graph-inferred",
+              "provenance": "unification-graph"
+            },
+            {
+              "structure": "CommercialProperty.locationAddress",
+              "semanticPath": "Location_PhysicalAddress_CityName",
+              "status": "evidence-backed",
+              "provenance": "ground-truth-corpus",
+              "formCount": 20,
+              "instanceCount": 63,
+              "fieldTypeCounts": {
+                "text": 63
+              },
+              "forms": [
+                "acord-0080-2016-11.ground-truth.json",
+                "acord-0081-2016-03r1.ground-truth.json",
+                "acord-0082-2020-03.ground-truth.json",
+                "acord-0083-2016-04r1.ground-truth.json",
+                "acord-0084-2016-11.ground-truth.json",
+                "acord-0085-2016-11.ground-truth.json",
+                "acord-0088-2015-12r1.ground-truth.json",
+                "acord-0090-fl-2015-12r1.ground-truth.json",
+                "acord-0090-ny-2015-12.ground-truth.json",
+                "acord-0130-2017-05.ground-truth.json",
+                "acord-0132-2015-12r1.ground-truth.json",
+                "acord-0133-2016-03.ground-truth.json",
+                "aig-comm-fleet-app-2019-09-12.ground-truth.json",
+                "amtrust-30-0912-2011-06.ground-truth.json",
+                "great-american-f-27647-12-08.ground-truth.json",
+                "merchants-mg-71-01-03-19.ground-truth.json",
+                "nationwide-gls-app-74s-6-17.ground-truth.json",
+                "nfip-fema-form-086-0-1-f-050-feb-2015.ground-truth.json",
+                "philadelphia-integ-tech-app-03-2018.ground-truth.json",
+                "usli-pro-ect-10-18.ground-truth.json"
+              ]
+            }
+          ]
+        },
+        {
+          "component": "stateOrProvince",
+          "canonicalComponentId": "phase31.address.state-or-province",
+          "bindings": [
+            {
+              "structure": "NamedInsured.mailingAddress",
+              "semanticPath": "NamedInsured_MailingAddress_StateOrProvinceCode",
+              "status": "evidence-backed",
+              "provenance": "ground-truth-corpus",
+              "formCount": 38,
+              "instanceCount": 47,
+              "fieldTypeCounts": {
+                "text": 47
+              },
+              "forms": [
+                "acord-0003-2019-09.ground-truth.json",
+                "acord-0080-2016-11.ground-truth.json",
+                "acord-0081-2016-03r1.ground-truth.json",
+                "acord-0082-2020-03.ground-truth.json",
+                "acord-0083-2016-04r1.ground-truth.json",
+                "acord-0084-2016-11.ground-truth.json",
+                "acord-0085-2016-11.ground-truth.json",
+                "acord-0088-2015-12r1.ground-truth.json",
+                "acord-0090-fl-2015-12r1.ground-truth.json",
+                "acord-0090-ny-2015-12.ground-truth.json",
+                "acord-0125-2016-03r1.ground-truth.json",
+                "acord-0130-2017-05.ground-truth.json",
+                "aig-comm-fleet-app-2019-09-12.ground-truth.json",
+                "amtrust-wic-ah-dbl-app-ny-ny-0114.ground-truth.json",
+                "argo-ac-sup090-2018-07.ground-truth.json",
+                "argo-g1000-0114.ground-truth.json",
+                "chubb-av003-2017-07.ground-truth.json",
+                "chubb-pf-48163-2017-08.ground-truth.json",
+                "hartford-cb-00-h001-00-2017-10.ground-truth.json",
+                "lancer-r-lmc-ap001-01-20.ground-truth.json",
+                "markel-mail-021-09-15.ground-truth.json",
+                "merchants-mg-71-01-03-19.ground-truth.json",
+                "mount-hawley-uwsr-207mth-2013-03.ground-truth.json",
+                "nfip-fema-form-086-0-1-f-050-feb-2015.ground-truth.json",
+                "philadelphia-builders-risk-ground-up-construction-2013-01.ground-truth.json",
+                "philadelphia-builders-risk-renovation-and-rehabilitation-2013-01.ground-truth.json",
+                "philadelphia-pi-cyb-014-2017-11.ground-truth.json",
+                "philadelphia-pi-cyb-014-ny-2017-11.ground-truth.json",
+                "philadelphia-salon-and-day-spa-app-2016-12.ground-truth.json",
+                "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+                "protective-insurance-company-large-fleet-updated-01-2016.ground-truth.json",
+                "quaker-av005-2018-05.ground-truth.json",
+                "quaker-special-risk-04-18-qsr-luxury-home-program-contractors-liability-application-04-18.ground-truth.json",
+                "travelers-cyb-14101-2017-12.ground-truth.json",
+                "united-specialty-unitedspec-01-2019-09-12.ground-truth.json",
+                "western-heritage-whi-app-120-8-02.ground-truth.json",
+                "western-heritage-whi-app-138-2013-11.ground-truth.json",
+                "westport-wic1107-2010-06.ground-truth.json"
+              ]
+            },
+            {
+              "structure": "NamedInsured.physicalAddress",
+              "semanticPath": "NamedInsured_PhysicalAddress_StateOrProvinceCode",
+              "status": "evidence-backed",
+              "provenance": "ground-truth-corpus",
+              "formCount": 10,
+              "instanceCount": 11,
+              "fieldTypeCounts": {
+                "text": 11
+              },
+              "forms": [
+                "acord-0080-2016-11.ground-truth.json",
+                "acord-0088-2015-12r1.ground-truth.json",
+                "aig-comm-fleet-app-2019-09-12.ground-truth.json",
+                "amtrust-30-0912-2011-06.ground-truth.json",
+                "amtrust-wic-ah-dbl-app-ny-ny-0114.ground-truth.json",
+                "hartford-ss-25-50-06-16.ground-truth.json",
+                "nationwide-gls-app-74s-6-17.ground-truth.json",
+                "philadelphia-salon-and-day-spa-app-2016-12.ground-truth.json",
+                "western-heritage-whi-app-120-8-02.ground-truth.json",
+                "westport-wic1107-2010-06.ground-truth.json"
+              ]
+            },
+            {
+              "structure": "Applicant.address",
+              "status": "unresolved",
+              "provenance": "missing-corpus-and-graph-evidence"
+            },
+            {
+              "structure": "Insured.address",
+              "status": "unresolved",
+              "provenance": "missing-corpus-and-graph-evidence"
+            },
+            {
+              "structure": "CommercialProperty.locationAddress",
+              "semanticPath": "Location_PhysicalAddress_StateOrProvinceCode",
+              "status": "evidence-backed",
+              "provenance": "ground-truth-corpus",
+              "formCount": 20,
+              "instanceCount": 63,
+              "fieldTypeCounts": {
+                "text": 63
+              },
+              "forms": [
+                "acord-0080-2016-11.ground-truth.json",
+                "acord-0081-2016-03r1.ground-truth.json",
+                "acord-0082-2020-03.ground-truth.json",
+                "acord-0083-2016-04r1.ground-truth.json",
+                "acord-0084-2016-11.ground-truth.json",
+                "acord-0085-2016-11.ground-truth.json",
+                "acord-0088-2015-12r1.ground-truth.json",
+                "acord-0090-fl-2015-12r1.ground-truth.json",
+                "acord-0090-ny-2015-12.ground-truth.json",
+                "acord-0130-2017-05.ground-truth.json",
+                "acord-0132-2015-12r1.ground-truth.json",
+                "acord-0133-2016-03.ground-truth.json",
+                "aig-comm-fleet-app-2019-09-12.ground-truth.json",
+                "amtrust-30-0912-2011-06.ground-truth.json",
+                "great-american-f-27647-12-08.ground-truth.json",
+                "merchants-mg-71-01-03-19.ground-truth.json",
+                "nationwide-gls-app-74s-6-17.ground-truth.json",
+                "nfip-fema-form-086-0-1-f-050-feb-2015.ground-truth.json",
+                "philadelphia-integ-tech-app-03-2018.ground-truth.json",
+                "usli-pro-ect-10-18.ground-truth.json"
+              ]
+            }
+          ]
+        },
+        {
+          "component": "postalCode",
+          "canonicalComponentId": "phase31.address.postal-code",
+          "bindings": [
+            {
+              "structure": "NamedInsured.mailingAddress",
+              "semanticPath": "NamedInsured_MailingAddress_PostalCode",
+              "status": "evidence-backed",
+              "provenance": "ground-truth-corpus",
+              "formCount": 39,
+              "instanceCount": 45,
+              "fieldTypeCounts": {
+                "text": 45
+              },
+              "forms": [
+                "acord-0003-2019-09.ground-truth.json",
+                "acord-0080-2016-11.ground-truth.json",
+                "acord-0081-2016-03r1.ground-truth.json",
+                "acord-0082-2020-03.ground-truth.json",
+                "acord-0083-2016-04r1.ground-truth.json",
+                "acord-0084-2016-11.ground-truth.json",
+                "acord-0085-2016-11.ground-truth.json",
+                "acord-0088-2015-12r1.ground-truth.json",
+                "acord-0090-fl-2015-12r1.ground-truth.json",
+                "acord-0090-ny-2015-12.ground-truth.json",
+                "acord-0125-2016-03r1.ground-truth.json",
+                "acord-0130-2017-05.ground-truth.json",
+                "aig-comm-fleet-app-2019-09-12.ground-truth.json",
+                "amtrust-wic-ah-dbl-app-ny-ny-0114.ground-truth.json",
+                "argo-ac-sup090-2018-07.ground-truth.json",
+                "argo-g1000-0114.ground-truth.json",
+                "chubb-av003-2017-07.ground-truth.json",
+                "chubb-pf-48163-2017-08.ground-truth.json",
+                "hartford-cb-00-h001-00-2017-10.ground-truth.json",
+                "lancer-r-lmc-ap001-01-20.ground-truth.json",
+                "markel-mail-021-09-15.ground-truth.json",
+                "merchants-mg-71-01-03-19.ground-truth.json",
+                "mount-hawley-uwsr-207mth-2013-03.ground-truth.json",
+                "nfip-fema-form-086-0-1-f-050-feb-2015.ground-truth.json",
+                "philadelphia-builders-risk-ground-up-construction-2013-01.ground-truth.json",
+                "philadelphia-builders-risk-renovation-and-rehabilitation-2013-01.ground-truth.json",
+                "philadelphia-pi-cyb-014-2017-11.ground-truth.json",
+                "philadelphia-pi-cyb-014-ny-2017-11.ground-truth.json",
+                "philadelphia-salon-and-day-spa-app-2016-12.ground-truth.json",
+                "preferred-mutual-cl-98-09-18-ny-2018-04-26.ground-truth.json",
+                "protective-insurance-company-large-fleet-updated-01-2016.ground-truth.json",
+                "quaker-av005-2018-05.ground-truth.json",
+                "quaker-special-risk-04-18-qsr-luxury-home-program-contractors-liability-application-04-18.ground-truth.json",
+                "quaker-special-risk-qsr-sr-constr-mgr-2019-01.ground-truth.json",
+                "travelers-cyb-14101-2017-12.ground-truth.json",
+                "united-specialty-unitedspec-01-2019-09-12.ground-truth.json",
+                "western-heritage-whi-app-120-8-02.ground-truth.json",
+                "western-heritage-whi-app-138-2013-11.ground-truth.json",
+                "westport-wic1107-2010-06.ground-truth.json"
+              ]
+            },
+            {
+              "structure": "NamedInsured.physicalAddress",
+              "semanticPath": "NamedInsured_PhysicalAddress_PostalCode",
+              "status": "evidence-backed",
+              "provenance": "ground-truth-corpus",
+              "formCount": 8,
+              "instanceCount": 8,
+              "fieldTypeCounts": {
+                "text": 8
+              },
+              "forms": [
+                "acord-0080-2016-11.ground-truth.json",
+                "acord-0088-2015-12r1.ground-truth.json",
+                "aig-comm-fleet-app-2019-09-12.ground-truth.json",
+                "amtrust-30-0912-2011-06.ground-truth.json",
+                "amtrust-wic-ah-dbl-app-ny-ny-0114.ground-truth.json",
+                "nationwide-gls-app-74s-6-17.ground-truth.json",
+                "western-heritage-whi-app-120-8-02.ground-truth.json",
+                "westport-wic1107-2010-06.ground-truth.json"
+              ]
+            },
+            {
+              "structure": "Applicant.address",
+              "status": "unresolved",
+              "provenance": "missing-corpus-and-graph-evidence"
+            },
+            {
+              "structure": "Insured.address",
+              "status": "unresolved",
+              "provenance": "missing-corpus-and-graph-evidence"
+            },
+            {
+              "structure": "CommercialProperty.locationAddress",
+              "semanticPath": "Location_PhysicalAddress_PostalCode",
+              "status": "evidence-backed",
+              "provenance": "ground-truth-corpus",
+              "formCount": 19,
+              "instanceCount": 59,
+              "fieldTypeCounts": {
+                "text": 59
+              },
+              "forms": [
+                "acord-0080-2016-11.ground-truth.json",
+                "acord-0081-2016-03r1.ground-truth.json",
+                "acord-0082-2020-03.ground-truth.json",
+                "acord-0083-2016-04r1.ground-truth.json",
+                "acord-0084-2016-11.ground-truth.json",
+                "acord-0085-2016-11.ground-truth.json",
+                "acord-0088-2015-12r1.ground-truth.json",
+                "acord-0090-fl-2015-12r1.ground-truth.json",
+                "acord-0090-ny-2015-12.ground-truth.json",
+                "acord-0130-2017-05.ground-truth.json",
+                "acord-0132-2015-12r1.ground-truth.json",
+                "acord-0133-2016-03.ground-truth.json",
+                "aig-comm-fleet-app-2019-09-12.ground-truth.json",
+                "great-american-f-27647-12-08.ground-truth.json",
+                "merchants-mg-71-01-03-19.ground-truth.json",
+                "nationwide-gls-app-74s-6-17.ground-truth.json",
+                "nfip-fema-form-086-0-1-f-050-feb-2015.ground-truth.json",
+                "philadelphia-integ-tech-app-03-2018.ground-truth.json",
+                "usli-pro-ect-10-18.ground-truth.json"
+              ]
+            }
+          ]
+        }
+      ],
+      "validation": {
+        "valid": true,
+        "componentCount": 4,
+        "structureCount": 5,
+        "bindingCount": 20,
+        "evidenceBackedBindingCount": 12,
+        "graphInferredBindingCount": 3,
+        "unresolvedBindingCount": 5
+      }
+    },
+    "crossFormUnification": {
+      "graph": {
+        "generatedAt": "1970-01-01T00:00:00.000Z",
+        "graphHash": "51cfc61b",
+        "edges": [
+          {
+            "sourceCode": "Applicant.Address.City",
+            "targetCode": "Insured.Address.City",
+            "relationship": "equivalent",
+            "unificationClass": "acord-126-to-127"
+          },
+          {
+            "sourceCode": "Applicant.Name",
+            "targetCode": "Insured.Name",
+            "relationship": "equivalent",
+            "unificationClass": "acord-126-to-127"
+          },
+          {
+            "sourceCode": "GeneralInfo.MailingAddress.Street",
+            "targetCode": "Applicant.Address.Street",
+            "relationship": "equivalent",
+            "unificationClass": "acord-125-to-126"
+          },
+          {
+            "sourceCode": "GeneralInfo.NamedInsured",
+            "targetCode": "Applicant.Name",
+            "relationship": "equivalent",
+            "unificationClass": "acord-125-to-126"
+          },
+          {
+            "sourceCode": "Location.Address.Street",
+            "targetCode": "CommercialLines.Location.Address.Street",
+            "relationship": "equivalent",
+            "unificationClass": "acord-140-commercial-lines"
+          },
+          {
+            "sourceCode": "Location.PremisesNumber",
+            "targetCode": "CommercialLines.Location.Number",
+            "relationship": "equivalent",
+            "unificationClass": "acord-140-commercial-lines"
+          }
+        ],
+        "groups": [
+          {
+            "groupId": "group-4158d71d",
+            "canonicalCode": "Applicant.Address.City",
+            "equivalentCodes": [
+              "Applicant.Address.City",
+              "Insured.Address.City"
+            ],
+            "classes": [
+              "acord-126-to-127"
+            ]
+          },
+          {
+            "groupId": "group-61e8a94a",
+            "canonicalCode": "Applicant.Address.Street",
+            "equivalentCodes": [
+              "Applicant.Address.Street",
+              "GeneralInfo.MailingAddress.Street"
+            ],
+            "classes": [
+              "acord-125-to-126"
+            ]
+          },
+          {
+            "groupId": "group-b0143d84",
+            "canonicalCode": "Applicant.Name",
+            "equivalentCodes": [
+              "Applicant.Name",
+              "GeneralInfo.NamedInsured",
+              "Insured.Name"
+            ],
+            "classes": [
+              "acord-125-to-126",
+              "acord-126-to-127"
+            ]
+          },
+          {
+            "groupId": "group-749951cc",
+            "canonicalCode": "CommercialLines.Location.Address.Street",
+            "equivalentCodes": [
+              "CommercialLines.Location.Address.Street",
+              "Location.Address.Street"
+            ],
+            "classes": [
+              "acord-140-commercial-lines"
+            ]
+          },
+          {
+            "groupId": "group-87928540",
+            "canonicalCode": "CommercialLines.Location.Number",
+            "equivalentCodes": [
+              "CommercialLines.Location.Number",
+              "Location.PremisesNumber"
+            ],
+            "classes": [
+              "acord-140-commercial-lines"
+            ]
+          }
+        ]
+      },
+      "bridges": [
+        {
+          "status": "candidate-bridge",
+          "groupId": "group-749951cc",
+          "canonicalCode": "CommercialProperty.Building.LocationAddress",
+          "graphCodes": [
+            "CommercialLines.Location.Address.Street",
+            "Location.Address.Street"
+          ],
+          "evidencePath": "Location_PhysicalAddress_LineOne",
+          "evidenceFormCount": 20,
+          "preservesEntityRoleContext": true
+        },
+        {
+          "status": "candidate-bridge",
+          "groupId": "group-61e8a94a",
+          "canonicalCode": "GeneralInfo.MailingAddress.Line1",
+          "graphCodes": [
+            "Applicant.Address.Street",
+            "GeneralInfo.MailingAddress.Street"
+          ],
+          "evidencePath": "NamedInsured_MailingAddress_LineOne",
+          "evidenceFormCount": 41,
+          "preservesEntityRoleContext": true
+        },
+        {
+          "status": "candidate-bridge",
+          "groupId": "group-b0143d84",
+          "canonicalCode": "GeneralInfo.NamedInsured",
+          "graphCodes": [
+            "Applicant.Name",
+            "GeneralInfo.NamedInsured",
+            "Insured.Name"
+          ],
+          "evidencePath": "NamedInsured_FullName",
+          "evidenceFormCount": 61,
+          "preservesEntityRoleContext": true
+        }
+      ],
+      "canonicalCodes": [
+        "GeneralInfo.NamedInsured"
+      ],
+      "graphOnlyCodes": [
+        "Applicant.Address.City",
+        "Applicant.Address.Street",
+        "Applicant.Name",
+        "CommercialLines.Location.Address.Street",
+        "CommercialLines.Location.Number",
+        "GeneralInfo.MailingAddress.Street",
+        "Insured.Address.City",
+        "Insured.Name",
+        "Location.Address.Street",
+        "Location.PremisesNumber"
+      ],
+      "bridgedGraphOnlyCodes": [
+        "Applicant.Address.Street",
+        "Applicant.Name",
+        "CommercialLines.Location.Address.Street",
+        "GeneralInfo.MailingAddress.Street",
+        "Insured.Name",
+        "Location.Address.Street"
+      ],
+      "unresolvedGraphOnlyCodes": [
+        "Applicant.Address.City",
+        "CommercialLines.Location.Number",
+        "Insured.Address.City",
+        "Location.PremisesNumber"
+      ],
+      "coverage": {
+        "edgeCount": 6,
+        "groupCount": 5,
+        "graphCodeCount": 11,
+        "canonicalGraphCodeCount": 1,
+        "bridgeCount": 3,
+        "bridgedGraphOnlyCodeCount": 6,
+        "unresolvedGraphOnlyCodeCount": 4
+      }
+    }
+  },
+  "validation": {
+    "valid": true,
+    "canonicalNodeCount": 8,
+    "bundleCount": 3,
+    "bundleNodeCountsMatch": true,
+    "signaturesValid": true,
+    "invalidBundleIds": [],
+    "invalidReferences": [],
+    "expandedConceptCount": 6,
+    "evidenceBackedAliasCount": 6,
+    "minimumEvidenceFormCount": 20,
+    "candidateInvalidReferences": [],
+    "fieldTypeOutlierCount": 1,
+    "addressHarmonizationValid": true,
+    "addressComponentCount": 4,
+    "addressBindingCount": 20,
+    "unresolvedAddressBindingCount": 5
+  },
+  "integrity": {
+    "algorithm": "sha256",
+    "payloadSha256": "de18ba8a33410b61095f318b403635e23ae731bf2deab0a950b96662bcd3f27d"
+  }
+}

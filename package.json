@@ -3,6 +3,12 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "ontology:phase31:generate": "node scripts/generate-ontology-phase31.cjs",
+    "ontology:phase31:expand": "node scripts/generate-ontology-phase31.cjs --evolve",
+    "ontology:phase31:evaluate-rp8": "node scripts/run-phase31-rp8-evaluation.cjs",
+    "ontology:phase32:stabilize-rp8": "node scripts/generate-phase32-semantic-truth-rp8.cjs",
+    "ontology:phase33:evaluate-readiness": "node scripts/generate-phase33-promotion-readiness.cjs",
+    "production:promote-rp8": "node scripts/promote-rp8-production-baseline.cjs",
     "diagnostics:extraction:alignment": "node scripts/run-extraction-alignment-diagnostics.cjs",
     "diagnostics:mapping:alignment": "node scripts/run-mapping-engine-alignment-diagnostics.cjs",
     "production:hardening": "node scripts/run-production-hardening.cjs",

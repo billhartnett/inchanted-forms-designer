@@ -1,0 +1,179 @@
+{
+  "schemaVersion": "phase33-promotion-readiness.v1",
+  "generatedAt": "2026-08-16T15:04:44.427Z",
+  "phase": 33,
+  "targetRestorePoint": "RP-8",
+  "promotionReady": false,
+  "decision": "not-ready-role-conflict-review-required",
+  "checks": {
+    "distinctRolesEnforced": true,
+    "crossRolePromotionDisabled": true,
+    "componentHarmonizationPreserved": true,
+    "roleConflictsBlocked": true,
+    "roleEquivalenceRequiresEvidence": true,
+    "allCompositeIdentitiesRoleScoped": true,
+    "rp7Preserved": true,
+    "phase32Inactive": true,
+    "phase33Inactive": true
+  },
+  "summary": {
+    "evaluatedDecisions": 1176,
+    "roleSensitiveDecisions": 90,
+    "roleBoundaryBlockedDecisions": 1,
+    "roleCrossingBridgesDemoted": 3,
+    "rolePromotingBridges": 0,
+    "componentHarmonizedDecisions": 24,
+    "confidenceChangesFromPhase32": 0,
+    "rankingChangesFromPhase32": 0
+  },
+  "blockedDecisions": [
+    {
+      "fixture": "Contractors Supp App.pdf",
+      "familyId": "unknown-family",
+      "blockId": "p1-l7",
+      "page": 1,
+      "text": "Applicant:",
+      "status": "role-boundary-blocked",
+      "rp7": {
+        "source": "chosen",
+        "acordCode": "NamedInsured_FullName",
+        "label": "GeneralInfo.NamedInsured Insured Name",
+        "confidence": 0.68,
+        "suppressed": false
+      },
+      "phase31": {
+        "acordCode": "GeneralInfo.NamedInsured",
+        "confidence": 0.68,
+        "rankingPosition": 1,
+        "activation": "evaluation-only"
+      },
+      "delta": {
+        "codeChanged": true,
+        "confidenceDelta": 0,
+        "rankingChanged": false,
+        "reason": "evidence-backed-alias",
+        "evidence": {
+          "semanticPath": "NamedInsured_FullName",
+          "formCount": 61,
+          "instanceCount": 83,
+          "dominantFieldType": "text",
+          "fieldTypeOutlierCount": 1
+        },
+        "bridge": null,
+        "addressBindings": []
+      },
+      "phase33": {
+        "acordCode": "NamedInsured_FullName",
+        "role": "Applicant",
+        "component": "identity.name",
+        "semanticIdentity": "Applicant:identity.name",
+        "promotion": "blocked",
+        "reviewRequired": true
+      },
+      "phase33Delta": {
+        "codeChangedFromPhase32": true,
+        "roleChanged": false,
+        "componentChanged": false,
+        "boundaryReason": "Blocked NamedInsured promotion for contextual Applicant role."
+      }
+    }
+  ],
+  "bridgeDemotions": [
+    {
+      "groupId": "group-4158d71d",
+      "equivalentCodes": [
+        "Applicant.Address.City",
+        "Insured.Address.City"
+      ],
+      "status": "finalized-component-bridge",
+      "canonicalCode": null,
+      "canonicalComponentId": "phase31.address.line1",
+      "runtimePromotion": false,
+      "evidence": {
+        "sourceStructures": [
+          "NamedInsured.mailingAddress",
+          "NamedInsured.physicalAddress",
+          "CommercialProperty.locationAddress"
+        ],
+        "totalFormsAcrossRoleBindings": 69,
+        "totalInstances": 121,
+        "allText": true
+      },
+      "phase33Status": "role-bounded-component-bridge",
+      "roles": [
+        "Applicant",
+        "Insured"
+      ],
+      "roleBoundary": "strict-distinct-roles",
+      "rolePromotionAllowed": false,
+      "equivalenceScope": "component-only",
+      "priorCanonicalCode": null,
+      "demotionReason": "No corpus evidence establishes legal or semantic role equivalence."
+    },
+    {
+      "groupId": "group-61e8a94a",
+      "equivalentCodes": [
+        "Applicant.Address.Street",
+        "GeneralInfo.MailingAddress.Street"
+      ],
+      "status": "finalized-canonical-bridge",
+      "canonicalCode": null,
+      "canonicalComponentId": "phase31.address.line1",
+      "runtimePromotion": false,
+      "evidencePath": "NamedInsured_MailingAddress_LineOne",
+      "evidenceFormCount": 41,
+      "phase33Status": "role-bounded-component-bridge",
+      "roles": [
+        "Applicant",
+        "NamedInsured"
+      ],
+      "roleBoundary": "strict-distinct-roles",
+      "rolePromotionAllowed": false,
+      "equivalenceScope": "component-only",
+      "priorCanonicalCode": "GeneralInfo.MailingAddress.Line1",
+      "demotionReason": "No corpus evidence establishes legal or semantic role equivalence."
+    },
+    {
+      "groupId": "group-b0143d84",
+      "equivalentCodes": [
+        "Applicant.Name",
+        "GeneralInfo.NamedInsured",
+        "Insured.Name"
+      ],
+      "status": "finalized-canonical-bridge",
+      "canonicalCode": null,
+      "canonicalComponentId": "phase33.identity.name",
+      "runtimePromotion": false,
+      "evidencePath": "NamedInsured_FullName",
+      "evidenceFormCount": 61,
+      "phase33Status": "role-bounded-component-bridge",
+      "roles": [
+        "Applicant",
+        "Insured",
+        "NamedInsured"
+      ],
+      "roleBoundary": "strict-distinct-roles",
+      "rolePromotionAllowed": false,
+      "equivalenceScope": "component-only",
+      "priorCanonicalCode": "GeneralInfo.NamedInsured",
+      "demotionReason": "No corpus evidence establishes legal or semantic role equivalence."
+    }
+  ],
+  "semanticTruthPayloadSha256": "c91ce8d66ec6a89c7eec455457721885d22e251aa6da92522591e16fcd95a4ec",
+  "guardrails": {
+    "rp7RuntimeBaselinePreserved": true,
+    "phase32Inactive": true,
+    "phase33Inactive": true,
+    "noRuntimeOntologyChange": true,
+    "noRoleCollapse": true,
+    "noCrossRolePromotion": true,
+    "noConfidenceChange": true,
+    "noRankingChange": true,
+    "noFieldIdChange": true,
+    "noPageIndexChange": true
+  },
+  "integrity": {
+    "algorithm": "sha256",
+    "payloadSha256": "9367aa2988893f50cebe56ac5cd86aba02333985708decd26f26e3d709918b0c"
+  }
+}

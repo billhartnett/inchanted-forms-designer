@@ -1,9 +1,8 @@
-import { useEffect, useMemo, useRef } from "react";
+import { lazy, Suspense, useEffect, useMemo, useRef } from "react";
 import { Group as KonvaGroup, Line, Transformer } from "react-konva";
 import { Rect as KonvaRect, Text as KonvaText } from "react-konva";
 import { CanvasStage } from "../../canvas/CanvasStage";
 import ZoomControls from "../../designer/controls/ZoomControls";
-import PdfImportModal from "../../designer/ai/PdfImportModal";
 import { useSelectedFields } from "../../state/fieldStore";
 import { useDesignerStore, type Field } from "../../state/designerStore";
 import { FieldControls } from "./FieldControls";
@@ -12,6 +11,8 @@ import PdfBackground from "./PdfBackground";
 import { resolveOntologySemanticMetadata } from "../../../../shared/src/acord/acord-gating";
 import { useMappingStore } from "../../state/mappingStore";
 import { useExtractionStore } from "../../state/extractionStore";
+
+const PdfImportModal = lazy(() => import("../../designer/ai/PdfImportModal"));
 
 const GRID_SIZE = 20;
 function deriveOntologyClusterLabel(field: Field, routedClusterFallback?: string): string {
@@ -554,11 +555,13 @@ export function DesignerCanvas({
               boxShadow: "0 16px 50px rgba(0, 0, 0, 0.2)",
             }}
           >
-            <PdfImportModal
-              mode={pdfModalMode}
-              onClose={onClosePdfModal}
-              onImportResult={onImportResult}
-            />
+            <Suspense fallback={null}>
+              <PdfImportModal
+                mode={pdfModalMode}
+                onClose={onClosePdfModal}
+                onImportResult={onImportResult}
+              />
+            </Suspense>
           </div>
         </div>
       )}
