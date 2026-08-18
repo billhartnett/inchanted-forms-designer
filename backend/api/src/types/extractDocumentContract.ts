@@ -43,6 +43,14 @@ export type ExtractDocumentFieldCatalogEntry = {
   id: string;
   page: number;
   role: ExtractDocumentFieldCatalogRole;
+  semanticRole?: "Producer";
+  semanticCluster?:
+    | "ProducerInformation"
+    | "ProducerContact"
+    | "ProducerAddress"
+    | "ProducerCodes"
+    | "ProducerCustomerId";
+  producerIndex?: number;
   valueType: ExtractDocumentFieldCatalogValueType;
   text: string;
   boundingBox: BoundingBox;

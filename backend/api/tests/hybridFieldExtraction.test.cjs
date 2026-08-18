@@ -3,10 +3,41 @@ const test = require("node:test");
 
 const {
   buildHybridFieldExtraction,
+  buildRp9ProducerGroups,
   toPixelBox,
 } = require("../dist/extraction/hybridFieldExtraction.js");
 const { boundsFromPolygon } = require("../dist/extraction/bboxNormalization.js");
 const { mapFields } = require("../dist/api/mapFields.js");
+
+test("builds RP-9 Producer clusters and indices from ACORD 125 page-one cues", () => {
+  const labels = [
+    ["agent", "AGENT NAME", 20],
+    ["address", "ADDRESS", 50],
+    ["city", "CITY", 70],
+    ["state", "STATE", 90],
+    ["zip", "ZIP CODE", 110],
+    ["phone", "PHONE", 130],
+    ["fax", "FAX", 150],
+    ["email", "E-MAIL ADDRESS", 170],
+    ["code", "CODE", 190],
+    ["sub-code", "SUB CODE", 210],
+    ["customer", "AGENCY CUSTOMER ID", 230],
+    ["bill", "AGENCY BILL", 250],
+  ];
+  const catalog = labels.map(([id, label, y]) => ({
+    id, page: 1, role: "input", valueType: "text", text: label,
+    semanticLabel: label, boundingBox: { x: 20, y, width: 120, height: 16 },
+    semanticValueRegion: { x: 150, y, width: 180, height: 16 },
+    source: "blank_detector", confidence: 0.99,
+  }));
+  const groups = buildRp9ProducerGroups(catalog);
+  assert.equal(groups.some((group) => group.label === "ProducerInformation"), true);
+  for (const label of ["ProducerContact", "ProducerAddress", "ProducerCodes", "ProducerCustomerId"]) {
+    assert.equal(groups.some((group) => group.label === label), true, label);
+  }
+  assert.equal(catalog.every((entry) => entry.semanticRole === "Producer"), true);
+  assert.deepEqual([...new Set(catalog.map((entry) => entry.producerIndex))], [0]);
+});
 
 test("normalizes every DI geometry source with the same page transform", async () => {
   assert.deepEqual(
