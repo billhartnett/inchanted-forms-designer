@@ -1,5 +1,7 @@
 FROM node:20-slim AS build
 
+ARG REQUIRE_RP9_EXTRACTOR_EMBEDDINGS=0
+
 WORKDIR /workspace
 
 # Copy the monorepo because backend/api depends on shared, wave8, and wave9.
@@ -23,6 +25,9 @@ RUN cd backend/api && PRODUCTION_BASELINE=RP-8 node -e \
 	"const runtime=require('./dist/services/rp8OntologyRuntime.js').validateActiveRp8Runtime(); if(runtime.metadata.restorePoint!=='RP-8') process.exit(1)"
 RUN cd backend/api && PRODUCTION_BASELINE=RP-8 SEMANTIC_BASELINE=RP-9 DEPLOYMENT_ENVIRONMENT=staging node -e \
 	"const runtime=require('./dist/services/semanticOntologyRuntime.js').validateConfiguredSemanticRuntime(); if(runtime.metadata.restorePoint!=='RP-9') process.exit(1)"
+RUN if [ "${REQUIRE_RP9_EXTRACTOR_EMBEDDINGS}" = "1" ]; then \
+	node -e "const x=require('/workspace/acord-artifacts/rp9-extractor-embeddings.json'); if(x.provider!=='openai'||x.activation?.scope!=='staging'||x.entries?.length!==18) process.exit(1)"; \
+	fi
 RUN test -f /workspace/backend/api/dist/services/rp8OntologyRuntime.js
 RUN test -f /workspace/backend/api/dist/services/rp9OntologyRuntime.js
 RUN test -f /workspace/backend/api/dist/services/semanticOntologyRuntime.js

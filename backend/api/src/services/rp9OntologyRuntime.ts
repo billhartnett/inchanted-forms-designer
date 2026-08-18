@@ -112,11 +112,21 @@ function roleForCode(code: string): Role | null {
   if (/(?:^|[._])Insured(?:[._]|$)/i.test(code || "")) return "Insured";
   return null;
 }
+function producerIndexFromEvidence(mapping?: FieldMapping): number | null {
+  const explicit = Number((mapping as any)?.producerIndex);
+  if (Number.isInteger(explicit) && explicit >= 0) return explicit;
+  for (const groupId of (mapping as any)?.semanticGroupIds || []) {
+    const match = String(groupId).match(/^rp9-producer-(?:information|contact|address|codes|customer-id)-p\d+-(\d+)$/i);
+    if (match) return Number(match[1]);
+  }
+  return null;
+}
 function instanceKey(node: Rp9Node, mapping?: FieldMapping): Record<string, string | number> {
+  const producerIndex = producerIndexFromEvidence(mapping);
   const values: Record<string, string | number> = {
     pageIndex: Math.max(0, Number(mapping?.page || 1) - 1),
     sectionOccurrence: String((mapping as any)?.groupId || "section-0"),
-    producerIndex: Number((mapping as any)?.producerIndex || 0),
+    producerIndex: producerIndex ?? String((mapping as any)?.groupId || mapping?.blockId || "producer-unresolved"),
     contactIndex: Number((mapping as any)?.contactIndex || 0),
     locationIndex: Number((mapping as any)?.locationIndex ?? (mapping as any)?.rowIndex ?? 0),
     buildingIndex: Number((mapping as any)?.buildingIndex ?? (mapping as any)?.columnIndex ?? 0),
@@ -251,6 +261,35 @@ function exactContextCandidate(contexts: string[], mapping: FieldMapping): Rp9Pr
   };
 }
 
+function producerSectionCueCandidate(mapping: FieldMapping): Rp9ProjectedCandidate | null {
+  const semanticRole = String((mapping as any)?.semanticRole || "");
+  const semanticCluster = String((mapping as any)?.semanticCluster || "");
+  const semanticGroups = ((mapping as any)?.semanticGroupIds || []).map(String);
+  const hasProducerCue = semanticRole === "Producer" ||
+    semanticCluster.startsWith("Producer") ||
+    semanticGroups.some((groupId: string) => groupId.startsWith("rp9-producer-information-"));
+  if (!hasProducerCue) return null;
+  const runtime = getActiveRp9Runtime();
+  const node = runtime.nodes.get("Section.ProducerInformation");
+  if (!node) return null;
+  return {
+    acordCode: "Section.ProducerInformation",
+    label: "PRODUCER INFORMATION",
+    confidenceScore: 1,
+    normalizedConfidenceScore: 1,
+    source: "heuristic",
+    rationale: "RP-9 Producer role, label, or cluster cue inferred the ProducerInformation section.",
+    rp9: {
+      ontologyScope: "canonical", canonical: true, canonicalAcordCode: "Section.ProducerInformation",
+      semanticRole: "Producer", component: "section", semanticIdentity: "Producer:section",
+      semanticKind: "section", boundaryDisposition: "allowed", equivalenceId: null,
+      instanceFamily: node.instanceFamily, instanceKey: instanceKey(node, mapping),
+      sections: node.sections || [], groups: node.groups || [],
+      rationale: "RP-9 Producer semantic cues inferred the canonical section anchor.",
+    },
+  };
+}
+
 function selectable(candidate: Rp9ProjectedCandidate): boolean {
   return candidate.rp9.canonical && candidate.rp9.boundaryDisposition !== "blocked";
 }
@@ -262,7 +301,17 @@ export function projectMappingsToRp9(mappings: FieldMapping[]): FieldMapping[] {
     const candidates = mapping.suggestions.map((candidate, index) => ({ candidate: projectedCandidate(candidate, context, mapping), index }));
     const exact = exactContextCandidate(contexts, mapping);
     if (exact && !candidates.some(({ candidate }) => candidate.acordCode === exact.acordCode)) candidates.unshift({ candidate: exact, index: -1 });
-    const suggestions = candidates.sort((left, right) => Number(!left.candidate.rp9.canonical) - Number(!right.candidate.rp9.canonical) || left.index - right.index).map(({ candidate }) => candidate);
+    const sectionCue = producerSectionCueCandidate(mapping);
+    if (sectionCue && !candidates.some(({ candidate }) => candidate.acordCode === sectionCue.acordCode)) candidates.push({ candidate: sectionCue, index: Number.MAX_SAFE_INTEGER });
+    const explicitProducerCue = String((mapping as any)?.semanticRole || "") === "Producer" ||
+      String((mapping as any)?.semanticCluster || "").startsWith("Producer");
+    const suggestions = candidates.filter(({ candidate }) =>
+      !explicitProducerCue || candidate.rp9.ontologyScope !== "dictionary-only",
+    ).sort((left, right) =>
+      Number(!left.candidate.rp9.canonical) - Number(!right.candidate.rp9.canonical) ||
+      Number(left.candidate.rp9.semanticKind === "section") - Number(right.candidate.rp9.semanticKind === "section") ||
+      left.index - right.index,
+    ).map(({ candidate }) => candidate);
     const chosen = suggestions.find(selectable);
     return { ...mapping, suggestions, topCandidate: suggestions[0], chosen };
   });
@@ -286,7 +335,27 @@ export function collectRp9Nodes(mappings: FieldMapping[]): Rp9Node[] {
 }
 
 export function collectRp9Sections(mappings: FieldMapping[]) {
-  return mappings.flatMap((mapping) => (mapping.suggestions as Rp9ProjectedCandidate[])
-    .filter((candidate) => candidate.rp9?.semanticKind === "section")
-    .map((candidate) => ({ blockId: mapping.blockId, page: mapping.page, canonicalNodeId: candidate.acordCode, sections: candidate.rp9.sections, instanceFamily: candidate.rp9.instanceFamily, instanceKey: candidate.rp9.instanceKey })));
+  const sections = new Map<string, ReturnType<typeof sectionRecord>>();
+  for (const mapping of mappings) {
+    for (const candidate of mapping.suggestions as Rp9ProjectedCandidate[]) {
+      if (candidate.rp9?.semanticKind !== "section") continue;
+      const producerIndex = candidate.acordCode === "Section.ProducerInformation"
+        ? producerIndexFromEvidence(mapping) ?? "unresolved"
+        : "section";
+      const key = `${mapping.page}:${candidate.acordCode}:${producerIndex}`;
+      if (!sections.has(key)) sections.set(key, sectionRecord(mapping, candidate));
+    }
+  }
+  return [...sections.values()];
+}
+
+function sectionRecord(mapping: FieldMapping, candidate: Rp9ProjectedCandidate) {
+  return {
+    blockId: mapping.blockId,
+    page: mapping.page,
+    canonicalNodeId: candidate.acordCode,
+    sections: candidate.rp9.sections,
+    instanceFamily: candidate.rp9.instanceFamily,
+    instanceKey: candidate.rp9.instanceKey,
+  };
 }

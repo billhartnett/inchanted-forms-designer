@@ -36,7 +36,7 @@
     "ontologyId": "acord-canonical-ontology",
     "version": "2026.08.18-rp9",
     "generatedAt": "deterministic",
-    "hash": "d257c500a5a19c4587417e9a3e13e74ef140571fc6032601de157d3001e24d9d",
+    "hash": "7856ce61f99dfe42b7637db14af5f792ce7b8b06a4625673858961293ab918fa",
     "nodes": {
       "CommercialProperty.Building.LocationAddress": {
         "acordCode": "CommercialProperty.Building.LocationAddress",
@@ -1776,7 +1776,10 @@
           "Section.ProducerInformation",
           "PRODUCER INFORMATION",
           "PRODUCER",
-          "AGENCY"
+          "AGENCY",
+          "AGENT NAME",
+          "AGENCY CUSTOMER ID",
+          "AGENCY BILL"
         ],
         "synonyms": [
           "agency",
@@ -2253,6 +2256,6 @@
   },
   "integrity": {
     "algorithm": "sha256",
-    "payloadSha256": "9528b281e6e2ff852318271f3c122af339bb9196c25c50671cf68c2088af68e0"
+    "payloadSha256": "4e477eaf1c34f6934331a546e095f9d09c221f7345cbef7b1984a231e55cd31a"
   }
 }

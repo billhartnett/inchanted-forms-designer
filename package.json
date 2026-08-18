@@ -5,6 +5,8 @@
   "scripts": {
     "ontology:rp9:generate": "node scripts/generate-rp9-semantic-artifacts.cjs",
     "ontology:rp9:validate": "node scripts/validate-rp9-semantic-artifacts.cjs",
+    "embeddings:rp9:extractor": "node scripts/generate-rp9-extractor-embeddings.cjs",
+    "embeddings:rp9:extractor:deterministic": "node scripts/generate-rp9-extractor-embeddings.cjs --deterministic",
     "diagnostics:extraction:alignment": "node scripts/run-extraction-alignment-diagnostics.cjs",
     "diagnostics:mapping:alignment": "node scripts/run-mapping-engine-alignment-diagnostics.cjs",
     "production:hardening": "node scripts/run-production-hardening.cjs",

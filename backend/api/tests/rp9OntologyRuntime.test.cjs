@@ -85,6 +85,36 @@ test("preserves multi-instance premises and building keys", () => withStagingRp9
   assert.deepEqual(projected[1].chosen.rp9.instanceKey, { locationIndex: 3, buildingIndex: 2 });
 }));
 
+test("retains Producer fillable choices while emitting section anchors from RP-9 cues", () => withStagingRp9(() => {
+  const projected = rp9.projectMappingsToRp9([
+    mapping("agent", "AGENT NAME", [candidate("Producer_FullName")], {
+      semanticRole: "Producer",
+      semanticCluster: "ProducerInformation",
+      semanticGroupIds: ["rp9-producer-information-p1-2"],
+      producerIndex: 2,
+    }),
+  ]);
+  assert.equal(projected[0].chosen.acordCode, "Producer.Identity.FullName");
+  assert.deepEqual(projected[0].chosen.rp9.instanceKey, { producerIndex: 2 });
+  const section = projected[0].suggestions.find((candidate) => candidate.acordCode === "Section.ProducerInformation");
+  assert.equal(section.rp9.semanticKind, "section");
+  assert.deepEqual(section.rp9.instanceKey, { pageIndex: 1, sectionOccurrence: "section-0" });
+  assert.equal(rp9.collectRp9Sections(projected)[0].canonicalNodeId, "Section.ProducerInformation");
+}));
+
+test("deduplicates Producer section anchors and removes dictionary-only leakage inside RP-9 Producer clusters", () => withStagingRp9(() => {
+  const projected = rp9.projectMappingsToRp9([
+    mapping("address-1", "ADDRESS", [candidate("Producer_MailingAddress_LineOne"), candidate("AccountantsLiability_BranchOffice_AddressLineOne")], {
+      page: 1, semanticRole: "Producer", semanticCluster: "ProducerAddress", producerIndex: 0,
+    }),
+    mapping("address-2", "CITY", [candidate("Producer_MailingAddress_CityName")], {
+      page: 1, semanticRole: "Producer", semanticCluster: "ProducerAddress", producerIndex: 0,
+    }),
+  ]);
+  assert.equal(projected[0].suggestions.some((item) => item.rp9.ontologyScope === "dictionary-only"), false);
+  assert.equal(rp9.collectRp9Sections(projected).length, 1);
+}));
+
 test("facade returns RP-9 sections and category bundles only in staging mode", () => withStagingRp9(() => {
   const mappings = facade.projectMappingsToActiveSemanticBaseline([
     mapping("section", "GENERAL INFORMATION", []),

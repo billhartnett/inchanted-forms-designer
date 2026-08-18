@@ -35,9 +35,12 @@ jobs:
           ACR_NAME: ${{ secrets.ACR_NAME }}
           ACR_LOGIN_SERVER: ${{ secrets.ACR_LOGIN_SERVER }}
           EMBEDDING_MODEL: ${{ secrets.EMBEDDING_MODEL }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_ENDPOINT: ${{ secrets.OPENAI_ENDPOINT }}
+          OPENAI_DEPLOYMENT: ${{ secrets.OPENAI_DEPLOYMENT }}
         run: |
           set -euo pipefail
-          for value in AZURE_CREDENTIALS ACR_NAME ACR_LOGIN_SERVER EMBEDDING_MODEL; do
+          for value in AZURE_CREDENTIALS ACR_NAME ACR_LOGIN_SERVER EMBEDDING_MODEL OPENAI_API_KEY OPENAI_ENDPOINT OPENAI_DEPLOYMENT; do
             if [[ -z "${!value}" ]]; then
               echo "Missing required staging secret: ${value}" >&2
               exit 1
@@ -62,6 +65,14 @@ jobs:
       - name: Validate RP-9 artifacts
         run: npm run ontology:rp9:validate
 
+      - name: Regenerate RP-9 extractor embeddings
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_ENDPOINT: ${{ secrets.OPENAI_ENDPOINT }}
+          OPENAI_DEPLOYMENT: ${{ secrets.OPENAI_DEPLOYMENT }}
+          EMBEDDING_MODEL: ${{ secrets.EMBEDDING_MODEL }}
+        run: npm run embeddings:rp9:extractor
+
       - name: Build and push RP-9 backend image
         id: image
         shell: bash
@@ -72,6 +83,7 @@ jobs:
             --registry "${{ secrets.ACR_NAME }}" \
             --image "${IMAGE_REPOSITORY}:${TAG}" \
             --file backend/api/Dockerfile \
+            --build-arg REQUIRE_RP9_EXTRACTOR_EMBEDDINGS=1 \
             . \
             --no-logs \
             --output json > acr-build.json

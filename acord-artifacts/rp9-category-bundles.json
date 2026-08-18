@@ -3,8 +3,8 @@
   "generatedAt": "2026-08-18T00:00:00.000Z",
   "restorePoint": "RP-9",
   "status": "staging-active",
-  "semanticTruthPayloadSha256": "9528b281e6e2ff852318271f3c122af339bb9196c25c50671cf68c2088af68e0",
-  "ontologyHash": "d257c500a5a19c4587417e9a3e13e74ef140571fc6032601de157d3001e24d9d",
+  "semanticTruthPayloadSha256": "4e477eaf1c34f6934331a546e095f9d09c221f7345cbef7b1984a231e55cd31a",
+  "ontologyHash": "7856ce61f99dfe42b7637db14af5f792ce7b8b06a4625673858961293ab918fa",
   "groups": [
     {
       "bundleId": "address",
@@ -440,6 +440,6 @@
   },
   "integrity": {
     "algorithm": "sha256",
-    "payloadSha256": "ccb076df53b5aaba631d915156b07a4e5f1e41f71c559034b01c1a9017df5f0c"
+    "payloadSha256": "15f691e406b0c0a258795eeefa51d7f16c20b5a0bde65de9e5a73cb8e06383ae"
   }
 }

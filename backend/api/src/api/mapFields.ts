@@ -1870,7 +1870,9 @@ export async function mapFields(
       return {
         ...mapping,
         boundingBox: promotedBox || mapping.boundingBox,
-        semanticRole: catalogEntry?.role,
+        semanticRole: catalogEntry?.semanticRole || catalogEntry?.role,
+        semanticCluster: catalogEntry?.semanticCluster,
+        producerIndex: catalogEntry?.producerIndex,
         semanticLabel: catalogEntry?.semanticLabel || catalogEntry?.text,
         semanticValueRegion: promotedBox || catalogEntry?.semanticValueRegion,
         labelBoundingBox: catalogEntry?.labelBoundingBox,

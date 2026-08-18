@@ -638,11 +638,12 @@ function buildCheckboxGroups(catalog: ExtractDocumentFieldCatalogEntry[]) {
 
 function buildAddressGroups(catalog: ExtractDocumentFieldCatalogEntry[]) {
   const groups: ExtractDocumentGroupedStructures["semanticGroups"] = [];
-  const addressPattern = /\b(address|city|state|province|zip|postal|mailing|business name|legal name|named insured|producer|agent|agency|carrier|insurer|underwriter)\b/i;
+  const addressPattern = /\b(address|city|state|province|zip|postal|mailing|business name|legal name|named insured|carrier|insurer|underwriter)\b/i;
   for (const page of new Set(catalog.map((entry) => entry.page))) {
     const candidates = catalog
       .filter((entry) =>
         entry.page === page &&
+        entry.semanticRole !== "Producer" &&
         Boolean(entry.semanticValueRegion) &&
         addressPattern.test(entry.semanticLabel || entry.text),
       )
@@ -680,6 +681,77 @@ function buildAddressGroups(catalog: ExtractDocumentFieldCatalogEntry[]) {
   return groups;
 }
 
+const RP9_PRODUCER_LABELS: Array<{
+  pattern: RegExp;
+  cluster: NonNullable<ExtractDocumentFieldCatalogEntry["semanticCluster"]>;
+}> = [
+  { pattern: /^(?:AGENT NAME|AGENCY)$/i, cluster: "ProducerInformation" },
+  { pattern: /^(?:ADDRESS|CITY|STATE|ZIP CODE)$/i, cluster: "ProducerAddress" },
+  { pattern: /^(?:PHONE|FAX|E[ -]?MAIL(?: ADDRESS)?)$/i, cluster: "ProducerContact" },
+  { pattern: /^(?:CODE|SUB CODE)$/i, cluster: "ProducerCodes" },
+  { pattern: /^AGENCY CUSTOMER ID$/i, cluster: "ProducerCustomerId" },
+  { pattern: /^AGENCY BILL$/i, cluster: "ProducerInformation" },
+];
+
+function normalizedProducerLabel(entry: ExtractDocumentFieldCatalogEntry): string {
+  return String(entry.semanticLabel || entry.text || "")
+    .toUpperCase()
+    .replace(/[^A-Z0-9]+/g, " ")
+    .trim();
+}
+
+function producerClusterForLabel(label: string) {
+  return RP9_PRODUCER_LABELS.find((entry) => entry.pattern.test(label))?.cluster;
+}
+
+export function buildRp9ProducerGroups(catalog: ExtractDocumentFieldCatalogEntry[]) {
+  const groups: ExtractDocumentGroupedStructures["semanticGroups"] = [];
+  for (const page of new Set(catalog.map((entry) => entry.page))) {
+    const pageEntries = catalog
+      .filter((entry) => entry.page === page)
+      .sort((left, right) => left.boundingBox.y - right.boundingBox.y || left.boundingBox.x - right.boundingBox.x);
+    const anchors = pageEntries.filter((entry) => /^(?:AGENT NAME|AGENCY|AGENCY CUSTOMER ID|AGENCY BILL)$/i.test(normalizedProducerLabel(entry)));
+    if (anchors.length === 0) continue;
+
+    const producerRegions: ExtractDocumentFieldCatalogEntry[][] = [];
+    for (const anchor of anchors) {
+      const existing = producerRegions.find((region) =>
+        region.some((entry) => Math.abs(entry.boundingBox.y - anchor.boundingBox.y) <= 260),
+      );
+      if (existing) existing.push(anchor);
+      else producerRegions.push([anchor]);
+    }
+
+    producerRegions.forEach((regionAnchors, producerIndex) => {
+      const top = Math.max(0, Math.min(...regionAnchors.map((entry) => entry.boundingBox.y)) - 20);
+      const bottom = Math.max(...regionAnchors.map((entry) => entry.boundingBox.y)) + 140;
+      const members = pageEntries.filter((entry) => {
+        if (entry.boundingBox.y < top || entry.boundingBox.y > bottom) return false;
+        return Boolean(producerClusterForLabel(normalizedProducerLabel(entry)));
+      });
+      if (members.length === 0) return;
+
+      const informationId = `rp9-producer-information-p${page}-${producerIndex}`;
+      for (const member of members) {
+        member.semanticRole = "Producer";
+        member.producerIndex = producerIndex;
+        member.semanticCluster = producerClusterForLabel(normalizedProducerLabel(member));
+        member.semanticGroupIds = [...new Set([...(member.semanticGroupIds || []), informationId])];
+      }
+      groups.push({ id: informationId, page, kind: "semantic", fieldIds: members.map((entry) => entry.id), label: "ProducerInformation" });
+
+      for (const cluster of ["ProducerContact", "ProducerAddress", "ProducerCodes", "ProducerCustomerId"] as const) {
+        const clusterMembers = members.filter((entry) => entry.semanticCluster === cluster);
+        if (clusterMembers.length === 0) continue;
+        const id = `rp9-${cluster.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase()}-p${page}-${producerIndex}`;
+        for (const member of clusterMembers) member.semanticGroupIds = [...new Set([...(member.semanticGroupIds || []), id])];
+        groups.push({ id, page, kind: "semantic", fieldIds: clusterMembers.map((entry) => entry.id), label: cluster });
+      }
+    });
+  }
+  return groups;
+}
+
 function buildStructuralSemanticGroups(catalog: ExtractDocumentFieldCatalogEntry[]): ExtractDocumentGroupedStructures["semanticGroups"] {
   const groups: ExtractDocumentGroupedStructures["semanticGroups"] = [];
   const tagged = new Set<string>();
@@ -710,9 +782,9 @@ function buildStructuralSemanticGroups(catalog: ExtractDocumentFieldCatalogEntry
     }
   }
 
-  const businessPattern = /\b(business|legal|company|agency|producer|agent|carrier|insurer|underwriter|named insured|applicant|mailing address|address|city|state|zip|postal)\b/i;
+  const businessPattern = /\b(business|legal|company|carrier|insurer|underwriter|named insured|applicant|mailing address|address|city|state|zip|postal)\b/i;
   for (const page of new Set(catalog.map((entry) => entry.page))) {
-    const businessEntries = catalog.filter((entry) => entry.page === page && businessPattern.test(entry.semanticLabel || entry.text || ""));
+    const businessEntries = catalog.filter((entry) => entry.page === page && entry.semanticRole !== "Producer" && businessPattern.test(entry.semanticLabel || entry.text || ""));
     for (const candidate of businessEntries) {
       if (candidate.semanticGroupIds?.length) continue;
       if (!isMultiRowHeaderCandidate(candidate, catalog)) continue;
@@ -1296,9 +1368,11 @@ export async function buildHybridFieldExtraction(args: {
     retainedIds.has(pair.questionFieldId) && retainedIds.has(pair.answerFieldId)
   );
   const checkboxGroups = buildCheckboxGroups(retainedCatalog);
+  const rp9ProducerGroups = buildRp9ProducerGroups(retainedCatalog);
   const addressGroups = buildAddressGroups(retainedCatalog);
   const structuralGroups = buildStructuralSemanticGroups(retainedCatalog);
   const semanticGroups: ExtractDocumentGroupedStructures["semanticGroups"] = [
+    ...rp9ProducerGroups,
     ...addressGroups,
     ...structuralGroups,
     ...tables.flatMap((table) => table.rowGroupIds.map((id) => ({

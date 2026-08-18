@@ -65,7 +65,7 @@ function collectEvidence() {
   const manifest = JSON.parse(fs.readFileSync(path.join(groundTruthRoot, 'manifest.json'), 'utf8'));
   const byPath = new Map();
   const headings = new Map([
-    ['Section.ProducerInformation', ['PRODUCER INFORMATION', 'PRODUCER', 'AGENCY']],
+    ['Section.ProducerInformation', ['PRODUCER INFORMATION', 'PRODUCER', 'AGENCY', 'AGENT NAME', 'AGENCY CUSTOMER ID', 'AGENCY BILL']],
     ['Section.ApplicantInformation', ['APPLICANT INFORMATION']],
     ['Section.PremisesInformation', ['PREMISES INFORMATION']],
     ['Section.GeneralInformation', ['GENERAL INFORMATION']],
@@ -316,7 +316,7 @@ function main() {
       evidence: { evidenceType: 'structural-section-model', section: evidence.section('Section.GeneralInformation'), corpus: evidence.manifest },
     }),
     'Section.ProducerInformation': node('Section.ProducerInformation', {
-      aliases: ['PRODUCER INFORMATION', 'PRODUCER', 'AGENCY'], synonyms: ['agent', 'agency', 'producer', 'section'], sections: ['producer-information'], groups: ['section'], semanticKind: 'section', role: 'Producer',
+      aliases: ['PRODUCER INFORMATION', 'PRODUCER', 'AGENCY', 'AGENT NAME', 'AGENCY CUSTOMER ID', 'AGENCY BILL'], synonyms: ['agent', 'agency', 'producer', 'section'], sections: ['producer-information'], groups: ['section'], semanticKind: 'section', role: 'Producer',
       component: 'section', instanceFamily: singleton('section.producer-information'), evidence: evidence.section('Section.ProducerInformation'),
     }),
     'Section.ApplicantInformation': node('Section.ApplicantInformation', {
