@@ -39,9 +39,8 @@ async function liveVectors(inputs) {
   if (!key) throw new Error("OPENAI_API_KEY is required");
   const endpoint = String(process.env.OPENAI_ENDPOINT || "https://api.openai.com/v1").replace(/\/$/, "");
   const azure = !endpoint.startsWith("https://api.openai.com");
-  const deployment = String(process.env.OPENAI_DEPLOYMENT || model).trim();
   const url = azure
-    ? `${endpoint}/openai/deployments/${encodeURIComponent(deployment)}/embeddings?api-version=2024-02-15-preview`
+    ? `${endpoint}/openai/deployments/${encodeURIComponent(model)}/embeddings?api-version=2024-02-15-preview`
     : `${endpoint}/embeddings`;
   const response = await fetch(url, {
     method: "POST",
