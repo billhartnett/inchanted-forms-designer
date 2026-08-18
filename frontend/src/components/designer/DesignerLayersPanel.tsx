@@ -208,6 +208,8 @@ export function DesignerLayersPanel() {
   const setCurrentPdfPage = useDesignerStore((s) => s.setCurrentPdfPage);
   const fields = useDesignerStore((s) => s.fields);
   const ontologyDocument = useMappingStore((state) => state.ontologyDocument);
+  const semanticBaseline = useMappingStore((state) => state.semanticBaseline);
+  const semanticSections = useMappingStore((state) => state.semanticSections);
   const ontologyFieldIds = useMemo(() => {
     const ontologyFields = Array.isArray(ontologyDocument?.fields)
       ? ontologyDocument.fields
@@ -530,6 +532,46 @@ export function DesignerLayersPanel() {
           </div>
         ) : null}
       </section>
+
+      {semanticBaseline === "RP-9" && semanticSections.length > 0 ? (
+        <section
+          style={{
+            border: "1px solid #bbf7d0",
+            borderRadius: 12,
+            background: "#f0fdf4",
+            padding: 12,
+            display: "grid",
+            gap: 8,
+          }}
+        >
+          <div>
+            <h4 style={{ margin: 0, color: "#166534" }}>RP-9 Sections</h4>
+            <div style={{ fontSize: 12, color: "#4b5563", marginTop: 2 }}>
+              Semantic navigation anchors. Section nodes are not canvas fields.
+            </div>
+          </div>
+          {semanticSections.map((section) => (
+            <button
+              key={`${section.blockId}:${section.canonicalNodeId}`}
+              type="button"
+              onClick={() => setCurrentPdfPage(Math.max(0, section.page - 1))}
+              style={{
+                textAlign: "left",
+                border: "1px solid #86efac",
+                borderRadius: 8,
+                background: "#ffffff",
+                color: "#166534",
+                padding: "0.55rem 0.65rem",
+                cursor: "pointer",
+                fontSize: 12,
+              }}
+            >
+              <div style={{ fontWeight: 700 }}>{section.canonicalNodeId}</div>
+              <div>Page {section.page} • {section.instanceFamily?.familyId || "section"}</div>
+            </button>
+          ))}
+        </section>
+      ) : null}
 
       <section
         style={{

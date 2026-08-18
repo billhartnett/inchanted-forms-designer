@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "node scripts/fetch-rp8-build-artifacts.mjs && vite build",
+    "build:rp9-staging": "node scripts/fetch-rp9-build-artifacts.mjs && vite build --mode rp9-staging",
     "preview": "vite preview"
   },
   "dependencies": {

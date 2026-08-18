@@ -91,11 +91,26 @@ type ExtractDocumentResponse = Pick<ExtractionResult, "pages"> & {
 };
 
 type HybridMappingResponse = {
+  semanticBaseline?: "RP-8" | "RP-9";
   mappings?: FieldMapping[];
   mappedFields?: FieldMapping[];
   fieldCatalog?: HybridCatalogEntry[];
   groupedStructures?: Record<string, unknown>;
   bboxNormalization?: Record<string, unknown>;
+  ontologyNodes?: Array<Record<string, unknown>>;
+  semanticSections?: Array<{
+    blockId: string;
+    page: number;
+    canonicalNodeId: string;
+    sections: string[];
+    instanceFamily?: Record<string, unknown> | null;
+    instanceKey?: Record<string, string | number> | null;
+  }>;
+  categoryBundles?: {
+    groups?: Array<{ bundleId: string; nodeIds: string[]; nodeCount: number }>;
+    sections?: Array<{ bundleId: string; nodeIds: string[]; nodeCount: number }>;
+    multiInstanceFamilies?: Record<string, unknown>;
+  } | null;
 };
 
 type MapFieldMapping = FieldMapping;
@@ -1092,6 +1107,7 @@ export default function PdfImportModal({
   const acceptFieldReview = useExtractionStore((s) => s.acceptField);
   const rejectFieldReview = useExtractionStore((s) => s.rejectField);
   const initializeMappings = useMappingStore((s) => s.initializeMappings);
+  const setOntologyContractPayload = useMappingStore((s) => s.setOntologyContractPayload);
   const linkFieldToMapping = useMappingStore((s) => s.linkFieldToMapping);
   const clearMappingReview = useMappingStore((s) => s.clear);
   const [isAutoMapping, setIsAutoMapping] = useState(true);
@@ -1279,6 +1295,12 @@ export default function PdfImportModal({
       pageDimensions: extractPayload.pageDimensions || [],
       context: "Wave 9 hybrid PDF mapping",
     })) as HybridMappingResponse;
+    setOntologyContractPayload({
+      semanticBaseline: mappingPayload.semanticBaseline,
+      ontologyNodes: mappingPayload.ontologyNodes,
+      semanticSections: mappingPayload.semanticSections,
+      categoryBundles: mappingPayload.categoryBundles,
+    });
     const mappedCatalog = mappingPayload.fieldCatalog || mergedExtraction.catalog;
     const catalogById = new Map(mappedCatalog.map((entry) => [entry.id, entry]));
     const strictMappings = mappingPayload.mappedFields || mappingPayload.mappings || [];

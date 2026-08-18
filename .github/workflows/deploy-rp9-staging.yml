@@ -1,0 +1,205 @@
+name: Deploy RP-9 Staging
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-rp9-staging
+  cancel-in-progress: true
+
+env:
+  STAGING_BACKEND_APP: inchanted-api-staging
+  STAGING_BACKEND_RG: inchanted-aca-rg
+  STAGING_BACKEND_URL: https://inchanted-api-staging.greenriver-7266e28c.eastus.azurecontainerapps.io
+  STAGING_FRONTEND_APP: forms-designer-staging
+  STAGING_FRONTEND_RG: inchanted-forms-rg
+  STAGING_FRONTEND_URL: https://forms-designer-staging.azurewebsites.net
+  IMAGE_REPOSITORY: wave9-backend-api
+
+jobs:
+  deploy-rp9-staging:
+    runs-on: ubuntu-latest
+    environment: staging
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate staging secrets
+        shell: bash
+        env:
+          AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+          ACR_NAME: ${{ secrets.ACR_NAME }}
+          ACR_LOGIN_SERVER: ${{ secrets.ACR_LOGIN_SERVER }}
+          EMBEDDING_MODEL: ${{ secrets.EMBEDDING_MODEL }}
+        run: |
+          set -euo pipefail
+          for value in AZURE_CREDENTIALS ACR_NAME ACR_LOGIN_SERVER EMBEDDING_MODEL; do
+            if [[ -z "${!value}" ]]; then
+              echo "Missing required staging secret: ${value}" >&2
+              exit 1
+            fi
+          done
+
+      - name: Azure login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22.x"
+          cache: npm
+          cache-dependency-path: |
+            frontend/package-lock.json
+            backend/api/package-lock.json
+            shared/package-lock.json
+
+      - name: Validate RP-9 artifacts
+        run: npm run ontology:rp9:validate
+
+      - name: Build and push RP-9 backend image
+        id: image
+        shell: bash
+        run: |
+          set -euo pipefail
+          TAG="rp9-staging-${GITHUB_SHA::12}"
+          az acr build \
+            --registry "${{ secrets.ACR_NAME }}" \
+            --image "${IMAGE_REPOSITORY}:${TAG}" \
+            --file backend/api/Dockerfile \
+            . \
+            --no-logs \
+            --output json > acr-build.json
+          DIGEST="$(node -e "const x=require('./acr-build.json'); process.stdout.write(x.outputImages?.[0]?.digest || '')")"
+          if [[ "${DIGEST}" != sha256:* ]]; then
+            echo "Unable to resolve ACR digest" >&2
+            cat acr-build.json
+            exit 1
+          fi
+          echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
+          echo "digest=${DIGEST}" >> "$GITHUB_OUTPUT"
+          echo "image=${{ secrets.ACR_LOGIN_SERVER }}/${IMAGE_REPOSITORY}@${DIGEST}" >> "$GITHUB_OUTPUT"
+
+      - name: Deploy RP-9 backend to staging ACA
+        shell: bash
+        run: |
+          set -euo pipefail
+          SUFFIX="rp9-${GITHUB_SHA::8}-${GITHUB_RUN_NUMBER}"
+          az containerapp update \
+            --name "${STAGING_BACKEND_APP}" \
+            --resource-group "${STAGING_BACKEND_RG}" \
+            --image "${{ steps.image.outputs.image }}" \
+            --revision-suffix "${SUFFIX}" \
+            --set-env-vars \
+              PRODUCTION_BASELINE=RP-8 \
+              SEMANTIC_BASELINE=RP-9 \
+              DEPLOYMENT_ENVIRONMENT=staging \
+              BUILD_TIMESTAMP="$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+              GIT_COMMIT_HASH="${GITHUB_SHA}" \
+              WAVE9_ENGINE_VERSION="${{ steps.image.outputs.tag }}" \
+              OPENAI_DEPLOYMENT='${{ secrets.OPENAI_DEPLOYMENT }}' \
+              EMBEDDING_MODEL='${{ secrets.EMBEDDING_MODEL }}' \
+            --output none
+
+      - name: Wait for staging ACA convergence
+        shell: bash
+        run: |
+          set -euo pipefail
+          for attempt in {1..60}; do
+            LATEST="$(az containerapp show --name "${STAGING_BACKEND_APP}" --resource-group "${STAGING_BACKEND_RG}" --query properties.latestRevisionName -o tsv)"
+            READY="$(az containerapp show --name "${STAGING_BACKEND_APP}" --resource-group "${STAGING_BACKEND_RG}" --query properties.latestReadyRevisionName -o tsv)"
+            if [[ -n "${LATEST}" && "${LATEST}" == "${READY}" ]]; then
+              echo "revision=${READY}" >> "$GITHUB_ENV"
+              exit 0
+            fi
+            sleep 10
+          done
+          echo "Staging ACA did not converge" >&2
+          exit 1
+
+      - name: Verify RP-9 staging backend
+        shell: bash
+        run: |
+          set -euo pipefail
+          VERSION="$(curl -fsS "${STAGING_BACKEND_URL}/api/version")"
+          TRUTH="$(curl -fsS "${STAGING_BACKEND_URL}/semantic-truth/current")"
+          LINEAGE="$(curl -fsS "${STAGING_BACKEND_URL}/ontology-lineage/current")"
+          BUNDLES="$(curl -fsS "${STAGING_BACKEND_URL}/category-bundles/current")"
+          VERSION="${VERSION}" TRUTH="${TRUTH}" LINEAGE="${LINEAGE}" BUNDLES="${BUNDLES}" node - <<'NODE'
+          const versionEnvelope = JSON.parse(process.env.VERSION);
+          const version = versionEnvelope.data || versionEnvelope;
+          const truth = JSON.parse(process.env.TRUTH);
+          const lineage = JSON.parse(process.env.LINEAGE);
+          const bundles = JSON.parse(process.env.BUNDLES);
+          if (version.productionBaseline !== 'RP-8') throw new Error('Production baseline changed');
+          if (version.semanticBaseline !== 'RP-9') throw new Error('RP-9 semantic baseline is not active');
+          if (version.semanticRuntime?.activationState !== 'staging-active') throw new Error('RP-9 runtime is not staging-active');
+          if (truth.restorePoint !== 'RP-9' || truth.activation?.state !== 'staging-active') throw new Error('RP-9 truth mismatch');
+          if (lineage.restorePoint !== 'RP-9' || lineage.activation?.scope !== 'staging') throw new Error('RP-9 lineage mismatch');
+          if (bundles.restorePoint !== 'RP-9' || bundles.status !== 'staging-active') throw new Error('RP-9 bundles mismatch');
+          NODE
+
+      - name: Install frontend dependencies
+        run: npm --prefix frontend ci --no-audit --no-fund
+
+      - name: Build RP-9 staging designer
+        run: npm --prefix frontend run build:rp9-staging
+
+      - name: Write staging runtime configuration
+        shell: bash
+        run: |
+          cat > frontend/dist/env.js <<EOF
+          window.__APP_CONFIG__ = window.__APP_CONFIG__ || {};
+          window.__APP_CONFIG__.API_BASE_URL = '${STAGING_BACKEND_URL}';
+          EOF
+
+      - name: Package staging designer
+        shell: bash
+        run: |
+          cd frontend/dist
+          zip -qr ../../forms-designer-rp9-staging.zip .
+
+      - name: Deploy RP-9 designer to staging Web App
+        run: |
+          az webapp deploy \
+            --resource-group "${STAGING_FRONTEND_RG}" \
+            --name "${STAGING_FRONTEND_APP}" \
+            --src-path forms-designer-rp9-staging.zip \
+            --type zip \
+            --clean true \
+            --restart true \
+            --async false \
+            --output none
+
+      - name: Verify RP-9 staging designer
+        shell: bash
+        run: |
+          set -euo pipefail
+          for attempt in {1..30}; do
+            if INDEX="$(curl -fsS "${STAGING_FRONTEND_URL}/designer?build=${GITHUB_SHA}" 2>/dev/null)"; then
+              ENV_JS="$(curl -fsS "${STAGING_FRONTEND_URL}/env.js?build=${GITHUB_SHA}")"
+              if grep -q 'inchanted-api-staging.greenriver-7266e28c.eastus.azurecontainerapps.io' <<<"${ENV_JS}"; then
+                echo "Staging designer is ready"
+                exit 0
+              fi
+            fi
+            sleep 10
+          done
+          echo "Staging designer did not become ready" >&2
+          exit 1
+
+      - name: Deployment summary
+        run: |
+          {
+            echo "## RP-9 staging deployment"
+            echo "- Backend: ${STAGING_BACKEND_URL}"
+            echo "- Backend revision: ${revision}"
+            echo "- Image digest: ${{ steps.image.outputs.digest }}"
+            echo "- Designer: ${STAGING_FRONTEND_URL}/designer"
+            echo "- Production baseline remains RP-8"
+          } >> "$GITHUB_STEP_SUMMARY"

@@ -1,11 +1,17 @@
 import express, { type NextFunction, type Request, type Response, type Router } from "express";
+import fs from "node:fs";
 import multer from "multer";
+import path from "node:path";
 import { buildPingPayload, buildHealthPayload } from "./health/checks";
 import { buildVersionPayload } from "./health/version";
 import { incrementMetric, logStructuredEvent, observeLatency } from "./services/observability";
+import {
+  configuredSemanticBaseline,
+  validateConfiguredSemanticRuntime,
+} from "./services/semanticOntologyRuntime";
 
 type RouteRegistrar = (router: Router) => void;
-const WAVE9_CONTRACT_VERSION = "wave8.v1";
+const WAVE9_CONTRACT_VERSION = configuredSemanticBaseline() === "RP-9" ? "rp9.mapping.v1" : "rp8.mapping.v1";
 let migratedRoutesReady = false;
 
 function contractEnvelope(path: string, status: number, payload: unknown) {
@@ -135,6 +141,10 @@ function loadExistingRouteHandlers(router: Router): void {
 function createServer() {
   const app = express();
   const upload = multer();
+  const frontendRoot = path.resolve(process.cwd(), "..", "..", "frontend", "dist");
+  const frontendIndex = path.join(frontendRoot, "index.html");
+  const artifactRoot = path.resolve(process.cwd(), "..", "..", "acord-artifacts");
+  const semanticBaseline = configuredSemanticBaseline();
 
   app.use(requestLoggingMiddleware);
   app.use(express.json({ limit: "25mb" }));
@@ -145,6 +155,50 @@ function createServer() {
   const apiRouter = express.Router();
   loadExistingRouteHandlers(apiRouter);
   app.use("/api", apiRouter);
+
+  app.get("/semantic-truth/current", (_request, response) => {
+    response.setHeader("Cache-Control", "no-store");
+    response.sendFile(path.join(
+      artifactRoot,
+      semanticBaseline === "RP-9" ? "authoritative-semantic-truth-rp9.json" : "authoritative-semantic-truth-rp8.json",
+    ));
+  });
+  app.get("/ontology-lineage/current", (_request, response) => {
+    response.setHeader("Cache-Control", "no-store");
+    response.sendFile(path.join(
+      artifactRoot,
+      semanticBaseline === "RP-9" ? "rp9-ontology-lineage.json" : "rp8-ontology-lineage.json",
+    ));
+  });
+  app.get("/category-bundles/current", (_request, response) => {
+    response.setHeader("Cache-Control", "no-store");
+    if (semanticBaseline !== "RP-9") {
+      response.status(404).json({ error: "Category bundles are not available for the active semantic baseline" });
+      return;
+    }
+    response.sendFile(path.join(artifactRoot, "rp9-category-bundles.json"));
+  });
+
+  if (fs.existsSync(frontendIndex)) {
+    app.use(express.static(frontendRoot, {
+      setHeaders(response, filePath) {
+        response.setHeader(
+          "Cache-Control",
+          path.basename(filePath) === "index.html"
+            ? "no-store"
+            : "public, max-age=31536000, immutable",
+        );
+      },
+    }));
+    app.get("*", (request, response, next) => {
+      if (request.path.startsWith("/api/")) {
+        next();
+        return;
+      }
+      response.setHeader("Cache-Control", "no-store");
+      response.sendFile(frontendIndex);
+    });
+  }
 
   app.use((request, response) => {
     sendContractJson(response, request, 404, {
@@ -160,6 +214,12 @@ function createServer() {
 }
 
 const port = Number(process.env.PORT || 8080);
+if (process.env.PRODUCTION_BASELINE === "RP-8" || process.env.SEMANTIC_BASELINE === "RP-9") {
+  const runtime = validateConfiguredSemanticRuntime();
+  console.log(
+    `[semantic-runtime] validated ${runtime.metadata.restorePoint} with ${runtime.metadata.nodeCount} canonical nodes; truth ${runtime.metadata.semanticTruthPayloadSha256}`,
+  );
+}
 const { app, apiRouter } = createServer();
 
 app.listen(port, () => {

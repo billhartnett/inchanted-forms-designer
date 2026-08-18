@@ -19,6 +19,11 @@ import {
   useDesignerStore,
 } from "../../designer/state/useDesignerStore";
 import { runExportAcordXml } from "../../api/wave9Integration";
+import {
+  configuredDesignerSemanticBaseline,
+  verifyRuntimeSemanticBaseline,
+  type RuntimeSemanticStatus,
+} from "../../config/semanticRuntime";
 
 const DESIGNER_STORAGE_KEY = "designerState";
 
@@ -48,6 +53,13 @@ type StageLike = {
 };
 
 export function DesignerApp() {
+  const configuredBaseline = configuredDesignerSemanticBaseline();
+  const [semanticStatus, setSemanticStatus] = useState<RuntimeSemanticStatus>({
+    state: "loading",
+    baseline: configuredBaseline,
+    label: `${configuredBaseline} · verifying`,
+    details: "Validating semantic truth, ontology lineage, and mapping contract.",
+  });
   const [stage, setStage] = useState<StageLike | null>(null);
   const [selectedPdfSize, setSelectedPdfSize] = useState<{
     width: number;
@@ -136,6 +148,16 @@ export function DesignerApp() {
   useEffect(() => {
     syncDesignerFields(fields);
   }, [fields, syncDesignerFields]);
+
+  useEffect(() => {
+    let active = true;
+    void verifyRuntimeSemanticBaseline().then((status) => {
+      if (active) setSemanticStatus(status);
+    });
+    return () => {
+      active = false;
+    };
+  }, []);
 
   const canGroup = selectedIds.length > 1 && !selectedGroupId;
   const canUngroup = Boolean(selectedGroupId);
@@ -716,6 +738,7 @@ export function DesignerApp() {
             setShowPdfModal(true);
           }}
           canAutoMapPdf
+          semanticStatus={semanticStatus}
           lastSavedAt={lastSavedAt}
           pdfPagesCount={pdfPages.length}
           currentPdfPage={currentPdfPage}

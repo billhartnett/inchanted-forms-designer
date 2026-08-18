@@ -1,0 +1,2258 @@
+{
+  "schemaVersion": "rp9-authoritative-semantic-truth.v1",
+  "generatedAt": "2026-08-18T00:00:00.000Z",
+  "restorePoint": "RP-9",
+  "targetRestorePoint": "RP-9",
+  "status": "staging-active-semantic-baseline",
+  "activation": {
+    "state": "staging-active",
+    "scope": "staging",
+    "runtimeChanged": true,
+    "productionBaselineChanged": false,
+    "requiresExplicitProductionPromotion": true,
+    "requiredEnvironment": {
+      "SEMANTIC_BASELINE": "RP-9",
+      "DEPLOYMENT_ENVIRONMENT": "staging"
+    }
+  },
+  "lineage": {
+    "parent": {
+      "restorePoint": "RP-8",
+      "semanticTruthPayloadSha256": "4d43562f83d749fac10a956949257484cf75b4be2a4c66a0d00b57d5a26c3d15",
+      "semanticTruthFileSha256": "3ba6d7ad88a9a217a5b4f7b073fafbe2cc64b04b2453b1e777e7f48a24f3e8a4",
+      "ontologyLineagePayloadSha256": "36389906b544548fe2ebee608eb9dbe82fff01141df5f5d9826d980f802445e3",
+      "ontologyLineageFileSha256": "5efb6ba9a648bd6a656febbb76ee67c60844f1ac3d47a25dd8f2cbca2c53cdff",
+      "phase33PayloadSha256": "ab2e2ae3e8d3a04b700a14c3a43117003d0b38ebfc9f352dcb95278573d5b2b2",
+      "phase33FileSha256": "862bdf8ccf4c047bfb2629dfb97419b045a390309254c268a30c01043f86e50f",
+      "phase31PayloadSha256": "de18ba8a33410b61095f318b403635e23ae731bf2deab0a950b96662bcd3f27d",
+      "phase31FileSha256": "5cf27c92d9f51cecfa5ff17fce12c27f865dd767bf7084beac7852c54f71f987"
+    },
+    "phase33Compatibility": {
+      "policyPayloadSha256": "ab2e2ae3e8d3a04b700a14c3a43117003d0b38ebfc9f352dcb95278573d5b2b2",
+      "compatible": true
+    }
+  },
+  "canonicalOntology": {
+    "ontologyId": "acord-canonical-ontology",
+    "version": "2026.08.18-rp9",
+    "generatedAt": "deterministic",
+    "hash": "d257c500a5a19c4587417e9a3e13e74ef140571fc6032601de157d3001e24d9d",
+    "nodes": {
+      "CommercialProperty.Building.LocationAddress": {
+        "acordCode": "CommercialProperty.Building.LocationAddress",
+        "aliases": [
+          "building location",
+          "Building location address",
+          "CommercialProperty.Building.LocationAddress"
+        ],
+        "synonyms": [
+          "address",
+          "building",
+          "location",
+          "property"
+        ],
+        "parentCodes": [],
+        "childCodes": [
+          "GeneralInfo.MailingAddress.City",
+          "GeneralInfo.MailingAddress.PostalCode",
+          "GeneralInfo.MailingAddress.State"
+        ],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "contact",
+          "property"
+        ],
+        "groups": [
+          "address"
+        ],
+        "semanticKind": "fillable",
+        "component": null,
+        "role": null,
+        "instanceFamily": {
+          "familyId": "premises.location",
+          "cardinality": "many",
+          "level": "location",
+          "instanceKey": [
+            "locationIndex"
+          ],
+          "parentFamilyId": null,
+          "stableIdentity": [
+            "locationIndex",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "evidenceType": "inherited-rp8",
+          "sourcePayloadSha256": "de18ba8a33410b61095f318b403635e23ae731bf2deab0a950b96662bcd3f27d"
+        },
+        "inheritedFrom": "RP-8"
+      },
+      "Contractors.Operations.Description": {
+        "acordCode": "Contractors.Operations.Description",
+        "aliases": [
+          "contractors operations",
+          "Contractors operations description",
+          "Contractors.Operations.Description"
+        ],
+        "synonyms": [
+          "contractor",
+          "description",
+          "operations",
+          "supplement",
+          "work"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "operations"
+        ],
+        "groups": [
+          "classification"
+        ],
+        "semanticKind": "fillable",
+        "component": null,
+        "role": null,
+        "instanceFamily": {
+          "familyId": "document.field",
+          "cardinality": "many",
+          "level": "document",
+          "instanceKey": [
+            "fieldOccurrence"
+          ],
+          "parentFamilyId": null,
+          "stableIdentity": [
+            "fieldOccurrence",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "evidenceType": "inherited-rp8",
+          "sourcePayloadSha256": "de18ba8a33410b61095f318b403635e23ae731bf2deab0a950b96662bcd3f27d"
+        },
+        "inheritedFrom": "RP-8"
+      },
+      "Form.Date.Completed": {
+        "acordCode": "Form.Date.Completed",
+        "aliases": [
+          "Form.Date.Completed",
+          "Form_CompletionDate",
+          "DATE (MM/DD/YYYY)"
+        ],
+        "synonyms": [
+          "completed",
+          "completion",
+          "date",
+          "form"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "document"
+        ],
+        "groups": [
+          "date"
+        ],
+        "semanticKind": "fillable",
+        "component": "form.date.completed",
+        "role": null,
+        "instanceFamily": {
+          "familyId": "form.lifecycle",
+          "cardinality": "many",
+          "level": "document",
+          "instanceKey": [
+            "formInstance"
+          ],
+          "parentFamilyId": null,
+          "stableIdentity": [
+            "formInstance",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "semanticPath": "Form_CompletionDate",
+          "formCount": 20,
+          "instanceCount": 20,
+          "fieldTypeCounts": {
+            "date": 20
+          }
+        },
+        "inheritedFrom": null
+      },
+      "Form.Date.Signed": {
+        "acordCode": "Form.Date.Signed",
+        "aliases": [
+          "Form.Date.Signed",
+          "NamedInsured_SignatureDate",
+          "Producer_AuthorizedRepresentative_SignatureDate",
+          "Producer_SignatureDate"
+        ],
+        "synonyms": [
+          "date",
+          "signature",
+          "signed"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "signature"
+        ],
+        "groups": [
+          "date",
+          "signature"
+        ],
+        "semanticKind": "fillable",
+        "component": "form.date.signed",
+        "role": null,
+        "instanceFamily": {
+          "familyId": "form.signature-date",
+          "cardinality": "many",
+          "level": "signature",
+          "instanceKey": [
+            "signerRole",
+            "signerIndex",
+            "signatureIndex"
+          ],
+          "parentFamilyId": null,
+          "stableIdentity": [
+            "signerRole",
+            "signerIndex",
+            "signatureIndex",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "evidenceType": "combined-semantic-paths",
+          "paths": [
+            {
+              "semanticPath": "NamedInsured_SignatureDate",
+              "formCount": 56,
+              "instanceCount": 64,
+              "fieldTypeCounts": {
+                "signature": 64
+              }
+            },
+            {
+              "semanticPath": "Producer_AuthorizedRepresentative_SignatureDate",
+              "formCount": 18,
+              "instanceCount": 18,
+              "fieldTypeCounts": {
+                "signature": 18
+              }
+            },
+            {
+              "semanticPath": "Producer_SignatureDate",
+              "formCount": 1,
+              "instanceCount": 1,
+              "fieldTypeCounts": {
+                "signature": 1
+              }
+            }
+          ]
+        },
+        "inheritedFrom": null
+      },
+      "GeneralInfo.MailingAddress.City": {
+        "acordCode": "GeneralInfo.MailingAddress.City",
+        "aliases": [
+          "GeneralInfo.MailingAddress.City",
+          "mailing address",
+          "Mailing address city"
+        ],
+        "synonyms": [
+          "address",
+          "city",
+          "mailing"
+        ],
+        "parentCodes": [
+          "CommercialProperty.Building.LocationAddress",
+          "GeneralInfo.MailingAddress.Line1",
+          "GeneralInfo.MailingAddress.PostalCode",
+          "GeneralInfo.MailingAddress.State"
+        ],
+        "childCodes": [
+          "GeneralInfo.MailingAddress.PostalCode",
+          "GeneralInfo.MailingAddress.State"
+        ],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [
+          "GeneralInfo.MailingAddress.State"
+        ],
+        "sections": [
+          "contact",
+          "general-information"
+        ],
+        "groups": [
+          "address"
+        ],
+        "semanticKind": "fillable",
+        "component": null,
+        "role": "NamedInsured",
+        "instanceFamily": {
+          "familyId": "document.field",
+          "cardinality": "many",
+          "level": "document",
+          "instanceKey": [
+            "fieldOccurrence"
+          ],
+          "parentFamilyId": null,
+          "stableIdentity": [
+            "fieldOccurrence",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "evidenceType": "inherited-rp8",
+          "sourcePayloadSha256": "de18ba8a33410b61095f318b403635e23ae731bf2deab0a950b96662bcd3f27d"
+        },
+        "inheritedFrom": "RP-8"
+      },
+      "GeneralInfo.MailingAddress.Line1": {
+        "acordCode": "GeneralInfo.MailingAddress.Line1",
+        "aliases": [
+          "GeneralInfo.MailingAddress.Line1",
+          "mailing address",
+          "Mailing address line 1"
+        ],
+        "synonyms": [
+          "address",
+          "line",
+          "mailing",
+          "primary",
+          "street"
+        ],
+        "parentCodes": [],
+        "childCodes": [
+          "GeneralInfo.MailingAddress.City",
+          "GeneralInfo.MailingAddress.PostalCode",
+          "GeneralInfo.MailingAddress.State"
+        ],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "contact",
+          "general-information"
+        ],
+        "groups": [
+          "address"
+        ],
+        "semanticKind": "fillable",
+        "component": null,
+        "role": "NamedInsured",
+        "instanceFamily": {
+          "familyId": "document.field",
+          "cardinality": "many",
+          "level": "document",
+          "instanceKey": [
+            "fieldOccurrence"
+          ],
+          "parentFamilyId": null,
+          "stableIdentity": [
+            "fieldOccurrence",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "evidenceType": "inherited-rp8",
+          "sourcePayloadSha256": "de18ba8a33410b61095f318b403635e23ae731bf2deab0a950b96662bcd3f27d"
+        },
+        "inheritedFrom": "RP-8"
+      },
+      "GeneralInfo.MailingAddress.PostalCode": {
+        "acordCode": "GeneralInfo.MailingAddress.PostalCode",
+        "aliases": [
+          "GeneralInfo.MailingAddress.PostalCode",
+          "mailing address",
+          "Mailing address postal code"
+        ],
+        "synonyms": [
+          "address",
+          "code",
+          "mailing",
+          "postal",
+          "zip"
+        ],
+        "parentCodes": [
+          "CommercialProperty.Building.LocationAddress",
+          "GeneralInfo.MailingAddress.City",
+          "GeneralInfo.MailingAddress.Line1",
+          "GeneralInfo.MailingAddress.State"
+        ],
+        "childCodes": [
+          "GeneralInfo.MailingAddress.City",
+          "GeneralInfo.MailingAddress.State"
+        ],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [
+          "GeneralInfo.MailingAddress.State"
+        ],
+        "sections": [
+          "contact",
+          "general-information"
+        ],
+        "groups": [
+          "address",
+          "classification"
+        ],
+        "semanticKind": "fillable",
+        "component": null,
+        "role": "NamedInsured",
+        "instanceFamily": {
+          "familyId": "document.field",
+          "cardinality": "many",
+          "level": "document",
+          "instanceKey": [
+            "fieldOccurrence"
+          ],
+          "parentFamilyId": null,
+          "stableIdentity": [
+            "fieldOccurrence",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "evidenceType": "inherited-rp8",
+          "sourcePayloadSha256": "de18ba8a33410b61095f318b403635e23ae731bf2deab0a950b96662bcd3f27d"
+        },
+        "inheritedFrom": "RP-8"
+      },
+      "GeneralInfo.MailingAddress.State": {
+        "acordCode": "GeneralInfo.MailingAddress.State",
+        "aliases": [
+          "GeneralInfo.MailingAddress.State",
+          "mailing address",
+          "Mailing address state"
+        ],
+        "synonyms": [
+          "address",
+          "code",
+          "mailing",
+          "province",
+          "state"
+        ],
+        "parentCodes": [
+          "CommercialProperty.Building.LocationAddress",
+          "GeneralInfo.MailingAddress.City",
+          "GeneralInfo.MailingAddress.Line1",
+          "GeneralInfo.MailingAddress.PostalCode"
+        ],
+        "childCodes": [
+          "GeneralInfo.MailingAddress.City",
+          "GeneralInfo.MailingAddress.PostalCode"
+        ],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [
+          "GeneralInfo.MailingAddress.City"
+        ],
+        "sections": [
+          "contact",
+          "general-information"
+        ],
+        "groups": [
+          "address",
+          "classification"
+        ],
+        "semanticKind": "fillable",
+        "component": null,
+        "role": "NamedInsured",
+        "instanceFamily": {
+          "familyId": "document.field",
+          "cardinality": "many",
+          "level": "document",
+          "instanceKey": [
+            "fieldOccurrence"
+          ],
+          "parentFamilyId": null,
+          "stableIdentity": [
+            "fieldOccurrence",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "evidenceType": "inherited-rp8",
+          "sourcePayloadSha256": "de18ba8a33410b61095f318b403635e23ae731bf2deab0a950b96662bcd3f27d"
+        },
+        "inheritedFrom": "RP-8"
+      },
+      "GeneralInfo.NamedInsured": {
+        "acordCode": "GeneralInfo.NamedInsured",
+        "aliases": [
+          "GeneralInfo.NamedInsured",
+          "named insured",
+          "Named insured"
+        ],
+        "synonyms": [
+          "applicant",
+          "entity",
+          "insured",
+          "legal",
+          "name",
+          "named"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "general-information"
+        ],
+        "groups": [
+          "identity"
+        ],
+        "semanticKind": "fillable",
+        "component": null,
+        "role": "NamedInsured",
+        "instanceFamily": {
+          "familyId": "document.field",
+          "cardinality": "many",
+          "level": "document",
+          "instanceKey": [
+            "fieldOccurrence"
+          ],
+          "parentFamilyId": null,
+          "stableIdentity": [
+            "fieldOccurrence",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "evidenceType": "inherited-rp8",
+          "sourcePayloadSha256": "de18ba8a33410b61095f318b403635e23ae731bf2deab0a950b96662bcd3f27d"
+        },
+        "inheritedFrom": "RP-8"
+      },
+      "GeneralInformation.Answer": {
+        "acordCode": "GeneralInformation.Answer",
+        "aliases": [
+          "GeneralInformation.Answer",
+          "general information answer"
+        ],
+        "synonyms": [
+          "answer",
+          "general",
+          "information",
+          "response"
+        ],
+        "parentCodes": [
+          "GeneralInformation.Question"
+        ],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "general-information"
+        ],
+        "groups": [
+          "question-answer"
+        ],
+        "semanticKind": "structural-answer",
+        "component": "answer",
+        "role": null,
+        "instanceFamily": {
+          "familyId": "general-information.question-answer",
+          "cardinality": "many",
+          "level": "question-answer",
+          "instanceKey": [
+            "sectionOccurrence",
+            "questionIndex"
+          ],
+          "parentFamilyId": null,
+          "stableIdentity": [
+            "sectionOccurrence",
+            "questionIndex",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "evidenceType": "structural-section-model",
+          "section": {
+            "evidenceType": "structural-section-heading",
+            "formCount": 16,
+            "occurrenceCount": 31,
+            "fillable": false
+          },
+          "corpus": {
+            "formCount": 63,
+            "fieldCount": 21140,
+            "groupCount": 1094,
+            "labelCount": 10679
+          }
+        },
+        "inheritedFrom": null
+      },
+      "GeneralInformation.Question": {
+        "acordCode": "GeneralInformation.Question",
+        "aliases": [
+          "GeneralInformation.Question",
+          "general information question"
+        ],
+        "synonyms": [
+          "general",
+          "information",
+          "question"
+        ],
+        "parentCodes": [],
+        "childCodes": [
+          "GeneralInformation.Answer"
+        ],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "general-information"
+        ],
+        "groups": [
+          "question-answer"
+        ],
+        "semanticKind": "structural-question",
+        "component": "question",
+        "role": null,
+        "instanceFamily": {
+          "familyId": "general-information.question-answer",
+          "cardinality": "many",
+          "level": "question-answer",
+          "instanceKey": [
+            "sectionOccurrence",
+            "questionIndex"
+          ],
+          "parentFamilyId": null,
+          "stableIdentity": [
+            "sectionOccurrence",
+            "questionIndex",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "evidenceType": "structural-section-model",
+          "section": {
+            "evidenceType": "structural-section-heading",
+            "formCount": 16,
+            "occurrenceCount": 31,
+            "fillable": false
+          },
+          "corpus": {
+            "formCount": 63,
+            "fieldCount": 21140,
+            "groupCount": 1094,
+            "labelCount": 10679
+          }
+        },
+        "inheritedFrom": null
+      },
+      "GeneralLiability.Exposure.HazardClass": {
+        "acordCode": "GeneralLiability.Exposure.HazardClass",
+        "aliases": [
+          "GeneralLiability.Exposure.HazardClass",
+          "hazard class",
+          "Hazard class"
+        ],
+        "synonyms": [
+          "class",
+          "general",
+          "hazard",
+          "liability"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "general-information",
+          "liability"
+        ],
+        "groups": [
+          "classification",
+          "risk"
+        ],
+        "semanticKind": "fillable",
+        "component": null,
+        "role": null,
+        "instanceFamily": {
+          "familyId": "document.field",
+          "cardinality": "many",
+          "level": "document",
+          "instanceKey": [
+            "fieldOccurrence"
+          ],
+          "parentFamilyId": null,
+          "stableIdentity": [
+            "fieldOccurrence",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "evidenceType": "inherited-rp8",
+          "sourcePayloadSha256": "de18ba8a33410b61095f318b403635e23ae731bf2deab0a950b96662bcd3f27d"
+        },
+        "inheritedFrom": "RP-8"
+      },
+      "Premises.Address.City": {
+        "acordCode": "Premises.Address.City",
+        "aliases": [
+          "Premises.Address.City",
+          "Location_PhysicalAddress_CityName"
+        ],
+        "synonyms": [
+          "city",
+          "location",
+          "premises"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "premises-information"
+        ],
+        "groups": [
+          "address",
+          "premises"
+        ],
+        "semanticKind": "fillable",
+        "component": "address.city",
+        "role": null,
+        "instanceFamily": {
+          "familyId": "premises.location",
+          "cardinality": "many",
+          "level": "location",
+          "instanceKey": [
+            "locationIndex"
+          ],
+          "parentFamilyId": null,
+          "stableIdentity": [
+            "locationIndex",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "semanticPath": "Location_PhysicalAddress_CityName",
+          "formCount": 20,
+          "instanceCount": 63,
+          "fieldTypeCounts": {
+            "text": 63
+          }
+        },
+        "inheritedFrom": null
+      },
+      "Premises.Address.Line1": {
+        "acordCode": "Premises.Address.Line1",
+        "aliases": [
+          "Premises.Address.Line1",
+          "Location_PhysicalAddress_LineOne"
+        ],
+        "synonyms": [
+          "address",
+          "location",
+          "premises",
+          "street"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "premises-information"
+        ],
+        "groups": [
+          "address",
+          "premises"
+        ],
+        "semanticKind": "fillable",
+        "component": "address.line1",
+        "role": null,
+        "instanceFamily": {
+          "familyId": "premises.location",
+          "cardinality": "many",
+          "level": "location",
+          "instanceKey": [
+            "locationIndex"
+          ],
+          "parentFamilyId": null,
+          "stableIdentity": [
+            "locationIndex",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "semanticPath": "Location_PhysicalAddress_LineOne",
+          "formCount": 20,
+          "instanceCount": 63,
+          "fieldTypeCounts": {
+            "text": 63
+          }
+        },
+        "inheritedFrom": null
+      },
+      "Premises.Address.Line2": {
+        "acordCode": "Premises.Address.Line2",
+        "aliases": [
+          "Premises.Address.Line2",
+          "Location_PhysicalAddress_LineTwo"
+        ],
+        "synonyms": [
+          "address",
+          "line two",
+          "location",
+          "premises"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "premises-information"
+        ],
+        "groups": [
+          "address",
+          "premises"
+        ],
+        "semanticKind": "fillable",
+        "component": "address.line2",
+        "role": null,
+        "instanceFamily": {
+          "familyId": "premises.location",
+          "cardinality": "many",
+          "level": "location",
+          "instanceKey": [
+            "locationIndex"
+          ],
+          "parentFamilyId": null,
+          "stableIdentity": [
+            "locationIndex",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "semanticPath": "Location_PhysicalAddress_LineTwo",
+          "formCount": 4,
+          "instanceCount": 12,
+          "fieldTypeCounts": {
+            "text": 12
+          }
+        },
+        "inheritedFrom": null
+      },
+      "Premises.Address.PostalCode": {
+        "acordCode": "Premises.Address.PostalCode",
+        "aliases": [
+          "Premises.Address.PostalCode",
+          "Location_PhysicalAddress_PostalCode"
+        ],
+        "synonyms": [
+          "postal",
+          "premises",
+          "zip"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "premises-information"
+        ],
+        "groups": [
+          "address",
+          "classification",
+          "premises"
+        ],
+        "semanticKind": "fillable",
+        "component": "address.postalCode",
+        "role": null,
+        "instanceFamily": {
+          "familyId": "premises.location",
+          "cardinality": "many",
+          "level": "location",
+          "instanceKey": [
+            "locationIndex"
+          ],
+          "parentFamilyId": null,
+          "stableIdentity": [
+            "locationIndex",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "semanticPath": "Location_PhysicalAddress_PostalCode",
+          "formCount": 19,
+          "instanceCount": 59,
+          "fieldTypeCounts": {
+            "text": 59
+          }
+        },
+        "inheritedFrom": null
+      },
+      "Premises.Address.StateOrProvince": {
+        "acordCode": "Premises.Address.StateOrProvince",
+        "aliases": [
+          "Premises.Address.StateOrProvince",
+          "Location_PhysicalAddress_StateOrProvinceCode"
+        ],
+        "synonyms": [
+          "premises",
+          "province",
+          "state"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "premises-information"
+        ],
+        "groups": [
+          "address",
+          "classification",
+          "premises"
+        ],
+        "semanticKind": "fillable",
+        "component": "address.stateOrProvince",
+        "role": null,
+        "instanceFamily": {
+          "familyId": "premises.location",
+          "cardinality": "many",
+          "level": "location",
+          "instanceKey": [
+            "locationIndex"
+          ],
+          "parentFamilyId": null,
+          "stableIdentity": [
+            "locationIndex",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "semanticPath": "Location_PhysicalAddress_StateOrProvinceCode",
+          "formCount": 20,
+          "instanceCount": 63,
+          "fieldTypeCounts": {
+            "text": 63
+          }
+        },
+        "inheritedFrom": null
+      },
+      "Premises.Building.Description": {
+        "acordCode": "Premises.Building.Description",
+        "aliases": [
+          "Premises.Building.Description",
+          "Location_BuildingDesciption",
+          "building description"
+        ],
+        "synonyms": [
+          "building",
+          "description",
+          "premises"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "premises-information"
+        ],
+        "groups": [
+          "classification",
+          "premises"
+        ],
+        "semanticKind": "fillable",
+        "component": "premises.building.description",
+        "role": null,
+        "instanceFamily": {
+          "familyId": "premises.building",
+          "cardinality": "many",
+          "level": "building",
+          "instanceKey": [
+            "locationIndex",
+            "buildingIndex"
+          ],
+          "parentFamilyId": "premises.location",
+          "stableIdentity": [
+            "locationIndex",
+            "buildingIndex",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "semanticPath": "Location_BuildingDesciption",
+          "formCount": 1,
+          "instanceCount": 2,
+          "fieldTypeCounts": {
+            "text": 2
+          }
+        },
+        "inheritedFrom": null
+      },
+      "Premises.Building.Identifier": {
+        "acordCode": "Premises.Building.Identifier",
+        "aliases": [
+          "Premises.Building.Identifier",
+          "CommercialStructure_Building_ProducerIdentifier",
+          "building number"
+        ],
+        "synonyms": [
+          "building",
+          "identifier",
+          "number",
+          "premises"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "premises-information"
+        ],
+        "groups": [
+          "classification",
+          "premises"
+        ],
+        "semanticKind": "fillable",
+        "component": "premises.building.identifier",
+        "role": null,
+        "instanceFamily": {
+          "familyId": "premises.building",
+          "cardinality": "many",
+          "level": "building",
+          "instanceKey": [
+            "locationIndex",
+            "buildingIndex"
+          ],
+          "parentFamilyId": "premises.location",
+          "stableIdentity": [
+            "locationIndex",
+            "buildingIndex",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "semanticPath": "CommercialStructure_Building_ProducerIdentifier",
+          "formCount": 3,
+          "instanceCount": 10,
+          "fieldTypeCounts": {
+            "text": 10
+          }
+        },
+        "inheritedFrom": null
+      },
+      "Premises.Location.Identifier": {
+        "acordCode": "Premises.Location.Identifier",
+        "aliases": [
+          "Premises.Location.Identifier",
+          "CommercialStructure_Location_ProducerIdentifier",
+          "location number",
+          "premises number"
+        ],
+        "synonyms": [
+          "identifier",
+          "location",
+          "number",
+          "premises"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "premises-information"
+        ],
+        "groups": [
+          "classification",
+          "premises"
+        ],
+        "semanticKind": "fillable",
+        "component": "premises.location.identifier",
+        "role": null,
+        "instanceFamily": {
+          "familyId": "premises.location",
+          "cardinality": "many",
+          "level": "location",
+          "instanceKey": [
+            "locationIndex"
+          ],
+          "parentFamilyId": null,
+          "stableIdentity": [
+            "locationIndex",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "semanticPath": "CommercialStructure_Location_ProducerIdentifier",
+          "formCount": 5,
+          "instanceCount": 32,
+          "fieldTypeCounts": {
+            "text": 32
+          }
+        },
+        "inheritedFrom": null
+      },
+      "Premises.Location.Name": {
+        "acordCode": "Premises.Location.Name",
+        "aliases": [
+          "Premises.Location.Name",
+          "Location_FullName",
+          "CommercialStructure_Location_FullName"
+        ],
+        "synonyms": [
+          "location",
+          "name",
+          "premises"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "premises-information"
+        ],
+        "groups": [
+          "identity",
+          "premises"
+        ],
+        "semanticKind": "fillable",
+        "component": "premises.location.name",
+        "role": null,
+        "instanceFamily": {
+          "familyId": "premises.location",
+          "cardinality": "many",
+          "level": "location",
+          "instanceKey": [
+            "locationIndex"
+          ],
+          "parentFamilyId": null,
+          "stableIdentity": [
+            "locationIndex",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "semanticPath": "Location_FullName",
+          "formCount": 3,
+          "instanceCount": 21,
+          "fieldTypeCounts": {
+            "text": 21
+          }
+        },
+        "inheritedFrom": null
+      },
+      "Producer.Address.City": {
+        "acordCode": "Producer.Address.City",
+        "aliases": [
+          "Producer.Address.City",
+          "Producer_MailingAddress_CityName"
+        ],
+        "synonyms": [
+          "city",
+          "mailing",
+          "producer"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "producer-information"
+        ],
+        "groups": [
+          "address"
+        ],
+        "semanticKind": "fillable",
+        "component": "address.city",
+        "role": "Producer",
+        "instanceFamily": {
+          "familyId": "party.producer",
+          "cardinality": "many",
+          "level": "party",
+          "instanceKey": [
+            "producerIndex"
+          ],
+          "parentFamilyId": null,
+          "stableIdentity": [
+            "producerIndex",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "semanticPath": "Producer_MailingAddress_CityName",
+          "formCount": 26,
+          "instanceCount": 29,
+          "fieldTypeCounts": {
+            "text": 29
+          }
+        },
+        "inheritedFrom": null
+      },
+      "Producer.Address.Line1": {
+        "acordCode": "Producer.Address.Line1",
+        "aliases": [
+          "Producer.Address.Line1",
+          "Producer_MailingAddress_LineOne"
+        ],
+        "synonyms": [
+          "address",
+          "agency",
+          "agent",
+          "mailing",
+          "producer",
+          "street"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "producer-information"
+        ],
+        "groups": [
+          "address"
+        ],
+        "semanticKind": "fillable",
+        "component": "address.line1",
+        "role": "Producer",
+        "instanceFamily": {
+          "familyId": "party.producer",
+          "cardinality": "many",
+          "level": "party",
+          "instanceKey": [
+            "producerIndex"
+          ],
+          "parentFamilyId": null,
+          "stableIdentity": [
+            "producerIndex",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "semanticPath": "Producer_MailingAddress_LineOne",
+          "formCount": 26,
+          "instanceCount": 29,
+          "fieldTypeCounts": {
+            "text": 29
+          }
+        },
+        "inheritedFrom": null
+      },
+      "Producer.Address.Line2": {
+        "acordCode": "Producer.Address.Line2",
+        "aliases": [
+          "Producer.Address.Line2",
+          "Producer_MailingAddress_LineTwo"
+        ],
+        "synonyms": [
+          "address",
+          "line two",
+          "mailing",
+          "producer"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "producer-information"
+        ],
+        "groups": [
+          "address"
+        ],
+        "semanticKind": "fillable",
+        "component": "address.line2",
+        "role": "Producer",
+        "instanceFamily": {
+          "familyId": "party.producer",
+          "cardinality": "many",
+          "level": "party",
+          "instanceKey": [
+            "producerIndex"
+          ],
+          "parentFamilyId": null,
+          "stableIdentity": [
+            "producerIndex",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "semanticPath": "Producer_MailingAddress_LineTwo",
+          "formCount": 13,
+          "instanceCount": 13,
+          "fieldTypeCounts": {
+            "text": 13
+          }
+        },
+        "inheritedFrom": null
+      },
+      "Producer.Address.PostalCode": {
+        "acordCode": "Producer.Address.PostalCode",
+        "aliases": [
+          "Producer.Address.PostalCode",
+          "Producer_MailingAddress_PostalCode"
+        ],
+        "synonyms": [
+          "postal",
+          "producer",
+          "zip"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "producer-information"
+        ],
+        "groups": [
+          "address",
+          "classification"
+        ],
+        "semanticKind": "fillable",
+        "component": "address.postalCode",
+        "role": "Producer",
+        "instanceFamily": {
+          "familyId": "party.producer",
+          "cardinality": "many",
+          "level": "party",
+          "instanceKey": [
+            "producerIndex"
+          ],
+          "parentFamilyId": null,
+          "stableIdentity": [
+            "producerIndex",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "semanticPath": "Producer_MailingAddress_PostalCode",
+          "formCount": 26,
+          "instanceCount": 29,
+          "fieldTypeCounts": {
+            "text": 29
+          }
+        },
+        "inheritedFrom": null
+      },
+      "Producer.Address.StateOrProvince": {
+        "acordCode": "Producer.Address.StateOrProvince",
+        "aliases": [
+          "Producer.Address.StateOrProvince",
+          "Producer_MailingAddress_StateOrProvinceCode"
+        ],
+        "synonyms": [
+          "producer",
+          "province",
+          "state"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "producer-information"
+        ],
+        "groups": [
+          "address",
+          "classification"
+        ],
+        "semanticKind": "fillable",
+        "component": "address.stateOrProvince",
+        "role": "Producer",
+        "instanceFamily": {
+          "familyId": "party.producer",
+          "cardinality": "many",
+          "level": "party",
+          "instanceKey": [
+            "producerIndex"
+          ],
+          "parentFamilyId": null,
+          "stableIdentity": [
+            "producerIndex",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "semanticPath": "Producer_MailingAddress_StateOrProvinceCode",
+          "formCount": 26,
+          "instanceCount": 29,
+          "fieldTypeCounts": {
+            "text": 29
+          }
+        },
+        "inheritedFrom": null
+      },
+      "Producer.Contact.Email": {
+        "acordCode": "Producer.Contact.Email",
+        "aliases": [
+          "Producer.Contact.Email",
+          "Producer_ContactPerson_EmailAddress"
+        ],
+        "synonyms": [
+          "contact",
+          "email",
+          "producer"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "producer-information"
+        ],
+        "groups": [
+          "contact"
+        ],
+        "semanticKind": "fillable",
+        "component": "contact.email",
+        "role": "Producer",
+        "instanceFamily": {
+          "familyId": "party.producer.contact",
+          "cardinality": "many",
+          "level": "contact",
+          "instanceKey": [
+            "producerIndex",
+            "contactIndex"
+          ],
+          "parentFamilyId": "party.producer",
+          "stableIdentity": [
+            "producerIndex",
+            "contactIndex",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "semanticPath": "Producer_ContactPerson_EmailAddress",
+          "formCount": 15,
+          "instanceCount": 17,
+          "fieldTypeCounts": {
+            "text": 17
+          }
+        },
+        "inheritedFrom": null
+      },
+      "Producer.Contact.Fax": {
+        "acordCode": "Producer.Contact.Fax",
+        "aliases": [
+          "Producer.Contact.Fax",
+          "Producer_FaxNumber"
+        ],
+        "synonyms": [
+          "fax",
+          "producer"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "producer-information"
+        ],
+        "groups": [
+          "contact"
+        ],
+        "semanticKind": "fillable",
+        "component": "contact.fax",
+        "role": "Producer",
+        "instanceFamily": {
+          "familyId": "party.producer.contact",
+          "cardinality": "many",
+          "level": "contact",
+          "instanceKey": [
+            "producerIndex",
+            "contactIndex"
+          ],
+          "parentFamilyId": "party.producer",
+          "stableIdentity": [
+            "producerIndex",
+            "contactIndex",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "semanticPath": "Producer_FaxNumber",
+          "formCount": 15,
+          "instanceCount": 15,
+          "fieldTypeCounts": {
+            "numeric": 15
+          }
+        },
+        "inheritedFrom": null
+      },
+      "Producer.Contact.FullName": {
+        "acordCode": "Producer.Contact.FullName",
+        "aliases": [
+          "Producer.Contact.FullName",
+          "Producer_ContactPerson_FullName"
+        ],
+        "synonyms": [
+          "contact",
+          "name",
+          "producer"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "producer-information"
+        ],
+        "groups": [
+          "contact",
+          "identity"
+        ],
+        "semanticKind": "fillable",
+        "component": "contact.name",
+        "role": "Producer",
+        "instanceFamily": {
+          "familyId": "party.producer.contact",
+          "cardinality": "many",
+          "level": "contact",
+          "instanceKey": [
+            "producerIndex",
+            "contactIndex"
+          ],
+          "parentFamilyId": "party.producer",
+          "stableIdentity": [
+            "producerIndex",
+            "contactIndex",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "semanticPath": "Producer_ContactPerson_FullName",
+          "formCount": 17,
+          "instanceCount": 17,
+          "fieldTypeCounts": {
+            "text": 17
+          }
+        },
+        "inheritedFrom": null
+      },
+      "Producer.Contact.Phone": {
+        "acordCode": "Producer.Contact.Phone",
+        "aliases": [
+          "Producer.Contact.Phone",
+          "Producer_ContactPerson_PhoneNumber",
+          "Producer_PhoneNumber"
+        ],
+        "synonyms": [
+          "contact",
+          "phone",
+          "producer",
+          "telephone"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "producer-information"
+        ],
+        "groups": [
+          "contact"
+        ],
+        "semanticKind": "fillable",
+        "component": "contact.phone",
+        "role": "Producer",
+        "instanceFamily": {
+          "familyId": "party.producer.contact",
+          "cardinality": "many",
+          "level": "contact",
+          "instanceKey": [
+            "producerIndex",
+            "contactIndex"
+          ],
+          "parentFamilyId": "party.producer",
+          "stableIdentity": [
+            "producerIndex",
+            "contactIndex",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "semanticPath": "Producer_ContactPerson_PhoneNumber",
+          "formCount": 21,
+          "instanceCount": 21,
+          "fieldTypeCounts": {
+            "numeric": 21
+          }
+        },
+        "inheritedFrom": null
+      },
+      "Producer.Identity.FullName": {
+        "acordCode": "Producer.Identity.FullName",
+        "aliases": [
+          "Producer.Identity.FullName",
+          "Producer_FullName",
+          "agent name",
+          "agency name",
+          "producer name"
+        ],
+        "synonyms": [
+          "agency",
+          "agent",
+          "broker",
+          "name",
+          "producer"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "producer-information"
+        ],
+        "groups": [
+          "identity"
+        ],
+        "semanticKind": "fillable",
+        "component": "identity.name",
+        "role": "Producer",
+        "instanceFamily": {
+          "familyId": "party.producer",
+          "cardinality": "many",
+          "level": "party",
+          "instanceKey": [
+            "producerIndex"
+          ],
+          "parentFamilyId": null,
+          "stableIdentity": [
+            "producerIndex",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "semanticPath": "Producer_FullName",
+          "formCount": 40,
+          "instanceCount": 44,
+          "fieldTypeCounts": {
+            "text": 44
+          }
+        },
+        "inheritedFrom": null
+      },
+      "Section.ApplicantInformation": {
+        "acordCode": "Section.ApplicantInformation",
+        "aliases": [
+          "Section.ApplicantInformation",
+          "APPLICANT INFORMATION"
+        ],
+        "synonyms": [
+          "applicant",
+          "information",
+          "section"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "applicant-information"
+        ],
+        "groups": [
+          "section"
+        ],
+        "semanticKind": "section",
+        "component": "section",
+        "role": "Applicant",
+        "instanceFamily": {
+          "familyId": "section.applicant-information",
+          "cardinality": "one-per-section-occurrence",
+          "level": "section",
+          "instanceKey": [
+            "pageIndex",
+            "sectionOccurrence"
+          ],
+          "parentFamilyId": null,
+          "stableIdentity": [
+            "pageIndex",
+            "sectionOccurrence",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "evidenceType": "structural-section-heading",
+          "formCount": 4,
+          "occurrenceCount": 6,
+          "fillable": false
+        },
+        "inheritedFrom": null
+      },
+      "Section.GeneralInformation": {
+        "acordCode": "Section.GeneralInformation",
+        "aliases": [
+          "Section.GeneralInformation",
+          "GENERAL INFORMATION"
+        ],
+        "synonyms": [
+          "general",
+          "information",
+          "section"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "general-information"
+        ],
+        "groups": [
+          "section"
+        ],
+        "semanticKind": "section",
+        "component": "section",
+        "role": null,
+        "instanceFamily": {
+          "familyId": "section.general-information",
+          "cardinality": "one-per-section-occurrence",
+          "level": "section",
+          "instanceKey": [
+            "pageIndex",
+            "sectionOccurrence"
+          ],
+          "parentFamilyId": null,
+          "stableIdentity": [
+            "pageIndex",
+            "sectionOccurrence",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "evidenceType": "structural-section-heading",
+          "formCount": 16,
+          "occurrenceCount": 31,
+          "fillable": false
+        },
+        "inheritedFrom": null
+      },
+      "Section.PremisesInformation": {
+        "acordCode": "Section.PremisesInformation",
+        "aliases": [
+          "Section.PremisesInformation",
+          "PREMISES INFORMATION"
+        ],
+        "synonyms": [
+          "location",
+          "premises",
+          "section"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "premises-information"
+        ],
+        "groups": [
+          "section"
+        ],
+        "semanticKind": "section",
+        "component": "section",
+        "role": null,
+        "instanceFamily": {
+          "familyId": "section.premises-information",
+          "cardinality": "one-per-section-occurrence",
+          "level": "section",
+          "instanceKey": [
+            "pageIndex",
+            "sectionOccurrence"
+          ],
+          "parentFamilyId": null,
+          "stableIdentity": [
+            "pageIndex",
+            "sectionOccurrence",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "evidenceType": "structural-section-heading",
+          "formCount": 1,
+          "occurrenceCount": 6,
+          "fillable": false
+        },
+        "inheritedFrom": null
+      },
+      "Section.ProducerInformation": {
+        "acordCode": "Section.ProducerInformation",
+        "aliases": [
+          "Section.ProducerInformation",
+          "PRODUCER INFORMATION",
+          "PRODUCER",
+          "AGENCY"
+        ],
+        "synonyms": [
+          "agency",
+          "agent",
+          "producer",
+          "section"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "producer-information"
+        ],
+        "groups": [
+          "section"
+        ],
+        "semanticKind": "section",
+        "component": "section",
+        "role": "Producer",
+        "instanceFamily": {
+          "familyId": "section.producer-information",
+          "cardinality": "one-per-section-occurrence",
+          "level": "section",
+          "instanceKey": [
+            "pageIndex",
+            "sectionOccurrence"
+          ],
+          "parentFamilyId": null,
+          "stableIdentity": [
+            "pageIndex",
+            "sectionOccurrence",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "evidenceType": "structural-section-heading",
+          "formCount": 19,
+          "occurrenceCount": 476,
+          "fillable": false
+        },
+        "inheritedFrom": null
+      },
+      "Signature.Applicant": {
+        "acordCode": "Signature.Applicant",
+        "aliases": [
+          "Signature.Applicant",
+          "NamedInsured_Signature",
+          "APPLICANT'S SIGNATURE"
+        ],
+        "synonyms": [
+          "applicant",
+          "signature",
+          "signer"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "applicant-information",
+          "signature"
+        ],
+        "groups": [
+          "signature"
+        ],
+        "semanticKind": "fillable",
+        "component": "signature",
+        "role": "Applicant",
+        "instanceFamily": {
+          "familyId": "signature.applicant",
+          "cardinality": "many",
+          "level": "signature",
+          "instanceKey": [
+            "applicantIndex",
+            "signatureIndex"
+          ],
+          "parentFamilyId": null,
+          "stableIdentity": [
+            "applicantIndex",
+            "signatureIndex",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "semanticPath": "NamedInsured_Signature",
+          "formCount": 59,
+          "instanceCount": 66,
+          "fieldTypeCounts": {
+            "signature": 66
+          }
+        },
+        "inheritedFrom": null
+      },
+      "Signature.Producer": {
+        "acordCode": "Signature.Producer",
+        "aliases": [
+          "Signature.Producer",
+          "Producer_AuthorizedRepresentative_Signature",
+          "PRODUCER_SIGNATURE",
+          "PRODUCER'S SIGNATURE"
+        ],
+        "synonyms": [
+          "agent",
+          "producer",
+          "signature",
+          "signer"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "producer-information",
+          "signature"
+        ],
+        "groups": [
+          "signature"
+        ],
+        "semanticKind": "fillable",
+        "component": "signature",
+        "role": "Producer",
+        "instanceFamily": {
+          "familyId": "signature.producer",
+          "cardinality": "many",
+          "level": "signature",
+          "instanceKey": [
+            "producerIndex",
+            "signatureIndex"
+          ],
+          "parentFamilyId": null,
+          "stableIdentity": [
+            "producerIndex",
+            "signatureIndex",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "semanticPath": "Producer_AuthorizedRepresentative_Signature",
+          "formCount": 37,
+          "instanceCount": 37,
+          "fieldTypeCounts": {
+            "signature": 37
+          }
+        },
+        "inheritedFrom": null
+      }
+    }
+  },
+  "roleBoundaryPolicy": {
+    "schemaVersion": "strict-role-boundaries.rp9.v1",
+    "roles": {
+      "NamedInsured": {
+        "legalMeaning": "The person or entity explicitly named as an insured in the policy contract.",
+        "semanticMeaning": "Named-insured identity and role-scoped contact or address data."
+      },
+      "Applicant": {
+        "legalMeaning": "The person or entity applying for insurance, whether or not ultimately named as an insured.",
+        "semanticMeaning": "Application-party identity and role-scoped contact or address data."
+      },
+      "Insured": {
+        "legalMeaning": "A person or entity receiving insured status without implying named-insured or applicant status.",
+        "semanticMeaning": "Insured-party identity and role-scoped contact or address data."
+      },
+      "Producer": {
+        "legalMeaning": "The insurance producer, agent, agency, or broker responsible for the application transaction.",
+        "semanticMeaning": "Producer-scoped identity, address, contact, and signature data."
+      }
+    },
+    "identityKey": [
+      "role",
+      "component"
+    ],
+    "distinctRolesRequired": true,
+    "roleLevelCollapsingProhibited": true,
+    "crossRolePromotionProhibited": true,
+    "componentLevelHarmonizationAllowed": [
+      "identity.name",
+      "address.line1",
+      "address.city",
+      "address.stateOrProvince",
+      "address.postalCode",
+      "contact.phone",
+      "contact.email"
+    ],
+    "roleEquivalenceEvidenceThreshold": "explicit-corpus-evidence-for-each-role",
+    "roleAliases": {
+      "Agent": "Producer",
+      "Agency": "Producer",
+      "Broker": "Producer"
+    }
+  },
+  "roleSafeEquivalences": [
+    {
+      "equivalenceId": "applicant-name-to-named-insured-full-name",
+      "sourceRole": "Applicant",
+      "sourceCode": "Applicant.Name",
+      "component": "identity.name",
+      "representationCode": "NamedInsured_FullName",
+      "representationRole": "NamedInsured",
+      "scope": "representation-only",
+      "runtimePromotion": false,
+      "preservesSourceRole": true,
+      "evidence": "explicit-phase33-role-safe-equivalence"
+    },
+    {
+      "equivalenceId": "agent-role-to-producer-role",
+      "sourceRole": "Agent",
+      "targetRole": "Producer",
+      "scope": "role-alias",
+      "runtimePromotion": false,
+      "preservesSourceLabel": true,
+      "evidence": "repository-domain-language-agent-producer-synonym"
+    },
+    {
+      "equivalenceId": "applicant-signature-named-insured-representation",
+      "sourceRole": "Applicant",
+      "sourceCode": "Applicant.Signature",
+      "component": "signature",
+      "representationCode": "NamedInsured_Signature",
+      "canonicalCode": "Signature.Applicant",
+      "representationRole": "NamedInsured",
+      "scope": "representation-only",
+      "runtimePromotion": false,
+      "preservesSourceRole": true,
+      "evidence": {
+        "semanticPath": "NamedInsured_Signature",
+        "formCount": 59,
+        "instanceCount": 66,
+        "fieldTypeCounts": {
+          "signature": 66
+        }
+      }
+    }
+  ],
+  "multiInstanceFamilies": {
+    "document.field": {
+      "familyId": "document.field",
+      "cardinality": "many",
+      "level": "document",
+      "instanceKey": [
+        "fieldOccurrence"
+      ],
+      "parentFamilyId": null,
+      "stableIdentity": [
+        "fieldOccurrence",
+        "canonicalNodeId"
+      ]
+    },
+    "form.lifecycle": {
+      "familyId": "form.lifecycle",
+      "cardinality": "many",
+      "level": "document",
+      "instanceKey": [
+        "formInstance"
+      ],
+      "parentFamilyId": null,
+      "stableIdentity": [
+        "formInstance",
+        "canonicalNodeId"
+      ]
+    },
+    "form.signature-date": {
+      "familyId": "form.signature-date",
+      "cardinality": "many",
+      "level": "signature",
+      "instanceKey": [
+        "signerRole",
+        "signerIndex",
+        "signatureIndex"
+      ],
+      "parentFamilyId": null,
+      "stableIdentity": [
+        "signerRole",
+        "signerIndex",
+        "signatureIndex",
+        "canonicalNodeId"
+      ]
+    },
+    "general-information.question-answer": {
+      "familyId": "general-information.question-answer",
+      "cardinality": "many",
+      "level": "question-answer",
+      "instanceKey": [
+        "sectionOccurrence",
+        "questionIndex"
+      ],
+      "parentFamilyId": null,
+      "stableIdentity": [
+        "sectionOccurrence",
+        "questionIndex",
+        "canonicalNodeId"
+      ]
+    },
+    "party.producer": {
+      "familyId": "party.producer",
+      "cardinality": "many",
+      "level": "party",
+      "instanceKey": [
+        "producerIndex"
+      ],
+      "parentFamilyId": null,
+      "stableIdentity": [
+        "producerIndex",
+        "canonicalNodeId"
+      ]
+    },
+    "party.producer.contact": {
+      "familyId": "party.producer.contact",
+      "cardinality": "many",
+      "level": "contact",
+      "instanceKey": [
+        "producerIndex",
+        "contactIndex"
+      ],
+      "parentFamilyId": "party.producer",
+      "stableIdentity": [
+        "producerIndex",
+        "contactIndex",
+        "canonicalNodeId"
+      ]
+    },
+    "premises.building": {
+      "familyId": "premises.building",
+      "cardinality": "many",
+      "level": "building",
+      "instanceKey": [
+        "locationIndex",
+        "buildingIndex"
+      ],
+      "parentFamilyId": "premises.location",
+      "stableIdentity": [
+        "locationIndex",
+        "buildingIndex",
+        "canonicalNodeId"
+      ]
+    },
+    "premises.location": {
+      "familyId": "premises.location",
+      "cardinality": "many",
+      "level": "location",
+      "instanceKey": [
+        "locationIndex"
+      ],
+      "parentFamilyId": null,
+      "stableIdentity": [
+        "locationIndex",
+        "canonicalNodeId"
+      ]
+    },
+    "section.applicant-information": {
+      "familyId": "section.applicant-information",
+      "cardinality": "one-per-section-occurrence",
+      "level": "section",
+      "instanceKey": [
+        "pageIndex",
+        "sectionOccurrence"
+      ],
+      "parentFamilyId": null,
+      "stableIdentity": [
+        "pageIndex",
+        "sectionOccurrence",
+        "canonicalNodeId"
+      ]
+    },
+    "section.general-information": {
+      "familyId": "section.general-information",
+      "cardinality": "one-per-section-occurrence",
+      "level": "section",
+      "instanceKey": [
+        "pageIndex",
+        "sectionOccurrence"
+      ],
+      "parentFamilyId": null,
+      "stableIdentity": [
+        "pageIndex",
+        "sectionOccurrence",
+        "canonicalNodeId"
+      ]
+    },
+    "section.premises-information": {
+      "familyId": "section.premises-information",
+      "cardinality": "one-per-section-occurrence",
+      "level": "section",
+      "instanceKey": [
+        "pageIndex",
+        "sectionOccurrence"
+      ],
+      "parentFamilyId": null,
+      "stableIdentity": [
+        "pageIndex",
+        "sectionOccurrence",
+        "canonicalNodeId"
+      ]
+    },
+    "section.producer-information": {
+      "familyId": "section.producer-information",
+      "cardinality": "one-per-section-occurrence",
+      "level": "section",
+      "instanceKey": [
+        "pageIndex",
+        "sectionOccurrence"
+      ],
+      "parentFamilyId": null,
+      "stableIdentity": [
+        "pageIndex",
+        "sectionOccurrence",
+        "canonicalNodeId"
+      ]
+    },
+    "signature.applicant": {
+      "familyId": "signature.applicant",
+      "cardinality": "many",
+      "level": "signature",
+      "instanceKey": [
+        "applicantIndex",
+        "signatureIndex"
+      ],
+      "parentFamilyId": null,
+      "stableIdentity": [
+        "applicantIndex",
+        "signatureIndex",
+        "canonicalNodeId"
+      ]
+    },
+    "signature.producer": {
+      "familyId": "signature.producer",
+      "cardinality": "many",
+      "level": "signature",
+      "instanceKey": [
+        "producerIndex",
+        "signatureIndex"
+      ],
+      "parentFamilyId": null,
+      "stableIdentity": [
+        "producerIndex",
+        "signatureIndex",
+        "canonicalNodeId"
+      ]
+    }
+  },
+  "semanticTruth": {
+    "inheritedNodeCount": 8,
+    "addedNodeCount": 29,
+    "canonicalNodeCount": 37,
+    "corpus": {
+      "formCount": 63,
+      "fieldCount": 21140,
+      "groupCount": 1094,
+      "labelCount": 10679
+    },
+    "sectionContainersAreNotFillable": true,
+    "questionAnswerNodesAreStructural": true
+  },
+  "guardrails": {
+    "rp8RemainsProductionActive": true,
+    "rp9StagingActive": true,
+    "noProductionRuntimeOntologyChange": true,
+    "stableCanonicalIdentifiers": true,
+    "preserveRoleBoundaries": true,
+    "preserveFieldIds": true,
+    "preservePageIndices": true,
+    "preserveGrouping": true
+  },
+  "validation": {
+    "valid": true,
+    "invalidReferences": [],
+    "phase33Compatible": true,
+    "nodeCount": 37,
+    "inheritedNodeCount": 8,
+    "addedNodeCount": 29,
+    "roleSafeEquivalenceCount": 3,
+    "multiInstanceFamilyCount": 14
+  },
+  "integrity": {
+    "algorithm": "sha256",
+    "payloadSha256": "9528b281e6e2ff852318271f3c122af339bb9196c25c50671cf68c2088af68e0"
+  }
+}
