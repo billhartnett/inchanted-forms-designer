@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useDesignerStore } from "../../state/designerStore";
+import type { RuntimeSemanticStatus } from "../../config/semanticRuntime";
 
 type DesignerToolbarProps = {
   canUndo: boolean;
@@ -18,6 +19,7 @@ type DesignerToolbarProps = {
   handleExportAcordXml: () => Promise<void>;
   onOpenAutoMapPdf: () => void;
   canAutoMapPdf: boolean;
+  semanticStatus: RuntimeSemanticStatus;
   lastSavedAt: string | null;
   pdfPagesCount: number;
   currentPdfPage: number;
@@ -89,6 +91,7 @@ export function DesignerToolbar({
   handleExportAcordXml,
   onOpenAutoMapPdf,
   canAutoMapPdf,
+  semanticStatus,
   lastSavedAt,
   pdfPagesCount,
   currentPdfPage,
@@ -767,6 +770,28 @@ export function DesignerToolbar({
       <button onClick={ungroupSelected} disabled={!canUngroup} title="Ctrl+Shift+G">
         Ungroup
       </button>
+
+      <span
+        data-semantic-contract-status={semanticStatus.state}
+        data-semantic-baseline={semanticStatus.baseline}
+        title={semanticStatus.details}
+        style={{
+          width: 170,
+          minWidth: 170,
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+          whiteSpace: "nowrap",
+          border: `1px solid ${semanticStatus.state === "verified" ? "#86efac" : semanticStatus.state === "mismatch" ? "#fca5a5" : "#cbd5e1"}`,
+          borderRadius: 6,
+          background: semanticStatus.state === "verified" ? "#f0fdf4" : semanticStatus.state === "mismatch" ? "#fef2f2" : "#f8fafc",
+          color: semanticStatus.state === "verified" ? "#166534" : semanticStatus.state === "mismatch" ? "#991b1b" : "#475569",
+          fontSize: 12,
+          fontWeight: 700,
+          padding: "0.3rem 0.45rem",
+        }}
+      >
+        {semanticStatus.label}
+      </span>
 
       <span style={{ color: "#0f172a", fontSize: 12, marginLeft: 6 }}>
         {lastSavedAt ? `Last saved: ${new Date(lastSavedAt).toLocaleTimeString()}` : "Last saved: never"}

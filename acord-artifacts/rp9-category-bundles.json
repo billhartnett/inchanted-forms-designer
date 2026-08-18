@@ -1,0 +1,445 @@
+{
+  "schemaVersion": "rp9-category-bundles.v1",
+  "generatedAt": "2026-08-18T00:00:00.000Z",
+  "restorePoint": "RP-9",
+  "status": "staging-active",
+  "semanticTruthPayloadSha256": "9528b281e6e2ff852318271f3c122af339bb9196c25c50671cf68c2088af68e0",
+  "ontologyHash": "d257c500a5a19c4587417e9a3e13e74ef140571fc6032601de157d3001e24d9d",
+  "groups": [
+    {
+      "bundleId": "address",
+      "nodeIds": [
+        "CommercialProperty.Building.LocationAddress",
+        "GeneralInfo.MailingAddress.City",
+        "GeneralInfo.MailingAddress.Line1",
+        "GeneralInfo.MailingAddress.PostalCode",
+        "GeneralInfo.MailingAddress.State",
+        "Premises.Address.City",
+        "Premises.Address.Line1",
+        "Premises.Address.Line2",
+        "Premises.Address.PostalCode",
+        "Premises.Address.StateOrProvince",
+        "Producer.Address.City",
+        "Producer.Address.Line1",
+        "Producer.Address.Line2",
+        "Producer.Address.PostalCode",
+        "Producer.Address.StateOrProvince"
+      ],
+      "nodeCount": 15
+    },
+    {
+      "bundleId": "classification",
+      "nodeIds": [
+        "Contractors.Operations.Description",
+        "GeneralInfo.MailingAddress.PostalCode",
+        "GeneralInfo.MailingAddress.State",
+        "GeneralLiability.Exposure.HazardClass",
+        "Premises.Address.PostalCode",
+        "Premises.Address.StateOrProvince",
+        "Premises.Building.Description",
+        "Premises.Building.Identifier",
+        "Premises.Location.Identifier",
+        "Producer.Address.PostalCode",
+        "Producer.Address.StateOrProvince"
+      ],
+      "nodeCount": 11
+    },
+    {
+      "bundleId": "contact",
+      "nodeIds": [
+        "Producer.Contact.Email",
+        "Producer.Contact.Fax",
+        "Producer.Contact.FullName",
+        "Producer.Contact.Phone"
+      ],
+      "nodeCount": 4
+    },
+    {
+      "bundleId": "date",
+      "nodeIds": [
+        "Form.Date.Completed",
+        "Form.Date.Signed"
+      ],
+      "nodeCount": 2
+    },
+    {
+      "bundleId": "identity",
+      "nodeIds": [
+        "GeneralInfo.NamedInsured",
+        "Premises.Location.Name",
+        "Producer.Contact.FullName",
+        "Producer.Identity.FullName"
+      ],
+      "nodeCount": 4
+    },
+    {
+      "bundleId": "premises",
+      "nodeIds": [
+        "Premises.Address.City",
+        "Premises.Address.Line1",
+        "Premises.Address.Line2",
+        "Premises.Address.PostalCode",
+        "Premises.Address.StateOrProvince",
+        "Premises.Building.Description",
+        "Premises.Building.Identifier",
+        "Premises.Location.Identifier",
+        "Premises.Location.Name"
+      ],
+      "nodeCount": 9
+    },
+    {
+      "bundleId": "question-answer",
+      "nodeIds": [
+        "GeneralInformation.Answer",
+        "GeneralInformation.Question"
+      ],
+      "nodeCount": 2
+    },
+    {
+      "bundleId": "risk",
+      "nodeIds": [
+        "GeneralLiability.Exposure.HazardClass"
+      ],
+      "nodeCount": 1
+    },
+    {
+      "bundleId": "section",
+      "nodeIds": [
+        "Section.ApplicantInformation",
+        "Section.GeneralInformation",
+        "Section.PremisesInformation",
+        "Section.ProducerInformation"
+      ],
+      "nodeCount": 4
+    },
+    {
+      "bundleId": "signature",
+      "nodeIds": [
+        "Form.Date.Signed",
+        "Signature.Applicant",
+        "Signature.Producer"
+      ],
+      "nodeCount": 3
+    }
+  ],
+  "sections": [
+    {
+      "bundleId": "applicant-information",
+      "nodeIds": [
+        "Section.ApplicantInformation",
+        "Signature.Applicant"
+      ],
+      "nodeCount": 2
+    },
+    {
+      "bundleId": "contact",
+      "nodeIds": [
+        "CommercialProperty.Building.LocationAddress",
+        "GeneralInfo.MailingAddress.City",
+        "GeneralInfo.MailingAddress.Line1",
+        "GeneralInfo.MailingAddress.PostalCode",
+        "GeneralInfo.MailingAddress.State"
+      ],
+      "nodeCount": 5
+    },
+    {
+      "bundleId": "document",
+      "nodeIds": [
+        "Form.Date.Completed"
+      ],
+      "nodeCount": 1
+    },
+    {
+      "bundleId": "general-information",
+      "nodeIds": [
+        "GeneralInfo.MailingAddress.City",
+        "GeneralInfo.MailingAddress.Line1",
+        "GeneralInfo.MailingAddress.PostalCode",
+        "GeneralInfo.MailingAddress.State",
+        "GeneralInfo.NamedInsured",
+        "GeneralInformation.Answer",
+        "GeneralInformation.Question",
+        "GeneralLiability.Exposure.HazardClass",
+        "Section.GeneralInformation"
+      ],
+      "nodeCount": 9
+    },
+    {
+      "bundleId": "liability",
+      "nodeIds": [
+        "GeneralLiability.Exposure.HazardClass"
+      ],
+      "nodeCount": 1
+    },
+    {
+      "bundleId": "operations",
+      "nodeIds": [
+        "Contractors.Operations.Description"
+      ],
+      "nodeCount": 1
+    },
+    {
+      "bundleId": "premises-information",
+      "nodeIds": [
+        "Premises.Address.City",
+        "Premises.Address.Line1",
+        "Premises.Address.Line2",
+        "Premises.Address.PostalCode",
+        "Premises.Address.StateOrProvince",
+        "Premises.Building.Description",
+        "Premises.Building.Identifier",
+        "Premises.Location.Identifier",
+        "Premises.Location.Name",
+        "Section.PremisesInformation"
+      ],
+      "nodeCount": 10
+    },
+    {
+      "bundleId": "producer-information",
+      "nodeIds": [
+        "Producer.Address.City",
+        "Producer.Address.Line1",
+        "Producer.Address.Line2",
+        "Producer.Address.PostalCode",
+        "Producer.Address.StateOrProvince",
+        "Producer.Contact.Email",
+        "Producer.Contact.Fax",
+        "Producer.Contact.FullName",
+        "Producer.Contact.Phone",
+        "Producer.Identity.FullName",
+        "Section.ProducerInformation",
+        "Signature.Producer"
+      ],
+      "nodeCount": 12
+    },
+    {
+      "bundleId": "property",
+      "nodeIds": [
+        "CommercialProperty.Building.LocationAddress"
+      ],
+      "nodeCount": 1
+    },
+    {
+      "bundleId": "signature",
+      "nodeIds": [
+        "Form.Date.Signed",
+        "Signature.Applicant",
+        "Signature.Producer"
+      ],
+      "nodeCount": 3
+    }
+  ],
+  "multiInstanceFamilies": {
+    "document.field": {
+      "familyId": "document.field",
+      "cardinality": "many",
+      "level": "document",
+      "instanceKey": [
+        "fieldOccurrence"
+      ],
+      "parentFamilyId": null,
+      "stableIdentity": [
+        "fieldOccurrence",
+        "canonicalNodeId"
+      ]
+    },
+    "form.lifecycle": {
+      "familyId": "form.lifecycle",
+      "cardinality": "many",
+      "level": "document",
+      "instanceKey": [
+        "formInstance"
+      ],
+      "parentFamilyId": null,
+      "stableIdentity": [
+        "formInstance",
+        "canonicalNodeId"
+      ]
+    },
+    "form.signature-date": {
+      "familyId": "form.signature-date",
+      "cardinality": "many",
+      "level": "signature",
+      "instanceKey": [
+        "signerRole",
+        "signerIndex",
+        "signatureIndex"
+      ],
+      "parentFamilyId": null,
+      "stableIdentity": [
+        "signerRole",
+        "signerIndex",
+        "signatureIndex",
+        "canonicalNodeId"
+      ]
+    },
+    "general-information.question-answer": {
+      "familyId": "general-information.question-answer",
+      "cardinality": "many",
+      "level": "question-answer",
+      "instanceKey": [
+        "sectionOccurrence",
+        "questionIndex"
+      ],
+      "parentFamilyId": null,
+      "stableIdentity": [
+        "sectionOccurrence",
+        "questionIndex",
+        "canonicalNodeId"
+      ]
+    },
+    "party.producer": {
+      "familyId": "party.producer",
+      "cardinality": "many",
+      "level": "party",
+      "instanceKey": [
+        "producerIndex"
+      ],
+      "parentFamilyId": null,
+      "stableIdentity": [
+        "producerIndex",
+        "canonicalNodeId"
+      ]
+    },
+    "party.producer.contact": {
+      "familyId": "party.producer.contact",
+      "cardinality": "many",
+      "level": "contact",
+      "instanceKey": [
+        "producerIndex",
+        "contactIndex"
+      ],
+      "parentFamilyId": "party.producer",
+      "stableIdentity": [
+        "producerIndex",
+        "contactIndex",
+        "canonicalNodeId"
+      ]
+    },
+    "premises.building": {
+      "familyId": "premises.building",
+      "cardinality": "many",
+      "level": "building",
+      "instanceKey": [
+        "locationIndex",
+        "buildingIndex"
+      ],
+      "parentFamilyId": "premises.location",
+      "stableIdentity": [
+        "locationIndex",
+        "buildingIndex",
+        "canonicalNodeId"
+      ]
+    },
+    "premises.location": {
+      "familyId": "premises.location",
+      "cardinality": "many",
+      "level": "location",
+      "instanceKey": [
+        "locationIndex"
+      ],
+      "parentFamilyId": null,
+      "stableIdentity": [
+        "locationIndex",
+        "canonicalNodeId"
+      ]
+    },
+    "section.applicant-information": {
+      "familyId": "section.applicant-information",
+      "cardinality": "one-per-section-occurrence",
+      "level": "section",
+      "instanceKey": [
+        "pageIndex",
+        "sectionOccurrence"
+      ],
+      "parentFamilyId": null,
+      "stableIdentity": [
+        "pageIndex",
+        "sectionOccurrence",
+        "canonicalNodeId"
+      ]
+    },
+    "section.general-information": {
+      "familyId": "section.general-information",
+      "cardinality": "one-per-section-occurrence",
+      "level": "section",
+      "instanceKey": [
+        "pageIndex",
+        "sectionOccurrence"
+      ],
+      "parentFamilyId": null,
+      "stableIdentity": [
+        "pageIndex",
+        "sectionOccurrence",
+        "canonicalNodeId"
+      ]
+    },
+    "section.premises-information": {
+      "familyId": "section.premises-information",
+      "cardinality": "one-per-section-occurrence",
+      "level": "section",
+      "instanceKey": [
+        "pageIndex",
+        "sectionOccurrence"
+      ],
+      "parentFamilyId": null,
+      "stableIdentity": [
+        "pageIndex",
+        "sectionOccurrence",
+        "canonicalNodeId"
+      ]
+    },
+    "section.producer-information": {
+      "familyId": "section.producer-information",
+      "cardinality": "one-per-section-occurrence",
+      "level": "section",
+      "instanceKey": [
+        "pageIndex",
+        "sectionOccurrence"
+      ],
+      "parentFamilyId": null,
+      "stableIdentity": [
+        "pageIndex",
+        "sectionOccurrence",
+        "canonicalNodeId"
+      ]
+    },
+    "signature.applicant": {
+      "familyId": "signature.applicant",
+      "cardinality": "many",
+      "level": "signature",
+      "instanceKey": [
+        "applicantIndex",
+        "signatureIndex"
+      ],
+      "parentFamilyId": null,
+      "stableIdentity": [
+        "applicantIndex",
+        "signatureIndex",
+        "canonicalNodeId"
+      ]
+    },
+    "signature.producer": {
+      "familyId": "signature.producer",
+      "cardinality": "many",
+      "level": "signature",
+      "instanceKey": [
+        "producerIndex",
+        "signatureIndex"
+      ],
+      "parentFamilyId": null,
+      "stableIdentity": [
+        "producerIndex",
+        "signatureIndex",
+        "canonicalNodeId"
+      ]
+    }
+  },
+  "validation": {
+    "allNodesBundled": true
+  },
+  "integrity": {
+    "algorithm": "sha256",
+    "payloadSha256": "ccb076df53b5aaba631d915156b07a4e5f1e41f71c559034b01c1a9017df5f0c"
+  }
+}

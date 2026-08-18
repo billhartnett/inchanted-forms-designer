@@ -1,0 +1,142 @@
+{
+  "schemaVersion": "production-ontology-lineage.v2",
+  "generatedAt": "2026-08-18T00:00:00.000Z",
+  "restorePoint": "RP-9",
+  "parentRestorePoint": "RP-8",
+  "status": "staging-active",
+  "parent": {
+    "restorePoint": "RP-8",
+    "semanticTruthPayloadSha256": "4d43562f83d749fac10a956949257484cf75b4be2a4c66a0d00b57d5a26c3d15",
+    "semanticTruthFileSha256": "3ba6d7ad88a9a217a5b4f7b073fafbe2cc64b04b2453b1e777e7f48a24f3e8a4",
+    "ontologyLineagePayloadSha256": "36389906b544548fe2ebee608eb9dbe82fff01141df5f5d9826d980f802445e3",
+    "ontologyLineageFileSha256": "5efb6ba9a648bd6a656febbb76ee67c60844f1ac3d47a25dd8f2cbca2c53cdff",
+    "phase33PayloadSha256": "ab2e2ae3e8d3a04b700a14c3a43117003d0b38ebfc9f352dcb95278573d5b2b2",
+    "phase33FileSha256": "862bdf8ccf4c047bfb2629dfb97419b045a390309254c268a30c01043f86e50f",
+    "phase31PayloadSha256": "de18ba8a33410b61095f318b403635e23ae731bf2deab0a950b96662bcd3f27d",
+    "phase31FileSha256": "5cf27c92d9f51cecfa5ff17fce12c27f865dd767bf7084beac7852c54f71f987"
+  },
+  "canonicalOntology": "rp9-semantic-expansion-producer-premises-general-information",
+  "activeSemanticPolicy": "phase33-strict-role-boundary-readiness",
+  "activeOntology": "rp9-semantic-expansion-producer-premises-general-information",
+  "activation": {
+    "state": "staging-active",
+    "scope": "staging",
+    "currentProductionBaseline": "RP-8",
+    "productionPromoted": false
+  },
+  "artifacts": {
+    "authoritativeSemanticTruth": {
+      "path": "acord-artifacts/authoritative-semantic-truth-rp9.json",
+      "payloadSha256": "9528b281e6e2ff852318271f3c122af339bb9196c25c50671cf68c2088af68e0",
+      "fileSha256": "aa4c6e5e1d4aa8ce78266af20de80697cbd044cb5238ed136f1bc51b62204793"
+    },
+    "categoryBundles": {
+      "path": "acord-artifacts/rp9-category-bundles.json",
+      "payloadSha256": "ccb076df53b5aaba631d915156b07a4e5f1e41f71c559034b01c1a9017df5f0c",
+      "fileSha256": "bf39c7702c801a94de1ed827abed41942e04a5ed9cc5fd730cc23536d9f3118d"
+    },
+    "phase33Policy": {
+      "path": "acord-artifacts/phase33-semantic-truth-rp8.json",
+      "payloadSha256": "ab2e2ae3e8d3a04b700a14c3a43117003d0b38ebfc9f352dcb95278573d5b2b2",
+      "fileSha256": "862bdf8ccf4c047bfb2629dfb97419b045a390309254c268a30c01043f86e50f"
+    }
+  },
+  "roleBoundaryPolicy": {
+    "schemaVersion": "strict-role-boundaries.rp9.v1",
+    "roles": {
+      "NamedInsured": {
+        "legalMeaning": "The person or entity explicitly named as an insured in the policy contract.",
+        "semanticMeaning": "Named-insured identity and role-scoped contact or address data."
+      },
+      "Applicant": {
+        "legalMeaning": "The person or entity applying for insurance, whether or not ultimately named as an insured.",
+        "semanticMeaning": "Application-party identity and role-scoped contact or address data."
+      },
+      "Insured": {
+        "legalMeaning": "A person or entity receiving insured status without implying named-insured or applicant status.",
+        "semanticMeaning": "Insured-party identity and role-scoped contact or address data."
+      },
+      "Producer": {
+        "legalMeaning": "The insurance producer, agent, agency, or broker responsible for the application transaction.",
+        "semanticMeaning": "Producer-scoped identity, address, contact, and signature data."
+      }
+    },
+    "identityKey": [
+      "role",
+      "component"
+    ],
+    "distinctRolesRequired": true,
+    "roleLevelCollapsingProhibited": true,
+    "crossRolePromotionProhibited": true,
+    "componentLevelHarmonizationAllowed": [
+      "identity.name",
+      "address.line1",
+      "address.city",
+      "address.stateOrProvince",
+      "address.postalCode",
+      "contact.phone",
+      "contact.email"
+    ],
+    "roleEquivalenceEvidenceThreshold": "explicit-corpus-evidence-for-each-role",
+    "roleAliases": {
+      "Agent": "Producer",
+      "Agency": "Producer",
+      "Broker": "Producer"
+    }
+  },
+  "roleSafeEquivalences": [
+    {
+      "equivalenceId": "applicant-name-to-named-insured-full-name",
+      "sourceRole": "Applicant",
+      "sourceCode": "Applicant.Name",
+      "component": "identity.name",
+      "representationCode": "NamedInsured_FullName",
+      "representationRole": "NamedInsured",
+      "scope": "representation-only",
+      "runtimePromotion": false,
+      "preservesSourceRole": true,
+      "evidence": "explicit-phase33-role-safe-equivalence"
+    },
+    {
+      "equivalenceId": "agent-role-to-producer-role",
+      "sourceRole": "Agent",
+      "targetRole": "Producer",
+      "scope": "role-alias",
+      "runtimePromotion": false,
+      "preservesSourceLabel": true,
+      "evidence": "repository-domain-language-agent-producer-synonym"
+    },
+    {
+      "equivalenceId": "applicant-signature-named-insured-representation",
+      "sourceRole": "Applicant",
+      "sourceCode": "Applicant.Signature",
+      "component": "signature",
+      "representationCode": "NamedInsured_Signature",
+      "canonicalCode": "Signature.Applicant",
+      "representationRole": "NamedInsured",
+      "scope": "representation-only",
+      "runtimePromotion": false,
+      "preservesSourceRole": true,
+      "evidence": {
+        "semanticPath": "NamedInsured_Signature",
+        "formCount": 59,
+        "instanceCount": 66,
+        "fieldTypeCounts": {
+          "signature": 66
+        }
+      }
+    }
+  ],
+  "ontologyHash": "d257c500a5a19c4587417e9a3e13e74ef140571fc6032601de157d3001e24d9d",
+  "nodeCount": 37,
+  "validation": {
+    "crossFileLineageValid": true,
+    "phase33Compatible": true,
+    "parentRp8IntegrityValid": true,
+    "rp8RemainsActive": true
+  },
+  "integrity": {
+    "algorithm": "sha256",
+    "payloadSha256": "baf398b49faaedf5d4195eeeaaf1e9886ecf58c50d149d258b94b2526c8e26c3"
+  }
+}

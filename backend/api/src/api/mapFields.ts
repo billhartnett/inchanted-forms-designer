@@ -7,7 +7,6 @@ import {
   mapBlocksWithAcord,
   searchAcordDictionary,
 } from "../mapping";
-import { getDefaultOntologyMetadata } from "shared/acord";
 import { coerceExtractedBlock } from "../extraction";
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
@@ -21,6 +20,15 @@ import type {
   MappingPersistencePayload,
   UnifiedDecisionGraph,
 } from "../types";
+import {
+  assertActiveSemanticSelections,
+  collectActiveOntologyNodes,
+  collectActiveSemanticSections,
+  configuredSemanticBaseline,
+  getActiveCategoryBundles,
+  getActiveSemanticRuntime,
+  projectMappingsToActiveSemanticBaseline,
+} from "../services/semanticOntologyRuntime";
 
 type LayoutLmPageImageInput = {
   page: number;
@@ -1879,7 +1887,11 @@ export async function mapFields(
         layoutlmEvaluation: layoutLmByBlock[mapping.blockId],
       };
     });
-    const mappedFields = mappingsWithLayoutLm.filter((mapping) => {
+    const semanticMappings = projectMappingsToActiveSemanticBaseline(mappingsWithLayoutLm);
+    assertActiveSemanticSelections(semanticMappings);
+    const mappedFields = semanticMappings.filter((mapping) => {
+      const chosen = mapping.chosen as any;
+      if (chosen?.rp9?.semanticKind && chosen.rp9.semanticKind !== "fillable") return false;
       const catalogEntry = catalogById.get(mapping.blockId);
       const isFillableCandidate = Boolean(
         catalogEntry && (
@@ -1898,7 +1910,8 @@ export async function mapFields(
       jsonBody: {
         documentId: body.documentId,
         contractVersion: "wave9.hybrid.v1",
-        mappings: mappingsWithLayoutLm,
+        semanticBaseline: configuredSemanticBaseline(),
+        mappings: semanticMappings,
         mappedFields,
         fieldCatalog,
         groupedStructures: body.groupedStructures ?? {
@@ -1909,9 +1922,12 @@ export async function mapFields(
           semanticGroups: [],
         },
         bboxNormalization: body.bboxNormalization,
-        decisionGraph: createMappingDecisionGraph(ontologyCompleteMappings, body.decisionGraph),
+        decisionGraph: createMappingDecisionGraph(semanticMappings, body.decisionGraph),
         layoutlmDiagnostics: layoutLmEvaluation.diagnostics,
-        ontologyAlignment: getDefaultOntologyMetadata(),
+        ontologyAlignment: getActiveSemanticRuntime().metadata,
+        ontologyNodes: collectActiveOntologyNodes(semanticMappings),
+        semanticSections: collectActiveSemanticSections(semanticMappings),
+        categoryBundles: getActiveCategoryBundles(),
       },
     };
   } catch (error: any) {

@@ -340,6 +340,21 @@ type MappingStoreState = {
     routedClusters: Record<string, number>;
   };
   routedClusters: Record<string, number>;
+  semanticBaseline: "RP-8" | "RP-9";
+  ontologyNodes: Array<Record<string, unknown>>;
+  semanticSections: Array<{
+    blockId: string;
+    page: number;
+    canonicalNodeId: string;
+    sections: string[];
+    instanceFamily?: Record<string, unknown> | null;
+    instanceKey?: Record<string, string | number> | null;
+  }>;
+  categoryBundles?: {
+    groups?: Array<{ bundleId: string; nodeIds: string[]; nodeCount: number }>;
+    sections?: Array<{ bundleId: string; nodeIds: string[]; nodeCount: number }>;
+    multiInstanceFamilies?: Record<string, unknown>;
+  } | null;
   ontologyDocument?: AcordDocument;
   ontologyDocumentApplyStats?: Pick<ApplyGatedFieldsResult, "appliedCount" | "skippedCount">;
   ontologyBuilderDiagnostics?: ApplyGatedFieldsResult["builderDiagnostics"];
@@ -360,6 +375,10 @@ type MappingStoreState = {
     ontologyDocumentApplyStats?: Pick<ApplyGatedFieldsResult, "appliedCount" | "skippedCount">;
     ontologyBuilderDiagnostics?: ApplyGatedFieldsResult["builderDiagnostics"];
     documentSemanticProfile?: DocumentSemanticProfile;
+    semanticBaseline?: "RP-8" | "RP-9";
+    ontologyNodes?: Array<Record<string, unknown>>;
+    semanticSections?: MappingStoreState["semanticSections"];
+    categoryBundles?: MappingStoreState["categoryBundles"];
   }) => void;
   initializeMappings: (documentId: string | undefined, mappings: FieldMapping[]) => void;
   linkFieldToMapping: (fieldId: string, extractionBlockId: string) => void;
@@ -476,6 +495,10 @@ export const useMappingStore = create<MappingStoreState>((set, get) => ({
   selectedSubmissionVersion: undefined,
   ontologyGating: undefined,
   routedClusters: {},
+  semanticBaseline: "RP-8",
+  ontologyNodes: [],
+  semanticSections: [],
+  categoryBundles: null,
   ontologyDocument: undefined,
   ontologyDocumentApplyStats: undefined,
   ontologyBuilderDiagnostics: undefined,
@@ -490,6 +513,10 @@ export const useMappingStore = create<MappingStoreState>((set, get) => ({
       ontologyDocumentApplyStats: payload.ontologyDocumentApplyStats,
       ontologyBuilderDiagnostics: payload.ontologyBuilderDiagnostics,
       documentSemanticProfile: payload.documentSemanticProfile,
+      semanticBaseline: payload.semanticBaseline || "RP-8",
+      ontologyNodes: payload.ontologyNodes || [],
+      semanticSections: payload.semanticSections || [],
+      categoryBundles: payload.categoryBundles || null,
     })),
   initializeMappings: (documentId, mappings) =>
     set((state) => {
@@ -1526,6 +1553,10 @@ export const useMappingStore = create<MappingStoreState>((set, get) => ({
       selectedSubmissionVersion: undefined,
       ontologyGating: undefined,
       routedClusters: {},
+      semanticBaseline: "RP-8",
+      ontologyNodes: [],
+      semanticSections: [],
+      categoryBundles: null,
       ontologyDocument: undefined,
       ontologyDocumentApplyStats: undefined,
       ontologyBuilderDiagnostics: undefined,

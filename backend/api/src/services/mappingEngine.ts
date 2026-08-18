@@ -273,29 +273,9 @@ const WAVE8_SELECTION_PAIRING_CONFIDENCE_THRESHOLD = Math.max(
   0.35,
   Math.min(0.9, Number(process.env.WAVE8_SELECTION_PAIRING_CONFIDENCE_THRESHOLD || 0.58)),
 );
-const WAVE8_GATE_MIN_CONFIDENCE = Math.max(
-  0,
-  Math.min(1, Number(process.env.WAVE8_GATE_MIN_CONFIDENCE || 0.3)),
-);
-const WAVE8_GATE_MIN_SEMANTIC_CONSISTENCY = Math.max(
-  0,
-  Math.min(1, Number(process.env.WAVE8_GATE_MIN_SEMANTIC_CONSISTENCY || 0.24)),
-);
-const WAVE8_GATE_MIN_DICTIONARY_CONSISTENCY = Math.max(
-  0,
-  Math.min(1, Number(process.env.WAVE8_GATE_MIN_DICTIONARY_CONSISTENCY || 0.2)),
-);
-const WAVE8_GATE_MIN_CATEGORY_CONSISTENCY = Math.max(
-  0,
-  Math.min(1, Number(process.env.WAVE8_GATE_MIN_CATEGORY_CONSISTENCY || 0.22)),
-);
 const WAVE8_HEADER_TOP_BAND_Y = Math.max(
   0,
   Number(process.env.WAVE8_HEADER_TOP_BAND_Y || 120),
-);
-const WAVE8_HEADER_STRICT_MIN_CONSISTENCY = Math.max(
-  0,
-  Math.min(1, Number(process.env.WAVE8_HEADER_STRICT_MIN_CONSISTENCY || 0.4)),
 );
 const WAVE8_PERMISSIVE_FUSION_THRESHOLD = Math.max(
   0,
@@ -1665,10 +1645,6 @@ function applyContractorsInsuredNameResolver(
       dictionaryScore: 0.38,
       heuristicScore: 0.34,
       supervisionBoost: 0.82,
-      wave8Gating: {
-        passed: true,
-        rejectReasons: [],
-      },
     } as AcordSuggestion;
 
     const nextSuggestions = [
@@ -1816,10 +1792,6 @@ function applyContractorsInsuredNameResolver(
     dictionaryScore: Math.max(0.35, selected.dictionaryScore),
     heuristicScore: 0.34,
     supervisionBoost: Number(Math.max(0.7, selected.supervisionBoost).toFixed(3)),
-    wave8Gating: {
-      passed: true,
-      rejectReasons: [],
-    },
   } as AcordSuggestion;
 
   const nextSuggestions = [
@@ -5343,90 +5315,7 @@ function toSuggestions(
     };
   });
 
-  const withWave8Gating = withConfidenceLevels.map((candidate) => {
-    const semanticConsistency = clamp01(
-      Number(((candidate as any)._wave8SemanticConsistency ?? candidate.semanticSimilarity) || 0),
-    );
-    const dictionaryConsistency = normalizeDictionaryConsistency(
-      Number(((candidate as any)._wave8DictionaryConsistency ?? candidate.dictionaryScore) || 0),
-    );
-    const categoryConsistency = clamp01(
-      Number(((candidate as any)._wave8CategoryConsistency ?? (candidate as any)._categoryEvidence) || 0),
-    );
-    const supervisionBoost = clamp01(
-      Number((candidate as any)._wave8SupervisionBoost || 0),
-    );
-    const headerBlock = Boolean((candidate as any)._wave8HeaderBlock || headerAssessment.headerBlock);
-
-    const rejectReasons: string[] = [];
-    if (Number(candidate.confidenceScore || 0) < WAVE8_GATE_MIN_CONFIDENCE) {
-      rejectReasons.push("below_min_confidence");
-    }
-    if (semanticConsistency < WAVE8_GATE_MIN_SEMANTIC_CONSISTENCY) {
-      rejectReasons.push("below_semantic_consistency");
-    }
-    if (dictionaryConsistency < WAVE8_GATE_MIN_DICTIONARY_CONSISTENCY) {
-      rejectReasons.push("below_dictionary_consistency");
-    }
-    if (categoryConsistency < WAVE8_GATE_MIN_CATEGORY_CONSISTENCY) {
-      rejectReasons.push("below_category_mode_consistency");
-    }
-
-    if (headerBlock) {
-      if (semanticConsistency < WAVE8_HEADER_STRICT_MIN_CONSISTENCY) {
-        rejectReasons.push("header_strict_semantic_consistency");
-      }
-      if (dictionaryConsistency < WAVE8_HEADER_STRICT_MIN_CONSISTENCY) {
-        rejectReasons.push("header_strict_dictionary_consistency");
-      }
-      if (categoryConsistency < WAVE8_HEADER_STRICT_MIN_CONSISTENCY) {
-        rejectReasons.push("header_strict_category_consistency");
-      }
-      if (supervisionBoost <= 0) {
-        rejectReasons.push("header_requires_supervision_boost");
-      }
-    }
-
-    const wave48OverrideExists = Boolean((candidate as any)._wave48OverrideExists);
-    const forceDecision = (candidate as any)._wave48ForceDecision;
-    const explicitPromotion =
-      (WAVE48_GATE_ENABLED && wave48OverrideExists && Boolean(forceDecision)) ||
-      String((candidate as any).rationale || "").includes("wave8_targeted_anchor");
-    const passed = rejectReasons.length === 0 || explicitPromotion;
-
-    return {
-      ...candidate,
-      wave8Gating: {
-        passed,
-        rejectReasons,
-        semanticConsistency,
-        dictionaryConsistency,
-        categoryConsistency,
-        supervisionBoost,
-        headerBlock,
-        thresholds: {
-          minConfidence: WAVE8_GATE_MIN_CONFIDENCE,
-          minSemanticConsistency: WAVE8_GATE_MIN_SEMANTIC_CONSISTENCY,
-          minDictionaryConsistency: WAVE8_GATE_MIN_DICTIONARY_CONSISTENCY,
-          minCategoryModeConsistency: WAVE8_GATE_MIN_CATEGORY_CONSISTENCY,
-        },
-      },
-    };
-  });
-
-  const withConfidenceLevelsFiltered = withWave8Gating.filter(
-    (candidate) => (candidate as any).wave8Gating?.passed,
-  );
-  const gatedCandidates =
-    headerAssessment.headerBlock
-      ? withConfidenceLevelsFiltered
-      : withConfidenceLevelsFiltered.length > 0
-      ? withConfidenceLevelsFiltered
-      : withWave8Gating;
-
-  if (headerAssessment.headerBlock && gatedCandidates.length === 0) {
-    return [];
-  }
+  const gatedCandidates = withConfidenceLevels;
 
   const topSuggestion = gatedCandidates[0];
   if (!topSuggestion) {
@@ -6567,17 +6456,15 @@ export async function mapBlocksToAcord(
           : topConfidenceLevel === "review"
             ? "between_review_and_accepted"
             : "below_review_threshold";
-      const topWave8Gating = (topCandidate as any)?.wave8Gating;
       const wave9Suppression = inferWave9Suppression(block);
       const suppressionReasons = [
         ...wave8HeaderAssessment.reasons,
         ...wave8HeaderAssessment.structureReasons,
-        ...(Array.isArray(topWave8Gating?.rejectReasons) ? topWave8Gating.rejectReasons : []),
         ...wave9Suppression.reasons,
       ];
       let isSuppressed =
         (wave8HeaderAssessment.headerBlock || wave8HeaderAssessment.structureSuppressed) &&
-        (!topCandidate || !Boolean(topWave8Gating?.passed));
+        !topCandidate;
       const fieldCueSuppressionRescue =
         Boolean(topCandidate) &&
         hasFieldCue(block.text) &&

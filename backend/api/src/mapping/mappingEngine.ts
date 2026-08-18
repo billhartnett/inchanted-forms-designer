@@ -8,7 +8,7 @@ import { buildMappingRationale } from "./mappingRationale";
 import type { CalibrationProfile } from "shared/types";
 import { resolveSemanticConflicts } from "shared/quality";
 import type { ConflictResolutionDecision } from "shared/quality";
-import { applyWave8Gating } from "./wave8Gating";
+import { projectMappingsToActiveSemanticBaseline } from "../services/semanticOntologyRuntime";
 
 export async function mapBlocksWithAcord(
   blocks: ExtractedBlock[],
@@ -57,14 +57,14 @@ export async function mapBlocksWithAcord(
 ): Promise<FieldMapping[]> {
   const mappings = await mapBlocksToAcord(blocks, options);
 
-  const gatedMappings = applyWave8Gating(mappings);
+  const projectedMappings = projectMappingsToActiveSemanticBaseline(mappings);
 
   const payload = {
     version: 1 as const,
     documentId: "in-memory-document",
     pages: [],
     fields: [],
-    mappings: gatedMappings.map((mapping) => ({
+    mappings: projectedMappings.map((mapping) => ({
       extractionBlockId: mapping.blockId,
       mapping,
     })),
@@ -113,15 +113,10 @@ export async function mapBlocksWithAcord(
       .map((decision) => [decision.extractionBlockId, decision]),
   );
 
-  return gatedMappings.map((mapping) => {
+  const conflictResolvedMappings = projectedMappings.map((mapping) => {
     const resolution = resolutionByBlock.get(mapping.blockId);
-    const preserveTargetedAnchorPromotion = Boolean(
-      (mapping as any)?.mappingDiagnostics?.wave8TargetedAnchorPromoted,
-    );
     const resolvedChosen =
-      preserveTargetedAnchorPromotion
-        ? mapping.chosen
-        : resolution && mapping.suggestions.length
+      resolution && mapping.suggestions.length
         ? mapping.suggestions.find((item) => item.acordCode === resolution.resolvedAcordCode) ||
           mapping.chosen
         : mapping.chosen;
@@ -157,6 +152,7 @@ export async function mapBlocksWithAcord(
       },
     };
   });
+  return projectMappingsToActiveSemanticBaseline(conflictResolvedMappings);
 }
 
 export function getLastReducerDebugSnapshot(): ReducerDebugSnapshot {

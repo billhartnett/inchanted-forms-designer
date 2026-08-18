@@ -33,6 +33,7 @@ export function DesignerBindingsPanel() {
 
   const required = Boolean(selectedField?.metadata?.required);
   const wave8 = selectedField?.metadata?.wave8;
+  const rp9 = (chosenCandidate as any)?.rp9;
   const hardFailures = chosenCandidate?.underwritingRules?.hardFailures?.length ?? 0;
   const ruleImpact = chosenCandidate?.underwritingRules?.scoreDelta ?? 0;
   const ruleCount = chosenCandidate?.underwritingRules?.evaluations?.length ?? 0;
@@ -150,6 +151,32 @@ export function DesignerBindingsPanel() {
                 {((selectedMapping.confidenceScore ?? 0) * 100).toFixed(1)}%
               </span>
             </div>
+          </div>
+        )}
+
+        {rp9?.canonical && (
+          <div
+            style={{
+              marginBottom: 10,
+              padding: 8,
+              borderRadius: 8,
+              background: "#f0fdf4",
+              border: "1px solid #86efac",
+              fontSize: 11,
+              color: "#166534",
+              display: "grid",
+              gap: 2,
+            }}
+          >
+            <div style={{ fontWeight: 700 }}>RP-9 canonical mapping</div>
+            <div>node: {rp9.canonicalAcordCode || chosenCandidate?.acordCode}</div>
+            <div>kind: {rp9.semanticKind || "fillable"}</div>
+            <div>role: {rp9.semanticRole || "not-role-bearing"}</div>
+            <div>component: {rp9.component || "-"}</div>
+            <div>family: {rp9.instanceFamily?.familyId || "-"}</div>
+            <div>instance: {rp9.instanceKey ? JSON.stringify(rp9.instanceKey) : "-"}</div>
+            <div>sections: {(rp9.sections || []).join(" · ") || "-"}</div>
+            <div>groups: {(rp9.groups || []).join(" · ") || "-"}</div>
           </div>
         )}
 

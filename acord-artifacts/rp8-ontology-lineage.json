@@ -1,0 +1,88 @@
+{
+  "schemaVersion": "production-ontology-lineage.v1",
+  "generatedAt": "2026-08-16T20:07:28.422Z",
+  "restorePoint": "RP-8",
+  "parentRestorePoint": "RP-7",
+  "parentOntology": "phase30-semantic-truth-rewrite",
+  "canonicalOntology": "phase31-semantic-expansion-cross-form-unification",
+  "stabilizationPhase": "phase32-semantic-truth-stabilization",
+  "activeSemanticPolicy": "phase33-strict-role-boundary-readiness",
+  "activeOntology": "phase33-strict-role-boundary-readiness",
+  "artifacts": {
+    "phase31": {
+      "phaseId": "phase31-semantic-expansion-cross-form-unification",
+      "payloadSha256": "de18ba8a33410b61095f318b403635e23ae731bf2deab0a950b96662bcd3f27d",
+      "fileSha256": "5cf27c92d9f51cecfa5ff17fce12c27f865dd767bf7084beac7852c54f71f987"
+    },
+    "phase31SemanticTruth": {
+      "payloadSha256": "ede0c372ee7e5d02bddd60f135cd2035bfa9e72be22ffdc39cd98e0b7069b6b7",
+      "fileSha256": "5bfc0487e362b4c9af93d9e3b25874515fb663f53add685edb6e4a06d36365a1"
+    },
+    "phase32": {
+      "phaseId": "phase32-semantic-truth-stabilization",
+      "payloadSha256": "cdffe8220fa3d48568d9e9feacf0dcc3873e8df9eb6acc11e5afe9af453bb21d",
+      "fileSha256": "a870521fd2f79ac17fcd6a282f07bda6722ea1e7c820a3a65d4d80a362154746"
+    },
+    "phase33": {
+      "phaseId": "phase33-strict-role-boundary-readiness",
+      "payloadSha256": "ab2e2ae3e8d3a04b700a14c3a43117003d0b38ebfc9f352dcb95278573d5b2b2",
+      "fileSha256": "862bdf8ccf4c047bfb2629dfb97419b045a390309254c268a30c01043f86e50f"
+    },
+    "promotionReadiness": {
+      "payloadSha256": "918cd89f8b15bbfa05f0d0772f7a2136e9432280f10c92f094b8bf1fce391f47",
+      "fileSha256": "9124682fe30053b10fa383357e4078273891547ab71b6a82c0f1f53f2971a3c8"
+    }
+  },
+  "roleBoundaryPolicy": {
+    "schemaVersion": "strict-role-boundaries.v1",
+    "roles": {
+      "NamedInsured": {
+        "legalMeaning": "The person or entity explicitly named as an insured in the policy contract.",
+        "semanticMeaning": "Named-insured identity and role-scoped contact or address data."
+      },
+      "Applicant": {
+        "legalMeaning": "The person or entity applying for insurance, whether or not ultimately named as an insured.",
+        "semanticMeaning": "Application-party identity and role-scoped contact or address data."
+      },
+      "Insured": {
+        "legalMeaning": "A person or entity receiving insured status without implying named-insured or applicant status.",
+        "semanticMeaning": "Insured-party identity and role-scoped contact or address data."
+      }
+    },
+    "identityKey": [
+      "role",
+      "component"
+    ],
+    "distinctRolesRequired": true,
+    "roleLevelCollapsingProhibited": true,
+    "crossRolePromotionProhibited": true,
+    "componentLevelHarmonizationAllowed": [
+      "identity.name",
+      "address.line1",
+      "address.city",
+      "address.stateOrProvince",
+      "address.postalCode",
+      "contact.phone",
+      "contact.email"
+    ],
+    "roleEquivalenceEvidenceThreshold": "explicit-corpus-evidence-for-each-role"
+  },
+  "roleSafeRepresentationEquivalences": [
+    {
+      "equivalenceId": "applicant-name-to-named-insured-full-name",
+      "sourceRole": "Applicant",
+      "sourceCode": "Applicant.Name",
+      "component": "identity.name",
+      "representationCode": "NamedInsured_FullName",
+      "representationRole": "NamedInsured",
+      "scope": "representation-only",
+      "runtimePromotion": false,
+      "preservesSourceRole": true,
+      "evidence": "explicit-phase33-role-safe-equivalence"
+    }
+  ],
+  "integrity": {
+    "algorithm": "sha256",
+    "payloadSha256": "36389906b544548fe2ebee608eb9dbe82fff01141df5f5d9826d980f802445e3"
+  }
+}

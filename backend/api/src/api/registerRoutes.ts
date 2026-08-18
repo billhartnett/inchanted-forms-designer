@@ -54,13 +54,14 @@ import { suggestLabels } from "./suggestLabels";
 import { updateGlobalSemanticGraphHandler } from "./updateGlobalSemanticGraph";
 import { updateSemanticMemoryHandler } from "./updateSemanticMemory";
 import { validateAcordOntologyHandler } from "./validateAcordOntology";
+import { configuredSemanticBaseline } from "../services/semanticOntologyRuntime";
 
 type AzureHandler = (
   request: HttpRequest,
   context: InvocationContext,
 ) => Promise<HttpResponseInit> | HttpResponseInit;
 
-const WAVE9_CONTRACT_VERSION = "wave8.v1";
+const WAVE9_CONTRACT_VERSION = configuredSemanticBaseline() === "RP-9" ? "rp9.mapping.v1" : "rp8.mapping.v1";
 
 type JsonRecord = Record<string, unknown>;
 

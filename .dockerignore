@@ -17,5 +17,4 @@ training-data
 corpus-validation-*
 debug
 docs
-frontend
 *.log

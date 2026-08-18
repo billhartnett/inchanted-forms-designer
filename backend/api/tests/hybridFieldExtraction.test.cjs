@@ -771,8 +771,13 @@ test("classifies real-form horizontal, vertical, and multiline blank geometry", 
   const topCode = (entry) => response.jsonBody.mappedFields
     .find((mapping) => mapping.blockId === entry.id)
     .suggestions[0].acordCode;
+  const topProjection = (entry) => response.jsonBody.mappedFields
+    .find((mapping) => mapping.blockId === entry.id)
+    .suggestions[0].rp8;
   assert.equal(topCode(applicant), "NamedInsured_FullName");
-  assert.equal(topCode(mailing), "NamedInsured_MailingAddress_LineOne");
+  assert.equal(topProjection(applicant).semanticIdentity, "Applicant:identity.name");
+  assert.equal(topCode(mailing), "GeneralInfo.MailingAddress.Line1");
+  assert.equal(topProjection(mailing).ontologyScope, "canonical");
   assert.equal(topCode(agent), "Producer_FullName");
 });
 
@@ -1074,6 +1079,12 @@ test("mapping flow ranks generic address and contractor license fields using doc
     .find((mapping) => mapping.blockId === id)
     .suggestions[0].acordCode;
   assert.equal(topCode("producer-city"), "Producer_MailingAddress_CityName");
-  assert.equal(topCode("insured-city"), "NamedInsured_MailingAddress_CityName");
+  assert.equal(topCode("insured-city"), "GeneralInfo.MailingAddress.City");
+  assert.equal(
+    response.jsonBody.mappedFields
+      .find((mapping) => mapping.blockId === "insured-city")
+      .suggestions[0].rp8.ontologyScope,
+    "canonical",
+  );
   assert.equal(topCode("licensed"), "ContractorsUnderwriting_LicenseNumberIdentifier");
 });
