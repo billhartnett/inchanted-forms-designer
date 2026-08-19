@@ -147,3 +147,33 @@ test("facade returns RP-9 sections and category bundles only in staging mode", (
   assert.equal(facade.getActiveCategoryBundles().restorePoint, "RP-9");
   assert.equal(facade.getActiveSemanticRuntime().metadata.mappingContractVersion, "rp9.mapping.v1");
 }));
+
+test("API exposes structural questions in mappings and boolean answers in mappedFields", async () => {
+  const previous = {
+    SEMANTIC_BASELINE: process.env.SEMANTIC_BASELINE,
+    DEPLOYMENT_ENVIRONMENT: process.env.DEPLOYMENT_ENVIRONMENT,
+  };
+  process.env.SEMANTIC_BASELINE = "RP-9";
+  process.env.DEPLOYMENT_ENVIRONMENT = "staging";
+  try {
+    const { mapFields } = require(path.join(apiRoot, "dist", "api", "mapFields.js"));
+    const fieldCatalog = [
+      { id: "question", page: 1, role: "question", semanticRole: "Question", semanticSection: "general-information", semanticCluster: "YesNoQuestion", questionIndex: 0, valueType: "label", text: "1. ANY CATASTROPHE EXPOSURE?", semanticLabel: "1. ANY CATASTROPHE EXPOSURE?", boundingBox: { x: 0, y: 0, width: 100, height: 20 }, source: "di_line", confidence: 0.99 },
+      { id: "answer", page: 1, role: "checkbox", semanticRole: "BooleanAnswer", semanticSection: "general-information", semanticCluster: "YesNoAnswer", questionIndex: 0, yesNoIndex: 0, valueType: "checkbox", text: "YES", semanticLabel: "YES", boundingBox: { x: 110, y: 0, width: 20, height: 20 }, source: "selection_mark", confidence: 0.99 },
+    ];
+    const response = await mapFields({ json: async () => ({
+      documentId: "question-api-visibility",
+      blocks: fieldCatalog.map((entry) => ({ id: entry.id, page: entry.page, type: entry.role === "checkbox" ? "checkbox" : "text", text: entry.text, boundingBox: entry.boundingBox, confidence: entry.confidence })),
+      fieldCatalog,
+      groupedStructures: { labelInputPairs: [], tables: [], questionAnswerPairs: [], checkboxGroups: [], semanticGroups: [] },
+      deterministic: true,
+    }) }, { warn() {}, error() {} });
+    assert.equal(response.status, 200);
+    assert.deepEqual(response.jsonBody.mappings.map((item) => item.chosen?.acordCode), ["Question.Text", "Question.BooleanAnswer"]);
+    assert.deepEqual(response.jsonBody.mappedFields.map((item) => item.chosen?.acordCode), ["Question.BooleanAnswer"]);
+  } finally {
+    for (const [key, value] of Object.entries(previous)) {
+      if (value === undefined) delete process.env[key]; else process.env[key] = value;
+    }
+  }
+});

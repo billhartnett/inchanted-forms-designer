@@ -43,6 +43,7 @@ async function main() {
   const payload = response.jsonBody;
   const pages = Object.keys(expectedSections).map(Number).map((page) => {
     const mappings = payload.mappings.filter((mapping) => mapping.page === page && mapping.semanticCluster);
+    const questionCatalogCount = extraction.fieldCatalog.filter((entry) => entry.page === page && (entry.semanticCluster === "Question" || entry.semanticCluster === "YesNoQuestion")).length;
     const sections = payload.semanticSections.filter((section) => section.page === page).map((section) => section.canonicalNodeId).sort();
     const suggestions = mappings.flatMap((mapping) => mapping.suggestions);
     return {
@@ -53,6 +54,8 @@ async function main() {
       clusters: [...new Set(extraction.groupedStructures.semanticGroups.filter((group) => group.page === page).map((group) => group.label).filter(Boolean))].sort(),
       canonicalNodes: [...new Set(mappings.map((mapping) => mapping.chosen?.acordCode).filter(Boolean))].sort(),
       questionCount: mappings.filter((mapping) => mapping.chosen?.acordCode === "Question.Text").length,
+      questionCatalogCount,
+      allQuestionsMapped: mappings.filter((mapping) => mapping.chosen?.acordCode === "Question.Text").length === questionCatalogCount,
       booleanCount: mappings.filter((mapping) => mapping.chosen?.acordCode === "Question.BooleanAnswer").length,
       premisesIndices: [...new Set(mappings.map((mapping) => mapping.premisesIndex).filter(Number.isInteger))],
       locationIndices: [...new Set(mappings.map((mapping) => mapping.locationIndex).filter(Number.isInteger))],
@@ -104,7 +107,7 @@ async function main() {
   }
   const report = {
     schemaVersion: "rp9-acord125-all-sections-validation.v1",
-    valid: pages.every((page) => page.sectionMatch && page.dictionaryOnlyCount === 0 && page.legacySuggestionCount === 0) && checkboxValidation.valid,
+    valid: pages.every((page) => page.sectionMatch && page.allQuestionsMapped && page.dictionaryOnlyCount === 0 && page.legacySuggestionCount === 0) && checkboxValidation.valid,
     blocks: extraction.blocks.length,
     fields: extraction.fieldCatalog.length,
     semanticGroupCount: extraction.groupedStructures.semanticGroups.length,
