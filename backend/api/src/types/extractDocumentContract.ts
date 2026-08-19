@@ -43,14 +43,34 @@ export type ExtractDocumentFieldCatalogEntry = {
   id: string;
   page: number;
   role: ExtractDocumentFieldCatalogRole;
-  semanticRole?: "Producer";
+  semanticRole?: "Producer" | "Premises" | "GeneralInformation" | "Question" | "BooleanAnswer";
+  semanticSection?: "producer-information" | "premises-information" | "general-information";
   semanticCluster?:
     | "ProducerInformation"
     | "ProducerContact"
     | "ProducerAddress"
     | "ProducerCodes"
-    | "ProducerCustomerId";
+    | "ProducerCustomerId"
+    | "PremisesInformation"
+    | "PremisesAddress"
+    | "PremisesOccupancy"
+    | "PremisesConstruction"
+    | "PremisesProtection"
+    | "PremisesFire"
+    | "PremisesBurglary"
+    | "GeneralInformation"
+    | "GeneralOperations"
+    | "GeneralExposure"
+    | "GeneralHazards"
+    | "GeneralBusinessDetails"
+    | "Question"
+    | "YesNoQuestion"
+    | "YesNoAnswer";
   producerIndex?: number;
+  premisesIndex?: number;
+  locationIndex?: number;
+  questionIndex?: number;
+  yesNoIndex?: number;
   valueType: ExtractDocumentFieldCatalogValueType;
   text: string;
   boundingBox: BoundingBox;

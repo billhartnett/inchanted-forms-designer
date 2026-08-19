@@ -704,6 +704,141 @@ function producerClusterForLabel(label: string) {
   return RP9_PRODUCER_LABELS.find((entry) => entry.pattern.test(label))?.cluster;
 }
 
+function normalizedSemanticLabel(entry: ExtractDocumentFieldCatalogEntry): string {
+  return String(entry.semanticLabel || entry.text || "")
+    .toUpperCase()
+    .replace(/#/g, " NUMBER ")
+    .replace(/[^A-Z0-9?%]+/g, " ")
+    .trim();
+}
+
+function premisesClusterForLabel(label: string): ExtractDocumentFieldCatalogEntry["semanticCluster"] | undefined {
+  if (/^(?:PREMISES INFORMATION|PREMISES NUMBER|LOCATION(?: NUMBER)?|BUILDING(?: NUMBER)?|BLDG DESCRIPTION)$/.test(label)) return "PremisesInformation";
+  if (/^(?:STREET ADDRESS|ADDRESS|CITY|STATE|ZIP CODE|POSTAL CODE)$/.test(label)) return "PremisesAddress";
+  if (/% OCCUPIED|OCCUPANCY|INTENDED USE|DESCRIPTION OF PROPERTY/.test(label)) return "PremisesOccupancy";
+  if (/CONSTRUCTION|BLKT|INFLATION|VALUATION/.test(label)) return "PremisesConstruction";
+  if (/BURGL|THEFT|WATCHMAN|GUARD/.test(label)) return "PremisesBurglary";
+  if (/FIRE|BOILER|SPRINKLER|HYDRANT/.test(label)) return "PremisesFire";
+  if (/PROTECTION|ALARM|CENTRAL STATION|LOCAL GONG/.test(label)) return "PremisesProtection";
+  return undefined;
+}
+
+function isQuestionLabel(entry: ExtractDocumentFieldCatalogEntry): boolean {
+  const label = normalizedSemanticLabel(entry);
+  if (!label || /^(?:YES|NO)$/.test(label)) return false;
+  return entry.role === "question" || /\?$/.test(label) || /^\d+[A-Z]?\.?\s+(?:ANY|ARE|CAN|DID|DO|DOES|HAS|HAVE|IS|WAS|WERE|WILL|WOULD)\b/.test(label) || /EXPLAIN ALL YES RESPONSES/.test(label);
+}
+
+export function buildRp9PremisesGroups(catalog: ExtractDocumentFieldCatalogEntry[]) {
+  const groups: ExtractDocumentGroupedStructures["semanticGroups"] = [];
+  for (const page of new Set(catalog.map((entry) => entry.page))) {
+    const pageEntries = catalog.filter((entry) => entry.page === page).sort((left, right) => left.boundingBox.y - right.boundingBox.y || left.boundingBox.x - right.boundingBox.x);
+    const anchors = pageEntries.filter((entry) => /^(?:PREMISES INFORMATION|PREMISES NUMBER)$/.test(normalizedSemanticLabel(entry)));
+    if (anchors.length === 0) continue;
+    const locationAnchors = pageEntries.filter((entry) => /^PREMISES NUMBER$/.test(normalizedSemanticLabel(entry)));
+    const regions = locationAnchors.length > 0 ? locationAnchors : [anchors[0]];
+    regions.forEach((anchor, locationIndex) => {
+      const nextY = regions[locationIndex + 1]?.boundingBox.y ?? Number.POSITIVE_INFINITY;
+      const members = pageEntries.filter((entry) => {
+        if (entry.semanticRole === "Producer" || entry.boundingBox.y < anchor.boundingBox.y - 80 || entry.boundingBox.y >= nextY) return false;
+        return Boolean(premisesClusterForLabel(normalizedSemanticLabel(entry))) || isQuestionLabel(entry) || /^(?:YES|NO)$/.test(normalizedSemanticLabel(entry));
+      });
+      if (members.length === 0) return;
+      const informationId = `rp9-premises-information-p${page}-${locationIndex}`;
+      for (const member of members) {
+        member.semanticRole = "Premises";
+        member.semanticSection = "premises-information";
+        member.semanticCluster = premisesClusterForLabel(normalizedSemanticLabel(member)) || member.semanticCluster;
+        member.premisesIndex = locationIndex;
+        member.locationIndex = locationIndex;
+        member.semanticGroupIds = [...new Set([...(member.semanticGroupIds || []), informationId])];
+      }
+      groups.push({ id: informationId, page, kind: "semantic", fieldIds: members.map((entry) => entry.id), label: "PremisesInformation" });
+      for (const cluster of ["PremisesAddress", "PremisesOccupancy", "PremisesConstruction", "PremisesProtection", "PremisesFire", "PremisesBurglary"] as const) {
+        const clusterMembers = members.filter((entry) => entry.semanticCluster === cluster);
+        if (clusterMembers.length === 0) continue;
+        const id = `rp9-${cluster.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase()}-p${page}-${locationIndex}`;
+        for (const member of clusterMembers) member.semanticGroupIds = [...new Set([...(member.semanticGroupIds || []), id])];
+        groups.push({ id, page, kind: "semantic", fieldIds: clusterMembers.map((entry) => entry.id), label: cluster });
+      }
+    });
+  }
+  return groups;
+}
+
+export function buildRp9QuestionGroups(catalog: ExtractDocumentFieldCatalogEntry[], checkboxGroups: ExtractDocumentGroupedStructures["checkboxGroups"]) {
+  const groups: ExtractDocumentGroupedStructures["semanticGroups"] = [];
+  let yesNoIndex = 0;
+  for (const page of new Set(catalog.map((entry) => entry.page))) {
+    const pageEntries = catalog.filter((entry) => entry.page === page);
+    const questionEntries = pageEntries.filter(isQuestionLabel).sort((left, right) => left.boundingBox.y - right.boundingBox.y || left.boundingBox.x - right.boundingBox.x);
+    const questionLabels = [...new Map(questionEntries.map((entry) => [normalizedSemanticLabel(entry), entry])).values()];
+    questionLabels.forEach((question, questionIndex) => {
+      const normalized = normalizedSemanticLabel(question);
+      const members = pageEntries.filter((entry) => normalizedSemanticLabel(entry) === normalized || entry.pairedQuestionId === question.id);
+      const section = members.find((entry) => entry.semanticSection)?.semanticSection;
+      const id = `rp9-question-p${page}-${questionIndex}`;
+      for (const member of members) {
+        member.semanticRole = "Question";
+        if (section) member.semanticSection = section;
+        member.semanticCluster = "Question";
+        member.questionIndex = questionIndex;
+        member.semanticGroupIds = [...new Set([...(member.semanticGroupIds || []), id])];
+      }
+      groups.push({ id, page, kind: "semantic", fieldIds: members.map((entry) => entry.id), label: "Question" });
+    });
+    for (const checkboxGroup of checkboxGroups.filter((group) => group.page === page)) {
+      const labels = checkboxGroup.labels.map((label) => String(label || "").toUpperCase().trim());
+      const members = pageEntries.filter((entry) => checkboxGroup.checkboxFieldIds.includes(entry.id));
+      const nearestQuestion = questionLabels
+        .map((entry, questionIndex) => ({ entry, questionIndex, distance: Math.abs(entry.boundingBox.y - (members[0]?.boundingBox.y || 0)) }))
+        .sort((left, right) => left.distance - right.distance)[0];
+      const literalYesNo = labels.some((label) => label === "YES") && labels.some((label) => label === "NO");
+      const repeatedQuestion = checkboxGroup.checkboxFieldIds.length === 2 && labels.some((label) => /\?|^\d+[A-Z]?\.?\s/.test(label));
+      const nearbyBinaryQuestion = checkboxGroup.checkboxFieldIds.length === 2 && Boolean(nearestQuestion && nearestQuestion.distance <= 40);
+      if (!literalYesNo && !repeatedQuestion && !nearbyBinaryQuestion) continue;
+      const section = nearestQuestion?.entry.semanticSection || members.find((entry) => entry.semanticSection)?.semanticSection;
+      const id = `rp9-yes-no-p${page}-${yesNoIndex}`;
+      for (const member of members) {
+        member.semanticRole = "BooleanAnswer";
+        if (section) member.semanticSection = section;
+        member.semanticCluster = "YesNoAnswer";
+        member.questionIndex = nearestQuestion?.questionIndex ?? yesNoIndex;
+        member.yesNoIndex = yesNoIndex;
+        member.semanticGroupIds = [...new Set([...(member.semanticGroupIds || []), id])];
+      }
+      if (nearestQuestion) nearestQuestion.entry.semanticCluster = "YesNoQuestion";
+      groups.push({ id, page, kind: "yes-no", fieldIds: members.map((entry) => entry.id), label: "YesNo" });
+      yesNoIndex += 1;
+    }
+  }
+  return groups;
+}
+
+export function buildRp9GeneralInformationGroups(catalog: ExtractDocumentFieldCatalogEntry[]) {
+  const groups: ExtractDocumentGroupedStructures["semanticGroups"] = [];
+  for (const page of new Set(catalog.map((entry) => entry.page))) {
+    const pageEntries = catalog.filter((entry) => entry.page === page && entry.semanticRole !== "Producer" && entry.semanticSection !== "premises-information");
+    const questions = pageEntries.filter((entry) => entry.semanticRole === "Question" || entry.semanticRole === "BooleanAnswer");
+    const semantic = pageEntries.filter((entry) => /OPERATIONS|NATURE OF BUSINESS|EXPOSURE|HAZARD|BUSINESS DESCRIPTION|BUSINESS DETAILS/.test(normalizedSemanticLabel(entry)));
+    const questionFamilyCount = new Set(questions.map((entry) => entry.questionIndex).filter(Number.isInteger)).size;
+    if (semantic.length === 0 && questionFamilyCount < 3) continue;
+    const members = [...new Map([...questions, ...semantic].map((entry) => [entry.id, entry])).values()];
+    if (members.length === 0) continue;
+    for (const member of members) {
+      member.semanticSection = "general-information";
+      if (!member.semanticCluster) {
+        const label = normalizedSemanticLabel(member);
+        member.semanticCluster = /OPERATIONS/.test(label) ? "GeneralOperations" : /EXPOSURE/.test(label) ? "GeneralExposure" : /HAZARD/.test(label) ? "GeneralHazards" : "GeneralBusinessDetails";
+      }
+    }
+    const id = `rp9-general-information-p${page}-0`;
+    for (const member of members) member.semanticGroupIds = [...new Set([...(member.semanticGroupIds || []), id])];
+    groups.push({ id, page, kind: "semantic", fieldIds: members.map((entry) => entry.id), label: "GeneralInformation" });
+  }
+  return groups;
+}
+
 export function buildRp9ProducerGroups(catalog: ExtractDocumentFieldCatalogEntry[]) {
   const groups: ExtractDocumentGroupedStructures["semanticGroups"] = [];
   for (const page of new Set(catalog.map((entry) => entry.page))) {
@@ -1368,13 +1503,20 @@ export async function buildHybridFieldExtraction(args: {
     retainedIds.has(pair.questionFieldId) && retainedIds.has(pair.answerFieldId)
   );
   const checkboxGroups = buildCheckboxGroups(retainedCatalog);
+  const rp9Staging = String(process.env.SEMANTIC_BASELINE || "").toUpperCase() === "RP-9" && String(process.env.DEPLOYMENT_ENVIRONMENT || "").toLowerCase() === "staging";
   const rp9ProducerGroups = buildRp9ProducerGroups(retainedCatalog);
+  const rp9PremisesGroups = buildRp9PremisesGroups(retainedCatalog);
+  const rp9QuestionGroups = buildRp9QuestionGroups(retainedCatalog, checkboxGroups);
+  const rp9GeneralGroups = buildRp9GeneralInformationGroups(retainedCatalog);
   const addressGroups = buildAddressGroups(retainedCatalog);
   const structuralGroups = buildStructuralSemanticGroups(retainedCatalog);
   const semanticGroups: ExtractDocumentGroupedStructures["semanticGroups"] = [
     ...rp9ProducerGroups,
-    ...addressGroups,
-    ...structuralGroups,
+    ...rp9PremisesGroups,
+    ...rp9QuestionGroups,
+    ...rp9GeneralGroups,
+    ...(rp9Staging ? [] : addressGroups),
+    ...structuralGroups.filter((group) => !rp9Staging || group.label !== "Business identity block"),
     ...tables.flatMap((table) => table.rowGroupIds.map((id) => ({
       id,
       page: table.page,
@@ -1384,6 +1526,7 @@ export async function buildHybridFieldExtraction(args: {
         .map((entry) => entry.id),
     }))),
     ...checkboxGroups
+      .filter((group) => !rp9Staging || !group.checkboxFieldIds.some((id) => retainedCatalog.find((entry) => entry.id === id)?.semanticCluster === "YesNoAnswer"))
       .filter((group) => group.checkboxFieldIds.length > 1)
       .map((group) => ({
         id: group.id,

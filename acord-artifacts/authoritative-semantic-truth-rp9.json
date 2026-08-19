@@ -36,7 +36,7 @@
     "ontologyId": "acord-canonical-ontology",
     "version": "2026.08.18-rp9",
     "generatedAt": "deterministic",
-    "hash": "7856ce61f99dfe42b7637db14af5f792ce7b8b06a4625673858961293ab918fa",
+    "hash": "5818d03a12daf856fddcaba6dbfec7b764a0c1a417ffd00ca79a85aea58d0a70",
     "nodes": {
       "CommercialProperty.Building.LocationAddress": {
         "acordCode": "CommercialProperty.Building.LocationAddress",
@@ -559,12 +559,240 @@
           "cardinality": "many",
           "level": "question-answer",
           "instanceKey": [
-            "sectionOccurrence",
+            "pageIndex",
             "questionIndex"
           ],
           "parentFamilyId": null,
           "stableIdentity": [
-            "sectionOccurrence",
+            "pageIndex",
+            "questionIndex",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "evidenceType": "structural-section-model",
+          "section": {
+            "evidenceType": "structural-section-heading",
+            "formCount": 16,
+            "occurrenceCount": 31,
+            "fillable": false
+          },
+          "corpus": {
+            "formCount": 63,
+            "fieldCount": 21140,
+            "groupCount": 1094,
+            "labelCount": 10679
+          }
+        },
+        "inheritedFrom": null
+      },
+      "GeneralInformation.BusinessDetails": {
+        "acordCode": "GeneralInformation.BusinessDetails",
+        "aliases": [
+          "GeneralInformation.BusinessDetails",
+          "BUSINESS DETAILS",
+          "NATURE OF BUSINESS"
+        ],
+        "synonyms": [
+          "business",
+          "details",
+          "general"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "general-information"
+        ],
+        "groups": [
+          "business"
+        ],
+        "semanticKind": "fillable",
+        "component": "general.businessDetails",
+        "role": null,
+        "instanceFamily": {
+          "familyId": "general-information.question-answer",
+          "cardinality": "many",
+          "level": "question-answer",
+          "instanceKey": [
+            "pageIndex",
+            "questionIndex"
+          ],
+          "parentFamilyId": null,
+          "stableIdentity": [
+            "pageIndex",
+            "questionIndex",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "evidenceType": "structural-section-model",
+          "section": {
+            "evidenceType": "structural-section-heading",
+            "formCount": 16,
+            "occurrenceCount": 31,
+            "fillable": false
+          },
+          "corpus": {
+            "formCount": 63,
+            "fieldCount": 21140,
+            "groupCount": 1094,
+            "labelCount": 10679
+          }
+        },
+        "inheritedFrom": null
+      },
+      "GeneralInformation.Exposure.Description": {
+        "acordCode": "GeneralInformation.Exposure.Description",
+        "aliases": [
+          "GeneralInformation.Exposure.Description",
+          "EXPOSURE"
+        ],
+        "synonyms": [
+          "exposure",
+          "general",
+          "risk"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "general-information"
+        ],
+        "groups": [
+          "exposure",
+          "risk"
+        ],
+        "semanticKind": "fillable",
+        "component": "general.exposure",
+        "role": null,
+        "instanceFamily": {
+          "familyId": "general-information.question-answer",
+          "cardinality": "many",
+          "level": "question-answer",
+          "instanceKey": [
+            "pageIndex",
+            "questionIndex"
+          ],
+          "parentFamilyId": null,
+          "stableIdentity": [
+            "pageIndex",
+            "questionIndex",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "evidenceType": "structural-section-model",
+          "section": {
+            "evidenceType": "structural-section-heading",
+            "formCount": 16,
+            "occurrenceCount": 31,
+            "fillable": false
+          },
+          "corpus": {
+            "formCount": 63,
+            "fieldCount": 21140,
+            "groupCount": 1094,
+            "labelCount": 10679
+          }
+        },
+        "inheritedFrom": null
+      },
+      "GeneralInformation.Hazard.Description": {
+        "acordCode": "GeneralInformation.Hazard.Description",
+        "aliases": [
+          "GeneralInformation.Hazard.Description",
+          "HAZARD",
+          "HAZARDOUS MATERIAL"
+        ],
+        "synonyms": [
+          "hazard",
+          "hazardous",
+          "risk"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "general-information"
+        ],
+        "groups": [
+          "hazard",
+          "risk"
+        ],
+        "semanticKind": "fillable",
+        "component": "general.hazard",
+        "role": null,
+        "instanceFamily": {
+          "familyId": "general-information.question-answer",
+          "cardinality": "many",
+          "level": "question-answer",
+          "instanceKey": [
+            "pageIndex",
+            "questionIndex"
+          ],
+          "parentFamilyId": null,
+          "stableIdentity": [
+            "pageIndex",
+            "questionIndex",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "evidenceType": "structural-section-model",
+          "section": {
+            "evidenceType": "structural-section-heading",
+            "formCount": 16,
+            "occurrenceCount": 31,
+            "fillable": false
+          },
+          "corpus": {
+            "formCount": 63,
+            "fieldCount": 21140,
+            "groupCount": 1094,
+            "labelCount": 10679
+          }
+        },
+        "inheritedFrom": null
+      },
+      "GeneralInformation.Operations.Description": {
+        "acordCode": "GeneralInformation.Operations.Description",
+        "aliases": [
+          "GeneralInformation.Operations.Description",
+          "NATURE OF BUSINESS - DESCRIPTION OF OPERATIONS BY PREMISE(S) USE 10 WORDS OR MORE TO DESCRIBE"
+        ],
+        "synonyms": [
+          "business",
+          "description",
+          "operations"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "general-information"
+        ],
+        "groups": [
+          "operations"
+        ],
+        "semanticKind": "fillable",
+        "component": "general.operations",
+        "role": null,
+        "instanceFamily": {
+          "familyId": "general-information.question-answer",
+          "cardinality": "many",
+          "level": "question-answer",
+          "instanceKey": [
+            "pageIndex",
+            "questionIndex"
+          ],
+          "parentFamilyId": null,
+          "stableIdentity": [
+            "pageIndex",
             "questionIndex",
             "canonicalNodeId"
           ]
@@ -617,12 +845,12 @@
           "cardinality": "many",
           "level": "question-answer",
           "instanceKey": [
-            "sectionOccurrence",
+            "pageIndex",
             "questionIndex"
           ],
           "parentFamilyId": null,
           "stableIdentity": [
-            "sectionOccurrence",
+            "pageIndex",
             "questionIndex",
             "canonicalNodeId"
           ]
@@ -721,10 +949,12 @@
           "cardinality": "many",
           "level": "location",
           "instanceKey": [
+            "premisesIndex",
             "locationIndex"
           ],
           "parentFamilyId": null,
           "stableIdentity": [
+            "premisesIndex",
             "locationIndex",
             "canonicalNodeId"
           ]
@@ -770,10 +1000,12 @@
           "cardinality": "many",
           "level": "location",
           "instanceKey": [
+            "premisesIndex",
             "locationIndex"
           ],
           "parentFamilyId": null,
           "stableIdentity": [
+            "premisesIndex",
             "locationIndex",
             "canonicalNodeId"
           ]
@@ -819,10 +1051,12 @@
           "cardinality": "many",
           "level": "location",
           "instanceKey": [
+            "premisesIndex",
             "locationIndex"
           ],
           "parentFamilyId": null,
           "stableIdentity": [
+            "premisesIndex",
             "locationIndex",
             "canonicalNodeId"
           ]
@@ -868,10 +1102,12 @@
           "cardinality": "many",
           "level": "location",
           "instanceKey": [
+            "premisesIndex",
             "locationIndex"
           ],
           "parentFamilyId": null,
           "stableIdentity": [
+            "premisesIndex",
             "locationIndex",
             "canonicalNodeId"
           ]
@@ -917,10 +1153,12 @@
           "cardinality": "many",
           "level": "location",
           "instanceKey": [
+            "premisesIndex",
             "locationIndex"
           ],
           "parentFamilyId": null,
           "stableIdentity": [
+            "premisesIndex",
             "locationIndex",
             "canonicalNodeId"
           ]
@@ -966,11 +1204,13 @@
           "cardinality": "many",
           "level": "building",
           "instanceKey": [
+            "premisesIndex",
             "locationIndex",
             "buildingIndex"
           ],
           "parentFamilyId": "premises.location",
           "stableIdentity": [
+            "premisesIndex",
             "locationIndex",
             "buildingIndex",
             "canonicalNodeId"
@@ -1018,11 +1258,13 @@
           "cardinality": "many",
           "level": "building",
           "instanceKey": [
+            "premisesIndex",
             "locationIndex",
             "buildingIndex"
           ],
           "parentFamilyId": "premises.location",
           "stableIdentity": [
+            "premisesIndex",
             "locationIndex",
             "buildingIndex",
             "canonicalNodeId"
@@ -1034,6 +1276,68 @@
           "instanceCount": 10,
           "fieldTypeCounts": {
             "text": 10
+          }
+        },
+        "inheritedFrom": null
+      },
+      "Premises.Construction.Type": {
+        "acordCode": "Premises.Construction.Type",
+        "aliases": [
+          "Premises.Construction.Type",
+          "CONSTRUCTION TYPE",
+          "BLKT",
+          "VALUATION"
+        ],
+        "synonyms": [
+          "building",
+          "construction",
+          "premises",
+          "type"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "premises-information"
+        ],
+        "groups": [
+          "construction",
+          "premises"
+        ],
+        "semanticKind": "fillable",
+        "component": "premises.construction.type",
+        "role": null,
+        "instanceFamily": {
+          "familyId": "premises.building",
+          "cardinality": "many",
+          "level": "building",
+          "instanceKey": [
+            "premisesIndex",
+            "locationIndex",
+            "buildingIndex"
+          ],
+          "parentFamilyId": "premises.location",
+          "stableIdentity": [
+            "premisesIndex",
+            "locationIndex",
+            "buildingIndex",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "evidenceType": "structural-section-model",
+          "section": {
+            "evidenceType": "structural-section-heading",
+            "formCount": 1,
+            "occurrenceCount": 6,
+            "fillable": false
+          },
+          "corpus": {
+            "formCount": 63,
+            "fieldCount": 21140,
+            "groupCount": 1094,
+            "labelCount": 10679
           }
         },
         "inheritedFrom": null
@@ -1071,10 +1375,12 @@
           "cardinality": "many",
           "level": "location",
           "instanceKey": [
+            "premisesIndex",
             "locationIndex"
           ],
           "parentFamilyId": null,
           "stableIdentity": [
+            "premisesIndex",
             "locationIndex",
             "canonicalNodeId"
           ]
@@ -1120,10 +1426,12 @@
           "cardinality": "many",
           "level": "location",
           "instanceKey": [
+            "premisesIndex",
             "locationIndex"
           ],
           "parentFamilyId": null,
           "stableIdentity": [
+            "premisesIndex",
             "locationIndex",
             "canonicalNodeId"
           ]
@@ -1134,6 +1442,315 @@
           "instanceCount": 21,
           "fieldTypeCounts": {
             "text": 21
+          }
+        },
+        "inheritedFrom": null
+      },
+      "Premises.Occupancy.Description": {
+        "acordCode": "Premises.Occupancy.Description",
+        "aliases": [
+          "Premises.Occupancy.Description",
+          "% OCCUPIED",
+          "OCCUPANCY",
+          "INTENDED USE"
+        ],
+        "synonyms": [
+          "occupancy",
+          "occupied",
+          "premises",
+          "use"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "premises-information"
+        ],
+        "groups": [
+          "occupancy",
+          "premises"
+        ],
+        "semanticKind": "fillable",
+        "component": "premises.occupancy",
+        "role": null,
+        "instanceFamily": {
+          "familyId": "premises.location",
+          "cardinality": "many",
+          "level": "location",
+          "instanceKey": [
+            "premisesIndex",
+            "locationIndex"
+          ],
+          "parentFamilyId": null,
+          "stableIdentity": [
+            "premisesIndex",
+            "locationIndex",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "evidenceType": "structural-section-model",
+          "section": {
+            "evidenceType": "structural-section-heading",
+            "formCount": 1,
+            "occurrenceCount": 6,
+            "fillable": false
+          },
+          "corpus": {
+            "formCount": 63,
+            "fieldCount": 21140,
+            "groupCount": 1094,
+            "labelCount": 10679
+          }
+        },
+        "inheritedFrom": null
+      },
+      "Premises.Protection.Burglary": {
+        "acordCode": "Premises.Protection.Burglary",
+        "aliases": [
+          "Premises.Protection.Burglary",
+          "BURGLARY",
+          "THEFT",
+          "WATCHMAN"
+        ],
+        "synonyms": [
+          "burglary",
+          "premises",
+          "security",
+          "theft"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "premises-information"
+        ],
+        "groups": [
+          "burglary",
+          "premises",
+          "protection"
+        ],
+        "semanticKind": "fillable",
+        "component": "premises.protection.burglary",
+        "role": null,
+        "instanceFamily": {
+          "familyId": "premises.building",
+          "cardinality": "many",
+          "level": "building",
+          "instanceKey": [
+            "premisesIndex",
+            "locationIndex",
+            "buildingIndex"
+          ],
+          "parentFamilyId": "premises.location",
+          "stableIdentity": [
+            "premisesIndex",
+            "locationIndex",
+            "buildingIndex",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "evidenceType": "structural-section-model",
+          "section": {
+            "evidenceType": "structural-section-heading",
+            "formCount": 1,
+            "occurrenceCount": 6,
+            "fillable": false
+          },
+          "corpus": {
+            "formCount": 63,
+            "fieldCount": 21140,
+            "groupCount": 1094,
+            "labelCount": 10679
+          }
+        },
+        "inheritedFrom": null
+      },
+      "Premises.Protection.Description": {
+        "acordCode": "Premises.Protection.Description",
+        "aliases": [
+          "Premises.Protection.Description",
+          "PROTECTION",
+          "CENTRAL STATION",
+          "LOCAL GONG"
+        ],
+        "synonyms": [
+          "alarm",
+          "premises",
+          "protection",
+          "security"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "premises-information"
+        ],
+        "groups": [
+          "premises",
+          "protection"
+        ],
+        "semanticKind": "fillable",
+        "component": "premises.protection",
+        "role": null,
+        "instanceFamily": {
+          "familyId": "premises.building",
+          "cardinality": "many",
+          "level": "building",
+          "instanceKey": [
+            "premisesIndex",
+            "locationIndex",
+            "buildingIndex"
+          ],
+          "parentFamilyId": "premises.location",
+          "stableIdentity": [
+            "premisesIndex",
+            "locationIndex",
+            "buildingIndex",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "evidenceType": "structural-section-model",
+          "section": {
+            "evidenceType": "structural-section-heading",
+            "formCount": 1,
+            "occurrenceCount": 6,
+            "fillable": false
+          },
+          "corpus": {
+            "formCount": 63,
+            "fieldCount": 21140,
+            "groupCount": 1094,
+            "labelCount": 10679
+          }
+        },
+        "inheritedFrom": null
+      },
+      "Premises.Protection.Fire": {
+        "acordCode": "Premises.Protection.Fire",
+        "aliases": [
+          "Premises.Protection.Fire",
+          "HEATING BOILER ON PREMISES?",
+          "SPRINKLER",
+          "HYDRANT"
+        ],
+        "synonyms": [
+          "boiler",
+          "fire",
+          "premises",
+          "sprinkler"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "premises-information"
+        ],
+        "groups": [
+          "fire",
+          "premises",
+          "protection"
+        ],
+        "semanticKind": "fillable",
+        "component": "premises.protection.fire",
+        "role": null,
+        "instanceFamily": {
+          "familyId": "premises.building",
+          "cardinality": "many",
+          "level": "building",
+          "instanceKey": [
+            "premisesIndex",
+            "locationIndex",
+            "buildingIndex"
+          ],
+          "parentFamilyId": "premises.location",
+          "stableIdentity": [
+            "premisesIndex",
+            "locationIndex",
+            "buildingIndex",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "evidenceType": "structural-section-model",
+          "section": {
+            "evidenceType": "structural-section-heading",
+            "formCount": 1,
+            "occurrenceCount": 6,
+            "fillable": false
+          },
+          "corpus": {
+            "formCount": 63,
+            "fieldCount": 21140,
+            "groupCount": 1094,
+            "labelCount": 10679
+          }
+        },
+        "inheritedFrom": null
+      },
+      "Premises.Protection.FireDistrictCode": {
+        "acordCode": "Premises.Protection.FireDistrictCode",
+        "aliases": [
+          "Premises.Protection.FireDistrictCode",
+          "FIRE DISTRICT/CODE NUMBER"
+        ],
+        "synonyms": [
+          "code",
+          "district",
+          "fire",
+          "premises"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "premises-information"
+        ],
+        "groups": [
+          "fire",
+          "premises",
+          "protection"
+        ],
+        "semanticKind": "fillable",
+        "component": "premises.protection.fireDistrictCode",
+        "role": null,
+        "instanceFamily": {
+          "familyId": "premises.building",
+          "cardinality": "many",
+          "level": "building",
+          "instanceKey": [
+            "premisesIndex",
+            "locationIndex",
+            "buildingIndex"
+          ],
+          "parentFamilyId": "premises.location",
+          "stableIdentity": [
+            "premisesIndex",
+            "locationIndex",
+            "buildingIndex",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "evidenceType": "structural-section-model",
+          "section": {
+            "evidenceType": "structural-section-heading",
+            "formCount": 1,
+            "occurrenceCount": 6,
+            "fillable": false
+          },
+          "corpus": {
+            "formCount": 63,
+            "fieldCount": 21140,
+            "groupCount": 1094,
+            "labelCount": 10679
           }
         },
         "inheritedFrom": null
@@ -1629,6 +2246,128 @@
         },
         "inheritedFrom": null
       },
+      "Question.BooleanAnswer": {
+        "acordCode": "Question.BooleanAnswer",
+        "aliases": [
+          "Question.BooleanAnswer",
+          "ACORD BOOLEAN ANSWER"
+        ],
+        "synonyms": [
+          "answer",
+          "boolean",
+          "no",
+          "yes"
+        ],
+        "parentCodes": [
+          "Question.Text"
+        ],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "general-information",
+          "premises-information"
+        ],
+        "groups": [
+          "question-answer",
+          "yes-no"
+        ],
+        "semanticKind": "fillable",
+        "component": "booleanAnswer",
+        "role": null,
+        "instanceFamily": {
+          "familyId": "question.boolean-answer",
+          "cardinality": "many",
+          "level": "answer",
+          "instanceKey": [
+            "pageIndex",
+            "questionIndex",
+            "yesNoIndex"
+          ],
+          "parentFamilyId": "question.instance",
+          "stableIdentity": [
+            "pageIndex",
+            "questionIndex",
+            "yesNoIndex",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "evidenceType": "structural-section-model",
+          "section": {
+            "evidenceType": "structural-section-heading",
+            "formCount": 16,
+            "occurrenceCount": 31,
+            "fillable": false
+          },
+          "corpus": {
+            "formCount": 63,
+            "fieldCount": 21140,
+            "groupCount": 1094,
+            "labelCount": 10679
+          }
+        },
+        "inheritedFrom": null
+      },
+      "Question.Text": {
+        "acordCode": "Question.Text",
+        "aliases": [
+          "Question.Text",
+          "ACORD QUESTION"
+        ],
+        "synonyms": [
+          "application",
+          "question",
+          "underwriting"
+        ],
+        "parentCodes": [],
+        "childCodes": [
+          "Question.BooleanAnswer"
+        ],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "general-information",
+          "premises-information"
+        ],
+        "groups": [
+          "question-answer"
+        ],
+        "semanticKind": "structural-question",
+        "component": "question",
+        "role": null,
+        "instanceFamily": {
+          "familyId": "question.instance",
+          "cardinality": "many",
+          "level": "question",
+          "instanceKey": [
+            "pageIndex",
+            "questionIndex"
+          ],
+          "parentFamilyId": null,
+          "stableIdentity": [
+            "pageIndex",
+            "questionIndex",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "evidenceType": "structural-section-model",
+          "section": {
+            "evidenceType": "structural-section-heading",
+            "formCount": 16,
+            "occurrenceCount": 31,
+            "fillable": false
+          },
+          "corpus": {
+            "formCount": 63,
+            "fieldCount": 21140,
+            "groupCount": 1094,
+            "labelCount": 10679
+          }
+        },
+        "inheritedFrom": null
+      },
       "Section.ApplicantInformation": {
         "acordCode": "Section.ApplicantInformation",
         "aliases": [
@@ -1680,11 +2419,16 @@
         "acordCode": "Section.GeneralInformation",
         "aliases": [
           "Section.GeneralInformation",
-          "GENERAL INFORMATION"
+          "GENERAL INFORMATION",
+          "EXPLAIN ALL \"YES\" RESPONSES",
+          "NATURE OF BUSINESS",
+          "DESCRIPTION OF OPERATIONS"
         ],
         "synonyms": [
+          "business",
           "general",
           "information",
+          "question",
           "section"
         ],
         "parentCodes": [],
@@ -1727,11 +2471,18 @@
         "acordCode": "Section.PremisesInformation",
         "aliases": [
           "Section.PremisesInformation",
-          "PREMISES INFORMATION"
+          "PREMISES INFORMATION",
+          "PROPERTY SECTION",
+          "PREMISES #",
+          "STREET ADDRESS",
+          "CONSTRUCTION TYPE",
+          "FIRE DISTRICT/CODE NUMBER"
         ],
         "synonyms": [
+          "building",
           "location",
           "premises",
+          "property",
           "section"
         ],
         "parentCodes": [],
@@ -2064,12 +2815,12 @@
       "cardinality": "many",
       "level": "question-answer",
       "instanceKey": [
-        "sectionOccurrence",
+        "pageIndex",
         "questionIndex"
       ],
       "parentFamilyId": null,
       "stableIdentity": [
-        "sectionOccurrence",
+        "pageIndex",
         "questionIndex",
         "canonicalNodeId"
       ]
@@ -2107,11 +2858,13 @@
       "cardinality": "many",
       "level": "building",
       "instanceKey": [
+        "premisesIndex",
         "locationIndex",
         "buildingIndex"
       ],
       "parentFamilyId": "premises.location",
       "stableIdentity": [
+        "premisesIndex",
         "locationIndex",
         "buildingIndex",
         "canonicalNodeId"
@@ -2122,11 +2875,45 @@
       "cardinality": "many",
       "level": "location",
       "instanceKey": [
+        "premisesIndex",
         "locationIndex"
       ],
       "parentFamilyId": null,
       "stableIdentity": [
+        "premisesIndex",
         "locationIndex",
+        "canonicalNodeId"
+      ]
+    },
+    "question.boolean-answer": {
+      "familyId": "question.boolean-answer",
+      "cardinality": "many",
+      "level": "answer",
+      "instanceKey": [
+        "pageIndex",
+        "questionIndex",
+        "yesNoIndex"
+      ],
+      "parentFamilyId": "question.instance",
+      "stableIdentity": [
+        "pageIndex",
+        "questionIndex",
+        "yesNoIndex",
+        "canonicalNodeId"
+      ]
+    },
+    "question.instance": {
+      "familyId": "question.instance",
+      "cardinality": "many",
+      "level": "question",
+      "instanceKey": [
+        "pageIndex",
+        "questionIndex"
+      ],
+      "parentFamilyId": null,
+      "stableIdentity": [
+        "pageIndex",
+        "questionIndex",
         "canonicalNodeId"
       ]
     },
@@ -2223,8 +3010,8 @@
   },
   "semanticTruth": {
     "inheritedNodeCount": 8,
-    "addedNodeCount": 29,
-    "canonicalNodeCount": 37,
+    "addedNodeCount": 41,
+    "canonicalNodeCount": 49,
     "corpus": {
       "formCount": 63,
       "fieldCount": 21140,
@@ -2248,14 +3035,14 @@
     "valid": true,
     "invalidReferences": [],
     "phase33Compatible": true,
-    "nodeCount": 37,
+    "nodeCount": 49,
     "inheritedNodeCount": 8,
-    "addedNodeCount": 29,
+    "addedNodeCount": 41,
     "roleSafeEquivalenceCount": 3,
-    "multiInstanceFamilyCount": 14
+    "multiInstanceFamilyCount": 16
   },
   "integrity": {
     "algorithm": "sha256",
-    "payloadSha256": "4e477eaf1c34f6934331a546e095f9d09c221f7345cbef7b1984a231e55cd31a"
+    "payloadSha256": "0e6243509df77e8cd0bbe7fc044ad8bda732d9ca821cfc411d4ef4cef23adcb3"
   }
 }
