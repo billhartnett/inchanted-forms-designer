@@ -1539,8 +1539,11 @@ export async function buildHybridFieldExtraction(args: {
         label: group.labels.join(" / "),
       })),
   ].filter((group) => group.fieldIds.length > 0);
+  const rp9QuestionAnchorIds = rp9Staging
+    ? new Set(retainedCatalog.filter((entry) => entry.semanticCluster === "Question" || entry.semanticCluster === "YesNoQuestion").map((entry) => entry.id))
+    : new Set<string>();
   const blocks = retainedCatalog
-    .filter((entry) => fillableIds.has(entry.id) || isDeterministicFillableCandidate(entry))
+    .filter((entry) => fillableIds.has(entry.id) || isDeterministicFillableCandidate(entry) || rp9QuestionAnchorIds.has(entry.id))
     .map<ExtractedBlock>((entry) => ({
     id: entry.id,
     page: entry.page,

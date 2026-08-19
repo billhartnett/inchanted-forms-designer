@@ -66,6 +66,7 @@ type HybridCatalogEntry = {
   id: string;
   page: number;
   role: HybridCatalogRole;
+  semanticRole?: string;
   valueType: string;
   text: string;
   boundingBox: BoundingBox;
@@ -1303,8 +1304,9 @@ export default function PdfImportModal({
     });
     const mappedCatalog = mappingPayload.fieldCatalog || mergedExtraction.catalog;
     const catalogById = new Map(mappedCatalog.map((entry) => [entry.id, entry]));
-    const strictMappings = mappingPayload.mappedFields || mappingPayload.mappings || [];
-    const mappings = strictMappings.map((mapping) => {
+    const strictMappings = mappingPayload.mappedFields ?? mappingPayload.mappings ?? [];
+    const semanticMappings = mappingPayload.mappings || strictMappings;
+    const mappings = semanticMappings.map((mapping) => {
       const catalog = catalogById.get(mapping.blockId);
       const semanticValueRegion = (mapping as any).semanticValueRegion || catalog?.semanticValueRegion;
       const labelBoundingBox = (mapping as any).labelBoundingBox || catalog?.labelBoundingBox;
@@ -1329,7 +1331,7 @@ export default function PdfImportModal({
                 : undefined,
             }))
           : undefined,
-        semanticRole: catalog?.role,
+        semanticRole: catalog?.semanticRole || (mapping as any).semanticRole || catalog?.role,
         semanticLabel: catalog?.semanticLabel || catalog?.text || mapping.text,
         fieldType: catalog?.valueType,
         groupId: catalog?.groupId,
@@ -1439,8 +1441,8 @@ export default function PdfImportModal({
 
     const mappingSummary = {
       candidateMappings: mappings.length,
-      keptMappings: safeMappings.length,
-      filteredMappings: mappings.length - safeMappings.length,
+      keptMappings: strictMappings.length,
+      filteredMappings: mappings.length - strictMappings.length,
     };
 
     // Capture funnel metrics for diagnostics

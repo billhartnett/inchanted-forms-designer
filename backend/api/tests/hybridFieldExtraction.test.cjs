@@ -1150,3 +1150,31 @@ test("builds RP-9 Premises, General Information, Question, and YesNo clusters wi
   assert.equal(catalog.find((item) => item.id === "yes").yesNoIndex, 0);
   assert.equal(catalog.find((item) => item.id === "boiler-question").semanticSection, "premises-information");
 });
+
+test("emits every RP-9 General Information question anchor as a mapping block", async () => {
+  const previous = {
+    SEMANTIC_BASELINE: process.env.SEMANTIC_BASELINE,
+    DEPLOYMENT_ENVIRONMENT: process.env.DEPLOYMENT_ENVIRONMENT,
+  };
+  process.env.SEMANTIC_BASELINE = "RP-9";
+  process.env.DEPLOYMENT_ENVIRONMENT = "staging";
+  try {
+    const result = await buildHybridFieldExtraction({ pages: [{
+      pageNumber: 1, width: 8.5, height: 11, unit: "inch",
+      lines: [
+        { content: "1. ANY CATASTROPHE EXPOSURE?", confidence: 0.99, boundingBox: { x: 1, y: 1, width: 3, height: 0.2 } },
+        { content: "2. IS A FORMAL SAFETY PROGRAM IN OPERATION?", confidence: 0.99, boundingBox: { x: 1, y: 2, width: 4, height: 0.2 } },
+        { content: "3. ANY EXPOSURE TO FLAMMABLES, EXPLOSIVES, CHEMICALS?", confidence: 0.99, boundingBox: { x: 1, y: 3, width: 5, height: 0.2 } },
+      ],
+    }] });
+    const questions = result.fieldCatalog.filter((entry) => entry.semanticCluster === "Question" || entry.semanticCluster === "YesNoQuestion");
+    const blockIds = new Set(result.blocks.map((block) => block.id));
+    assert.equal(new Set(questions.map((entry) => entry.semanticLabel)).size, 3);
+    assert.equal(questions.length, 6);
+    assert.equal(questions.every((entry) => blockIds.has(entry.id)), true);
+  } finally {
+    for (const [key, value] of Object.entries(previous)) {
+      if (value === undefined) delete process.env[key]; else process.env[key] = value;
+    }
+  }
+});
