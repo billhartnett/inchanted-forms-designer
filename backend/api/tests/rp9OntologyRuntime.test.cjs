@@ -49,10 +49,10 @@ test("loads staging-active RP-9 truth, lineage, bundles, and families", () => wi
   const runtime = rp9.validateActiveRp9Runtime();
   assert.equal(runtime.metadata.restorePoint, "RP-9");
   assert.equal(runtime.metadata.activationState, "staging-active");
-  assert.equal(runtime.metadata.nodeCount, 37);
+  assert.equal(runtime.metadata.nodeCount, 49);
   assert.equal(runtime.nodes.has("Producer.Identity.FullName"), true);
   assert.equal(runtime.nodes.has("Section.GeneralInformation"), true);
-  assert.equal(runtime.categoryBundles.groups.length, 10);
+  assert.equal(runtime.categoryBundles.groups.length, 20);
 }));
 
 test("projects Producer, date, premises, signature, and section aliases canonically", () => withStagingRp9(() => {
@@ -78,11 +78,11 @@ test("projects Producer, date, premises, signature, and section aliases canonica
 
 test("preserves multi-instance premises and building keys", () => withStagingRp9(() => {
   const projected = rp9.projectMappingsToRp9([
-    mapping("location", "Location_PhysicalAddress_LineOne", [candidate("Location_PhysicalAddress_LineOne")], { locationIndex: 3 }),
-    mapping("building", "building number", [candidate("CommercialStructure_Building_ProducerIdentifier")], { locationIndex: 3, buildingIndex: 2 }),
+    mapping("location", "Location_PhysicalAddress_LineOne", [candidate("Location_PhysicalAddress_LineOne")], { premisesIndex: 1, locationIndex: 3 }),
+    mapping("building", "building number", [candidate("CommercialStructure_Building_ProducerIdentifier")], { premisesIndex: 1, locationIndex: 3, buildingIndex: 2 }),
   ]);
-  assert.deepEqual(projected[0].chosen.rp9.instanceKey, { locationIndex: 3 });
-  assert.deepEqual(projected[1].chosen.rp9.instanceKey, { locationIndex: 3, buildingIndex: 2 });
+  assert.deepEqual(projected[0].chosen.rp9.instanceKey, { premisesIndex: 1, locationIndex: 3 });
+  assert.deepEqual(projected[1].chosen.rp9.instanceKey, { premisesIndex: 1, locationIndex: 3, buildingIndex: 2 });
 }));
 
 test("retains Producer fillable choices while emitting section anchors from RP-9 cues", () => withStagingRp9(() => {
@@ -113,6 +113,29 @@ test("deduplicates Producer section anchors and removes dictionary-only leakage 
   ]);
   assert.equal(projected[0].suggestions.some((item) => item.rp9.ontologyScope === "dictionary-only"), false);
   assert.equal(rp9.collectRp9Sections(projected).length, 1);
+}));
+
+test("projects Premises, General Information, question, and boolean cues with evidence-derived keys", () => withStagingRp9(() => {
+  const projected = rp9.projectMappingsToRp9([
+    mapping("street", "STREET ADDRESS", [candidate("AccountantsLiability_BranchOffice_AddressLineOne")], {
+      page: 5, semanticRole: "Premises", semanticSection: "premises-information", semanticCluster: "PremisesAddress",
+      semanticGroupIds: ["rp9-premises-information-p5-2", "rp9-premises-address-p5-2"], premisesIndex: 2, locationIndex: 2,
+    }),
+    mapping("question", "1. ANY CATASTROPHE EXPOSURE?", [candidate("GeneralLiability_Question")], {
+      page: 1, semanticRole: "Question", semanticSection: "general-information", semanticCluster: "YesNoQuestion",
+      semanticGroupIds: ["rp9-question-p1-4"], questionIndex: 4,
+    }),
+    mapping("answer", "YES", [candidate("AccountantsLiability_QuestionIndicator")], {
+      page: 1, semanticRole: "BooleanAnswer", semanticSection: "general-information", semanticCluster: "YesNoAnswer",
+      semanticGroupIds: ["rp9-yes-no-p1-7"], questionIndex: 4, yesNoIndex: 7,
+    }),
+  ]);
+  assert.deepEqual(projected.map((item) => item.chosen.acordCode), ["Premises.Address.Line1", "Question.Text", "Question.BooleanAnswer"]);
+  assert.deepEqual(projected[0].chosen.rp9.instanceKey, { premisesIndex: 2, locationIndex: 2 });
+  assert.deepEqual(projected[1].chosen.rp9.instanceKey, { pageIndex: 0, questionIndex: 4 });
+  assert.deepEqual(projected[2].chosen.rp9.instanceKey, { pageIndex: 0, questionIndex: 4, yesNoIndex: 7 });
+  assert.equal(projected.flatMap((item) => item.suggestions).some((item) => item.rp9.ontologyScope === "dictionary-only"), false);
+  assert.deepEqual(rp9.collectRp9Sections(projected).map((item) => item.canonicalNodeId).sort(), ["Section.GeneralInformation", "Section.PremisesInformation"]);
 }));
 
 test("facade returns RP-9 sections and category bundles only in staging mode", () => withStagingRp9(() => {

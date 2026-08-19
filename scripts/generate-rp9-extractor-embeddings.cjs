@@ -6,7 +6,24 @@ const root = path.resolve(__dirname, "..");
 const output = path.join(root, "acord-artifacts", "rp9-extractor-embeddings.json");
 const model = String(process.env.EMBEDDING_MODEL || "text-embedding-3-large").trim();
 const deterministic = process.argv.includes("--deterministic");
-const labels = ["AGENT NAME", "ADDRESS", "CITY", "STATE", "ZIP CODE", "PHONE", "FAX", "E-MAIL ADDRESS", "CODE", "SUB CODE", "AGENCY CUSTOMER ID", "AGENCY BILL"];
+const labels = [
+  ["AGENT NAME", "cluster:ProducerInformation"], ["ADDRESS", "cluster:ProducerAddress"], ["CITY", "cluster:ProducerAddress"],
+  ["STATE", "cluster:ProducerAddress"], ["ZIP CODE", "cluster:ProducerAddress"], ["PHONE", "cluster:ProducerContact"],
+  ["FAX", "cluster:ProducerContact"], ["E-MAIL ADDRESS", "cluster:ProducerContact"], ["CODE", "cluster:ProducerCodes"],
+  ["SUB CODE", "cluster:ProducerCodes"], ["AGENCY CUSTOMER ID", "cluster:ProducerCustomerId"], ["AGENCY BILL", "cluster:ProducerInformation"],
+  ["PREMISES INFORMATION", "cluster:PremisesInformation"], ["PREMISES #", "cluster:PremisesInformation"], ["STREET ADDRESS", "cluster:PremisesAddress"],
+  ["% OCCUPIED", "cluster:PremisesOccupancy"], ["INTENDED USE", "cluster:PremisesOccupancy"], ["CONSTRUCTION TYPE", "cluster:PremisesConstruction"],
+  ["FIRE DISTRICT/CODE NUMBER", "cluster:PremisesFire"], ["HEATING BOILER ON PREMISES?", "cluster:PremisesFire"], ["BURGLARY", "cluster:PremisesBurglary"],
+  ["CENTRAL STATION", "cluster:PremisesProtection"], ["NATURE OF BUSINESS - DESCRIPTION OF OPERATIONS", "cluster:GeneralOperations"],
+  ["ANY CATASTROPHE EXPOSURE?", "cluster:GeneralExposure"], ["HAZARDOUS MATERIAL?", "cluster:GeneralHazards"],
+  ["BUSINESS DETAILS", "cluster:GeneralBusinessDetails"], ["ACORD QUESTION", "cluster:Question"], ["YES", "cluster:YesNoAnswer"], ["NO", "cluster:YesNoAnswer"],
+];
+const labelContext = (cluster) => {
+  const normalized = cluster.replace("cluster:", "").replace(/([a-z])([A-Z])/g, "$1 $2").toLowerCase();
+  if (cluster === "cluster:Question") return "acord underwriting application question text";
+  if (cluster === "cluster:YesNoAnswer") return "acord yes no boolean answer checkbox";
+  return normalized;
+};
 const sources = [
   ["cluster:ProducerInformation", "producer information agent name agency"],
   ["cluster:ProducerContact", "producer contact phone fax email address"],
@@ -14,7 +31,24 @@ const sources = [
   ["cluster:ProducerCodes", "producer code sub code"],
   ["cluster:ProducerCustomerId", "producer agency customer identifier"],
   ["section:Section.ProducerInformation", "producer information producer agency agent name agency customer id agency bill"],
-  ...labels.map((label) => [`label:${label}`, `producer ${label.toLowerCase()}`]),
+  ["cluster:PremisesInformation", "premises information property location building"],
+  ["cluster:PremisesAddress", "premises address street city state postal"],
+  ["cluster:PremisesOccupancy", "premises occupancy occupied intended use"],
+  ["cluster:PremisesConstruction", "premises building construction type valuation"],
+  ["cluster:PremisesProtection", "premises protection security alarm central station"],
+  ["cluster:PremisesFire", "premises fire boiler sprinkler hydrant fire district"],
+  ["cluster:PremisesBurglary", "premises burglary theft watchman security"],
+  ["cluster:GeneralInformation", "general information application business questions"],
+  ["cluster:GeneralOperations", "general information business operations description"],
+  ["cluster:GeneralExposure", "general information insurance exposure catastrophe risk"],
+  ["cluster:GeneralHazards", "general information hazard hazardous material risk"],
+  ["cluster:GeneralBusinessDetails", "general information business details nature"],
+  ["cluster:Question", "acord underwriting application question text"],
+  ["cluster:YesNoQuestion", "acord binary yes no question"],
+  ["cluster:YesNoAnswer", "acord boolean answer yes no checkbox"],
+  ["section:Section.PremisesInformation", "premises information property section location building"],
+  ["section:Section.GeneralInformation", "general information underwriting questions operations exposures hazards"],
+  ...labels.map(([label, cluster]) => [`label:${label}`, `${labelContext(cluster)} ${label.toLowerCase()}`]),
 ];
 
 const hash = (value) => crypto.createHash("sha256").update(value).digest("hex");
@@ -33,6 +67,17 @@ function featureVector(text) {
   }
   const magnitude = Math.sqrt(vector.reduce((sum, value) => sum + value * value, 0)) || 1;
   return vector.map((value) => Number((value / magnitude).toFixed(6)));
+}
+function cosine(left, right) {
+  let dot = 0;
+  let leftMagnitude = 0;
+  let rightMagnitude = 0;
+  for (let index = 0; index < left.length; index += 1) {
+    dot += left[index] * right[index];
+    leftMagnitude += left[index] * left[index];
+    rightMagnitude += right[index] * right[index];
+  }
+  return dot / ((Math.sqrt(leftMagnitude) * Math.sqrt(rightMagnitude)) || 1);
 }
 async function liveVectors(inputs) {
   const key = String(process.env.OPENAI_API_KEY || "").trim();
@@ -55,6 +100,15 @@ async function main() {
   const inputs = sources.map(([, text]) => text);
   const vectors = deterministic ? inputs.map(featureVector) : await liveVectors(inputs);
   if (vectors.length !== sources.length || vectors.some((vector) => !vector.length)) throw new Error("Incomplete RP-9 embedding response");
+  const vectorById = new Map(sources.map(([id], index) => [id, vectors[index]]));
+  const clusterIds = sources.map(([id]) => id).filter((id) => id.startsWith("cluster:"));
+  const validationCases = labels.map(([label, expectedCluster]) => {
+    const labelVector = vectorById.get(`label:${label}`);
+    const ranked = clusterIds.map((clusterId) => ({ clusterId, similarity: cosine(labelVector, vectorById.get(clusterId)) })).sort((left, right) => right.similarity - left.similarity);
+    const expectedSimilarity = ranked.find((item) => item.clusterId === expectedCluster)?.similarity ?? -1;
+    return { label, expectedCluster, topCluster: ranked[0].clusterId, expectedSimilarity: Number(expectedSimilarity.toFixed(6)), passed: ranked[0].clusterId === expectedCluster || expectedSimilarity >= ranked[0].similarity - 0.08 };
+  });
+  if (validationCases.some((item) => !item.passed)) throw new Error(`RP-9 embedding similarity validation failed: ${JSON.stringify(validationCases.filter((item) => !item.passed))}`);
   const payload = {
     schemaVersion: "rp9-extractor-embeddings.v1",
     restorePoint: "RP-9",
@@ -63,10 +117,11 @@ async function main() {
     model: deterministic ? "feature-hash-64" : model,
     sourcePayloadSha256: hash(JSON.stringify(sources)),
     dimensions: vectors[0].length,
+    validation: { valid: true, caseCount: validationCases.length, cases: validationCases },
     entries: sources.map(([id, text], index) => ({ id, text, vector: vectors[index] })),
   };
   const artifact = { ...payload, integrity: { algorithm: "sha256", payloadSha256: hash(stable(payload)) } };
   fs.writeFileSync(output, `${JSON.stringify(artifact, null, 2)}\n`, "utf8");
-  console.log(JSON.stringify({ output, provider: payload.provider, model: payload.model, dimensions: payload.dimensions, entryCount: payload.entries.length, payloadSha256: artifact.integrity.payloadSha256 }, null, 2));
+  console.log(JSON.stringify({ output, provider: payload.provider, model: payload.model, dimensions: payload.dimensions, entryCount: payload.entries.length, validationCaseCount: validationCases.length, payloadSha256: artifact.integrity.payloadSha256 }, null, 2));
 }
 main().catch((error) => { console.error(error.stack || error); process.exit(1); });

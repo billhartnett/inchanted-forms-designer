@@ -121,19 +121,34 @@ function producerIndexFromEvidence(mapping?: FieldMapping): number | null {
   }
   return null;
 }
+function indexedEvidence(mapping: FieldMapping | undefined, property: string, pattern: RegExp): number | null {
+  const explicit = Number((mapping as any)?.[property]);
+  if (Number.isInteger(explicit) && explicit >= 0) return explicit;
+  for (const groupId of (mapping as any)?.semanticGroupIds || []) {
+    const match = String(groupId).match(pattern);
+    if (match) return Number(match[1]);
+  }
+  return null;
+}
 function instanceKey(node: Rp9Node, mapping?: FieldMapping): Record<string, string | number> {
   const producerIndex = producerIndexFromEvidence(mapping);
+  const premisesIndex = indexedEvidence(mapping, "premisesIndex", /^rp9-premises-information-p\d+-(\d+)$/i);
+  const locationIndex = indexedEvidence(mapping, "locationIndex", /^rp9-premises-(?:information|address|occupancy|construction|protection|fire|burglary)-p\d+-(\d+)$/i);
+  const questionIndex = indexedEvidence(mapping, "questionIndex", /^rp9-question-p\d+-(\d+)$/i);
+  const yesNoIndex = indexedEvidence(mapping, "yesNoIndex", /^rp9-yes-no-p\d+-(\d+)$/i);
   const values: Record<string, string | number> = {
     pageIndex: Math.max(0, Number(mapping?.page || 1) - 1),
     sectionOccurrence: String((mapping as any)?.groupId || "section-0"),
     producerIndex: producerIndex ?? String((mapping as any)?.groupId || mapping?.blockId || "producer-unresolved"),
+    premisesIndex: premisesIndex ?? String((mapping as any)?.groupId || mapping?.blockId || "premises-unresolved"),
     contactIndex: Number((mapping as any)?.contactIndex || 0),
-    locationIndex: Number((mapping as any)?.locationIndex ?? (mapping as any)?.rowIndex ?? 0),
+    locationIndex: locationIndex ?? String((mapping as any)?.groupId || mapping?.blockId || "location-unresolved"),
     buildingIndex: Number((mapping as any)?.buildingIndex ?? (mapping as any)?.columnIndex ?? 0),
     applicantIndex: Number((mapping as any)?.applicantIndex || 0),
     signatureIndex: Number((mapping as any)?.signatureIndex || 0),
     signerRole: node.role || "Unknown",
-    questionIndex: Number((mapping as any)?.rowIndex || 0),
+    questionIndex: questionIndex ?? String((mapping as any)?.groupId || mapping?.blockId || "question-unresolved"),
+    yesNoIndex: yesNoIndex ?? String((mapping as any)?.groupId || mapping?.blockId || "yes-no-unresolved"),
     formInstance: 0,
     fieldOccurrence: String(mapping?.blockId || "field-0"),
   };
@@ -290,6 +305,60 @@ function producerSectionCueCandidate(mapping: FieldMapping): Rp9ProjectedCandida
   };
 }
 
+function syntheticCanonicalCandidate(canonicalId: string, mapping: FieldMapping, rationale: string): Rp9ProjectedCandidate | null {
+  const node = getActiveRp9Runtime().nodes.get(canonicalId);
+  if (!node) return null;
+  return {
+    acordCode: canonicalId,
+    label: node.aliases?.[1] || canonicalId,
+    confidenceScore: 1,
+    normalizedConfidenceScore: 1,
+    source: "heuristic",
+    rationale,
+    rp9: {
+      ontologyScope: "canonical", canonical: true, canonicalAcordCode: canonicalId,
+      semanticRole: node.role, component: node.component,
+      semanticIdentity: `${node.role || "Semantic"}:${node.component || node.semanticKind}`,
+      semanticKind: node.semanticKind, boundaryDisposition: node.role ? "allowed" : "not-role-bearing",
+      equivalenceId: null, instanceFamily: node.instanceFamily, instanceKey: instanceKey(node, mapping),
+      sections: node.sections || [], groups: node.groups || [], rationale,
+    },
+  };
+}
+
+function extractionCueCandidate(mapping: FieldMapping): Rp9ProjectedCandidate | null {
+  const cluster = String((mapping as any)?.semanticCluster || "");
+  const label = normalize(String(mapping.semanticLabel || mapping.text || ""));
+  let canonicalId: string | null = null;
+  if (cluster === "Question" || cluster === "YesNoQuestion") canonicalId = "Question.Text";
+  else if (cluster === "YesNoAnswer") canonicalId = "Question.BooleanAnswer";
+  else if (cluster === "PremisesAddress") canonicalId = "Premises.Address.Line1";
+  else if (cluster === "PremisesOccupancy") canonicalId = "Premises.Occupancy.Description";
+  else if (cluster === "PremisesConstruction") canonicalId = "Premises.Construction.Type";
+  else if (cluster === "PremisesFire") canonicalId = /firedistrict|codenumber/.test(label) ? "Premises.Protection.FireDistrictCode" : "Premises.Protection.Fire";
+  else if (cluster === "PremisesBurglary") canonicalId = "Premises.Protection.Burglary";
+  else if (cluster === "PremisesProtection") canonicalId = "Premises.Protection.Description";
+  else if (cluster === "PremisesInformation") {
+    canonicalId = /premises/.test(label) && /#|number/.test(String(mapping.semanticLabel || mapping.text || ""))
+      ? "Premises.Location.Identifier"
+      : /building/.test(label) && /#|number/.test(String(mapping.semanticLabel || mapping.text || ""))
+        ? "Premises.Building.Identifier"
+        : /description/.test(label) ? "Premises.Building.Description" : null;
+  } else if (cluster === "GeneralOperations") canonicalId = "GeneralInformation.Operations.Description";
+  else if (cluster === "GeneralExposure") canonicalId = "GeneralInformation.Exposure.Description";
+  else if (cluster === "GeneralHazards") canonicalId = "GeneralInformation.Hazard.Description";
+  else if (cluster === "GeneralBusinessDetails") canonicalId = "GeneralInformation.BusinessDetails";
+  return canonicalId ? syntheticCanonicalCandidate(canonicalId, mapping, `RP-9 ${cluster} extractor evidence selected a canonical node.`) : null;
+}
+
+function semanticSectionCueCandidate(mapping: FieldMapping): Rp9ProjectedCandidate | null {
+  const section = String((mapping as any)?.semanticSection || "");
+  const canonicalId = section === "premises-information"
+    ? "Section.PremisesInformation"
+    : section === "general-information" ? "Section.GeneralInformation" : null;
+  return canonicalId ? syntheticCanonicalCandidate(canonicalId, mapping, `RP-9 ${section} field evidence inferred the canonical section anchor.`) : null;
+}
+
 function selectable(candidate: Rp9ProjectedCandidate): boolean {
   return candidate.rp9.canonical && candidate.rp9.boundaryDisposition !== "blocked";
 }
@@ -303,10 +372,13 @@ export function projectMappingsToRp9(mappings: FieldMapping[]): FieldMapping[] {
     if (exact && !candidates.some(({ candidate }) => candidate.acordCode === exact.acordCode)) candidates.unshift({ candidate: exact, index: -1 });
     const sectionCue = producerSectionCueCandidate(mapping);
     if (sectionCue && !candidates.some(({ candidate }) => candidate.acordCode === sectionCue.acordCode)) candidates.push({ candidate: sectionCue, index: Number.MAX_SAFE_INTEGER });
-    const explicitProducerCue = String((mapping as any)?.semanticRole || "") === "Producer" ||
-      String((mapping as any)?.semanticCluster || "").startsWith("Producer");
+    const extractionCue = extractionCueCandidate(mapping);
+    if (extractionCue && !candidates.some(({ candidate }) => candidate.acordCode === extractionCue.acordCode)) candidates.unshift({ candidate: extractionCue, index: -2 });
+    const semanticSectionCue = semanticSectionCueCandidate(mapping);
+    if (semanticSectionCue && !candidates.some(({ candidate }) => candidate.acordCode === semanticSectionCue.acordCode)) candidates.push({ candidate: semanticSectionCue, index: Number.MAX_SAFE_INTEGER });
+    const explicitSemanticCue = Boolean((mapping as any)?.semanticCluster);
     const suggestions = candidates.filter(({ candidate }) =>
-      !explicitProducerCue || candidate.rp9.ontologyScope !== "dictionary-only",
+      !explicitSemanticCue || candidate.rp9.ontologyScope !== "dictionary-only",
     ).sort((left, right) =>
       Number(!left.candidate.rp9.canonical) - Number(!right.candidate.rp9.canonical) ||
       Number(left.candidate.rp9.semanticKind === "section") - Number(right.candidate.rp9.semanticKind === "section") ||
@@ -339,10 +411,10 @@ export function collectRp9Sections(mappings: FieldMapping[]) {
   for (const mapping of mappings) {
     for (const candidate of mapping.suggestions as Rp9ProjectedCandidate[]) {
       if (candidate.rp9?.semanticKind !== "section") continue;
-      const producerIndex = candidate.acordCode === "Section.ProducerInformation"
+      const occurrence = candidate.acordCode === "Section.ProducerInformation"
         ? producerIndexFromEvidence(mapping) ?? "unresolved"
         : "section";
-      const key = `${mapping.page}:${candidate.acordCode}:${producerIndex}`;
+      const key = `${mapping.page}:${candidate.acordCode}:${occurrence}`;
       if (!sections.has(key)) sections.set(key, sectionRecord(mapping, candidate));
     }
   }

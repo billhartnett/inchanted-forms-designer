@@ -60,6 +60,9 @@ const requiredNodes = [
   'Form.Date.Completed', 'Form.Date.Signed', 'Signature.Applicant', 'Signature.Producer',
   'Premises.Location.Identifier', 'Premises.Building.Identifier', 'Premises.Address.Line1', 'Premises.Address.City',
   'GeneralInformation.Question', 'GeneralInformation.Answer',
+  'Question.Text', 'Question.BooleanAnswer',
+  'Premises.Occupancy.Description', 'Premises.Construction.Type', 'Premises.Protection.Fire', 'Premises.Protection.Burglary',
+  'GeneralInformation.Operations.Description', 'GeneralInformation.Exposure.Description', 'GeneralInformation.Hazard.Description', 'GeneralInformation.BusinessDetails',
   'Section.ProducerInformation', 'Section.ApplicantInformation', 'Section.PremisesInformation', 'Section.GeneralInformation',
 ];
 checks.requiredNodesPresent = requiredNodes.every((id) => nodeIds.has(id));
@@ -75,7 +78,7 @@ checks.allNodesBundled = bundles.validation.allNodesBundled === true;
 checks.roleBoundariesPreserved = truth.roleBoundaryPolicy.crossRolePromotionProhibited === true && truth.roleBoundaryPolicy.roleLevelCollapsingProhibited === true;
 checks.agentAliasSafe = truth.roleBoundaryPolicy.roleAliases.Agent === 'Producer' && truth.roleSafeEquivalences.some((item) => item.equivalenceId === 'agent-role-to-producer-role' && item.runtimePromotion === false);
 checks.applicantSignatureSafe = truth.roleSafeEquivalences.some((item) => item.equivalenceId === 'applicant-signature-named-insured-representation' && item.preservesSourceRole === true && item.runtimePromotion === false);
-checks.multiInstanceFamilies = Object.keys(truth.multiInstanceFamilies).length === truth.validation.multiInstanceFamilyCount && ['party.producer', 'premises.location', 'premises.building', 'general-information.question-answer'].every((id) => truth.multiInstanceFamilies[id]);
+checks.multiInstanceFamilies = Object.keys(truth.multiInstanceFamilies).length === truth.validation.multiInstanceFamilyCount && ['party.producer', 'premises.location', 'premises.building', 'general-information.question-answer', 'question.instance', 'question.boolean-answer'].every((id) => truth.multiInstanceFamilies[id]);
 
 const failedChecks = Object.entries(checks).filter(([, passed]) => !passed).map(([name]) => name);
 const report = {

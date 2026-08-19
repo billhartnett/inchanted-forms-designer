@@ -3,7 +3,10 @@ const test = require("node:test");
 
 const {
   buildHybridFieldExtraction,
+  buildRp9GeneralInformationGroups,
+  buildRp9PremisesGroups,
   buildRp9ProducerGroups,
+  buildRp9QuestionGroups,
   toPixelBox,
 } = require("../dist/extraction/hybridFieldExtraction.js");
 const { boundsFromPolygon } = require("../dist/extraction/bboxNormalization.js");
@@ -1118,4 +1121,32 @@ test("mapping flow ranks generic address and contractor license fields using doc
     "canonical",
   );
   assert.equal(topCode("licensed"), "ContractorsUnderwriting_LicenseNumberIdentifier");
+});
+
+test("builds RP-9 Premises, General Information, Question, and YesNo clusters with evidence indices", () => {
+  const entry = (id, page, label, y, role = "input") => ({
+    id, page, role, valueType: role === "checkbox" ? "checkbox" : "text", text: label,
+    semanticLabel: label, boundingBox: { x: 20, y, width: 180, height: 16 },
+    semanticValueRegion: { x: 220, y, width: 180, height: 16 }, source: role === "checkbox" ? "selection_mark" : "blank_detector", confidence: 0.99,
+  });
+  const catalog = [
+    entry("premises", 5, "PREMISES #", 20), entry("street", 5, "STREET ADDRESS", 40),
+    entry("construction", 5, "CONSTRUCTION TYPE", 60), entry("fire", 5, "FIRE DISTRICT/CODE NUMBER", 80),
+    entry("boiler-question", 5, "HEATING BOILER ON PREMISES?", 100, "question"),
+    entry("yes", 5, "YES", 120, "checkbox"), entry("no", 5, "NO", 120, "checkbox"),
+    entry("general-question", 1, "1. ANY CATASTROPHE EXPOSURE?", 200, "question"),
+    entry("operations", 1, "NATURE OF BUSINESS - DESCRIPTION OF OPERATIONS", 240),
+  ];
+  const checkboxGroups = [{ id: "yn", page: 5, checkboxFieldIds: ["yes", "no"], labels: ["YES", "NO"] }];
+  const premises = buildRp9PremisesGroups(catalog);
+  const questions = buildRp9QuestionGroups(catalog, checkboxGroups);
+  const general = buildRp9GeneralInformationGroups(catalog);
+  assert.deepEqual([...new Set(premises.map((group) => group.label))].sort(), ["PremisesAddress", "PremisesConstruction", "PremisesFire", "PremisesInformation"].sort());
+  assert.equal(questions.some((group) => group.label === "Question"), true);
+  assert.equal(questions.some((group) => group.label === "YesNo"), true);
+  assert.equal(general.some((group) => group.label === "GeneralInformation"), true);
+  assert.deepEqual({ premisesIndex: catalog[1].premisesIndex, locationIndex: catalog[1].locationIndex }, { premisesIndex: 0, locationIndex: 0 });
+  assert.equal(catalog.find((item) => item.id === "general-question").questionIndex, 0);
+  assert.equal(catalog.find((item) => item.id === "yes").yesNoIndex, 0);
+  assert.equal(catalog.find((item) => item.id === "boiler-question").semanticSection, "premises-information");
 });

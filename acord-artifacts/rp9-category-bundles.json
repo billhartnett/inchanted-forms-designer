@@ -3,8 +3,8 @@
   "generatedAt": "2026-08-18T00:00:00.000Z",
   "restorePoint": "RP-9",
   "status": "staging-active",
-  "semanticTruthPayloadSha256": "4e477eaf1c34f6934331a546e095f9d09c221f7345cbef7b1984a231e55cd31a",
-  "ontologyHash": "7856ce61f99dfe42b7637db14af5f792ce7b8b06a4625673858961293ab918fa",
+  "semanticTruthPayloadSha256": "0e6243509df77e8cd0bbe7fc044ad8bda732d9ca821cfc411d4ef4cef23adcb3",
+  "ontologyHash": "5818d03a12daf856fddcaba6dbfec7b764a0c1a417ffd00ca79a85aea58d0a70",
   "groups": [
     {
       "bundleId": "address",
@@ -28,6 +28,20 @@
       "nodeCount": 15
     },
     {
+      "bundleId": "burglary",
+      "nodeIds": [
+        "Premises.Protection.Burglary"
+      ],
+      "nodeCount": 1
+    },
+    {
+      "bundleId": "business",
+      "nodeIds": [
+        "GeneralInformation.BusinessDetails"
+      ],
+      "nodeCount": 1
+    },
+    {
       "bundleId": "classification",
       "nodeIds": [
         "Contractors.Operations.Description",
@@ -43,6 +57,13 @@
         "Producer.Address.StateOrProvince"
       ],
       "nodeCount": 11
+    },
+    {
+      "bundleId": "construction",
+      "nodeIds": [
+        "Premises.Construction.Type"
+      ],
+      "nodeCount": 1
     },
     {
       "bundleId": "contact",
@@ -63,6 +84,28 @@
       "nodeCount": 2
     },
     {
+      "bundleId": "exposure",
+      "nodeIds": [
+        "GeneralInformation.Exposure.Description"
+      ],
+      "nodeCount": 1
+    },
+    {
+      "bundleId": "fire",
+      "nodeIds": [
+        "Premises.Protection.Fire",
+        "Premises.Protection.FireDistrictCode"
+      ],
+      "nodeCount": 2
+    },
+    {
+      "bundleId": "hazard",
+      "nodeIds": [
+        "GeneralInformation.Hazard.Description"
+      ],
+      "nodeCount": 1
+    },
+    {
       "bundleId": "identity",
       "nodeIds": [
         "GeneralInfo.NamedInsured",
@@ -71,6 +114,20 @@
         "Producer.Identity.FullName"
       ],
       "nodeCount": 4
+    },
+    {
+      "bundleId": "occupancy",
+      "nodeIds": [
+        "Premises.Occupancy.Description"
+      ],
+      "nodeCount": 1
+    },
+    {
+      "bundleId": "operations",
+      "nodeIds": [
+        "GeneralInformation.Operations.Description"
+      ],
+      "nodeCount": 1
     },
     {
       "bundleId": "premises",
@@ -82,25 +139,45 @@
         "Premises.Address.StateOrProvince",
         "Premises.Building.Description",
         "Premises.Building.Identifier",
+        "Premises.Construction.Type",
         "Premises.Location.Identifier",
-        "Premises.Location.Name"
+        "Premises.Location.Name",
+        "Premises.Occupancy.Description",
+        "Premises.Protection.Burglary",
+        "Premises.Protection.Description",
+        "Premises.Protection.Fire",
+        "Premises.Protection.FireDistrictCode"
       ],
-      "nodeCount": 9
+      "nodeCount": 15
+    },
+    {
+      "bundleId": "protection",
+      "nodeIds": [
+        "Premises.Protection.Burglary",
+        "Premises.Protection.Description",
+        "Premises.Protection.Fire",
+        "Premises.Protection.FireDistrictCode"
+      ],
+      "nodeCount": 4
     },
     {
       "bundleId": "question-answer",
       "nodeIds": [
         "GeneralInformation.Answer",
-        "GeneralInformation.Question"
+        "GeneralInformation.Question",
+        "Question.BooleanAnswer",
+        "Question.Text"
       ],
-      "nodeCount": 2
+      "nodeCount": 4
     },
     {
       "bundleId": "risk",
       "nodeIds": [
+        "GeneralInformation.Exposure.Description",
+        "GeneralInformation.Hazard.Description",
         "GeneralLiability.Exposure.HazardClass"
       ],
-      "nodeCount": 1
+      "nodeCount": 3
     },
     {
       "bundleId": "section",
@@ -120,6 +197,13 @@
         "Signature.Producer"
       ],
       "nodeCount": 3
+    },
+    {
+      "bundleId": "yes-no",
+      "nodeIds": [
+        "Question.BooleanAnswer"
+      ],
+      "nodeCount": 1
     }
   ],
   "sections": [
@@ -158,11 +242,17 @@
         "GeneralInfo.MailingAddress.State",
         "GeneralInfo.NamedInsured",
         "GeneralInformation.Answer",
+        "GeneralInformation.BusinessDetails",
+        "GeneralInformation.Exposure.Description",
+        "GeneralInformation.Hazard.Description",
+        "GeneralInformation.Operations.Description",
         "GeneralInformation.Question",
         "GeneralLiability.Exposure.HazardClass",
+        "Question.BooleanAnswer",
+        "Question.Text",
         "Section.GeneralInformation"
       ],
-      "nodeCount": 9
+      "nodeCount": 15
     },
     {
       "bundleId": "liability",
@@ -188,11 +278,19 @@
         "Premises.Address.StateOrProvince",
         "Premises.Building.Description",
         "Premises.Building.Identifier",
+        "Premises.Construction.Type",
         "Premises.Location.Identifier",
         "Premises.Location.Name",
+        "Premises.Occupancy.Description",
+        "Premises.Protection.Burglary",
+        "Premises.Protection.Description",
+        "Premises.Protection.Fire",
+        "Premises.Protection.FireDistrictCode",
+        "Question.BooleanAnswer",
+        "Question.Text",
         "Section.PremisesInformation"
       ],
-      "nodeCount": 10
+      "nodeCount": 18
     },
     {
       "bundleId": "producer-information",
@@ -278,12 +376,12 @@
       "cardinality": "many",
       "level": "question-answer",
       "instanceKey": [
-        "sectionOccurrence",
+        "pageIndex",
         "questionIndex"
       ],
       "parentFamilyId": null,
       "stableIdentity": [
-        "sectionOccurrence",
+        "pageIndex",
         "questionIndex",
         "canonicalNodeId"
       ]
@@ -321,11 +419,13 @@
       "cardinality": "many",
       "level": "building",
       "instanceKey": [
+        "premisesIndex",
         "locationIndex",
         "buildingIndex"
       ],
       "parentFamilyId": "premises.location",
       "stableIdentity": [
+        "premisesIndex",
         "locationIndex",
         "buildingIndex",
         "canonicalNodeId"
@@ -336,11 +436,45 @@
       "cardinality": "many",
       "level": "location",
       "instanceKey": [
+        "premisesIndex",
         "locationIndex"
       ],
       "parentFamilyId": null,
       "stableIdentity": [
+        "premisesIndex",
         "locationIndex",
+        "canonicalNodeId"
+      ]
+    },
+    "question.boolean-answer": {
+      "familyId": "question.boolean-answer",
+      "cardinality": "many",
+      "level": "answer",
+      "instanceKey": [
+        "pageIndex",
+        "questionIndex",
+        "yesNoIndex"
+      ],
+      "parentFamilyId": "question.instance",
+      "stableIdentity": [
+        "pageIndex",
+        "questionIndex",
+        "yesNoIndex",
+        "canonicalNodeId"
+      ]
+    },
+    "question.instance": {
+      "familyId": "question.instance",
+      "cardinality": "many",
+      "level": "question",
+      "instanceKey": [
+        "pageIndex",
+        "questionIndex"
+      ],
+      "parentFamilyId": null,
+      "stableIdentity": [
+        "pageIndex",
+        "questionIndex",
         "canonicalNodeId"
       ]
     },
@@ -440,6 +574,6 @@
   },
   "integrity": {
     "algorithm": "sha256",
-    "payloadSha256": "15f691e406b0c0a258795eeefa51d7f16c20b5a0bde65de9e5a73cb8e06383ae"
+    "payloadSha256": "350ec71aa7dcd9ec035d88e99d54b515317644b4b08d9bb32e09dba1c98bbf35"
   }
 }

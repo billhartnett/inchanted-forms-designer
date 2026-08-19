@@ -197,9 +197,12 @@ function main() {
   const producerFamily = family('party.producer', 'party', ['producerIndex']);
   const producerContactFamily = family('party.producer.contact', 'contact', ['producerIndex', 'contactIndex'], 'party.producer');
   const signatureFamily = (role) => family(`signature.${role.toLowerCase()}`, 'signature', [`${role.toLowerCase()}Index`, 'signatureIndex']);
-  const locationFamily = family('premises.location', 'location', ['locationIndex']);
-  const buildingFamily = family('premises.building', 'building', ['locationIndex', 'buildingIndex'], 'premises.location');
-  const qaFamily = family('general-information.question-answer', 'question-answer', ['sectionOccurrence', 'questionIndex']);
+  const locationFamily = family('premises.location', 'location', ['premisesIndex', 'locationIndex']);
+  const buildingFamily = family('premises.building', 'building', ['premisesIndex', 'locationIndex', 'buildingIndex'], 'premises.location');
+  const qaFamily = family('general-information.question-answer', 'question-answer', ['pageIndex', 'questionIndex']);
+  const questionFamily = family('question.instance', 'question', ['pageIndex', 'questionIndex']);
+  const booleanAnswerFamily = family('question.boolean-answer', 'answer', ['pageIndex', 'questionIndex', 'yesNoIndex'], 'question.instance');
+  const structuralEvidence = (section) => ({ evidenceType: 'structural-section-model', section: evidence.section(section), corpus: evidence.manifest });
 
   const additions = {
     'Producer.Identity.FullName': node('Producer.Identity.FullName', {
@@ -305,6 +308,54 @@ function main() {
       aliases: ['Location_PhysicalAddress_PostalCode'], synonyms: ['postal', 'premises', 'zip'], sections: ['premises-information'], groups: ['address', 'classification', 'premises'],
       component: 'address.postalCode', instanceFamily: locationFamily, evidence: evidence.path('Location_PhysicalAddress_PostalCode'),
     }),
+    'Premises.Occupancy.Description': node('Premises.Occupancy.Description', {
+      aliases: ['% OCCUPIED', 'OCCUPANCY', 'INTENDED USE'], synonyms: ['occupied', 'occupancy', 'premises', 'use'], sections: ['premises-information'], groups: ['premises', 'occupancy'],
+      component: 'premises.occupancy', instanceFamily: locationFamily, evidence: structuralEvidence('Section.PremisesInformation'),
+    }),
+    'Premises.Construction.Type': node('Premises.Construction.Type', {
+      aliases: ['CONSTRUCTION TYPE', 'BLKT', 'VALUATION'], synonyms: ['building', 'construction', 'premises', 'type'], sections: ['premises-information'], groups: ['premises', 'construction'],
+      component: 'premises.construction.type', instanceFamily: buildingFamily, evidence: structuralEvidence('Section.PremisesInformation'),
+    }),
+    'Premises.Protection.Description': node('Premises.Protection.Description', {
+      aliases: ['PROTECTION', 'CENTRAL STATION', 'LOCAL GONG'], synonyms: ['alarm', 'premises', 'protection', 'security'], sections: ['premises-information'], groups: ['premises', 'protection'],
+      component: 'premises.protection', instanceFamily: buildingFamily, evidence: structuralEvidence('Section.PremisesInformation'),
+    }),
+    'Premises.Protection.FireDistrictCode': node('Premises.Protection.FireDistrictCode', {
+      aliases: ['FIRE DISTRICT/CODE NUMBER'], synonyms: ['code', 'district', 'fire', 'premises'], sections: ['premises-information'], groups: ['premises', 'protection', 'fire'],
+      component: 'premises.protection.fireDistrictCode', instanceFamily: buildingFamily, evidence: structuralEvidence('Section.PremisesInformation'),
+    }),
+    'Premises.Protection.Fire': node('Premises.Protection.Fire', {
+      aliases: ['HEATING BOILER ON PREMISES?', 'SPRINKLER', 'HYDRANT'], synonyms: ['boiler', 'fire', 'premises', 'sprinkler'], sections: ['premises-information'], groups: ['premises', 'protection', 'fire'],
+      component: 'premises.protection.fire', instanceFamily: buildingFamily, evidence: structuralEvidence('Section.PremisesInformation'),
+    }),
+    'Premises.Protection.Burglary': node('Premises.Protection.Burglary', {
+      aliases: ['BURGLARY', 'THEFT', 'WATCHMAN'], synonyms: ['burglary', 'premises', 'security', 'theft'], sections: ['premises-information'], groups: ['premises', 'protection', 'burglary'],
+      component: 'premises.protection.burglary', instanceFamily: buildingFamily, evidence: structuralEvidence('Section.PremisesInformation'),
+    }),
+    'GeneralInformation.Operations.Description': node('GeneralInformation.Operations.Description', {
+      aliases: ['NATURE OF BUSINESS - DESCRIPTION OF OPERATIONS BY PREMISE(S) USE 10 WORDS OR MORE TO DESCRIBE'], synonyms: ['business', 'description', 'operations'], sections: ['general-information'], groups: ['operations'],
+      component: 'general.operations', instanceFamily: qaFamily, evidence: structuralEvidence('Section.GeneralInformation'),
+    }),
+    'GeneralInformation.Exposure.Description': node('GeneralInformation.Exposure.Description', {
+      aliases: ['EXPOSURE'], synonyms: ['exposure', 'general', 'risk'], sections: ['general-information'], groups: ['exposure', 'risk'],
+      component: 'general.exposure', instanceFamily: qaFamily, evidence: structuralEvidence('Section.GeneralInformation'),
+    }),
+    'GeneralInformation.Hazard.Description': node('GeneralInformation.Hazard.Description', {
+      aliases: ['HAZARD', 'HAZARDOUS MATERIAL'], synonyms: ['hazard', 'hazardous', 'risk'], sections: ['general-information'], groups: ['hazard', 'risk'],
+      component: 'general.hazard', instanceFamily: qaFamily, evidence: structuralEvidence('Section.GeneralInformation'),
+    }),
+    'GeneralInformation.BusinessDetails': node('GeneralInformation.BusinessDetails', {
+      aliases: ['BUSINESS DETAILS', 'NATURE OF BUSINESS'], synonyms: ['business', 'details', 'general'], sections: ['general-information'], groups: ['business'],
+      component: 'general.businessDetails', instanceFamily: qaFamily, evidence: structuralEvidence('Section.GeneralInformation'),
+    }),
+    'Question.Text': node('Question.Text', {
+      aliases: ['ACORD QUESTION'], synonyms: ['application', 'question', 'underwriting'], sections: ['general-information', 'premises-information'], groups: ['question-answer'],
+      semanticKind: 'structural-question', component: 'question', instanceFamily: questionFamily, evidence: structuralEvidence('Section.GeneralInformation'),
+    }),
+    'Question.BooleanAnswer': node('Question.BooleanAnswer', {
+      aliases: ['ACORD BOOLEAN ANSWER'], synonyms: ['answer', 'boolean', 'no', 'yes'], sections: ['general-information', 'premises-information'], groups: ['question-answer', 'yes-no'],
+      semanticKind: 'fillable', component: 'booleanAnswer', instanceFamily: booleanAnswerFamily, parentCodes: ['Question.Text'], evidence: structuralEvidence('Section.GeneralInformation'),
+    }),
     'GeneralInformation.Question': node('GeneralInformation.Question', {
       aliases: ['general information question'], synonyms: ['general', 'information', 'question'], sections: ['general-information'], groups: ['question-answer'],
       semanticKind: 'structural-question', component: 'question', instanceFamily: qaFamily,
@@ -324,17 +375,18 @@ function main() {
       component: 'section', instanceFamily: singleton('section.applicant-information'), evidence: evidence.section('Section.ApplicantInformation'),
     }),
     'Section.PremisesInformation': node('Section.PremisesInformation', {
-      aliases: ['PREMISES INFORMATION'], synonyms: ['location', 'premises', 'section'], sections: ['premises-information'], groups: ['section'], semanticKind: 'section',
+      aliases: ['PREMISES INFORMATION', 'PROPERTY SECTION', 'PREMISES #', 'STREET ADDRESS', 'CONSTRUCTION TYPE', 'FIRE DISTRICT/CODE NUMBER'], synonyms: ['building', 'location', 'premises', 'property', 'section'], sections: ['premises-information'], groups: ['section'], semanticKind: 'section',
       component: 'section', instanceFamily: singleton('section.premises-information'), evidence: evidence.section('Section.PremisesInformation'),
     }),
     'Section.GeneralInformation': node('Section.GeneralInformation', {
-      aliases: ['GENERAL INFORMATION'], synonyms: ['general', 'information', 'section'], sections: ['general-information'], groups: ['section'], semanticKind: 'section',
+      aliases: ['GENERAL INFORMATION', 'EXPLAIN ALL "YES" RESPONSES', 'NATURE OF BUSINESS', 'DESCRIPTION OF OPERATIONS'], synonyms: ['business', 'general', 'information', 'question', 'section'], sections: ['general-information'], groups: ['section'], semanticKind: 'section',
       component: 'section', instanceFamily: singleton('section.general-information'), evidence: evidence.section('Section.GeneralInformation'),
     }),
   };
 
   const nodes = Object.fromEntries([...Object.entries(inheritedNodes), ...Object.entries(additions)].sort(([a], [b]) => a.localeCompare(b)));
   nodes['GeneralInformation.Question'].childCodes = ['GeneralInformation.Answer'];
+  nodes['Question.Text'].childCodes = ['Question.BooleanAnswer'];
   const invalidReferences = [];
   for (const [id, current] of Object.entries(nodes)) {
     for (const relation of ['parentCodes', 'childCodes', 'mutuallyExclusiveCodes', 'requiredSiblingCodes']) {
