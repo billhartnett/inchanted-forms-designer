@@ -61,7 +61,73 @@ test("scores XFDL first and uses LayoutLMv3 only as validation evidence", () => 
   assert.equal(withLayout.mappings[0].suggestions[0].acordCode, "Producer.Identity.FullName");
   assert.equal(withLayout.mappings[0].suggestions[0].confidenceScore > withoutLayout.mappings[0].suggestions[0].confidenceScore, true);
   assert.equal(withLayout.diagnostics.legacyFallbackUsed, false);
-  assert.deepEqual(withLayout.diagnostics.weights, { xfdlLabelMatch: 0.55, layoutLmValidation: 0.2, sectionAlignment: 0.15, geometryAlignment: 0.1 });
+  assert.deepEqual(withLayout.diagnostics.weights, { xfdlLabelMatch: 0.5, layoutLmValidation: 0.2, sectionAlignment: 0.1, geometryAlignment: 0.1, tableAlignment: 0.1 });
+}));
+
+test("expands required XFDL label aliases symmetrically", () => {
+  for (const [left, right] of [
+    ["PRODUCER", "AGENCY"],
+    ["APPLICANT", "NAMED INSURED"],
+    ["ADDRESS", "MAILING ADDRESS"],
+    ["CITY", "TOWN"],
+    ["STATE", "PROVINCE"],
+    ["ZIP CODE", "POSTAL CODE"],
+  ]) assert.equal(pipeline.xfdlLabelSimilarity(left, right), 1, `${left} should alias ${right}`);
+});
+
+test("applies global checkbox, currency, and percentage RP-9 type rules", () => withXfdlStaging(() => {
+  const blocks = [
+    block("boolean", "YES", 20, 60, "checkbox"),
+    block("currency", "ANNUAL SALES", 20, 90),
+    block("percent", "PERCENT OCCUPIED", 20, 120),
+  ];
+  const fieldCatalog = [
+    catalog("boolean", "YES", 20, 60, "checkbox", "checkbox", "general-information"),
+    catalog("currency", "ANNUAL SALES", 20, 90, "input", "currency", "general-information"),
+    catalog("percent", "PERCENT OCCUPIED", 20, 120, "input", "percentage", "premises-information"),
+  ];
+  const result = pipeline.mapBlocksWithXfdlRp9({ blocks, fieldCatalog, layoutLmByBlock: {}, sourceDocumentName: "sample-Acord-125.pdf", formId: "acord-125" });
+  assert.deepEqual(result.mappings.map((mapping) => mapping.suggestions[0].acordCode), ["Question.BooleanAnswer", "CurrencyAmount", "Percentage"]);
+  assert.equal(result.mappings.every((mapping) => mapping.suggestions[0].rationale.startsWith("Global")), true);
+}));
+
+test("recognizes all seven ACORD 125 General Information question patterns", () => withXfdlStaging(() => {
+  const index = pipeline.getAcord125XfdlIndex();
+  const paths = ["AAICode", "AAJCode", "KAACode", "ABCCode", "AAHCode", "AACCode", "AADCode"];
+  const questions = index.fields.filter((field) => paths.some((code) => field.semanticPath.includes(`Question_${code}`)));
+  assert.equal(questions.length, 7);
+  assert.equal(questions.every((field) => field.canonicalNodeIds.includes("Question.BooleanAnswer")), true);
+}));
+
+test("adds table alignment evidence for supplemental application cells", () => withXfdlStaging(() => {
+  const inputBlock = block("cell", "AGENCY NAME", 20, 60);
+  const plainCatalog = catalog("cell", "NAME", 20, 60, "table-cell", "text", "producer-information");
+  const tableCatalog = { ...plainCatalog, tableId: "producer-table", rowIndex: 1, columnIndex: 1 };
+  const header = { ...catalog("header", "AGENCY", 20, 30, "column_header", "label", "producer-information"), tableId: "producer-table", rowIndex: 0, columnIndex: 1 };
+  const plain = pipeline.mapBlocksWithXfdlRp9({ blocks: [inputBlock], fieldCatalog: [plainCatalog], layoutLmByBlock: {}, sourceDocumentName: "sample-Acord-125.pdf" });
+  const table = pipeline.mapBlocksWithXfdlRp9({
+    blocks: [inputBlock],
+    fieldCatalog: [tableCatalog, header],
+    layoutLmByBlock: {},
+    sourceDocumentName: "sample-Acord-125.pdf",
+    groupedStructures: { labelInputPairs: [], tables: [{ id: "producer-table", page: 1, rowCount: 2, columnCount: 2, rowGroupIds: ["producer-table-row-2"] }], questionAnswerPairs: [], checkboxGroups: [], semanticGroups: [] },
+  });
+  assert.equal(table.diagnostics.tableAwareBlockCount, 2);
+  assert.equal(table.mappings[0].suggestions[0].xfdl.scores.tableAlignment > 0, true);
+  assert.equal(table.mappings[0].suggestions[0].confidenceScore > plain.mappings[0].suggestions[0].confidenceScore, true);
+}));
+
+test("loads ACORD 126, ACORD 130, and supplemental XFDL indexes", () => withXfdlStaging(() => {
+  const cases = [
+    ["ACORD_126_-_Commercial_General_Liability_Section.pdf", "acord-126", "ACORD 0126"],
+    ["sample-Acord-130.pdf", "acord-130", "ACORD 0130"],
+    ["Quaker_Special_Risk 04-18_QSR.pdf", "supplemental", "Quaker_Special_Risk 04-18_QSR"],
+  ];
+  for (const [source, formId, expected] of cases) {
+    const index = pipeline.getXfdlSemanticIndex(source, formId);
+    assert.equal(index.fields.length > 0, true, source);
+    assert.equal(index.sourcePath.includes(expected), true, index.sourcePath);
+  }
 }));
 
 test("mapFields exposes the staging XFDL pipeline contract without legacy fallback", async () => withXfdlStaging(async () => {
@@ -84,7 +150,7 @@ test("mapFields exposes the staging XFDL pipeline contract without legacy fallba
   assert.equal(response.jsonBody.mappings[0].chosen.rp9.ontologyScope, "canonical");
 }));
 
-test("XFDL primary mapping gate is staging-only and ACORD-125-only", () => {
+test("XFDL primary mapping gate is staging-only and XFDL-backed-form-only", () => {
   const previous = { SEMANTIC_BASELINE: process.env.SEMANTIC_BASELINE, DEPLOYMENT_ENVIRONMENT: process.env.DEPLOYMENT_ENVIRONMENT, XFDL_PRIMARY_MAPPING: process.env.XFDL_PRIMARY_MAPPING };
   process.env.XFDL_PRIMARY_MAPPING = "1";
   process.env.SEMANTIC_BASELINE = "RP-9";
@@ -92,7 +158,8 @@ test("XFDL primary mapping gate is staging-only and ACORD-125-only", () => {
   assert.equal(pipeline.isXfdlPrimaryMappingEnabled("sample-Acord-125.pdf", "acord-125"), false);
   process.env.DEPLOYMENT_ENVIRONMENT = "staging";
   assert.equal(pipeline.isXfdlPrimaryMappingEnabled("sample-Acord-125.pdf", "acord-125"), true);
-  assert.equal(pipeline.isXfdlPrimaryMappingEnabled("sample-Acord-126.pdf", "acord-126"), false);
+  assert.equal(pipeline.isXfdlPrimaryMappingEnabled("sample-Acord-126.pdf", "acord-126"), true);
+  assert.equal(pipeline.isXfdlPrimaryMappingEnabled("sample-Acord-999.pdf", "acord-999"), false);
   for (const [key, value] of Object.entries(previous)) {
     if (value === undefined) delete process.env[key]; else process.env[key] = value;
   }

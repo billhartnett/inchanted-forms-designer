@@ -1,11 +1,12 @@
 import fs from "node:fs";
 import path from "node:path";
+import zlib from "node:zlib";
 import type { AcordLabelCandidate } from "shared/acord";
 import type { BoundingBox, ExtractedBlock, FieldMapping } from "shared/types";
-import type { ExtractDocumentFieldCatalogEntry } from "../types/extractDocumentContract";
+import type { ExtractDocumentFieldCatalogEntry, ExtractDocumentGroupedStructures } from "../types/extractDocumentContract";
 import { getActiveRp9Runtime } from "./rp9OntologyRuntime";
 
-export type XfdlAnswerType = "text" | "boolean" | "select" | "date" | "number" | "currency" | "signature";
+export type XfdlAnswerType = "text" | "boolean" | "select" | "date" | "number" | "currency" | "percent" | "signature";
 
 export type XfdlSemanticField = {
   sid: string;
@@ -38,6 +39,8 @@ type PipelineInput = {
   layoutLmByBlock: Record<string, LayoutLmEvaluation>;
   pageDimensions?: Array<{ page: number; width: number; height: number }>;
   formId?: string;
+  sourceDocumentName?: string;
+  groupedStructures?: ExtractDocumentGroupedStructures;
 };
 
 type ScoredCandidate = {
@@ -47,10 +50,12 @@ type ScoredCandidate = {
   layoutLmValidation: number;
   sectionAlignment: number;
   geometryAlignment: number;
+  tableAlignment: number;
   score: number;
+  origin: "xfdl" | "layoutlm" | "type-rule";
 };
 
-const WEIGHTS = Object.freeze({ xfdlLabelMatch: 0.55, layoutLmValidation: 0.2, sectionAlignment: 0.15, geometryAlignment: 0.1 });
+const WEIGHTS = Object.freeze({ xfdlLabelMatch: 0.5, layoutLmValidation: 0.2, sectionAlignment: 0.1, geometryAlignment: 0.1, tableAlignment: 0.1 });
 const DIRECT_RP9_PATHS = new Map<string, string>([
   ["NamedInsured_FullName", "GeneralInfo.NamedInsured"],
   ["NamedInsured_MailingAddress_LineOne", "GeneralInfo.MailingAddress.Line1"],
@@ -58,10 +63,29 @@ const DIRECT_RP9_PATHS = new Map<string, string>([
   ["NamedInsured_MailingAddress_StateOrProvinceCode", "GeneralInfo.MailingAddress.State"],
   ["NamedInsured_MailingAddress_PostalCode", "GeneralInfo.MailingAddress.PostalCode"],
 ]);
-let cachedIndex: XfdlSemanticIndex | null = null;
+const GENERAL_INFORMATION_QUESTION_PATTERNS = Object.freeze([
+  "is the applicant a subsidiary of another entity",
+  "does the applicant have any subsidiaries",
+  "is a formal safety program in operation",
+  "any exposure to flammables explosives chemicals",
+  "any other insurance with this company",
+  "any policy or coverage declined cancelled or non renewed during the mandated number of years",
+  "any past losses or claims relating to sexual abuse or molestation allegations discrimination or negligent hiring",
+]);
+const indexCache = new Map<string, XfdlSemanticIndex>();
 
 function normalize(value: unknown): string {
-  return String(value || "").replace(/([a-z])([A-Z])/g, "$1 $2").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+  return String(value || "")
+    .replace(/([a-z])([A-Z])/g, "$1 $2")
+    .toLowerCase()
+    .replace(/\b(?:agent|agency|broker)\b/g, "producer")
+    .replace(/\b(?:named\s+insured|applicant)\b/g, "insuredparty")
+    .replace(/\bmailing\s+address\b|\baddress\b/g, "address")
+    .replace(/\b(?:city|town)\b/g, "city")
+    .replace(/\b(?:state|province)\b/g, "state")
+    .replace(/\b(?:zip\s+code|postal\s+code|zip|postal)\b/g, "postalcode")
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
 }
 
 function normalizedKey(value: unknown): string {
@@ -69,9 +93,7 @@ function normalizedKey(value: unknown): string {
 }
 
 function tokens(value: unknown): Set<string> {
-  return new Set(normalize(value).split(/\s+/).filter((token) => token.length > 1).map((token) =>
-    ["agent", "agency", "broker", "producer"].includes(token) ? "producer" : token,
-  ));
+  return new Set(normalize(value).split(/\s+/).filter((token) => token.length > 1));
 }
 
 function tokenSimilarity(left: unknown, right: unknown): number {
@@ -81,6 +103,10 @@ function tokenSimilarity(left: unknown, right: unknown): number {
   let overlap = 0;
   for (const token of leftTokens) if (rightTokens.has(token)) overlap += 1;
   return (2 * overlap) / (leftTokens.size + rightTokens.size);
+}
+
+export function xfdlLabelSimilarity(left: unknown, right: unknown): number {
+  return tokenSimilarity(left, right);
 }
 
 function quotedQuestion(helpText: string): string {
@@ -116,7 +142,8 @@ function answerType(controlType: string, helpText: string, body: string): XfdlAn
   if (/signature/i.test(helpText)) return "signature";
   if (/enter\s+date/i.test(helpText)) return "date";
   if (/enter\s+(?:amount|currency)/i.test(helpText)) return "currency";
-  if (/enter\s+(?:number|numeric|percent)/i.test(helpText)) return "number";
+  if (/percent|percentage|%/i.test(`${helpText} ${body}`)) return "percent";
+  if (/enter\s+(?:number|numeric)/i.test(helpText)) return "number";
   if (controlType === "combobox" || /<type>\s*(?:select|choice)/i.test(body)) return "select";
   return "text";
 }
@@ -166,12 +193,19 @@ function canonicalNodesFor(semanticPath: string, label: string, helpText: string
     if (similarity >= 0.72) matches.add(id);
   }
   const normalized = normalize(context);
-  if (answer === "boolean" && /question|indicator|yes|no|check the box/.test(normalized)) matches.add("Question.BooleanAnswer");
+  const isGeneralInformationQuestion = GENERAL_INFORMATION_QUESTION_PATTERNS.some((pattern) => normalized.includes(normalize(pattern)));
+  if (answer === "boolean" || isGeneralInformationQuestion) matches.add("Question.BooleanAnswer");
+  if (answer === "currency") matches.add("CurrencyAmount");
+  if (answer === "percent") matches.add("Percentage");
   else if (/\?|question/.test(normalized)) matches.add("Question.Text");
   return [...matches];
 }
 
 export function parseXfdlSemanticIndex(xml: string, sourcePath = "inline", formId = "acord-125"): XfdlSemanticIndex {
+  if (/content-encoding\s*=\s*["']?base64-gzip/i.test(xml.slice(0, 200))) {
+    const encoded = xml.replace(/^[^\r\n]*(?:\r?\n)/, "").replace(/\s+/g, "");
+    xml = zlib.gunzipSync(Buffer.from(encoded, "base64")).toString("utf8");
+  }
   const pages: Array<{ page: number; body: string }> = [];
   const pageRegex = /<page\s+sid="([^"]+)"[^>]*>([\s\S]*?)<\/page>/gi;
   let pageMatch: RegExpExecArray | null;
@@ -222,16 +256,33 @@ export function parseXfdlSemanticIndex(xml: string, sourcePath = "inline", formI
   return { formId, sourcePath, pageCount: pages.length, fields };
 }
 
-function defaultXfdlPath(): string {
-  return path.resolve(process.env.XFDL_SEMANTIC_ROOT || path.join(__dirname, "..", "..", "..", "..", "training-data", "ACORD 0125 2016-03r1.xfdl"));
+function xfdlRoot(): string {
+  return path.resolve(process.env.XFDL_SEMANTIC_ROOT || path.join(__dirname, "..", "..", "..", "..", "training-data"));
 }
 
 export function getAcord125XfdlIndex(): XfdlSemanticIndex {
-  if (cachedIndex) return cachedIndex;
-  const sourcePath = defaultXfdlPath();
+  const sourcePath = path.join(xfdlRoot(), "ACORD 0125 2016-03r1.xfdl");
   if (!fs.existsSync(sourcePath)) throw new Error(`Missing authoritative ACORD 125 XFDL: ${sourcePath}`);
-  cachedIndex = parseXfdlSemanticIndex(fs.readFileSync(sourcePath, "utf8"), sourcePath, "acord-125");
-  return cachedIndex;
+  if (!indexCache.has(sourcePath)) indexCache.set(sourcePath, parseXfdlSemanticIndex(fs.readFileSync(sourcePath, "utf8"), sourcePath, "acord-125"));
+  return indexCache.get(sourcePath)!;
+}
+
+function resolveXfdlPath(sourceDocumentName?: string, formId?: string): string | null {
+  const root = xfdlRoot();
+  if (!fs.existsSync(root)) return null;
+  const requested = normalize(`${formId || ""} ${path.parse(sourceDocumentName || "").name}`);
+  const acordNumber = requested.match(/\bacord\s+0*(125|126|130)\b/)?.[1];
+  const files = fs.readdirSync(root).filter((name) => /\.xfdl$/i.test(name));
+  if (acordNumber) return path.join(root, files.find((name) => new RegExp(`^ACORD\\s+0*${acordNumber}\\b`, "i").test(name)) || "");
+  const ranked = files.map((name) => ({ name, similarity: tokenSimilarity(requested, path.parse(name).name) })).sort((left, right) => right.similarity - left.similarity);
+  return ranked[0]?.similarity >= 0.55 ? path.join(root, ranked[0].name) : null;
+}
+
+export function getXfdlSemanticIndex(sourceDocumentName?: string, formId?: string): XfdlSemanticIndex {
+  const sourcePath = resolveXfdlPath(sourceDocumentName || "sample-Acord-125.pdf", formId || "acord-125");
+  if (!sourcePath || !fs.existsSync(sourcePath)) throw new Error(`Missing authoritative XFDL for ${sourceDocumentName || formId || "unknown form"}`);
+  if (!indexCache.has(sourcePath)) indexCache.set(sourcePath, parseXfdlSemanticIndex(fs.readFileSync(sourcePath, "utf8"), sourcePath, formId || path.parse(sourcePath).name));
+  return indexCache.get(sourcePath)!;
 }
 
 function sectionForCatalog(entry: ExtractDocumentFieldCatalogEntry | undefined): string | null {
@@ -270,8 +321,17 @@ function layoutLmValidation(canonicalNodeId: string, evaluation: LayoutLmEvaluat
   return best;
 }
 
-function scoreCandidate(block: ExtractedBlock, catalog: ExtractDocumentFieldCatalogEntry | undefined, field: XfdlSemanticField, canonicalNodeId: string, layoutLm: LayoutLmEvaluation | undefined, pageDimensions: PipelineInput["pageDimensions"], index: XfdlSemanticIndex): ScoredCandidate {
-  const context = `${catalog?.semanticLabel || ""} ${catalog?.text || ""} ${block.text}`;
+function tableContext(catalog: ExtractDocumentFieldCatalogEntry | undefined, fieldCatalog: ExtractDocumentFieldCatalogEntry[]): string {
+  if (!catalog?.tableId) return "";
+  return fieldCatalog
+    .filter((entry) => entry.tableId === catalog.tableId && (entry.rowIndex === catalog.rowIndex || entry.columnIndex === catalog.columnIndex))
+    .map((entry) => `${entry.semanticLabel || ""} ${entry.text || ""}`)
+    .join(" ");
+}
+
+function scoreCandidate(block: ExtractedBlock, catalog: ExtractDocumentFieldCatalogEntry | undefined, field: XfdlSemanticField, canonicalNodeId: string, layoutLm: LayoutLmEvaluation | undefined, pageDimensions: PipelineInput["pageDimensions"], index: XfdlSemanticIndex, fieldCatalog: ExtractDocumentFieldCatalogEntry[], groupedStructures: ExtractDocumentGroupedStructures | undefined): ScoredCandidate {
+  const table = tableContext(catalog, fieldCatalog);
+  const context = `${catalog?.semanticLabel || ""} ${catalog?.text || ""} ${block.text} ${table}`;
   const lexical = Math.max(
     normalizedKey(context) === normalizedKey(field.label) ? 1 : 0,
     tokenSimilarity(context, field.label),
@@ -285,8 +345,10 @@ function scoreCandidate(block: ExtractedBlock, catalog: ExtractDocumentFieldCata
   const section = sectionForCatalog(catalog);
   const sectionAlignment = section && node?.sections?.includes(section) ? 1 : section ? 0 : 0.5;
   const geometry = geometryAlignment(block, field, pageDimensions, index);
-  const score = WEIGHTS.xfdlLabelMatch * xfdlLabelMatch + WEIGHTS.layoutLmValidation * layout + WEIGHTS.sectionAlignment * sectionAlignment + WEIGHTS.geometryAlignment * geometry;
-  return { canonicalNodeId, field, xfdlLabelMatch, layoutLmValidation: layout, sectionAlignment, geometryAlignment: geometry, score };
+  const declaredTable = Boolean(catalog?.tableId && groupedStructures?.tables.some((item) => item.id === catalog.tableId && item.page === block.page));
+  const tableAlignment = declaredTable ? Math.max(tokenSimilarity(table, field.label), tokenSimilarity(table, field.semanticPath), tokenSimilarity(table, field.helpText)) : 0;
+  const score = WEIGHTS.xfdlLabelMatch * xfdlLabelMatch + WEIGHTS.layoutLmValidation * layout + WEIGHTS.sectionAlignment * sectionAlignment + WEIGHTS.geometryAlignment * geometry + WEIGHTS.tableAlignment * tableAlignment;
+  return { canonicalNodeId, field, xfdlLabelMatch, layoutLmValidation: layout, sectionAlignment, geometryAlignment: geometry, tableAlignment, score, origin: "xfdl" };
 }
 
 function layoutLmOnlyCandidates(evaluation: LayoutLmEvaluation | undefined): ScoredCandidate[] {
@@ -296,12 +358,25 @@ function layoutLmOnlyCandidates(evaluation: LayoutLmEvaluation | undefined): Sco
     const canonicalNodeId = runtime.aliases.get(normalizedKey(prediction.eLabelName));
     if (!canonicalNodeId) return [];
     const probability = Number(prediction.probability) || 0;
-    return [{ canonicalNodeId, field: null, xfdlLabelMatch: 0, layoutLmValidation: probability, sectionAlignment: 0, geometryAlignment: 0, score: WEIGHTS.layoutLmValidation * probability }];
+    return [{ canonicalNodeId, field: null, xfdlLabelMatch: 0, layoutLmValidation: probability, sectionAlignment: 0, geometryAlignment: 0, tableAlignment: 0, score: WEIGHTS.layoutLmValidation * probability, origin: "layoutlm" }];
   });
 }
 
+function globalTypeCandidate(block: ExtractedBlock, catalog: ExtractDocumentFieldCatalogEntry | undefined): ScoredCandidate | null {
+  const type = String(catalog?.valueType || block.type || "").toLowerCase();
+  const canonicalNodeId = type === "checkbox" || type === "radio"
+    ? "Question.BooleanAnswer"
+    : type === "currency"
+      ? "CurrencyAmount"
+      : type === "percentage" || type === "percent"
+        ? "Percentage"
+        : null;
+  if (!canonicalNodeId || !getActiveRp9Runtime().nodes.has(canonicalNodeId)) return null;
+  return { canonicalNodeId, field: null, xfdlLabelMatch: 1, layoutLmValidation: 0, sectionAlignment: 1, geometryAlignment: 0, tableAlignment: catalog?.tableId ? 1 : 0, score: catalog?.tableId ? 1 : 0.9, origin: "type-rule" };
+}
+
 export function mapBlocksWithXfdlRp9(input: PipelineInput): { mappings: FieldMapping[]; diagnostics: Record<string, unknown> } {
-  const index = getAcord125XfdlIndex();
+  const index = getXfdlSemanticIndex(input.sourceDocumentName, input.formId);
   const catalogById = new Map(input.fieldCatalog.map((entry) => [entry.id, entry]));
   let xfdlMatched = 0;
   let layoutLmOnly = 0;
@@ -311,13 +386,14 @@ export function mapBlocksWithXfdlRp9(input: PipelineInput): { mappings: FieldMap
     const candidates = index.fields
       .filter((field) => field.canonicalNodeIds.length > 0)
       .filter((field) => field.page === block.page || tokenSimilarity(context, `${field.label} ${field.semanticPath}`) >= 0.55)
-      .flatMap((field) => field.canonicalNodeIds.map((canonicalNodeId) => scoreCandidate(block, catalog, field, canonicalNodeId, input.layoutLmByBlock[block.id], input.pageDimensions, index)));
+      .flatMap((field) => field.canonicalNodeIds.map((canonicalNodeId) => scoreCandidate(block, catalog, field, canonicalNodeId, input.layoutLmByBlock[block.id], input.pageDimensions, index, input.fieldCatalog, input.groupedStructures)));
     const fallback = candidates.length === 0 ? layoutLmOnlyCandidates(input.layoutLmByBlock[block.id]) : [];
-    const ranked = [...candidates, ...fallback]
+    const typeCandidate = globalTypeCandidate(block, catalog);
+    const ranked = [...(typeCandidate ? [typeCandidate] : []), ...candidates, ...fallback]
       .sort((left, right) => right.score - left.score)
-      .filter((candidate) => candidate.field
+      .filter((candidate) => candidate.origin === "type-rule" || (candidate.field
         ? candidate.score >= 0.4 && candidate.xfdlLabelMatch >= 0.35
-        : candidate.layoutLmValidation >= 0.7)
+        : candidate.layoutLmValidation >= 0.7))
       .filter((candidate, position, all) => all.findIndex((item) => item.canonicalNodeId === candidate.canonicalNodeId) === position)
       .slice(0, 5);
     if (ranked[0]?.field) xfdlMatched += 1;
@@ -327,13 +403,15 @@ export function mapBlocksWithXfdlRp9(input: PipelineInput): { mappings: FieldMap
       label: getActiveRp9Runtime().nodes.get(candidate.canonicalNodeId)?.aliases?.[1] || candidate.canonicalNodeId,
       confidenceScore: Number(candidate.score.toFixed(6)),
       normalizedConfidenceScore: Number(candidate.score.toFixed(6)),
-      source: candidate.field ? "heuristic" : "ai",
+      source: candidate.origin === "layoutlm" ? "ai" : "heuristic",
       lexicalScore: Number(candidate.xfdlLabelMatch.toFixed(6)),
       semanticSimilarity: Number(candidate.layoutLmValidation.toFixed(6)),
       heuristicScore: Number((candidate.sectionAlignment * WEIGHTS.sectionAlignment + candidate.geometryAlignment * WEIGHTS.geometryAlignment).toFixed(6)),
       rationale: candidate.field
         ? `XFDL ${candidate.field.sid} → RP-9; label=${candidate.xfdlLabelMatch.toFixed(3)}, layoutlm=${candidate.layoutLmValidation.toFixed(3)}, section=${candidate.sectionAlignment.toFixed(3)}, geometry=${candidate.geometryAlignment.toFixed(3)}.`
-        : `LayoutLMv3 validated an unlabeled field directly against RP-9 (${candidate.layoutLmValidation.toFixed(3)}).`,
+        : candidate.origin === "type-rule"
+          ? `Global ${String(catalog?.valueType || block.type)} type rule → RP-9 ${candidate.canonicalNodeId}.`
+          : `LayoutLMv3 validated an unlabeled field directly against RP-9 (${candidate.layoutLmValidation.toFixed(3)}).`,
       xfdl: candidate.field ? {
         sid: candidate.field.sid,
         semanticPath: candidate.field.semanticPath,
@@ -347,6 +425,7 @@ export function mapBlocksWithXfdlRp9(input: PipelineInput): { mappings: FieldMap
           layoutLmValidation: candidate.layoutLmValidation,
           sectionAlignment: candidate.sectionAlignment,
           geometryAlignment: candidate.geometryAlignment,
+          tableAlignment: candidate.tableAlignment,
           final: candidate.score,
         },
       } : undefined,
@@ -366,6 +445,8 @@ export function mapBlocksWithXfdlRp9(input: PipelineInput): { mappings: FieldMap
       layoutLmOnlyBlockCount: layoutLmOnly,
       unresolvedBlockCount: mappings.filter((mapping) => mapping.suggestions.length === 0).length,
       weights: WEIGHTS,
+      generalInformationQuestionPatternCount: GENERAL_INFORMATION_QUESTION_PATTERNS.length,
+      tableAwareBlockCount: input.fieldCatalog.filter((entry) => Boolean(entry.tableId && input.groupedStructures?.tables.some((table) => table.id === entry.tableId && table.page === entry.page))).length,
       legacyFallbackUsed: false,
     },
   };
@@ -375,5 +456,5 @@ export function isXfdlPrimaryMappingEnabled(sourceDocumentName?: string, familyI
   return process.env.XFDL_PRIMARY_MAPPING === "1" &&
     String(process.env.SEMANTIC_BASELINE || "").toUpperCase() === "RP-9" &&
     String(process.env.DEPLOYMENT_ENVIRONMENT || "").toLowerCase() === "staging" &&
-    (/acord[-_ ]?125/i.test(String(sourceDocumentName || "")) || /acord[-_ ]?125/i.test(String(familyId || "")));
+    Boolean(resolveXfdlPath(sourceDocumentName, familyId));
 }

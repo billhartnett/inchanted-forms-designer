@@ -36,7 +36,7 @@
     "ontologyId": "acord-canonical-ontology",
     "version": "2026.08.18-rp9",
     "generatedAt": "deterministic",
-    "hash": "5818d03a12daf856fddcaba6dbfec7b764a0c1a417ffd00ca79a85aea58d0a70",
+    "hash": "e34e49f41f533d8c5c1089d7fe8ff63c452b3fd92768d9734e7150c9abcd56e4",
     "nodes": {
       "CommercialProperty.Building.LocationAddress": {
         "acordCode": "CommercialProperty.Building.LocationAddress",
@@ -133,6 +133,67 @@
           "sourcePayloadSha256": "de18ba8a33410b61095f318b403635e23ae731bf2deab0a950b96662bcd3f27d"
         },
         "inheritedFrom": "RP-8"
+      },
+      "CurrencyAmount": {
+        "acordCode": "CurrencyAmount",
+        "aliases": [
+          "CurrencyAmount",
+          "CURRENCY AMOUNT",
+          "AMOUNT ($)",
+          "DOLLAR AMOUNT"
+        ],
+        "synonyms": [
+          "amount",
+          "currency",
+          "dollar",
+          "money"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "general-information",
+          "premises-information"
+        ],
+        "groups": [
+          "currency",
+          "numeric"
+        ],
+        "semanticKind": "fillable",
+        "component": "currencyAmount",
+        "role": null,
+        "instanceFamily": {
+          "familyId": "numeric.value",
+          "cardinality": "many",
+          "level": "value",
+          "instanceKey": [
+            "pageIndex",
+            "fieldOccurrence"
+          ],
+          "parentFamilyId": null,
+          "stableIdentity": [
+            "pageIndex",
+            "fieldOccurrence",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "evidenceType": "structural-section-model",
+          "section": {
+            "evidenceType": "structural-section-heading",
+            "formCount": 16,
+            "occurrenceCount": 31,
+            "fillable": false
+          },
+          "corpus": {
+            "formCount": 63,
+            "fieldCount": 21140,
+            "groupCount": 1094,
+            "labelCount": 10679
+          }
+        },
+        "inheritedFrom": null
       },
       "Form.Date.Completed": {
         "acordCode": "Form.Date.Completed",
@@ -918,6 +979,66 @@
           "sourcePayloadSha256": "de18ba8a33410b61095f318b403635e23ae731bf2deab0a950b96662bcd3f27d"
         },
         "inheritedFrom": "RP-8"
+      },
+      "Percentage": {
+        "acordCode": "Percentage",
+        "aliases": [
+          "Percentage",
+          "PERCENTAGE",
+          "PERCENT",
+          "%"
+        ],
+        "synonyms": [
+          "percent",
+          "percentage",
+          "rate"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "general-information",
+          "premises-information"
+        ],
+        "groups": [
+          "numeric",
+          "percentage"
+        ],
+        "semanticKind": "fillable",
+        "component": "percentage",
+        "role": null,
+        "instanceFamily": {
+          "familyId": "numeric.value",
+          "cardinality": "many",
+          "level": "value",
+          "instanceKey": [
+            "pageIndex",
+            "fieldOccurrence"
+          ],
+          "parentFamilyId": null,
+          "stableIdentity": [
+            "pageIndex",
+            "fieldOccurrence",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "evidenceType": "structural-section-model",
+          "section": {
+            "evidenceType": "structural-section-heading",
+            "formCount": 16,
+            "occurrenceCount": 31,
+            "fillable": false
+          },
+          "corpus": {
+            "formCount": 63,
+            "fieldCount": 21140,
+            "groupCount": 1094,
+            "labelCount": 10679
+          }
+        },
+        "inheritedFrom": null
       },
       "Premises.Address.City": {
         "acordCode": "Premises.Address.City",
@@ -2825,6 +2946,21 @@
         "canonicalNodeId"
       ]
     },
+    "numeric.value": {
+      "familyId": "numeric.value",
+      "cardinality": "many",
+      "level": "value",
+      "instanceKey": [
+        "pageIndex",
+        "fieldOccurrence"
+      ],
+      "parentFamilyId": null,
+      "stableIdentity": [
+        "pageIndex",
+        "fieldOccurrence",
+        "canonicalNodeId"
+      ]
+    },
     "party.producer": {
       "familyId": "party.producer",
       "cardinality": "many",
@@ -3010,8 +3146,8 @@
   },
   "semanticTruth": {
     "inheritedNodeCount": 8,
-    "addedNodeCount": 41,
-    "canonicalNodeCount": 49,
+    "addedNodeCount": 43,
+    "canonicalNodeCount": 51,
     "corpus": {
       "formCount": 63,
       "fieldCount": 21140,
@@ -3035,14 +3171,14 @@
     "valid": true,
     "invalidReferences": [],
     "phase33Compatible": true,
-    "nodeCount": 49,
+    "nodeCount": 51,
     "inheritedNodeCount": 8,
-    "addedNodeCount": 41,
+    "addedNodeCount": 43,
     "roleSafeEquivalenceCount": 3,
-    "multiInstanceFamilyCount": 16
+    "multiInstanceFamilyCount": 17
   },
   "integrity": {
     "algorithm": "sha256",
-    "payloadSha256": "0e6243509df77e8cd0bbe7fc044ad8bda732d9ca821cfc411d4ef4cef23adcb3"
+    "payloadSha256": "39f8c2bc52c4afe380a731900855ae2d2bddd00da76d7c93f6f298fb6152ea05"
   }
 }

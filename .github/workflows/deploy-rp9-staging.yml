@@ -146,13 +146,19 @@ jobs:
           XFDL_MAPPING="$(curl -fsS -X POST "${STAGING_BACKEND_URL}/api/mapFields" \
             -H 'Content-Type: application/json' \
             --data '{"documentId":"xfdl-staging-smoke","sourceDocumentName":"sample-Acord-125.pdf","familyId":"acord-125","deterministic":true,"blocks":[{"id":"agent","page":1,"type":"text","text":"AGENT NAME","confidence":0.99,"boundingBox":{"x":20,"y":60,"width":180,"height":20}}],"fieldCatalog":[{"id":"agent","page":1,"role":"input","semanticRole":"Producer","semanticSection":"producer-information","valueType":"text","text":"AGENT NAME","semanticLabel":"AGENT NAME","boundingBox":{"x":20,"y":60,"width":180,"height":20},"source":"blank_detector","confidence":0.99}],"groupedStructures":{"labelInputPairs":[],"tables":[],"questionAnswerPairs":[],"checkboxGroups":[],"semanticGroups":[]}}')"
-          VERSION="${VERSION}" TRUTH="${TRUTH}" LINEAGE="${LINEAGE}" BUNDLES="${BUNDLES}" XFDL_MAPPING="${XFDL_MAPPING}" node - <<'NODE'
+          XFDL_126="$(curl -fsS -X POST "${STAGING_BACKEND_URL}/api/mapFields" -H 'Content-Type: application/json' --data '{"documentId":"xfdl-126-smoke","sourceDocumentName":"ACORD_126_-_Commercial_General_Liability_Section.pdf","familyId":"acord-126","blocks":[{"id":"amount","page":1,"type":"text","text":"PREMIUM","confidence":0.99,"boundingBox":{"x":20,"y":60,"width":180,"height":20}}],"fieldCatalog":[{"id":"amount","page":1,"role":"input","valueType":"currency","text":"PREMIUM","semanticLabel":"PREMIUM","boundingBox":{"x":20,"y":60,"width":180,"height":20},"source":"blank_detector","confidence":0.99}],"groupedStructures":{"labelInputPairs":[],"tables":[],"questionAnswerPairs":[],"checkboxGroups":[],"semanticGroups":[]}}')"
+          XFDL_130="$(curl -fsS -X POST "${STAGING_BACKEND_URL}/api/mapFields" -H 'Content-Type: application/json' --data '{"documentId":"xfdl-130-smoke","sourceDocumentName":"sample-Acord-130.pdf","familyId":"acord-130","blocks":[{"id":"percent","page":1,"type":"text","text":"OWNERSHIP %","confidence":0.99,"boundingBox":{"x":20,"y":60,"width":180,"height":20}}],"fieldCatalog":[{"id":"percent","page":1,"role":"input","valueType":"percentage","text":"OWNERSHIP %","semanticLabel":"OWNERSHIP %","boundingBox":{"x":20,"y":60,"width":180,"height":20},"source":"blank_detector","confidence":0.99}],"groupedStructures":{"labelInputPairs":[],"tables":[],"questionAnswerPairs":[],"checkboxGroups":[],"semanticGroups":[]}}')"
+          XFDL_SUPPLEMENTAL="$(curl -fsS -X POST "${STAGING_BACKEND_URL}/api/mapFields" -H 'Content-Type: application/json' --data '{"documentId":"xfdl-supplemental-smoke","sourceDocumentName":"Quaker_Special_Risk 04-18_QSR.pdf","familyId":"supplemental","blocks":[{"id":"table-check","page":1,"type":"checkbox","text":"YES","confidence":0.99,"boundingBox":{"x":20,"y":60,"width":20,"height":20}}],"fieldCatalog":[{"id":"table-check","page":1,"role":"table-cell","valueType":"checkbox","text":"YES","semanticLabel":"YES","boundingBox":{"x":20,"y":60,"width":20,"height":20},"source":"selection_mark","confidence":0.99,"tableId":"questions","rowIndex":1,"columnIndex":1}],"groupedStructures":{"labelInputPairs":[],"tables":[{"id":"questions","page":1,"rowCount":2,"columnCount":2,"rowGroupIds":["questions-row-2"]}],"questionAnswerPairs":[],"checkboxGroups":[],"semanticGroups":[]}}')"
+          VERSION="${VERSION}" TRUTH="${TRUTH}" LINEAGE="${LINEAGE}" BUNDLES="${BUNDLES}" XFDL_MAPPING="${XFDL_MAPPING}" XFDL_126="${XFDL_126}" XFDL_130="${XFDL_130}" XFDL_SUPPLEMENTAL="${XFDL_SUPPLEMENTAL}" node - <<'NODE'
           const versionEnvelope = JSON.parse(process.env.VERSION);
           const version = versionEnvelope.data || versionEnvelope;
           const truth = JSON.parse(process.env.TRUTH);
           const lineage = JSON.parse(process.env.LINEAGE);
           const bundles = JSON.parse(process.env.BUNDLES);
           const mapping = JSON.parse(process.env.XFDL_MAPPING);
+          const acord126 = JSON.parse(process.env.XFDL_126);
+          const acord130 = JSON.parse(process.env.XFDL_130);
+          const supplemental = JSON.parse(process.env.XFDL_SUPPLEMENTAL);
           if (version.productionBaseline !== 'RP-8') throw new Error('Production baseline changed');
           if (version.semanticBaseline !== 'RP-9') throw new Error('RP-9 semantic baseline is not active');
           if (version.semanticRuntime?.activationState !== 'staging-active') throw new Error('RP-9 runtime is not staging-active');
@@ -163,6 +169,12 @@ jobs:
           if (mapping.mappingPipeline !== 'xfdl-rp9-layoutlm.v1') throw new Error('XFDL mapping pipeline is not active');
           if (mapping.xfdlDiagnostics?.legacyFallbackUsed !== false) throw new Error('Legacy fallback entered the XFDL pipeline');
           if (mapping.mappings?.[0]?.chosen?.acordCode !== 'Producer.Identity.FullName') throw new Error('XFDL Agent mapping mismatch');
+          for (const current of [acord126, acord130, supplemental]) {
+            if (current.contractVersion !== 'xfdl.rp9.mapping.v1' || current.xfdlDiagnostics?.legacyFallbackUsed !== false) throw new Error('Cross-form XFDL contract mismatch');
+          }
+          if (acord126.mappings?.[0]?.chosen?.acordCode !== 'CurrencyAmount') throw new Error('ACORD 126 currency rule mismatch');
+          if (acord130.mappings?.[0]?.chosen?.acordCode !== 'Percentage') throw new Error('ACORD 130 percentage rule mismatch');
+          if (supplemental.mappings?.[0]?.chosen?.acordCode !== 'Question.BooleanAnswer' || supplemental.xfdlDiagnostics?.tableAwareBlockCount !== 1) throw new Error('Supplemental table checkbox rule mismatch');
           NODE
 
       - name: Install frontend dependencies

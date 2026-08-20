@@ -1817,6 +1817,8 @@ export async function mapFields(
           layoutLmByBlock,
           pageDimensions: body.pageDimensions,
           formId: body.familyId,
+          sourceDocumentName: body.sourceDocumentName,
+          groupedStructures: body.groupedStructures,
         })
       : null;
     const mappings = xfdlResult

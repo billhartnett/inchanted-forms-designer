@@ -202,6 +202,7 @@ function main() {
   const qaFamily = family('general-information.question-answer', 'question-answer', ['pageIndex', 'questionIndex']);
   const questionFamily = family('question.instance', 'question', ['pageIndex', 'questionIndex']);
   const booleanAnswerFamily = family('question.boolean-answer', 'answer', ['pageIndex', 'questionIndex', 'yesNoIndex'], 'question.instance');
+  const numericValueFamily = family('numeric.value', 'value', ['pageIndex', 'fieldOccurrence']);
   const structuralEvidence = (section) => ({ evidenceType: 'structural-section-model', section: evidence.section(section), corpus: evidence.manifest });
 
   const additions = {
@@ -355,6 +356,14 @@ function main() {
     'Question.BooleanAnswer': node('Question.BooleanAnswer', {
       aliases: ['ACORD BOOLEAN ANSWER'], synonyms: ['answer', 'boolean', 'no', 'yes'], sections: ['general-information', 'premises-information'], groups: ['question-answer', 'yes-no'],
       semanticKind: 'fillable', component: 'booleanAnswer', instanceFamily: booleanAnswerFamily, parentCodes: ['Question.Text'], evidence: structuralEvidence('Section.GeneralInformation'),
+    }),
+    CurrencyAmount: node('CurrencyAmount', {
+      aliases: ['CURRENCY AMOUNT', 'AMOUNT ($)', 'DOLLAR AMOUNT'], synonyms: ['amount', 'currency', 'dollar', 'money'], sections: ['general-information', 'premises-information'], groups: ['numeric', 'currency'],
+      semanticKind: 'fillable', component: 'currencyAmount', instanceFamily: numericValueFamily, evidence: structuralEvidence('Section.GeneralInformation'),
+    }),
+    Percentage: node('Percentage', {
+      aliases: ['PERCENTAGE', 'PERCENT', '%'], synonyms: ['percent', 'percentage', 'rate'], sections: ['general-information', 'premises-information'], groups: ['numeric', 'percentage'],
+      semanticKind: 'fillable', component: 'percentage', instanceFamily: numericValueFamily, evidence: structuralEvidence('Section.GeneralInformation'),
     }),
     'GeneralInformation.Question': node('GeneralInformation.Question', {
       aliases: ['general information question'], synonyms: ['general', 'information', 'question'], sections: ['general-information'], groups: ['question-answer'],

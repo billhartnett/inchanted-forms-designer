@@ -14,7 +14,8 @@
 **/tests/diagnostics
 restore-points
 training-data/*
-!training-data/ACORD 0125 2016-03r1.xfdl
+!training-data/*.xfdl
+!training-data/*.Xfdl
 corpus-validation-*
 debug
 docs
