@@ -13,7 +13,8 @@
 **/__azurite_db_*
 **/tests/diagnostics
 restore-points
-training-data
+training-data/*
+!training-data/ACORD 0125 2016-03r1.xfdl
 corpus-validation-*
 debug
 docs
