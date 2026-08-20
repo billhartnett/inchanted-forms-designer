@@ -33,6 +33,9 @@ RUN test -f /workspace/backend/api/dist/services/rp9OntologyRuntime.js
 RUN test -f /workspace/backend/api/dist/services/semanticOntologyRuntime.js
 RUN test -f /workspace/backend/api/dist/services/xfdlRp9MappingPipeline.js
 RUN test -f "/workspace/training-data/ACORD 0125 2016-03r1.xfdl"
+RUN test -f "/workspace/training-data/ACORD 0126 2016-09.xfdl"
+RUN test -f "/workspace/training-data/ACORD 0130 2017-05.xfdl"
+RUN test "$(find /workspace/training-data -maxdepth 1 -type f -iname '*.xfdl' | wc -l)" -ge 60
 RUN test "$(find /workspace/backend/api/dist -type f -name '*wave8Gating*' | wc -l)" -eq 0
 RUN ! grep -R -E 'wave8Gating|WAVE8_GATE|header_requires_supervision_boost' /workspace/backend/api/dist
 

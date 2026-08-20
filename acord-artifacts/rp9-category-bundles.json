@@ -3,8 +3,8 @@
   "generatedAt": "2026-08-18T00:00:00.000Z",
   "restorePoint": "RP-9",
   "status": "staging-active",
-  "semanticTruthPayloadSha256": "0e6243509df77e8cd0bbe7fc044ad8bda732d9ca821cfc411d4ef4cef23adcb3",
-  "ontologyHash": "5818d03a12daf856fddcaba6dbfec7b764a0c1a417ffd00ca79a85aea58d0a70",
+  "semanticTruthPayloadSha256": "39f8c2bc52c4afe380a731900855ae2d2bddd00da76d7c93f6f298fb6152ea05",
+  "ontologyHash": "e34e49f41f533d8c5c1089d7fe8ff63c452b3fd92768d9734e7150c9abcd56e4",
   "groups": [
     {
       "bundleId": "address",
@@ -76,6 +76,13 @@
       "nodeCount": 4
     },
     {
+      "bundleId": "currency",
+      "nodeIds": [
+        "CurrencyAmount"
+      ],
+      "nodeCount": 1
+    },
+    {
       "bundleId": "date",
       "nodeIds": [
         "Form.Date.Completed",
@@ -116,6 +123,14 @@
       "nodeCount": 4
     },
     {
+      "bundleId": "numeric",
+      "nodeIds": [
+        "CurrencyAmount",
+        "Percentage"
+      ],
+      "nodeCount": 2
+    },
+    {
       "bundleId": "occupancy",
       "nodeIds": [
         "Premises.Occupancy.Description"
@@ -126,6 +141,13 @@
       "bundleId": "operations",
       "nodeIds": [
         "GeneralInformation.Operations.Description"
+      ],
+      "nodeCount": 1
+    },
+    {
+      "bundleId": "percentage",
+      "nodeIds": [
+        "Percentage"
       ],
       "nodeCount": 1
     },
@@ -236,6 +258,7 @@
     {
       "bundleId": "general-information",
       "nodeIds": [
+        "CurrencyAmount",
         "GeneralInfo.MailingAddress.City",
         "GeneralInfo.MailingAddress.Line1",
         "GeneralInfo.MailingAddress.PostalCode",
@@ -248,11 +271,12 @@
         "GeneralInformation.Operations.Description",
         "GeneralInformation.Question",
         "GeneralLiability.Exposure.HazardClass",
+        "Percentage",
         "Question.BooleanAnswer",
         "Question.Text",
         "Section.GeneralInformation"
       ],
-      "nodeCount": 15
+      "nodeCount": 17
     },
     {
       "bundleId": "liability",
@@ -271,6 +295,8 @@
     {
       "bundleId": "premises-information",
       "nodeIds": [
+        "CurrencyAmount",
+        "Percentage",
         "Premises.Address.City",
         "Premises.Address.Line1",
         "Premises.Address.Line2",
@@ -290,7 +316,7 @@
         "Question.Text",
         "Section.PremisesInformation"
       ],
-      "nodeCount": 18
+      "nodeCount": 20
     },
     {
       "bundleId": "producer-information",
@@ -383,6 +409,21 @@
       "stableIdentity": [
         "pageIndex",
         "questionIndex",
+        "canonicalNodeId"
+      ]
+    },
+    "numeric.value": {
+      "familyId": "numeric.value",
+      "cardinality": "many",
+      "level": "value",
+      "instanceKey": [
+        "pageIndex",
+        "fieldOccurrence"
+      ],
+      "parentFamilyId": null,
+      "stableIdentity": [
+        "pageIndex",
+        "fieldOccurrence",
         "canonicalNodeId"
       ]
     },
@@ -574,6 +615,6 @@
   },
   "integrity": {
     "algorithm": "sha256",
-    "payloadSha256": "350ec71aa7dcd9ec035d88e99d54b515317644b4b08d9bb32e09dba1c98bbf35"
+    "payloadSha256": "10f07bdfa5e71091a09c0fd8e2b30abe1965cb526aa7a6e1fe80c6f87ca2b6cd"
   }
 }

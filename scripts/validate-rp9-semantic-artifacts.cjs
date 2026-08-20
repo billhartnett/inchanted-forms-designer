@@ -61,12 +61,13 @@ const requiredNodes = [
   'Premises.Location.Identifier', 'Premises.Building.Identifier', 'Premises.Address.Line1', 'Premises.Address.City',
   'GeneralInformation.Question', 'GeneralInformation.Answer',
   'Question.Text', 'Question.BooleanAnswer',
+  'CurrencyAmount', 'Percentage',
   'Premises.Occupancy.Description', 'Premises.Construction.Type', 'Premises.Protection.Fire', 'Premises.Protection.Burglary',
   'GeneralInformation.Operations.Description', 'GeneralInformation.Exposure.Description', 'GeneralInformation.Hazard.Description', 'GeneralInformation.BusinessDetails',
   'Section.ProducerInformation', 'Section.ApplicantInformation', 'Section.PremisesInformation', 'Section.GeneralInformation',
 ];
 checks.requiredNodesPresent = requiredNodes.every((id) => nodeIds.has(id));
-checks.stableIdentifiers = [...nodeIds].every((id) => /^[A-Z][A-Za-z0-9]*(\.[A-Z][A-Za-z0-9]*)+$/.test(id));
+checks.stableIdentifiers = [...nodeIds].every((id) => /^[A-Z][A-Za-z0-9]*(\.[A-Z][A-Za-z0-9]*)*$/.test(id));
 checks.nodeCount = nodeIds.size === truth.validation.nodeCount && nodeIds.size === lineage.nodeCount;
 checks.ontologyHash = sha256(stableSerialize(nodes)) === truth.canonicalOntology.hash && truth.canonicalOntology.hash === bundles.ontologyHash && bundles.ontologyHash === lineage.ontologyHash;
 checks.referencesValid = Object.values(nodes).every((node) => ['parentCodes', 'childCodes', 'mutuallyExclusiveCodes', 'requiredSiblingCodes'].every((relation) => (node[relation] || []).every((id) => nodeIds.has(id))));
