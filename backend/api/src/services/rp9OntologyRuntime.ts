@@ -389,6 +389,17 @@ export function projectMappingsToRp9(mappings: FieldMapping[]): FieldMapping[] {
   });
 }
 
+export function projectCanonicalMappingsToRp9(mappings: FieldMapping[]): FieldMapping[] {
+  return mappings.map((mapping) => {
+    const context = [mapping.semanticLabel, mapping.text].filter((value): value is string => Boolean(value?.trim())).join(" ").trim();
+    const suggestions = mapping.suggestions
+      .map((candidate) => projectedCandidate(candidate, context, mapping))
+      .filter((candidate) => candidate.rp9.canonical && candidate.rp9.boundaryDisposition !== "blocked");
+    const chosen = suggestions[0];
+    return { ...mapping, suggestions, topCandidate: chosen, chosen };
+  });
+}
+
 export function assertRp9Selections(mappings: FieldMapping[]): void {
   for (const mapping of mappings) {
     const suggestions = mapping.suggestions as Rp9ProjectedCandidate[];
