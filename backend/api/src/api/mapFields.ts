@@ -29,6 +29,11 @@ import {
   getActiveSemanticRuntime,
   projectMappingsToActiveSemanticBaseline,
 } from "../services/semanticOntologyRuntime";
+import {
+  isXfdlPrimaryMappingEnabled,
+  mapBlocksWithXfdlRp9,
+} from "../services/xfdlRp9MappingPipeline";
+import { projectCanonicalMappingsToRp9 } from "../services/rp9OntologyRuntime";
 
 type LayoutLmPageImageInput = {
   page: number;
@@ -1804,15 +1809,27 @@ export async function mapFields(
     const layoutLmEvaluation = await layoutLmByBlockPromise;
     const layoutLmByBlock = layoutLmEvaluation.byBlockId;
 
-    const mappings = fieldCatalog.length > 0
-      ? blocks.map((block): FieldMapping => ({
+    const xfdlPrimary = isXfdlPrimaryMappingEnabled(body.sourceDocumentName, body.familyId);
+    const xfdlResult = xfdlPrimary
+      ? mapBlocksWithXfdlRp9({
+          blocks,
+          fieldCatalog,
+          layoutLmByBlock,
+          pageDimensions: body.pageDimensions,
+          formId: body.familyId,
+        })
+      : null;
+    const mappings = xfdlResult
+      ? xfdlResult.mappings
+      : fieldCatalog.length > 0
+        ? blocks.map((block): FieldMapping => ({
           blockId: block.id,
           page: block.page,
           text: block.text,
           boundingBox: block.boundingBox,
           suggestions: [],
         }))
-      : await mapBlocksWithAcord(blocks, {
+        : await mapBlocksWithAcord(blocks, {
           context: body.context,
           deterministic: body.deterministic === true,
           calibrationProfile: body.calibrationProfile,
@@ -1837,7 +1854,7 @@ export async function mapFields(
       },
     );
     const promotedSuggestionCache = new Map<string, FieldMapping["suggestions"]>();
-    const ontologyCompleteMappings = completeMappings.map((mapping) => {
+    const ontologyCompleteMappings = xfdlPrimary ? completeMappings : completeMappings.map((mapping) => {
       const catalogEntry = catalogById.get(mapping.blockId);
       const suggestions = promotedDictionarySuggestions(
         mapping,
@@ -1851,18 +1868,20 @@ export async function mapFields(
         ? mapping
         : { ...mapping, suggestions, topCandidate: suggestions[0] };
     });
-    const reducerSnapshot = getLastReducerDebugSnapshot();
-    await writeReducerArtifacts({
-      documentId: body.documentId,
-      totalBlocks: blocks.length,
-      mappingsCount: ontologyCompleteMappings.length,
-      reducerSnapshot,
-    });
-    await writeUsabilityArtifacts({
-      documentId: body.documentId,
-      totalBlocks: blocks.length,
-      mappings: ontologyCompleteMappings,
-    });
+    if (!xfdlPrimary) {
+      const reducerSnapshot = getLastReducerDebugSnapshot();
+      await writeReducerArtifacts({
+        documentId: body.documentId,
+        totalBlocks: blocks.length,
+        mappingsCount: ontologyCompleteMappings.length,
+        reducerSnapshot,
+      });
+      await writeUsabilityArtifacts({
+        documentId: body.documentId,
+        totalBlocks: blocks.length,
+        mappings: ontologyCompleteMappings,
+      });
+    }
 
     const mappingsWithLayoutLm = ontologyCompleteMappings.map((mapping) => {
       const catalogEntry = catalogById.get(mapping.blockId);
@@ -1894,7 +1913,9 @@ export async function mapFields(
         layoutlmEvaluation: layoutLmByBlock[mapping.blockId],
       };
     });
-    const semanticMappings = projectMappingsToActiveSemanticBaseline(mappingsWithLayoutLm);
+    const semanticMappings = xfdlPrimary
+      ? projectCanonicalMappingsToRp9(mappingsWithLayoutLm)
+      : projectMappingsToActiveSemanticBaseline(mappingsWithLayoutLm);
     assertActiveSemanticSelections(semanticMappings);
     const mappedFields = semanticMappings.filter((mapping) => {
       const chosen = mapping.chosen as any;
@@ -1916,7 +1937,9 @@ export async function mapFields(
       status: 200,
       jsonBody: {
         documentId: body.documentId,
-        contractVersion: "wave9.hybrid.v1",
+        contractVersion: xfdlPrimary ? "xfdl.rp9.mapping.v1" : "wave9.hybrid.v1",
+        mappingPipeline: xfdlPrimary ? "xfdl-rp9-layoutlm.v1" : "legacy-rp9-projection.v1",
+        xfdlDiagnostics: xfdlResult?.diagnostics,
         semanticBaseline: configuredSemanticBaseline(),
         mappings: semanticMappings,
         mappedFields,
