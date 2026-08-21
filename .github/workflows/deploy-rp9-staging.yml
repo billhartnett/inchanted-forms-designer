@@ -172,7 +172,7 @@ jobs:
           for (const current of [acord126, acord130, supplemental]) {
             if (current.contractVersion !== 'xfdl.rp9.mapping.v1' || current.xfdlDiagnostics?.legacyFallbackUsed !== false) throw new Error('Cross-form XFDL contract mismatch');
           }
-          if (acord126.mappings?.[0]?.chosen?.acordCode !== 'CurrencyAmount') throw new Error('ACORD 126 currency rule mismatch');
+          if (acord126.mappings?.[0]?.chosen?.acordCode !== 'Premium.Amount') throw new Error('ACORD 126 premium rule mismatch');
           if (acord130.mappings?.[0]?.chosen?.acordCode !== 'Percentage') throw new Error('ACORD 130 percentage rule mismatch');
           if (supplemental.mappings?.[0]?.chosen?.acordCode !== 'Question.BooleanAnswer' || supplemental.xfdlDiagnostics?.tableAwareBlockCount !== 1) throw new Error('Supplemental table checkbox rule mismatch');
           NODE

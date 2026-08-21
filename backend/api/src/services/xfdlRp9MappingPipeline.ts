@@ -203,28 +203,37 @@ function horizontalOverlap(left: BoundingBox, right: BoundingBox): number {
 
 function mergedLabel(seed: XfdlLabel | null, labels: XfdlLabel[]): { text: string; sids: string[] } {
   if (!seed?.geometry) return { text: seed?.value || "", sids: seed ? [seed.sid] : [] };
+  if (displayLabel(seed.value).length > 160) return { text: displayLabel(seed.value), sids: [seed.sid] };
+  const seedGeometry = seed.geometry;
   const selected = new Map([[seed.sid, seed]]);
-  let changed = true;
-  while (changed) {
-    changed = false;
-    for (const candidate of labels) {
-      if (!candidate.geometry || selected.has(candidate.sid)) continue;
-      const adjacent = [...selected.values()].some((current) => {
-        const left = current.geometry!;
-        const right = candidate.geometry!;
-        const horizontalGap = Math.max(0, Math.max(left.x, right.x) - Math.min(left.x + left.width, right.x + right.width));
-        const verticalGap = Math.max(0, Math.max(left.y, right.y) - Math.min(left.y + left.height, right.y + right.height));
-        return (verticalOverlap(left, right) >= Math.min(left.height, right.height) * 0.45 && horizontalGap <= 24) ||
-          (horizontalOverlap(left, right) >= Math.min(left.width, right.width) * 0.35 && verticalGap <= 10);
-      });
-      if (adjacent) { selected.set(candidate.sid, candidate); changed = true; }
-    }
-  }
+  const adjacent = labels
+    .filter((candidate) => candidate.geometry && candidate.sid !== seed.sid && displayLabel(candidate.value).length <= 160)
+    .map((candidate) => {
+      const geometry = candidate.geometry!;
+      const horizontalGap = Math.max(0, Math.max(seedGeometry.x, geometry.x) - Math.min(seedGeometry.x + seedGeometry.width, geometry.x + geometry.width));
+      const verticalGap = Math.max(0, Math.max(seedGeometry.y, geometry.y) - Math.min(seedGeometry.y + seedGeometry.height, geometry.y + geometry.height));
+      const sameLine = verticalOverlap(seedGeometry, geometry) >= Math.min(seedGeometry.height, geometry.height) * 0.6 && horizontalGap <= 16;
+      const wrappedLine = horizontalOverlap(seedGeometry, geometry) >= Math.min(seedGeometry.width, geometry.width) * 0.5 && verticalGap <= 6;
+      return { candidate, distance: Math.hypot(seedGeometry.x - geometry.x, seedGeometry.y - geometry.y), adjacent: sameLine || wrappedLine };
+    })
+    .filter((item) => item.adjacent)
+    .sort((left, right) => left.distance - right.distance)
+    .slice(0, 3);
+  for (const item of adjacent) selected.set(item.candidate.sid, item.candidate);
   const ordered = [...selected.values()].sort((left, right) => {
     const lineDelta = (left.geometry?.y || 0) - (right.geometry?.y || 0);
     return Math.abs(lineDelta) <= 8 ? (left.geometry?.x || 0) - (right.geometry?.x || 0) : lineDelta;
   });
-  return { text: displayLabel(ordered.map((item) => item.value).join(" ")), sids: ordered.map((item) => item.sid) };
+  const unique: XfdlLabel[] = [];
+  for (const item of ordered) {
+    const value = normalize(item.value);
+    if (!value || unique.some((existing) => normalize(existing.value) === value || normalize(existing.value).includes(value) || value.includes(normalize(existing.value)))) continue;
+    unique.push(item);
+  }
+  const combined = displayLabel(unique.map((item) => item.value).join(" "));
+  return combined.length > 240
+    ? { text: displayLabel(seed.value), sids: [seed.sid] }
+    : { text: combined, sids: unique.map((item) => item.sid) };
 }
 
 function supplementalSection(context: string): { id: string; label: string; nodeId: string } {
@@ -261,7 +270,10 @@ export function inferSupplementalNumericSemantics(context: string, answer: XfdlA
 }
 
 function reconstructField(fieldGeometry: BoundingBox | null, nearest: XfdlLabel | null, labels: XfdlLabel[], semanticPath: string, helpText: string, answer: XfdlAnswerType) {
-  if (!fieldGeometry) return { label: nearest?.value || "", rowHeader: "", columnHeader: "", section: supplementalSection(`${semanticPath} ${helpText}`), numeric: numericSemantics(`${semanticPath} ${helpText}`, answer), sources: nearest ? [nearest.sid] : [] };
+  if (!fieldGeometry) {
+    const label = displayLabel(nearest?.value || questionTextFrom(helpText, "") || helpText || semanticPath.replace(/_/g, " "));
+    return { label, rowHeader: "", columnHeader: "", section: supplementalSection(`${label} ${semanticPath} ${helpText}`), numeric: numericSemantics(`${label} ${semanticPath} ${helpText}`, answer), sources: nearest ? [nearest.sid] : [] };
+  }
   const merged = mergedLabel(nearest, labels);
   const centerY = fieldGeometry.y + fieldGeometry.height / 2;
   const row = labels
@@ -270,12 +282,15 @@ function reconstructField(fieldGeometry: BoundingBox | null, nearest: XfdlLabel 
   const column = labels
     .filter((item) => item.geometry && item.geometry.y + item.geometry.height <= fieldGeometry.y + 4 && fieldGeometry.y - (item.geometry.y + item.geometry.height) <= 120 && horizontalOverlap(item.geometry, fieldGeometry) > 0)
     .sort((left, right) => (fieldGeometry.y - (left.geometry!.y + left.geometry!.height)) - (fieldGeometry.y - (right.geometry!.y + right.geometry!.height)))[0];
-  const rowText = row ? mergedLabel(row, labels).text : "";
-  const columnText = column ? mergedLabel(column, labels).text : "";
+  const narrativeLabel = merged.text.length > 160;
+  const rowText = !narrativeLabel && row ? mergedLabel(row, labels).text : "";
+  const columnText = !narrativeLabel && column ? mergedLabel(column, labels).text : "";
   const parts = [...new Set([rowText, columnText, merged.text].map(displayLabel).filter(Boolean))];
-  const reconstructed = parts.join(" - ") || displayLabel(questionTextFrom(helpText, "") || semanticPath.replace(/_/g, " "));
+  const combined = parts.join(" - ") || displayLabel(questionTextFrom(helpText, "") || semanticPath.replace(/_/g, " "));
+  const contextTooLong = Boolean(merged.text) && !narrativeLabel && combined.length > 240;
+  const reconstructed = contextTooLong ? merged.text : combined;
   const section = supplementalSection(`${reconstructed} ${semanticPath} ${helpText}`);
-  return { label: reconstructed, rowHeader: rowText, columnHeader: columnText, section, numeric: numericSemantics(`${reconstructed} ${semanticPath} ${helpText}`, answer), sources: [...new Set([...merged.sids, row?.sid, column?.sid].filter((value): value is string => Boolean(value)))] };
+  return { label: reconstructed, rowHeader: contextTooLong ? "" : rowText, columnHeader: contextTooLong ? "" : columnText, section, numeric: numericSemantics(`${reconstructed} ${semanticPath} ${helpText}`, answer), sources: [...new Set([...merged.sids, ...(!narrativeLabel && !contextTooLong ? [row?.sid, column?.sid] : [])].filter((value): value is string => Boolean(value)))] };
 }
 
 function nearestLabel(fieldGeometry: BoundingBox | null, labels: XfdlLabel[], semanticContext: string): XfdlLabel | null {
