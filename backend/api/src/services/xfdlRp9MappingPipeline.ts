@@ -500,10 +500,20 @@ function layoutLmValidation(canonicalNodeId: string, evaluation: LayoutLmEvaluat
 
 function tableContext(catalog: ExtractDocumentFieldCatalogEntry | undefined, fieldCatalog: ExtractDocumentFieldCatalogEntry[]): string {
   if (!catalog?.tableId) return "";
-  return fieldCatalog
-    .filter((entry) => entry.tableId === catalog.tableId && (entry.rowIndex === catalog.rowIndex || entry.columnIndex === catalog.columnIndex))
-    .map((entry) => `${entry.semanticLabel || ""} ${entry.text || ""}`)
-    .join(" ");
+  const context = catalogTableContext(catalog, fieldCatalog);
+  return `${context.rowHeader} ${context.columnHeader}`.trim();
+}
+
+function catalogTableContext(catalog: ExtractDocumentFieldCatalogEntry | undefined, fieldCatalog: ExtractDocumentFieldCatalogEntry[]): { rowHeader: string; columnHeader: string } {
+  if (!catalog?.tableId) return { rowHeader: "", columnHeader: "" };
+  const values = (role: "row_label" | "column_header", matches: (entry: ExtractDocumentFieldCatalogEntry) => boolean) => [...new Set(fieldCatalog
+    .filter((entry) => entry.id !== catalog.id && entry.tableId === catalog.tableId && entry.role === role && matches(entry))
+    .map((entry) => displayLabel(entry.semanticLabel || entry.text))
+    .filter(Boolean))].join(" / ");
+  return {
+    rowHeader: values("row_label", (entry) => entry.rowIndex === catalog.rowIndex),
+    columnHeader: values("column_header", (entry) => entry.columnIndex === catalog.columnIndex),
+  };
 }
 
 function scoreCandidate(block: ExtractedBlock, catalog: ExtractDocumentFieldCatalogEntry | undefined, field: XfdlSemanticField, canonicalNodeId: string, layoutLm: LayoutLmEvaluation | undefined, pageDimensions: PipelineInput["pageDimensions"], index: XfdlSemanticIndex, fieldCatalog: ExtractDocumentFieldCatalogEntry[], groupedStructures: ExtractDocumentGroupedStructures | undefined): ScoredCandidate {
@@ -710,11 +720,14 @@ export function mapBlocksWithXfdlRp9(input: PipelineInput): { mappings: FieldMap
       } : undefined,
     } as AcordLabelCandidate));
     const reconstruction = (suggestions[0] as any)?.xfdl;
-    const catalogTable = tableContext(catalog, input.fieldCatalog);
+    const catalogHeaders = catalogTableContext(catalog, input.fieldCatalog);
+    const catalogTable = `${catalogHeaders.rowHeader} ${catalogHeaders.columnHeader}`.trim();
     const fallbackContext = `${catalog?.semanticLabel || ""} ${catalog?.text || ""} ${block.text} ${catalogTable}`;
     const fallbackNumeric = inferSupplementalNumericSemantics(fallbackContext, String(catalog?.valueType || "") === "currency" ? "currency" : String(catalog?.valueType || "") === "percentage" ? "percent" : String(catalog?.valueType || "") === "numeric" ? "number" : "text");
     const fallbackSection = supplementalSection(fallbackContext);
     const declaredTable = Boolean(catalog?.tableId && input.groupedStructures?.tables.some((table) => table.id === catalog.tableId && table.page === block.page));
+    const localLabel = displayLabel(catalog?.semanticLabel || catalog?.text || block.text);
+    const tableLabel = [...new Set([catalogHeaders.rowHeader, catalogHeaders.columnHeader, localLabel].filter(Boolean))].join(" - ");
     return {
       blockId: block.id,
       page: block.page,
@@ -722,11 +735,11 @@ export function mapBlocksWithXfdlRp9(input: PipelineInput): { mappings: FieldMap
       boundingBox: block.boundingBox,
       suggestions,
       topCandidate: suggestions[0],
-      semanticLabel: reconstruction?.reconstructedLabel || displayLabel(`${catalog?.semanticLabel || catalog?.text || block.text}`),
+      semanticLabel: declaredTable ? tableLabel || localLabel : reconstruction?.reconstructedLabel || localLabel,
       reconstructedNumericType: reconstruction?.numericType || fallbackNumeric.type,
       reconstructedSection: reconstruction?.sectionLabel || fallbackSection.label,
       reconstructedSectionNodeId: reconstruction?.sectionNodeId || fallbackSection.nodeId,
-      tableContext: declaredTable ? { rowHeader: reconstruction?.rowHeader || displayLabel(catalogTable), columnHeader: reconstruction?.columnHeader || "" } : undefined,
+      tableContext: declaredTable ? catalogHeaders : undefined,
     } as FieldMapping;
   });
   const bound = bindQuestionMappings(mappings, input);
