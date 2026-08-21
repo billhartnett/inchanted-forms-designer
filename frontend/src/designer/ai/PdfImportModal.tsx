@@ -769,6 +769,9 @@ function readHybridMappingMetadata(
     tableId: (mapping as any).tableId,
     rowIndex: (mapping as any).rowIndex,
     columnIndex: (mapping as any).columnIndex,
+    tableContext: (mapping as any).tableContext,
+    reconstructedSection: (mapping as any).reconstructedSection,
+    reconstructedSectionNodeId: (mapping as any).reconstructedSectionNodeId,
   };
 }
 
@@ -1332,13 +1335,18 @@ export default function PdfImportModal({
             }))
           : undefined,
         semanticRole: catalog?.semanticRole || (mapping as any).semanticRole || catalog?.role,
-        semanticLabel: catalog?.semanticLabel || catalog?.text || mapping.text,
-        fieldType: catalog?.valueType,
+        semanticLabel: (mapping as any).semanticLabel || catalog?.semanticLabel || catalog?.text || mapping.text,
+        fieldType: ["integer", "decimal", "rate-per-100", "rate-per-1000"].includes((mapping as any).reconstructedNumericType)
+          ? "numeric"
+          : (mapping as any).reconstructedNumericType || catalog?.valueType,
         groupId: catalog?.groupId,
         semanticGroupIds: catalog?.semanticGroupIds,
         tableId: catalog?.tableId,
         rowIndex: catalog?.rowIndex,
         columnIndex: catalog?.columnIndex,
+        tableContext: (mapping as any).tableContext,
+        reconstructedSection: (mapping as any).reconstructedSection,
+        reconstructedSectionNodeId: (mapping as any).reconstructedSectionNodeId,
       } as MapFieldMapping;
     });
     const promotedMappingIds = new Set(strictMappings.map((mapping) => mapping.blockId));

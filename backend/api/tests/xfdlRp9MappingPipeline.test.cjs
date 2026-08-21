@@ -219,6 +219,64 @@ test("loads ACORD 126, ACORD 130, and supplemental XFDL indexes", () => withXfdl
   }
 }));
 
+test("reconstructs split labels and table row/column context", () => withXfdlStaging(() => {
+  const location = (x, y, width, height) => `<itemLocation><ae><ae>absolute</ae><ae>${x}</ae><ae>${y}</ae></ae><ae><ae>extent</ae><ae>${width}</ae><ae>${height}</ae></ae></itemLocation>`;
+  const xml = `<page sid="PAGE1">
+    <label sid="row-a">${location(20, 100, 65, 16)}<value>ANNUAL</value></label>
+    <label sid="row-b">${location(88, 100, 70, 16)}<value>PAYROLL</value></label>
+    <label sid="column">${location(200, 60, 100, 18)}<value>$ AMOUNT</value></label>
+    <field sid="Payroll_Amount_A">${location(200, 100, 100, 18)}<value></value></field>
+  </page>`;
+  const index = pipeline.parseXfdlSemanticIndex(xml, "inline-payroll", "supplemental");
+  const field = index.fields.find((item) => item.sid === "Payroll_Amount_A");
+  assert.match(field.reconstructedLabel, /ANNUAL PAYROLL/i);
+  assert.match(field.reconstructedLabel, /\$ AMOUNT/i);
+  assert.equal(field.rowHeader, "ANNUAL PAYROLL");
+  assert.equal(field.columnHeader, "$ AMOUNT");
+  assert.equal(field.numericType, "currency");
+  assert.equal(field.canonicalNodeIds[0], "Payroll.Amount");
+  assert.equal(field.section, "payroll-exposure");
+}));
+
+test("infers all supplemental numeric semantic types", () => withXfdlStaging(() => {
+  const cases = [
+    ["Annual payroll $ amount", "Payroll.Amount", "currency"],
+    ["Payroll percentage %", "Payroll.Percentage", "percent"],
+    ["Gross receipts amount", "GrossReceipts.Amount", "currency"],
+    ["Total exposure $ amount", "Exposure.Amount", "currency"],
+    ["Hazard percentage", "Hazard.Percentage", "percent"],
+    ["Rate per $100", "Rate.Per100", "rate-per-100"],
+    ["Rate per $1,000", "Rate.Per1000", "rate-per-1000"],
+    ["Total premium", "Premium.Amount", "currency"],
+    ["Classification code", "Classification.Code", "integer"],
+    ["Classification description", "Classification.Description", "text"],
+    ["Number of employees", "Integer", "integer"],
+    ["Experience modifier decimal", "Decimal", "decimal"],
+  ];
+  for (const [text, nodeId, type] of cases) {
+    const inferred = pipeline.inferSupplementalNumericSemantics(text);
+    assert.equal(inferred.nodeId, nodeId, text);
+    assert.equal(inferred.type, type, text);
+  }
+}));
+
+test("reconstructs semantics across ACORD 130 and carrier supplemental XFDLs", () => withXfdlStaging(() => {
+  const cases = [
+    ["sample-Acord-130.pdf", "acord-130"],
+    ["Markel MAIL 021 09_15.pdf", "supplemental"],
+    ["Hartford SS_25_50_06_16.pdf", "supplemental"],
+    ["Philadelphia Salon_and_Day_Spa_App 2016-12.pdf", "supplemental"],
+    ["Travelers CP-4650 2001-05.pdf", "supplemental"],
+  ];
+  const requestedNodes = new Set(["Payroll.Amount", "GrossReceipts.Amount", "Exposure.Amount", "Premium.Amount", "Classification.Code", "Classification.Description", "Integer", "Decimal"]);
+  for (const [source, formId] of cases) {
+    const index = pipeline.getXfdlSemanticIndex(source, formId);
+    assert.equal(index.fields.filter((field) => field.controlType !== "label").every((field) => Boolean(field.reconstructedLabel)), true, source);
+    assert.equal(index.fields.some((field) => field.canonicalNodeIds.some((nodeId) => requestedNodes.has(nodeId))), true, source);
+    assert.equal(index.fields.some((field) => field.section?.includes("supplemental") || ["payroll-exposure", "classification", "rating"].includes(field.section)), true, source);
+  }
+}));
+
 test("mapFields exposes the staging XFDL pipeline contract without legacy fallback", async () => withXfdlStaging(async () => {
   const blocks = [block("agent", "AGENT NAME", 20, 60)];
   const fieldCatalog = [catalog("agent", "AGENT NAME", 20, 60, "input", "text", "producer-information")];

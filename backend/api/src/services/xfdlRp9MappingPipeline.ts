@@ -6,7 +6,7 @@ import type { BoundingBox, ExtractedBlock, FieldMapping, QuestionAnswerBinding, 
 import type { ExtractDocumentFieldCatalogEntry, ExtractDocumentGroupedStructures } from "../types/extractDocumentContract";
 import { getActiveRp9Runtime } from "./rp9OntologyRuntime";
 
-export type XfdlAnswerType = "text" | "boolean" | "select" | "date" | "number" | "currency" | "percent" | "signature";
+export type XfdlAnswerType = "text" | "boolean" | "select" | "date" | "number" | "integer" | "decimal" | "currency" | "percent" | "rate-per-100" | "rate-per-1000" | "signature";
 
 export type XfdlSemanticField = {
   sid: string;
@@ -22,6 +22,13 @@ export type XfdlSemanticField = {
   canonicalNodeIds: string[];
   questionFamilyId?: string;
   bindingRole?: "question" | "boolean-answer";
+  reconstructedLabel?: string;
+  rowHeader?: string;
+  columnHeader?: string;
+  sectionLabel?: string;
+  sectionNodeId?: string;
+  numericType?: XfdlAnswerType;
+  reconstructionSources?: string[];
 };
 
 export type XfdlSemanticIndex = {
@@ -81,6 +88,7 @@ function normalize(value: unknown): string {
   return String(value || "")
     .replace(/([a-z])([A-Z])/g, "$1 $2")
     .toLowerCase()
+    .replace(/(\d),(?=\d)/g, "$1")
     .replace(/\b(?:agent|agency|broker)\b/g, "producer")
     .replace(/\b(?:named\s+insured|applicant)\b/g, "insuredparty")
     .replace(/\bmailing\s+address\b|\baddress\b/g, "address")
@@ -137,6 +145,16 @@ function decodeXml(value: string): string {
     .trim();
 }
 
+function displayLabel(value: string): string {
+  return decodeXml(value)
+    .replace(/[\u2010-\u2015]/g, "-")
+    .replace(/\s+([,.:;?%])/g, "$1")
+    .replace(/\(\s+/g, "(")
+    .replace(/\s+\)/g, ")")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 function parseGeometry(body: string): BoundingBox | null {
   const absolute = body.match(/<ae>\s*<ae>absolute<\/ae>\s*<ae>(-?\d+(?:\.\d+)?)<\/ae>\s*<ae>(-?\d+(?:\.\d+)?)<\/ae>\s*<\/ae>/i);
   const extent = body.match(/<ae>\s*<ae>extent<\/ae>\s*<ae>(-?\d+(?:\.\d+)?)<\/ae>\s*<ae>(-?\d+(?:\.\d+)?)<\/ae>\s*<\/ae>/i);
@@ -174,6 +192,91 @@ function inferSection(label: string, semanticPath: string): string | null {
 }
 
 type XfdlLabel = { sid: string; value: string; geometry: BoundingBox | null };
+
+function verticalOverlap(left: BoundingBox, right: BoundingBox): number {
+  return Math.max(0, Math.min(left.y + left.height, right.y + right.height) - Math.max(left.y, right.y));
+}
+
+function horizontalOverlap(left: BoundingBox, right: BoundingBox): number {
+  return Math.max(0, Math.min(left.x + left.width, right.x + right.width) - Math.max(left.x, right.x));
+}
+
+function mergedLabel(seed: XfdlLabel | null, labels: XfdlLabel[]): { text: string; sids: string[] } {
+  if (!seed?.geometry) return { text: seed?.value || "", sids: seed ? [seed.sid] : [] };
+  const selected = new Map([[seed.sid, seed]]);
+  let changed = true;
+  while (changed) {
+    changed = false;
+    for (const candidate of labels) {
+      if (!candidate.geometry || selected.has(candidate.sid)) continue;
+      const adjacent = [...selected.values()].some((current) => {
+        const left = current.geometry!;
+        const right = candidate.geometry!;
+        const horizontalGap = Math.max(0, Math.max(left.x, right.x) - Math.min(left.x + left.width, right.x + right.width));
+        const verticalGap = Math.max(0, Math.max(left.y, right.y) - Math.min(left.y + left.height, right.y + right.height));
+        return (verticalOverlap(left, right) >= Math.min(left.height, right.height) * 0.45 && horizontalGap <= 24) ||
+          (horizontalOverlap(left, right) >= Math.min(left.width, right.width) * 0.35 && verticalGap <= 10);
+      });
+      if (adjacent) { selected.set(candidate.sid, candidate); changed = true; }
+    }
+  }
+  const ordered = [...selected.values()].sort((left, right) => {
+    const lineDelta = (left.geometry?.y || 0) - (right.geometry?.y || 0);
+    return Math.abs(lineDelta) <= 8 ? (left.geometry?.x || 0) - (right.geometry?.x || 0) : lineDelta;
+  });
+  return { text: displayLabel(ordered.map((item) => item.value).join(" ")), sids: ordered.map((item) => item.sid) };
+}
+
+function supplementalSection(context: string): { id: string; label: string; nodeId: string } {
+  const value = normalize(context);
+  if (/payroll|employee|remuneration/.test(value)) return { id: "payroll-exposure", label: "Payroll and Exposure", nodeId: "Section.PayrollExposure" };
+  if (/classification|class code|description of operations/.test(value)) return { id: "classification", label: "Classification", nodeId: "Section.Classification" };
+  if (/premium|rate|rating/.test(value)) return { id: "rating", label: "Rating and Premium", nodeId: "Section.Rating" };
+  if (/location|premises|building/.test(value)) return { id: "premises-information", label: "Premises Information", nodeId: "Section.PremisesInformation" };
+  return { id: "supplemental-information", label: "Supplemental Information", nodeId: "Section.SupplementalInformation" };
+}
+
+function numericSemantics(context: string, answer: XfdlAnswerType): { type: XfdlAnswerType; nodeId: string | null } {
+  if (["boolean", "select", "date", "signature"].includes(answer)) return { type: answer, nodeId: null };
+  const value = normalize(context);
+  if (/per\s*(?:\$\s*)?1000|per thousand/.test(value)) return { type: "rate-per-1000", nodeId: "Rate.Per1000" };
+  if (/per\s*(?:\$\s*)?100\b|per hundred/.test(value)) return { type: "rate-per-100", nodeId: "Rate.Per100" };
+  if (/class(?:ification)?\s*(?:code|no|number)/.test(value)) return { type: "integer", nodeId: "Classification.Code" };
+  if (/class(?:ification)?\s*description|description of (?:class|operations)/.test(value)) return { type: "text", nodeId: "Classification.Description" };
+  if (/payroll/.test(value) && /percent|percentage|%/.test(value)) return { type: "percent", nodeId: "Payroll.Percentage" };
+  if (/payroll|remuneration/.test(value)) return { type: "currency", nodeId: "Payroll.Amount" };
+  if (/gross (?:receipts|sales)/.test(value)) return { type: "currency", nodeId: "GrossReceipts.Amount" };
+  if (/premium/.test(value)) return { type: "currency", nodeId: "Premium.Amount" };
+  if (/hazard/.test(value) && /percent|percentage|%/.test(value)) return { type: "percent", nodeId: "Hazard.Percentage" };
+  if (/exposure|receipts|sales|cost/.test(value) && /amount|total|\$/.test(context)) return { type: "currency", nodeId: "Exposure.Amount" };
+  if (answer === "currency" || /\$|dollar|amount/.test(context)) return { type: "currency", nodeId: "CurrencyAmount" };
+  if (answer === "percent" || /%|percent|percentage/.test(context)) return { type: "percent", nodeId: "Percentage" };
+  if (/decimal|factor|modifier|ratio/.test(value)) return { type: "decimal", nodeId: "Decimal" };
+  if (/count|number of|employees|units|year/.test(value)) return { type: "integer", nodeId: "Integer" };
+  return answer === "number" ? { type: "decimal", nodeId: "Decimal" } : { type: answer, nodeId: null };
+}
+
+export function inferSupplementalNumericSemantics(context: string, answer: XfdlAnswerType = "text"): { type: XfdlAnswerType; nodeId: string | null } {
+  return numericSemantics(context, answer);
+}
+
+function reconstructField(fieldGeometry: BoundingBox | null, nearest: XfdlLabel | null, labels: XfdlLabel[], semanticPath: string, helpText: string, answer: XfdlAnswerType) {
+  if (!fieldGeometry) return { label: nearest?.value || "", rowHeader: "", columnHeader: "", section: supplementalSection(`${semanticPath} ${helpText}`), numeric: numericSemantics(`${semanticPath} ${helpText}`, answer), sources: nearest ? [nearest.sid] : [] };
+  const merged = mergedLabel(nearest, labels);
+  const centerY = fieldGeometry.y + fieldGeometry.height / 2;
+  const row = labels
+    .filter((item) => item.geometry && item.geometry.x + item.geometry.width <= fieldGeometry.x + 16 && fieldGeometry.x - (item.geometry.x + item.geometry.width) <= 160 && Math.abs((item.geometry.y + item.geometry.height / 2) - centerY) <= Math.max(18, fieldGeometry.height))
+    .sort((left, right) => (right.geometry!.x + right.geometry!.width) - (left.geometry!.x + left.geometry!.width))[0];
+  const column = labels
+    .filter((item) => item.geometry && item.geometry.y + item.geometry.height <= fieldGeometry.y + 4 && fieldGeometry.y - (item.geometry.y + item.geometry.height) <= 120 && horizontalOverlap(item.geometry, fieldGeometry) > 0)
+    .sort((left, right) => (fieldGeometry.y - (left.geometry!.y + left.geometry!.height)) - (fieldGeometry.y - (right.geometry!.y + right.geometry!.height)))[0];
+  const rowText = row ? mergedLabel(row, labels).text : "";
+  const columnText = column ? mergedLabel(column, labels).text : "";
+  const parts = [...new Set([rowText, columnText, merged.text].map(displayLabel).filter(Boolean))];
+  const reconstructed = parts.join(" - ") || displayLabel(questionTextFrom(helpText, "") || semanticPath.replace(/_/g, " "));
+  const section = supplementalSection(`${reconstructed} ${semanticPath} ${helpText}`);
+  return { label: reconstructed, rowHeader: rowText, columnHeader: columnText, section, numeric: numericSemantics(`${reconstructed} ${semanticPath} ${helpText}`, answer), sources: [...new Set([...merged.sids, row?.sid, column?.sid].filter((value): value is string => Boolean(value)))] };
+}
 
 function nearestLabel(fieldGeometry: BoundingBox | null, labels: XfdlLabel[], semanticContext: string): XfdlLabel | null {
   if (!fieldGeometry) return null;
@@ -264,22 +367,33 @@ export function parseXfdlSemanticIndex(xml: string, sourcePath = "inline", formI
       const nearest = nearestLabel(geometry, labels, `${semanticPath} ${helpText}`);
       const label = nearest?.value || "";
       const answer = answerType(controlType, helpText, body);
+      const reconstruction = reconstructField(geometry, nearest, labels, semanticPath, helpText, answer);
+      const effectiveAnswer = reconstruction.numeric.type;
+      const reconstructedNodes = canonicalNodesFor(semanticPath, reconstruction.label, helpText, effectiveAnswer);
+      if (!DIRECT_RP9_PATHS.has(semanticPath) && reconstruction.numeric.nodeId && getActiveRp9Runtime().nodes.has(reconstruction.numeric.nodeId)) reconstructedNodes.unshift(reconstruction.numeric.nodeId);
       const questionText = answer === "boolean" ? questionTextFrom(helpText, label) : "";
       const familyId = questionText ? `xfdl-question-${page.page}-${normalizedKey(questionText)}` : undefined;
       fields.push({
         sid,
         semanticPath,
         controlType,
-        answerType: answer,
+        answerType: effectiveAnswer,
         page: page.page,
         label,
         helpText,
-        section: inferSection(label, semanticPath),
+        section: inferSection(reconstruction.label || label, semanticPath) || reconstruction.section.id,
         group: groupFromPath(semanticPath),
         geometry,
-        canonicalNodeIds: canonicalNodesFor(semanticPath, label, helpText, answer),
+        canonicalNodeIds: [...new Set(reconstructedNodes)],
         questionFamilyId: familyId,
         bindingRole: familyId ? "boolean-answer" : undefined,
+        reconstructedLabel: reconstruction.label,
+        rowHeader: reconstruction.rowHeader,
+        columnHeader: reconstruction.columnHeader,
+        sectionLabel: reconstruction.section.label,
+        sectionNodeId: reconstruction.section.nodeId,
+        numericType: reconstruction.numeric.type,
+        reconstructionSources: reconstruction.sources,
       });
       const visualQuestion = questionLabel(labels, questionText);
       if (familyId && visualQuestion?.geometry && !fields.some((field) => field.questionFamilyId === familyId && field.bindingRole === "question")) {
@@ -412,13 +526,9 @@ function layoutLmOnlyCandidates(evaluation: LayoutLmEvaluation | undefined): Sco
 
 function globalTypeCandidate(block: ExtractedBlock, catalog: ExtractDocumentFieldCatalogEntry | undefined): ScoredCandidate | null {
   const type = String(catalog?.valueType || block.type || "").toLowerCase();
-  const canonicalNodeId = type === "checkbox" || type === "radio"
-    ? "Question.BooleanAnswer"
-    : type === "currency"
-      ? "CurrencyAmount"
-      : type === "percentage" || type === "percent"
-        ? "Percentage"
-        : null;
+  const answer: XfdlAnswerType = type === "currency" ? "currency" : type === "percentage" || type === "percent" ? "percent" : type === "numeric" || type === "number" ? "number" : "text";
+  const inferred = inferSupplementalNumericSemantics(`${catalog?.semanticLabel || ""} ${catalog?.text || ""} ${block.text}`, answer);
+  const canonicalNodeId = type === "checkbox" || type === "radio" ? "Question.BooleanAnswer" : inferred.nodeId;
   if (!canonicalNodeId || !getActiveRp9Runtime().nodes.has(canonicalNodeId)) return null;
   return { canonicalNodeId, field: null, xfdlLabelMatch: 1, layoutLmValidation: 0, sectionAlignment: 1, geometryAlignment: 0, tableAlignment: catalog?.tableId ? 1 : 0, score: catalog?.tableId ? 1 : 0.9, origin: "type-rule" };
 }
@@ -529,9 +639,9 @@ export function mapBlocksWithXfdlRp9(input: PipelineInput): { mappings: FieldMap
       .flatMap((field) => field.canonicalNodeIds.map((canonicalNodeId) => scoreCandidate(block, catalog, field, canonicalNodeId, input.layoutLmByBlock[block.id], input.pageDimensions, index, input.fieldCatalog, input.groupedStructures)));
     const fallback = candidates.length === 0 ? layoutLmOnlyCandidates(input.layoutLmByBlock[block.id]) : [];
     const typeCandidate = globalTypeCandidate(block, catalog);
-    if (typeCandidate?.canonicalNodeId === "Question.BooleanAnswer") {
+    if (typeCandidate) {
       typeCandidate.field = candidates
-        .filter((candidate) => candidate.canonicalNodeId === "Question.BooleanAnswer" && candidate.field?.questionFamilyId)
+        .filter((candidate) => candidate.canonicalNodeId === typeCandidate.canonicalNodeId && (typeCandidate.canonicalNodeId !== "Question.BooleanAnswer" || candidate.field?.questionFamilyId))
         .sort((left, right) => right.score - left.score)[0]?.field || null;
     }
     const ranked = [...(typeCandidate ? [typeCandidate] : []), ...candidates, ...fallback]
@@ -552,10 +662,10 @@ export function mapBlocksWithXfdlRp9(input: PipelineInput): { mappings: FieldMap
       lexicalScore: Number(candidate.xfdlLabelMatch.toFixed(6)),
       semanticSimilarity: Number(candidate.layoutLmValidation.toFixed(6)),
       heuristicScore: Number((candidate.sectionAlignment * WEIGHTS.sectionAlignment + candidate.geometryAlignment * WEIGHTS.geometryAlignment).toFixed(6)),
-      rationale: candidate.field
-        ? `XFDL ${candidate.field.sid} → RP-9; label=${candidate.xfdlLabelMatch.toFixed(3)}, layoutlm=${candidate.layoutLmValidation.toFixed(3)}, section=${candidate.sectionAlignment.toFixed(3)}, geometry=${candidate.geometryAlignment.toFixed(3)}.`
-        : candidate.origin === "type-rule"
-          ? `Global ${String(catalog?.valueType || block.type)} type rule → RP-9 ${candidate.canonicalNodeId}.`
+      rationale: candidate.origin === "type-rule"
+        ? `Global ${String(catalog?.valueType || block.type)} type rule → RP-9 ${candidate.canonicalNodeId}.`
+        : candidate.field
+          ? `XFDL ${candidate.field.sid} → RP-9; label=${candidate.xfdlLabelMatch.toFixed(3)}, layoutlm=${candidate.layoutLmValidation.toFixed(3)}, section=${candidate.sectionAlignment.toFixed(3)}, geometry=${candidate.geometryAlignment.toFixed(3)}.`
           : `LayoutLMv3 validated an unlabeled field directly against RP-9 (${candidate.layoutLmValidation.toFixed(3)}).`,
       xfdl: candidate.field ? {
         sid: candidate.field.sid,
@@ -567,6 +677,13 @@ export function mapBlocksWithXfdlRp9(input: PipelineInput): { mappings: FieldMap
         group: candidate.field.group,
         questionFamilyId: candidate.field.questionFamilyId,
         bindingRole: candidate.field.bindingRole,
+        reconstructedLabel: candidate.field.reconstructedLabel,
+        rowHeader: candidate.field.rowHeader,
+        columnHeader: candidate.field.columnHeader,
+        sectionLabel: candidate.field.sectionLabel,
+        sectionNodeId: candidate.field.sectionNodeId,
+        numericType: candidate.field.numericType,
+        reconstructionSources: candidate.field.reconstructionSources,
         scores: {
           xfdlLabelMatch: candidate.xfdlLabelMatch,
           layoutLmValidation: candidate.layoutLmValidation,
@@ -577,7 +694,25 @@ export function mapBlocksWithXfdlRp9(input: PipelineInput): { mappings: FieldMap
         },
       } : undefined,
     } as AcordLabelCandidate));
-    return { blockId: block.id, page: block.page, text: block.text, boundingBox: block.boundingBox, suggestions, topCandidate: suggestions[0] };
+    const reconstruction = (suggestions[0] as any)?.xfdl;
+    const catalogTable = tableContext(catalog, input.fieldCatalog);
+    const fallbackContext = `${catalog?.semanticLabel || ""} ${catalog?.text || ""} ${block.text} ${catalogTable}`;
+    const fallbackNumeric = inferSupplementalNumericSemantics(fallbackContext, String(catalog?.valueType || "") === "currency" ? "currency" : String(catalog?.valueType || "") === "percentage" ? "percent" : String(catalog?.valueType || "") === "numeric" ? "number" : "text");
+    const fallbackSection = supplementalSection(fallbackContext);
+    const declaredTable = Boolean(catalog?.tableId && input.groupedStructures?.tables.some((table) => table.id === catalog.tableId && table.page === block.page));
+    return {
+      blockId: block.id,
+      page: block.page,
+      text: block.text,
+      boundingBox: block.boundingBox,
+      suggestions,
+      topCandidate: suggestions[0],
+      semanticLabel: reconstruction?.reconstructedLabel || displayLabel(`${catalog?.semanticLabel || catalog?.text || block.text}`),
+      reconstructedNumericType: reconstruction?.numericType || fallbackNumeric.type,
+      reconstructedSection: reconstruction?.sectionLabel || fallbackSection.label,
+      reconstructedSectionNodeId: reconstruction?.sectionNodeId || fallbackSection.nodeId,
+      tableContext: declaredTable ? { rowHeader: reconstruction?.rowHeader || displayLabel(catalogTable), columnHeader: reconstruction?.columnHeader || "" } : undefined,
+    } as FieldMapping;
   });
   const bound = bindQuestionMappings(mappings, input);
   return {
@@ -600,6 +735,8 @@ export function mapBlocksWithXfdlRp9(input: PipelineInput): { mappings: FieldMap
       weights: WEIGHTS,
       generalInformationQuestionPatternCount: GENERAL_INFORMATION_QUESTION_PATTERNS.length,
       tableAwareBlockCount: input.fieldCatalog.filter((entry) => Boolean(entry.tableId && input.groupedStructures?.tables.some((table) => table.id === entry.tableId && table.page === entry.page))).length,
+      reconstructedLabelCount: bound.mappings.filter((mapping) => Boolean((mapping as any).semanticLabel)).length,
+      reconstructedNumericCount: bound.mappings.filter((mapping) => Boolean((mapping as any).reconstructedNumericType)).length,
       legacyFallbackUsed: false,
     },
   };

@@ -182,6 +182,11 @@ jobs:
           XFDL_VALIDATION_API_BASE_URL: ${{ env.STAGING_BACKEND_URL }}
         run: npm --prefix backend/api run validate:xfdl:multi-form
 
+      - name: Verify cross-form semantic reconstruction
+        env:
+          XFDL_VALIDATION_API_BASE_URL: ${{ env.STAGING_BACKEND_URL }}
+        run: npm --prefix backend/api run validate:xfdl:reconstruction
+
       - name: Install frontend dependencies
         run: npm --prefix frontend ci --no-audit --no-fund
 

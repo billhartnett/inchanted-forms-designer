@@ -49,12 +49,15 @@ test("loads staging-active RP-9 truth, lineage, bundles, and families", () => wi
   const runtime = rp9.validateActiveRp9Runtime();
   assert.equal(runtime.metadata.restorePoint, "RP-9");
   assert.equal(runtime.metadata.activationState, "staging-active");
-  assert.equal(runtime.metadata.nodeCount, 51);
+  assert.equal(runtime.metadata.nodeCount, 67);
   assert.equal(runtime.nodes.has("Producer.Identity.FullName"), true);
   assert.equal(runtime.nodes.has("Section.GeneralInformation"), true);
   assert.equal(runtime.nodes.has("CurrencyAmount"), true);
   assert.equal(runtime.nodes.has("Percentage"), true);
-  assert.equal(runtime.categoryBundles.groups.length, 23);
+  assert.equal(runtime.nodes.has("Payroll.Amount"), true);
+  assert.equal(runtime.nodes.has("Rate.Per1000"), true);
+  assert.equal(runtime.nodes.has("Section.SupplementalInformation"), true);
+  assert.equal(runtime.categoryBundles.groups.length, 25);
 }));
 
 test("projects Producer, date, premises, signature, and section aliases canonically", () => withStagingRp9(() => {

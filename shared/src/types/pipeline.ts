@@ -157,6 +157,13 @@ export type FieldMetadata = {
   source: FieldMetadataSource;
   extractionBlockId?: string;
   semanticLabel?: string;
+  reconstructedNumericType?: string;
+  reconstructedSection?: string;
+  reconstructedSectionNodeId?: string;
+  tableContext?: {
+    rowHeader?: string;
+    columnHeader?: string;
+  };
   tooltip?: string;
   locked?: boolean;
   hidden?: boolean;
@@ -573,6 +580,13 @@ export type FieldMapping = {
   };
   fieldType?: SemanticFieldType;
   semanticLabel?: string;
+  reconstructedNumericType?: string;
+  reconstructedSection?: string;
+  reconstructedSectionNodeId?: string;
+  tableContext?: {
+    rowHeader?: string;
+    columnHeader?: string;
+  };
   fallbackReason?:
     | "confidence_only_fallback"
     | "synthetic_confidence_fallback"

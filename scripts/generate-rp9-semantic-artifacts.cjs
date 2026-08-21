@@ -365,6 +365,54 @@ function main() {
       aliases: ['PERCENTAGE', 'PERCENT', '%'], synonyms: ['percent', 'percentage', 'rate'], sections: ['general-information', 'premises-information'], groups: ['numeric', 'percentage'],
       semanticKind: 'fillable', component: 'percentage', instanceFamily: numericValueFamily, evidence: structuralEvidence('Section.GeneralInformation'),
     }),
+    Integer: node('Integer', {
+      aliases: ['INTEGER', 'WHOLE NUMBER', 'COUNT'], synonyms: ['count', 'integer', 'number', 'units'], sections: ['supplemental-information'], groups: ['numeric'],
+      semanticKind: 'fillable', component: 'integer', instanceFamily: numericValueFamily, evidence: structuralEvidence('Section.GeneralInformation'),
+    }),
+    Decimal: node('Decimal', {
+      aliases: ['DECIMAL', 'FACTOR', 'MODIFIER'], synonyms: ['decimal', 'factor', 'modifier', 'ratio'], sections: ['supplemental-information', 'rating'], groups: ['numeric', 'rating'],
+      semanticKind: 'fillable', component: 'decimal', instanceFamily: numericValueFamily, evidence: structuralEvidence('Section.GeneralInformation'),
+    }),
+    'Payroll.Amount': node('Payroll.Amount', {
+      aliases: ['PAYROLL', 'ANNUAL PAYROLL', 'REMUNERATION'], synonyms: ['amount', 'payroll', 'remuneration'], sections: ['payroll-exposure', 'supplemental-information'], groups: ['numeric', 'currency', 'payroll'],
+      semanticKind: 'fillable', component: 'payroll.amount', instanceFamily: numericValueFamily, evidence: structuralEvidence('Section.GeneralInformation'),
+    }),
+    'Payroll.Percentage': node('Payroll.Percentage', {
+      aliases: ['PAYROLL %', 'PERCENT OF PAYROLL'], synonyms: ['payroll', 'percent', 'percentage'], sections: ['payroll-exposure', 'supplemental-information'], groups: ['numeric', 'percentage', 'payroll'],
+      semanticKind: 'fillable', component: 'payroll.percentage', instanceFamily: numericValueFamily, evidence: structuralEvidence('Section.GeneralInformation'),
+    }),
+    'GrossReceipts.Amount': node('GrossReceipts.Amount', {
+      aliases: ['GROSS RECEIPTS', 'GROSS SALES', 'ANNUAL RECEIPTS'], synonyms: ['amount', 'gross', 'receipts', 'sales'], sections: ['payroll-exposure', 'supplemental-information'], groups: ['numeric', 'currency', 'exposure'],
+      semanticKind: 'fillable', component: 'grossReceipts.amount', instanceFamily: numericValueFamily, evidence: structuralEvidence('Section.GeneralInformation'),
+    }),
+    'Exposure.Amount': node('Exposure.Amount', {
+      aliases: ['EXPOSURE AMOUNT', 'TOTAL EXPOSURE'], synonyms: ['amount', 'exposure', 'total'], sections: ['payroll-exposure', 'supplemental-information'], groups: ['numeric', 'currency', 'exposure'],
+      semanticKind: 'fillable', component: 'exposure.amount', instanceFamily: numericValueFamily, evidence: structuralEvidence('Section.GeneralInformation'),
+    }),
+    'Hazard.Percentage': node('Hazard.Percentage', {
+      aliases: ['HAZARD %', 'PERCENT HAZARD'], synonyms: ['hazard', 'percent', 'percentage'], sections: ['payroll-exposure', 'supplemental-information'], groups: ['numeric', 'percentage', 'hazard'],
+      semanticKind: 'fillable', component: 'hazard.percentage', instanceFamily: numericValueFamily, evidence: structuralEvidence('Section.GeneralInformation'),
+    }),
+    'Rate.Per100': node('Rate.Per100', {
+      aliases: ['RATE PER $100', 'RATE PER 100'], synonyms: ['hundred', 'per', 'rate'], sections: ['rating', 'supplemental-information'], groups: ['numeric', 'rating'],
+      semanticKind: 'fillable', component: 'rate.per100', instanceFamily: numericValueFamily, evidence: structuralEvidence('Section.GeneralInformation'),
+    }),
+    'Rate.Per1000': node('Rate.Per1000', {
+      aliases: ['RATE PER $1,000', 'RATE PER 1000'], synonyms: ['per', 'rate', 'thousand'], sections: ['rating', 'supplemental-information'], groups: ['numeric', 'rating'],
+      semanticKind: 'fillable', component: 'rate.per1000', instanceFamily: numericValueFamily, evidence: structuralEvidence('Section.GeneralInformation'),
+    }),
+    'Premium.Amount': node('Premium.Amount', {
+      aliases: ['PREMIUM', 'TOTAL PREMIUM', 'ANNUAL PREMIUM'], synonyms: ['amount', 'premium', 'total'], sections: ['rating', 'supplemental-information'], groups: ['numeric', 'currency', 'rating'],
+      semanticKind: 'fillable', component: 'premium.amount', instanceFamily: numericValueFamily, evidence: structuralEvidence('Section.GeneralInformation'),
+    }),
+    'Classification.Code': node('Classification.Code', {
+      aliases: ['CLASS CODE', 'CLASSIFICATION CODE'], synonyms: ['class', 'classification', 'code'], sections: ['classification', 'supplemental-information'], groups: ['classification'],
+      semanticKind: 'fillable', component: 'classification.code', instanceFamily: numericValueFamily, evidence: structuralEvidence('Section.GeneralInformation'),
+    }),
+    'Classification.Description': node('Classification.Description', {
+      aliases: ['CLASS DESCRIPTION', 'CLASSIFICATION DESCRIPTION', 'DESCRIPTION OF OPERATIONS'], synonyms: ['class', 'classification', 'description', 'operations'], sections: ['classification', 'supplemental-information'], groups: ['classification'],
+      semanticKind: 'fillable', component: 'classification.description', instanceFamily: numericValueFamily, evidence: structuralEvidence('Section.GeneralInformation'),
+    }),
     'GeneralInformation.Question': node('GeneralInformation.Question', {
       aliases: ['general information question'], synonyms: ['general', 'information', 'question'], sections: ['general-information'], groups: ['question-answer'],
       semanticKind: 'structural-question', component: 'question', instanceFamily: qaFamily,
@@ -390,6 +438,22 @@ function main() {
     'Section.GeneralInformation': node('Section.GeneralInformation', {
       aliases: ['GENERAL INFORMATION', 'EXPLAIN ALL "YES" RESPONSES', 'NATURE OF BUSINESS', 'DESCRIPTION OF OPERATIONS'], synonyms: ['business', 'general', 'information', 'question', 'section'], sections: ['general-information'], groups: ['section'], semanticKind: 'section',
       component: 'section', instanceFamily: singleton('section.general-information'), evidence: evidence.section('Section.GeneralInformation'),
+    }),
+    'Section.SupplementalInformation': node('Section.SupplementalInformation', {
+      aliases: ['SUPPLEMENTAL APPLICATION', 'SUPPLEMENTAL INFORMATION'], synonyms: ['application', 'information', 'section', 'supplemental'], sections: ['supplemental-information'], groups: ['section'], semanticKind: 'section',
+      component: 'section', instanceFamily: singleton('section.supplemental-information'), evidence: structuralEvidence('Section.GeneralInformation'),
+    }),
+    'Section.PayrollExposure': node('Section.PayrollExposure', {
+      aliases: ['PAYROLL AND EXPOSURE', 'PAYROLL', 'EXPOSURE'], synonyms: ['exposure', 'payroll', 'section'], sections: ['payroll-exposure'], groups: ['section', 'payroll', 'exposure'], semanticKind: 'section',
+      component: 'section', instanceFamily: singleton('section.payroll-exposure'), evidence: structuralEvidence('Section.GeneralInformation'),
+    }),
+    'Section.Classification': node('Section.Classification', {
+      aliases: ['CLASSIFICATION', 'CLASS CODE'], synonyms: ['class', 'classification', 'section'], sections: ['classification'], groups: ['section', 'classification'], semanticKind: 'section',
+      component: 'section', instanceFamily: singleton('section.classification'), evidence: structuralEvidence('Section.GeneralInformation'),
+    }),
+    'Section.Rating': node('Section.Rating', {
+      aliases: ['RATING AND PREMIUM', 'RATING', 'PREMIUM'], synonyms: ['premium', 'rate', 'rating', 'section'], sections: ['rating'], groups: ['section', 'rating'], semanticKind: 'section',
+      component: 'section', instanceFamily: singleton('section.rating'), evidence: structuralEvidence('Section.GeneralInformation'),
     }),
   };
 
