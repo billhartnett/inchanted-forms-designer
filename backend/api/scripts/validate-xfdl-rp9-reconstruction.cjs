@@ -68,7 +68,7 @@ async function validate(current) {
   return {
     family: current.family,
     source: current.source,
-    valid: response.status === 200 && payload.contractVersion === "xfdl.rp9.mapping.v1" && payload.xfdlDiagnostics?.legacyFallbackUsed === false && mapping?.chosen?.acordCode === current.expected && Boolean(mapping?.semanticLabel) && Boolean(mapping?.reconstructedNumericType) && Boolean(mapping?.reconstructedSection),
+    valid: response.status === 200 && payload.contractVersion === "xfdl.rp9.mapping.v1" && payload.xfdlDiagnostics?.legacyFallbackUsed === false && mapping?.chosen?.acordCode === current.expected && mapping?.semanticLabel === `${current.label} - ${current.valueType === "currency" ? "$ AMOUNT" : "COUNT"}` && mapping?.tableContext?.rowHeader === current.label && mapping?.tableContext?.columnHeader === (current.valueType === "currency" ? "$ AMOUNT" : "COUNT") && Boolean(mapping?.reconstructedNumericType) && Boolean(mapping?.reconstructedSection),
     chosen: mapping?.chosen?.acordCode || null,
     semanticLabel: mapping?.semanticLabel || null,
     numericType: mapping?.reconstructedNumericType || null,

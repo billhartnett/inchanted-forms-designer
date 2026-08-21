@@ -206,6 +206,19 @@ test("adds table alignment evidence for supplemental application cells", () => w
   assert.equal(table.mappings[0].suggestions[0].confidenceScore > plain.mappings[0].suggestions[0].confidenceScore, true);
 }));
 
+test("emits deduplicated role-aware table context", () => withXfdlStaging(() => {
+  const inputBlock = block("value", "ANNUAL PAYROLL", 300, 200);
+  const fieldCatalog = [
+    { ...catalog("row", "ANNUAL PAYROLL", 20, 200, "row_label", "label"), tableId: "table-1", rowIndex: 1, columnIndex: 0 },
+    { ...catalog("column", "$ AMOUNT", 300, 160, "column_header", "label"), tableId: "table-1", rowIndex: 0, columnIndex: 1 },
+    { ...catalog("value", "ANNUAL PAYROLL", 300, 200, "table-cell", "currency"), tableId: "table-1", rowIndex: 1, columnIndex: 1 },
+  ];
+  const result = pipeline.mapBlocksWithXfdlRp9({ blocks: [inputBlock], fieldCatalog, layoutLmByBlock: {}, sourceDocumentName: "sample-Acord-130.pdf", groupedStructures: { labelInputPairs: [], tables: [{ id: "table-1", page: 1, rowCount: 2, columnCount: 2, rowGroupIds: ["table-1-row-2"] }], questionAnswerPairs: [], checkboxGroups: [], semanticGroups: [] } });
+  assert.equal(result.mappings[0].semanticLabel, "ANNUAL PAYROLL - $ AMOUNT");
+  assert.deepEqual(result.mappings[0].tableContext, { rowHeader: "ANNUAL PAYROLL", columnHeader: "$ AMOUNT" });
+  assert.equal(result.mappings[0].suggestions[0].acordCode, "Payroll.Amount");
+}));
+
 test("loads ACORD 126, ACORD 130, and supplemental XFDL indexes", () => withXfdlStaging(() => {
   const cases = [
     ["ACORD_126_-_Commercial_General_Liability_Section.pdf", "acord-126", "ACORD 0126"],
