@@ -36,8 +36,10 @@ function catalog(id, label, x, y, role = "input", valueType = "text", semanticSe
 test("parses authoritative ACORD 125 XFDL semantics", () => withXfdlStaging(() => {
   const index = pipeline.getAcord125XfdlIndex();
   assert.equal(index.pageCount, 4);
-  assert.equal(index.fields.length, 552);
-  assert.equal(index.fields.filter((field) => field.answerType === "boolean").length, 164);
+  assert.equal(index.controlCount, 552);
+  assert.equal(index.fields.length > index.controlCount, true);
+  assert.equal(index.fields.filter((field) => field.controlType === "check").length, 164);
+  assert.equal(index.fields.filter((field) => field.answerType === "boolean").length > 164, true);
   assert.equal(index.fields.filter((field) => field.canonicalNodeIds.length > 0).length >= 220, true);
   const producer = index.fields.find((field) => field.sid === "Producer_FullName_A");
   assert.equal(producer.label, "AGENCY");
@@ -94,9 +96,96 @@ test("applies global checkbox, currency, and percentage RP-9 type rules", () => 
 test("recognizes all seven ACORD 125 General Information question patterns", () => withXfdlStaging(() => {
   const index = pipeline.getAcord125XfdlIndex();
   const paths = ["AAICode", "AAJCode", "KAACode", "ABCCode", "AAHCode", "AACCode", "AADCode"];
-  const questions = index.fields.filter((field) => paths.some((code) => field.semanticPath.includes(`Question_${code}`)));
+  const questions = index.fields.filter((field) => field.bindingRole === "boolean-answer" && paths.some((code) => field.semanticPath.includes(`Question_${code}`)));
   assert.equal(questions.length, 7);
   assert.equal(questions.every((field) => field.canonicalNodeIds.includes("Question.BooleanAnswer")), true);
+}));
+
+test("binds structural question text to its boolean control without moving either placement", async () => withXfdlStaging(async () => {
+  const question = block("question", "Is the applicant a subsidiary of another entity?", 40, 200);
+  const answer = block("answer", "YES", 700, 200, "checkbox");
+  const noAnswer = block("answer-no", "NO", 730, 200, "checkbox");
+  const response = await mapFields({ json: async () => ({
+    documentId: "question-binding",
+    sourceDocumentName: "sample-Acord-125.pdf",
+    familyId: "acord-125",
+    blocks: [question, answer, noAnswer],
+    fieldCatalog: [
+      catalog("question", question.text, 40, 200, "question", "label", "general-information"),
+      catalog("answer", "YES", 700, 200, "checkbox", "checkbox", "general-information"),
+      catalog("answer-no", "NO", 730, 200, "checkbox", "checkbox", "general-information"),
+    ],
+    groupedStructures: { labelInputPairs: [], tables: [], questionAnswerPairs: [{ id: "qa-1", page: 1, questionFieldId: "question", answerFieldId: "answer" }], checkboxGroups: [{ id: "yes-no-1", page: 1, checkboxFieldIds: ["answer", "answer-no"], labels: ["YES", "NO"] }], semanticGroups: [] },
+  }) }, { warn() {}, error() {} });
+  const binding = response.jsonBody.questionBindings[0];
+  const questionMapping = response.jsonBody.mappings.find((mapping) => mapping.blockId === "question");
+  const answerMapping = response.jsonBody.mappings.find((mapping) => mapping.blockId === "answer");
+  assert.equal(binding.canonicalNodeId, "Question.Text");
+  assert.equal(binding.question.fillable, false);
+  assert.equal(binding.booleanAnswer.canonicalNodeId, "Question.BooleanAnswer");
+  assert.deepEqual(binding.question.boundingBox, question.boundingBox);
+  assert.deepEqual(binding.booleanAnswer.boundingBox, answer.boundingBox);
+  assert.deepEqual(binding.booleanAnswer.controls.map((control) => control.blockId), ["answer", "answer-no"]);
+  assert.equal(questionMapping.chosen.acordCode, "Question.Text");
+  assert.equal(answerMapping.chosen.acordCode, "Question.BooleanAnswer");
+  assert.equal(response.jsonBody.mappedFields.some((mapping) => mapping.blockId === "question"), false);
+  assert.equal(response.jsonBody.mappedFields.some((mapping) => mapping.blockId === "answer"), true);
+  assert.equal(response.jsonBody.mappedFields.some((mapping) => mapping.blockId === "answer-no"), true);
+}));
+
+test("binds all seven ACORD 125 General Information questions", async () => withXfdlStaging(async () => {
+  const questions = [
+    "Is the applicant a subsidiary of another entity?",
+    "Does the applicant have any subsidiaries?",
+    "Is a formal safety program in operation?",
+    "Any exposure to flammables, explosives, chemicals?",
+    "Any other insurance with this company?",
+    "Any policy or coverage declined, cancelled or non-renewed during the mandated number of years?",
+    "Any past losses or claims relating to sexual abuse or molestation allegations, discrimination or negligent hiring?",
+  ];
+  const blocks = questions.flatMap((text, index) => [block(`q-${index}`, text, 40, 100 + index * 40), block(`a-${index}`, "YES", 700, 100 + index * 40, "checkbox")]);
+  const fieldCatalog = questions.flatMap((text, index) => [catalog(`q-${index}`, text, 40, 100 + index * 40, "question", "label", "general-information"), catalog(`a-${index}`, "YES", 700, 100 + index * 40, "checkbox", "checkbox", "general-information")]);
+  const questionAnswerPairs = questions.map((_, index) => ({ id: `qa-${index}`, page: 1, questionFieldId: `q-${index}`, answerFieldId: `a-${index}` }));
+  const response = await mapFields({ json: async () => ({ documentId: "acord-125-seven-bindings", sourceDocumentName: "sample-Acord-125.pdf", familyId: "acord-125", blocks, fieldCatalog, groupedStructures: { labelInputPairs: [], tables: [], questionAnswerPairs, checkboxGroups: [], semanticGroups: [] } }) }, { warn() {}, error() {} });
+  assert.equal(response.jsonBody.questionBindings.length, 7);
+  assert.equal(response.jsonBody.questionBindings.every((binding) => binding.source === "extractor-pair" && binding.question.fillable === false && binding.booleanAnswer.fillable === true), true);
+  assert.equal(response.jsonBody.mappedFields.some((mapping) => mapping.questionBinding?.role === "question"), false);
+}));
+
+test("does not create a question binding over empty space", () => withXfdlStaging(() => {
+  const question = { ...block("question", "Question?", 40, 200), boundingBox: { x: 40, y: 200, width: 0, height: 0 } };
+  const answer = block("answer", "YES", 700, 200, "checkbox");
+  const result = pipeline.mapBlocksWithXfdlRp9({
+    blocks: [question, answer],
+    fieldCatalog: [catalog("question", "Question?", 40, 200, "question", "label"), catalog("answer", "YES", 700, 200, "checkbox", "checkbox")],
+    layoutLmByBlock: {},
+    sourceDocumentName: "sample-Acord-125.pdf",
+    groupedStructures: { labelInputPairs: [], tables: [], questionAnswerPairs: [{ id: "qa-empty", page: 1, questionFieldId: "question", answerFieldId: "answer" }], checkboxGroups: [], semanticGroups: [] },
+  });
+  assert.equal(result.questionBindings.length, 0);
+}));
+
+test("infers an XFDL family binding without self-binding", () => withXfdlStaging(() => {
+  const index = pipeline.getAcord125XfdlIndex();
+  const answerField = index.fields.find((field) => field.bindingRole === "boolean-answer" && field.questionFamilyId);
+  const questionField = index.fields.find((field) => field.questionFamilyId === answerField.questionFamilyId && field.bindingRole === "question");
+  const pageFields = index.fields.filter((field) => field.page === answerField.page && field.geometry);
+  const width = Math.max(...pageFields.map((field) => field.geometry.x + field.geometry.width));
+  const height = Math.max(...pageFields.map((field) => field.geometry.y + field.geometry.height));
+  const blocks = [
+    { id: "question", page: questionField.page, type: "text", text: questionField.label, confidence: 0.99, boundingBox: questionField.geometry },
+    { id: "answer", page: answerField.page, type: "checkbox", text: "YES", confidence: 0.99, boundingBox: answerField.geometry },
+  ];
+  const fieldCatalog = [
+    { ...catalog("question", questionField.label, questionField.geometry.x, questionField.geometry.y, "question", "label"), page: questionField.page, boundingBox: questionField.geometry },
+    { ...catalog("answer", "YES", answerField.geometry.x, answerField.geometry.y, "checkbox", "checkbox"), page: answerField.page, boundingBox: answerField.geometry },
+  ];
+  const result = pipeline.mapBlocksWithXfdlRp9({ blocks, fieldCatalog, layoutLmByBlock: {}, sourceDocumentName: "sample-Acord-125.pdf", pageDimensions: [{ page: questionField.page, width, height }] });
+  assert.equal(result.questionBindings.length, 1);
+  assert.equal(result.questionBindings[0].source, "xfdl-family");
+  assert.equal(result.questionBindings[0].question.blockId, "question");
+  assert.equal(result.questionBindings[0].booleanAnswer.blockId, "answer");
+  assert.notEqual(result.questionBindings[0].question.blockId, result.questionBindings[0].booleanAnswer.blockId);
 }));
 
 test("adds table alignment evidence for supplemental application cells", () => withXfdlStaging(() => {

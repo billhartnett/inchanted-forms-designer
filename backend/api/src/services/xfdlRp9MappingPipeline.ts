@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import zlib from "node:zlib";
 import type { AcordLabelCandidate } from "shared/acord";
-import type { BoundingBox, ExtractedBlock, FieldMapping } from "shared/types";
+import type { BoundingBox, ExtractedBlock, FieldMapping, QuestionAnswerBinding, QuestionMappingBinding } from "shared/types";
 import type { ExtractDocumentFieldCatalogEntry, ExtractDocumentGroupedStructures } from "../types/extractDocumentContract";
 import { getActiveRp9Runtime } from "./rp9OntologyRuntime";
 
@@ -20,12 +20,15 @@ export type XfdlSemanticField = {
   group: string;
   geometry: BoundingBox | null;
   canonicalNodeIds: string[];
+  questionFamilyId?: string;
+  bindingRole?: "question" | "boolean-answer";
 };
 
 export type XfdlSemanticIndex = {
   formId: string;
   sourcePath: string;
   pageCount: number;
+  controlCount: number;
   fields: XfdlSemanticField[];
 };
 
@@ -114,6 +117,14 @@ function quotedQuestion(helpText: string): string {
   return matches.map((match) => match[1]).sort((left, right) => right.length - left.length)[0] || "";
 }
 
+function questionTextFrom(helpText: string, label: string): string {
+  const quoted = quotedQuestion(helpText);
+  if (quoted) return quoted;
+  const helpQuestion = String(helpText || "").match(/^([\s\S]*?\?)/)?.[1]?.trim();
+  if (helpQuestion) return helpQuestion;
+  return /\?/.test(label) ? label.match(/^([\s\S]*?\?)/)?.[1]?.trim() || "" : "";
+}
+
 function decodeXml(value: string): string {
   return value
     .replace(/&#xA;|&#10;/gi, " ")
@@ -139,6 +150,7 @@ function semanticPathFromSid(sid: string): string {
 
 function answerType(controlType: string, helpText: string, body: string): XfdlAnswerType {
   if (controlType === "check") return "boolean";
+  if (/\benter\s+y\b[\s\S]*\byes\b[\s\S]*\b(?:input|enter)\s+n\b[\s\S]*\bno\b/i.test(helpText)) return "boolean";
   if (/signature/i.test(helpText)) return "signature";
   if (/enter\s+date/i.test(helpText)) return "date";
   if (/enter\s+(?:amount|currency)/i.test(helpText)) return "currency";
@@ -161,8 +173,10 @@ function inferSection(label: string, semanticPath: string): string | null {
   return null;
 }
 
-function nearestLabel(fieldGeometry: BoundingBox | null, labels: Array<{ value: string; geometry: BoundingBox | null }>, semanticContext: string): string {
-  if (!fieldGeometry) return "";
+type XfdlLabel = { sid: string; value: string; geometry: BoundingBox | null };
+
+function nearestLabel(fieldGeometry: BoundingBox | null, labels: XfdlLabel[], semanticContext: string): XfdlLabel | null {
+  if (!fieldGeometry) return null;
   const centerX = fieldGeometry.x + fieldGeometry.width / 2;
   const centerY = fieldGeometry.y + fieldGeometry.height / 2;
   return labels
@@ -174,9 +188,18 @@ function nearestLabel(fieldGeometry: BoundingBox | null, labels: Array<{ value: 
       const directionalPenalty = labelX > centerX + fieldGeometry.width && labelY > centerY + fieldGeometry.height ? 250 : 0;
       const distance = Math.hypot(centerX - labelX, centerY - labelY) + directionalPenalty;
       const semanticRelevance = tokenSimilarity(label.value, semanticContext);
-      return { value: label.value, score: semanticRelevance * 400 - distance };
+      return { label, score: semanticRelevance * 400 - distance };
     })
-    .sort((left, right) => right.score - left.score)[0]?.value || "";
+    .sort((left, right) => right.score - left.score)[0]?.label || null;
+}
+
+function questionLabel(labels: XfdlLabel[], questionText: string): XfdlLabel | null {
+  if (!questionText) return null;
+  const match = labels
+    .filter((label) => label.geometry && label.geometry.width > 0 && label.geometry.height > 0)
+    .map((label) => ({ label, similarity: tokenSimilarity(label.value, questionText) }))
+    .sort((left, right) => right.similarity - left.similarity)[0];
+  return match && match.similarity >= 0.35 ? match.label : null;
 }
 
 function canonicalNodesFor(semanticPath: string, label: string, helpText: string, answer: XfdlAnswerType): string[] {
@@ -214,13 +237,14 @@ export function parseXfdlSemanticIndex(xml: string, sourcePath = "inline", formI
     pages.push({ page, body: pageMatch[2] });
   }
   const fields: XfdlSemanticField[] = [];
+  let controlCount = 0;
   for (const page of pages) {
-    const labels: Array<{ value: string; geometry: BoundingBox | null }> = [];
-    const labelRegex = /<label\s+sid="[^"]+"[^>]*>([\s\S]*?)<\/label>/gi;
+    const labels: XfdlLabel[] = [];
+    const labelRegex = /<label\s+sid="([^"]+)"[^>]*>([\s\S]*?)<\/label>/gi;
     let labelMatch: RegExpExecArray | null;
     while ((labelMatch = labelRegex.exec(page.body)) !== null) {
-      const value = decodeXml(labelMatch[1].match(/<value>([\s\S]*?)<\/value>/i)?.[1] || "");
-      if (value) labels.push({ value, geometry: parseGeometry(labelMatch[1]) });
+      const value = decodeXml(labelMatch[2].match(/<value>([\s\S]*?)<\/value>/i)?.[1] || "");
+      if (value) labels.push({ sid: labelMatch[1], value, geometry: parseGeometry(labelMatch[2]) });
     }
     const helpMap = new Map<string, string>();
     const helpRegex = /<help\s+sid="([^"]+)"[^>]*>\s*<value>([\s\S]*?)<\/value>\s*<\/help>/gi;
@@ -229,6 +253,7 @@ export function parseXfdlSemanticIndex(xml: string, sourcePath = "inline", formI
     const controlRegex = /<(field|check|combobox|popup|signature)\s+sid="([^"]+)"[^>]*>([\s\S]*?)<\/\1>/gi;
     let controlMatch: RegExpExecArray | null;
     while ((controlMatch = controlRegex.exec(page.body)) !== null) {
+      controlCount += 1;
       const controlType = controlMatch[1].toLowerCase();
       const sid = controlMatch[2];
       const body = controlMatch[3];
@@ -236,8 +261,11 @@ export function parseXfdlSemanticIndex(xml: string, sourcePath = "inline", formI
       const helpSid = body.match(/<help>([^<]+)<\/help>/i)?.[1]?.trim() || "";
       const helpText = helpMap.get(helpSid) || "";
       const geometry = parseGeometry(body);
-      const label = nearestLabel(geometry, labels, `${semanticPath} ${helpText}`);
+      const nearest = nearestLabel(geometry, labels, `${semanticPath} ${helpText}`);
+      const label = nearest?.value || "";
       const answer = answerType(controlType, helpText, body);
+      const questionText = answer === "boolean" ? questionTextFrom(helpText, label) : "";
+      const familyId = questionText ? `xfdl-question-${page.page}-${normalizedKey(questionText)}` : undefined;
       fields.push({
         sid,
         semanticPath,
@@ -250,10 +278,30 @@ export function parseXfdlSemanticIndex(xml: string, sourcePath = "inline", formI
         group: groupFromPath(semanticPath),
         geometry,
         canonicalNodeIds: canonicalNodesFor(semanticPath, label, helpText, answer),
+        questionFamilyId: familyId,
+        bindingRole: familyId ? "boolean-answer" : undefined,
       });
+      const visualQuestion = questionLabel(labels, questionText);
+      if (familyId && visualQuestion?.geometry && !fields.some((field) => field.questionFamilyId === familyId && field.bindingRole === "question")) {
+        fields.push({
+          sid: visualQuestion.sid,
+          semanticPath: `${semanticPath}_QuestionText`,
+          controlType: "label",
+          answerType: "text",
+          page: page.page,
+          label: questionText,
+          helpText,
+          section: inferSection(questionText, semanticPath),
+          group: groupFromPath(semanticPath),
+          geometry: visualQuestion.geometry,
+          canonicalNodeIds: ["Question.Text"],
+          questionFamilyId: familyId,
+          bindingRole: "question",
+        });
+      }
     }
   }
-  return { formId, sourcePath, pageCount: pages.length, fields };
+  return { formId, sourcePath, pageCount: pages.length, controlCount, fields };
 }
 
 function xfdlRoot(): string {
@@ -375,7 +423,99 @@ function globalTypeCandidate(block: ExtractedBlock, catalog: ExtractDocumentFiel
   return { canonicalNodeId, field: null, xfdlLabelMatch: 1, layoutLmValidation: 0, sectionAlignment: 1, geometryAlignment: 0, tableAlignment: catalog?.tableId ? 1 : 0, score: catalog?.tableId ? 1 : 0.9, origin: "type-rule" };
 }
 
-export function mapBlocksWithXfdlRp9(input: PipelineInput): { mappings: FieldMapping[]; diagnostics: Record<string, unknown> } {
+function hasPlacement(mapping: FieldMapping | undefined): mapping is FieldMapping {
+  return Boolean(mapping && mapping.boundingBox.width > 0 && mapping.boundingBox.height > 0);
+}
+
+function bindingCandidate(canonicalNodeId: "Question.Text" | "Question.BooleanAnswer", rationale: string): AcordLabelCandidate {
+  return {
+    acordCode: canonicalNodeId,
+    label: canonicalNodeId,
+    confidenceScore: 1,
+    normalizedConfidenceScore: 1,
+    source: "heuristic",
+    lexicalScore: 1,
+    semanticSimilarity: 0,
+    heuristicScore: 1,
+    rationale,
+  } as AcordLabelCandidate;
+}
+
+function bindQuestionMappings(mappings: FieldMapping[], input: PipelineInput): { mappings: FieldMapping[]; questionBindings: QuestionAnswerBinding[] } {
+  const byId = new Map(mappings.map((mapping) => [mapping.blockId, mapping]));
+  const bindings: QuestionAnswerBinding[] = [];
+  const boundBlocks = new Set<string>();
+
+  const attach = (id: string, questionBlockId: string, answerBlockIds: string[], source: QuestionAnswerBinding["source"]): void => {
+    const uniqueAnswerIds = [...new Set(answerBlockIds)].filter((answerBlockId) => answerBlockId !== questionBlockId && !boundBlocks.has(answerBlockId));
+    if (uniqueAnswerIds.length === 0) return;
+    const question = byId.get(questionBlockId);
+    const answers = uniqueAnswerIds.map((answerBlockId) => byId.get(answerBlockId)).filter(hasPlacement);
+    if (!hasPlacement(question) || boundBlocks.has(questionBlockId) || answers.length !== uniqueAnswerIds.length || answers.some((answer) => answer.page !== question.page)) return;
+    const primaryAnswer = answers[0];
+    const questionCandidate = bindingCandidate("Question.Text", `${source} binds structural question text to ${uniqueAnswerIds.join(", ")}.`);
+    const answerCandidate = bindingCandidate("Question.BooleanAnswer", `${source} attaches boolean answer to ${questionBlockId}.`);
+    const baseBinding = { bindingId: id, questionBlockId, booleanAnswerBlockId: primaryAnswer.blockId, booleanAnswerBlockIds: uniqueAnswerIds };
+    byId.set(questionBlockId, {
+      ...question,
+      suggestions: [questionCandidate],
+      topCandidate: questionCandidate,
+      questionBinding: { ...baseBinding, role: "question" } satisfies QuestionMappingBinding,
+    });
+    for (const answer of answers) {
+      byId.set(answer.blockId, {
+        ...answer,
+        suggestions: [answerCandidate],
+        topCandidate: answerCandidate,
+        questionBinding: { ...baseBinding, role: "boolean-answer" } satisfies QuestionMappingBinding,
+      });
+    }
+    bindings.push({
+      id,
+      page: question.page,
+      canonicalNodeId: "Question.Text",
+      source,
+      question: { blockId: questionBlockId, text: question.text, boundingBox: question.boundingBox, canonicalNodeId: "Question.Text", fillable: false },
+      booleanAnswer: {
+        blockId: primaryAnswer.blockId,
+        boundingBox: primaryAnswer.boundingBox,
+        canonicalNodeId: "Question.BooleanAnswer",
+        fillable: true,
+        controls: answers.map((answer) => ({ blockId: answer.blockId, boundingBox: answer.boundingBox })),
+      },
+    });
+    boundBlocks.add(questionBlockId);
+    for (const answerBlockId of uniqueAnswerIds) boundBlocks.add(answerBlockId);
+  };
+
+  for (const pair of input.groupedStructures?.questionAnswerPairs || []) {
+    const checkboxGroup = input.groupedStructures?.checkboxGroups.find((group) => group.checkboxFieldIds.includes(pair.answerFieldId));
+    attach(pair.id, pair.questionFieldId, checkboxGroup?.checkboxFieldIds || [pair.answerFieldId], "extractor-pair");
+  }
+
+  const families = new Map<string, { question?: string; answers: string[] }>();
+  for (const mapping of mappings) {
+    const catalog = input.fieldCatalog.find((entry) => entry.id === mapping.blockId);
+    const questionEligible = catalog?.role === "question" || catalog?.valueType === "label";
+    const answerEligible = catalog?.role === "checkbox" || catalog?.valueType === "checkbox";
+    for (const suggestion of mapping.suggestions as Array<AcordLabelCandidate & { xfdl?: { questionFamilyId?: string; bindingRole?: string } }>) {
+      const familyId = suggestion.xfdl?.questionFamilyId;
+      const role = suggestion.xfdl?.bindingRole;
+      if (!familyId || (role !== "question" && role !== "boolean-answer")) continue;
+      const family = families.get(familyId) || { answers: [] };
+      if (role === "question" && questionEligible && !family.question) family.question = mapping.blockId;
+      if (role === "boolean-answer" && answerEligible && !family.answers.includes(mapping.blockId)) family.answers.push(mapping.blockId);
+      families.set(familyId, family);
+    }
+  }
+  for (const [familyId, family] of families) {
+    if (family.question && family.answers.length > 0) attach(familyId, family.question, family.answers, "xfdl-family");
+  }
+
+  return { mappings: mappings.map((mapping) => byId.get(mapping.blockId) || mapping), questionBindings: bindings };
+}
+
+export function mapBlocksWithXfdlRp9(input: PipelineInput): { mappings: FieldMapping[]; questionBindings: QuestionAnswerBinding[]; diagnostics: Record<string, unknown> } {
   const index = getXfdlSemanticIndex(input.sourceDocumentName, input.formId);
   const catalogById = new Map(input.fieldCatalog.map((entry) => [entry.id, entry]));
   let xfdlMatched = 0;
@@ -389,6 +529,11 @@ export function mapBlocksWithXfdlRp9(input: PipelineInput): { mappings: FieldMap
       .flatMap((field) => field.canonicalNodeIds.map((canonicalNodeId) => scoreCandidate(block, catalog, field, canonicalNodeId, input.layoutLmByBlock[block.id], input.pageDimensions, index, input.fieldCatalog, input.groupedStructures)));
     const fallback = candidates.length === 0 ? layoutLmOnlyCandidates(input.layoutLmByBlock[block.id]) : [];
     const typeCandidate = globalTypeCandidate(block, catalog);
+    if (typeCandidate?.canonicalNodeId === "Question.BooleanAnswer") {
+      typeCandidate.field = candidates
+        .filter((candidate) => candidate.canonicalNodeId === "Question.BooleanAnswer" && candidate.field?.questionFamilyId)
+        .sort((left, right) => right.score - left.score)[0]?.field || null;
+    }
     const ranked = [...(typeCandidate ? [typeCandidate] : []), ...candidates, ...fallback]
       .sort((left, right) => right.score - left.score)
       .filter((candidate) => candidate.origin === "type-rule" || (candidate.field
@@ -420,6 +565,8 @@ export function mapBlocksWithXfdlRp9(input: PipelineInput): { mappings: FieldMap
         answerType: candidate.field.answerType,
         section: candidate.field.section,
         group: candidate.field.group,
+        questionFamilyId: candidate.field.questionFamilyId,
+        bindingRole: candidate.field.bindingRole,
         scores: {
           xfdlLabelMatch: candidate.xfdlLabelMatch,
           layoutLmValidation: candidate.layoutLmValidation,
@@ -432,18 +579,24 @@ export function mapBlocksWithXfdlRp9(input: PipelineInput): { mappings: FieldMap
     } as AcordLabelCandidate));
     return { blockId: block.id, page: block.page, text: block.text, boundingBox: block.boundingBox, suggestions, topCandidate: suggestions[0] };
   });
+  const bound = bindQuestionMappings(mappings, input);
   return {
-    mappings,
+    mappings: bound.mappings,
+    questionBindings: bound.questionBindings,
     diagnostics: {
       pipeline: "xfdl-rp9-layoutlm.v1",
       formId: input.formId || index.formId,
       xfdlSourcePath: index.sourcePath,
       xfdlPageCount: index.pageCount,
+      xfdlControlCount: index.controlCount,
       xfdlFieldCount: index.fields.length,
       xfdlCanonicalFieldCount: index.fields.filter((field) => field.canonicalNodeIds.length > 0).length,
       xfdlMatchedBlockCount: xfdlMatched,
       layoutLmOnlyBlockCount: layoutLmOnly,
-      unresolvedBlockCount: mappings.filter((mapping) => mapping.suggestions.length === 0).length,
+      unresolvedBlockCount: bound.mappings.filter((mapping) => mapping.suggestions.length === 0).length,
+      questionBindingCount: bound.questionBindings.length,
+      extractorQuestionBindingCount: bound.questionBindings.filter((binding) => binding.source === "extractor-pair").length,
+      xfdlQuestionBindingCount: bound.questionBindings.filter((binding) => binding.source === "xfdl-family").length,
       weights: WEIGHTS,
       generalInformationQuestionPatternCount: GENERAL_INFORMATION_QUESTION_PATTERNS.length,
       tableAwareBlockCount: input.fieldCatalog.filter((entry) => Boolean(entry.tableId && input.groupedStructures?.tables.some((table) => table.id === entry.tableId && table.page === entry.page))).length,

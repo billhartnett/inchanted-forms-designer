@@ -177,6 +177,11 @@ jobs:
           if (supplemental.mappings?.[0]?.chosen?.acordCode !== 'Question.BooleanAnswer' || supplemental.xfdlDiagnostics?.tableAwareBlockCount !== 1) throw new Error('Supplemental table checkbox rule mismatch');
           NODE
 
+      - name: Verify cross-form question bindings
+        env:
+          XFDL_VALIDATION_API_BASE_URL: ${{ env.STAGING_BACKEND_URL }}
+        run: npm --prefix backend/api run validate:xfdl:multi-form
+
       - name: Install frontend dependencies
         run: npm --prefix frontend ci --no-audit --no-fund
 
