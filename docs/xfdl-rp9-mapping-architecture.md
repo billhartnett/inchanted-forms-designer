@@ -52,6 +52,25 @@ Label matching expands these representation aliases before comparison:
 
 Seven ACORD 125 General Information questions are recognized from their authoritative XFDL help text: parent/subsidiary status, formal safety program, flammable/explosive/chemical exposure, other insurance, declined/cancelled/non-renewed coverage, and abuse/discrimination/negligent-hiring claims.
 
+## Question Binding
+
+Question families are bound after candidate scoring and before canonical RP-9 projection:
+
+1. Extractor-provided `questionAnswerPairs` bind real question and answer block IDs authoritatively.
+2. When no extractor pair exists, matching XFDL `questionFamilyId` values bind a question label control to its boolean answer control.
+3. A binding is emitted only when both mappings are on the same page and both bounding boxes have positive width and height.
+4. One aggregate `Question.Text` node contains the attached `Question.BooleanAnswer`, while the two underlying mappings retain their original placement geometry.
+
+The response exposes `questionBindings` with this shape:
+
+- structural question: `Question.Text`, `fillable: false`, question block geometry
+- attached answer: `Question.BooleanAnswer`, `fillable: true`, with `controls[]` containing every Yes/No checkbox or radio placement
+- source: `extractor-pair` or `xfdl-family`
+
+Question mappings remain in `mappings` for semantic review but are excluded from `mappedFields`. Boolean answer mappings remain fillable. The binder never synthesizes a canvas block or places a mapping over empty space.
+
+Markel supplemental forms encode question text in checkbox help values rather than separate XFDL labels. For those forms, XFDL identifies the boolean family and the PDF extractor supplies the real question-text block and authoritative pair.
+
 ## Scoring
 
 The initial score is intentionally small and inspectable:
@@ -108,9 +127,9 @@ The existing pipeline remains available outside this gate.
   - staging-gated pipeline routing
   - response contract: `mappingPipeline` and `xfdlDiagnostics`
 - `backend/api/tests/xfdlRp9MappingPipeline.test.cjs`
-  - parser, canonical resolution, scoring, API contract, and staging isolation
+  - parser, canonical resolution, scoring, binding placement, fillability, API contract, and staging isolation
 - `backend/api/scripts/validate-xfdl-rp9-multi-form.cjs`
-  - repeatable ACORD 125/126/130 and supplemental API-contract report
+  - repeatable local or live ACORD 125/126/130 and Markel question-binding report
 
 ## Follow-Up Plan
 

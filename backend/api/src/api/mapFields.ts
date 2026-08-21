@@ -1942,6 +1942,7 @@ export async function mapFields(
         contractVersion: xfdlPrimary ? "xfdl.rp9.mapping.v1" : "wave9.hybrid.v1",
         mappingPipeline: xfdlPrimary ? "xfdl-rp9-layoutlm.v1" : "legacy-rp9-projection.v1",
         xfdlDiagnostics: xfdlResult?.diagnostics,
+        questionBindings: xfdlResult?.questionBindings || [],
         semanticBaseline: configuredSemanticBaseline(),
         mappings: semanticMappings,
         mappedFields,

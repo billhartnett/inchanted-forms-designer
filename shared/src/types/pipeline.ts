@@ -477,6 +477,40 @@ export type NormalizedBoundingBox = {
   boundingBox: BoundingBox;
 };
 
+export type QuestionBindingRole = "question" | "boolean-answer";
+
+export type QuestionMappingBinding = {
+  bindingId: string;
+  role: QuestionBindingRole;
+  questionBlockId: string;
+  booleanAnswerBlockId: string;
+  booleanAnswerBlockIds: string[];
+};
+
+export type QuestionAnswerBinding = {
+  id: string;
+  page: number;
+  canonicalNodeId: "Question.Text";
+  source: "extractor-pair" | "xfdl-family";
+  question: {
+    blockId: string;
+    text: string;
+    boundingBox: BoundingBox;
+    canonicalNodeId: "Question.Text";
+    fillable: false;
+  };
+  booleanAnswer: {
+    blockId: string;
+    boundingBox: BoundingBox;
+    canonicalNodeId: "Question.BooleanAnswer";
+    fillable: true;
+    controls: Array<{
+      blockId: string;
+      boundingBox: BoundingBox;
+    }>;
+  };
+};
+
 export type FieldMapping = {
   blockId: string;
   page: number;
@@ -544,11 +578,13 @@ export type FieldMapping = {
     | "synthetic_confidence_fallback"
     | "role_context_reject";
   rationale?: AcordMappingRationale;
+  questionBinding?: QuestionMappingBinding;
 };
 
 export type MappingResult = {
   documentId?: string;
   mappings: FieldMapping[];
+  questionBindings?: QuestionAnswerBinding[];
 };
 
 export type ExtractionResult = {
