@@ -1899,7 +1899,7 @@ export async function mapFields(
         locationIndex: catalogEntry?.locationIndex,
         questionIndex: catalogEntry?.questionIndex,
         yesNoIndex: catalogEntry?.yesNoIndex,
-        semanticLabel: catalogEntry?.semanticLabel || catalogEntry?.text,
+        semanticLabel: mapping.semanticLabel || catalogEntry?.semanticLabel || catalogEntry?.text,
         semanticValueRegion: promotedBox || catalogEntry?.semanticValueRegion,
         labelBoundingBox: catalogEntry?.labelBoundingBox,
         eLabelCandidates: mapping.suggestions.map((candidate) => ({
@@ -1912,6 +1912,10 @@ export async function mapFields(
         tableId: catalogEntry?.tableId,
         rowIndex: catalogEntry?.rowIndex,
         columnIndex: catalogEntry?.columnIndex,
+        reconstructedNumericType: mapping.reconstructedNumericType,
+        reconstructedSection: mapping.reconstructedSection,
+        reconstructedSectionNodeId: mapping.reconstructedSectionNodeId,
+        tableContext: mapping.tableContext,
         layoutlmEvaluation: layoutLmByBlock[mapping.blockId],
       };
     });

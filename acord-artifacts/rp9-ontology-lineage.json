@@ -27,13 +27,13 @@
   "artifacts": {
     "authoritativeSemanticTruth": {
       "path": "acord-artifacts/authoritative-semantic-truth-rp9.json",
-      "payloadSha256": "39f8c2bc52c4afe380a731900855ae2d2bddd00da76d7c93f6f298fb6152ea05",
-      "fileSha256": "a78956a45f811fff6f5b6e7a962ee965348b03d60cd495c69357e3202ba15206"
+      "payloadSha256": "00be98e4dafec0f8f98bff856aa83b4ce6658a827a1e750139e561fea26c6a4c",
+      "fileSha256": "7c6803519ba8168f3e59236c5bd70d97f4c8450ea8531b19f11270c9641083a3"
     },
     "categoryBundles": {
       "path": "acord-artifacts/rp9-category-bundles.json",
-      "payloadSha256": "10f07bdfa5e71091a09c0fd8e2b30abe1965cb526aa7a6e1fe80c6f87ca2b6cd",
-      "fileSha256": "9d3b6cc80520d58e204dc7683a7422dfe58a445294432850ab3683a7f66b71b1"
+      "payloadSha256": "33a0238d7796500bceb8323d3bf28c7c5b77d86c886e15849596ebc62d9accfb",
+      "fileSha256": "98ee480410b3a6afed5b4c92b6be7dc2fccec42316ba0a467a12ae0c2ebdb8e1"
     },
     "phase33Policy": {
       "path": "acord-artifacts/phase33-semantic-truth-rp8.json",
@@ -127,8 +127,8 @@
       }
     }
   ],
-  "ontologyHash": "e34e49f41f533d8c5c1089d7fe8ff63c452b3fd92768d9734e7150c9abcd56e4",
-  "nodeCount": 51,
+  "ontologyHash": "4d9e5f64cb7784392b71f69fe8976422dfa474b1160d2e0ed0d0524718d435fb",
+  "nodeCount": 67,
   "validation": {
     "crossFileLineageValid": true,
     "phase33Compatible": true,
@@ -137,6 +137,6 @@
   },
   "integrity": {
     "algorithm": "sha256",
-    "payloadSha256": "9798e314925d5d0b1d2ac6124e6da37a5083acab42828dee002d1571b9a78581"
+    "payloadSha256": "a1baa4f0d3f2f26c727322071ca7e6e1e302f09b22e96d2c18c2c75191ac0c1b"
   }
 }

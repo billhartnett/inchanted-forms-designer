@@ -71,6 +71,36 @@ Question mappings remain in `mappings` for semantic review but are excluded from
 
 Markel supplemental forms encode question text in checkbox help values rather than separate XFDL labels. For those forms, XFDL identifies the boolean family and the PDF extractor supplies the real question-text block and authoritative pair.
 
+## Cross-Form Reconstruction
+
+The semantic index runs a deterministic reconstruction pass before scoring:
+
+1. Adjacent XFDL label fragments are merged by bounded horizontal/vertical overlap, preserving source SIDs.
+2. Nearby left-side labels become row headers; nearby overlapping labels above the control become column headers.
+3. The reconstructed label combines row header, column header, and local label without changing the control geometry.
+4. Numeric semantics are inferred from reconstructed text, semantic path, XFDL help/type metadata, and symbols such as `$`, `%`, `per $100`, and `per $1,000`.
+5. The resulting concept and section are resolved only to canonical RP-9 nodes.
+
+Supported supplemental numeric concepts:
+
+- `Integer`, `Decimal`, `CurrencyAmount`, `Percentage`
+- `Payroll.Amount`, `Payroll.Percentage`
+- `GrossReceipts.Amount`, `Exposure.Amount`, `Hazard.Percentage`
+- `Rate.Per100`, `Rate.Per1000`, `Premium.Amount`
+- `Classification.Code`, `Classification.Description`
+
+Supplemental section reconstruction maps to these RP-9 section bundles:
+
+- `Section.SupplementalInformation`
+- `Section.PayrollExposure`
+- `Section.Classification`
+- `Section.Rating`
+- existing `Section.PremisesInformation` where premises/location evidence controls
+
+Each mapping may expose `semanticLabel`, `reconstructedNumericType`, `reconstructedSection`, `reconstructedSectionNodeId`, and `tableContext`. These enrich the field without changing its stable ID, page, bounding box, or question binding.
+
+The designer prefers the reconstructed semantic label and numeric type, renders BooleanAnswer controls through the existing checkbox path, and displays row/column context plus reconstructed section in the binding details panel.
+
 ## Scoring
 
 The initial score is intentionally small and inspectable:
@@ -130,6 +160,8 @@ The existing pipeline remains available outside this gate.
   - parser, canonical resolution, scoring, binding placement, fillability, API contract, and staging isolation
 - `backend/api/scripts/validate-xfdl-rp9-multi-form.cjs`
   - repeatable local or live ACORD 125/126/130 and Markel question-binding report
+- `backend/api/scripts/validate-xfdl-rp9-reconstruction.cjs`
+  - repeatable local or live reconstruction report for ACORD, Markel, Hartford, Philadelphia, Travelers, and Chubb forms
 
 ## Follow-Up Plan
 

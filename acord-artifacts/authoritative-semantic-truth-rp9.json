@@ -36,8 +36,126 @@
     "ontologyId": "acord-canonical-ontology",
     "version": "2026.08.18-rp9",
     "generatedAt": "deterministic",
-    "hash": "e34e49f41f533d8c5c1089d7fe8ff63c452b3fd92768d9734e7150c9abcd56e4",
+    "hash": "4d9e5f64cb7784392b71f69fe8976422dfa474b1160d2e0ed0d0524718d435fb",
     "nodes": {
+      "Classification.Code": {
+        "acordCode": "Classification.Code",
+        "aliases": [
+          "Classification.Code",
+          "CLASS CODE",
+          "CLASSIFICATION CODE"
+        ],
+        "synonyms": [
+          "class",
+          "classification",
+          "code"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "classification",
+          "supplemental-information"
+        ],
+        "groups": [
+          "classification"
+        ],
+        "semanticKind": "fillable",
+        "component": "classification.code",
+        "role": null,
+        "instanceFamily": {
+          "familyId": "numeric.value",
+          "cardinality": "many",
+          "level": "value",
+          "instanceKey": [
+            "pageIndex",
+            "fieldOccurrence"
+          ],
+          "parentFamilyId": null,
+          "stableIdentity": [
+            "pageIndex",
+            "fieldOccurrence",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "evidenceType": "structural-section-model",
+          "section": {
+            "evidenceType": "structural-section-heading",
+            "formCount": 16,
+            "occurrenceCount": 31,
+            "fillable": false
+          },
+          "corpus": {
+            "formCount": 63,
+            "fieldCount": 21140,
+            "groupCount": 1094,
+            "labelCount": 10679
+          }
+        },
+        "inheritedFrom": null
+      },
+      "Classification.Description": {
+        "acordCode": "Classification.Description",
+        "aliases": [
+          "Classification.Description",
+          "CLASS DESCRIPTION",
+          "CLASSIFICATION DESCRIPTION",
+          "DESCRIPTION OF OPERATIONS"
+        ],
+        "synonyms": [
+          "class",
+          "classification",
+          "description",
+          "operations"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "classification",
+          "supplemental-information"
+        ],
+        "groups": [
+          "classification"
+        ],
+        "semanticKind": "fillable",
+        "component": "classification.description",
+        "role": null,
+        "instanceFamily": {
+          "familyId": "numeric.value",
+          "cardinality": "many",
+          "level": "value",
+          "instanceKey": [
+            "pageIndex",
+            "fieldOccurrence"
+          ],
+          "parentFamilyId": null,
+          "stableIdentity": [
+            "pageIndex",
+            "fieldOccurrence",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "evidenceType": "structural-section-model",
+          "section": {
+            "evidenceType": "structural-section-heading",
+            "formCount": 16,
+            "occurrenceCount": 31,
+            "fillable": false
+          },
+          "corpus": {
+            "formCount": 63,
+            "fieldCount": 21140,
+            "groupCount": 1094,
+            "labelCount": 10679
+          }
+        },
+        "inheritedFrom": null
+      },
       "CommercialProperty.Building.LocationAddress": {
         "acordCode": "CommercialProperty.Building.LocationAddress",
         "aliases": [
@@ -162,6 +280,127 @@
         ],
         "semanticKind": "fillable",
         "component": "currencyAmount",
+        "role": null,
+        "instanceFamily": {
+          "familyId": "numeric.value",
+          "cardinality": "many",
+          "level": "value",
+          "instanceKey": [
+            "pageIndex",
+            "fieldOccurrence"
+          ],
+          "parentFamilyId": null,
+          "stableIdentity": [
+            "pageIndex",
+            "fieldOccurrence",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "evidenceType": "structural-section-model",
+          "section": {
+            "evidenceType": "structural-section-heading",
+            "formCount": 16,
+            "occurrenceCount": 31,
+            "fillable": false
+          },
+          "corpus": {
+            "formCount": 63,
+            "fieldCount": 21140,
+            "groupCount": 1094,
+            "labelCount": 10679
+          }
+        },
+        "inheritedFrom": null
+      },
+      "Decimal": {
+        "acordCode": "Decimal",
+        "aliases": [
+          "Decimal",
+          "DECIMAL",
+          "FACTOR",
+          "MODIFIER"
+        ],
+        "synonyms": [
+          "decimal",
+          "factor",
+          "modifier",
+          "ratio"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "rating",
+          "supplemental-information"
+        ],
+        "groups": [
+          "numeric",
+          "rating"
+        ],
+        "semanticKind": "fillable",
+        "component": "decimal",
+        "role": null,
+        "instanceFamily": {
+          "familyId": "numeric.value",
+          "cardinality": "many",
+          "level": "value",
+          "instanceKey": [
+            "pageIndex",
+            "fieldOccurrence"
+          ],
+          "parentFamilyId": null,
+          "stableIdentity": [
+            "pageIndex",
+            "fieldOccurrence",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "evidenceType": "structural-section-model",
+          "section": {
+            "evidenceType": "structural-section-heading",
+            "formCount": 16,
+            "occurrenceCount": 31,
+            "fillable": false
+          },
+          "corpus": {
+            "formCount": 63,
+            "fieldCount": 21140,
+            "groupCount": 1094,
+            "labelCount": 10679
+          }
+        },
+        "inheritedFrom": null
+      },
+      "Exposure.Amount": {
+        "acordCode": "Exposure.Amount",
+        "aliases": [
+          "Exposure.Amount",
+          "EXPOSURE AMOUNT",
+          "TOTAL EXPOSURE"
+        ],
+        "synonyms": [
+          "amount",
+          "exposure",
+          "total"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "payroll-exposure",
+          "supplemental-information"
+        ],
+        "groups": [
+          "currency",
+          "exposure",
+          "numeric"
+        ],
+        "semanticKind": "fillable",
+        "component": "exposure.amount",
         "role": null,
         "instanceFamily": {
           "familyId": "numeric.value",
@@ -979,6 +1218,308 @@
           "sourcePayloadSha256": "de18ba8a33410b61095f318b403635e23ae731bf2deab0a950b96662bcd3f27d"
         },
         "inheritedFrom": "RP-8"
+      },
+      "GrossReceipts.Amount": {
+        "acordCode": "GrossReceipts.Amount",
+        "aliases": [
+          "GrossReceipts.Amount",
+          "GROSS RECEIPTS",
+          "GROSS SALES",
+          "ANNUAL RECEIPTS"
+        ],
+        "synonyms": [
+          "amount",
+          "gross",
+          "receipts",
+          "sales"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "payroll-exposure",
+          "supplemental-information"
+        ],
+        "groups": [
+          "currency",
+          "exposure",
+          "numeric"
+        ],
+        "semanticKind": "fillable",
+        "component": "grossReceipts.amount",
+        "role": null,
+        "instanceFamily": {
+          "familyId": "numeric.value",
+          "cardinality": "many",
+          "level": "value",
+          "instanceKey": [
+            "pageIndex",
+            "fieldOccurrence"
+          ],
+          "parentFamilyId": null,
+          "stableIdentity": [
+            "pageIndex",
+            "fieldOccurrence",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "evidenceType": "structural-section-model",
+          "section": {
+            "evidenceType": "structural-section-heading",
+            "formCount": 16,
+            "occurrenceCount": 31,
+            "fillable": false
+          },
+          "corpus": {
+            "formCount": 63,
+            "fieldCount": 21140,
+            "groupCount": 1094,
+            "labelCount": 10679
+          }
+        },
+        "inheritedFrom": null
+      },
+      "Hazard.Percentage": {
+        "acordCode": "Hazard.Percentage",
+        "aliases": [
+          "Hazard.Percentage",
+          "HAZARD %",
+          "PERCENT HAZARD"
+        ],
+        "synonyms": [
+          "hazard",
+          "percent",
+          "percentage"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "payroll-exposure",
+          "supplemental-information"
+        ],
+        "groups": [
+          "hazard",
+          "numeric",
+          "percentage"
+        ],
+        "semanticKind": "fillable",
+        "component": "hazard.percentage",
+        "role": null,
+        "instanceFamily": {
+          "familyId": "numeric.value",
+          "cardinality": "many",
+          "level": "value",
+          "instanceKey": [
+            "pageIndex",
+            "fieldOccurrence"
+          ],
+          "parentFamilyId": null,
+          "stableIdentity": [
+            "pageIndex",
+            "fieldOccurrence",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "evidenceType": "structural-section-model",
+          "section": {
+            "evidenceType": "structural-section-heading",
+            "formCount": 16,
+            "occurrenceCount": 31,
+            "fillable": false
+          },
+          "corpus": {
+            "formCount": 63,
+            "fieldCount": 21140,
+            "groupCount": 1094,
+            "labelCount": 10679
+          }
+        },
+        "inheritedFrom": null
+      },
+      "Integer": {
+        "acordCode": "Integer",
+        "aliases": [
+          "Integer",
+          "INTEGER",
+          "WHOLE NUMBER",
+          "COUNT"
+        ],
+        "synonyms": [
+          "count",
+          "integer",
+          "number",
+          "units"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "supplemental-information"
+        ],
+        "groups": [
+          "numeric"
+        ],
+        "semanticKind": "fillable",
+        "component": "integer",
+        "role": null,
+        "instanceFamily": {
+          "familyId": "numeric.value",
+          "cardinality": "many",
+          "level": "value",
+          "instanceKey": [
+            "pageIndex",
+            "fieldOccurrence"
+          ],
+          "parentFamilyId": null,
+          "stableIdentity": [
+            "pageIndex",
+            "fieldOccurrence",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "evidenceType": "structural-section-model",
+          "section": {
+            "evidenceType": "structural-section-heading",
+            "formCount": 16,
+            "occurrenceCount": 31,
+            "fillable": false
+          },
+          "corpus": {
+            "formCount": 63,
+            "fieldCount": 21140,
+            "groupCount": 1094,
+            "labelCount": 10679
+          }
+        },
+        "inheritedFrom": null
+      },
+      "Payroll.Amount": {
+        "acordCode": "Payroll.Amount",
+        "aliases": [
+          "Payroll.Amount",
+          "PAYROLL",
+          "ANNUAL PAYROLL",
+          "REMUNERATION"
+        ],
+        "synonyms": [
+          "amount",
+          "payroll",
+          "remuneration"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "payroll-exposure",
+          "supplemental-information"
+        ],
+        "groups": [
+          "currency",
+          "numeric",
+          "payroll"
+        ],
+        "semanticKind": "fillable",
+        "component": "payroll.amount",
+        "role": null,
+        "instanceFamily": {
+          "familyId": "numeric.value",
+          "cardinality": "many",
+          "level": "value",
+          "instanceKey": [
+            "pageIndex",
+            "fieldOccurrence"
+          ],
+          "parentFamilyId": null,
+          "stableIdentity": [
+            "pageIndex",
+            "fieldOccurrence",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "evidenceType": "structural-section-model",
+          "section": {
+            "evidenceType": "structural-section-heading",
+            "formCount": 16,
+            "occurrenceCount": 31,
+            "fillable": false
+          },
+          "corpus": {
+            "formCount": 63,
+            "fieldCount": 21140,
+            "groupCount": 1094,
+            "labelCount": 10679
+          }
+        },
+        "inheritedFrom": null
+      },
+      "Payroll.Percentage": {
+        "acordCode": "Payroll.Percentage",
+        "aliases": [
+          "Payroll.Percentage",
+          "PAYROLL %",
+          "PERCENT OF PAYROLL"
+        ],
+        "synonyms": [
+          "payroll",
+          "percent",
+          "percentage"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "payroll-exposure",
+          "supplemental-information"
+        ],
+        "groups": [
+          "numeric",
+          "payroll",
+          "percentage"
+        ],
+        "semanticKind": "fillable",
+        "component": "payroll.percentage",
+        "role": null,
+        "instanceFamily": {
+          "familyId": "numeric.value",
+          "cardinality": "many",
+          "level": "value",
+          "instanceKey": [
+            "pageIndex",
+            "fieldOccurrence"
+          ],
+          "parentFamilyId": null,
+          "stableIdentity": [
+            "pageIndex",
+            "fieldOccurrence",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "evidenceType": "structural-section-model",
+          "section": {
+            "evidenceType": "structural-section-heading",
+            "formCount": 16,
+            "occurrenceCount": 31,
+            "fillable": false
+          },
+          "corpus": {
+            "formCount": 63,
+            "fieldCount": 21140,
+            "groupCount": 1094,
+            "labelCount": 10679
+          }
+        },
+        "inheritedFrom": null
       },
       "Percentage": {
         "acordCode": "Percentage",
@@ -1876,6 +2417,67 @@
         },
         "inheritedFrom": null
       },
+      "Premium.Amount": {
+        "acordCode": "Premium.Amount",
+        "aliases": [
+          "Premium.Amount",
+          "PREMIUM",
+          "TOTAL PREMIUM",
+          "ANNUAL PREMIUM"
+        ],
+        "synonyms": [
+          "amount",
+          "premium",
+          "total"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "rating",
+          "supplemental-information"
+        ],
+        "groups": [
+          "currency",
+          "numeric",
+          "rating"
+        ],
+        "semanticKind": "fillable",
+        "component": "premium.amount",
+        "role": null,
+        "instanceFamily": {
+          "familyId": "numeric.value",
+          "cardinality": "many",
+          "level": "value",
+          "instanceKey": [
+            "pageIndex",
+            "fieldOccurrence"
+          ],
+          "parentFamilyId": null,
+          "stableIdentity": [
+            "pageIndex",
+            "fieldOccurrence",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "evidenceType": "structural-section-model",
+          "section": {
+            "evidenceType": "structural-section-heading",
+            "formCount": 16,
+            "occurrenceCount": 31,
+            "fillable": false
+          },
+          "corpus": {
+            "formCount": 63,
+            "fieldCount": 21140,
+            "groupCount": 1094,
+            "labelCount": 10679
+          }
+        },
+        "inheritedFrom": null
+      },
       "Producer.Address.City": {
         "acordCode": "Producer.Address.City",
         "aliases": [
@@ -2489,6 +3091,124 @@
         },
         "inheritedFrom": null
       },
+      "Rate.Per100": {
+        "acordCode": "Rate.Per100",
+        "aliases": [
+          "Rate.Per100",
+          "RATE PER $100",
+          "RATE PER 100"
+        ],
+        "synonyms": [
+          "hundred",
+          "per",
+          "rate"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "rating",
+          "supplemental-information"
+        ],
+        "groups": [
+          "numeric",
+          "rating"
+        ],
+        "semanticKind": "fillable",
+        "component": "rate.per100",
+        "role": null,
+        "instanceFamily": {
+          "familyId": "numeric.value",
+          "cardinality": "many",
+          "level": "value",
+          "instanceKey": [
+            "pageIndex",
+            "fieldOccurrence"
+          ],
+          "parentFamilyId": null,
+          "stableIdentity": [
+            "pageIndex",
+            "fieldOccurrence",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "evidenceType": "structural-section-model",
+          "section": {
+            "evidenceType": "structural-section-heading",
+            "formCount": 16,
+            "occurrenceCount": 31,
+            "fillable": false
+          },
+          "corpus": {
+            "formCount": 63,
+            "fieldCount": 21140,
+            "groupCount": 1094,
+            "labelCount": 10679
+          }
+        },
+        "inheritedFrom": null
+      },
+      "Rate.Per1000": {
+        "acordCode": "Rate.Per1000",
+        "aliases": [
+          "Rate.Per1000",
+          "RATE PER $1,000",
+          "RATE PER 1000"
+        ],
+        "synonyms": [
+          "per",
+          "rate",
+          "thousand"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "rating",
+          "supplemental-information"
+        ],
+        "groups": [
+          "numeric",
+          "rating"
+        ],
+        "semanticKind": "fillable",
+        "component": "rate.per1000",
+        "role": null,
+        "instanceFamily": {
+          "familyId": "numeric.value",
+          "cardinality": "many",
+          "level": "value",
+          "instanceKey": [
+            "pageIndex",
+            "fieldOccurrence"
+          ],
+          "parentFamilyId": null,
+          "stableIdentity": [
+            "pageIndex",
+            "fieldOccurrence",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "evidenceType": "structural-section-model",
+          "section": {
+            "evidenceType": "structural-section-heading",
+            "formCount": 16,
+            "occurrenceCount": 31,
+            "fillable": false
+          },
+          "corpus": {
+            "formCount": 63,
+            "fieldCount": 21140,
+            "groupCount": 1094,
+            "labelCount": 10679
+          }
+        },
+        "inheritedFrom": null
+      },
       "Section.ApplicantInformation": {
         "acordCode": "Section.ApplicantInformation",
         "aliases": [
@@ -2533,6 +3253,64 @@
           "formCount": 4,
           "occurrenceCount": 6,
           "fillable": false
+        },
+        "inheritedFrom": null
+      },
+      "Section.Classification": {
+        "acordCode": "Section.Classification",
+        "aliases": [
+          "Section.Classification",
+          "CLASSIFICATION",
+          "CLASS CODE"
+        ],
+        "synonyms": [
+          "class",
+          "classification",
+          "section"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "classification"
+        ],
+        "groups": [
+          "classification",
+          "section"
+        ],
+        "semanticKind": "section",
+        "component": "section",
+        "role": null,
+        "instanceFamily": {
+          "familyId": "section.classification",
+          "cardinality": "one-per-section-occurrence",
+          "level": "section",
+          "instanceKey": [
+            "pageIndex",
+            "sectionOccurrence"
+          ],
+          "parentFamilyId": null,
+          "stableIdentity": [
+            "pageIndex",
+            "sectionOccurrence",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "evidenceType": "structural-section-model",
+          "section": {
+            "evidenceType": "structural-section-heading",
+            "formCount": 16,
+            "occurrenceCount": 31,
+            "fillable": false
+          },
+          "corpus": {
+            "formCount": 63,
+            "fieldCount": 21140,
+            "groupCount": 1094,
+            "labelCount": 10679
+          }
         },
         "inheritedFrom": null
       },
@@ -2585,6 +3363,66 @@
           "formCount": 16,
           "occurrenceCount": 31,
           "fillable": false
+        },
+        "inheritedFrom": null
+      },
+      "Section.PayrollExposure": {
+        "acordCode": "Section.PayrollExposure",
+        "aliases": [
+          "Section.PayrollExposure",
+          "PAYROLL AND EXPOSURE",
+          "PAYROLL",
+          "EXPOSURE"
+        ],
+        "synonyms": [
+          "exposure",
+          "payroll",
+          "section"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "payroll-exposure"
+        ],
+        "groups": [
+          "exposure",
+          "payroll",
+          "section"
+        ],
+        "semanticKind": "section",
+        "component": "section",
+        "role": null,
+        "instanceFamily": {
+          "familyId": "section.payroll-exposure",
+          "cardinality": "one-per-section-occurrence",
+          "level": "section",
+          "instanceKey": [
+            "pageIndex",
+            "sectionOccurrence"
+          ],
+          "parentFamilyId": null,
+          "stableIdentity": [
+            "pageIndex",
+            "sectionOccurrence",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "evidenceType": "structural-section-model",
+          "section": {
+            "evidenceType": "structural-section-heading",
+            "formCount": 16,
+            "occurrenceCount": 31,
+            "fillable": false
+          },
+          "corpus": {
+            "formCount": 63,
+            "fieldCount": 21140,
+            "groupCount": 1094,
+            "labelCount": 10679
+          }
         },
         "inheritedFrom": null
       },
@@ -2692,6 +3530,124 @@
           "formCount": 19,
           "occurrenceCount": 476,
           "fillable": false
+        },
+        "inheritedFrom": null
+      },
+      "Section.Rating": {
+        "acordCode": "Section.Rating",
+        "aliases": [
+          "Section.Rating",
+          "RATING AND PREMIUM",
+          "RATING",
+          "PREMIUM"
+        ],
+        "synonyms": [
+          "premium",
+          "rate",
+          "rating",
+          "section"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "rating"
+        ],
+        "groups": [
+          "rating",
+          "section"
+        ],
+        "semanticKind": "section",
+        "component": "section",
+        "role": null,
+        "instanceFamily": {
+          "familyId": "section.rating",
+          "cardinality": "one-per-section-occurrence",
+          "level": "section",
+          "instanceKey": [
+            "pageIndex",
+            "sectionOccurrence"
+          ],
+          "parentFamilyId": null,
+          "stableIdentity": [
+            "pageIndex",
+            "sectionOccurrence",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "evidenceType": "structural-section-model",
+          "section": {
+            "evidenceType": "structural-section-heading",
+            "formCount": 16,
+            "occurrenceCount": 31,
+            "fillable": false
+          },
+          "corpus": {
+            "formCount": 63,
+            "fieldCount": 21140,
+            "groupCount": 1094,
+            "labelCount": 10679
+          }
+        },
+        "inheritedFrom": null
+      },
+      "Section.SupplementalInformation": {
+        "acordCode": "Section.SupplementalInformation",
+        "aliases": [
+          "Section.SupplementalInformation",
+          "SUPPLEMENTAL APPLICATION",
+          "SUPPLEMENTAL INFORMATION"
+        ],
+        "synonyms": [
+          "application",
+          "information",
+          "section",
+          "supplemental"
+        ],
+        "parentCodes": [],
+        "childCodes": [],
+        "mutuallyExclusiveCodes": [],
+        "requiredSiblingCodes": [],
+        "sections": [
+          "supplemental-information"
+        ],
+        "groups": [
+          "section"
+        ],
+        "semanticKind": "section",
+        "component": "section",
+        "role": null,
+        "instanceFamily": {
+          "familyId": "section.supplemental-information",
+          "cardinality": "one-per-section-occurrence",
+          "level": "section",
+          "instanceKey": [
+            "pageIndex",
+            "sectionOccurrence"
+          ],
+          "parentFamilyId": null,
+          "stableIdentity": [
+            "pageIndex",
+            "sectionOccurrence",
+            "canonicalNodeId"
+          ]
+        },
+        "evidence": {
+          "evidenceType": "structural-section-model",
+          "section": {
+            "evidenceType": "structural-section-heading",
+            "formCount": 16,
+            "occurrenceCount": 31,
+            "fillable": false
+          },
+          "corpus": {
+            "formCount": 63,
+            "fieldCount": 21140,
+            "groupCount": 1094,
+            "labelCount": 10679
+          }
         },
         "inheritedFrom": null
       },
@@ -3068,8 +4024,38 @@
         "canonicalNodeId"
       ]
     },
+    "section.classification": {
+      "familyId": "section.classification",
+      "cardinality": "one-per-section-occurrence",
+      "level": "section",
+      "instanceKey": [
+        "pageIndex",
+        "sectionOccurrence"
+      ],
+      "parentFamilyId": null,
+      "stableIdentity": [
+        "pageIndex",
+        "sectionOccurrence",
+        "canonicalNodeId"
+      ]
+    },
     "section.general-information": {
       "familyId": "section.general-information",
+      "cardinality": "one-per-section-occurrence",
+      "level": "section",
+      "instanceKey": [
+        "pageIndex",
+        "sectionOccurrence"
+      ],
+      "parentFamilyId": null,
+      "stableIdentity": [
+        "pageIndex",
+        "sectionOccurrence",
+        "canonicalNodeId"
+      ]
+    },
+    "section.payroll-exposure": {
+      "familyId": "section.payroll-exposure",
       "cardinality": "one-per-section-occurrence",
       "level": "section",
       "instanceKey": [
@@ -3100,6 +4086,36 @@
     },
     "section.producer-information": {
       "familyId": "section.producer-information",
+      "cardinality": "one-per-section-occurrence",
+      "level": "section",
+      "instanceKey": [
+        "pageIndex",
+        "sectionOccurrence"
+      ],
+      "parentFamilyId": null,
+      "stableIdentity": [
+        "pageIndex",
+        "sectionOccurrence",
+        "canonicalNodeId"
+      ]
+    },
+    "section.rating": {
+      "familyId": "section.rating",
+      "cardinality": "one-per-section-occurrence",
+      "level": "section",
+      "instanceKey": [
+        "pageIndex",
+        "sectionOccurrence"
+      ],
+      "parentFamilyId": null,
+      "stableIdentity": [
+        "pageIndex",
+        "sectionOccurrence",
+        "canonicalNodeId"
+      ]
+    },
+    "section.supplemental-information": {
+      "familyId": "section.supplemental-information",
       "cardinality": "one-per-section-occurrence",
       "level": "section",
       "instanceKey": [
@@ -3146,8 +4162,8 @@
   },
   "semanticTruth": {
     "inheritedNodeCount": 8,
-    "addedNodeCount": 43,
-    "canonicalNodeCount": 51,
+    "addedNodeCount": 59,
+    "canonicalNodeCount": 67,
     "corpus": {
       "formCount": 63,
       "fieldCount": 21140,
@@ -3171,14 +4187,14 @@
     "valid": true,
     "invalidReferences": [],
     "phase33Compatible": true,
-    "nodeCount": 51,
+    "nodeCount": 67,
     "inheritedNodeCount": 8,
-    "addedNodeCount": 43,
+    "addedNodeCount": 59,
     "roleSafeEquivalenceCount": 3,
-    "multiInstanceFamilyCount": 17
+    "multiInstanceFamilyCount": 21
   },
   "integrity": {
     "algorithm": "sha256",
-    "payloadSha256": "39f8c2bc52c4afe380a731900855ae2d2bddd00da76d7c93f6f298fb6152ea05"
+    "payloadSha256": "00be98e4dafec0f8f98bff856aa83b4ce6658a827a1e750139e561fea26c6a4c"
   }
 }

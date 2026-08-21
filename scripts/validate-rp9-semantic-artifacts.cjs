@@ -62,9 +62,12 @@ const requiredNodes = [
   'GeneralInformation.Question', 'GeneralInformation.Answer',
   'Question.Text', 'Question.BooleanAnswer',
   'CurrencyAmount', 'Percentage',
+  'Integer', 'Decimal', 'Payroll.Amount', 'Payroll.Percentage', 'GrossReceipts.Amount', 'Exposure.Amount', 'Hazard.Percentage',
+  'Rate.Per100', 'Rate.Per1000', 'Premium.Amount', 'Classification.Code', 'Classification.Description',
   'Premises.Occupancy.Description', 'Premises.Construction.Type', 'Premises.Protection.Fire', 'Premises.Protection.Burglary',
   'GeneralInformation.Operations.Description', 'GeneralInformation.Exposure.Description', 'GeneralInformation.Hazard.Description', 'GeneralInformation.BusinessDetails',
   'Section.ProducerInformation', 'Section.ApplicantInformation', 'Section.PremisesInformation', 'Section.GeneralInformation',
+  'Section.SupplementalInformation', 'Section.PayrollExposure', 'Section.Classification', 'Section.Rating',
 ];
 checks.requiredNodesPresent = requiredNodes.every((id) => nodeIds.has(id));
 checks.stableIdentifiers = [...nodeIds].every((id) => /^[A-Z][A-Za-z0-9]*(\.[A-Z][A-Za-z0-9]*)*$/.test(id));

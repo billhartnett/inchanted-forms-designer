@@ -145,6 +145,16 @@ export function DesignerBindingsPanel() {
                 Field Type: <span style={{ fontWeight: 600 }}>{selectedMapping.fieldType}</span>
               </div>
             )}
+            {(selectedMapping as any).tableContext && (
+              <div style={{ color: "#475569", marginBottom: 2 }}>
+                Table Context: <span style={{ fontWeight: 600 }}>{[(selectedMapping as any).tableContext.rowHeader, (selectedMapping as any).tableContext.columnHeader].filter(Boolean).join(" / ") || "-"}</span>
+              </div>
+            )}
+            {(selectedMapping as any).reconstructedSection && (
+              <div style={{ color: "#475569", marginBottom: 2 }}>
+                Section: <span style={{ fontWeight: 600 }}>{(selectedMapping as any).reconstructedSection}</span>
+              </div>
+            )}
             <div style={{ color: "#475569" }}>
               Confidence:{" "}
               <span style={{ fontWeight: 600 }}>
